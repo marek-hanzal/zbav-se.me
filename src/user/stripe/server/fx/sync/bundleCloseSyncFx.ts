@@ -4,6 +4,7 @@ import { NotFoundErrorFx } from "@/lib/common/error";
 import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
+import { bundleFeatureCloseSyncFx } from "./bundleFeatureCloseSyncFx";
 import { bundleItemCloseSyncFx } from "./bundleItemCloseSyncFx";
 import { bundleLimitCloseSyncFx } from "./bundleLimitCloseSyncFx";
 
@@ -50,11 +51,14 @@ export const bundleCloseSyncFx = Effect.fn("bundleCloseSyncFx")(function* ({
 				);
 			});
 
-			const [items, limits] = yield* Effect.all([
+			const [items, limits, features] = yield* Effect.all([
 				bundleItemCloseSyncFx({
 					key,
 				}),
 				bundleLimitCloseSyncFx({
+					key,
+				}),
+				bundleFeatureCloseSyncFx({
 					key,
 				}),
 			]);
@@ -62,6 +66,7 @@ export const bundleCloseSyncFx = Effect.fn("bundleCloseSyncFx")(function* ({
 				...new Set([
 					...items.map((item) => item.resourceBundleId),
 					...limits.map((limit) => limit.resourceBundleId),
+					...features.map((feature) => feature.resourceBundleId),
 				]),
 			];
 

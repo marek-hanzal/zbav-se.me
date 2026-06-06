@@ -13,7 +13,7 @@ const SellerEnumSchema = z.enum([
 	 * By default, listings are delivered to non-paying buyers with delay, this perk
 	 * enables seller to distribute their listings to _all_ users in time.
 	 */
-	"seller:limit:listing.early-delivery",
+	"seller:feature:listing.early-delivery",
 ]);
 
 const BuyerEnumSchema = z.enum([
@@ -27,7 +27,7 @@ const BuyerEnumSchema = z.enum([
 	 * This per enables buyers to discover all the listings in the feed early; does not effect
 	 * direct links which are enabled all the times.
 	 */
-	"buyer:limit:listing.early-discovery",
+	"buyer:feature:listing.early-discovery",
 	/**
 	 * Early Diescovery
 	 *

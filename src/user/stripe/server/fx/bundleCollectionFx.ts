@@ -11,7 +11,7 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 
 	const stripe = yield* stripeClientFx();
 
-	const { bundles, items, limits } = yield* dbFx(async (kysely) => {
+	const { bundles, items, limits, features } = yield* dbFx(async (kysely) => {
 		const bundles = await kysely
 			.selectFrom("resource_bundle")
 			.select([
@@ -26,12 +26,13 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 				bundles,
 				items: [],
 				limits: [],
+				features: [],
 			};
 		}
 
 		const ids = bundles.map((bundle) => bundle.id);
 
-		const [items, limits] = await Promise.all([
+		const [items, limits, features] = await Promise.all([
 			kysely
 				.selectFrom("resource_bundle_item")
 				.select([
@@ -55,12 +56,22 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 				.where("resourceBundleId", "in", ids)
 				.where("limit", ">", 0)
 				.execute(),
+			kysely
+				.selectFrom("resource_bundle_feature")
+				.select([
+					"id",
+					"resourceBundleId",
+					"resourceDefinitionId",
+				])
+				.where("resourceBundleId", "in", ids)
+				.execute(),
 		]);
 
 		return {
 			bundles,
 			items,
 			limits,
+			features,
 		};
 	});
 
@@ -76,6 +87,7 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 	);
 	const itemsById = Map.groupBy(items, (item) => item.resourceBundleId);
 	const limitsById = Map.groupBy(limits, (limit) => limit.resourceBundleId);
+	const featuresById = Map.groupBy(features, (feature) => feature.resourceBundleId);
 
 	const prices = yield* Effect.promise(() => {
 		return stripe.prices.list({
@@ -167,6 +179,7 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 					sort: product.sort,
 					items: itemsById.get(bundle.id) ?? [],
 					limits: limitsById.get(bundle.id) ?? [],
+					features: featuresById.get(bundle.id) ?? [],
 				},
 			];
 		})

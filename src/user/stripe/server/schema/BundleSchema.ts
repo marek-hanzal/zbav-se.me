@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { ResourceBundleFeatureSchema } from "~/common/resource-bundle-feature/server/schema/ResourceBundleFeatureSchema";
 import { ResourceBundleItemSchema } from "~/common/resource-bundle-item/server/schema/ResourceBundleItemSchema";
 import { ResourceBundleLimitSchema } from "~/common/resource-bundle-limit/server/schema/ResourceBundleLimitSchema";
 
@@ -20,6 +21,12 @@ export const BundleSchema = z
 				id: true,
 				resourceDefinitionId: true,
 				limit: true,
+			}),
+		),
+		features: z.array(
+			ResourceBundleFeatureSchema.pick({
+				id: true,
+				resourceDefinitionId: true,
 			}),
 		),
 	})

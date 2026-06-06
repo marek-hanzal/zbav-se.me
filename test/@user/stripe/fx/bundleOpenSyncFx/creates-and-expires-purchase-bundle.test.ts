@@ -84,9 +84,27 @@ describe("bundleOpenSyncFx", () => {
 					.where("resourceBundleId", "=", purchaseBundle.id)
 					.execute();
 			});
+			const purchaseFeatures = yield* Effect.promise(() => {
+				return database.kysely
+					.selectFrom("resource_bundle_feature")
+					.select([
+						"resourceDefinitionId",
+					])
+					.where("resourceBundleId", "=", purchaseBundle.id)
+					.execute();
+			});
 			const itemSources = yield* Effect.promise(() => {
 				return database.kysely
 					.selectFrom("resource_bundle_item_stripe")
+					.select([
+						"key",
+					])
+					.where("key", "=", key)
+					.execute();
+			});
+			const featureSources = yield* Effect.promise(() => {
+				return database.kysely
+					.selectFrom("resource_bundle_feature_stripe")
 					.select([
 						"key",
 					])
@@ -143,12 +161,23 @@ describe("bundleOpenSyncFx", () => {
 						ResourceDefinitionEnumSchema.enum["buyer:limit:feed.count"],
 				},
 			]);
+			expect(purchaseFeatures).toEqual([
+				{
+					resourceDefinitionId:
+						ResourceDefinitionEnumSchema.enum["buyer:feature:listing.early-discovery"],
+				},
+			]);
 			expect(itemSources).toEqual([
 				{
 					key,
 				},
 			]);
 			expect(limitSources).toEqual([
+				{
+					key,
+				},
+			]);
+			expect(featureSources).toEqual([
 				{
 					key,
 				},

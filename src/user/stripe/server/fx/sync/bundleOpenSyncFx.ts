@@ -6,6 +6,7 @@ import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { SyncSkipErrorFx } from "../../error/SyncSkipErrorFx";
+import { bundleFeatureOpenSyncFx } from "./bundleFeatureOpenSyncFx";
 import { bundleItemOpenSyncFx } from "./bundleItemOpenSyncFx";
 import { bundleLimitOpenSyncFx } from "./bundleLimitOpenSyncFx";
 
@@ -79,8 +80,8 @@ export const bundleOpenSyncFx = Effect.fn("bundleOpenSyncFx")(function* ({
 			 * Check if the item/limit is already present.
 			 */
 			{
-				const { item, limit } = yield* dbFx(async (kysely) => {
-					const [item, limit] = await Promise.all([
+				const { item, limit, feature } = yield* dbFx(async (kysely) => {
+					const [item, limit, feature] = await Promise.all([
 						kysely
 							.selectFrom("resource_bundle_item_stripe")
 							.select([
@@ -95,15 +96,23 @@ export const bundleOpenSyncFx = Effect.fn("bundleOpenSyncFx")(function* ({
 							])
 							.where("key", "=", key)
 							.executeTakeFirst(),
+						kysely
+							.selectFrom("resource_bundle_feature_stripe")
+							.select([
+								"id",
+							])
+							.where("key", "=", key)
+							.executeTakeFirst(),
 					]);
 
 					return {
 						item,
 						limit,
+						feature,
 					};
 				});
 
-				if (item || limit) {
+				if (item || limit || feature) {
 					return yield* new SyncSkipErrorFx({
 						message: "Stripe one-off purchase was already fulfilled",
 						reason: "one-off already fulfilled",
@@ -201,10 +210,16 @@ export const bundleOpenSyncFx = Effect.fn("bundleOpenSyncFx")(function* ({
 							key,
 							createdAt,
 						}),
+						bundleFeatureOpenSyncFx({
+							sourceResourceBundleId: resourceBundle.id,
+							purchaseResourceBundleId: purchaseBundle.id,
+							key,
+							createdAt,
+						}),
 					],
 					{
 						discard: true,
-						concurrency: 2,
+						concurrency: 3,
 					},
 				);
 			}

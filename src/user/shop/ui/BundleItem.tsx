@@ -92,6 +92,14 @@ export const BundleItem: FC<BundleItem.Props> = ({ bundle, ...props }) => {
 						<Typo label={`${limit.limit} ${limit.resourceDefinitionId}`} />
 					)}
 				/>
+
+				<ValueList
+					data-ui={"BundleItem-[Features]"}
+					textLabel={translator.text("Bundle features (label)", "Features")}
+					textEmpty={translator.text("Bundle features empty", "No features")}
+					items={bundle.features}
+					renderFn={(feature) => <Typo label={feature.resourceDefinitionId} />}
+				/>
 			</Container>
 
 			<CheckoutButton bundle={bundle.bundle} />
