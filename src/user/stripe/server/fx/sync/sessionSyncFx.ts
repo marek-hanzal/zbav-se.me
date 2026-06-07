@@ -6,6 +6,7 @@ import { getLoggerFx } from "@/lib/common/log";
 import { paymentIntentFetchFx } from "../paymentIntentFetchFx";
 import { resolveUserFx } from "../resolveUserFx";
 import { sessionFetchFx } from "../sessionFetchFx";
+import { stripeClientFx } from "../stripeClientFx";
 import { bundleCloseSyncFx } from "./bundleCloseSyncFx";
 import { bundleOpenSyncFx } from "./bundleOpenSyncFx";
 import { subscriptionSyncFx } from "./subscriptionSyncFx";
@@ -48,16 +49,58 @@ export const sessionSyncFx = Effect.fn("sessionSyncFx")(function* ({
 	});
 
 	/*
-	 * Subscription checkout sessions are delegated immediately. The session only tells
-	 * us which subscription changed; subscriptionSyncFx refetches the authoritative
-	 * subscription state and decides whether the local bundle is active or expired.
-	 * We intentionally do not continue into line items here: subscription line items
-	 * are not one-off purchases and must not open purchase bundles.
+	 * Subscription checkout sessions carry the authoritative subscription pointer,
+	 * but Stripe can also attach optional one-off line items to the same paid session.
+	 * Recurring line items stay delegated to subscriptionSyncFx; one-off line items are
+	 * materialized as purchase bundles below.
 	 */
 	if (session.subscription) {
+		const resourceBundleId = session.metadata?.resourceBundleId;
+		const bundle = session.metadata?.bundle;
+
 		yield* subscriptionSyncFx({
 			subscription: session.subscription,
+		}).pipe(Effect.ignore);
+
+		if (session.payment_status !== "paid") {
+			return yield* Effect.void;
+		}
+
+		if (!resourceBundleId || !bundle) {
+			return yield* new NotFoundErrorFx({
+				resource: "stripe-session-resource-bundle-metadata",
+				resourceId: session.id,
+				message: "Stripe checkout session resource bundle metadata is missing",
+			});
+		}
+
+		const stripe = yield* stripeClientFx();
+		const lineItems = yield* Effect.promise(() => {
+			return stripe.checkout.sessions.listLineItems(session.id, {
+				limit: 100,
+			});
 		});
+		const userId = yield* resolveUserFx({
+			session,
+		});
+		const createdAt = dateService.ofSeconds(session.created).toJSDate();
+
+		yield* Effect.forEach(
+			lineItems.data.filter((item) => item.price?.type === "one_time"),
+			(lineItem) => {
+				return bundleOpenSyncFx({
+					userId,
+					resourceBundleId,
+					bundle,
+					key: `stripe:checkout:${session.id}:${lineItem.id}`,
+					createdAt,
+				}).pipe(Effect.ignore);
+			},
+			{
+				discard: true,
+				concurrency: 4,
+			},
+		);
 
 		return yield* Effect.void;
 	}
