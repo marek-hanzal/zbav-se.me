@@ -154,7 +154,7 @@ describe("bundleOpenSyncFx", () => {
 						ResourceDefinitionEnumSchema.enum["common:item:token-small"],
 				},
 				{
-					amount: "1000000.00",
+					amount: "150.00",
 					expiration: 31 * 24 * 60 * 60,
 					resourceDefinitionId:
 						ResourceDefinitionEnumSchema.enum["common:item:agent.usage"],
