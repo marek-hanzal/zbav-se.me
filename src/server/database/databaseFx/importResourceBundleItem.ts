@@ -1,18 +1,26 @@
 import type { withDatabaseFx } from "@/lib/common/database";
 import { genId } from "@/lib/common/gen-id";
-import { resourceBundleItemSeedData } from "~/server/@migrations/0049-resource-bundle/resource-bundle-item";
-import type { ResourceBundleItemTableSchema } from "../@table/ResourceBundleItemTableSchema";
+import type { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/ResourceDefinitionEnumSchema";
+import { bundles } from "~/server/@migrations/0049-resource-bundle/bundles";
+import type { ResourceBundleEnumSchema } from "~/user/resource-bundle/server/schema/ResourceBundleEnumSchema";
 import type { Database } from "../Database";
-
-type ResourceBundleItemImportRow = Pick<
-	ResourceBundleItemTableSchema.Type,
-	"id" | "resourceBundleId" | "resourceDefinitionId" | "amount" | "expiration"
->;
 
 export const importResourceBundleItem: withDatabaseFx.Import<Database> = {
 	name: "resource-bundle-item",
 	async run({ kysely }) {
-		const resourceBundleItems = resourceBundleItemSeedData;
+		const resourceBundleItems = Object.entries(bundles).flatMap(
+			([resourceBundleId, bundle]) => {
+				return Object.entries(bundle.items).map(([resourceDefinitionId, item]) => {
+					return {
+						resourceBundleId: resourceBundleId as ResourceBundleEnumSchema.Type,
+						resourceDefinitionId:
+							resourceDefinitionId as ResourceDefinitionEnumSchema.Type,
+						amount: item.amount,
+						expiration: item.expiration,
+					} as const;
+				});
+			},
+		);
 
 		if (resourceBundleItems.length === 0) {
 			return;
@@ -21,6 +29,7 @@ export const importResourceBundleItem: withDatabaseFx.Import<Database> = {
 		const resourceBundleNames = [
 			...new Set(resourceBundleItems.map((item) => item.resourceBundleId)),
 		];
+
 		const resourceBundles = await kysely
 			.selectFrom("resource_bundle")
 			.select([
@@ -29,13 +38,15 @@ export const importResourceBundleItem: withDatabaseFx.Import<Database> = {
 			])
 			.where("name", "in", resourceBundleNames)
 			.execute();
+
 		const resourceBundleIdByName = new Map(
 			resourceBundles.map((resourceBundle) => [
 				resourceBundle.name,
 				resourceBundle.id,
 			]),
 		);
-		const values = resourceBundleItems.map((item): ResourceBundleItemImportRow => {
+
+		const values = resourceBundleItems.map((item) => {
 			const resourceBundleId = resourceBundleIdByName.get(item.resourceBundleId);
 
 			if (!resourceBundleId) {
@@ -48,7 +59,7 @@ export const importResourceBundleItem: withDatabaseFx.Import<Database> = {
 				resourceDefinitionId: item.resourceDefinitionId,
 				amount: item.amount,
 				expiration: item.expiration,
-			};
+			} as const;
 		});
 
 		return kysely
