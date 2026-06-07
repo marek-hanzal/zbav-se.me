@@ -30,7 +30,12 @@ export const bundles: Record<
 		features: {},
 	},
 	"package:free": {
-		items: {},
+		items: {
+			"common:item:agent.usage": {
+				amount: 250_000,
+				expiration: null,
+			},
+		},
 		limits: {
 			"buyer:limit:feed.count": {
 				limit: 3,
@@ -50,6 +55,10 @@ export const bundles: Record<
 				amount: 150,
 				expiration: null,
 			},
+			"common:item:agent.usage": {
+				amount: 1_000_000,
+				expiration: 31 * 24 * 60 * 60,
+			},
 		},
 		limits: {
 			"buyer:limit:feed.count": {
@@ -57,6 +66,8 @@ export const bundles: Record<
 			},
 		},
 		features: {
+			"buyer:feature:anti-topper": {},
+			"buyer:feature:history": {},
 			"buyer:feature:listing.early-discovery": {},
 			"buyer:feature:seller.info": {},
 		},
@@ -71,6 +82,10 @@ export const bundles: Record<
 				amount: 150,
 				expiration: null,
 			},
+			"common:item:agent.usage": {
+				amount: 750_000,
+				expiration: 31 * 24 * 60 * 60,
+			},
 		},
 		limits: {},
 		features: {
@@ -78,12 +93,22 @@ export const bundles: Record<
 		},
 	},
 	"package:pro": {
-		items: {},
+		items: {
+			"common:item:agent.usage": {
+				amount: 2_500_000,
+				expiration: 31 * 24 * 60 * 60,
+			},
+		},
 		limits: {},
 		features: {},
 	},
 	"package:master": {
-		items: {},
+		items: {
+			"common:item:agent.usage": {
+				amount: 5_000_000,
+				expiration: 31 * 24 * 60 * 60,
+			},
+		},
 		limits: {},
 		features: {},
 	},

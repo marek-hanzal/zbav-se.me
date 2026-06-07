@@ -24,20 +24,20 @@ const SellerEnumSchema = z.enum([
 	 * Enables access to more deep buyer analysis data.
 	 */
 	"seller:feature:buyer.info",
-    /**
-     * Cheap way to mark a listing; does not affect ordering, it's only like "heeey, I'm here!".
-     *
-     * Could be suppresed by buyer's anti-topper.
-     */
+	/**
+	 * Cheap way to mark a listing; does not affect ordering, it's only like "heeey, I'm here!".
+	 *
+	 * Could be suppresed by buyer's anti-topper.
+	 */
 	"seller:item:listing.mark",
-    /**
-     * This is classic Top, but it could be suppresed by buyers' anti-topper.
-     */
+	/**
+	 * This is classic Top, but it could be suppresed by buyers' anti-topper.
+	 */
 	"seller:item:listing.top",
-    /**
-     * High-tech top: this one cannot be suppresed by buyer: keep sort and listing status. Basically a 
-     * bullet which cannot be dodged.
-     */
+	/**
+	 * High-tech top: this one cannot be suppresed by buyer: keep sort and listing status. Basically a
+	 * bullet which cannot be dodged.
+	 */
 	"seller:item:listing.top-maxi",
 ]);
 
@@ -61,6 +61,10 @@ const BuyerEnumSchema = z.enum([
 	 * This will suppress Marks and simple Tops; Top-Maxxi will survive this feature.
 	 */
 	"buyer:feature:anti-topper",
+	/**
+	 * Buyer can access historical data, dig through various prices and so on.
+	 */
+	"buyer:feature:history",
 ]);
 
 const CommonEnumSchema = z.enum([
@@ -70,6 +74,10 @@ const CommonEnumSchema = z.enum([
 	"common:item:token-small",
 	"common:item:token-medium",
 	"common:item:token-large",
+	/**
+	 * Agent usage limit
+	 */
+	"common:item:agent.usage",
 ]);
 
 export const ResourceDefinitionEnumSchema = z
