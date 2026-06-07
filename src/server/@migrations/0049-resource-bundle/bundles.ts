@@ -65,7 +65,7 @@ export const bundles: Record<
 	},
 	"package:buyer": {
 		items: {
-			"common:item:token-small": {
+			"common:item:token": {
 				amount: 150,
 				expiration: null,
 			},
@@ -92,7 +92,7 @@ export const bundles: Record<
 				amount: 3,
 				expiration: inMonth,
 			},
-			"common:item:token-small": {
+			"common:item:token": {
 				amount: 150,
 				expiration: null,
 			},
@@ -108,7 +108,7 @@ export const bundles: Record<
 				amount: 3,
 				expiration: inMonth,
 			},
-			"seller:item:listing.top-maxi": {
+			"seller:item:listing.top-maxxi": {
 				amount: 1,
 				expiration: inMonth,
 			},

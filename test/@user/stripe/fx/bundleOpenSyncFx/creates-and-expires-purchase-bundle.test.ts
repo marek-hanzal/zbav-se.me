@@ -150,12 +150,11 @@ describe("bundleOpenSyncFx", () => {
 				{
 					amount: "150.00",
 					expiration: null,
-					resourceDefinitionId:
-						ResourceDefinitionEnumSchema.enum["common:item:token-small"],
+					resourceDefinitionId: ResourceDefinitionEnumSchema.enum["common:item:token"],
 				},
 				{
 					amount: "150.00",
-					expiration: 31 * 24 * 60 * 60,
+					expiration: 30 * 24 * 60 * 60,
 					resourceDefinitionId:
 						ResourceDefinitionEnumSchema.enum["common:item:agent.usage"],
 				},
@@ -268,7 +267,7 @@ describe("bundleOpenSyncFx", () => {
 					])
 					.where("urb.userId", "=", buyer.id)
 					.where("urb.expiresAt", "is", null)
-					.where("rbi.resourceDefinitionId", "=", "common:item:token-small")
+					.where("rbi.resourceDefinitionId", "=", "common:item:token")
 					.orderBy("rb.name", "asc")
 					.execute();
 			});
@@ -280,14 +279,12 @@ describe("bundleOpenSyncFx", () => {
 				{
 					name: "package:buyer",
 					amount: "150.00",
-					resourceDefinitionId:
-						ResourceDefinitionEnumSchema.enum["common:item:token-small"],
+					resourceDefinitionId: ResourceDefinitionEnumSchema.enum["common:item:token"],
 				},
 				{
 					name: key,
 					amount: "150.00",
-					resourceDefinitionId:
-						ResourceDefinitionEnumSchema.enum["common:item:token-small"],
+					resourceDefinitionId: ResourceDefinitionEnumSchema.enum["common:item:token"],
 				},
 			]);
 			expect(tokenTotal).toBe(300);

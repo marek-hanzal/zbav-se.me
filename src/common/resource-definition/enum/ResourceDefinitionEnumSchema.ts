@@ -38,7 +38,7 @@ const SellerEnumSchema = z.enum([
 	 * High-tech top: this one cannot be suppresed by buyer: keep sort and listing status. Basically a
 	 * bullet which cannot be dodged.
 	 */
-	"seller:item:listing.top-maxi",
+	"seller:item:listing.top-maxxi",
 	/**
 	 * Access to an extended (own) listing information.
 	 */
@@ -85,11 +85,9 @@ const BuyerEnumSchema = z.enum([
 
 const CommonEnumSchema = z.enum([
 	/**
-	 * Those are token packages
+	 * Token resource used to buy other stuff around.
 	 */
-	"common:item:token-small",
-	"common:item:token-medium",
-	"common:item:token-large",
+	"common:item:token",
 	/**
 	 * Agent usage limit
 	 */

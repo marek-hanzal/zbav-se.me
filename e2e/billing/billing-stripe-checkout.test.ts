@@ -421,7 +421,7 @@ test("Stripe checkout provisions buyer subscription with token upsell", async ({
 	const prices = await stripe.prices.list({
 		active: true,
 		lookup_keys: [
-			ResourceDefinitionEnumSchema.enum["common:item:token-small"],
+			ResourceDefinitionEnumSchema.enum["common:item:token"],
 		],
 		limit: 2,
 	});
@@ -429,7 +429,7 @@ test("Stripe checkout provisions buyer subscription with token upsell", async ({
 
 	if (!upsellPrice) {
 		throw new Error(
-			`Expected ${ResourceDefinitionEnumSchema.enum["common:item:token-small"]} Stripe price`,
+			`Expected ${ResourceDefinitionEnumSchema.enum["common:item:token"]} Stripe price`,
 		);
 	}
 
@@ -502,7 +502,7 @@ test("Stripe checkout provisions buyer subscription with token upsell", async ({
 		])
 		.where("urb.userId", "=", registeredUser.id)
 		.where("urb.expiresAt", "is", null)
-		.where("rbi.resourceDefinitionId", "=", "common:item:token-small")
+		.where("rbi.resourceDefinitionId", "=", "common:item:token")
 		.orderBy("rb.name", "asc")
 		.execute();
 
@@ -510,12 +510,12 @@ test("Stripe checkout provisions buyer subscription with token upsell", async ({
 		{
 			name: "package:buyer",
 			amount: "150.00",
-			resourceDefinitionId: ResourceDefinitionEnumSchema.enum["common:item:token-small"],
+			resourceDefinitionId: ResourceDefinitionEnumSchema.enum["common:item:token"],
 		},
 		{
 			name: bundleKey,
 			amount: "150.00",
-			resourceDefinitionId: ResourceDefinitionEnumSchema.enum["common:item:token-small"],
+			resourceDefinitionId: ResourceDefinitionEnumSchema.enum["common:item:token"],
 		},
 	]);
 });

@@ -36,7 +36,7 @@ describe("sessionSyncFx", () => {
 			const prices = await stripe.prices.list({
 				active: true,
 				lookup_keys: [
-					ResourceDefinitionEnumSchema.enum["common:item:token-small"],
+					ResourceDefinitionEnumSchema.enum["common:item:token"],
 				],
 				limit: 2,
 			});
@@ -44,7 +44,7 @@ describe("sessionSyncFx", () => {
 
 			if (!price) {
 				throw new Error(
-					`Expected ${ResourceDefinitionEnumSchema.enum["common:item:token-small"]} Stripe price`,
+					`Expected ${ResourceDefinitionEnumSchema.enum["common:item:token"]} Stripe price`,
 				);
 			}
 
@@ -120,7 +120,7 @@ describe("sessionSyncFx", () => {
 			const prices = await stripe.prices.list({
 				active: true,
 				lookup_keys: [
-					ResourceDefinitionEnumSchema.enum["common:item:token-small"],
+					ResourceDefinitionEnumSchema.enum["common:item:token"],
 				],
 				limit: 2,
 			});
@@ -128,7 +128,7 @@ describe("sessionSyncFx", () => {
 
 			if (!price) {
 				throw new Error(
-					`Expected ${ResourceDefinitionEnumSchema.enum["common:item:token-small"]} Stripe price`,
+					`Expected ${ResourceDefinitionEnumSchema.enum["common:item:token"]} Stripe price`,
 				);
 			}
 
