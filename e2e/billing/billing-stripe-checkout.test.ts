@@ -194,6 +194,155 @@ test("Stripe checkout provisions buyer subscription", async ({ page, database })
 	await expect(checkoutButton).toContainText(/active/i);
 });
 
+test("Stripe checkout reactivates buyer subscription after external cancellation", async ({
+	page,
+	database,
+}) => {
+	const stripeSecret = process.env.SERVER_STRIPE_SECRET;
+	const stripeWebhookSecret = process.env.SERVER_STRIPE_WEBHOOK_SECRET;
+
+	if (!stripeSecret) {
+		throw new Error("SERVER_STRIPE_SECRET is required");
+	}
+	if (!stripeWebhookSecret) {
+		throw new Error("SERVER_STRIPE_WEBHOOK_SECRET is required");
+	}
+
+	const user = await signUpBuyer(page);
+	const stripe = new Stripe(stripeSecret);
+
+	const registeredUser = await database.kysely
+		.selectFrom("user")
+		.select("id")
+		.where("email", "=", user.email)
+		.executeTakeFirstOrThrow();
+
+	await page.goto("/cs/app/shop");
+	const checkoutButton = page.locator('[data-ui="CheckoutButton"]').first();
+
+	await expect(checkoutButton).toBeEnabled();
+	await checkoutButton.click();
+	await page.waitForURL(/^https:\/\/checkout\.stripe\.com\//);
+
+	await fillStripeCardForm({
+		cardholderName: "Stripe E2E Renewal First",
+		page,
+	});
+	await page.locator('[data-testid="hosted-payment-submit-button"]').click();
+	await page.waitForURL(/\/cs\/app\/shop\?stripe=success$/);
+
+	await expect
+		.poll(
+			async () => {
+				return database.kysely
+					.selectFrom("user_resource_bundle as urb")
+					.innerJoin("resource_bundle as rb", "rb.id", "urb.resourceBundleId")
+					.innerJoin(
+						"user_resource_bundle_stripe as urbs",
+						"urbs.userResourceBundleId",
+						"urb.id",
+					)
+					.select([
+						"urb.expiresAt",
+						"urbs.subscriptionId",
+					])
+					.where("urb.userId", "=", registeredUser.id)
+					.where("rb.name", "=", "package:buyer")
+					.executeTakeFirst();
+			},
+			{
+				timeout: 30_000,
+			},
+		)
+		.toMatchObject({
+			expiresAt: null,
+		});
+
+	const firstSubscription = await database.kysely
+		.selectFrom("user_resource_bundle as urb")
+		.innerJoin("resource_bundle as rb", "rb.id", "urb.resourceBundleId")
+		.innerJoin("user_resource_bundle_stripe as urbs", "urbs.userResourceBundleId", "urb.id")
+		.select("urbs.subscriptionId")
+		.where("urb.userId", "=", registeredUser.id)
+		.where("rb.name", "=", "package:buyer")
+		.executeTakeFirstOrThrow();
+
+	await stripe.subscriptions.cancel(firstSubscription.subscriptionId);
+
+	await expect
+		.poll(
+			async () => {
+				const bundle = await database.kysely
+					.selectFrom("user_resource_bundle as urb")
+					.innerJoin("resource_bundle as rb", "rb.id", "urb.resourceBundleId")
+					.select("urb.expiresAt")
+					.where("urb.userId", "=", registeredUser.id)
+					.where("rb.name", "=", "package:buyer")
+					.executeTakeFirst();
+
+				return bundle?.expiresAt instanceof Date;
+			},
+			{
+				timeout: 30_000,
+			},
+		)
+		.toBe(true);
+
+	await page.goto("/cs/app/shop");
+	await expect(checkoutButton).toBeEnabled();
+	await checkoutButton.click();
+	await page.waitForURL(/^https:\/\/checkout\.stripe\.com\//);
+
+	await fillStripeCardForm({
+		cardholderName: "Stripe E2E Renewal Second",
+		page,
+	});
+	await page.locator('[data-testid="hosted-payment-submit-button"]').click();
+	await page.waitForURL(/\/cs\/app\/shop\?stripe=success$/);
+
+	await expect
+		.poll(
+			async () => {
+				return database.kysely
+					.selectFrom("user_resource_bundle as urb")
+					.innerJoin("resource_bundle as rb", "rb.id", "urb.resourceBundleId")
+					.innerJoin(
+						"user_resource_bundle_stripe as urbs",
+						"urbs.userResourceBundleId",
+						"urb.id",
+					)
+					.select([
+						"urb.expiresAt",
+						"urbs.subscriptionId",
+					])
+					.where("urb.userId", "=", registeredUser.id)
+					.where("rb.name", "=", "package:buyer")
+					.executeTakeFirst();
+			},
+			{
+				timeout: 30_000,
+			},
+		)
+		.toMatchObject({
+			expiresAt: null,
+		});
+
+	const renewedSubscription = await database.kysely
+		.selectFrom("user_resource_bundle as urb")
+		.innerJoin("resource_bundle as rb", "rb.id", "urb.resourceBundleId")
+		.innerJoin("user_resource_bundle_stripe as urbs", "urbs.userResourceBundleId", "urb.id")
+		.select("urbs.subscriptionId")
+		.where("urb.userId", "=", registeredUser.id)
+		.where("rb.name", "=", "package:buyer")
+		.executeTakeFirstOrThrow();
+
+	expect(renewedSubscription.subscriptionId).not.toBe(firstSubscription.subscriptionId);
+
+	await page.reload();
+	await expect(page.locator('[data-ui="BundleItem-[Active]"]').first()).toBeVisible();
+	await expect(checkoutButton).toContainText(/active/i);
+});
+
 test("Stripe checkout provisions buyer subscription with token upsell", async ({
 	appOrigin,
 	page,
