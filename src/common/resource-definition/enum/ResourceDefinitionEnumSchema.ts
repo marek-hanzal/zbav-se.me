@@ -12,8 +12,33 @@ const SellerEnumSchema = z.enum([
 	/**
 	 * By default, listings are delivered to non-paying buyers with delay, this perk
 	 * enables seller to distribute their listings to _all_ users in time.
+	 *
+	 * This is very strong feature which should be only in high-end packages/top package.
 	 */
 	"seller:feature:listing.early-delivery",
+	/**
+	 * This is consumable item - seller selects, which listing he marks with early delivery.
+	 */
+	"seller:item:listing.early-delivery",
+	/**
+	 * Enables access to more deep buyer analysis data.
+	 */
+	"seller:feature:buyer.info",
+    /**
+     * Cheap way to mark a listing; does not affect ordering, it's only like "heeey, I'm here!".
+     *
+     * Could be suppresed by buyer's anti-topper.
+     */
+	"seller:item:listing.mark",
+    /**
+     * This is classic Top, but it could be suppresed by buyers' anti-topper.
+     */
+	"seller:item:listing.top",
+    /**
+     * High-tech top: this one cannot be suppresed by buyer: keep sort and listing status. Basically a 
+     * bullet which cannot be dodged.
+     */
+	"seller:item:listing.top-maxi",
 ]);
 
 const BuyerEnumSchema = z.enum([
@@ -35,6 +60,14 @@ const BuyerEnumSchema = z.enum([
 	 * synthetic availableAt in the future on listings.
 	 */
 	"buyer:limit:early-discovery",
+	/**
+	 * Enables access to more deep seller analysis data.
+	 */
+	"buyer:feature:seller.info",
+	/**
+	 * This will suppress Marks and simple Tops; Top-Maxxi will survive this feature.
+	 */
+	"buyer:feature:anti-topper",
 ]);
 
 const CommonEnumSchema = z.enum([

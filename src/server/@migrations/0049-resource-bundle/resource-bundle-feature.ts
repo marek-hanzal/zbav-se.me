@@ -1,21 +1,28 @@
-import { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/ResourceDefinitionEnumSchema";
-import type { ResourceBundleFeatureTableSchema } from "~/server/database/@table/ResourceBundleFeatureTableSchema";
-import { ResourceBundleEnumSchema } from "~/user/resource-bundle/server/schema/ResourceBundleEnumSchema";
+import type { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/ResourceDefinitionEnumSchema";
+import type { ResourceBundleEnumSchema } from "~/user/resource-bundle/server/schema/ResourceBundleEnumSchema";
 
-type ResourceBundleFeatureSeed = Pick<
-	ResourceBundleFeatureTableSchema.Type,
-	"resourceBundleId" | "resourceDefinitionId"
->;
+interface ResourceBundleFeatureSeed {
+	resourceBundleId: ResourceBundleEnumSchema.Type;
+	resourceDefinitionId: ResourceDefinitionEnumSchema.Type;
+}
 
-export const resourceBundleFeatureSeedData = [
+export const resourceBundleFeatureSeedData: ResourceBundleFeatureSeed[] = [
+	/**
+	 * Buyer features
+	 */
 	{
-		resourceBundleId: ResourceBundleEnumSchema.enum["package:buyer"],
-		resourceDefinitionId:
-			ResourceDefinitionEnumSchema.enum["buyer:feature:listing.early-discovery"],
+		resourceBundleId: "package:buyer",
+		resourceDefinitionId: "buyer:feature:listing.early-discovery",
 	},
 	{
-		resourceBundleId: ResourceBundleEnumSchema.enum["package:seller"],
-		resourceDefinitionId:
-			ResourceDefinitionEnumSchema.enum["seller:feature:listing.early-delivery"],
+		resourceBundleId: "package:buyer",
+		resourceDefinitionId: "buyer:feature:seller.info",
 	},
-] satisfies ResourceBundleFeatureSeed[];
+	/**
+	 * Seller features
+	 */
+	{
+		resourceBundleId: "package:seller",
+		resourceDefinitionId: "seller:feature:buyer.info",
+	},
+];
