@@ -39,6 +39,22 @@ const SellerEnumSchema = z.enum([
 	 * bullet which cannot be dodged.
 	 */
 	"seller:item:listing.top-maxi",
+	/**
+	 * Access to an extended (own) listing information.
+	 */
+	"seller:feature:listing.info",
+	/**
+	 * Enables payback when seller's listing has been suppresed by buyer's anti-topper.
+	 */
+	"seller:feature:payback",
+	/**
+	 * Enables seller to manage his own brand (as everything is anonymous, this gives a seller searchable public name).
+	 */
+	"seller:feature:brand",
+	/**
+	 * Adds new options on listing expiration (so they'll staly longer live).
+	 */
+	"seller:feature:listing.longer-expiration",
 ]);
 
 const BuyerEnumSchema = z.enum([

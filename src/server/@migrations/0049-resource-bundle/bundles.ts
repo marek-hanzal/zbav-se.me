@@ -1,6 +1,8 @@
 import type { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/ResourceDefinitionEnumSchema";
 import type { ResourceBundleEnumSchema } from "~/user/resource-bundle/server/schema/ResourceBundleEnumSchema";
 
+const inMonth = 30 * 24 * 60 * 60;
+
 export const bundles: Record<
 	ResourceBundleEnumSchema.Type,
 	{
@@ -25,15 +27,27 @@ export const bundles: Record<
 	}
 > = {
 	"package:welcome.promo": {
-		items: {},
-		limits: {},
+		items: {
+			"common:item:agent.usage": {
+				amount: 75,
+				expiration: inMonth * 2,
+			},
+		},
+		limits: {
+			"seller:limit:listing.count": {
+				limit: 10,
+			},
+			"seller:limit:listing.gallery.count": {
+				limit: 8,
+			},
+		},
 		features: {},
 	},
 	"package:free": {
 		items: {
 			"common:item:agent.usage": {
 				amount: 30,
-				expiration: null,
+				expiration: inMonth,
 			},
 		},
 		limits: {
@@ -57,7 +71,7 @@ export const bundles: Record<
 			},
 			"common:item:agent.usage": {
 				amount: 150,
-				expiration: 31 * 24 * 60 * 60,
+				expiration: inMonth,
 			},
 		},
 		limits: {
@@ -76,7 +90,7 @@ export const bundles: Record<
 		items: {
 			"seller:item:listing.early-delivery": {
 				amount: 3,
-				expiration: null,
+				expiration: inMonth,
 			},
 			"common:item:token-small": {
 				amount: 150,
@@ -84,19 +98,42 @@ export const bundles: Record<
 			},
 			"common:item:agent.usage": {
 				amount: 120,
-				expiration: 31 * 24 * 60 * 60,
+				expiration: inMonth,
+			},
+			"seller:item:listing.mark": {
+				amount: 5,
+				expiration: inMonth,
+			},
+			"seller:item:listing.top": {
+				amount: 3,
+				expiration: inMonth,
+			},
+			"seller:item:listing.top-maxi": {
+				amount: 1,
+				expiration: inMonth,
 			},
 		},
-		limits: {},
+		limits: {
+			"seller:limit:listing.count": {
+				limit: 20,
+			},
+			"seller:limit:listing.gallery.count": {
+				limit: 12,
+			},
+		},
 		features: {
+			"seller:feature:brand": {},
 			"seller:feature:buyer.info": {},
+			"seller:feature:listing.info": {},
+			"seller:feature:payback": {},
+			"seller:feature:listing.longer-expiration": {},
 		},
 	},
 	"package:pro": {
 		items: {
 			"common:item:agent.usage": {
 				amount: 300,
-				expiration: 31 * 24 * 60 * 60,
+				expiration: inMonth,
 			},
 		},
 		limits: {},
@@ -106,7 +143,7 @@ export const bundles: Record<
 		items: {
 			"common:item:agent.usage": {
 				amount: 600,
-				expiration: 31 * 24 * 60 * 60,
+				expiration: inMonth,
 			},
 		},
 		limits: {},
