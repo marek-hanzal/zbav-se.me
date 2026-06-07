@@ -92,6 +92,14 @@ const CommonEnumSchema = z.enum([
 	 * Agent usage limit
 	 */
 	"common:item:agent.usage",
+    /**
+     * Support tickets a user can use 
+     */
+    "common:item:support",
+    /**
+     * Feature given to the first wave of users.
+     */
+    "common:feature:founder",
 ]);
 
 export const ResourceDefinitionEnumSchema = z
