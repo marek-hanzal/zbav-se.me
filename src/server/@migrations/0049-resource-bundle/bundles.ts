@@ -32,7 +32,7 @@ export const bundles: Record<
 	"package:free": {
 		items: {
 			"common:item:agent.usage": {
-				amount: 250_000,
+				amount: 30,
 				expiration: null,
 			},
 		},
@@ -56,7 +56,7 @@ export const bundles: Record<
 				expiration: null,
 			},
 			"common:item:agent.usage": {
-				amount: 1_000_000,
+				amount: 150,
 				expiration: 31 * 24 * 60 * 60,
 			},
 		},
@@ -83,7 +83,7 @@ export const bundles: Record<
 				expiration: null,
 			},
 			"common:item:agent.usage": {
-				amount: 750_000,
+				amount: 120,
 				expiration: 31 * 24 * 60 * 60,
 			},
 		},
@@ -95,7 +95,7 @@ export const bundles: Record<
 	"package:pro": {
 		items: {
 			"common:item:agent.usage": {
-				amount: 2_500_000,
+				amount: 300,
 				expiration: 31 * 24 * 60 * 60,
 			},
 		},
@@ -105,7 +105,7 @@ export const bundles: Record<
 	"package:master": {
 		items: {
 			"common:item:agent.usage": {
-				amount: 5_000_000,
+				amount: 600,
 				expiration: 31 * 24 * 60 * 60,
 			},
 		},
