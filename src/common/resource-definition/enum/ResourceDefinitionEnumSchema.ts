@@ -54,13 +54,6 @@ const BuyerEnumSchema = z.enum([
 	 */
 	"buyer:feature:listing.early-discovery",
 	/**
-	 * Early Diescovery
-	 *
-	 * This enables users to _discover_ listings early before others; basically it removes
-	 * synthetic availableAt in the future on listings.
-	 */
-	"buyer:limit:early-discovery",
-	/**
 	 * Enables access to more deep seller analysis data.
 	 */
 	"buyer:feature:seller.info",
