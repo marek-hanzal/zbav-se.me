@@ -131,13 +131,53 @@ export const bundles: Record<
 	},
 	"package:pro": {
 		items: {
+			"common:item:token": {
+				amount: 300,
+				expiration: null,
+			},
 			"common:item:agent.usage": {
 				amount: 300,
 				expiration: inMonth,
 			},
+			"seller:item:listing.early-delivery": {
+				amount: 6,
+				expiration: inMonth,
+			},
+			"seller:item:listing.mark": {
+				amount: 10,
+				expiration: inMonth,
+			},
+			"seller:item:listing.top": {
+				amount: 6,
+				expiration: inMonth,
+			},
+			"seller:item:listing.top-maxxi": {
+				amount: 3,
+				expiration: inMonth,
+			},
 		},
-		limits: {},
-		features: {},
+		limits: {
+			"buyer:limit:feed.count": {
+				limit: 20,
+			},
+			"seller:limit:listing.count": {
+				limit: 40,
+			},
+			"seller:limit:listing.gallery.count": {
+				limit: 20,
+			},
+		},
+		features: {
+			"buyer:feature:anti-topper": {},
+			"buyer:feature:history": {},
+			"buyer:feature:listing.early-discovery": {},
+			"buyer:feature:seller.info": {},
+			"seller:feature:brand": {},
+			"seller:feature:buyer.info": {},
+			"seller:feature:listing.longer-expiration": {},
+			"seller:feature:payback": {},
+			"seller:feature:listing.info": {},
+		},
 	},
 	"package:master": {
 		items: {
