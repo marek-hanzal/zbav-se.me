@@ -114,7 +114,14 @@ export const bundles: Record<
 	},
 	"extra:founders.promo": {
 		items: {},
-		limits: {},
+		limits: {
+			"seller:limit:listing.count": {
+				limit: 30,
+			},
+			"seller:limit:listing.gallery.count": {
+				limit: 20,
+			},
+		},
 		features: {},
 	},
 	"extra:founders.lifetime": {

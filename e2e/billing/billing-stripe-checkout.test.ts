@@ -509,12 +509,12 @@ test("Stripe checkout provisions buyer subscription with token upsell", async ({
 	expect(tokenItems).toEqual([
 		{
 			name: "package:buyer",
-			amount: "1.00",
+			amount: "150.00",
 			resourceDefinitionId: ResourceDefinitionEnumSchema.enum["common:item:token-small"],
 		},
 		{
 			name: bundleKey,
-			amount: "1.00",
+			amount: "150.00",
 			resourceDefinitionId: ResourceDefinitionEnumSchema.enum["common:item:token-small"],
 		},
 	]);

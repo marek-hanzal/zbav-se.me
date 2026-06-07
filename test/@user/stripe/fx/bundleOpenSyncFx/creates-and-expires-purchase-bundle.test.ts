@@ -148,15 +148,21 @@ describe("bundleOpenSyncFx", () => {
 			});
 			expect(purchaseItems).toEqual([
 				{
-					amount: "1.00",
+					amount: "150.00",
 					expiration: null,
 					resourceDefinitionId:
 						ResourceDefinitionEnumSchema.enum["common:item:token-small"],
 				},
+				{
+					amount: "1000000.00",
+					expiration: 31 * 24 * 60 * 60,
+					resourceDefinitionId:
+						ResourceDefinitionEnumSchema.enum["common:item:agent.usage"],
+				},
 			]);
 			expect(purchaseLimits).toEqual([
 				{
-					limit: "15.00",
+					limit: "10.00",
 					resourceDefinitionId:
 						ResourceDefinitionEnumSchema.enum["buyer:limit:feed.count"],
 				},
@@ -164,10 +170,25 @@ describe("bundleOpenSyncFx", () => {
 			expect(purchaseFeatures).toEqual([
 				{
 					resourceDefinitionId:
+						ResourceDefinitionEnumSchema.enum["buyer:feature:anti-topper"],
+				},
+				{
+					resourceDefinitionId:
+						ResourceDefinitionEnumSchema.enum["buyer:feature:history"],
+				},
+				{
+					resourceDefinitionId:
 						ResourceDefinitionEnumSchema.enum["buyer:feature:listing.early-discovery"],
+				},
+				{
+					resourceDefinitionId:
+						ResourceDefinitionEnumSchema.enum["buyer:feature:seller.info"],
 				},
 			]);
 			expect(itemSources).toEqual([
+				{
+					key,
+				},
 				{
 					key,
 				},
@@ -178,6 +199,15 @@ describe("bundleOpenSyncFx", () => {
 				},
 			]);
 			expect(featureSources).toEqual([
+				{
+					key,
+				},
+				{
+					key,
+				},
+				{
+					key,
+				},
 				{
 					key,
 				},
@@ -249,18 +279,18 @@ describe("bundleOpenSyncFx", () => {
 			expect(activeTokenItems).toEqual([
 				{
 					name: "package:buyer",
-					amount: "1.00",
+					amount: "150.00",
 					resourceDefinitionId:
 						ResourceDefinitionEnumSchema.enum["common:item:token-small"],
 				},
 				{
 					name: key,
-					amount: "1.00",
+					amount: "150.00",
 					resourceDefinitionId:
 						ResourceDefinitionEnumSchema.enum["common:item:token-small"],
 				},
 			]);
-			expect(tokenTotal).toBe(2);
+			expect(tokenTotal).toBe(300);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });
