@@ -2,10 +2,10 @@ import { Effect, Either } from "effect";
 import { DateTime } from "luxon";
 import Stripe from "stripe";
 import { describe, expect, it } from "vitest";
-import { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/ResourceDefinitionEnumSchema";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
+import { ResourceBundleEnumSchema } from "~/user/resource-bundle/server/schema/ResourceBundleEnumSchema";
 import { withStripeConfigFx } from "~/user/stripe/server/context/withStripeConfigFx";
 import { sessionSyncFx } from "~/user/stripe/server/fx/sync/sessionSyncFx";
 
@@ -36,7 +36,7 @@ describe("sessionSyncFx", () => {
 			const prices = await stripe.prices.list({
 				active: true,
 				lookup_keys: [
-					ResourceDefinitionEnumSchema.enum["common:item:token"],
+					ResourceBundleEnumSchema.enum["extra:token:small"],
 				],
 				limit: 2,
 			});
@@ -44,7 +44,7 @@ describe("sessionSyncFx", () => {
 
 			if (!price) {
 				throw new Error(
-					`Expected ${ResourceDefinitionEnumSchema.enum["common:item:token"]} Stripe price`,
+					`Expected ${ResourceBundleEnumSchema.enum["extra:token:small"]} Stripe price`,
 				);
 			}
 
@@ -120,7 +120,7 @@ describe("sessionSyncFx", () => {
 			const prices = await stripe.prices.list({
 				active: true,
 				lookup_keys: [
-					ResourceDefinitionEnumSchema.enum["common:item:token"],
+					ResourceBundleEnumSchema.enum["extra:token:small"],
 				],
 				limit: 2,
 			});
@@ -128,7 +128,7 @@ describe("sessionSyncFx", () => {
 
 			if (!price) {
 				throw new Error(
-					`Expected ${ResourceDefinitionEnumSchema.enum["common:item:token"]} Stripe price`,
+					`Expected ${ResourceBundleEnumSchema.enum["extra:token:small"]} Stripe price`,
 				);
 			}
 

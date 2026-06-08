@@ -148,13 +148,18 @@ describe("bundleOpenSyncFx", () => {
 			});
 			expect(purchaseItems).toEqual([
 				{
+					amount: "3.00",
+					expiresAt: null,
+					resourceDefinitionId: ResourceDefinitionEnumSchema.enum["common:item:support"],
+				},
+				{
 					amount: "150.00",
-					expiration: null,
+					expiresAt: null,
 					resourceDefinitionId: ResourceDefinitionEnumSchema.enum["common:item:token"],
 				},
 				{
 					amount: "150.00",
-					expiration: 30 * 24 * 60 * 60,
+					expiresAt: null,
 					resourceDefinitionId:
 						ResourceDefinitionEnumSchema.enum["common:item:agent.usage"],
 				},
@@ -164,6 +169,16 @@ describe("bundleOpenSyncFx", () => {
 					limit: "10.00",
 					resourceDefinitionId:
 						ResourceDefinitionEnumSchema.enum["buyer:limit:feed.count"],
+				},
+				{
+					limit: "10000.00",
+					resourceDefinitionId:
+						ResourceDefinitionEnumSchema.enum["common:limit:agent.token"],
+				},
+				{
+					limit: "1500000.00",
+					resourceDefinitionId:
+						ResourceDefinitionEnumSchema.enum["common:limit:agent.handbrake"],
 				},
 			]);
 			expect(purchaseFeatures).toEqual([
@@ -191,8 +206,17 @@ describe("bundleOpenSyncFx", () => {
 				{
 					key,
 				},
+				{
+					key,
+				},
 			]);
 			expect(limitSources).toEqual([
+				{
+					key,
+				},
+				{
+					key,
+				},
 				{
 					key,
 				},
@@ -286,8 +310,13 @@ describe("bundleOpenSyncFx", () => {
 					amount: "150.00",
 					resourceDefinitionId: ResourceDefinitionEnumSchema.enum["common:item:token"],
 				},
+				{
+					name: "welcome:founders:promo",
+					amount: "300.00",
+					resourceDefinitionId: ResourceDefinitionEnumSchema.enum["common:item:token"],
+				},
 			]);
-			expect(tokenTotal).toBe(300);
+			expect(tokenTotal).toBe(600);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });
