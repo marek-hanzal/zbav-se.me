@@ -1,8 +1,6 @@
 import type { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/ResourceDefinitionEnumSchema";
 import type { ResourceBundleEnumSchema } from "~/user/resource-bundle/server/schema/ResourceBundleEnumSchema";
 
-const inMonth = 30 * 24 * 60 * 60;
-
 export const bundles: Record<
 	ResourceBundleEnumSchema.Type,
 	{
@@ -11,7 +9,6 @@ export const bundles: Record<
 				ResourceDefinitionEnumSchema.Type,
 				{
 					amount: number;
-					expiration: number | null;
 				}
 			>
 		>;
@@ -34,11 +31,9 @@ export const bundles: Record<
 		items: {
 			"common:item:support": {
 				amount: 1,
-				expiration: inMonth,
 			},
 			"common:item:agent.usage": {
 				amount: 30,
-				expiration: inMonth,
 			},
 		},
 		limits: {
@@ -67,15 +62,12 @@ export const bundles: Record<
 		items: {
 			"common:item:support": {
 				amount: 3,
-				expiration: inMonth,
 			},
 			"common:item:token": {
 				amount: 150,
-				expiration: null,
 			},
 			"common:item:agent.usage": {
 				amount: 150,
-				expiration: inMonth,
 			},
 		},
 		limits: {
@@ -103,31 +95,24 @@ export const bundles: Record<
 		items: {
 			"common:item:support": {
 				amount: 3,
-				expiration: inMonth,
 			},
 			"seller:item:listing.early-delivery": {
 				amount: 3,
-				expiration: inMonth,
 			},
 			"common:item:token": {
 				amount: 150,
-				expiration: null,
 			},
 			"common:item:agent.usage": {
 				amount: 120,
-				expiration: inMonth,
 			},
 			"seller:item:listing.mark": {
 				amount: 5,
-				expiration: inMonth,
 			},
 			"seller:item:listing.top": {
 				amount: 3,
-				expiration: inMonth,
 			},
 			"seller:item:listing.top-maxxi": {
 				amount: 1,
-				expiration: inMonth,
 			},
 		},
 		limits: {
@@ -158,31 +143,24 @@ export const bundles: Record<
 		items: {
 			"common:item:support": {
 				amount: 5,
-				expiration: inMonth,
 			},
 			"common:item:token": {
 				amount: 300,
-				expiration: null,
 			},
 			"common:item:agent.usage": {
 				amount: 300,
-				expiration: inMonth,
 			},
 			"seller:item:listing.early-delivery": {
 				amount: 6,
-				expiration: inMonth,
 			},
 			"seller:item:listing.mark": {
 				amount: 10,
-				expiration: inMonth,
 			},
 			"seller:item:listing.top": {
 				amount: 6,
-				expiration: inMonth,
 			},
 			"seller:item:listing.top-maxxi": {
 				amount: 3,
-				expiration: inMonth,
 			},
 		},
 		limits: {
@@ -224,31 +202,24 @@ export const bundles: Record<
 		items: {
 			"common:item:support": {
 				amount: 10,
-				expiration: inMonth,
 			},
 			"common:item:token": {
 				amount: 1000,
-				expiration: null,
 			},
 			"common:item:agent.usage": {
 				amount: 1000,
-				expiration: inMonth,
 			},
 			"seller:item:listing.early-delivery": {
 				amount: 20,
-				expiration: inMonth,
 			},
 			"seller:item:listing.mark": {
 				amount: 30,
-				expiration: inMonth,
 			},
 			"seller:item:listing.top": {
 				amount: 15,
-				expiration: inMonth,
 			},
 			"seller:item:listing.top-maxxi": {
 				amount: 6,
-				expiration: inMonth,
 			},
 		},
 		limits: {
@@ -288,7 +259,6 @@ export const bundles: Record<
 		items: {
 			"common:item:token": {
 				amount: 149,
-				expiration: null,
 			},
 		},
 		limits: {},
@@ -298,7 +268,6 @@ export const bundles: Record<
 		items: {
 			"common:item:token": {
 				amount: 399,
-				expiration: null,
 			},
 		},
 		limits: {},
@@ -308,7 +277,6 @@ export const bundles: Record<
 		items: {
 			"common:item:token": {
 				amount: 999,
-				expiration: null,
 			},
 		},
 		limits: {},
@@ -318,7 +286,6 @@ export const bundles: Record<
 		items: {
 			"seller:item:listing.mark": {
 				amount: 10,
-				expiration: null,
 			},
 		},
 		limits: {},
@@ -328,7 +295,6 @@ export const bundles: Record<
 		items: {
 			"seller:item:listing.top": {
 				amount: 10,
-				expiration: null,
 			},
 		},
 		limits: {},
@@ -338,7 +304,6 @@ export const bundles: Record<
 		items: {
 			"seller:item:listing.top-maxxi": {
 				amount: 3,
-				expiration: null,
 			},
 		},
 		limits: {},
@@ -355,7 +320,6 @@ export const bundles: Record<
 		items: {
 			"seller:feature:listing.early-delivery": {
 				amount: 5,
-				expiration: null,
 			},
 		},
 		limits: {},
@@ -382,11 +346,9 @@ export const bundles: Record<
 		items: {
 			"common:item:agent.usage": {
 				amount: 75,
-				expiration: inMonth * 2,
 			},
 			"common:item:support": {
 				amount: 3,
-				expiration: inMonth * 2,
 			},
 		},
 		limits: {
@@ -412,31 +374,24 @@ export const bundles: Record<
 		items: {
 			"common:item:support": {
 				amount: 10,
-				expiration: inMonth,
 			},
 			"common:item:token": {
 				amount: 300,
-				expiration: null,
 			},
 			"common:item:agent.usage": {
 				amount: 500,
-				expiration: inMonth,
 			},
 			"seller:item:listing.early-delivery": {
 				amount: 10,
-				expiration: inMonth,
 			},
 			"seller:item:listing.mark": {
 				amount: 15,
-				expiration: inMonth,
 			},
 			"seller:item:listing.top": {
 				amount: 8,
-				expiration: inMonth,
 			},
 			"seller:item:listing.top-maxxi": {
 				amount: 3,
-				expiration: inMonth,
 			},
 		},
 		limits: {
