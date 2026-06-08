@@ -13,7 +13,10 @@ const ShopSearchSchema = z
 
 export const Route = createFileRoute("/$locale/app/shop")({
 	validateSearch: ShopSearchSchema,
-	async loader({ search }) {
+	loaderDeps({ search }) {
+		return search;
+	},
+	async loader({ deps: search }) {
 		if (search.stripe?.startsWith("success")) {
 			await checkoutReturnSyncFn({
 				data: {
