@@ -6,26 +6,26 @@ import { dbFx } from "~/server/database/fx/dbFx";
 export namespace bundleFeatureOpenSyncFx {
 	export interface Props {
 		sourceResourceBundleId: string;
-		purchaseResourceBundleId: string;
+		userResourceBundleId: string;
 		key: string;
 		createdAt: Date;
 	}
 }
 
 /**
- * Copies feature resources from the configured source bundle into one Stripe purchase
- * bundle and records which copied rows came from the Stripe bundle key.
+ * Copies feature templates from the configured source bundle into one user-facing
+ * Stripe purchase snapshot and records which copied rows came from the Stripe key.
  */
 export const bundleFeatureOpenSyncFx = Effect.fn("bundleFeatureOpenSyncFx")(function* ({
 	sourceResourceBundleId,
-	purchaseResourceBundleId,
+	userResourceBundleId,
 	key,
 	createdAt,
 }: bundleFeatureOpenSyncFx.Props) {
 	const logger = yield* getLoggerFx("bundleFeatureOpenSyncFx");
 	logger.trace("bundleFeatureOpenSyncFx", {
 		sourceResourceBundleId,
-		purchaseResourceBundleId,
+		userResourceBundleId,
 		key,
 	});
 
@@ -40,52 +40,30 @@ export const bundleFeatureOpenSyncFx = Effect.fn("bundleFeatureOpenSyncFx")(func
 		(sourceFeature) => {
 			return dbFx(async (kysely) => {
 				const feature = await kysely
-					.insertInto("resource_bundle_feature")
+					.insertInto("user_resource_bundle_feature")
 					.values({
 						id: genId(),
-						resourceBundleId: purchaseResourceBundleId,
+						userResourceBundleId,
 						resourceDefinitionId: sourceFeature.resourceDefinitionId,
+						createdAt,
+						availableAt: createdAt,
+						expiresAt: sourceFeature.expiresAt,
 					})
-					.onConflict((oc) => {
-						return oc
-							.columns([
-								"resourceBundleId",
-								"resourceDefinitionId",
-							])
-							.doNothing();
-					})
-					.returningAll()
-					.executeTakeFirst();
-
-				const resourceBundleFeatureId =
-					feature?.id ??
-					(
-						await kysely
-							.selectFrom("resource_bundle_feature")
-							.select("id")
-							.where("resourceBundleId", "=", purchaseResourceBundleId)
-							.where("resourceDefinitionId", "=", sourceFeature.resourceDefinitionId)
-							.executeTakeFirstOrThrow()
-					).id;
+					.returning([
+						"id",
+					])
+					.executeTakeFirstOrThrow();
 
 				return kysely
-					.insertInto("resource_bundle_feature_stripe")
+					.insertInto("user_resource_bundle_feature_stripe")
 					.values({
 						id: genId(),
-						resourceBundleFeatureId,
+						userResourceBundleFeatureId: feature.id,
 						key,
 						createdAt,
 					})
-					.onConflict((oc) => {
-						return oc
-							.columns([
-								"resourceBundleFeatureId",
-								"key",
-							])
-							.doNothing();
-					})
 					.execute();
-			}).pipe(Effect.ignore);
+			});
 		},
 		{
 			discard: true,

@@ -135,22 +135,28 @@ export const seedResourceLimitReadModelFx = (database: TestDatabase) =>
 					})
 					.execute();
 
-				await database.kysely
-					.insertInto("resource_bundle_limit")
-					.values({
-						id: genId(),
-						resourceBundleId,
-						resourceDefinitionId: seed.resourceDefinitionId,
-						limit: seed.limit,
-					})
-					.execute();
-
-				await database.kysely
+				const userResourceBundle = await database.kysely
 					.insertInto("user_resource_bundle")
 					.values({
 						id: genId(),
 						userId: seed.userId,
 						resourceBundleId,
+						createdAt: date(seed.createdAt),
+						availableAt: date(seed.availableAt),
+						expiresAt: seed.expiresAt ? date(seed.expiresAt) : null,
+					})
+					.returning([
+						"id",
+					])
+					.executeTakeFirstOrThrow();
+
+				await database.kysely
+					.insertInto("user_resource_bundle_limit")
+					.values({
+						id: genId(),
+						userResourceBundleId: userResourceBundle.id,
+						resourceDefinitionId: seed.resourceDefinitionId,
+						limit: seed.limit,
 						createdAt: date(seed.createdAt),
 						availableAt: date(seed.availableAt),
 						expiresAt: seed.expiresAt ? date(seed.expiresAt) : null,

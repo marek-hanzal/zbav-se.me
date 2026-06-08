@@ -4,17 +4,12 @@ import { dbFx } from "~/server/database/fx/dbFx";
 
 export namespace bundleFeatureCloseSyncFx {
 	export interface Props {
-		/**
-		 * Deterministic Stripe bundle key used by the open sync.
-		 */
+		/** Deterministic Stripe bundle key used by the open sync. */
 		key: string;
 	}
 }
 
-/**
- * Resolves purchase bundle IDs that were opened from feature resources for one Stripe
- * bundle key.
- */
+/** Resolves user bundle assignments opened from feature resources for one Stripe key. */
 export const bundleFeatureCloseSyncFx = Effect.fn("bundleFeatureCloseSyncFx")(function* ({
 	key,
 }: bundleFeatureCloseSyncFx.Props) {
@@ -25,10 +20,14 @@ export const bundleFeatureCloseSyncFx = Effect.fn("bundleFeatureCloseSyncFx")(fu
 
 	return yield* dbFx(async (kysely) => {
 		return kysely
-			.selectFrom("resource_bundle_feature_stripe as rbfs")
-			.innerJoin("resource_bundle_feature as rbf", "rbf.id", "rbfs.resourceBundleFeatureId")
-			.select("rbf.resourceBundleId")
-			.where("rbfs.key", "=", key)
+			.selectFrom("user_resource_bundle_feature_stripe as urbfs")
+			.innerJoin(
+				"user_resource_bundle_feature as urbf",
+				"urbf.id",
+				"urbfs.userResourceBundleFeatureId",
+			)
+			.select("urbf.userResourceBundleId")
+			.where("urbfs.key", "=", key)
 			.execute();
 	});
 });

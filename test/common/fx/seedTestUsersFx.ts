@@ -114,5 +114,93 @@ export const seedTestUsersFx = Effect.fn("seedTestUsersFx")(function* ({
 					.doNothing(),
 			)
 			.execute();
+
+		const [items, limits, features, assignments] = await Promise.all([
+			database.kysely
+				.selectFrom("resource_bundle_item")
+				.selectAll()
+				.where("resourceBundleId", "=", resourceBundle.id)
+				.execute(),
+			database.kysely
+				.selectFrom("resource_bundle_limit")
+				.selectAll()
+				.where("resourceBundleId", "=", resourceBundle.id)
+				.execute(),
+			database.kysely
+				.selectFrom("resource_bundle_feature")
+				.selectAll()
+				.where("resourceBundleId", "=", resourceBundle.id)
+				.execute(),
+			database.kysely
+				.selectFrom("user_resource_bundle")
+				.select([
+					"id",
+				])
+				.where(
+					"userId",
+					"in",
+					users.map((user) => user.id),
+				)
+				.where("resourceBundleId", "=", resourceBundle.id)
+				.execute(),
+		]);
+
+		for (const assignment of assignments) {
+			const existingSnapshot = await database.kysely
+				.selectFrom("user_resource_bundle_item")
+				.select([
+					"id",
+				])
+				.where("userResourceBundleId", "=", assignment.id)
+				.executeTakeFirst();
+
+			if (existingSnapshot) {
+				continue;
+			}
+
+			for (const item of items) {
+				await database.kysely
+					.insertInto("user_resource_bundle_item")
+					.values({
+						id: genId(),
+						userResourceBundleId: assignment.id,
+						resourceDefinitionId: item.resourceDefinitionId,
+						amount: item.amount,
+						createdAt: TEST_USER_RESOURCE_BUNDLE_AVAILABLE_AT,
+						availableAt: TEST_USER_RESOURCE_BUNDLE_AVAILABLE_AT,
+						expiresAt: item.expiresAt,
+					})
+					.execute();
+			}
+
+			for (const limit of limits) {
+				await database.kysely
+					.insertInto("user_resource_bundle_limit")
+					.values({
+						id: genId(),
+						userResourceBundleId: assignment.id,
+						resourceDefinitionId: limit.resourceDefinitionId,
+						limit: limit.limit,
+						createdAt: TEST_USER_RESOURCE_BUNDLE_AVAILABLE_AT,
+						availableAt: TEST_USER_RESOURCE_BUNDLE_AVAILABLE_AT,
+						expiresAt: limit.expiresAt,
+					})
+					.execute();
+			}
+
+			for (const feature of features) {
+				await database.kysely
+					.insertInto("user_resource_bundle_feature")
+					.values({
+						id: genId(),
+						userResourceBundleId: assignment.id,
+						resourceDefinitionId: feature.resourceDefinitionId,
+						createdAt: TEST_USER_RESOURCE_BUNDLE_AVAILABLE_AT,
+						availableAt: TEST_USER_RESOURCE_BUNDLE_AVAILABLE_AT,
+						expiresAt: feature.expiresAt,
+					})
+					.execute();
+			}
+		}
 	});
 });

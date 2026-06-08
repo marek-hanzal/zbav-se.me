@@ -42,9 +42,9 @@ export namespace bundleOpenSyncFx {
  * Materializes a one-off Stripe purchase as its own resource bundle.
  *
  * The important model decision is that one-off purchases do not mutate the user's
- * personal bundle. Each Stripe line item becomes a dedicated purchase bundle with
- * copied item/limit rows and a user_resource_bundle assignment. Rollback can then
- * expire that single assignment and kill exactly the resources created by the
+ * personal bundle. Each Stripe line item gets a dedicated purchase bundle, a
+ * user_resource_bundle assignment, and copied user-facing resource rows. Rollback
+ * can then expire that single assignment and kill exactly the resources created by the
  * purchase, without subtracting credits or guessing from current bundle config.
  */
 export const bundleOpenSyncFx = Effect.fn("bundleOpenSyncFx")(function* ({
@@ -83,21 +83,21 @@ export const bundleOpenSyncFx = Effect.fn("bundleOpenSyncFx")(function* ({
 				const { item, limit, feature } = yield* dbFx(async (kysely) => {
 					const [item, limit, feature] = await Promise.all([
 						kysely
-							.selectFrom("resource_bundle_item_stripe")
+							.selectFrom("user_resource_bundle_item_stripe")
 							.select([
 								"id",
 							])
 							.where("key", "=", key)
 							.executeTakeFirst(),
 						kysely
-							.selectFrom("resource_bundle_limit_stripe")
+							.selectFrom("user_resource_bundle_limit_stripe")
 							.select([
 								"id",
 							])
 							.where("key", "=", key)
 							.executeTakeFirst(),
 						kysely
-							.selectFrom("resource_bundle_feature_stripe")
+							.selectFrom("user_resource_bundle_feature_stripe")
 							.select([
 								"id",
 							])
@@ -171,8 +171,8 @@ export const bundleOpenSyncFx = Effect.fn("bundleOpenSyncFx")(function* ({
 						.executeTakeFirstOrThrow();
 				});
 
-				yield* dbFx(async (kysely) => {
-					return kysely
+				const userResourceBundle = yield* dbFx(async (kysely) => {
+					const current = await kysely
 						.insertInto("user_resource_bundle")
 						.values({
 							id: genId(),
@@ -193,26 +193,42 @@ export const bundleOpenSyncFx = Effect.fn("bundleOpenSyncFx")(function* ({
 									expiresAt: null,
 								});
 						})
-						.execute();
+						.returning([
+							"id",
+						])
+						.executeTakeFirst();
+
+					if (current) {
+						return current;
+					}
+
+					return kysely
+						.selectFrom("user_resource_bundle")
+						.select([
+							"id",
+						])
+						.where("userId", "=", userId)
+						.where("resourceBundleId", "=", purchaseBundle.id)
+						.executeTakeFirstOrThrow();
 				});
 
 				return yield* Effect.all(
 					[
 						bundleItemOpenSyncFx({
 							sourceResourceBundleId: resourceBundle.id,
-							purchaseResourceBundleId: purchaseBundle.id,
+							userResourceBundleId: userResourceBundle.id,
 							key,
 							createdAt,
 						}),
 						bundleLimitOpenSyncFx({
 							sourceResourceBundleId: resourceBundle.id,
-							purchaseResourceBundleId: purchaseBundle.id,
+							userResourceBundleId: userResourceBundle.id,
 							key,
 							createdAt,
 						}),
 						bundleFeatureOpenSyncFx({
 							sourceResourceBundleId: resourceBundle.id,
-							purchaseResourceBundleId: purchaseBundle.id,
+							userResourceBundleId: userResourceBundle.id,
 							key,
 							createdAt,
 						}),

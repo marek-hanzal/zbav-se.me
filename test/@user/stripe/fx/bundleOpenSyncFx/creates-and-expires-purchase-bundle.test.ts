@@ -56,6 +56,7 @@ describe("bundleOpenSyncFx", () => {
 				return database.kysely
 					.selectFrom("user_resource_bundle")
 					.select([
+						"id",
 						"availableAt",
 						"expiresAt",
 						"userId",
@@ -65,37 +66,37 @@ describe("bundleOpenSyncFx", () => {
 			});
 			const purchaseItems = yield* Effect.promise(() => {
 				return database.kysely
-					.selectFrom("resource_bundle_item")
+					.selectFrom("user_resource_bundle_item")
 					.select([
 						"amount",
 						"expiresAt",
 						"resourceDefinitionId",
 					])
-					.where("resourceBundleId", "=", purchaseBundle.id)
+					.where("userResourceBundleId", "=", purchaseAssignment.id)
 					.execute();
 			});
 			const purchaseLimits = yield* Effect.promise(() => {
 				return database.kysely
-					.selectFrom("resource_bundle_limit")
+					.selectFrom("user_resource_bundle_limit")
 					.select([
 						"limit",
 						"resourceDefinitionId",
 					])
-					.where("resourceBundleId", "=", purchaseBundle.id)
+					.where("userResourceBundleId", "=", purchaseAssignment.id)
 					.execute();
 			});
 			const purchaseFeatures = yield* Effect.promise(() => {
 				return database.kysely
-					.selectFrom("resource_bundle_feature")
+					.selectFrom("user_resource_bundle_feature")
 					.select([
 						"resourceDefinitionId",
 					])
-					.where("resourceBundleId", "=", purchaseBundle.id)
+					.where("userResourceBundleId", "=", purchaseAssignment.id)
 					.execute();
 			});
 			const itemSources = yield* Effect.promise(() => {
 				return database.kysely
-					.selectFrom("resource_bundle_item_stripe")
+					.selectFrom("user_resource_bundle_item_stripe")
 					.select([
 						"key",
 					])
@@ -104,7 +105,7 @@ describe("bundleOpenSyncFx", () => {
 			});
 			const featureSources = yield* Effect.promise(() => {
 				return database.kysely
-					.selectFrom("resource_bundle_feature_stripe")
+					.selectFrom("user_resource_bundle_feature_stripe")
 					.select([
 						"key",
 					])
@@ -113,7 +114,7 @@ describe("bundleOpenSyncFx", () => {
 			});
 			const limitSources = yield* Effect.promise(() => {
 				return database.kysely
-					.selectFrom("resource_bundle_limit_stripe")
+					.selectFrom("user_resource_bundle_limit_stripe")
 					.select([
 						"key",
 					])
@@ -141,7 +142,7 @@ describe("bundleOpenSyncFx", () => {
 				throw new Error("Expected duplicate Stripe grant to be skipped");
 			}
 			expect(duplicate.left._tag).toBe("SyncSkipErrorFx");
-			expect(purchaseAssignment).toEqual({
+			expect(purchaseAssignment).toMatchObject({
 				availableAt: createdAt,
 				expiresAt: null,
 				userId: buyer.id,
@@ -258,13 +259,29 @@ describe("bundleOpenSyncFx", () => {
 					.executeTakeFirstOrThrow();
 			});
 
-			yield* Effect.promise(() => {
-				return database.kysely
+			yield* Effect.promise(async () => {
+				const userResourceBundle = await database.kysely
 					.insertInto("user_resource_bundle")
 					.values({
 						id: genId(),
 						userId: buyer.id,
 						resourceBundleId: resourceBundle.id,
+						createdAt,
+						availableAt: createdAt,
+						expiresAt: null,
+					})
+					.returning([
+						"id",
+					])
+					.executeTakeFirstOrThrow();
+
+				await database.kysely
+					.insertInto("user_resource_bundle_item")
+					.values({
+						id: genId(),
+						userResourceBundleId: userResourceBundle.id,
+						resourceDefinitionId: "common:item:token",
+						amount: 150,
 						createdAt,
 						availableAt: createdAt,
 						expiresAt: null,
@@ -283,15 +300,20 @@ describe("bundleOpenSyncFx", () => {
 				return database.kysely
 					.selectFrom("user_resource_bundle as urb")
 					.innerJoin("resource_bundle as rb", "rb.id", "urb.resourceBundleId")
-					.innerJoin("resource_bundle_item as rbi", "rbi.resourceBundleId", "rb.id")
+					.innerJoin(
+						"user_resource_bundle_item as urbi",
+						"urbi.userResourceBundleId",
+						"urb.id",
+					)
 					.select([
 						"rb.name",
-						"rbi.amount",
-						"rbi.resourceDefinitionId",
+						"urbi.amount",
+						"urbi.resourceDefinitionId",
 					])
 					.where("urb.userId", "=", buyer.id)
 					.where("urb.expiresAt", "is", null)
-					.where("rbi.resourceDefinitionId", "=", "common:item:token")
+					.where("urbi.expiresAt", "is", null)
+					.where("urbi.resourceDefinitionId", "=", "common:item:token")
 					.orderBy("rb.name", "asc")
 					.execute();
 			});

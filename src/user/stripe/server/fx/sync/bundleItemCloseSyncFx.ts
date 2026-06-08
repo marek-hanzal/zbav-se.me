@@ -4,20 +4,12 @@ import { dbFx } from "~/server/database/fx/dbFx";
 
 export namespace bundleItemCloseSyncFx {
 	export interface Props {
-		/**
-		 * Deterministic Stripe bundle key used by the open sync.
-		 */
+		/** Deterministic Stripe bundle key used by the open sync. */
 		key: string;
 	}
 }
 
-/**
- * Resolves purchase bundle IDs that were opened from item resources for one Stripe
- * bundle key.
- *
- * Close sync expires the user_resource_bundle assignment, not the copied item rows.
- * This Fx only maps Stripe item rows back to the owning purchase bundles.
- */
+/** Resolves user bundle assignments opened from item resources for one Stripe key. */
 export const bundleItemCloseSyncFx = Effect.fn("bundleItemCloseSyncFx")(function* ({
 	key,
 }: bundleItemCloseSyncFx.Props) {
@@ -28,10 +20,14 @@ export const bundleItemCloseSyncFx = Effect.fn("bundleItemCloseSyncFx")(function
 
 	return yield* dbFx(async (kysely) => {
 		return kysely
-			.selectFrom("resource_bundle_item_stripe as rbis")
-			.innerJoin("resource_bundle_item as rbi", "rbi.id", "rbis.resourceBundleItemId")
-			.select("rbi.resourceBundleId")
-			.where("rbis.key", "=", key)
+			.selectFrom("user_resource_bundle_item_stripe as urbis")
+			.innerJoin(
+				"user_resource_bundle_item as urbi",
+				"urbi.id",
+				"urbis.userResourceBundleItemId",
+			)
+			.select("urbi.userResourceBundleId")
+			.where("urbis.key", "=", key)
 			.execute();
 	});
 });

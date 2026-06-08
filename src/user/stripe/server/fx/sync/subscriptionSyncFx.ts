@@ -8,6 +8,7 @@ import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { SyncSkipErrorFx } from "../../error/SyncSkipErrorFx";
 import { subscriptionFetchFx } from "../subscriptionFetchFx";
+import { userResourceBundleMaterializeFx } from "~/user/resource-bundle/server/fx/userResourceBundleMaterializeFx";
 
 export namespace subscriptionSyncFx {
 	export interface Props {
@@ -173,6 +174,63 @@ export const subscriptionSyncFx = Effect.fn("subscriptionSyncFx")(function* ({
 			})
 			.execute();
 	});
+
+	const snapshotExists = yield* dbFx(async (kysely) => {
+		const [item, limit, feature] = await Promise.all([
+			kysely
+				.selectFrom("user_resource_bundle_item")
+				.select([
+					"id",
+				])
+				.where("userResourceBundleId", "=", userResourceBundle.id)
+				.executeTakeFirst(),
+			kysely
+				.selectFrom("user_resource_bundle_limit")
+				.select([
+					"id",
+				])
+				.where("userResourceBundleId", "=", userResourceBundle.id)
+				.executeTakeFirst(),
+			kysely
+				.selectFrom("user_resource_bundle_feature")
+				.select([
+					"id",
+				])
+				.where("userResourceBundleId", "=", userResourceBundle.id)
+				.executeTakeFirst(),
+		]);
+
+		return Boolean(item || limit || feature);
+	});
+
+	if (isActive && !snapshotExists) {
+		yield* userResourceBundleMaterializeFx({
+			resourceBundleId: bundle.id,
+			userResourceBundleId: userResourceBundle.id,
+			createdAt: now,
+			availableAt: now,
+			limitExpiresAt: expiresAt,
+			featureExpiresAt: expiresAt,
+		});
+	} else if (snapshotExists) {
+		yield* dbFx(async (kysely) => {
+			await kysely
+				.updateTable("user_resource_bundle_limit")
+				.set({
+					expiresAt,
+				})
+				.where("userResourceBundleId", "=", userResourceBundle.id)
+				.execute();
+
+			return kysely
+				.updateTable("user_resource_bundle_feature")
+				.set({
+					expiresAt,
+				})
+				.where("userResourceBundleId", "=", userResourceBundle.id)
+				.execute();
+		});
+	}
 
 	return userResourceBundle;
 });

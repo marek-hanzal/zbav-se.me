@@ -6,30 +6,26 @@ import { dbFx } from "~/server/database/fx/dbFx";
 export namespace bundleLimitOpenSyncFx {
 	export interface Props {
 		sourceResourceBundleId: string;
-		purchaseResourceBundleId: string;
+		userResourceBundleId: string;
 		key: string;
 		createdAt: Date;
 	}
 }
 
 /**
- * Copies limit resources from the configured source bundle into one Stripe purchase
- * bundle and records which copied rows came from the Stripe bundle key.
- *
- * Limits default to replace semantics in the resource model, so replaying this Fx
- * for the same purchase bundle updates the concrete copied limit row and leaves the
- * Stripe mapping idempotent.
+ * Copies limit templates from the configured source bundle into one user-facing
+ * Stripe purchase snapshot and records which copied rows came from the Stripe key.
  */
 export const bundleLimitOpenSyncFx = Effect.fn("bundleLimitOpenSyncFx")(function* ({
 	sourceResourceBundleId,
-	purchaseResourceBundleId,
+	userResourceBundleId,
 	key,
 	createdAt,
 }: bundleLimitOpenSyncFx.Props) {
 	const logger = yield* getLoggerFx("bundleLimitOpenSyncFx");
 	logger.trace("bundleLimitOpenSyncFx", {
 		sourceResourceBundleId,
-		purchaseResourceBundleId,
+		userResourceBundleId,
 		key,
 	});
 
@@ -44,47 +40,31 @@ export const bundleLimitOpenSyncFx = Effect.fn("bundleLimitOpenSyncFx")(function
 		(sourceLimit) => {
 			return dbFx(async (kysely) => {
 				const limit = await kysely
-					.insertInto("resource_bundle_limit")
+					.insertInto("user_resource_bundle_limit")
 					.values({
 						id: genId(),
-						resourceBundleId: purchaseResourceBundleId,
+						userResourceBundleId,
 						resourceDefinitionId: sourceLimit.resourceDefinitionId,
 						limit: sourceLimit.limit,
+						createdAt,
+						availableAt: createdAt,
+						expiresAt: sourceLimit.expiresAt,
 					})
-					.onConflict((oc) =>
-						oc
-							.columns([
-								"resourceBundleId",
-								"resourceDefinitionId",
-							])
-							.doUpdateSet({
-								limit: sourceLimit.limit,
-							}),
-					)
-					.returningAll()
+					.returning([
+						"id",
+					])
 					.executeTakeFirstOrThrow();
 
 				return kysely
-					.insertInto("resource_bundle_limit_stripe")
+					.insertInto("user_resource_bundle_limit_stripe")
 					.values({
 						id: genId(),
-						resourceBundleLimitId: limit.id,
+						userResourceBundleLimitId: limit.id,
 						key,
 						createdAt,
 					})
-					.onConflict((oc) =>
-						oc
-							.columns([
-								"resourceBundleLimitId",
-								"key",
-							])
-							.doNothing(),
-					)
 					.execute();
-				/**
-				 * Ignore all the errors
-				 */
-			}).pipe(Effect.ignore);
+			});
 		},
 		{
 			discard: true,

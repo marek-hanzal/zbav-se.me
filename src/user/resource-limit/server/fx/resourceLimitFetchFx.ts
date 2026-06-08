@@ -24,7 +24,7 @@ export const resourceLimitFetchFx = Effect.fn("resourceLimitFetchFx")(function* 
 	});
 
 	return yield* withFetchFx({
-		resource: "resource_bundle_limit",
+		resource: "user_resource_bundle_limit",
 		selectFx: withResourceLimitSelectFx({
 			sort,
 		}),

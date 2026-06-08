@@ -54,21 +54,28 @@ describe("draftPatchFx gallery limit", () => {
 						name: `Draft gallery limit ${limitSeed.bundleId}`,
 					})
 					.execute();
-				await database.kysely
-					.insertInto("resource_bundle_limit")
-					.values({
-						id: genId(),
-						resourceBundleId: limitSeed.bundleId,
-						resourceDefinitionId: "seller:limit:listing.gallery.count",
-						limit: GALLERY_LIMIT,
-					})
-					.execute();
-				await database.kysely
+				const userResourceBundle = await database.kysely
 					.insertInto("user_resource_bundle")
 					.values({
 						id: genId(),
 						userId: seller.id,
 						resourceBundleId: limitSeed.bundleId,
+						createdAt: limitSeed.createdAt,
+						availableAt: limitSeed.now,
+						expiresAt: null,
+					})
+					.returning([
+						"id",
+					])
+					.executeTakeFirstOrThrow();
+
+				await database.kysely
+					.insertInto("user_resource_bundle_limit")
+					.values({
+						id: genId(),
+						userResourceBundleId: userResourceBundle.id,
+						resourceDefinitionId: "seller:limit:listing.gallery.count",
+						limit: GALLERY_LIMIT,
 						createdAt: limitSeed.createdAt,
 						availableAt: limitSeed.now,
 						expiresAt: null,

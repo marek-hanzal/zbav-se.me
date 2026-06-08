@@ -26,32 +26,32 @@ export const withResourceLimitSelectFx = Effect.fn("withResourceLimitSelectFx")(
 	const now = dateService.now().toJSDate();
 
 	let query = kysely
-		.selectFrom("user_resource_bundle as urb")
-		.innerJoin("resource_bundle_limit as rbl", "rbl.resourceBundleId", "urb.resourceBundleId")
+		.selectFrom("user_resource_bundle_limit as urbl")
+		.innerJoin("user_resource_bundle as urb", "urb.id", "urbl.userResourceBundleId")
 		.select([
-			"rbl.id",
-			"rbl.resourceDefinitionId",
-			"urb.createdAt",
-			"urb.availableAt",
-			"urb.expiresAt",
-			sql<number>`rbl.limit::float8`.as("limit"),
+			"urbl.id",
+			"urbl.resourceDefinitionId",
+			"urbl.createdAt",
+			"urbl.availableAt",
+			"urbl.expiresAt",
+			sql<number>`urbl.limit::float8`.as("limit"),
 		])
-		.where("urb.availableAt", "<=", now)
+		.where("urbl.availableAt", "<=", now)
 		.where((eb) => {
 			return eb.or([
-				eb("urb.expiresAt", "is", null),
-				eb("urb.expiresAt", ">", now),
+				eb("urbl.expiresAt", "is", null),
+				eb("urbl.expiresAt", ">", now),
 			]);
 		});
 
 	for (const item of sort) {
 		query = match(item.field)
-			.with("availableAt", () => query.orderBy("urb.availableAt", item.order))
-			.with("createdAt", () => query.orderBy("urb.createdAt", item.order))
-			.with("expiresAt", () => query.orderBy("urb.expiresAt", item.order))
-			.with("limit", () => query.orderBy("rbl.limit", item.order))
+			.with("availableAt", () => query.orderBy("urbl.availableAt", item.order))
+			.with("createdAt", () => query.orderBy("urbl.createdAt", item.order))
+			.with("expiresAt", () => query.orderBy("urbl.expiresAt", item.order))
+			.with("limit", () => query.orderBy("urbl.limit", item.order))
 			.with("resourceDefinitionId", () =>
-				query.orderBy("rbl.resourceDefinitionId", item.order),
+				query.orderBy("urbl.resourceDefinitionId", item.order),
 			)
 			.exhaustive();
 	}
@@ -67,7 +67,7 @@ export const withResourceLimitSelectFx = Effect.fn("withResourceLimitSelectFx")(
 				}
 
 				if (where.id) {
-					query = query.where("rbl.id", "=", where.id);
+					query = query.where("urbl.id", "=", where.id);
 				}
 
 				if (where.userId) {
@@ -76,7 +76,7 @@ export const withResourceLimitSelectFx = Effect.fn("withResourceLimitSelectFx")(
 
 				if (where.resourceDefinitionId) {
 					query = query.where(
-						"rbl.resourceDefinitionId",
+						"urbl.resourceDefinitionId",
 						"=",
 						where.resourceDefinitionId,
 					);
@@ -84,7 +84,7 @@ export const withResourceLimitSelectFx = Effect.fn("withResourceLimitSelectFx")(
 
 				if (where.resourceDefinitionIdIn && where.resourceDefinitionIdIn.length > 0) {
 					query = query.where(
-						"rbl.resourceDefinitionId",
+						"urbl.resourceDefinitionId",
 						"in",
 						where.resourceDefinitionIdIn,
 					);

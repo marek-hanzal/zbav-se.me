@@ -24,9 +24,9 @@ export namespace bundleCloseSyncFx {
 /**
  * Expires all local resources created by one Stripe one-off purchase.
  *
- * The resource rows themselves do not carry expiresAt. The active/inactive switch is
- * the user_resource_bundle assignment, so rollback only needs to find the purchase
- * bundle through Stripe mapping rows and expire that assignment.
+ * Refund/rollback is a hard stop: expire the assignment and every user-facing
+ * snapshot row created under it. Parent expiry is not implicit resource expiry,
+ * so the child rows are updated deliberately here.
  */
 export const bundleCloseSyncFx = Effect.fn("bundleCloseSyncFx")(function* ({
 	key,
@@ -62,15 +62,15 @@ export const bundleCloseSyncFx = Effect.fn("bundleCloseSyncFx")(function* ({
 					key,
 				}),
 			]);
-			const bundleIds = [
+			const userResourceBundleIds = [
 				...new Set([
-					...items.map((item) => item.resourceBundleId),
-					...limits.map((limit) => limit.resourceBundleId),
-					...features.map((feature) => feature.resourceBundleId),
+					...items.map((item) => item.userResourceBundleId),
+					...limits.map((limit) => limit.userResourceBundleId),
+					...features.map((feature) => feature.userResourceBundleId),
 				]),
 			];
 
-			if (bundleIds.length === 0) {
+			if (userResourceBundleIds.length === 0) {
 				return yield* new NotFoundErrorFx({
 					resource: "stripe-one-off-purchase-bundle",
 					resourceId: key,
@@ -79,12 +79,36 @@ export const bundleCloseSyncFx = Effect.fn("bundleCloseSyncFx")(function* ({
 			}
 
 			yield* dbFx(async (kysely) => {
-				return kysely
+				await kysely
 					.updateTable("user_resource_bundle")
 					.set({
 						expiresAt,
 					})
-					.where("resourceBundleId", "in", bundleIds)
+					.where("id", "in", userResourceBundleIds)
+					.execute();
+
+				await kysely
+					.updateTable("user_resource_bundle_item")
+					.set({
+						expiresAt,
+					})
+					.where("userResourceBundleId", "in", userResourceBundleIds)
+					.execute();
+
+				await kysely
+					.updateTable("user_resource_bundle_limit")
+					.set({
+						expiresAt,
+					})
+					.where("userResourceBundleId", "in", userResourceBundleIds)
+					.execute();
+
+				return kysely
+					.updateTable("user_resource_bundle_feature")
+					.set({
+						expiresAt,
+					})
+					.where("userResourceBundleId", "in", userResourceBundleIds)
 					.execute();
 			});
 

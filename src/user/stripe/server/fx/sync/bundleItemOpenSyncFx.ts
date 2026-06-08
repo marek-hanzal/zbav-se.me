@@ -6,30 +6,26 @@ import { dbFx } from "~/server/database/fx/dbFx";
 export namespace bundleItemOpenSyncFx {
 	export interface Props {
 		sourceResourceBundleId: string;
-		purchaseResourceBundleId: string;
+		userResourceBundleId: string;
 		key: string;
 		createdAt: Date;
 	}
 }
 
 /**
- * Copies item resources from the configured source bundle into one Stripe purchase
- * bundle and records which copied rows came from the Stripe bundle key.
- *
- * This Fx intentionally performs the source read inside the Effect.forEach input.
- * The source rows are only meaningful for this copy pass, so keeping the read next
- * to the write makes the one-off bundle path easier to audit.
+ * Copies item templates from the configured source bundle into one user-facing
+ * Stripe purchase snapshot and records which copied rows came from the Stripe key.
  */
 export const bundleItemOpenSyncFx = Effect.fn("bundleItemOpenSyncFx")(function* ({
 	sourceResourceBundleId,
-	purchaseResourceBundleId,
+	userResourceBundleId,
 	key,
 	createdAt,
 }: bundleItemOpenSyncFx.Props) {
 	const logger = yield* getLoggerFx("bundleItemOpenSyncFx");
 	logger.trace("bundleItemOpenSyncFx", {
 		sourceResourceBundleId,
-		purchaseResourceBundleId,
+		userResourceBundleId,
 		key,
 	});
 
@@ -44,49 +40,31 @@ export const bundleItemOpenSyncFx = Effect.fn("bundleItemOpenSyncFx")(function* 
 		(sourceItem) => {
 			return dbFx(async (kysely) => {
 				const item = await kysely
-					.insertInto("resource_bundle_item")
+					.insertInto("user_resource_bundle_item")
 					.values({
 						id: genId(),
-						resourceBundleId: purchaseResourceBundleId,
+						userResourceBundleId,
 						resourceDefinitionId: sourceItem.resourceDefinitionId,
 						amount: sourceItem.amount,
+						createdAt,
+						availableAt: createdAt,
 						expiresAt: sourceItem.expiresAt,
 					})
-					.onConflict((oc) => {
-						return oc
-							.columns([
-								"resourceBundleId",
-								"resourceDefinitionId",
-							])
-							.doUpdateSet({
-								amount: sourceItem.amount,
-								expiresAt: sourceItem.expiresAt,
-							});
-					})
-					.returningAll()
+					.returning([
+						"id",
+					])
 					.executeTakeFirstOrThrow();
 
 				return kysely
-					.insertInto("resource_bundle_item_stripe")
+					.insertInto("user_resource_bundle_item_stripe")
 					.values({
 						id: genId(),
-						resourceBundleItemId: item.id,
+						userResourceBundleItemId: item.id,
 						key,
 						createdAt,
 					})
-					.onConflict((oc) => {
-						return oc
-							.columns([
-								"resourceBundleItemId",
-								"key",
-							])
-							.doNothing();
-					})
 					.execute();
-				/**
-				 * Ignore all errors, keep going
-				 */
-			}).pipe(Effect.ignore);
+			});
 		},
 		{
 			discard: true,
