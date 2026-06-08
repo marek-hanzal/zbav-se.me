@@ -9,7 +9,6 @@ export const ResourceBundleItemMigration: Migration = {
 			.addColumn("resourceBundleId", "text", (col) => col.notNull())
 			.addColumn("resourceDefinitionId", "text", (col) => col.notNull())
 			.addColumn("amount", "decimal(10, 2)", (col) => col.notNull())
-			.addColumn("expiresAt", "timestamptz")
 			.addForeignKeyConstraint(
 				"rbi_[rbId]_fk",
 				[

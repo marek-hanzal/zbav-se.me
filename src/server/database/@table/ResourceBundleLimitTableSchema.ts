@@ -16,9 +16,6 @@ export const ResourceBundleLimitTableSchema = z
 			description: "Limit value defined by the resource bundle",
 			type: "number",
 		}),
-		expiresAt: z.coerce.date().nullish().meta({
-			description: "Optional expiration date of this resource template row",
-		}),
 	})
 	.meta({
 		id: "ResourceBundleLimitTable",

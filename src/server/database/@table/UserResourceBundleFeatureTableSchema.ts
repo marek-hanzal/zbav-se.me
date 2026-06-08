@@ -20,7 +20,7 @@ export const UserResourceBundleFeatureTableSchema = z
 			description: "Timestamp when this feature becomes active",
 			type: "string",
 		}),
-		expiresAt: z.coerce.date().nullish().meta({
+		expiresAt: z.coerce.date().nullable().meta({
 			description:
 				"Timestamp when this feature stops being active; null means it does not expire",
 			type: "string",

@@ -24,7 +24,7 @@ export const UserResourceBundleItemTableSchema = z
 			description: "Timestamp when this item becomes active",
 			type: "string",
 		}),
-		expiresAt: z.coerce.date().nullish().meta({
+		expiresAt: z.coerce.date().nullable().meta({
 			description:
 				"Timestamp when this item stops being active; null means it does not expire",
 			type: "string",

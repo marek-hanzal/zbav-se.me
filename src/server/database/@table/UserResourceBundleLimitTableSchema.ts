@@ -24,7 +24,7 @@ export const UserResourceBundleLimitTableSchema = z
 			description: "Timestamp when this limit becomes active",
 			type: "string",
 		}),
-		expiresAt: z.coerce.date().nullish().meta({
+		expiresAt: z.coerce.date().nullable().meta({
 			description:
 				"Timestamp when this limit stops being active; null means it does not expire",
 			type: "string",
