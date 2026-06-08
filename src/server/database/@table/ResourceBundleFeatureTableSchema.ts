@@ -12,6 +12,9 @@ export const ResourceBundleFeatureTableSchema = z
 		resourceDefinitionId: ResourceDefinitionEnumSchema.meta({
 			description: "Referenced resource definition name",
 		}),
+		expiresAt: z.coerce.date().nullish().meta({
+			description: "Optional expiration date of this item",
+		}),
 	})
 	.meta({
 		id: "ResourceBundleFeatureTable",
