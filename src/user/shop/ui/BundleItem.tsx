@@ -21,68 +21,8 @@ export namespace BundleItem {
 	}
 }
 
-const fallbackDescription = (bundle: BundleSchema.Type) => {
-	switch (bundle.bundle) {
-		case "package:buyer":
-			return "Méně šumu pro nakupování: feedy, early discovery kupóny a tokeny na rozšíření.";
-		case "package:seller":
-			return "Nástroje pro prodej: více inzerátů, fotky, zvýraznění, data a brand.";
-		case "package:pro":
-			return "Kupující i prodejce v jednom: nejvíc limitů, passů a pohodlí bez cirkusu.";
-		case "package:master":
-			return "Nejvyšší balíček pro podporu projektu a maximum dostupných nástrojů.";
-		default:
-			return "Předplatné pro pohodlnější používání Zbav-se.me.";
-	}
-};
-
-const resourceLabel = (resource: string) => {
-	switch (resource) {
-		case "common:item:token":
-			return "Tokeny";
-		case "common:item:agent.usage":
-			return "Použití asistenta";
-		case "common:item:support":
-			return "Support";
-		case "common:feature:founder":
-			return "Founders";
-		case "buyer:limit:feed.count":
-			return "Uložené feedy";
-		case "seller:limit:listing.count":
-			return "Aktivní inzeráty";
-		case "seller:limit:listing.gallery.count":
-			return "Fotky u inzerátu";
-		case "buyer:feature:listing.early-discovery":
-			return "Early Discovery";
-		case "buyer:feature:seller.info":
-			return "Detail prodejce";
-		case "buyer:feature:anti-topper":
-			return "Anti-topper";
-		case "buyer:feature:history":
-			return "Historie trhu";
-		case "seller:feature:buyer.info":
-			return "Detail kupujícího";
-		case "seller:feature:brand":
-			return "Brand";
-		case "seller:feature:listing.info":
-			return "Rozšířená data";
-		case "seller:feature:listing.longer-expiration":
-			return "Delší expirace";
-		case "seller:feature:payback":
-			return "Payback";
-		case "seller:feature:listing.early-delivery":
-			return "Early Delivery";
-		case "seller:item:listing.early-delivery":
-			return "Early Delivery kupón";
-		case "seller:item:listing.mark":
-			return "Mark kupón";
-		case "seller:item:listing.top":
-			return "Top kupón";
-		case "seller:item:listing.top-maxxi":
-			return "Top Maxxi kupón";
-		default:
-			return resource;
-	}
+const isHumanStripeDescription = (description: string) => {
+	return description.length > 0 && !description.startsWith("bundle=");
 };
 
 export const BundleItem: FC<BundleItem.Props> = ({ bundle, ...props }) => {
@@ -93,9 +33,9 @@ export const BundleItem: FC<BundleItem.Props> = ({ bundle, ...props }) => {
 		bundle: bundle.bundle,
 	});
 	const stripeDescription = bundle.description?.trim() || "";
-	const description = stripeDescription.startsWith("bundle=")
-		? fallbackDescription(bundle)
-		: stripeDescription || fallbackDescription(bundle);
+	const description = isHumanStripeDescription(stripeDescription)
+		? stripeDescription
+		: translator.text(`Resource bundle - ${bundle.bundle} (description)`);
 	const price = (
 		<PriceInline
 			price={bundle.price / 100}
@@ -103,6 +43,9 @@ export const BundleItem: FC<BundleItem.Props> = ({ bundle, ...props }) => {
 			currency={bundle.currency.toUpperCase()}
 		/>
 	);
+	const resourceLabel = (resourceDefinitionId: string) => {
+		return translator.text(`Resource definition - ${resourceDefinitionId} (label)`);
+	};
 
 	return (
 		<Container
@@ -124,58 +67,59 @@ export const BundleItem: FC<BundleItem.Props> = ({ bundle, ...props }) => {
 				data-ui-shadow={true}
 				data-ui-round="xl"
 				data-ui-inner="default"
-				data-ui-flow="vertical"
-				data-ui-items="stretch"
+				data-ui-flow="horizontal"
+				data-ui-items="center"
+				data-ui-justify="space-between"
 				data-ui-gap="default"
+				iconEnabled={ChevronRightIcon}
+				iconPosition="right"
+				iconProps={{
+					"data-ui-text": "xl",
+				}}
 				onClick={() => {
 					setIsOpen(true);
 				}}
 			>
 				<Container
-					data-ui-layout="horizontal"
-					data-ui-items="start"
-					data-ui-justify="space-between"
-					data-ui-gap="default"
+					data-ui-layout="vertical-flex"
+					data-ui-gap="sm"
 					data-ui-width="full"
+					className="min-w-0 flex-1 text-left"
 				>
 					<Container
-						data-ui-layout="vertical"
-						data-ui-gap="xs"
+						data-ui-flow="horizontal"
+						data-ui-items="center"
+						data-ui-justify="space-between"
+						data-ui-gap="default"
+						data-ui-width="full"
 					>
 						<Typo
 							label={bundle.name}
 							preset="subheader"
+							data-ui-truncate
+							className="min-w-0"
 						/>
 						<Typo
-							label={description}
-							data-ui-opacity="7"
-							data-ui-text="sm"
+							label={price}
+							data-ui-font="bold"
+							className="shrink-0 whitespace-nowrap"
 						/>
 					</Container>
 
-					<Icon
-						icon={ChevronRightIcon}
-						data-ui-text="xl"
-					/>
-				</Container>
-
-				<Container
-					data-ui-layout="horizontal"
-					data-ui-items="center"
-					data-ui-justify="space-between"
-					data-ui-gap="default"
-					data-ui-width="full"
-				>
 					<Typo
-						label={price}
-						data-ui-font="bold"
+						label={description}
+						data-ui-opacity="7"
+						data-ui-text="sm"
+						data-ui-wrap="wrap"
 					/>
+
 					{isActive ? (
 						<Typo
-							label={translator.text("Active", "Active")}
+							label={translator.text("Active")}
 							data-ui={"BundleItem-[Active]"}
 							data-ui-color="lead"
 							data-ui-font="bold"
+							data-ui-text="sm"
 						/>
 					) : null}
 				</Container>
@@ -189,6 +133,9 @@ export const BundleItem: FC<BundleItem.Props> = ({ bundle, ...props }) => {
 				}}
 				detent="default"
 				withHeader
+				contentProps={{
+					className: "h-full min-h-0 overflow-hidden",
+				}}
 				header={({ close }) => ({
 					title: bundle.name,
 					right: <CloseButton onClick={close} />,
@@ -196,25 +143,27 @@ export const BundleItem: FC<BundleItem.Props> = ({ bundle, ...props }) => {
 			>
 				<Container
 					data-ui="BundleItem-[SheetContent]"
-					data-ui-layout="vertical"
+					data-ui-layout="vertical-flex"
 					data-ui-gap="default"
 					data-ui-inner="default"
+					data-ui-height="full"
 					data-ui-scroll="vertical"
+					className="pb-6"
 				>
 					<LabelValue
-						textLabel={translator.text("Price (label)", "Cena")}
+						textLabel="Price (label)"
 						textValue={price}
 					/>
 
 					<LabelValue
-						textLabel={translator.text("Description (label)", "Popis")}
-						textValue={description}
+						textLabel="Description (label)"
+						textValue={<Typo label={description} />}
 					/>
 
 					<ValueList
 						data-ui={"BundleItem-[Items]"}
-						textLabel={translator.text("Bundle items (label)", "Items")}
-						textEmpty={translator.text("Bundle items empty", "No items")}
+						textLabel="Bundle items (label)"
+						textEmpty="Bundle items empty"
 						items={bundle.items}
 						renderFn={(item) => (
 							<Typo
@@ -225,8 +174,8 @@ export const BundleItem: FC<BundleItem.Props> = ({ bundle, ...props }) => {
 
 					<ValueList
 						data-ui={"BundleItem-[Limits]"}
-						textLabel={translator.text("Bundle limits (label)", "Limits")}
-						textEmpty={translator.text("Bundle limits empty", "No limits")}
+						textLabel="Bundle limits (label)"
+						textEmpty="Bundle limits empty"
 						items={bundle.limits}
 						renderFn={(limit) => (
 							<Typo
@@ -237,8 +186,8 @@ export const BundleItem: FC<BundleItem.Props> = ({ bundle, ...props }) => {
 
 					<ValueList
 						data-ui={"BundleItem-[Features]"}
-						textLabel={translator.text("Bundle features (label)", "Features")}
-						textEmpty={translator.text("Bundle features empty", "No features")}
+						textLabel="Bundle features (label)"
+						textEmpty="Bundle features empty"
 						items={bundle.features}
 						renderFn={(feature) => (
 							<Typo label={resourceLabel(feature.resourceDefinitionId)} />
@@ -248,7 +197,7 @@ export const BundleItem: FC<BundleItem.Props> = ({ bundle, ...props }) => {
 					{isActive ? (
 						<Container
 							data-ui="BundleItem-[ActiveNotice]"
-							data-ui-layout="horizontal"
+							data-ui-layout="horizontal-flex"
 							data-ui-items="center"
 							data-ui-gap="sm"
 							data-ui-inner="default"
@@ -260,10 +209,7 @@ export const BundleItem: FC<BundleItem.Props> = ({ bundle, ...props }) => {
 								data-ui-text="xl"
 							/>
 							<Typo
-								label={translator.text(
-									"Subscription active (message)",
-									"Tohle předplatné teď běží. Zrušení zastaví další obnovu, aktuální období doběhne.",
-								)}
+								label={translator.text("Subscription active (message)")}
 								data-ui-text="sm"
 							/>
 						</Container>
