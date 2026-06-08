@@ -2,6 +2,7 @@ import { Effect } from "effect";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
+import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 
 export namespace subscriptionBundleUpsertFx {
 	export interface Props {
@@ -31,52 +32,56 @@ export const subscriptionBundleUpsertFx = Effect.fn("subscriptionBundleUpsertFx"
 		expiresAt,
 	});
 
-	const assignment = yield* dbFx(async (kysely) => {
-		return kysely
-			.insertInto("user_resource_bundle")
-			.values({
-				id: genId(),
-				userId,
-				resourceBundleId: bundleId,
-				createdAt,
-				availableAt,
-				expiresAt,
-			})
-			.onConflict((oc) => {
-				return oc
-					.columns([
-						"userId",
-						"resourceBundleId",
-					])
-					.doUpdateSet({
+	return yield* withTransactionFx(
+		Effect.gen(function* () {
+			const assignment = yield* dbFx(async (kysely) => {
+				return kysely
+					.insertInto("user_resource_bundle")
+					.values({
+						id: genId(),
+						userId,
+						resourceBundleId: bundleId,
+						createdAt,
 						availableAt,
 						expiresAt,
-					});
-			})
-			.returning([
-				"id",
-			])
-			.executeTakeFirstOrThrow();
-	});
+					})
+					.onConflict((oc) => {
+						return oc
+							.columns([
+								"userId",
+								"resourceBundleId",
+							])
+							.doUpdateSet({
+								availableAt,
+								expiresAt,
+							});
+					})
+					.returning([
+						"id",
+					])
+					.executeTakeFirstOrThrow();
+			});
 
-	yield* dbFx(async (kysely) => {
-		return kysely
-			.insertInto("user_resource_bundle_stripe")
-			.values({
-				id: genId(),
-				userResourceBundleId: assignment.id,
-				subscriptionId: subscriptionId,
-				createdAt,
-			})
-			.onConflict((oc) => {
-				return oc.column("userResourceBundleId").doUpdateSet({
-					subscriptionId: subscriptionId,
-				});
-			})
-			.execute();
-	});
+			yield* dbFx(async (kysely) => {
+				return kysely
+					.insertInto("user_resource_bundle_stripe")
+					.values({
+						id: genId(),
+						userResourceBundleId: assignment.id,
+						subscriptionId,
+						createdAt,
+					})
+					.onConflict((oc) => {
+						return oc.column("userResourceBundleId").doUpdateSet({
+							subscriptionId,
+						});
+					})
+					.execute();
+			});
 
-	return assignment;
+			return assignment;
+		}),
+	);
 });
 
 export type subscriptionBundleUpsertFx = ReturnType<typeof subscriptionBundleUpsertFx>;

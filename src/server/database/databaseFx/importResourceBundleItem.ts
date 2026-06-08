@@ -16,7 +16,6 @@ export const importResourceBundleItem: withDatabaseFx.Import<Database> = {
 						resourceDefinitionId:
 							resourceDefinitionId as ResourceDefinitionEnumSchema.Type,
 						amount: item.amount,
-						expiresAt: null,
 					} as const;
 				});
 			},
@@ -58,7 +57,6 @@ export const importResourceBundleItem: withDatabaseFx.Import<Database> = {
 				resourceBundleId,
 				resourceDefinitionId: item.resourceDefinitionId,
 				amount: item.amount,
-				expiresAt: item.expiresAt,
 			} as const;
 		});
 
@@ -73,7 +71,6 @@ export const importResourceBundleItem: withDatabaseFx.Import<Database> = {
 					])
 					.doUpdateSet((eb) => ({
 						amount: eb.ref("excluded.amount"),
-						expiresAt: eb.ref("excluded.expiresAt"),
 					}));
 			})
 			.execute();

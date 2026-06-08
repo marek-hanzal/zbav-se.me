@@ -2,6 +2,7 @@ import { Effect } from "effect";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
+import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 
 export namespace userBundleItemCopyFx {
 	export interface Props {
@@ -11,7 +12,7 @@ export namespace userBundleItemCopyFx {
 		assignmentId: string;
 		createdAt: Date;
 		availableAt: Date;
-		/** undefined copies template expiry, null writes non-expiring rows. */
+		/** Concrete snapshot expiration; null/undefined writes non-expiring rows. */
 		expiresAt?: Date | null;
 		/** Optional Stripe provenance key for copied rows. */
 		stripeKey?: string;
@@ -34,50 +35,56 @@ export const userBundleItemCopyFx = Effect.fn("userBundleItemCopyFx")(function* 
 		stripeKey,
 	});
 
-	return yield* Effect.forEach(
-		yield* dbFx(async (kysely) => {
-			return kysely
-				.selectFrom("resource_bundle_item")
-				.selectAll()
-				.where("resourceBundleId", "=", bundleId)
-				.execute();
-		}),
-		(item) => {
-			return dbFx(async (kysely) => {
-				const row = await kysely
-					.insertInto("user_resource_bundle_item")
-					.values({
-						id: genId(),
-						userResourceBundleId: assignmentId,
-						resourceDefinitionId: item.resourceDefinitionId,
-						amount: item.amount,
-						createdAt,
-						availableAt,
-						expiresAt: expiresAt === undefined ? item.expiresAt : expiresAt,
-					})
-					.returning([
-						"id",
-					])
-					.executeTakeFirstOrThrow();
-
-				if (!stripeKey) {
-					return;
-				}
-
-				await kysely
-					.insertInto("user_resource_bundle_item_stripe")
-					.values({
-						id: genId(),
-						userResourceBundleItemId: row.id,
-						key: stripeKey,
-						createdAt,
-					})
+	return yield* withTransactionFx(
+		Effect.gen(function* () {
+			const items = yield* dbFx(async (kysely) => {
+				return kysely
+					.selectFrom("resource_bundle_item")
+					.selectAll()
+					.where("resourceBundleId", "=", bundleId)
 					.execute();
 			});
-		},
-		{
-			discard: true,
-		},
+
+			return yield* Effect.forEach(
+				items,
+				(item) => {
+					return dbFx(async (kysely) => {
+						const row = await kysely
+							.insertInto("user_resource_bundle_item")
+							.values({
+								id: genId(),
+								userResourceBundleId: assignmentId,
+								resourceDefinitionId: item.resourceDefinitionId,
+								amount: item.amount,
+								createdAt,
+								availableAt,
+								expiresAt: expiresAt ?? null,
+							})
+							.returning([
+								"id",
+							])
+							.executeTakeFirstOrThrow();
+
+						if (!stripeKey) {
+							return;
+						}
+
+						await kysely
+							.insertInto("user_resource_bundle_item_stripe")
+							.values({
+								id: genId(),
+								userResourceBundleItemId: row.id,
+								key: stripeKey,
+								createdAt,
+							})
+							.execute();
+					});
+				},
+				{
+					discard: true,
+				},
+			);
+		}),
 	);
 });
 

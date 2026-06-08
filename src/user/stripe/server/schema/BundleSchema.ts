@@ -13,7 +13,6 @@ export const BundleSchema = z
 				amount: true,
 				id: true,
 				resourceDefinitionId: true,
-				expiresAt: true,
 			}),
 		),
 		limits: z.array(
@@ -21,14 +20,12 @@ export const BundleSchema = z
 				id: true,
 				resourceDefinitionId: true,
 				limit: true,
-				expiresAt: true,
 			}),
 		),
 		features: z.array(
 			ResourceBundleFeatureSchema.pick({
 				id: true,
 				resourceDefinitionId: true,
-				expiresAt: true,
 			}),
 		),
 	})

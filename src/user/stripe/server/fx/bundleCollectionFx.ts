@@ -2,6 +2,7 @@ import { Effect } from "effect";
 import { match, P } from "ts-pattern";
 import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
+import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { ResourceBundleEnumSchema } from "~/user/resource-bundle/server/schema/ResourceBundleEnumSchema";
 import { stripeClientFx } from "~/user/stripe/server/fx/stripeClientFx";
 
@@ -11,71 +12,70 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 
 	const stripe = yield* stripeClientFx();
 
-	const { bundles, items, limits, features } = yield* dbFx(async (kysely) => {
-		const bundles = await kysely
-			.selectFrom("resource_bundle")
-			.select([
-				"id",
-				"name",
-			])
-			.where("name", "in", ResourceBundleEnumSchema.options)
-			.execute();
+	const { bundles, items, limits, features } = yield* withTransactionFx(
+		dbFx(async (kysely) => {
+			const bundles = await kysely
+				.selectFrom("resource_bundle")
+				.select([
+					"id",
+					"name",
+				])
+				.where("name", "in", ResourceBundleEnumSchema.options)
+				.execute();
 
-		if (bundles.length === 0) {
+			if (bundles.length === 0) {
+				return {
+					bundles,
+					items: [],
+					limits: [],
+					features: [],
+				};
+			}
+
+			const ids = bundles.map((bundle) => bundle.id);
+
+			const [items, limits, features] = await Promise.all([
+				kysely
+					.selectFrom("resource_bundle_item")
+					.select([
+						"id",
+						"resourceBundleId",
+						"resourceDefinitionId",
+						"amount",
+					])
+					.where("resourceBundleId", "in", ids)
+					.where("amount", ">", 0)
+					.execute(),
+				kysely
+					.selectFrom("resource_bundle_limit")
+					.select([
+						"id",
+						"resourceBundleId",
+						"resourceDefinitionId",
+						"limit",
+					])
+					.where("resourceBundleId", "in", ids)
+					.where("limit", ">", 0)
+					.execute(),
+				kysely
+					.selectFrom("resource_bundle_feature")
+					.select([
+						"id",
+						"resourceBundleId",
+						"resourceDefinitionId",
+					])
+					.where("resourceBundleId", "in", ids)
+					.execute(),
+			]);
+
 			return {
 				bundles,
-				items: [],
-				limits: [],
-				features: [],
+				items,
+				limits,
+				features,
 			};
-		}
-
-		const ids = bundles.map((bundle) => bundle.id);
-
-		const [items, limits, features] = await Promise.all([
-			kysely
-				.selectFrom("resource_bundle_item")
-				.select([
-					"id",
-					"resourceBundleId",
-					"resourceDefinitionId",
-					"amount",
-					"expiresAt",
-				])
-				.where("resourceBundleId", "in", ids)
-				.where("amount", ">", 0)
-				.execute(),
-			kysely
-				.selectFrom("resource_bundle_limit")
-				.select([
-					"id",
-					"resourceBundleId",
-					"resourceDefinitionId",
-					"limit",
-					"expiresAt",
-				])
-				.where("resourceBundleId", "in", ids)
-				.where("limit", ">", 0)
-				.execute(),
-			kysely
-				.selectFrom("resource_bundle_feature")
-				.select([
-					"id",
-					"resourceBundleId",
-					"resourceDefinitionId",
-					"expiresAt",
-				])
-				.where("resourceBundleId", "in", ids)
-				.execute(),
-		]);
-
-		return {
-			bundles,
-			items,
-			limits,
-			features,
-		};
-	});
+		}),
+	);
 
 	if (bundles.length === 0) {
 		return [];

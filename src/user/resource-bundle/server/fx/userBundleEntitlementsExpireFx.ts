@@ -1,6 +1,7 @@
 import { Effect } from "effect";
 import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
+import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 
 export namespace userBundleEntitlementsExpireFx {
 	export interface Props {
@@ -18,23 +19,25 @@ export const userBundleEntitlementsExpireFx = Effect.fn("userBundleEntitlementsE
 			expiresAt,
 		});
 
-		yield* dbFx(async (kysely) => {
-			await kysely
-				.updateTable("user_resource_bundle_limit")
-				.set({
-					expiresAt,
-				})
-				.where("userResourceBundleId", "=", assignmentId)
-				.execute();
+		yield* withTransactionFx(
+			dbFx(async (kysely) => {
+				await kysely
+					.updateTable("user_resource_bundle_limit")
+					.set({
+						expiresAt,
+					})
+					.where("userResourceBundleId", "=", assignmentId)
+					.execute();
 
-			await kysely
-				.updateTable("user_resource_bundle_feature")
-				.set({
-					expiresAt,
-				})
-				.where("userResourceBundleId", "=", assignmentId)
-				.execute();
-		});
+				await kysely
+					.updateTable("user_resource_bundle_feature")
+					.set({
+						expiresAt,
+					})
+					.where("userResourceBundleId", "=", assignmentId)
+					.execute();
+			}),
+		);
 	},
 );
 
