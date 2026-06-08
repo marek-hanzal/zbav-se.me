@@ -6,7 +6,7 @@ export const ResourceBundleTableSchema = z
 			description: "Unique ID of the resource bundle",
 		}),
 		name: z.string().meta({
-			description: "Unique display name of the resource bundle",
+			description: "Resource bundle name",
 		}),
 	})
 	.meta({

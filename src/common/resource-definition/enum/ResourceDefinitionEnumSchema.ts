@@ -96,10 +96,10 @@ const CommonEnumSchema = z.enum([
 	 * Limits tokens on one "usage", thus overall agent usage is `agent.usage * agent.token`.
 	 */
 	"common:limit:agent.token",
-    /**
-     * This is hard limit on token usage if there is runaway conversation with agent without
-     * any tool calls involved.
-     */
+	/**
+	 * This is hard limit on token usage if there is runaway conversation with agent without
+	 * any tool calls involved.
+	 */
 	"common:limit:agent.handbrake",
 	/**
 	 * Support tickets a user can use

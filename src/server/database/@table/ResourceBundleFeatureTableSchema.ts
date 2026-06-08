@@ -7,18 +7,18 @@ export const ResourceBundleFeatureTableSchema = z
 			description: "Unique ID of the resource bundle feature row",
 		}),
 		resourceBundleId: z.string().meta({
-			description: "ID of the resource bundle providing the feature",
+			description: "ID of the resource bundle defining the feature template",
 		}),
 		resourceDefinitionId: ResourceDefinitionEnumSchema.meta({
 			description: "Referenced resource definition name",
 		}),
 		expiresAt: z.coerce.date().nullish().meta({
-			description: "Optional expiration date of this item",
+			description: "Optional expiration date of this resource template row",
 		}),
 	})
 	.meta({
 		id: "ResourceBundleFeatureTable",
-		description: "Database row for a feature granted by a resource bundle.",
+		description: "Database row for a feature template defined by a resource bundle.",
 	})
 	.strip();
 

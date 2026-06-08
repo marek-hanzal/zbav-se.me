@@ -50,10 +50,10 @@ const ExtraEnumSchema = z.enum([
 	"extra:mark",
 	"extra:top",
 	"extra:top-maxxi",
-    //
-    "extra:brand",
-    "extra:early-delivery",
-    "extra:extra-listings",
+	//
+	"extra:brand",
+	"extra:early-delivery",
+	"extra:extra-listings",
 ]);
 
 export const ResourceBundleEnumSchema = z.enum([
