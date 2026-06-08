@@ -20,14 +20,14 @@ export const bundleItemCloseSyncFx = Effect.fn("bundleItemCloseSyncFx")(function
 
 	return yield* dbFx(async (kysely) => {
 		return kysely
-			.selectFrom("user_resource_bundle_item_stripe as urbis")
+			.selectFrom("user_resource_bundle_item_stripe as itemStripe")
 			.innerJoin(
-				"user_resource_bundle_item as urbi",
-				"urbi.id",
-				"urbis.userResourceBundleItemId",
+				"user_resource_bundle_item as resourceItem",
+				"resourceItem.id",
+				"itemStripe.userResourceBundleItemId",
 			)
-			.select("urbi.userResourceBundleId")
-			.where("urbis.key", "=", key)
+			.select("resourceItem.userResourceBundleId as assignmentId")
+			.where("itemStripe.key", "=", key)
 			.execute();
 	});
 });

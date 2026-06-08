@@ -1,55 +1,34 @@
 import { Effect } from "effect";
-import { sql } from "kysely";
 import { NotFoundErrorFx } from "@/lib/common/error";
-import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
+import { userBundleFeatureCopyFx } from "~/user/resource-bundle/server/fx/userBundleFeatureCopyFx";
+import { userBundleItemCopyFx } from "~/user/resource-bundle/server/fx/userBundleItemCopyFx";
+import { userBundleLimitCopyFx } from "~/user/resource-bundle/server/fx/userBundleLimitCopyFx";
 import { SyncSkipErrorFx } from "../../error/SyncSkipErrorFx";
-import { bundleFeatureOpenSyncFx } from "./bundleFeatureOpenSyncFx";
-import { bundleItemOpenSyncFx } from "./bundleItemOpenSyncFx";
-import { bundleLimitOpenSyncFx } from "./bundleLimitOpenSyncFx";
+import { bundleKeyLockFx } from "./bundleKeyLockFx";
+import { bundlePurchaseAssignFx } from "./bundlePurchaseAssignFx";
+import { bundlePurchaseExistsFx } from "./bundlePurchaseExistsFx";
 
 export namespace bundleOpenSyncFx {
 	export interface Props {
 		userId: string;
-		/**
-		 * Source application bundle ID copied into Stripe metadata by checkout.
-		 */
-		resourceBundleId: string;
-		/**
-		 * Source application bundle configured in Stripe metadata.
-		 *
-		 * The source bundle is copied into a dedicated purchase bundle, so later changes
-		 * to the user's default bundle never mutate historical Stripe purchases.
-		 */
+		/** Source application bundle ID copied into Stripe metadata by checkout. */
+		bundleId: string;
+		/** Source application bundle name copied into Stripe metadata by checkout. */
 		bundle: string;
-		/**
-		 * Deterministic bundle key stored in Stripe metadata.
-		 *
-		 * It is intentionally not a hash: the value should be readable in production
-		 * when we need to explain why a purchase exists or was skipped.
-		 */
+		/** Deterministic readable key stored in Stripe metadata. */
 		key: string;
-		/**
-		 * Stripe creation timestamp for the purchase source, not local processing time.
-		 */
+		/** Stripe creation timestamp for the purchase source. */
 		createdAt: Date;
 	}
 }
 
-/**
- * Materializes a one-off Stripe purchase as its own resource bundle.
- *
- * The important model decision is that one-off purchases do not mutate the user's
- * personal bundle. Each Stripe line item gets a dedicated purchase bundle, a
- * user_resource_bundle assignment, and copied user-facing resource rows. Rollback
- * can then expire that single assignment and kill exactly the resources created by the
- * purchase, without subtracting credits or guessing from current bundle config.
- */
+/** Opens one Stripe one-off purchase as a dedicated user resource bundle. */
 export const bundleOpenSyncFx = Effect.fn("bundleOpenSyncFx")(function* ({
 	userId,
-	resourceBundleId,
+	bundleId,
 	bundle,
 	key,
 	createdAt,
@@ -57,188 +36,73 @@ export const bundleOpenSyncFx = Effect.fn("bundleOpenSyncFx")(function* ({
 	const logger = yield* getLoggerFx("bundleOpenSyncFx");
 	logger.trace("bundleOpenSyncFx", {
 		userId,
-		resourceBundleId,
+		bundleId,
 		bundle,
 		key,
 	});
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			/*
-			 * The mapping tables allow the same key to appear once per copied resource row,
-			 * so a plain unique key constraint would be wrong. The advisory lock serializes
-			 * processing for one Stripe bundle key before we check whether any copied
-			 * row for that purchase already exists.
-			 */
-			yield* dbFx(async (kysely) => {
-				return sql`select pg_advisory_xact_lock(hashtextextended(${key}, 0))`.execute(
-					kysely,
-				);
+			yield* bundleKeyLockFx({
+				key,
 			});
 
-			/**
-			 * Check if the item/limit is already present.
-			 */
-			{
-				const { item, limit, feature } = yield* dbFx(async (kysely) => {
-					const [item, limit, feature] = await Promise.all([
-						kysely
-							.selectFrom("user_resource_bundle_item_stripe")
-							.select([
-								"id",
-							])
-							.where("key", "=", key)
-							.executeTakeFirst(),
-						kysely
-							.selectFrom("user_resource_bundle_limit_stripe")
-							.select([
-								"id",
-							])
-							.where("key", "=", key)
-							.executeTakeFirst(),
-						kysely
-							.selectFrom("user_resource_bundle_feature_stripe")
-							.select([
-								"id",
-							])
-							.where("key", "=", key)
-							.executeTakeFirst(),
-					]);
-
-					return {
-						item,
-						limit,
-						feature,
-					};
+			if (
+				yield* bundlePurchaseExistsFx({
+					key,
+				})
+			) {
+				return yield* new SyncSkipErrorFx({
+					message: "Stripe one-off purchase was already fulfilled",
+					reason: "one-off already fulfilled",
+					cause: {
+						key,
+					},
 				});
-
-				if (item || limit || feature) {
-					return yield* new SyncSkipErrorFx({
-						message: "Stripe one-off purchase was already fulfilled",
-						reason: "one-off already fulfilled",
-						cause: {
-							key,
-						},
-					});
-				}
 			}
 
-			const resourceBundle = yield* dbFx(async (kysely) => {
+			const source = yield* dbFx(async (kysely) => {
 				return kysely
 					.selectFrom("resource_bundle")
-					.selectAll()
-					.where("id", "=", resourceBundleId)
+					.select([
+						"id",
+					])
+					.where("id", "=", bundleId)
 					.executeTakeFirst();
 			});
 
-			if (!resourceBundle) {
+			if (!source) {
 				return yield* new NotFoundErrorFx({
 					resource: "resource_bundle",
-					resourceId: resourceBundleId,
+					resourceId: bundleId,
 					message: "Stripe source resource bundle is missing",
 				});
 			}
 
-			/*
-			 * Fulfillment scope: create the purchase bundle, assign it to the user, then
-			 * let item/limit syncs copy their concrete rows and Stripe mappings.
-			 */
-			{
-				/*
-				 * The bundle name is the Stripe bundle key. This gives support/debugging
-				 * a direct path from a Stripe line item to the exact resource bundle visible in
-				 * our database.
-				 */
-				const purchaseBundle = yield* dbFx(async (kysely) => {
-					const current = await kysely
-						.insertInto("resource_bundle")
-						.values({
-							id: genId(),
-							name: key,
-						})
-						.onConflict((oc) => oc.column("name").doNothing())
-						.returningAll()
-						.executeTakeFirst();
+			const assignment = yield* bundlePurchaseAssignFx({
+				userId,
+				key,
+				createdAt,
+			});
+			const copy = {
+				bundleId: source.id,
+				assignmentId: assignment.id,
+				createdAt,
+				availableAt: createdAt,
+				stripeKey: key,
+			} as const;
 
-					if (current) {
-						return current;
-					}
-
-					return kysely
-						.selectFrom("resource_bundle")
-						.selectAll()
-						.where("name", "=", key)
-						.executeTakeFirstOrThrow();
-				});
-
-				const userResourceBundle = yield* dbFx(async (kysely) => {
-					const current = await kysely
-						.insertInto("user_resource_bundle")
-						.values({
-							id: genId(),
-							userId,
-							resourceBundleId: purchaseBundle.id,
-							createdAt,
-							availableAt: createdAt,
-							expiresAt: null,
-						})
-						.onConflict((oc) => {
-							return oc
-								.columns([
-									"userId",
-									"resourceBundleId",
-								])
-								.doUpdateSet({
-									availableAt: createdAt,
-									expiresAt: null,
-								});
-						})
-						.returning([
-							"id",
-						])
-						.executeTakeFirst();
-
-					if (current) {
-						return current;
-					}
-
-					return kysely
-						.selectFrom("user_resource_bundle")
-						.select([
-							"id",
-						])
-						.where("userId", "=", userId)
-						.where("resourceBundleId", "=", purchaseBundle.id)
-						.executeTakeFirstOrThrow();
-				});
-
-				return yield* Effect.all(
-					[
-						bundleItemOpenSyncFx({
-							sourceResourceBundleId: resourceBundle.id,
-							userResourceBundleId: userResourceBundle.id,
-							key,
-							createdAt,
-						}),
-						bundleLimitOpenSyncFx({
-							sourceResourceBundleId: resourceBundle.id,
-							userResourceBundleId: userResourceBundle.id,
-							key,
-							createdAt,
-						}),
-						bundleFeatureOpenSyncFx({
-							sourceResourceBundleId: resourceBundle.id,
-							userResourceBundleId: userResourceBundle.id,
-							key,
-							createdAt,
-						}),
-					],
-					{
-						discard: true,
-						concurrency: 3,
-					},
-				);
-			}
+			return yield* Effect.all(
+				[
+					userBundleItemCopyFx(copy),
+					userBundleLimitCopyFx(copy),
+					userBundleFeatureCopyFx(copy),
+				],
+				{
+					discard: true,
+					concurrency: 3,
+				},
+			);
 		}),
 	);
 });

@@ -1,42 +1,48 @@
 import { Effect } from "effect";
 import type { Stripe } from "stripe";
 import { DateServiceFx } from "@/lib/common/date";
-import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { stripeClientFx } from "../stripeClientFx";
 import { sessionSyncFx } from "./sessionSyncFx";
+import { subscriptionBundleUpsertFx } from "./subscriptionBundleUpsertFx";
 import { subscriptionSyncFx } from "./subscriptionSyncFx";
 
 export namespace syncFx {
 	export interface Grant {
 		bundleId: string;
-		subId: string;
+		subscriptionId: string;
 		expiresAt: Date | null;
 	}
 
 	export interface Props {
-		/**
-		 * Stripe Customer ID that should be reconciled from the current Stripe API state.
-		 */
+		/** Stripe Customer ID reconciled from current Stripe API state. */
 		customerId: string;
 	}
 }
 
-/**
- * Reconciles one Stripe customer from Stripe API state into local resources.
- *
- * Webhooks are only pings that tell us which customer changed. This Fx deliberately
- * ignores event payloads and lists current Stripe objects for the customer instead,
- * so event delivery order cannot drive local state transitions.
- */
+const byCreated = <
+	Item extends {
+		created: number;
+	},
+>(
+	items: Item[],
+) => {
+	return items.toSorted((left, right) => left.created - right.created);
+};
+
+const subscriptionIdOf = (subscription: Stripe.Checkout.Session["subscription"]) => {
+	return typeof subscription === "string" ? subscription : (subscription?.id ?? null);
+};
+
+/** Reconciles one Stripe customer from Stripe API state into local resources. */
 export const syncFx = Effect.fn("syncFx")(function* ({ customerId }: syncFx.Props) {
 	const logger = yield* getLoggerFx("syncFx");
 	logger.trace("syncFx", {
 		customerId,
 	});
 
-	const userStripe = yield* dbFx(async (kysely) => {
+	const user = yield* dbFx(async (kysely) => {
 		return kysely
 			.selectFrom("user_stripe")
 			.select([
@@ -46,26 +52,13 @@ export const syncFx = Effect.fn("syncFx")(function* ({ customerId }: syncFx.Prop
 			.executeTakeFirst();
 	});
 
-	if (!userStripe) {
+	if (!user) {
 		return yield* Effect.void;
 	}
 
-	const dateService = yield* DateServiceFx;
-	const expiresAt = dateService.now().toJSDate();
+	const date = yield* DateServiceFx;
+	const now = date.now().toJSDate();
 	const stripe = yield* stripeClientFx();
-
-	const byCreated = <
-		Item extends {
-			created: number;
-		},
-	>(
-		items: Item[],
-	) => {
-		return items.toSorted((left, right) => {
-			return left.created - right.created;
-		});
-	};
-
 	const snapshot = yield* Effect.promise(async () => {
 		const [allSubs, activeSubs, trialSubs, sessions] = await Promise.all([
 			stripe.subscriptions.list({
@@ -99,17 +92,13 @@ export const syncFx = Effect.fn("syncFx")(function* ({ customerId }: syncFx.Prop
 		};
 	});
 
-	const subIdOf = (subscription: Stripe.Checkout.Session["subscription"]) => {
-		return typeof subscription === "string" ? subscription : (subscription?.id ?? null);
-	};
-
 	const sessionBundles = new Map<string, string>();
 	for (const session of snapshot.sessions) {
-		const subId = subIdOf(session.subscription);
+		const subscriptionId = subscriptionIdOf(session.subscription);
 		const bundleId = session.metadata?.resourceBundleId;
 
-		if (subId && bundleId) {
-			sessionBundles.set(subId, bundleId);
+		if (subscriptionId && bundleId) {
+			sessionBundles.set(subscriptionId, bundleId);
 		}
 	}
 
@@ -122,19 +111,17 @@ export const syncFx = Effect.fn("syncFx")(function* ({ customerId }: syncFx.Prop
 			continue;
 		}
 
-		const periodEnd =
-			subscription.items.data
-				.map((item) => item.current_period_end)
-				.find((periodEnd) => Boolean(periodEnd)) ?? subscription.cancel_at;
+		const itemEnd =
+			subscription.items.data.map((item) => item.current_period_end).find(Boolean) ??
+			subscription.cancel_at;
 		const grant: syncFx.Grant = {
 			bundleId,
-			subId: subscription.id,
+			subscriptionId: subscription.id,
 			expiresAt:
-				subscription.cancel_at_period_end && periodEnd
-					? dateService.ofSeconds(periodEnd).toJSDate()
+				subscription.cancel_at_period_end && itemEnd
+					? date.ofSeconds(itemEnd).toJSDate()
 					: null,
 		};
-
 		const stored = grants.get(bundleId);
 
 		if (
@@ -146,11 +133,7 @@ export const syncFx = Effect.fn("syncFx")(function* ({ customerId }: syncFx.Prop
 		}
 	}
 
-	/*
-	 * First replay all Stripe objects chronologically. Then apply current subscription
-	 * grants fetched by Stripe status, so old canceled objects cannot close a bundle
-	 * while another subscription still grants access.
-	 */
+	/* Replay all objects first; then re-apply current grants so stale events cannot win. */
 	yield* Effect.forEach(
 		snapshot.allSubs,
 		(subscription) => {
@@ -168,7 +151,7 @@ export const syncFx = Effect.fn("syncFx")(function* ({ customerId }: syncFx.Prop
 		(session) => {
 			return sessionSyncFx({
 				id: session.id,
-				expiresAt,
+				expiresAt: now,
 			}).pipe(Effect.ignore);
 		},
 		{
@@ -180,47 +163,13 @@ export const syncFx = Effect.fn("syncFx")(function* ({ customerId }: syncFx.Prop
 	yield* Effect.forEach(
 		Array.from(grants.values()),
 		(grant) => {
-			return dbFx(async (kysely) => {
-				const userResourceBundle = await kysely
-					.insertInto("user_resource_bundle")
-					.values({
-						id: genId(),
-						userId: userStripe.userId,
-						resourceBundleId: grant.bundleId,
-						createdAt: expiresAt,
-						availableAt: expiresAt,
-						expiresAt: grant.expiresAt,
-					})
-					.onConflict((oc) => {
-						return oc
-							.columns([
-								"userId",
-								"resourceBundleId",
-							])
-							.doUpdateSet({
-								availableAt: expiresAt,
-								expiresAt: grant.expiresAt,
-							});
-					})
-					.returning([
-						"id",
-					])
-					.executeTakeFirstOrThrow();
-
-				await kysely
-					.insertInto("user_resource_bundle_stripe")
-					.values({
-						id: genId(),
-						userResourceBundleId: userResourceBundle.id,
-						subscriptionId: grant.subId,
-						createdAt: expiresAt,
-					})
-					.onConflict((oc) => {
-						return oc.column("userResourceBundleId").doUpdateSet({
-							subscriptionId: grant.subId,
-						});
-					})
-					.execute();
+			return subscriptionBundleUpsertFx({
+				userId: user.userId,
+				bundleId: grant.bundleId,
+				subscriptionId: grant.subscriptionId,
+				createdAt: now,
+				availableAt: now,
+				expiresAt: grant.expiresAt,
 			});
 		},
 		{

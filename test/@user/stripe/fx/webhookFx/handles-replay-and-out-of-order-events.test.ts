@@ -149,14 +149,18 @@ describe("webhookFx", () => {
 
 					const activeBundle = yield* Effect.promise(() => {
 						return database.kysely
-							.selectFrom("user_resource_bundle as urb")
-							.innerJoin("resource_bundle as rb", "rb.id", "urb.resourceBundleId")
+							.selectFrom("user_resource_bundle as assignment")
+							.innerJoin(
+								"resource_bundle as bundle",
+								"bundle.id",
+								"assignment.resourceBundleId",
+							)
 							.select([
-								"rb.name",
-								"urb.expiresAt",
+								"bundle.name",
+								"assignment.expiresAt",
 							])
-							.where("urb.userId", "=", buyer.id)
-							.where("rb.name", "=", "package:buyer")
+							.where("assignment.userId", "=", buyer.id)
+							.where("bundle.name", "=", "package:buyer")
 							.executeTakeFirstOrThrow();
 					});
 					const replayedEventRows = yield* Effect.promise(() => {
@@ -188,13 +192,17 @@ describe("webhookFx", () => {
 
 					const expiredBundle = yield* Effect.promise(() => {
 						return database.kysely
-							.selectFrom("user_resource_bundle as urb")
-							.innerJoin("resource_bundle as rb", "rb.id", "urb.resourceBundleId")
+							.selectFrom("user_resource_bundle as assignment")
+							.innerJoin(
+								"resource_bundle as bundle",
+								"bundle.id",
+								"assignment.resourceBundleId",
+							)
 							.select([
-								"urb.expiresAt",
+								"assignment.expiresAt",
 							])
-							.where("urb.userId", "=", buyer.id)
-							.where("rb.name", "=", "package:buyer")
+							.where("assignment.userId", "=", buyer.id)
+							.where("bundle.name", "=", "package:buyer")
 							.executeTakeFirstOrThrow();
 					});
 					const processedEvents = yield* Effect.promise(() => {

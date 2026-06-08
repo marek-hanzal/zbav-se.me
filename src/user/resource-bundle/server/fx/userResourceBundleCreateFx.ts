@@ -6,7 +6,9 @@ import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { InvalidRequestErrorFx } from "~/server/error/InvalidRequestErrorFx";
 import type { UserResourceBundleCreateSchema } from "../schema/UserResourceBundleCreateSchema";
-import { userResourceBundleMaterializeFx } from "./userResourceBundleMaterializeFx";
+import { userBundleFeatureCopyFx } from "./userBundleFeatureCopyFx";
+import { userBundleItemCopyFx } from "./userBundleItemCopyFx";
+import { userBundleLimitCopyFx } from "./userBundleLimitCopyFx";
 
 export namespace userResourceBundleCreateFx {
 	export interface Props extends UserResourceBundleCreateSchema.Type {
@@ -16,37 +18,37 @@ export namespace userResourceBundleCreateFx {
 
 export const userResourceBundleCreateFx = Effect.fn("userResourceBundleCreateFx")(function* ({
 	userId,
-	bundle,
+	bundle: bundleName,
 	availableAt,
 	expiresAt = null,
 }: userResourceBundleCreateFx.Props) {
 	const logger = yield* getLoggerFx("userResourceBundleCreateFx");
 	logger.trace("userResourceBundleCreateFx", {
 		userId,
-		bundle,
+		bundle: bundleName,
 		availableAt,
 		expiresAt,
 	});
 
 	const dateService = yield* DateServiceFx;
 	const now = dateService.now().toJSDate();
-	const activeFrom = availableAt ?? now;
+	const activeAt = availableAt ?? now;
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const resourceBundle = yield* dbFx(async (kysely) => {
+			const bundle = yield* dbFx(async (kysely) => {
 				return kysely
 					.selectFrom("resource_bundle")
 					.select([
 						"id",
 					])
-					.where("name", "=", bundle)
+					.where("name", "=", bundleName)
 					.executeTakeFirst();
 			});
 
-			if (!resourceBundle) {
+			if (!bundle) {
 				return yield* new InvalidRequestErrorFx({
-					message: `Resource bundle [${bundle}] does not exist`,
+					message: `Resource bundle [${bundleName}] does not exist`,
 				});
 			}
 
@@ -56,9 +58,9 @@ export const userResourceBundleCreateFx = Effect.fn("userResourceBundleCreateFx"
 					.values({
 						id: genId(),
 						userId,
-						resourceBundleId: resourceBundle.id,
+						resourceBundleId: bundle.id,
 						createdAt: now,
-						availableAt: activeFrom,
+						availableAt: activeAt,
 						expiresAt,
 					})
 					.onConflict((oc) =>
@@ -76,19 +78,39 @@ export const userResourceBundleCreateFx = Effect.fn("userResourceBundleCreateFx"
 			});
 
 			if (inserted) {
-				yield* userResourceBundleMaterializeFx({
-					resourceBundleId: resourceBundle.id,
-					userResourceBundleId: inserted.id,
+				const copy = {
+					bundleId: bundle.id,
+					assignmentId: inserted.id,
 					createdAt: now,
-					availableAt: activeFrom,
-					...(expiresAt === null
+					availableAt: activeAt,
+				} as const;
+				const childExpires =
+					expiresAt === null
 						? {}
 						: {
-								featureExpiresAt: expiresAt,
-								itemExpiresAt: expiresAt,
-								limitExpiresAt: expiresAt,
-							}),
-				});
+								expiresAt,
+							};
+
+				yield* Effect.all(
+					[
+						userBundleItemCopyFx({
+							...copy,
+							...childExpires,
+						}),
+						userBundleLimitCopyFx({
+							...copy,
+							...childExpires,
+						}),
+						userBundleFeatureCopyFx({
+							...copy,
+							...childExpires,
+						}),
+					],
+					{
+						discard: true,
+						concurrency: 3,
+					},
+				);
 			}
 
 			return yield* dbFx(async (kysely) => {
@@ -96,7 +118,7 @@ export const userResourceBundleCreateFx = Effect.fn("userResourceBundleCreateFx"
 					.selectFrom("user_resource_bundle")
 					.selectAll()
 					.where("userId", "=", userId)
-					.where("resourceBundleId", "=", resourceBundle.id)
+					.where("resourceBundleId", "=", bundle.id)
 					.executeTakeFirstOrThrow();
 			});
 		}),

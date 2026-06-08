@@ -3,53 +3,39 @@ import type { Stripe } from "stripe";
 import { match, P } from "ts-pattern";
 import { DateServiceFx } from "@/lib/common/date";
 import { NotFoundErrorFx } from "@/lib/common/error";
-import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
+import { userBundleFeatureCopyFx } from "~/user/resource-bundle/server/fx/userBundleFeatureCopyFx";
+import { userBundleItemCopyFx } from "~/user/resource-bundle/server/fx/userBundleItemCopyFx";
+import { userBundleLimitCopyFx } from "~/user/resource-bundle/server/fx/userBundleLimitCopyFx";
+import { userBundleEntitlementsExpireFx } from "~/user/resource-bundle/server/fx/userBundleEntitlementsExpireFx";
+import { userBundleSnapshotExistsFx } from "~/user/resource-bundle/server/fx/userBundleSnapshotExistsFx";
 import { SyncSkipErrorFx } from "../../error/SyncSkipErrorFx";
 import { subscriptionFetchFx } from "../subscriptionFetchFx";
-import { userResourceBundleMaterializeFx } from "~/user/resource-bundle/server/fx/userResourceBundleMaterializeFx";
+import { subscriptionBundleUpsertFx } from "./subscriptionBundleUpsertFx";
 
 export namespace subscriptionSyncFx {
 	export interface Props {
-		/**
-		 * Subscription ID or expanded object. The current subscription is always refetched.
-		 */
+		/** Subscription ID or expanded object. The current subscription is always refetched. */
 		subscription: string | Stripe.Subscription;
 	}
 }
 
-/**
- * Syncs one Stripe subscription into the user's active resource bundles.
- *
- * Active/trialing subscriptions keep the bundle active unless cancellation is
- * scheduled for period end. Any non-active subscription expires the assignment
- * immediately, preferring Stripe's ended/canceled timestamp when available.
- */
-export const subscriptionSyncFx = Effect.fn("subscriptionSyncFx")(function* ({
-	subscription,
-}: subscriptionSyncFx.Props) {
-	const logger = yield* getLoggerFx("subscriptionSyncFx");
-	logger.trace("subscriptionSyncFx", {
-		subscription: match(subscription)
-			.with(P.string, (id) => id)
-			.with(
-				{
-					id: P.string,
-				},
-				(subscription) => subscription.id,
-			)
-			.exhaustive(),
-	});
+const subscriptionId = (subscription: string | Stripe.Subscription) => {
+	return match(subscription)
+		.with(P.string, (id) => id)
+		.with(
+			{
+				id: P.string,
+			},
+			(subscription) => subscription.id,
+		)
+		.exhaustive();
+};
 
-	const resolvedSubscription = yield* subscriptionFetchFx({
-		id: subscription,
-	});
-
-	const dateContext = yield* DateServiceFx;
-	const now = dateContext.now().toJSDate();
-	const customerId = match(resolvedSubscription.customer)
-		.with(P.string, (customer) => customer)
+const customerIdOf = (customer: Stripe.Subscription["customer"]) => {
+	return match(customer)
+		.with(P.string, (id) => id)
 		.with(
 			{
 				id: P.string,
@@ -57,17 +43,28 @@ export const subscriptionSyncFx = Effect.fn("subscriptionSyncFx")(function* ({
 			(customer) => customer.id,
 		)
 		.exhaustive();
-	const resourceBundleId = resolvedSubscription.metadata.resourceBundleId;
-	const itemPeriodEnd =
-		resolvedSubscription.items.data
-			.map((item) => item.current_period_end)
-			.find((periodEnd) => Boolean(periodEnd)) ?? resolvedSubscription.cancel_at;
-	const periodEnd = itemPeriodEnd ? dateContext.ofSeconds(itemPeriodEnd).toJSDate() : null;
+};
 
-	if (!resourceBundleId) {
+/** Syncs one Stripe subscription into one local user resource bundle. */
+export const subscriptionSyncFx = Effect.fn("subscriptionSyncFx")(function* ({
+	subscription: source,
+}: subscriptionSyncFx.Props) {
+	const logger = yield* getLoggerFx("subscriptionSyncFx");
+	logger.trace("subscriptionSyncFx", {
+		subscription: subscriptionId(source),
+	});
+
+	const subscription = yield* subscriptionFetchFx({
+		id: source,
+	});
+	const date = yield* DateServiceFx;
+	const now = date.now().toJSDate();
+	const bundleId = subscription.metadata.resourceBundleId;
+
+	if (!bundleId) {
 		return yield* new NotFoundErrorFx({
 			resource: "stripe-subscription-resource-bundle-metadata",
-			resourceId: resolvedSubscription.id,
+			resourceId: subscription.id,
 			message: "Stripe subscription metadata does not resolve resource bundle",
 		});
 	}
@@ -77,162 +74,103 @@ export const subscriptionSyncFx = Effect.fn("subscriptionSyncFx")(function* ({
 			.selectFrom("resource_bundle")
 			.select([
 				"id",
-				"name",
 			])
-			.where("id", "=", resourceBundleId)
+			.where("id", "=", bundleId)
 			.executeTakeFirst();
 	});
 
 	if (!bundle) {
 		return yield* new NotFoundErrorFx({
 			resource: "resource_bundle",
-			resourceId: resourceBundleId,
+			resourceId: bundleId,
 			message: "Stripe subscription resource bundle is missing",
 		});
 	}
 
-	const userStripe = yield* dbFx(async (kysely) => {
+	const user = yield* dbFx(async (kysely) => {
 		return kysely
 			.selectFrom("user_stripe")
 			.select([
 				"userId",
 			])
-			.where("customerId", "=", customerId)
+			.where("customerId", "=", customerIdOf(subscription.customer))
 			.executeTakeFirst();
 	});
 
-	if (!userStripe) {
+	if (!user) {
 		return yield* new SyncSkipErrorFx({
 			message: "Stripe subscription customer is not linked to a user",
 			reason: "subscription customer missing",
 			cause: {
-				customerId,
+				customerId: customerIdOf(subscription.customer),
 				subscription,
 			},
 		});
 	}
 
-	const isActive = match(resolvedSubscription.status)
+	const active = match(subscription.status)
 		.with(P.union("active", "trialing"), () => true)
 		.otherwise(() => false);
-	/*
-	 * Stripe shape has moved current-period fields around API versions, so period end
-	 * is normalized above and cancellation timestamps are read defensively here.
-	 */
-	const endedAt = resolvedSubscription.ended_at
-		? dateContext.ofSeconds(resolvedSubscription.ended_at).toJSDate()
-		: resolvedSubscription.canceled_at
-			? dateContext.ofSeconds(resolvedSubscription.canceled_at).toJSDate()
+	const itemEnd =
+		subscription.items.data.map((item) => item.current_period_end).find(Boolean) ??
+		subscription.cancel_at;
+	const periodEnd = itemEnd ? date.ofSeconds(itemEnd).toJSDate() : null;
+	const endedAt = subscription.ended_at
+		? date.ofSeconds(subscription.ended_at).toJSDate()
+		: subscription.canceled_at
+			? date.ofSeconds(subscription.canceled_at).toJSDate()
 			: null;
-	const expiresAt = isActive
-		? resolvedSubscription.cancel_at_period_end
+	const expiresAt = active
+		? subscription.cancel_at_period_end
 			? periodEnd
 			: null
 		: (endedAt ?? now);
 
-	const userResourceBundle = yield* dbFx(async (kysely) => {
-		return kysely
-			.insertInto("user_resource_bundle")
-			.values({
-				id: genId(),
-				userId: userStripe.userId,
-				resourceBundleId: bundle.id,
-				createdAt: now,
-				availableAt: now,
-				expiresAt,
-			})
-			.onConflict((oc) => {
-				return oc
-					.columns([
-						"userId",
-						"resourceBundleId",
-					])
-					.doUpdateSet({
-						availableAt: now,
-						expiresAt,
-					});
-			})
-			.returning([
-				"id",
-			])
-			.executeTakeFirstOrThrow();
+	const assignment = yield* subscriptionBundleUpsertFx({
+		userId: user.userId,
+		bundleId: bundle.id,
+		subscriptionId: subscription.id,
+		createdAt: now,
+		availableAt: now,
+		expiresAt,
+	});
+	const hasSnapshot = yield* userBundleSnapshotExistsFx({
+		assignmentId: assignment.id,
 	});
 
-	yield* dbFx(async (kysely) => {
-		return kysely
-			.insertInto("user_resource_bundle_stripe")
-			.values({
-				id: genId(),
-				userResourceBundleId: userResourceBundle.id,
-				subscriptionId: resolvedSubscription.id,
-				createdAt: now,
-			})
-			.onConflict((oc) => {
-				return oc.column("userResourceBundleId").doUpdateSet({
-					subscriptionId: resolvedSubscription.id,
-				});
-			})
-			.execute();
-	});
-
-	const snapshotExists = yield* dbFx(async (kysely) => {
-		const [item, limit, feature] = await Promise.all([
-			kysely
-				.selectFrom("user_resource_bundle_item")
-				.select([
-					"id",
-				])
-				.where("userResourceBundleId", "=", userResourceBundle.id)
-				.executeTakeFirst(),
-			kysely
-				.selectFrom("user_resource_bundle_limit")
-				.select([
-					"id",
-				])
-				.where("userResourceBundleId", "=", userResourceBundle.id)
-				.executeTakeFirst(),
-			kysely
-				.selectFrom("user_resource_bundle_feature")
-				.select([
-					"id",
-				])
-				.where("userResourceBundleId", "=", userResourceBundle.id)
-				.executeTakeFirst(),
-		]);
-
-		return Boolean(item || limit || feature);
-	});
-
-	if (isActive && !snapshotExists) {
-		yield* userResourceBundleMaterializeFx({
-			resourceBundleId: bundle.id,
-			userResourceBundleId: userResourceBundle.id,
+	if (active && !hasSnapshot) {
+		const copy = {
+			bundleId: bundle.id,
+			assignmentId: assignment.id,
 			createdAt: now,
 			availableAt: now,
-			limitExpiresAt: expiresAt,
-			featureExpiresAt: expiresAt,
-		});
-	} else if (snapshotExists) {
-		yield* dbFx(async (kysely) => {
-			await kysely
-				.updateTable("user_resource_bundle_limit")
-				.set({
-					expiresAt,
-				})
-				.where("userResourceBundleId", "=", userResourceBundle.id)
-				.execute();
+		} as const;
 
-			return kysely
-				.updateTable("user_resource_bundle_feature")
-				.set({
+		yield* Effect.all(
+			[
+				userBundleItemCopyFx(copy),
+				userBundleLimitCopyFx({
+					...copy,
 					expiresAt,
-				})
-				.where("userResourceBundleId", "=", userResourceBundle.id)
-				.execute();
+				}),
+				userBundleFeatureCopyFx({
+					...copy,
+					expiresAt,
+				}),
+			],
+			{
+				discard: true,
+				concurrency: 3,
+			},
+		);
+	} else if (hasSnapshot) {
+		yield* userBundleEntitlementsExpireFx({
+			assignmentId: assignment.id,
+			expiresAt,
 		});
 	}
 
-	return userResourceBundle;
+	return assignment;
 });
 
 export type subscriptionSyncFx = ReturnType<typeof subscriptionSyncFx>;

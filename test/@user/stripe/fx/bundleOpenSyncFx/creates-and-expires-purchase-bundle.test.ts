@@ -30,7 +30,7 @@ describe("bundleOpenSyncFx", () => {
 
 			yield* bundleOpenSyncFx({
 				userId: buyer.id,
-				resourceBundleId: resourceBundle.id,
+				bundleId: resourceBundle.id,
 				bundle: "package:buyer",
 				key,
 				createdAt,
@@ -38,7 +38,7 @@ describe("bundleOpenSyncFx", () => {
 			const duplicate = yield* Effect.either(
 				bundleOpenSyncFx({
 					userId: buyer.id,
-					resourceBundleId: resourceBundle.id,
+					bundleId: resourceBundle.id,
 					bundle: "package:buyer",
 					key,
 					createdAt,
@@ -135,6 +135,40 @@ describe("bundleOpenSyncFx", () => {
 					])
 					.where("resourceBundleId", "=", purchaseBundle.id)
 					.executeTakeFirstOrThrow();
+			});
+			const expiredChildRows = yield* Effect.promise(async () => {
+				const [item, limit, feature] = await Promise.all([
+					database.kysely
+						.selectFrom("user_resource_bundle_item")
+						.select(({ fn }) => [
+							fn.countAll<string>().as("count"),
+						])
+						.where("userResourceBundleId", "=", purchaseAssignment.id)
+						.where("expiresAt", "=", expiresAt)
+						.executeTakeFirstOrThrow(),
+					database.kysely
+						.selectFrom("user_resource_bundle_limit")
+						.select(({ fn }) => [
+							fn.countAll<string>().as("count"),
+						])
+						.where("userResourceBundleId", "=", purchaseAssignment.id)
+						.where("expiresAt", "=", expiresAt)
+						.executeTakeFirstOrThrow(),
+					database.kysely
+						.selectFrom("user_resource_bundle_feature")
+						.select(({ fn }) => [
+							fn.countAll<string>().as("count"),
+						])
+						.where("userResourceBundleId", "=", purchaseAssignment.id)
+						.where("expiresAt", "=", expiresAt)
+						.executeTakeFirstOrThrow(),
+				]);
+
+				return {
+					feature: Number(feature.count),
+					item: Number(item.count),
+					limit: Number(limit.count),
+				};
 			});
 
 			expect(duplicate._tag).toBe("Left");
@@ -239,6 +273,11 @@ describe("bundleOpenSyncFx", () => {
 			expect(expiredAssignment).toEqual({
 				expiresAt,
 			});
+			expect(expiredChildRows).toEqual({
+				feature: 4,
+				item: 3,
+				limit: 3,
+			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 
@@ -290,7 +329,7 @@ describe("bundleOpenSyncFx", () => {
 			});
 			yield* bundleOpenSyncFx({
 				userId: buyer.id,
-				resourceBundleId: resourceBundle.id,
+				bundleId: resourceBundle.id,
 				bundle: "package:buyer",
 				key,
 				createdAt,
@@ -298,23 +337,27 @@ describe("bundleOpenSyncFx", () => {
 
 			const activeTokenItems = yield* Effect.promise(() => {
 				return database.kysely
-					.selectFrom("user_resource_bundle as urb")
-					.innerJoin("resource_bundle as rb", "rb.id", "urb.resourceBundleId")
+					.selectFrom("user_resource_bundle as assignment")
 					.innerJoin(
-						"user_resource_bundle_item as urbi",
-						"urbi.userResourceBundleId",
-						"urb.id",
+						"resource_bundle as bundle",
+						"bundle.id",
+						"assignment.resourceBundleId",
+					)
+					.innerJoin(
+						"user_resource_bundle_item as resourceItem",
+						"resourceItem.userResourceBundleId",
+						"assignment.id",
 					)
 					.select([
-						"rb.name",
-						"urbi.amount",
-						"urbi.resourceDefinitionId",
+						"bundle.name",
+						"resourceItem.amount",
+						"resourceItem.resourceDefinitionId",
 					])
-					.where("urb.userId", "=", buyer.id)
-					.where("urb.expiresAt", "is", null)
-					.where("urbi.expiresAt", "is", null)
-					.where("urbi.resourceDefinitionId", "=", "common:item:token")
-					.orderBy("rb.name", "asc")
+					.where("assignment.userId", "=", buyer.id)
+					.where("assignment.expiresAt", "is", null)
+					.where("resourceItem.expiresAt", "is", null)
+					.where("resourceItem.resourceDefinitionId", "=", "common:item:token")
+					.orderBy("bundle.name", "asc")
 					.execute();
 			});
 			const tokenTotal = activeTokenItems.reduce((sum, item) => {

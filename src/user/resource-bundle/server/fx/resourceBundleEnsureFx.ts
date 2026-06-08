@@ -64,15 +64,19 @@ export const resourceBundleEnsureFx = Effect.fn("resourceBundleEnsureFx")(functi
 
 			return yield* dbFx(async (kysely) => {
 				return kysely
-					.selectFrom("user_resource_bundle as urb")
-					.innerJoin("resource_bundle as rb", "rb.id", "urb.resourceBundleId")
+					.selectFrom("user_resource_bundle as assignment")
+					.innerJoin(
+						"resource_bundle as bundle",
+						"bundle.id",
+						"assignment.resourceBundleId",
+					)
 					.select([
-						"urb.id",
-						"urb.expiresAt",
-						"rb.name as resourceBundleName",
+						"assignment.id",
+						"assignment.expiresAt",
+						"bundle.name as resourceBundleName",
 					])
-					.where("urb.userId", "=", userId)
-					.where("urb.resourceBundleId", "=", userId)
+					.where("assignment.userId", "=", userId)
+					.where("assignment.resourceBundleId", "=", userId)
 					.executeTakeFirstOrThrow();
 			});
 		}),

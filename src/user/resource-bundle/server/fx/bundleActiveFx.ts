@@ -10,7 +10,7 @@ export namespace bundleActiveFx {
 }
 
 export const bundleActiveFx = Effect.fn("bundleActiveFx")(function* ({
-	bundle,
+	bundle: bundleName,
 	userId,
 }: bundleActiveFx.Props) {
 	const dateService = yield* DateServiceFx;
@@ -19,18 +19,18 @@ export const bundleActiveFx = Effect.fn("bundleActiveFx")(function* ({
 	return Boolean(
 		yield* dbFx(async (kysely) => {
 			return kysely
-				.selectFrom("user_resource_bundle as urb")
-				.innerJoin("resource_bundle as rb", "rb.id", "urb.resourceBundleId")
+				.selectFrom("user_resource_bundle as assignment")
+				.innerJoin("resource_bundle as bundle", "bundle.id", "assignment.resourceBundleId")
 				.select([
-					"urb.id",
+					"assignment.id",
 				])
-				.where("urb.userId", "=", userId)
-				.where("rb.name", "=", bundle)
-				.where("urb.availableAt", "<=", now)
+				.where("assignment.userId", "=", userId)
+				.where("bundle.name", "=", bundleName)
+				.where("assignment.availableAt", "<=", now)
 				.where((eb) =>
 					eb.or([
-						eb("urb.expiresAt", "is", null),
-						eb("urb.expiresAt", ">", now),
+						eb("assignment.expiresAt", "is", null),
+						eb("assignment.expiresAt", ">", now),
 					]),
 				)
 				.executeTakeFirst();

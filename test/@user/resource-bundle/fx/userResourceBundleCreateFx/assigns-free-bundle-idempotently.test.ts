@@ -24,14 +24,18 @@ describe("userResourceBundleCreateFx", () => {
 
 			const rows = yield* Effect.promise(() =>
 				database.kysely
-					.selectFrom("user_resource_bundle as urb")
-					.innerJoin("resource_bundle as rb", "rb.id", "urb.resourceBundleId")
+					.selectFrom("user_resource_bundle as assignment")
+					.innerJoin(
+						"resource_bundle as bundle",
+						"bundle.id",
+						"assignment.resourceBundleId",
+					)
 					.select([
-						"urb.id",
-						"rb.name",
+						"assignment.id",
+						"bundle.name",
 					])
-					.where("urb.userId", "=", seller.id)
-					.where("rb.name", "=", ResourceBundleEnumSchema.enum["package:free"])
+					.where("assignment.userId", "=", seller.id)
+					.where("bundle.name", "=", ResourceBundleEnumSchema.enum["package:free"])
 					.execute(),
 			);
 

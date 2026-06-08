@@ -20,7 +20,7 @@ export namespace checkoutFx {
 
 export const checkoutFx = Effect.fn("checkoutFx")(function* ({
 	userId,
-	bundle,
+	bundle: bundleName,
 	locale,
 	urlSuccess,
 	urlCancel,
@@ -28,7 +28,7 @@ export const checkoutFx = Effect.fn("checkoutFx")(function* ({
 	const logger = yield* getLoggerFx("checkoutFx");
 	logger.trace("checkoutFx", {
 		userId,
-		bundle,
+		bundle: bundleName,
 	});
 
 	const stripe = yield* stripeClientFx();
@@ -36,27 +36,27 @@ export const checkoutFx = Effect.fn("checkoutFx")(function* ({
 		userId,
 	});
 
-	const resourceBundle = yield* dbFx(async (kysely) => {
+	const bundle = yield* dbFx(async (kysely) => {
 		return kysely
 			.selectFrom("resource_bundle")
 			.select([
 				"id",
 				"name",
 			])
-			.where("name", "=", bundle)
+			.where("name", "=", bundleName)
 			.executeTakeFirst();
 	});
 
-	if (!resourceBundle) {
+	if (!bundle) {
 		return yield* new NotFoundErrorFx({
 			resource: "resource_bundle",
-			resourceId: bundle,
+			resourceId: bundleName,
 			message: "Stripe checkout resource bundle is missing",
 		});
 	}
 
 	const price = yield* priceFetchFx({
-		lookupKey: bundle,
+		lookupKey: bundleName,
 	});
 	const bundleKey = `stripe:checkout:${genId()}`;
 
@@ -71,8 +71,8 @@ export const checkoutFx = Effect.fn("checkoutFx")(function* ({
 	const metadata = {
 		userId,
 		customerId: customer.customerId,
-		resourceBundleId: resourceBundle.id,
-		bundle: resourceBundle.name,
+		resourceBundleId: bundle.id,
+		bundle: bundle.name,
 		priceId: price.id,
 		bundleKey,
 	};

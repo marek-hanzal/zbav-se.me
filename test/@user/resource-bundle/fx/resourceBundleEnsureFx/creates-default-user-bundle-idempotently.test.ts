@@ -21,15 +21,19 @@ describe("resourceBundleEnsureFx", () => {
 
 			const rows = yield* Effect.promise(() =>
 				database.kysely
-					.selectFrom("user_resource_bundle as urb")
-					.innerJoin("resource_bundle as rb", "rb.id", "urb.resourceBundleId")
+					.selectFrom("user_resource_bundle as assignment")
+					.innerJoin(
+						"resource_bundle as bundle",
+						"bundle.id",
+						"assignment.resourceBundleId",
+					)
 					.select([
-						"urb.id",
-						"urb.expiresAt",
-						"rb.name",
+						"assignment.id",
+						"assignment.expiresAt",
+						"bundle.name",
 					])
-					.where("urb.userId", "=", buyer.id)
-					.where("rb.name", "=", buyer.id)
+					.where("assignment.userId", "=", buyer.id)
+					.where("bundle.name", "=", buyer.id)
 					.execute(),
 			);
 

@@ -20,14 +20,14 @@ export const bundleLimitCloseSyncFx = Effect.fn("bundleLimitCloseSyncFx")(functi
 
 	return yield* dbFx(async (kysely) => {
 		return kysely
-			.selectFrom("user_resource_bundle_limit_stripe as urbls")
+			.selectFrom("user_resource_bundle_limit_stripe as limitStripe")
 			.innerJoin(
-				"user_resource_bundle_limit as urbl",
-				"urbl.id",
-				"urbls.userResourceBundleLimitId",
+				"user_resource_bundle_limit as resourceLimit",
+				"resourceLimit.id",
+				"limitStripe.userResourceBundleLimitId",
 			)
-			.select("urbl.userResourceBundleId")
-			.where("urbls.key", "=", key)
+			.select("resourceLimit.userResourceBundleId as assignmentId")
+			.where("limitStripe.key", "=", key)
 			.execute();
 	});
 });

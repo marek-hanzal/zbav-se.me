@@ -55,7 +55,7 @@ export const sessionSyncFx = Effect.fn("sessionSyncFx")(function* ({
 	 * materialized as purchase bundles below.
 	 */
 	if (session.subscription) {
-		const resourceBundleId = session.metadata?.resourceBundleId;
+		const bundleId = session.metadata?.resourceBundleId;
 		const bundle = session.metadata?.bundle;
 
 		yield* subscriptionSyncFx({
@@ -66,7 +66,7 @@ export const sessionSyncFx = Effect.fn("sessionSyncFx")(function* ({
 			return yield* Effect.void;
 		}
 
-		if (!resourceBundleId || !bundle) {
+		if (!bundleId || !bundle) {
 			return yield* new NotFoundErrorFx({
 				resource: "stripe-session-resource-bundle-metadata",
 				resourceId: session.id,
@@ -90,7 +90,7 @@ export const sessionSyncFx = Effect.fn("sessionSyncFx")(function* ({
 			(lineItem) => {
 				return bundleOpenSyncFx({
 					userId,
-					resourceBundleId,
+					bundleId,
 					bundle,
 					key: `stripe:checkout:${session.id}:${lineItem.id}`,
 					createdAt,
@@ -112,11 +112,11 @@ export const sessionSyncFx = Effect.fn("sessionSyncFx")(function* ({
 		return yield* Effect.void;
 	}
 
-	const resourceBundleId = session.metadata?.resourceBundleId;
+	const bundleId = session.metadata?.resourceBundleId;
 	const bundle = session.metadata?.bundle;
 	const bundleKey = session.metadata?.bundleKey;
 
-	if (!resourceBundleId || !bundle || !bundleKey) {
+	if (!bundleId || !bundle || !bundleKey) {
 		return yield* new NotFoundErrorFx({
 			resource: "stripe-session-resource-bundle-metadata",
 			resourceId: session.id,
@@ -199,7 +199,7 @@ export const sessionSyncFx = Effect.fn("sessionSyncFx")(function* ({
 
 	return yield* bundleOpenSyncFx({
 		userId,
-		resourceBundleId,
+		bundleId,
 		bundle,
 		key: bundleKey,
 		createdAt,

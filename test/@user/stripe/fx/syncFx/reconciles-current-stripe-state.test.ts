@@ -128,14 +128,18 @@ describe("syncFx", () => {
 
 				const subscriptionBundle = yield* Effect.promise(() => {
 					return database.kysely
-						.selectFrom("user_resource_bundle as urb")
-						.innerJoin("resource_bundle as rb", "rb.id", "urb.resourceBundleId")
+						.selectFrom("user_resource_bundle as assignment")
+						.innerJoin(
+							"resource_bundle as bundle",
+							"bundle.id",
+							"assignment.resourceBundleId",
+						)
 						.select([
-							"rb.name",
-							"urb.expiresAt",
+							"bundle.name",
+							"assignment.expiresAt",
 						])
-						.where("urb.userId", "=", buyer.id)
-						.where("rb.name", "=", "package:buyer")
+						.where("assignment.userId", "=", buyer.id)
+						.where("bundle.name", "=", "package:buyer")
 						.executeTakeFirstOrThrow();
 				});
 
@@ -270,20 +274,24 @@ describe("syncFx", () => {
 
 					const activeBundle = yield* Effect.promise(() => {
 						return database.kysely
-							.selectFrom("user_resource_bundle as urb")
-							.innerJoin("resource_bundle as rb", "rb.id", "urb.resourceBundleId")
+							.selectFrom("user_resource_bundle as assignment")
 							.innerJoin(
-								"user_resource_bundle_stripe as urbs",
-								"urbs.userResourceBundleId",
-								"urb.id",
+								"resource_bundle as bundle",
+								"bundle.id",
+								"assignment.resourceBundleId",
+							)
+							.innerJoin(
+								"user_resource_bundle_stripe as stripeLink",
+								"stripeLink.userResourceBundleId",
+								"assignment.id",
 							)
 							.select([
-								"rb.name",
-								"urb.expiresAt",
-								"urbs.subscriptionId",
+								"bundle.name",
+								"assignment.expiresAt",
+								"stripeLink.subscriptionId",
 							])
-							.where("urb.userId", "=", buyer.id)
-							.where("rb.name", "=", "package:buyer")
+							.where("assignment.userId", "=", buyer.id)
+							.where("bundle.name", "=", "package:buyer")
 							.executeTakeFirstOrThrow();
 					});
 
@@ -296,13 +304,17 @@ describe("syncFx", () => {
 
 					const expiredBundle = yield* Effect.promise(() => {
 						return database.kysely
-							.selectFrom("user_resource_bundle as urb")
-							.innerJoin("resource_bundle as rb", "rb.id", "urb.resourceBundleId")
+							.selectFrom("user_resource_bundle as assignment")
+							.innerJoin(
+								"resource_bundle as bundle",
+								"bundle.id",
+								"assignment.resourceBundleId",
+							)
 							.select([
-								"urb.expiresAt",
+								"assignment.expiresAt",
 							])
-							.where("urb.userId", "=", buyer.id)
-							.where("rb.name", "=", "package:buyer")
+							.where("assignment.userId", "=", buyer.id)
+							.where("bundle.name", "=", "package:buyer")
 							.executeTakeFirstOrThrow();
 					});
 
@@ -435,20 +447,24 @@ describe("syncFx", () => {
 
 				const subscriptionBundle = yield* Effect.promise(() => {
 					return database.kysely
-						.selectFrom("user_resource_bundle as urb")
-						.innerJoin("resource_bundle as rb", "rb.id", "urb.resourceBundleId")
+						.selectFrom("user_resource_bundle as assignment")
 						.innerJoin(
-							"user_resource_bundle_stripe as urbs",
-							"urbs.userResourceBundleId",
-							"urb.id",
+							"resource_bundle as bundle",
+							"bundle.id",
+							"assignment.resourceBundleId",
+						)
+						.innerJoin(
+							"user_resource_bundle_stripe as stripeLink",
+							"stripeLink.userResourceBundleId",
+							"assignment.id",
 						)
 						.select([
-							"rb.name",
-							"urb.expiresAt",
-							"urbs.subscriptionId",
+							"bundle.name",
+							"assignment.expiresAt",
+							"stripeLink.subscriptionId",
 						])
-						.where("urb.userId", "=", buyer.id)
-						.where("rb.name", "=", "package:buyer")
+						.where("assignment.userId", "=", buyer.id)
+						.where("bundle.name", "=", "package:buyer")
 						.executeTakeFirstOrThrow();
 				});
 				const syncedSubscription = yield* Effect.promise(() => {
