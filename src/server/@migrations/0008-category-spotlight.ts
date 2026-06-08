@@ -10,7 +10,7 @@ export const CategorySpotlightMigration: Migration = {
 			.addColumn("locale", "text", (col) => col.notNull())
 			.addColumn("weight", "integer", (col) => col.notNull())
 			.addForeignKeyConstraint(
-				"category_spotlight_categoryId_fk",
+				"category_spotlight_[categoryId]_fk",
 				[
 					"categoryId",
 				],
@@ -20,7 +20,7 @@ export const CategorySpotlightMigration: Migration = {
 				],
 				(builder) => builder.onDelete("cascade"),
 			)
-			.addUniqueConstraint("category_spotlight_[categoryId-locale-text]_unique_idx", [
+			.addUniqueConstraint("category_spotlight_[categoryId-locale-text]_uniq", [
 				"categoryId",
 				"locale",
 				"text",

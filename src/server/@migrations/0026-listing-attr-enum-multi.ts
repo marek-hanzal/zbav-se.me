@@ -15,7 +15,7 @@ export const ListingAttrEnumMultiMigration: Migration = {
 			])
 
 			.addForeignKeyConstraint(
-				"listing_attr_enum_multi_[listingId]_fk",
+				"laem_[listingId]_fk",
 				[
 					"listingId",
 				],
@@ -26,7 +26,7 @@ export const ListingAttrEnumMultiMigration: Migration = {
 				(c) => c.onDelete("cascade"),
 			)
 			.addForeignKeyConstraint(
-				"listing_attr_enum_multi_[fieldId]_fk",
+				"laem_[fieldId]_fk",
 				[
 					"fieldId",
 				],
@@ -37,7 +37,7 @@ export const ListingAttrEnumMultiMigration: Migration = {
 				(c) => c.onDelete("cascade"),
 			)
 			.addForeignKeyConstraint(
-				"listing_attr_enum_multi_[fieldId-value]_fk",
+				"laem_[fieldId-value]_fk",
 				[
 					"fieldId",
 					"value",
@@ -53,7 +53,7 @@ export const ListingAttrEnumMultiMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("listing_attr_enum_multi_[fieldId-value-listingId]_idx")
+			.createIndex("laem_[fieldId-value-listingId]_idx")
 			.on("listing_attr_enum_multi")
 			.columns([
 				"fieldId",

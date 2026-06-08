@@ -11,7 +11,7 @@ export const UserResourceBundleMigration: Migration = {
 			.addColumn("availableAt", "timestamptz", (col) => col.notNull())
 			.addColumn("expiresAt", "timestamptz")
 			.addForeignKeyConstraint(
-				"user_resource_bundle_[userId]_fk",
+				"urb_[userId]_fk",
 				[
 					"userId",
 				],
@@ -22,7 +22,7 @@ export const UserResourceBundleMigration: Migration = {
 				(c) => c.onDelete("cascade"),
 			)
 			.addForeignKeyConstraint(
-				"user_resource_bundle_[resourceBundleId]_fk",
+				"urb_[rbId]_fk",
 				[
 					"resourceBundleId",
 				],
@@ -34,7 +34,7 @@ export const UserResourceBundleMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("user_resource_bundle_[userId-availableAt]_idx")
+			.createIndex("urb_[userId-availableAt]_idx")
 			.on("user_resource_bundle")
 			.columns([
 				"userId",
@@ -43,13 +43,13 @@ export const UserResourceBundleMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("user_resource_bundle_[resourceBundleId]_idx")
+			.createIndex("urb_[rbId]_idx")
 			.on("user_resource_bundle")
 			.column("resourceBundleId")
 			.execute();
 
 		await db.schema
-			.createIndex("user_resource_bundle_[userId-createdAt]_idx")
+			.createIndex("urb_[userId-createdAt]_idx")
 			.on("user_resource_bundle")
 			.columns([
 				"userId",

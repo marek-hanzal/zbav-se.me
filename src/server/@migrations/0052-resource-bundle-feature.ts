@@ -9,7 +9,7 @@ export const ResourceBundleFeatureMigration: Migration = {
 			.addColumn("resourceDefinitionId", "text", (col) => col.notNull())
 			.addColumn("expiresAt", "timestamptz")
 			.addForeignKeyConstraint(
-				"resource_bundle_feature_[resourceBundleId]_fk",
+				"rbf_[rbId]_fk",
 				[
 					"resourceBundleId",
 				],
@@ -20,7 +20,7 @@ export const ResourceBundleFeatureMigration: Migration = {
 				(c) => c.onDelete("cascade"),
 			)
 			.addForeignKeyConstraint(
-				"resource_bundle_feature_[resourceDefinitionId]_fk",
+				"rbf_[rdId]_fk",
 				[
 					"resourceDefinitionId",
 				],
@@ -30,7 +30,7 @@ export const ResourceBundleFeatureMigration: Migration = {
 				],
 			)
 			.addUniqueConstraint(
-				"resource_bundle_feature_[bundle-resource]_uniq",
+				"rbf_[rbId-rdId]_uniq",
 				[
 					"resourceBundleId",
 					"resourceDefinitionId",

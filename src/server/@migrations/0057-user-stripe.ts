@@ -19,10 +19,10 @@ export const UserStripeMigration: Migration = {
 				],
 				(c) => c.onDelete("cascade"),
 			)
-			.addUniqueConstraint("user_stripe_[userId]_unique_idx", [
+			.addUniqueConstraint("user_stripe_[userId]_uniq", [
 				"userId",
 			])
-			.addUniqueConstraint("user_stripe_[customerId]_unique_idx", [
+			.addUniqueConstraint("user_stripe_[customerId]_uniq", [
 				"customerId",
 			])
 			.execute();

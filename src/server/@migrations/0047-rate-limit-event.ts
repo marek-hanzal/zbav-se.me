@@ -16,7 +16,7 @@ export const RateLimitEventMigration: Migration = {
 			])
 			.addCheckConstraint("rate_limit_event_[count]_chk", sql`"count" >= 0`)
 			.addForeignKeyConstraint(
-				"rate_limit_event_[rule]_fk",
+				"rle_[rule]_fk",
 				[
 					"rule",
 				],
@@ -29,13 +29,13 @@ export const RateLimitEventMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("rate_limit_event_[window]_idx")
+			.createIndex("rle_[window]_idx")
 			.on("rate_limit_event")
 			.column("window")
 			.execute();
 
 		await db.schema
-			.createIndex("rate_limit_event_[rule-window]_idx")
+			.createIndex("rle_[rule-window]_idx")
 			.on("rate_limit_event")
 			.columns([
 				"rule",

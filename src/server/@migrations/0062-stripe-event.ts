@@ -10,7 +10,7 @@ export const StripeEventMigration: Migration = {
 			.addColumn("payload", "jsonb", (col) => col.notNull())
 			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
 			.addColumn("processedAt", "timestamptz")
-			.addUniqueConstraint("stripe_event_[eventId]_unique_idx", [
+			.addUniqueConstraint("stripe_event_[eventId]_uniq", [
 				"eventId",
 			])
 			.execute();

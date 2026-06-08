@@ -9,7 +9,7 @@ export const UserResourceBundleStripeMigration: Migration = {
 			.addColumn("subscriptionId", "text", (col) => col.notNull())
 			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
 			.addForeignKeyConstraint(
-				"user_resource_bundle_stripe_[userResourceBundleId]_fk",
+				"urbs_[urbId]_fk",
 				[
 					"userResourceBundleId",
 				],
@@ -19,10 +19,10 @@ export const UserResourceBundleStripeMigration: Migration = {
 				],
 				(c) => c.onDelete("cascade"),
 			)
-			.addUniqueConstraint("user_resource_bundle_stripe_[userResourceBundleId]_unique_idx", [
+			.addUniqueConstraint("urbs_[urbId]_uniq", [
 				"userResourceBundleId",
 			])
-			.addUniqueConstraint("user_resource_bundle_stripe_[subscriptionId]_unique_idx", [
+			.addUniqueConstraint("urbs_[subscriptionId]_uniq", [
 				"subscriptionId",
 			])
 			.execute();

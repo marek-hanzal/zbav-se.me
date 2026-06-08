@@ -29,7 +29,7 @@ export const UserExMigration: Migration = {
 				],
 				(c) => c.onDelete("cascade"),
 			)
-			.addUniqueConstraint("user_ex_[userId]_unique_idx", [
+			.addUniqueConstraint("user_ex_[userId]_uniq", [
 				"userId",
 			])
 			.execute();

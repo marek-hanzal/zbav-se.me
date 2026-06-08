@@ -43,7 +43,7 @@ export const LocationMigration: Migration = {
 			//
 			.addCheckConstraint("location_[lat]_chk", sql`"lat" >= -90 AND "lat" <= 90`)
 			.addCheckConstraint("location_[lon]_chk", sql`"lon" >= -180 AND "lon" <= 180`)
-			.addUniqueConstraint("location_[lang-hash]_unique_idx", [
+			.addUniqueConstraint("location_[lang-hash]_uniq", [
 				"lang",
 				"hash",
 			])

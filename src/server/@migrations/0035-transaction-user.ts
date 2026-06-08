@@ -32,7 +32,7 @@ export const TransactionUserMigration: Migration = {
 				],
 				(c) => c.onDelete("cascade"),
 			)
-			.addUniqueConstraint("transaction_user_[transactionId-userId]_unique_idx", [
+			.addUniqueConstraint("transaction_user_[transactionId-userId]_uniq", [
 				"transactionId",
 				"userId",
 			])

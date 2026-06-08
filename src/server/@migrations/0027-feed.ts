@@ -47,7 +47,7 @@ export const FeedMigration: Migration = {
 				],
 				(c) => c.onDelete("set null"),
 			)
-			.addUniqueConstraint("feed_[userId-name-type]_unique_idx", [
+			.addUniqueConstraint("feed_[userId-name-type]_uniq", [
 				"userId",
 				"name",
 				"type",

@@ -14,7 +14,7 @@ export const ListingAttrEnumSingleMigration: Migration = {
 			])
 
 			.addForeignKeyConstraint(
-				"listing_attr_enum_single_[listingId]_fk",
+				"laes_[listingId]_fk",
 				[
 					"listingId",
 				],
@@ -25,7 +25,7 @@ export const ListingAttrEnumSingleMigration: Migration = {
 				(c) => c.onDelete("cascade"),
 			)
 			.addForeignKeyConstraint(
-				"listing_attr_enum_single_[fieldId]_fk",
+				"laes_[fieldId]_fk",
 				[
 					"fieldId",
 				],
@@ -36,7 +36,7 @@ export const ListingAttrEnumSingleMigration: Migration = {
 				(c) => c.onDelete("cascade"),
 			)
 			.addForeignKeyConstraint(
-				"listing_attr_enum_single_[fieldId-value]_fk",
+				"laes_[fieldId-value]_fk",
 				[
 					"fieldId",
 					"value",
@@ -52,7 +52,7 @@ export const ListingAttrEnumSingleMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("listing_attr_enum_single_[fieldId-value-listingId]_idx")
+			.createIndex("laes_[fieldId-value-listingId]_idx")
 			.on("listing_attr_enum_single")
 			.columns([
 				"fieldId",

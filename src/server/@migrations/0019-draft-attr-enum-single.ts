@@ -14,7 +14,7 @@ export const DraftAttrEnumSingleMigration: Migration = {
 			])
 
 			.addForeignKeyConstraint(
-				"draft_attr_enum_single_[draftId]_fk",
+				"daes_[draftId]_fk",
 				[
 					"draftId",
 				],
@@ -25,7 +25,7 @@ export const DraftAttrEnumSingleMigration: Migration = {
 				(c) => c.onDelete("cascade"),
 			)
 			.addForeignKeyConstraint(
-				"draft_attr_enum_single_[fieldId]_fk",
+				"daes_[fieldId]_fk",
 				[
 					"fieldId",
 				],
@@ -36,7 +36,7 @@ export const DraftAttrEnumSingleMigration: Migration = {
 				(c) => c.onDelete("cascade"),
 			)
 			.addForeignKeyConstraint(
-				"draft_attr_enum_single_[fieldId-value]_fk",
+				"daes_[fieldId-value]_fk",
 				[
 					"fieldId",
 					"value",
@@ -52,7 +52,7 @@ export const DraftAttrEnumSingleMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("draft_attr_enum_single_[fieldId-value-draftId]_idx")
+			.createIndex("daes_[fieldId-value-draftId]_idx")
 			.on("draft_attr_enum_single")
 			.columns([
 				"fieldId",
