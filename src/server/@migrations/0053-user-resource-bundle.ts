@@ -31,10 +31,6 @@ export const UserResourceBundleMigration: Migration = {
 					"id",
 				],
 			)
-			.addUniqueConstraint("user_resource_bundle_[userId-resourceBundleId]_unique_idx", [
-				"userId",
-				"resourceBundleId",
-			])
 			.execute();
 
 		await db.schema

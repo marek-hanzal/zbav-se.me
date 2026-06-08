@@ -52,12 +52,15 @@ import { ResourceBundleLimitMigration } from "~/server/@migrations/0050-resource
 import { ResourceBundleItemMigration } from "~/server/@migrations/0051-resource-bundle-item";
 import { ResourceBundleFeatureMigration } from "~/server/@migrations/0052-resource-bundle-feature";
 import { UserResourceBundleMigration } from "~/server/@migrations/0053-user-resource-bundle";
-import { UserStripeMigration } from "~/server/@migrations/0054-user-stripe";
-import { UserResourceBundleStripeMigration } from "~/server/@migrations/0055-user-resource-bundle-stripe";
-import { StripeEventMigration } from "~/server/@migrations/0056-stripe-event";
-import { ResourceBundleItemStripeMigration } from "~/server/@migrations/0057-resource-bundle-item-stripe";
-import { ResourceBundleLimitStripeMigration } from "~/server/@migrations/0058-resource-bundle-limit-stripe";
-import { ResourceBundleFeatureStripeMigration } from "~/server/@migrations/0059-resource-bundle-feature-stripe";
+import { UserResourceBundleLimitMigration } from "~/server/@migrations/0054-user-resource-bundle-limit";
+import { UserResourceBundleItemMigration } from "~/server/@migrations/0055-user-resource-bundle-item";
+import { UserResourceBundleFeatureMigration } from "~/server/@migrations/0056-user-resource-bundle-feature";
+import { UserStripeMigration } from "~/server/@migrations/0057-user-stripe";
+import { UserResourceBundleStripeMigration } from "~/server/@migrations/0058-user-resource-bundle-stripe";
+import { UserResourceBundleItemStripeMigration } from "~/server/@migrations/0059-user-resource-bundle-item-stripe";
+import { UserResourceBundleLimitStripeMigration } from "~/server/@migrations/0060-user-resource-bundle-limit-stripe";
+import { UserResourceBundleFeatureStripeMigration } from "~/server/@migrations/0061-user-resource-bundle-feature-stripe";
+import { StripeEventMigration } from "~/server/@migrations/0062-stripe-event";
 
 export const migrations = {
 	"0000-postgres-extensions": PostgresExtensionsMigration,
@@ -114,10 +117,13 @@ export const migrations = {
 	"0051-resource-bundle-item": ResourceBundleItemMigration,
 	"0052-resource-bundle-feature": ResourceBundleFeatureMigration,
 	"0053-user-resource-bundle": UserResourceBundleMigration,
-	"0054-user-stripe": UserStripeMigration,
-	"0055-user-resource-bundle-stripe": UserResourceBundleStripeMigration,
-	"0056-stripe-event": StripeEventMigration,
-	"0057-resource-bundle-item-stripe": ResourceBundleItemStripeMigration,
-	"0058-resource-bundle-limit-stripe": ResourceBundleLimitStripeMigration,
-	"0059-resource-bundle-feature-stripe": ResourceBundleFeatureStripeMigration,
+	"0054-user-resource-bundle-limit": UserResourceBundleLimitMigration,
+	"0055-user-resource-bundle-item": UserResourceBundleItemMigration,
+	"0056-user-resource-bundle-feature": UserResourceBundleFeatureMigration,
+	"0057-user-stripe": UserStripeMigration,
+	"0058-user-resource-bundle-stripe": UserResourceBundleStripeMigration,
+	"0059-user-resource-bundle-item-stripe": UserResourceBundleItemStripeMigration,
+	"0060-user-resource-bundle-limit-stripe": UserResourceBundleLimitStripeMigration,
+	"0061-user-resource-bundle-feature-stripe": UserResourceBundleFeatureStripeMigration,
+	"0062-stripe-event": StripeEventMigration,
 };

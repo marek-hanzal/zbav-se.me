@@ -8,9 +8,12 @@ export const ResourceBundleMigration: Migration = {
 			.createTable("resource_bundle")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("name", "text", (col) => col.notNull())
-			.addUniqueConstraint("resource_bundle_[name]_unique_idx", [
-				"name",
-			])
+			.execute();
+
+		await db.schema
+			.createIndex("resource_bundle_[name]_idx")
+			.on("resource_bundle")
+			.column("name")
 			.execute();
 
 		await db
@@ -21,7 +24,6 @@ export const ResourceBundleMigration: Migration = {
 					name,
 				})),
 			)
-			.onConflict((oc) => oc.column("name").doNothing())
 			.execute();
 	},
 };
