@@ -9,7 +9,7 @@ export const ResourceBundleItemMigration: Migration = {
 			.addColumn("resourceBundleId", "text", (col) => col.notNull())
 			.addColumn("resourceDefinitionId", "text", (col) => col.notNull())
 			.addColumn("amount", "decimal(10, 2)", (col) => col.notNull())
-			.addColumn("expiration", "integer")
+			.addColumn("expiresAt", "timestamptz")
 			.addForeignKeyConstraint(
 				"resource_bundle_item_[resourceBundleId]_fk",
 				[
@@ -39,10 +39,6 @@ export const ResourceBundleItemMigration: Migration = {
 				],
 			)
 			.addCheckConstraint("resource_bundle_item_[amount]_chk", sql`"amount" >= 0`)
-			.addCheckConstraint(
-				"resource_bundle_item_[expiration]_chk",
-				sql`"expiration" IS NULL OR "expiration" >= 0`,
-			)
 			.execute();
 	},
 };

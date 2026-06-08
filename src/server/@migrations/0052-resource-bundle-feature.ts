@@ -7,6 +7,7 @@ export const ResourceBundleFeatureMigration: Migration = {
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("resourceBundleId", "text", (col) => col.notNull())
 			.addColumn("resourceDefinitionId", "text", (col) => col.notNull())
+			.addColumn("expiresAt", "timestamptz")
 			.addForeignKeyConstraint(
 				"resource_bundle_feature_[resourceBundleId]_fk",
 				[

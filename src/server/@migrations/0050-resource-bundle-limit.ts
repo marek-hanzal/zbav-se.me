@@ -9,6 +9,7 @@ export const ResourceBundleLimitMigration: Migration = {
 			.addColumn("resourceBundleId", "text", (col) => col.notNull())
 			.addColumn("resourceDefinitionId", "text", (col) => col.notNull())
 			.addColumn("limit", "decimal(10, 2)", (col) => col.notNull())
+			.addColumn("expiresAt", "timestamptz")
 			.addForeignKeyConstraint(
 				"resource_bundle_limit_[resourceBundleId]_fk",
 				[

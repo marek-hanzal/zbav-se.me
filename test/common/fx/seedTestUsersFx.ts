@@ -99,7 +99,7 @@ export const seedTestUsersFx = Effect.fn("seedTestUsersFx")(function* ({
 		const resourceBundle = await database.kysely
 			.selectFrom("resource_bundle")
 			.select("id")
-			.where("name", "=", ResourceBundleEnumSchema.enum["extra:founders.promo"])
+			.where("name", "=", ResourceBundleEnumSchema.enum["welcome:founders:promo"])
 			.executeTakeFirstOrThrow();
 
 		await database.kysely

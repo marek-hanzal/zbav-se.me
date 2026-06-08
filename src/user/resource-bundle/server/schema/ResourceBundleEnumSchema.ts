@@ -46,6 +46,14 @@ const ExtraEnumSchema = z.enum([
 	"extra:token:small",
 	"extra:token:medium",
 	"extra:token:large",
+	//
+	"extra:mark",
+	"extra:top",
+	"extra:top-maxxi",
+    //
+    "extra:brand",
+    "extra:early-delivery",
+    "extra:extra-listings",
 ]);
 
 export const ResourceBundleEnumSchema = z.enum([

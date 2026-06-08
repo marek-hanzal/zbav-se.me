@@ -314,6 +314,62 @@ export const bundles: Record<
 		limits: {},
 		features: {},
 	},
+	"extra:mark": {
+		items: {
+			"seller:item:listing.mark": {
+				amount: 10,
+				expiration: null,
+			},
+		},
+		limits: {},
+		features: {},
+	},
+	"extra:top": {
+		items: {
+			"seller:item:listing.top": {
+				amount: 10,
+				expiration: null,
+			},
+		},
+		limits: {},
+		features: {},
+	},
+	"extra:top-maxxi": {
+		items: {
+			"seller:item:listing.top-maxxi": {
+				amount: 3,
+				expiration: null,
+			},
+		},
+		limits: {},
+		features: {},
+	},
+	"extra:brand": {
+		items: {},
+		limits: {},
+		features: {
+			"seller:feature:brand": {},
+		},
+	},
+	"extra:early-delivery": {
+		items: {
+			"seller:feature:listing.early-delivery": {
+				amount: 5,
+				expiration: null,
+			},
+		},
+		limits: {},
+		features: {},
+	},
+	"extra:extra-listings": {
+		items: {},
+		limits: {
+			"seller:limit:listing.count": {
+				limit: 20,
+			},
+		},
+		features: {},
+	},
 
 	/**
 	 * Extra bundles not being sold directly
