@@ -494,15 +494,16 @@ test("Stripe checkout provisions buyer subscription with token upsell", async ({
 	const tokenItems = await database.kysely
 		.selectFrom("user_resource_bundle as urb")
 		.innerJoin("resource_bundle as rb", "rb.id", "urb.resourceBundleId")
-		.innerJoin("resource_bundle_item as rbi", "rbi.resourceBundleId", "rb.id")
+		.innerJoin("user_resource_bundle_item as urbi", "urbi.userResourceBundleId", "urb.id")
 		.select([
 			"rb.name",
-			"rbi.amount",
-			"rbi.resourceDefinitionId",
+			"urbi.amount",
+			"urbi.resourceDefinitionId",
 		])
 		.where("urb.userId", "=", registeredUser.id)
 		.where("urb.expiresAt", "is", null)
-		.where("rbi.resourceDefinitionId", "=", "common:item:token")
+		.where("urbi.expiresAt", "is", null)
+		.where("urbi.resourceDefinitionId", "=", "common:item:token")
 		.orderBy("rb.name", "asc")
 		.execute();
 
