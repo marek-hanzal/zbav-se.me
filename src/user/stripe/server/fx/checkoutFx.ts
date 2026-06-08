@@ -77,6 +77,8 @@ export const checkoutFx = Effect.fn("checkoutFx")(function* ({
 		bundleKey,
 	};
 
+	const successUrl = urlSuccess();
+
 	const session = yield* Effect.promise(() => {
 		return stripe.checkout.sessions.create({
 			mode: "subscription",
@@ -93,7 +95,7 @@ export const checkoutFx = Effect.fn("checkoutFx")(function* ({
 					quantity: 1,
 				},
 			],
-			success_url: urlSuccess(),
+			success_url: `${successUrl}${successUrl.includes("?") ? "&" : "?"}session_id={CHECKOUT_SESSION_ID}`,
 			cancel_url: urlCancel(),
 		});
 	});

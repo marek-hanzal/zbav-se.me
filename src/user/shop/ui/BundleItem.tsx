@@ -24,10 +24,12 @@ export const BundleItem: FC<BundleItem.Props> = ({ bundle, ...props }) => {
 
 	return (
 		<Container
+			{...props}
 			data-ui={"BundleItem"}
+			data-resource-bundle={bundle.bundle}
+			data-ui-bundle={bundle.bundle}
 			data-ui-layout="vertical"
 			data-ui-gap="md"
-			{...props}
 		>
 			<Container
 				data-ui={"BundleItem-[Header]"}
@@ -102,7 +104,10 @@ export const BundleItem: FC<BundleItem.Props> = ({ bundle, ...props }) => {
 				/>
 			</Container>
 
-			<CheckoutButton bundle={bundle.bundle} />
+			<CheckoutButton
+				bundle={bundle.bundle}
+				isActive={isActive}
+			/>
 		</Container>
 	);
 };

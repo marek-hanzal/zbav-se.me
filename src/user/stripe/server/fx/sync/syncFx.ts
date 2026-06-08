@@ -139,6 +139,10 @@ export const syncFx = Effect.fn("syncFx")(function* ({ customerId }: syncFx.Prop
 		(subscription) => {
 			return subscriptionSyncFx({
 				subscription: subscription.id,
+				fallback: {
+					bundleId: sessionBundles.get(subscription.id),
+					userId: user.userId,
+				},
 			}).pipe(Effect.ignore);
 		},
 		{

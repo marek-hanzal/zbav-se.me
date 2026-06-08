@@ -4,22 +4,20 @@ import { Button } from "@/lib/client/button";
 import { useLocale } from "@/lib/client/locale";
 import { useTranslator } from "@/lib/client/translation";
 import { UnlockIcon } from "~/common/ui/icon";
-import { withBundleActiveQuery } from "~/user/resource-bundle/query/withBundleActiveQuery";
 import { withCheckoutMutation } from "~/user/stripe/mutation/withCheckoutMutation";
+import type { CheckoutBundleEnumSchema } from "~/user/stripe/server/schema/CheckoutBundleEnumSchema";
 
 export namespace CheckoutButton {
 	export interface Props extends Button.Props {
-		bundle: string;
+		bundle: CheckoutBundleEnumSchema.Type;
+		isActive: boolean;
 	}
 }
 
-export const CheckoutButton: FC<CheckoutButton.Props> = ({ bundle, ...props }) => {
+export const CheckoutButton: FC<CheckoutButton.Props> = ({ bundle, isActive, ...props }) => {
 	const locale = useLocale();
 	const navigate = useNavigate();
 	const translator = useTranslator();
-	const { data: isActive } = withBundleActiveQuery.useSuspenseQuery({
-		bundle,
-	});
 	const mutation = withCheckoutMutation.useMutation({
 		async onPostMutation({ result }) {
 			await navigate({
@@ -30,7 +28,11 @@ export const CheckoutButton: FC<CheckoutButton.Props> = ({ bundle, ...props }) =
 
 	return (
 		<Button
+			{...props}
 			data-ui={"CheckoutButton"}
+			data-action={"checkout"}
+			data-resource-bundle={bundle}
+			data-ui-bundle={bundle}
 			iconEnabled={UnlockIcon}
 			loading={mutation.isPending}
 			disabled={mutation.isPending || isActive}
@@ -40,7 +42,6 @@ export const CheckoutButton: FC<CheckoutButton.Props> = ({ bundle, ...props }) =
 					bundle,
 				});
 			}}
-			{...props}
 		>
 			{isActive
 				? translator.text("Subscription already active (label)")

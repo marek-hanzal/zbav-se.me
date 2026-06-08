@@ -1,16 +1,20 @@
 import type { Page } from "@playwright/test";
 import Stripe from "stripe";
 import { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/ResourceDefinitionEnumSchema";
+import { ResourceBundleEnumSchema } from "~/user/resource-bundle/server/schema/ResourceBundleEnumSchema";
 import { expect, test } from "../test";
 import { createUser } from "../utils/createUser";
+
+test.setTimeout(120_000);
+test.describe.configure({
+	mode: "serial",
+});
 
 const STRIPE_E2E_DATABASE_NAME = "e2e-stripe-billing";
 
 test.use({
 	dbName: STRIPE_E2E_DATABASE_NAME,
 });
-
-test.setTimeout(120_000);
 
 interface StripeCardFormProps {
 	cardholderName: string;
@@ -108,6 +112,39 @@ async function signUpBuyer(page: Page) {
 	return user;
 }
 
+async function clickBuyerCheckout(page: Page) {
+	const scopedButton = page
+		.locator(
+			'[data-ui="BundleItem"][data-resource-bundle="package:buyer"] [data-ui="CheckoutButton"]',
+		)
+		.first();
+	const directButton = page
+		.locator('[data-ui="CheckoutButton"][data-resource-bundle="package:buyer"]')
+		.first();
+	const checkoutButtons = page.locator('[data-ui="CheckoutButton"]');
+
+	await expect(checkoutButtons.first()).toBeAttached({
+		timeout: 30_000,
+	});
+
+	const checkoutButton = (await scopedButton.count())
+		? scopedButton
+		: (await directButton.count())
+			? directButton
+			: checkoutButtons.first();
+
+	await expect(checkoutButton).toBeEnabled({
+		timeout: 30_000,
+	});
+	await checkoutButton.evaluate((element) => {
+		element.scrollIntoView({
+			block: "center",
+			inline: "center",
+		});
+	});
+	await checkoutButton.click();
+}
+
 test("Stripe checkout provisions buyer subscription", async ({ page, database }) => {
 	test.skip(!process.env.SERVER_STRIPE_SECRET, "SERVER_STRIPE_SECRET is required");
 	test.skip(
@@ -129,10 +166,7 @@ test("Stripe checkout provisions buyer subscription", async ({ page, database })
 		.executeTakeFirstOrThrow();
 
 	await page.goto("/cs/app/shop");
-	const checkoutButton = page.locator('[data-ui="CheckoutButton"]').first();
-
-	await expect(checkoutButton).toBeEnabled();
-	await checkoutButton.click();
+	await clickBuyerCheckout(page);
 	await page.waitForURL(/^https:\/\/checkout\.stripe\.com\//);
 
 	await fillStripeCardForm({
@@ -140,7 +174,7 @@ test("Stripe checkout provisions buyer subscription", async ({ page, database })
 		page,
 	});
 	await page.locator('[data-testid="hosted-payment-submit-button"]').click();
-	await page.waitForURL(/\/cs\/app\/shop\?stripe=success$/);
+	await page.waitForURL(/\/cs\/app\/shop\?stripe=success/);
 
 	await expect
 		.poll(
@@ -191,7 +225,7 @@ test("Stripe checkout provisions buyer subscription", async ({ page, database })
 
 	await page.reload();
 	await expect(page.locator('[data-ui="BundleItem-[Active]"]').first()).toBeVisible();
-	await expect(checkoutButton).toContainText(/active/i);
+	await expect(page.locator('[data-ui="CheckoutButton"]').first()).toContainText(/active/i);
 });
 
 test("Stripe checkout reactivates buyer subscription after external cancellation", async ({
@@ -218,10 +252,7 @@ test("Stripe checkout reactivates buyer subscription after external cancellation
 		.executeTakeFirstOrThrow();
 
 	await page.goto("/cs/app/shop");
-	const checkoutButton = page.locator('[data-ui="CheckoutButton"]').first();
-
-	await expect(checkoutButton).toBeEnabled();
-	await checkoutButton.click();
+	await clickBuyerCheckout(page);
 	await page.waitForURL(/^https:\/\/checkout\.stripe\.com\//);
 
 	await fillStripeCardForm({
@@ -229,7 +260,7 @@ test("Stripe checkout reactivates buyer subscription after external cancellation
 		page,
 	});
 	await page.locator('[data-testid="hosted-payment-submit-button"]').click();
-	await page.waitForURL(/\/cs\/app\/shop\?stripe=success$/);
+	await page.waitForURL(/\/cs\/app\/shop\?stripe=success/);
 
 	await expect
 		.poll(
@@ -289,8 +320,7 @@ test("Stripe checkout reactivates buyer subscription after external cancellation
 		.toBe(true);
 
 	await page.goto("/cs/app/shop");
-	await expect(checkoutButton).toBeEnabled();
-	await checkoutButton.click();
+	await clickBuyerCheckout(page);
 	await page.waitForURL(/^https:\/\/checkout\.stripe\.com\//);
 
 	await fillStripeCardForm({
@@ -298,7 +328,7 @@ test("Stripe checkout reactivates buyer subscription after external cancellation
 		page,
 	});
 	await page.locator('[data-testid="hosted-payment-submit-button"]').click();
-	await page.waitForURL(/\/cs\/app\/shop\?stripe=success$/);
+	await page.waitForURL(/\/cs\/app\/shop\?stripe=success/);
 
 	await expect
 		.poll(
@@ -340,7 +370,7 @@ test("Stripe checkout reactivates buyer subscription after external cancellation
 
 	await page.reload();
 	await expect(page.locator('[data-ui="BundleItem-[Active]"]').first()).toBeVisible();
-	await expect(checkoutButton).toContainText(/active/i);
+	await expect(page.locator('[data-ui="CheckoutButton"]').first()).toContainText(/active/i);
 });
 
 test("Stripe checkout provisions buyer subscription with token upsell", async ({
@@ -368,10 +398,7 @@ test("Stripe checkout provisions buyer subscription with token upsell", async ({
 		.executeTakeFirstOrThrow();
 
 	await page.goto("/cs/app/shop");
-	const checkoutButton = page.locator('[data-ui="CheckoutButton"]').first();
-
-	await expect(checkoutButton).toBeEnabled();
-	await checkoutButton.click();
+	await clickBuyerCheckout(page);
 	await page.waitForURL(/^https:\/\/checkout\.stripe\.com\//);
 
 	await fillStripeCardForm({
@@ -379,7 +406,7 @@ test("Stripe checkout provisions buyer subscription with token upsell", async ({
 		page,
 	});
 	await page.locator('[data-testid="hosted-payment-submit-button"]').click();
-	await page.waitForURL(/\/cs\/app\/shop\?stripe=success$/);
+	await page.waitForURL(/\/cs\/app\/shop\?stripe=success/);
 
 	await expect
 		.poll(
@@ -410,18 +437,18 @@ test("Stripe checkout provisions buyer subscription with token upsell", async ({
 		.select("customerId")
 		.where("userId", "=", registeredUser.id)
 		.executeTakeFirstOrThrow();
-	const resourceBundle = await database.kysely
+	const upsellBundle = await database.kysely
 		.selectFrom("resource_bundle")
 		.select([
 			"id",
 			"name",
 		])
-		.where("name", "=", "package:buyer")
+		.where("name", "=", ResourceBundleEnumSchema.enum["extra:token:small"])
 		.executeTakeFirstOrThrow();
 	const prices = await stripe.prices.list({
 		active: true,
 		lookup_keys: [
-			ResourceDefinitionEnumSchema.enum["common:item:token"],
+			upsellBundle.name,
 		],
 		limit: 2,
 	});
@@ -429,7 +456,7 @@ test("Stripe checkout provisions buyer subscription with token upsell", async ({
 
 	if (!upsellPrice) {
 		throw new Error(
-			`Expected ${ResourceDefinitionEnumSchema.enum["common:item:token"]} Stripe price`,
+			`Expected ${ResourceBundleEnumSchema.enum["extra:token:small"]} Stripe price`,
 		);
 	}
 
@@ -445,15 +472,15 @@ test("Stripe checkout provisions buyer subscription with token upsell", async ({
 			},
 		],
 		metadata: {
-			bundle: resourceBundle.name,
+			bundle: upsellBundle.name,
 			bundleKey,
 			customerId: userStripe.customerId,
 			priceId: upsellPrice.id,
-			resourceBundleId: resourceBundle.id,
+			resourceBundleId: upsellBundle.id,
 			userId: registeredUser.id,
 		},
 		mode: "payment",
-		success_url: `${appOrigin}/cs/app/shop?stripe=success-upsell`,
+		success_url: `${appOrigin}/cs/app/shop?stripe=success-upsell&session_id={CHECKOUT_SESSION_ID}`,
 	});
 
 	if (!upsellSession.url) {
@@ -466,7 +493,7 @@ test("Stripe checkout provisions buyer subscription with token upsell", async ({
 		page,
 	});
 	await page.locator('[data-testid="hosted-payment-submit-button"]').click();
-	await page.waitForURL(/\/cs\/app\/shop\?stripe=success-upsell$/);
+	await page.waitForURL(/\/cs\/app\/shop\?stripe=success-upsell/);
 
 	await expect
 		.poll(
@@ -515,7 +542,7 @@ test("Stripe checkout provisions buyer subscription with token upsell", async ({
 		},
 		{
 			name: bundleKey,
-			amount: "150.00",
+			amount: "149.00",
 			resourceDefinitionId: ResourceDefinitionEnumSchema.enum["common:item:token"],
 		},
 	]);

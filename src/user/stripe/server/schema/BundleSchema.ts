@@ -2,10 +2,11 @@ import { z } from "zod";
 import { ResourceBundleFeatureSchema } from "~/common/resource-bundle-feature/server/schema/ResourceBundleFeatureSchema";
 import { ResourceBundleItemSchema } from "~/common/resource-bundle-item/server/schema/ResourceBundleItemSchema";
 import { ResourceBundleLimitSchema } from "~/common/resource-bundle-limit/server/schema/ResourceBundleLimitSchema";
+import { CheckoutBundleEnumSchema } from "~/user/stripe/server/schema/CheckoutBundleEnumSchema";
 
 export const BundleSchema = z
 	.looseObject({
-		bundle: z.string().min(1),
+		bundle: CheckoutBundleEnumSchema,
 		name: z.string().min(1),
 		price: z.coerce.number().nonnegative(),
 		items: z.array(

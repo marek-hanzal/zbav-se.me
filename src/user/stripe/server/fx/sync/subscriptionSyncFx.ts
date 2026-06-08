@@ -18,6 +18,11 @@ export namespace subscriptionSyncFx {
 	export interface Props {
 		/** Subscription ID or expanded object. The current subscription is always refetched. */
 		subscription: string | Stripe.Subscription;
+		/** Checkout Session metadata fallback used while Stripe propagates subscription metadata. */
+		fallback?: {
+			bundleId?: string;
+			userId?: string;
+		};
 	}
 }
 
@@ -48,6 +53,7 @@ const customerIdOf = (customer: Stripe.Subscription["customer"]) => {
 /** Syncs one Stripe subscription into one local user resource bundle. */
 export const subscriptionSyncFx = Effect.fn("subscriptionSyncFx")(function* ({
 	subscription: source,
+	fallback,
 }: subscriptionSyncFx.Props) {
 	const logger = yield* getLoggerFx("subscriptionSyncFx");
 	logger.trace("subscriptionSyncFx", {
@@ -59,7 +65,7 @@ export const subscriptionSyncFx = Effect.fn("subscriptionSyncFx")(function* ({
 	});
 	const date = yield* DateServiceFx;
 	const now = date.now().toJSDate();
-	const bundleId = subscription.metadata.resourceBundleId;
+	const bundleId = subscription.metadata.resourceBundleId ?? fallback?.bundleId;
 
 	if (!bundleId) {
 		return yield* new NotFoundErrorFx({
@@ -87,15 +93,27 @@ export const subscriptionSyncFx = Effect.fn("subscriptionSyncFx")(function* ({
 		});
 	}
 
-	const user = yield* dbFx(async (kysely) => {
-		return kysely
-			.selectFrom("user_stripe")
-			.select([
-				"userId",
-			])
-			.where("customerId", "=", customerIdOf(subscription.customer))
-			.executeTakeFirst();
-	});
+	let user:
+		| {
+				userId: string;
+		  }
+		| undefined;
+
+	if (fallback?.userId) {
+		user = {
+			userId: fallback.userId,
+		};
+	} else {
+		user = yield* dbFx(async (kysely) => {
+			return kysely
+				.selectFrom("user_stripe")
+				.select([
+					"userId",
+				])
+				.where("customerId", "=", customerIdOf(subscription.customer))
+				.executeTakeFirst();
+		});
+	}
 
 	if (!user) {
 		return yield* new SyncSkipErrorFx({

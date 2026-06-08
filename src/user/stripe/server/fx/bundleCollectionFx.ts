@@ -3,16 +3,29 @@ import { match, P } from "ts-pattern";
 import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
-import { ResourceBundleEnumSchema } from "~/user/resource-bundle/server/schema/ResourceBundleEnumSchema";
 import { stripeClientFx } from "~/user/stripe/server/fx/stripeClientFx";
+import { CheckoutBundleEnumSchema } from "~/user/stripe/server/schema/CheckoutBundleEnumSchema";
+import type { BundleSchema } from "../schema/BundleSchema";
 
 export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 	const logger = yield* getLoggerFx("bundleCollectionFx");
 	logger.trace("bundleCollectionFx");
 
 	const stripe = yield* stripeClientFx();
+	const checkoutBundles = CheckoutBundleEnumSchema.options;
+	const orderByName = new Map(
+		checkoutBundles.map((bundle, index) => [
+			bundle,
+			index,
+		]),
+	);
 
-	const { bundles, items, limits, features } = yield* withTransactionFx(
+	const {
+		bundles: rawBundles,
+		items,
+		limits,
+		features,
+	} = yield* withTransactionFx(
 		dbFx(async (kysely) => {
 			const bundles = await kysely
 				.selectFrom("resource_bundle")
@@ -20,7 +33,7 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 					"id",
 					"name",
 				])
-				.where("name", "in", ResourceBundleEnumSchema.options)
+				.where("name", "in", checkoutBundles)
 				.execute();
 
 			if (bundles.length === 0) {
@@ -76,6 +89,21 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 			};
 		}),
 	);
+
+	const bundles = rawBundles.flatMap((bundle) => {
+		const name = CheckoutBundleEnumSchema.safeParse(bundle.name);
+
+		if (!name.success) {
+			return [];
+		}
+
+		return [
+			{
+				id: bundle.id,
+				name: name.data,
+			},
+		];
+	});
 
 	if (bundles.length === 0) {
 		return [];
@@ -149,43 +177,58 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 			return null;
 		}
 
-		const sort = Number(product.metadata.sort);
-
 		return {
 			bundle: bundle.name,
 			id: bundle.id,
 			name: product.name,
 			price: price.unit_amount,
-			sort: Number.isFinite(sort) ? sort : Number.POSITIVE_INFINITY,
+			sort: orderByName.get(bundle.name) ?? Number.POSITIVE_INFINITY,
 		};
 	});
 
 	return products
-		.flatMap((product) => {
-			if (!product) {
-				return [];
-			}
+		.flatMap(
+			(
+				product,
+			): (BundleSchema.Type & {
+				sort: number;
+			})[] => {
+				if (!product) {
+					return [];
+				}
 
-			const bundle = byName.get(product.bundle);
+				const bundle = byName.get(product.bundle);
 
-			if (!bundle) {
-				return [];
-			}
+				if (!bundle) {
+					return [];
+				}
 
-			return [
-				{
-					id: bundle.id,
-					bundle: bundle.name,
-					name: product.name,
-					price: product.price,
-					sort: product.sort,
-					items: itemsById.get(bundle.id) ?? [],
-					limits: limitsById.get(bundle.id) ?? [],
-					features: featuresById.get(bundle.id) ?? [],
-				},
-			];
-		})
-		.toSorted((left, right) => left.sort - right.sort);
+				return [
+					{
+						bundle: bundle.name,
+						name: product.name,
+						price: product.price,
+						sort: product.sort,
+						items: (itemsById.get(bundle.id) ?? []).map((item) => ({
+							amount: item.amount,
+							id: item.id,
+							resourceDefinitionId: item.resourceDefinitionId,
+						})),
+						limits: (limitsById.get(bundle.id) ?? []).map((limit) => ({
+							id: limit.id,
+							limit: limit.limit,
+							resourceDefinitionId: limit.resourceDefinitionId,
+						})),
+						features: (featuresById.get(bundle.id) ?? []).map((feature) => ({
+							id: feature.id,
+							resourceDefinitionId: feature.resourceDefinitionId,
+						})),
+					},
+				];
+			},
+		)
+		.toSorted((left, right) => left.sort - right.sort)
+		.map(({ sort: _sort, ...bundle }) => bundle);
 });
 
 export type bundleCollectionFx = ReturnType<typeof bundleCollectionFx>;

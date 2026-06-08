@@ -3,6 +3,7 @@ import { match } from "ts-pattern";
 import { DateServiceFx } from "@/lib/common/date";
 import { NotFoundErrorFx } from "@/lib/common/error";
 import { getLoggerFx } from "@/lib/common/log";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { paymentIntentFetchFx } from "../paymentIntentFetchFx";
 import { resolveUserFx } from "../resolveUserFx";
 import { sessionFetchFx } from "../sessionFetchFx";
@@ -58,10 +59,6 @@ export const sessionSyncFx = Effect.fn("sessionSyncFx")(function* ({
 		const bundleId = session.metadata?.resourceBundleId;
 		const bundle = session.metadata?.bundle;
 
-		yield* subscriptionSyncFx({
-			subscription: session.subscription,
-		}).pipe(Effect.ignore);
-
 		if (session.payment_status !== "paid") {
 			return yield* Effect.void;
 		}
@@ -74,28 +71,67 @@ export const sessionSyncFx = Effect.fn("sessionSyncFx")(function* ({
 			});
 		}
 
+		const userId = yield* resolveUserFx({
+			session,
+		});
+
+		yield* subscriptionSyncFx({
+			subscription: session.subscription,
+			fallback: {
+				bundleId,
+				userId,
+			},
+		});
+
 		const stripe = yield* stripeClientFx();
 		const lineItems = yield* Effect.promise(() => {
 			return stripe.checkout.sessions.listLineItems(session.id, {
 				limit: 100,
 			});
 		});
-		const userId = yield* resolveUserFx({
-			session,
-		});
 		const createdAt = dateService.ofSeconds(session.created).toJSDate();
 
 		yield* Effect.forEach(
 			lineItems.data.filter((item) => item.price?.type === "one_time"),
-			(lineItem) => {
-				return bundleOpenSyncFx({
-					userId,
-					bundleId,
-					bundle,
-					key: `stripe:checkout:${session.id}:${lineItem.id}`,
-					createdAt,
-				}).pipe(Effect.ignore);
-			},
+			(lineItem) =>
+				Effect.gen(function* () {
+					const lookupKey = lineItem.price?.lookup_key;
+
+					if (!lookupKey) {
+						return yield* new NotFoundErrorFx({
+							resource: "stripe-checkout-line-item-lookup-key",
+							resourceId: lineItem.id,
+							message: "Stripe checkout line item lookup key is missing",
+						});
+					}
+
+					const source = yield* dbFx(async (kysely) => {
+						return kysely
+							.selectFrom("resource_bundle")
+							.select([
+								"id",
+								"name",
+							])
+							.where("name", "=", lookupKey)
+							.executeTakeFirst();
+					});
+
+					if (!source) {
+						return yield* new NotFoundErrorFx({
+							resource: "resource_bundle",
+							resourceId: lookupKey,
+							message: "Stripe checkout line item resource bundle is missing",
+						});
+					}
+
+					return yield* bundleOpenSyncFx({
+						userId,
+						bundleId: source.id,
+						bundle: source.name,
+						key: `stripe:checkout:${session.id}:${lineItem.id}`,
+						createdAt,
+					}).pipe(Effect.catchTag("SyncSkipErrorFx", () => Effect.void));
+				}),
 			{
 				discard: true,
 				concurrency: 4,
@@ -203,7 +239,7 @@ export const sessionSyncFx = Effect.fn("sessionSyncFx")(function* ({
 		bundle,
 		key: bundleKey,
 		createdAt,
-	}).pipe(Effect.ignore);
+	}).pipe(Effect.catchTag("SyncSkipErrorFx", () => Effect.void));
 });
 
 export type sessionSyncFx = ReturnType<typeof sessionSyncFx>;
