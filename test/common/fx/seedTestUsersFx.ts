@@ -168,7 +168,7 @@ export const seedTestUsersFx = Effect.fn("seedTestUsersFx")(function* ({
 						amount: item.amount,
 						createdAt: TEST_USER_RESOURCE_BUNDLE_AVAILABLE_AT,
 						availableAt: TEST_USER_RESOURCE_BUNDLE_AVAILABLE_AT,
-						expiresAt: item.expiresAt,
+						expiresAt: null,
 					})
 					.execute();
 			}
@@ -183,7 +183,7 @@ export const seedTestUsersFx = Effect.fn("seedTestUsersFx")(function* ({
 						limit: limit.limit,
 						createdAt: TEST_USER_RESOURCE_BUNDLE_AVAILABLE_AT,
 						availableAt: TEST_USER_RESOURCE_BUNDLE_AVAILABLE_AT,
-						expiresAt: limit.expiresAt,
+						expiresAt: null,
 					})
 					.execute();
 			}
@@ -197,7 +197,7 @@ export const seedTestUsersFx = Effect.fn("seedTestUsersFx")(function* ({
 						resourceDefinitionId: feature.resourceDefinitionId,
 						createdAt: TEST_USER_RESOURCE_BUNDLE_AVAILABLE_AT,
 						availableAt: TEST_USER_RESOURCE_BUNDLE_AVAILABLE_AT,
-						expiresAt: feature.expiresAt,
+						expiresAt: null,
 					})
 					.execute();
 			}
