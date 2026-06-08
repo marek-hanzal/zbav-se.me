@@ -30,7 +30,7 @@ export const ResourceBundleFeatureMigration: Migration = {
 				],
 			)
 			.addUniqueConstraint(
-				"resource_bundle_feature_[resourceBundleId-resourceDefinitionId]_unique_idx",
+				"resource_bundle_feature_[bundle-resource]_uniq",
 				[
 					"resourceBundleId",
 					"resourceDefinitionId",

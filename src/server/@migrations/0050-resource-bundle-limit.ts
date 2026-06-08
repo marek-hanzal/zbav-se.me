@@ -32,7 +32,7 @@ export const ResourceBundleLimitMigration: Migration = {
 				],
 			)
 			.addUniqueConstraint(
-				"resource_bundle_limit_[resourceBundleId-resourceDefinitionId]_unique_idx",
+				"resource_bundle_limit_[bundle-resource]_uniq",
 				[
 					"resourceBundleId",
 					"resourceDefinitionId",

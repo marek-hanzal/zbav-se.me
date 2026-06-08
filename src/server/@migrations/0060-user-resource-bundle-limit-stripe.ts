@@ -9,7 +9,7 @@ export const UserResourceBundleLimitStripeMigration: Migration = {
 			.addColumn("key", "text", (col) => col.notNull())
 			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
 			.addForeignKeyConstraint(
-				"user_resource_bundle_limit_stripe_[userResourceBundleLimitId]_fk",
+				"urb_limit_stripe_[limit]_fk",
 				[
 					"userResourceBundleLimitId",
 				],
@@ -20,7 +20,7 @@ export const UserResourceBundleLimitStripeMigration: Migration = {
 				(c) => c.onDelete("cascade"),
 			)
 			.addUniqueConstraint(
-				"user_resource_bundle_limit_stripe_[userResourceBundleLimitId-key]_unique_idx",
+				"urb_limit_stripe_[limit-key]_uniq",
 				[
 					"userResourceBundleLimitId",
 					"key",
@@ -29,7 +29,7 @@ export const UserResourceBundleLimitStripeMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("user_resource_bundle_limit_stripe_[key]_idx")
+			.createIndex("urb_limit_stripe_[key]_idx")
 			.on("user_resource_bundle_limit_stripe")
 			.column("key")
 			.execute();

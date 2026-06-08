@@ -9,7 +9,7 @@ export const UserResourceBundleFeatureStripeMigration: Migration = {
 			.addColumn("key", "text", (col) => col.notNull())
 			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
 			.addForeignKeyConstraint(
-				"user_resource_bundle_feature_stripe_[userResourceBundleFeatureId]_fk",
+				"urb_feature_stripe_[feature]_fk",
 				[
 					"userResourceBundleFeatureId",
 				],
@@ -20,7 +20,7 @@ export const UserResourceBundleFeatureStripeMigration: Migration = {
 				(c) => c.onDelete("cascade"),
 			)
 			.addUniqueConstraint(
-				"user_resource_bundle_feature_stripe_[userResourceBundleFeatureId-key]_unique_idx",
+				"urb_feature_stripe_[feature-key]_uniq",
 				[
 					"userResourceBundleFeatureId",
 					"key",
@@ -29,7 +29,7 @@ export const UserResourceBundleFeatureStripeMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("user_resource_bundle_feature_stripe_[key]_idx")
+			.createIndex("urb_feature_stripe_[key]_idx")
 			.on("user_resource_bundle_feature_stripe")
 			.column("key")
 			.execute();

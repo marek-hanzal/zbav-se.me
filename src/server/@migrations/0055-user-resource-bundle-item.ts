@@ -43,7 +43,7 @@ export const UserResourceBundleItemMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("user_resource_bundle_item_[resourceDefinitionId-availableAt]_idx")
+			.createIndex("urb_item_[resource-available]_idx")
 			.on("user_resource_bundle_item")
 			.columns([
 				"resourceDefinitionId",

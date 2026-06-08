@@ -43,7 +43,7 @@ export const UserResourceBundleLimitMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("user_resource_bundle_limit_[resourceDefinitionId-availableAt]_idx")
+			.createIndex("urb_limit_[resource-available]_idx")
 			.on("user_resource_bundle_limit")
 			.columns([
 				"resourceDefinitionId",

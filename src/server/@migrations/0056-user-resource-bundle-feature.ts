@@ -40,7 +40,7 @@ export const UserResourceBundleFeatureMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("user_resource_bundle_feature_[resourceDefinitionId-availableAt]_idx")
+			.createIndex("urb_feature_[resource-available]_idx")
 			.on("user_resource_bundle_feature")
 			.columns([
 				"resourceDefinitionId",
