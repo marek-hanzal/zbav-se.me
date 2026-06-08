@@ -33,13 +33,13 @@ const WelcomeEnumSchema = z.enum([
 	/**
 	 * Initial wave get both founders packages, this one is life-time bonus
 	 */
-	"welcone:founders",
+	"welcome:founders",
 	/**
 	 * Extra: Initial founders wave when the app launches: they've some extra bonuses.
 	 *
 	 * This package has some features, but it lasts only for a limited time.
 	 */
-	"welcone:founders:promo",
+	"welcome:founders:promo",
 ]);
 
 const ExtraEnumSchema = z.enum([

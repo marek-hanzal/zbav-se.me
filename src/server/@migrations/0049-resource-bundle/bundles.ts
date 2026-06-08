@@ -352,7 +352,7 @@ export const bundles: Record<
 	/**
 	 * One-shot bundle assigned to founders wave of users.
 	 */
-	"welcone:founders:promo": {
+	"welcome:founders:promo": {
 		items: {
 			"common:item:support": {
 				amount: 10,
@@ -415,7 +415,7 @@ export const bundles: Record<
 	/**
 	 * Permanent bundle assigned to founders wave
 	 */
-	"welcone:founders": {
+	"welcome:founders": {
 		items: {},
 		limits: {
 			"buyer:limit:feed.count": {
