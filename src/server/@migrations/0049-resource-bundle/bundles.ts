@@ -26,27 +26,10 @@ export const bundles: Record<
 		features: Partial<Record<ResourceDefinitionEnumSchema.Type, {}>>;
 	}
 > = {
-	"package:welcome.promo": {
-		items: {
-			"common:item:agent.usage": {
-				amount: 75,
-				expiration: inMonth * 2,
-			},
-			"common:item:support": {
-				amount: 3,
-				expiration: inMonth * 2,
-			},
-		},
-		limits: {
-			"seller:limit:listing.count": {
-				limit: 10,
-			},
-			"seller:limit:listing.gallery.count": {
-				limit: 8,
-			},
-		},
-		features: {},
-	},
+	/**
+	 * Every user gets this package as the baseline fallback for limits and basic resources.
+	 * Paid packages must override these limits explicitly where needed.
+	 */
 	"package:free": {
 		items: {
 			"common:item:support": {
@@ -68,9 +51,18 @@ export const bundles: Record<
 			"seller:limit:listing.gallery.count": {
 				limit: 5,
 			},
+			"common:limit:agent.token": {
+				limit: 5_000,
+			},
+			"common:limit:agent.handbrake": {
+				limit: 200_000,
+			},
 		},
 		features: {},
 	},
+	/**
+	 * Buyer expansion package.
+	 */
 	"package:buyer": {
 		items: {
 			"common:item:support": {
@@ -90,6 +82,12 @@ export const bundles: Record<
 			"buyer:limit:feed.count": {
 				limit: 10,
 			},
+			"common:limit:agent.token": {
+				limit: 10_000,
+			},
+			"common:limit:agent.handbrake": {
+				limit: 1_500_000,
+			},
 		},
 		features: {
 			"buyer:feature:anti-topper": {},
@@ -98,6 +96,9 @@ export const bundles: Record<
 			"buyer:feature:seller.info": {},
 		},
 	},
+	/**
+	 * Seller expansion package
+	 */
 	"package:seller": {
 		items: {
 			"common:item:support": {
@@ -136,6 +137,12 @@ export const bundles: Record<
 			"seller:limit:listing.gallery.count": {
 				limit: 12,
 			},
+			"common:limit:agent.token": {
+				limit: 10_000,
+			},
+			"common:limit:agent.handbrake": {
+				limit: 1_500_000,
+			},
 		},
 		features: {
 			"seller:feature:buyer.info": {},
@@ -144,6 +151,9 @@ export const bundles: Record<
 			"seller:feature:listing.longer-expiration": {},
 		},
 	},
+	/**
+	 * This should generally extend seller/buyer plan in the spirit of "I don't want to think about limits".
+	 */
 	"package:pro": {
 		items: {
 			"common:item:support": {
@@ -185,6 +195,12 @@ export const bundles: Record<
 			"seller:limit:listing.gallery.count": {
 				limit: 20,
 			},
+			"common:limit:agent.token": {
+				limit: 15_000,
+			},
+			"common:limit:agent.handbrake": {
+				limit: 4_000_000,
+			},
 		},
 		features: {
 			"buyer:feature:anti-topper": {},
@@ -198,6 +214,12 @@ export const bundles: Record<
 			"seller:feature:listing.info": {},
 		},
 	},
+	/**
+	 * Master is the best a user can buy - pricy, but generous; it's more intended to be
+	 * supporter/Patreon like package, but also with proper value for the user.
+	 *
+	 * Think about this as "I want the best available option, regardless of the price".
+	 */
 	"package:master": {
 		items: {
 			"common:item:support": {
@@ -239,6 +261,12 @@ export const bundles: Record<
 			"seller:limit:listing.gallery.count": {
 				limit: 30,
 			},
+			"common:limit:agent.token": {
+				limit: 25_000,
+			},
+			"common:limit:agent.handbrake": {
+				limit: 10_000_000,
+			},
 		},
 		features: {
 			"buyer:feature:anti-topper": {},
@@ -252,7 +280,79 @@ export const bundles: Record<
 			"seller:feature:listing.info": {},
 		},
 	},
-	"extra:founders.promo": {
+
+	/**
+	 * Those packages are extras a user can buy with various setup
+	 */
+	"extra:token:small": {
+		items: {
+			"common:item:token": {
+				amount: 149,
+				expiration: null,
+			},
+		},
+		limits: {},
+		features: {},
+	},
+	"extra:token:medium": {
+		items: {
+			"common:item:token": {
+				amount: 399,
+				expiration: null,
+			},
+		},
+		limits: {},
+		features: {},
+	},
+	"extra:token:large": {
+		items: {
+			"common:item:token": {
+				amount: 999,
+				expiration: null,
+			},
+		},
+		limits: {},
+		features: {},
+	},
+
+	/**
+	 * Extra bundles not being sold directly
+	 */
+
+	/**
+	 * One-shot welcome bundle assigned to new users.
+	 */
+	"welcome:default": {
+		items: {
+			"common:item:agent.usage": {
+				amount: 75,
+				expiration: inMonth * 2,
+			},
+			"common:item:support": {
+				amount: 3,
+				expiration: inMonth * 2,
+			},
+		},
+		limits: {
+			"seller:limit:listing.count": {
+				limit: 10,
+			},
+			"seller:limit:listing.gallery.count": {
+				limit: 8,
+			},
+			"common:limit:agent.token": {
+				limit: 10_000,
+			},
+			"common:limit:agent.handbrake": {
+				limit: 750_000,
+			},
+		},
+		features: {},
+	},
+	/**
+	 * One-shot bundle assigned to founders wave of users.
+	 */
+	"welcone:founders:promo": {
 		items: {
 			"common:item:support": {
 				amount: 10,
@@ -293,6 +393,12 @@ export const bundles: Record<
 			"seller:limit:listing.gallery.count": {
 				limit: 20,
 			},
+			"common:limit:agent.token": {
+				limit: 15_000,
+			},
+			"common:limit:agent.handbrake": {
+				limit: 5_000_000,
+			},
 		},
 		features: {
 			"buyer:feature:anti-topper": {},
@@ -306,7 +412,10 @@ export const bundles: Record<
 			"seller:feature:listing.info": {},
 		},
 	},
-	"extra:founders.lifetime": {
+	/**
+	 * Permanent bundle assigned to founders wave
+	 */
+	"welcone:founders": {
 		items: {},
 		limits: {
 			"buyer:limit:feed.count": {

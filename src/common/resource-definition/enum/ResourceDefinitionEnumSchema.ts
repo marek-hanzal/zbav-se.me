@@ -92,14 +92,23 @@ const CommonEnumSchema = z.enum([
 	 * Agent usage limit
 	 */
 	"common:item:agent.usage",
+	/**
+	 * Limits tokens on one "usage", thus overall agent usage is `agent.usage * agent.token`.
+	 */
+	"common:limit:agent.token",
     /**
-     * Support tickets a user can use 
+     * This is hard limit on token usage if there is runaway conversation with agent without
+     * any tool calls involved.
      */
-    "common:item:support",
-    /**
-     * Feature given to the first wave of users.
-     */
-    "common:feature:founder",
+	"common:limit:agent.handbrake",
+	/**
+	 * Support tickets a user can use
+	 */
+	"common:item:support",
+	/**
+	 * Feature given to the first wave of users.
+	 */
+	"common:feature:founder",
 ]);
 
 export const ResourceDefinitionEnumSchema = z

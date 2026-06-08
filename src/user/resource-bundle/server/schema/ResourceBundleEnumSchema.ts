@@ -1,15 +1,11 @@
 import { z } from "zod";
 
-export const ResourceBundleEnumSchema = z.enum([
+const PackageEnumSchema = z.enum([
 	/**
 	 * Default for free users; every user must have this package or they'll be basically
 	 * unable to use the app.
 	 */
 	"package:free",
-	/**
-	 * New registrations will get this welcome promo with limited time.
-	 */
-	"package:welcome.promo",
 	/**
 	 * Buyer optimized stuff
 	 */
@@ -27,16 +23,35 @@ export const ResourceBundleEnumSchema = z.enum([
 	 * There is a boost, but the price is more like "I like to support you" than the actual value
 	 */
 	"package:master",
+]);
+
+const WelcomeEnumSchema = z.enum([
+	/**
+	 * New registrations will get this welcome promo with limited time.
+	 */
+	"welcome:default",
+	/**
+	 * Initial wave get both founders packages, this one is life-time bonus
+	 */
+	"welcone:founders",
 	/**
 	 * Extra: Initial founders wave when the app launches: they've some extra bonuses.
 	 *
 	 * This package has some features, but it lasts only for a limited time.
 	 */
-	"extra:founders.promo",
-	/**
-	 * Initial wave get both founders packages, this one is life-time bonus
-	 */
-	"extra:founders.lifetime",
+	"welcone:founders:promo",
+]);
+
+const ExtraEnumSchema = z.enum([
+	"extra:token:small",
+	"extra:token:medium",
+	"extra:token:large",
+]);
+
+export const ResourceBundleEnumSchema = z.enum([
+	...PackageEnumSchema.options,
+	...WelcomeEnumSchema.options,
+	...ExtraEnumSchema.options,
 ]);
 
 export type ResourceBundleEnumSchema = typeof ResourceBundleEnumSchema;
