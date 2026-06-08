@@ -68,7 +68,7 @@ describe("bundleOpenSyncFx", () => {
 					.selectFrom("resource_bundle_item")
 					.select([
 						"amount",
-						"expiration",
+						"expiresAt",
 						"resourceDefinitionId",
 					])
 					.where("resourceBundleId", "=", purchaseBundle.id)

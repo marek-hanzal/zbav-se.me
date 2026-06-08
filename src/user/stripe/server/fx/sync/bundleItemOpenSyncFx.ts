@@ -50,7 +50,7 @@ export const bundleItemOpenSyncFx = Effect.fn("bundleItemOpenSyncFx")(function* 
 						resourceBundleId: purchaseResourceBundleId,
 						resourceDefinitionId: sourceItem.resourceDefinitionId,
 						amount: sourceItem.amount,
-						expiration: sourceItem.expiration,
+						expiresAt: sourceItem.expiresAt,
 					})
 					.onConflict((oc) => {
 						return oc
@@ -60,7 +60,7 @@ export const bundleItemOpenSyncFx = Effect.fn("bundleItemOpenSyncFx")(function* 
 							])
 							.doUpdateSet({
 								amount: sourceItem.amount,
-								expiration: sourceItem.expiration,
+								expiresAt: sourceItem.expiresAt,
 							});
 					})
 					.returningAll()

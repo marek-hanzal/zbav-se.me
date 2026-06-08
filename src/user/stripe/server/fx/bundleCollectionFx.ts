@@ -40,7 +40,7 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 					"resourceBundleId",
 					"resourceDefinitionId",
 					"amount",
-					"expiration",
+					"expiresAt",
 				])
 				.where("resourceBundleId", "in", ids)
 				.where("amount", ">", 0)
