@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 import { ShopPage } from "~/user/shop/ShopPage/ShopPage";
 import { checkoutReturnSyncFn } from "~/user/stripe/fn/checkoutReturnSyncFn";
-import { ensureCustomerFn } from "~/user/stripe/fn/ensureCustomerFn";
 
 const ShopSearchSchema = z
 	.looseObject({
@@ -27,7 +26,9 @@ export const Route = createFileRoute("/$locale/app/shop")({
 			return;
 		}
 
-		await ensureCustomerFn();
+		await checkoutReturnSyncFn({
+			data: {},
+		});
 	},
 	component() {
 		return <ShopPage _suspense="I know" />;

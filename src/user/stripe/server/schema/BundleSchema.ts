@@ -8,7 +8,10 @@ export const BundleSchema = z
 	.looseObject({
 		bundle: CheckoutBundleEnumSchema,
 		name: z.string().min(1),
+		description: z.string().nullable(),
 		price: z.coerce.number().nonnegative(),
+		currency: z.string().min(1),
+		interval: z.string().nullable(),
 		items: z.array(
 			ResourceBundleItemSchema.pick({
 				amount: true,

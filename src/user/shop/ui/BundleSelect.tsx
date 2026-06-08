@@ -19,6 +19,7 @@ export const BundleSelect: FC<BundleSelect.Props> = ({ _suspense, ...props }) =>
 			data-ui-layout="vertical"
 			data-ui-gap="default"
 			data-ui-height="full"
+			data-ui-inner="default"
 			data-ui-scroll="vertical"
 			{...props}
 		>

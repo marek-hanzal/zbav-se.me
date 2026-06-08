@@ -1,8 +1,10 @@
 import { Effect } from "effect";
 import type { Stripe } from "stripe";
 import { DateServiceFx } from "@/lib/common/date";
+import { NotFoundErrorFx } from "@/lib/common/error";
 import { getLoggerFx } from "@/lib/common/log";
 import { AccessDeniedErrorFx } from "~/server/error/AccessDeniedErrorFx";
+import { ResourceBundleEnumSchema } from "~/user/resource-bundle/server/schema/ResourceBundleEnumSchema";
 import { ensureCustomerFx } from "./ensureCustomerFx";
 import { sessionFetchFx } from "./sessionFetchFx";
 import { sessionSyncFx } from "./sync/sessionSyncFx";
@@ -46,7 +48,9 @@ export const checkoutReturnSyncFx = Effect.fn("checkoutReturnSyncFx")(function* 
 			customerId: customer.customerId,
 		});
 
-		return customer;
+		return {
+			customerId: customer.customerId,
+		};
 	}
 
 	const session = yield* sessionFetchFx({
@@ -59,12 +63,25 @@ export const checkoutReturnSyncFx = Effect.fn("checkoutReturnSyncFx")(function* 
 		});
 	}
 
+	const bundle = ResourceBundleEnumSchema.safeParse(session.metadata?.bundle);
+
+	if (!bundle.success) {
+		return yield* new NotFoundErrorFx({
+			resource: "stripe-session-bundle-metadata",
+			resourceId: session.id,
+			message: "Stripe checkout session bundle metadata is missing",
+		});
+	}
+
 	yield* sessionSyncFx({
 		id: session.id,
 		expiresAt: date.now().toJSDate(),
 	});
 
-	return customer;
+	return {
+		customerId: customer.customerId,
+		bundle: bundle.data,
+	};
 });
 
 export type checkoutReturnSyncFx = ReturnType<typeof checkoutReturnSyncFx>;

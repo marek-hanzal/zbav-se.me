@@ -43,19 +43,17 @@ export const checkoutFn = createServerFn({
 					userId: user.id,
 					urlSuccess() {
 						return link({
-							href: "/:locale/app/shop",
+							href: "/:locale/app/shop/success",
 							query: {
 								locale: data.locale,
-								stripe: "success",
 							},
 						});
 					},
 					urlCancel() {
 						return link({
-							href: "/:locale/app/shop",
+							href: "/:locale/app/shop/cancel",
 							query: {
 								locale: data.locale,
-								stripe: "cancel",
 							},
 						});
 					},

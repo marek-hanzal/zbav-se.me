@@ -112,37 +112,48 @@ async function signUpBuyer(page: Page) {
 	return user;
 }
 
-async function clickBuyerCheckout(page: Page) {
-	const scopedButton = page
+async function openBuyerBundle(page: Page) {
+	if (!new URL(page.url()).pathname.endsWith("/cs/app/shop/browse")) {
+		await page.goto("/cs/app/shop/browse");
+	}
+
+	const bundleButton = page
 		.locator(
-			'[data-ui="BundleItem"][data-resource-bundle="package:buyer"] [data-ui="CheckoutButton"]',
+			'[data-ui="BundleItem"][data-resource-bundle="package:buyer"] [data-ui="BundleItem-[CardButton]"]',
 		)
 		.first();
-	const directButton = page
-		.locator('[data-ui="CheckoutButton"][data-resource-bundle="package:buyer"]')
-		.first();
-	const checkoutButtons = page.locator('[data-ui="CheckoutButton"]');
 
-	await expect(checkoutButtons.first()).toBeAttached({
+	await expect(bundleButton).toBeAttached({
 		timeout: 30_000,
 	});
-
-	const checkoutButton = (await scopedButton.count())
-		? scopedButton
-		: (await directButton.count())
-			? directButton
-			: checkoutButtons.first();
-
-	await expect(checkoutButton).toBeEnabled({
-		timeout: 30_000,
-	});
-	await checkoutButton.evaluate((element) => {
+	await bundleButton.evaluate((element) => {
 		element.scrollIntoView({
 			block: "center",
 			inline: "center",
 		});
 	});
+	await bundleButton.click();
+}
+
+async function clickBuyerCheckout(page: Page) {
+	await openBuyerBundle(page);
+
+	const checkoutButton = page
+		.locator('[data-ui="CheckoutButton"][data-resource-bundle="package:buyer"]')
+		.last();
+
+	await expect(checkoutButton).toBeEnabled({
+		timeout: 30_000,
+	});
 	await checkoutButton.click();
+}
+
+async function expectBuyerSubscriptionActive(page: Page) {
+	await expect(page.locator('[data-ui="BundleItem-[Active]"]').first()).toBeVisible();
+	await openBuyerBundle(page);
+	await expect(
+		page.locator('[data-ui="CheckoutButton"][data-resource-bundle="package:buyer"]').last(),
+	).toContainText(/zrušit|cancel/i);
 }
 
 test("Stripe checkout provisions buyer subscription", async ({ page, database }) => {
@@ -165,7 +176,6 @@ test("Stripe checkout provisions buyer subscription", async ({ page, database })
 		.where("email", "=", user.email)
 		.executeTakeFirstOrThrow();
 
-	await page.goto("/cs/app/shop");
 	await clickBuyerCheckout(page);
 	await page.waitForURL(/^https:\/\/checkout\.stripe\.com\//);
 
@@ -174,7 +184,7 @@ test("Stripe checkout provisions buyer subscription", async ({ page, database })
 		page,
 	});
 	await page.locator('[data-testid="hosted-payment-submit-button"]').click();
-	await page.waitForURL(/\/cs\/app\/shop\?stripe=success/);
+	await page.waitForURL(/\/cs\/app\/shop\/success/);
 
 	await expect
 		.poll(
@@ -223,9 +233,8 @@ test("Stripe checkout provisions buyer subscription", async ({ page, database })
 	expect(subscription.metadata.customerId).toBe(subscription.customer);
 	expect(subscription.metadata.priceId).toBeTruthy();
 
-	await page.reload();
-	await expect(page.locator('[data-ui="BundleItem-[Active]"]').first()).toBeVisible();
-	await expect(page.locator('[data-ui="CheckoutButton"]').first()).toContainText(/active/i);
+	await page.goto("/cs/app/shop/browse");
+	await expectBuyerSubscriptionActive(page);
 });
 
 test("Stripe checkout reactivates buyer subscription after external cancellation", async ({
@@ -251,7 +260,7 @@ test("Stripe checkout reactivates buyer subscription after external cancellation
 		.where("email", "=", user.email)
 		.executeTakeFirstOrThrow();
 
-	await page.goto("/cs/app/shop");
+	await page.goto("/cs/app/shop/browse");
 	await clickBuyerCheckout(page);
 	await page.waitForURL(/^https:\/\/checkout\.stripe\.com\//);
 
@@ -260,7 +269,7 @@ test("Stripe checkout reactivates buyer subscription after external cancellation
 		page,
 	});
 	await page.locator('[data-testid="hosted-payment-submit-button"]').click();
-	await page.waitForURL(/\/cs\/app\/shop\?stripe=success/);
+	await page.waitForURL(/\/cs\/app\/shop\/success/);
 
 	await expect
 		.poll(
@@ -300,6 +309,14 @@ test("Stripe checkout reactivates buyer subscription after external cancellation
 
 	await stripe.subscriptions.cancel(firstSubscription.subscriptionId);
 
+	/*
+	 * The Stripe CLI webhook is still the async production path, but this test runs
+	 * against one fixed E2E DB and cannot pretend webhook timing is deterministic.
+	 * Opening Billing must reconcile the current customer state before rendering, so
+	 * external Dashboard/API cancellation is visible even if the webhook is late.
+	 */
+	await page.goto("/cs/app/shop/browse");
+
 	await expect
 		.poll(
 			async () => {
@@ -319,7 +336,6 @@ test("Stripe checkout reactivates buyer subscription after external cancellation
 		)
 		.toBe(true);
 
-	await page.goto("/cs/app/shop");
 	await clickBuyerCheckout(page);
 	await page.waitForURL(/^https:\/\/checkout\.stripe\.com\//);
 
@@ -328,7 +344,7 @@ test("Stripe checkout reactivates buyer subscription after external cancellation
 		page,
 	});
 	await page.locator('[data-testid="hosted-payment-submit-button"]').click();
-	await page.waitForURL(/\/cs\/app\/shop\?stripe=success/);
+	await page.waitForURL(/\/cs\/app\/shop\/success/);
 
 	await expect
 		.poll(
@@ -368,9 +384,8 @@ test("Stripe checkout reactivates buyer subscription after external cancellation
 
 	expect(renewedSubscription.subscriptionId).not.toBe(firstSubscription.subscriptionId);
 
-	await page.reload();
-	await expect(page.locator('[data-ui="BundleItem-[Active]"]').first()).toBeVisible();
-	await expect(page.locator('[data-ui="CheckoutButton"]').first()).toContainText(/active/i);
+	await page.goto("/cs/app/shop/browse");
+	await expectBuyerSubscriptionActive(page);
 });
 
 test("Stripe checkout provisions buyer subscription with token upsell", async ({
@@ -397,7 +412,7 @@ test("Stripe checkout provisions buyer subscription with token upsell", async ({
 		.where("email", "=", user.email)
 		.executeTakeFirstOrThrow();
 
-	await page.goto("/cs/app/shop");
+	await page.goto("/cs/app/shop/browse");
 	await clickBuyerCheckout(page);
 	await page.waitForURL(/^https:\/\/checkout\.stripe\.com\//);
 
@@ -406,7 +421,7 @@ test("Stripe checkout provisions buyer subscription with token upsell", async ({
 		page,
 	});
 	await page.locator('[data-testid="hosted-payment-submit-button"]').click();
-	await page.waitForURL(/\/cs\/app\/shop\?stripe=success/);
+	await page.waitForURL(/\/cs\/app\/shop\/success/);
 
 	await expect
 		.poll(
@@ -462,7 +477,7 @@ test("Stripe checkout provisions buyer subscription with token upsell", async ({
 
 	const bundleKey = `stripe:checkout:upsell-${registeredUser.id}`;
 	const upsellSession = await stripe.checkout.sessions.create({
-		cancel_url: `${appOrigin}/cs/app/shop?stripe=cancel-upsell`,
+		cancel_url: `${appOrigin}/cs/app/shop/cancel`,
 		client_reference_id: registeredUser.id,
 		customer: userStripe.customerId,
 		line_items: [
@@ -480,7 +495,7 @@ test("Stripe checkout provisions buyer subscription with token upsell", async ({
 			userId: registeredUser.id,
 		},
 		mode: "payment",
-		success_url: `${appOrigin}/cs/app/shop?stripe=success-upsell&session_id={CHECKOUT_SESSION_ID}`,
+		success_url: `${appOrigin}/cs/app/shop/success?session_id={CHECKOUT_SESSION_ID}`,
 	});
 
 	if (!upsellSession.url) {
@@ -493,7 +508,7 @@ test("Stripe checkout provisions buyer subscription with token upsell", async ({
 		page,
 	});
 	await page.locator('[data-testid="hosted-payment-submit-button"]').click();
-	await page.waitForURL(/\/cs\/app\/shop\?stripe=success-upsell/);
+	await page.waitForURL(/\/cs\/app\/shop\/success/);
 
 	await expect
 		.poll(

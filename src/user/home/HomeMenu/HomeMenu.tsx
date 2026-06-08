@@ -197,7 +197,7 @@ export const HomeMenu = withFallback(({ _suspense, onLinkClick, ...props }: Home
 								<Group data-ui-shadow={false}>
 									<LinkTo
 										icon={"icon-[solar--gift-outline]"}
-										to={"/$locale/app/shop"}
+										to={"/$locale/app/shop/browse"}
 										params={{
 											locale,
 										}}

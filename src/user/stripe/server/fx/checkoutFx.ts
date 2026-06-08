@@ -1,11 +1,13 @@
 import { Effect } from "effect";
 import type Stripe from "stripe";
+import { match } from "ts-pattern";
 import { NotFoundErrorFx } from "@/lib/common/error";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
 import type { BillingCheckoutCreateSchema } from "../schema/BillingCheckoutCreateSchema";
+import { OneOffCheckoutBundleEnumSchema } from "../schema/OneOffCheckoutBundleEnumSchema";
 import { ensureCustomerFx } from "./ensureCustomerFx";
 import { priceFetchFx } from "./priceFetchFx";
 import { stripeClientFx } from "./stripeClientFx";
@@ -17,6 +19,13 @@ export namespace checkoutFx {
 		urlCancel(): string;
 	}
 }
+
+const checkoutModeOf = (bundle: BillingCheckoutCreateSchema.Type["bundle"]) => {
+	return match(OneOffCheckoutBundleEnumSchema.safeParse(bundle).success)
+		.with(true, () => "payment" as const)
+		.with(false, () => "subscription" as const)
+		.exhaustive();
+};
 
 export const checkoutFx = Effect.fn("checkoutFx")(function* ({
 	userId,
@@ -58,15 +67,13 @@ export const checkoutFx = Effect.fn("checkoutFx")(function* ({
 	const price = yield* priceFetchFx({
 		lookupKey: bundleName,
 	});
+	const mode = checkoutModeOf(bundleName);
 	const bundleKey = `stripe:checkout:${genId()}`;
 
 	/*
-	 * Keep our local identifiers on the Stripe objects created by Checkout.
-	 *
-	 * Webhooks only tell us that something changed, while sync reads the current
-	 * Stripe objects. Writing the user/bundle IDs here lets later sync runs resolve
-	 * local state directly from Session/Subscription metadata instead of jumping
-	 * through price/product parents only to rediscover our own catalog mapping.
+	 * Keep our local identifiers on every Stripe object created by Checkout.
+	 * Webhooks are just pings; sync refetches current Stripe state and uses this
+	 * metadata to resolve the local resource bundle without guessing through products.
 	 */
 	const metadata = {
 		userId,
@@ -76,27 +83,39 @@ export const checkoutFx = Effect.fn("checkoutFx")(function* ({
 		priceId: price.id,
 		bundleKey,
 	};
-
 	const successUrl = urlSuccess();
+	const commonParams = {
+		customer: customer.customerId,
+		client_reference_id: userId,
+		locale: locale as Stripe.Checkout.SessionCreateParams.Locale,
+		metadata,
+		line_items: [
+			{
+				price: price.id,
+				quantity: 1,
+			},
+		],
+		success_url: `${successUrl}${successUrl.includes("?") ? "&" : "?"}session_id={CHECKOUT_SESSION_ID}`,
+		cancel_url: urlCancel(),
+	} satisfies Omit<Stripe.Checkout.SessionCreateParams, "mode">;
 
 	const session = yield* Effect.promise(() => {
+		if (mode === "payment") {
+			return stripe.checkout.sessions.create({
+				...commonParams,
+				mode,
+				payment_intent_data: {
+					metadata,
+				},
+			});
+		}
+
 		return stripe.checkout.sessions.create({
-			mode: "subscription",
-			customer: customer.customerId,
-			client_reference_id: userId,
-			locale: locale as Stripe.Checkout.SessionCreateParams.Locale,
-			metadata,
+			...commonParams,
+			mode,
 			subscription_data: {
 				metadata,
 			},
-			line_items: [
-				{
-					price: price.id,
-					quantity: 1,
-				},
-			],
-			success_url: `${successUrl}${successUrl.includes("?") ? "&" : "?"}session_id={CHECKOUT_SESSION_ID}`,
-			cancel_url: urlCancel(),
 		});
 	});
 

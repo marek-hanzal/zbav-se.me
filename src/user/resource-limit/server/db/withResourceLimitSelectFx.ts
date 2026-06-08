@@ -37,7 +37,7 @@ export const withResourceLimitSelectFx = Effect.fn("withResourceLimitSelectFx")(
 			"resourceLimit.resourceDefinitionId",
 			"resourceLimit.createdAt",
 			"resourceLimit.availableAt",
-			"resourceLimit.expiresAt",
+			sql<Date | null>`${sql.ref("resourceLimit.expiresAt")}`.as("expiresAt"),
 			sql<number>`${sql.ref("resourceLimit.limit")}::float8`.as("limit"),
 		])
 		.where("resourceLimit.availableAt", "<=", now)

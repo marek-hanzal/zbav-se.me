@@ -163,6 +163,7 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 			)
 			.with(
 				{
+					description: P.any,
 					id: P.string,
 					metadata: P.any,
 					name: P.string,
@@ -179,7 +180,10 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 
 		return {
 			bundle: bundle.name,
+			currency: price.currency,
+			description: product.description ?? null,
 			id: bundle.id,
+			interval: price.recurring?.interval ?? null,
 			name: product.name,
 			price: price.unit_amount,
 			sort: orderByName.get(bundle.name) ?? Number.POSITIVE_INFINITY,
@@ -206,6 +210,9 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 				return [
 					{
 						bundle: bundle.name,
+						currency: product.currency,
+						description: product.description,
+						interval: product.interval,
 						name: product.name,
 						price: product.price,
 						sort: product.sort,

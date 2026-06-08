@@ -19,7 +19,11 @@ export const ShopPage: FC<ShopPage.Props> = ({ _suspense, ...props }) => {
 
 	return (
 		<TitleContainer
-			textTitle={translator.text("Shop (title)")}
+			textTitle={translator.text("Shop (title)", "Obchod")}
+			textSubtitle={translator.text(
+				"Shop (subtitle)",
+				"Předplatné a balíčky bez schovaných triků. Hnusně dospělé, já vím.",
+			)}
 			left={
 				<BackHomeButton
 					to="/$locale/app/home"
