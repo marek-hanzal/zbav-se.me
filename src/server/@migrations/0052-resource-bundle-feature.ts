@@ -29,13 +29,10 @@ export const ResourceBundleFeatureMigration: Migration = {
 					"name",
 				],
 			)
-			.addUniqueConstraint(
-				"rbf_[rbId-rdId]_uniq",
-				[
-					"resourceBundleId",
-					"resourceDefinitionId",
-				],
-			)
+			.addUniqueConstraint("rbf_[rbId-rdId]_uniq", [
+				"resourceBundleId",
+				"resourceDefinitionId",
+			])
 			.execute();
 	},
 };

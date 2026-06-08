@@ -19,13 +19,10 @@ export const UserResourceBundleFeatureStripeMigration: Migration = {
 				],
 				(c) => c.onDelete("cascade"),
 			)
-			.addUniqueConstraint(
-				"urbfs_[urbfId-key]_uniq",
-				[
-					"userResourceBundleFeatureId",
-					"key",
-				],
-			)
+			.addUniqueConstraint("urbfs_[urbfId-key]_uniq", [
+				"userResourceBundleFeatureId",
+				"key",
+			])
 			.execute();
 
 		await db.schema

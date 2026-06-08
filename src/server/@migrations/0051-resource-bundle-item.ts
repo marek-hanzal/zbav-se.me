@@ -31,13 +31,10 @@ export const ResourceBundleItemMigration: Migration = {
 					"name",
 				],
 			)
-			.addUniqueConstraint(
-				"rbi_[rbId-rdId]_uniq",
-				[
-					"resourceBundleId",
-					"resourceDefinitionId",
-				],
-			)
+			.addUniqueConstraint("rbi_[rbId-rdId]_uniq", [
+				"resourceBundleId",
+				"resourceDefinitionId",
+			])
 			.addCheckConstraint("resource_bundle_item_[amount]_chk", sql`"amount" >= 0`)
 			.execute();
 	},

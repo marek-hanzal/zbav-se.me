@@ -19,13 +19,10 @@ export const UserResourceBundleItemStripeMigration: Migration = {
 				],
 				(c) => c.onDelete("cascade"),
 			)
-			.addUniqueConstraint(
-				"urbis_[urbiId-key]_uniq",
-				[
-					"userResourceBundleItemId",
-					"key",
-				],
-			)
+			.addUniqueConstraint("urbis_[urbiId-key]_uniq", [
+				"userResourceBundleItemId",
+				"key",
+			])
 			.execute();
 
 		await db.schema

@@ -8,7 +8,9 @@ export const ResourceBundleMigration: Migration = {
 			.createTable("resource_bundle")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("name", "text", (col) => col.notNull())
-			.addUniqueConstraint("resource_bundle_[name]_uniq", ["name"])
+			.addUniqueConstraint("resource_bundle_[name]_uniq", [
+				"name",
+			])
 			.execute();
 
 		await db

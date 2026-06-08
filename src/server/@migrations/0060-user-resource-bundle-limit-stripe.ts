@@ -19,13 +19,10 @@ export const UserResourceBundleLimitStripeMigration: Migration = {
 				],
 				(c) => c.onDelete("cascade"),
 			)
-			.addUniqueConstraint(
-				"urbls_[urblId-key]_uniq",
-				[
-					"userResourceBundleLimitId",
-					"key",
-				],
-			)
+			.addUniqueConstraint("urbls_[urblId-key]_uniq", [
+				"userResourceBundleLimitId",
+				"key",
+			])
 			.execute();
 
 		await db.schema

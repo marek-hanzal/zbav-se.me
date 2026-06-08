@@ -31,13 +31,10 @@ export const ResourceBundleLimitMigration: Migration = {
 					"name",
 				],
 			)
-			.addUniqueConstraint(
-				"rbl_[rbId-rdId]_uniq",
-				[
-					"resourceBundleId",
-					"resourceDefinitionId",
-				],
-			)
+			.addUniqueConstraint("rbl_[rbId-rdId]_uniq", [
+				"resourceBundleId",
+				"resourceDefinitionId",
+			])
 			.addCheckConstraint("resource_bundle_limit_[limit]_chk", sql`"limit" >= 0`)
 			.execute();
 	},
