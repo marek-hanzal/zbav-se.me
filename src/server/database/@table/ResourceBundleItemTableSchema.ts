@@ -16,9 +16,8 @@ export const ResourceBundleItemTableSchema = z
 			description: "Item amount granted by the resource bundle",
 			type: "number",
 		}),
-		expiration: z.coerce.number().nullable().meta({
-			description: "Item expiration duration in seconds, or null for never-expiring",
-			type: "number",
+		expiresAt: z.coerce.date().nullish().meta({
+			description: "Optional expiration date of this item",
 		}),
 	})
 	.meta({
