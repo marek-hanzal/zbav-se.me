@@ -60,6 +60,19 @@ export const Route = createFileRoute("/$locale/app/shop/success")({
 						data-ui-tone="brand"
 						data-ui-theme="light"
 						data-ui-color="lead"
+						titleProps={{
+							"data-ui-text": "xl",
+						}}
+						messageProps={{
+							"data-ui-text": "default",
+							className: "mt-2 text-center",
+							components: {
+								p: {
+									"data-ui-justify": "center",
+									className: "text-center",
+								},
+							},
+						}}
 						action={
 							<LinkTo
 								data-action="goto shop browse"

@@ -6,17 +6,18 @@ import { Status } from "@/lib/client/status";
 import { Tx } from "@/lib/client/tx";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
-import { CancelIcon } from "~/common/ui/icon";
 import { uiCtaLinkButton } from "~/common/ui/ui";
 import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
 
-export const Route = createFileRoute("/$locale/app/shop/cancel")({
+const CancelledIcon = "icon-[material-symbols--event-available-rounded]";
+
+export const Route = createFileRoute("/$locale/app/shop/cancelled")({
 	component() {
 		const { locale } = Route.useParams();
 
 		return (
 			<TitleContainer
-				textTitle="Shop cancel (title)"
+				textTitle="Shop cancelled (title)"
 				left={
 					<BackHomeButton
 						to="/$locale/app/home"
@@ -29,9 +30,9 @@ export const Route = createFileRoute("/$locale/app/shop/cancel")({
 			>
 				<Container data-ui-layout="vertical-centered">
 					<Status
-						icon={CancelIcon}
-						textTitle="Shop cancel status (title)"
-						textMessage="Shop cancel status (message)"
+						icon={CancelledIcon}
+						textTitle="Shop cancelled status (title)"
+						textMessage="Shop cancelled status (message)"
 						data-ui-tone="brand"
 						data-ui-theme="light"
 						data-ui-color="lead"
