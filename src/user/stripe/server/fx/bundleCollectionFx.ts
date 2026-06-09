@@ -1,15 +1,28 @@
 import { Effect } from "effect";
 import { match, P } from "ts-pattern";
+import { DateServiceFx } from "@/lib/common/date";
 import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { stripeClientFx } from "~/user/stripe/server/fx/stripeClientFx";
 import { CheckoutBundleEnumSchema } from "~/user/stripe/server/schema/CheckoutBundleEnumSchema";
-import type { BundleSchema } from "../schema/BundleSchema";
+import type { BundleActiveSchema, BundleSchema } from "../schema/BundleSchema";
 
-export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
+export namespace bundleCollectionFx {
+	export interface Props {
+		userId: string;
+	}
+}
+
+export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* ({
+	userId,
+}: bundleCollectionFx.Props) {
 	const logger = yield* getLoggerFx("bundleCollectionFx");
-	logger.trace("bundleCollectionFx");
+	logger.trace("bundleCollectionFx", {
+		userId,
+	});
+	const date = yield* DateServiceFx;
+	const now = date.now().toJSDate();
 
 	const stripe = yield* stripeClientFx();
 	const checkoutBundles = CheckoutBundleEnumSchema.options;
@@ -22,6 +35,7 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 
 	const {
 		bundles: rawBundles,
+		activeAssignments,
 		items,
 		limits,
 		features,
@@ -39,6 +53,7 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 			if (bundles.length === 0) {
 				return {
 					bundles,
+					activeAssignments: [],
 					items: [],
 					limits: [],
 					features: [],
@@ -47,7 +62,34 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 
 			const ids = bundles.map((bundle) => bundle.id);
 
-			const [items, limits, features] = await Promise.all([
+			const [activeAssignments, items, limits, features] = await Promise.all([
+				kysely
+					.selectFrom("user_resource_bundle as assignment")
+					.innerJoin(
+						"resource_bundle as bundle",
+						"bundle.id",
+						"assignment.resourceBundleId",
+					)
+					.leftJoin(
+						"user_resource_bundle_stripe as stripeLink",
+						"stripeLink.userResourceBundleId",
+						"assignment.id",
+					)
+					.select([
+						"assignment.expiresAt",
+						"bundle.name",
+						"stripeLink.subscriptionId",
+					])
+					.where("assignment.userId", "=", userId)
+					.where("bundle.name", "in", checkoutBundles)
+					.where("assignment.availableAt", "<=", now)
+					.where((eb) =>
+						eb.or([
+							eb("assignment.expiresAt", "is", null),
+							eb("assignment.expiresAt", ">", now),
+						]),
+					)
+					.execute(),
 				kysely
 					.selectFrom("resource_bundle_item")
 					.select([
@@ -83,6 +125,7 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 
 			return {
 				bundles,
+				activeAssignments,
 				items,
 				limits,
 				features,
@@ -118,6 +161,59 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 	const itemsById = Map.groupBy(items, (item) => item.resourceBundleId);
 	const limitsById = Map.groupBy(limits, (limit) => limit.resourceBundleId);
 	const featuresById = Map.groupBy(features, (feature) => feature.resourceBundleId);
+	const activeRows = activeAssignments.flatMap((assignment) => {
+		const name = CheckoutBundleEnumSchema.safeParse(assignment.name);
+
+		if (!name.success) {
+			return [];
+		}
+
+		return [
+			{
+				bundle: name.data,
+				expiresAt: assignment.expiresAt,
+				subscriptionId: assignment.subscriptionId ?? null,
+			},
+		];
+	});
+	const subscriptionsById = new Map(
+		yield* Effect.promise(async () => {
+			const entries = await Promise.all(
+				activeRows
+					.map((assignment) => assignment.subscriptionId)
+					.filter((subscriptionId): subscriptionId is string => Boolean(subscriptionId))
+					.map(async (subscriptionId) => {
+						const subscription = await stripe.subscriptions.retrieve(subscriptionId);
+
+						return [
+							subscription.id,
+							subscription,
+						] as const;
+					}),
+			);
+
+			return entries;
+		}),
+	);
+	const activeByBundle = new Map<CheckoutBundleEnumSchema.Type, BundleActiveSchema.Type>();
+
+	for (const assignment of activeRows) {
+		const subscription = assignment.subscriptionId
+			? subscriptionsById.get(assignment.subscriptionId)
+			: null;
+		const itemEnd =
+			subscription?.items.data.map((item) => item.current_period_end).find(Boolean) ??
+			subscription?.cancel_at ??
+			null;
+		const currentPeriodEndAt = itemEnd ? date.ofSeconds(itemEnd).toJSDate() : null;
+		const cancelAtPeriodEnd =
+			subscription?.cancel_at_period_end ?? Boolean(assignment.expiresAt);
+
+		activeByBundle.set(assignment.bundle, {
+			cancelAtPeriodEnd,
+			periodEndAt: assignment.expiresAt ?? currentPeriodEndAt,
+		});
+	}
 
 	const prices = yield* Effect.promise(() => {
 		return stripe.prices.list({
@@ -209,6 +305,7 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 
 				return [
 					{
+						active: activeByBundle.get(bundle.name) ?? null,
 						bundle: bundle.name,
 						currency: product.currency,
 						description: product.description,
@@ -216,20 +313,9 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 						name: product.name,
 						price: product.price,
 						sort: product.sort,
-						items: (itemsById.get(bundle.id) ?? []).map((item) => ({
-							amount: item.amount,
-							id: item.id,
-							resourceDefinitionId: item.resourceDefinitionId,
-						})),
-						limits: (limitsById.get(bundle.id) ?? []).map((limit) => ({
-							id: limit.id,
-							limit: limit.limit,
-							resourceDefinitionId: limit.resourceDefinitionId,
-						})),
-						features: (featuresById.get(bundle.id) ?? []).map((feature) => ({
-							id: feature.id,
-							resourceDefinitionId: feature.resourceDefinitionId,
-						})),
+						items: itemsById.get(bundle.id) ?? [],
+						limits: limitsById.get(bundle.id) ?? [],
+						features: featuresById.get(bundle.id) ?? [],
 					},
 				];
 			},

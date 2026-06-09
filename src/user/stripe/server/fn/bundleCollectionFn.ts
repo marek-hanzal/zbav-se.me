@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
 import { z } from "zod";
+import { withDateServiceFx } from "@/lib/common/date";
 import { zodGuardFx } from "@/lib/common/fx";
 import { withLoggerFx } from "@/lib/common/log";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
@@ -22,7 +23,7 @@ export const bundleCollectionFn = createServerFn()
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.handler(async ({ context: { database, rootLogger }, serverFnMeta: { name } }) => {
+	.handler(async ({ context: { database, rootLogger, user }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",
 			name,
@@ -31,9 +32,12 @@ export const bundleCollectionFn = createServerFn()
 
 		return zodGuardFx({
 			schema: z.array(BundleSchema),
-			dataFx: bundleCollectionFx(),
+			dataFx: bundleCollectionFx({
+				userId: user.id,
+			}),
 		}).pipe(
 			withKyselyFx(database),
+			withDateServiceFx(),
 			withStripeConfigFx(withStripConfigEnv()),
 			withLoggerFx(rootLogger),
 			Effect.tapError((error) =>

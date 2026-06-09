@@ -4,8 +4,16 @@ import { ResourceBundleItemSchema } from "~/common/resource-bundle-item/server/s
 import { ResourceBundleLimitSchema } from "~/common/resource-bundle-limit/server/schema/ResourceBundleLimitSchema";
 import { CheckoutBundleEnumSchema } from "~/user/stripe/server/schema/CheckoutBundleEnumSchema";
 
+export const BundleActiveSchema = z
+	.looseObject({
+		cancelAtPeriodEnd: z.boolean(),
+		periodEndAt: z.coerce.date().nullable(),
+	})
+	.strip();
+
 export const BundleSchema = z
 	.looseObject({
+		active: BundleActiveSchema.nullable(),
 		bundle: CheckoutBundleEnumSchema,
 		name: z.string().min(1),
 		description: z.string().nullable(),
@@ -35,7 +43,12 @@ export const BundleSchema = z
 	})
 	.strip();
 
+export type BundleActiveSchema = typeof BundleActiveSchema;
 export type BundleSchema = typeof BundleSchema;
+
+export namespace BundleActiveSchema {
+	export type Type = z.infer<BundleActiveSchema>;
+}
 
 export namespace BundleSchema {
 	export type Type = z.infer<BundleSchema>;
