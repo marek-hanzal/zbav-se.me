@@ -118,9 +118,7 @@ async function openBuyerBundle(page: Page) {
 	}
 
 	const bundleButton = page
-		.locator(
-			'[data-ui="BundleItem"][data-resource-bundle="package:buyer"] [data-ui="BundleItem-[CardButton]"]',
-		)
+		.locator('[data-ui="BundleItem"][data-resource-bundle="package:buyer"]')
 		.first();
 
 	await expect(bundleButton).toBeAttached({
@@ -152,7 +150,7 @@ async function expectBuyerSubscriptionActive(page: Page) {
 	await expect(page.locator('[data-ui="BundleItem-[Active]"]').first()).toBeVisible();
 	await openBuyerBundle(page);
 	await expect(
-		page.locator('[data-ui="CheckoutButton"][data-resource-bundle="package:buyer"]').last(),
+		page.locator('[data-ui="CancelButton"][data-resource-bundle="package:buyer"]').last(),
 	).toContainText(/zrušit|cancel/i);
 }
 
