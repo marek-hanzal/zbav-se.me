@@ -1,41 +1,30 @@
-import type { FC } from "react";
+import type { FC, KeyboardEvent } from "react";
 import { useState } from "react";
-import { BottomSheet } from "@/lib/client/bottom-sheet";
-import { Button } from "@/lib/client/button";
 import { Container } from "@/lib/client/container";
+import { Group } from "@/lib/client/group";
 import { ChevronRightIcon, Icon } from "@/lib/client/icon";
 import { useLocale } from "@/lib/client/locale";
 import { PriceInline } from "@/lib/client/price-inline";
 import { useTranslator } from "@/lib/client/translation";
 import { Typo } from "@/lib/client/typo";
-import { LabelValue, ValueList } from "@/lib/client/value";
-import { CloseButton } from "~/common/ui/button";
-import { CheckIcon } from "~/common/ui/icon";
-import { withBundleActiveQuery } from "~/user/resource-bundle/query/withBundleActiveQuery";
+import { toTimeDiff } from "@/lib/common/time";
 import type { BundleSchema } from "~/user/stripe/server/schema/BundleSchema";
-import { CheckoutButton } from "./CheckoutButton";
+import { BundleSheet } from "./BundleSheet";
 
 export namespace BundleItem {
-	export interface Props extends Container.Props {
+	export interface Props extends Group.Props {
 		bundle: BundleSchema.Type;
 	}
 }
 
-const isHumanStripeDescription = (description: string) => {
-	return description.length > 0 && !description.startsWith("bundle=");
-};
-
-export const BundleItem: FC<BundleItem.Props> = ({ bundle, ...props }) => {
+export const BundleItem: FC<BundleItem.Props> = ({ bundle, className, ...props }) => {
 	const locale = useLocale();
 	const translator = useTranslator();
 	const [isOpen, setIsOpen] = useState(false);
-	const { data: isActive } = withBundleActiveQuery.useSuspenseQuery({
-		bundle: bundle.bundle,
-	});
-	const stripeDescription = bundle.description?.trim() || "";
-	const description = isHumanStripeDescription(stripeDescription)
-		? stripeDescription
-		: translator.text(`Resource bundle - ${bundle.bundle} (description)`);
+	const isActive = Boolean(bundle.active);
+	const description =
+		bundle.description?.trim() ||
+		translator.text(`Resource bundle - ${bundle.bundle} (description)`);
 	const price = (
 		<PriceInline
 			price={bundle.price / 100}
@@ -43,184 +32,141 @@ export const BundleItem: FC<BundleItem.Props> = ({ bundle, ...props }) => {
 			currency={bundle.currency.toUpperCase()}
 		/>
 	);
-	const resourceLabel = (resourceDefinitionId: string) => {
-		return translator.text(`Resource definition - ${resourceDefinitionId} (label)`);
+	const open = () => {
+		setIsOpen(true);
+	};
+	const openByKeyboard = (event: KeyboardEvent<HTMLDivElement>) => {
+		if (event.key !== "Enter" && event.key !== " ") {
+			return;
+		}
+
+		event.preventDefault();
+		open();
 	};
 
 	return (
-		<Container
-			{...props}
-			data-ui={"BundleItem"}
-			data-resource-bundle={bundle.bundle}
-			data-ui-bundle={bundle.bundle}
-		>
-			<Button
-				data-ui={"BundleItem-[CardButton]"}
+		<>
+			<Group
+				{...props}
+				data-ui="BundleItem"
 				data-resource-bundle={bundle.bundle}
 				data-ui-bundle={bundle.bundle}
-				data-ui-tone="neutral"
+				data-ui-tone={isActive ? "secondary" : "neutral"}
 				data-ui-theme="light"
-				data-ui-width="full"
-				data-ui-height="content"
-				data-ui-background="default"
+				data-ui-background={isActive ? "alt" : "default"}
 				data-ui-border={true}
-				data-ui-shadow={true}
-				data-ui-round="xl"
-				data-ui-inner="default"
-				data-ui-flow="horizontal"
-				data-ui-items="center"
-				data-ui-justify="space-between"
-				data-ui-gap="default"
-				iconEnabled={ChevronRightIcon}
-				iconPosition="right"
-				iconProps={{
-					"data-ui-text": "xl",
-				}}
-				onClick={() => {
-					setIsOpen(true);
-				}}
+				data-ui-shadow={!isActive}
+				data-ui-inner="2xl"
+				role="button"
+				tabIndex={0}
+				className={[
+					"cursor-pointer",
+					className,
+				]}
+				onClick={open}
+				onKeyDown={openByKeyboard}
 			>
 				<Container
-					data-ui-layout="vertical-flex"
-					data-ui-gap="sm"
+					data-ui="BundleItem-[Card]"
+					data-ui-flow="horizontal"
+					data-ui-items="center"
+					data-ui-justify="space-between"
+					data-ui-gap="default"
 					data-ui-width="full"
-					className="min-w-0 flex-1 text-left"
 				>
 					<Container
-						data-ui-flow="horizontal"
-						data-ui-items="center"
-						data-ui-justify="space-between"
-						data-ui-gap="default"
+						data-ui="BundleItem-[CardContent]"
+						data-ui-layout="vertical-flex"
+						data-ui-gap="sm"
 						data-ui-width="full"
+						className="min-w-0 flex-1 text-left"
 					>
+						<Container
+							data-ui-flow="horizontal"
+							data-ui-items="start"
+							data-ui-justify="space-between"
+							data-ui-gap="default"
+							data-ui-width="full"
+						>
+							<Typo
+								label={bundle.name}
+								preset="subheader"
+								className="min-w-0"
+							/>
+							<Typo
+								label={price}
+								data-ui-font="bold"
+								className="shrink-0 whitespace-nowrap"
+							/>
+						</Container>
+
 						<Typo
-							label={bundle.name}
-							preset="subheader"
-							data-ui-truncate
-							className="min-w-0"
+							label={description}
+							data-ui-opacity="7"
+							data-ui-text="sm"
+							className="line-clamp-3"
 						/>
-						<Typo
-							label={price}
-							data-ui-font="bold"
-							className="shrink-0 whitespace-nowrap"
-						/>
+
+						{bundle.active ? (
+							<Container
+								data-ui="BundleItem-[ActiveSummary]"
+								data-ui-layout="vertical-flex"
+								data-ui-gap="xs"
+							>
+								<Typo
+									label={translator.text("Active")}
+									data-ui="BundleItem-[Active]"
+									data-ui-color="lead"
+									data-ui-font="bold"
+									data-ui-text="sm"
+								/>
+
+								{bundle.active.periodEndAt ? (
+									<Container
+										data-ui-flow="horizontal"
+										data-ui-gap="xs"
+									>
+										<Typo
+											label={translator.text(
+												bundle.active.cancelAtPeriodEnd
+													? "Subscription ends summary (label)"
+													: "Subscription renewal summary (label)",
+											)}
+											data-ui-color="lead"
+											data-ui-text="xs"
+										/>
+										<Typo
+											label={toTimeDiff({
+												locale,
+												time: bundle.active.periodEndAt,
+												type: "human",
+											})}
+											data-ui-color="lead"
+											data-ui-text="xs"
+										/>
+									</Container>
+								) : null}
+							</Container>
+						) : null}
 					</Container>
 
-					<Typo
-						label={description}
-						data-ui-opacity="7"
-						data-ui-text="sm"
-						data-ui-wrap="wrap"
+					<Icon
+						icon={ChevronRightIcon}
+						data-ui-text="xl"
+						data-ui-color="lead"
+						className="shrink-0"
 					/>
-
-					{isActive ? (
-						<Typo
-							label={translator.text("Active")}
-							data-ui={"BundleItem-[Active]"}
-							data-ui-color="lead"
-							data-ui-font="bold"
-							data-ui-text="sm"
-						/>
-					) : null}
 				</Container>
-			</Button>
+			</Group>
 
-			<BottomSheet
-				data-ui="BundleItem-[BottomSheet]"
+			<BundleSheet
+				bundle={bundle}
+				description={description}
 				isOpen={isOpen}
 				onClose={() => {
 					setIsOpen(false);
 				}}
-				detent="default"
-				withHeader
-				contentProps={{
-					className: "h-full min-h-0 overflow-hidden",
-				}}
-				header={({ close }) => ({
-					title: bundle.name,
-					right: <CloseButton onClick={close} />,
-				})}
-			>
-				<Container
-					data-ui="BundleItem-[SheetContent]"
-					data-ui-layout="vertical-flex"
-					data-ui-gap="default"
-					data-ui-inner="default"
-					data-ui-height="full"
-					data-ui-scroll="vertical"
-					className="pb-6"
-				>
-					<LabelValue
-						textLabel="Price (label)"
-						textValue={price}
-					/>
-
-					<LabelValue
-						textLabel="Description (label)"
-						textValue={<Typo label={description} />}
-					/>
-
-					<ValueList
-						data-ui={"BundleItem-[Items]"}
-						textLabel="Bundle items (label)"
-						textEmpty="Bundle items empty"
-						items={bundle.items}
-						renderFn={(item) => (
-							<Typo
-								label={`${item.amount}× ${resourceLabel(item.resourceDefinitionId)}`}
-							/>
-						)}
-					/>
-
-					<ValueList
-						data-ui={"BundleItem-[Limits]"}
-						textLabel="Bundle limits (label)"
-						textEmpty="Bundle limits empty"
-						items={bundle.limits}
-						renderFn={(limit) => (
-							<Typo
-								label={`${limit.limit} ${resourceLabel(limit.resourceDefinitionId)}`}
-							/>
-						)}
-					/>
-
-					<ValueList
-						data-ui={"BundleItem-[Features]"}
-						textLabel="Bundle features (label)"
-						textEmpty="Bundle features empty"
-						items={bundle.features}
-						renderFn={(feature) => (
-							<Typo label={resourceLabel(feature.resourceDefinitionId)} />
-						)}
-					/>
-
-					{isActive ? (
-						<Container
-							data-ui="BundleItem-[ActiveNotice]"
-							data-ui-layout="horizontal-flex"
-							data-ui-items="center"
-							data-ui-gap="sm"
-							data-ui-inner="default"
-							data-ui-background="default"
-							data-ui-round="default"
-						>
-							<Icon
-								icon={CheckIcon}
-								data-ui-text="xl"
-							/>
-							<Typo
-								label={translator.text("Subscription active (message)")}
-								data-ui-text="sm"
-							/>
-						</Container>
-					) : null}
-
-					<CheckoutButton
-						bundle={bundle.bundle}
-						isActive={isActive}
-					/>
-				</Container>
-			</BottomSheet>
-		</Container>
+			/>
+		</>
 	);
 };
