@@ -1438,16 +1438,16 @@ Shop cancel status (message):
 Shop cancel status (title):
     value: Nic jsme si nevzali
 "Shop success - package:buyer (message)":
-    value: Tvoje Kupující předplatné běží.
+    value: Tvoje předplatné Kupující běží.
     dynamic: true
 "Shop success - package:seller (message)":
-    value: Tvoje Prodejce předplatné běží.
+    value: Tvoje předplatné Prodejce běží.
     dynamic: true
 "Shop success - package:pro (message)":
-    value: Tvoje Pro předplatné běží.
+    value: Tvoje předplatné Naplno běží.
     dynamic: true
 "Shop success - package:master (message)":
-    value: Tvoje Master předplatné běží.
+    value: Tvoje předplatné Patron běží.
     dynamic: true
 "Shop success - extra:token:small (message)":
     value: Malý tokenový balíček jsme připsali.
@@ -1467,7 +1467,31 @@ Shop success (title):
 Start subscription (button):
     value: Zaplatit předplatné
 Subscription active (message):
-    value: Tohle předplatné teď běží. Zrušení zastaví další obnovu, aktuální období doběhne.
+    value: Předplatné běží. Zrušení jen zastaví další obnovu.
+Subscription active (title):
+    value: Předplatné běží
+Subscription cancel scheduled (title):
+    value: Obnovování je zrušené
+Subscription ends summary (label):
+    value: Končí
+Subscription renewal summary (label):
+    value: Obnova
+Subscription period unknown (label):
+    value: datum zatím neznáme
+Subscription renewal cancelled (label):
+    value: zrušená
+Subscription renews at (label):
+    value: Další obnova
+Subscription valid until (label):
+    value: Běží do
+Confirm cancel subscription renewal (button):
+    value: Opravdu zrušit obnovu
+Shop cancelled (title):
+    value: Obnovování zrušeno
+Shop cancelled status (title):
+    value: Jop, zrušeno
+Shop cancelled status (message):
+    value: Další obnovení jsme zastavili. Aktuální zaplacené období doběhne normálně, protože nejsme platební hydra.
 Sign in (button):
     value: Přihlásit se
 Sign out:
