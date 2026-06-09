@@ -39,13 +39,13 @@ import { Route as LocaleForgotSentRouteImport } from './@routes/$locale/forgot/s
 import { Route as LocaleForgotPasswordRouteImport } from './@routes/$locale/forgot/password'
 import { Route as LocaleAppWelcomeRouteImport } from './@routes/$locale/app/welcome'
 import { Route as LocaleAppUserRouteImport } from './@routes/$locale/app/user'
-import { Route as LocaleAppShopRouteImport } from './@routes/$locale/app/shop'
 import { Route as LocaleAppHomeRouteImport } from './@routes/$locale/app/home'
 import { Route as SitemapsListingsDayChar123pageChar125DotxmlRouteImport } from './@routes/sitemaps/listings/$day/{$page}[.]xml'
 import { Route as ApiPublicMigrationRunRouteImport } from './@routes/api/public/migration/run'
 import { Route as LocaleZIdViewRouteImport } from './@routes/$locale/z/$id/view'
 import { Route as LocaleZIdUnavailableRouteImport } from './@routes/$locale/z/$id/unavailable'
 import { Route as LocaleAppShopSuccessRouteImport } from './@routes/$locale/app/shop/success'
+import { Route as LocaleAppShopCancelledRouteImport } from './@routes/$locale/app/shop/cancelled'
 import { Route as LocaleAppShopCancelRouteImport } from './@routes/$locale/app/shop/cancel'
 import { Route as LocaleAppShopBrowseRouteImport } from './@routes/$locale/app/shop/browse'
 import { Route as LocaleAppBuyerSearchRouteImport } from './@routes/$locale/app/buyer/search'
@@ -221,11 +221,6 @@ const LocaleAppUserRoute = LocaleAppUserRouteImport.update({
   path: '/user',
   getParentRoute: () => LocaleAppRoute,
 } as any)
-const LocaleAppShopRoute = LocaleAppShopRouteImport.update({
-  id: '/shop',
-  path: '/shop',
-  getParentRoute: () => LocaleAppRoute,
-} as any)
 const LocaleAppHomeRoute = LocaleAppHomeRouteImport.update({
   id: '/home',
   path: '/home',
@@ -253,19 +248,24 @@ const LocaleZIdUnavailableRoute = LocaleZIdUnavailableRouteImport.update({
   getParentRoute: () => LocaleRoute,
 } as any)
 const LocaleAppShopSuccessRoute = LocaleAppShopSuccessRouteImport.update({
-  id: '/success',
-  path: '/success',
-  getParentRoute: () => LocaleAppShopRoute,
+  id: '/shop/success',
+  path: '/shop/success',
+  getParentRoute: () => LocaleAppRoute,
+} as any)
+const LocaleAppShopCancelledRoute = LocaleAppShopCancelledRouteImport.update({
+  id: '/shop/cancelled',
+  path: '/shop/cancelled',
+  getParentRoute: () => LocaleAppRoute,
 } as any)
 const LocaleAppShopCancelRoute = LocaleAppShopCancelRouteImport.update({
-  id: '/cancel',
-  path: '/cancel',
-  getParentRoute: () => LocaleAppShopRoute,
+  id: '/shop/cancel',
+  path: '/shop/cancel',
+  getParentRoute: () => LocaleAppRoute,
 } as any)
 const LocaleAppShopBrowseRoute = LocaleAppShopBrowseRouteImport.update({
-  id: '/browse',
-  path: '/browse',
-  getParentRoute: () => LocaleAppShopRoute,
+  id: '/shop/browse',
+  path: '/shop/browse',
+  getParentRoute: () => LocaleAppRoute,
 } as any)
 const LocaleAppBuyerSearchRoute = LocaleAppBuyerSearchRouteImport.update({
   id: '/buyer/search',
@@ -403,7 +403,6 @@ export interface FileRoutesByFullPath {
   '/sitemaps/pages.xml': typeof SitemapsPagesDotxmlRoute
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/app/home': typeof LocaleAppHomeRoute
-  '/$locale/app/shop': typeof LocaleAppShopRouteWithChildren
   '/$locale/app/user': typeof LocaleAppUserRoute
   '/$locale/app/welcome': typeof LocaleAppWelcomeRoute
   '/$locale/forgot/password': typeof LocaleForgotPasswordRoute
@@ -423,6 +422,7 @@ export interface FileRoutesByFullPath {
   '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
   '/$locale/app/shop/browse': typeof LocaleAppShopBrowseRoute
   '/$locale/app/shop/cancel': typeof LocaleAppShopCancelRoute
+  '/$locale/app/shop/cancelled': typeof LocaleAppShopCancelledRoute
   '/$locale/app/shop/success': typeof LocaleAppShopSuccessRoute
   '/$locale/z/$id/unavailable': typeof LocaleZIdUnavailableRoute
   '/$locale/z/$id/view': typeof LocaleZIdViewRoute
@@ -462,7 +462,6 @@ export interface FileRoutesByTo {
   '/sitemaps/pages.xml': typeof SitemapsPagesDotxmlRoute
   '/$locale': typeof LocaleIndexRoute
   '/$locale/app/home': typeof LocaleAppHomeRoute
-  '/$locale/app/shop': typeof LocaleAppShopRouteWithChildren
   '/$locale/app/user': typeof LocaleAppUserRoute
   '/$locale/app/welcome': typeof LocaleAppWelcomeRoute
   '/$locale/forgot/password': typeof LocaleForgotPasswordRoute
@@ -482,6 +481,7 @@ export interface FileRoutesByTo {
   '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
   '/$locale/app/shop/browse': typeof LocaleAppShopBrowseRoute
   '/$locale/app/shop/cancel': typeof LocaleAppShopCancelRoute
+  '/$locale/app/shop/cancelled': typeof LocaleAppShopCancelledRoute
   '/$locale/app/shop/success': typeof LocaleAppShopSuccessRoute
   '/$locale/z/$id/unavailable': typeof LocaleZIdUnavailableRoute
   '/$locale/z/$id/view': typeof LocaleZIdViewRoute
@@ -524,7 +524,6 @@ export interface FileRoutesById {
   '/sitemaps/pages.xml': typeof SitemapsPagesDotxmlRoute
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/app/home': typeof LocaleAppHomeRoute
-  '/$locale/app/shop': typeof LocaleAppShopRouteWithChildren
   '/$locale/app/user': typeof LocaleAppUserRoute
   '/$locale/app/welcome': typeof LocaleAppWelcomeRoute
   '/$locale/forgot/password': typeof LocaleForgotPasswordRoute
@@ -544,6 +543,7 @@ export interface FileRoutesById {
   '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
   '/$locale/app/shop/browse': typeof LocaleAppShopBrowseRoute
   '/$locale/app/shop/cancel': typeof LocaleAppShopCancelRoute
+  '/$locale/app/shop/cancelled': typeof LocaleAppShopCancelledRoute
   '/$locale/app/shop/success': typeof LocaleAppShopSuccessRoute
   '/$locale/z/$id/unavailable': typeof LocaleZIdUnavailableRoute
   '/$locale/z/$id/view': typeof LocaleZIdViewRoute
@@ -587,7 +587,6 @@ export interface FileRouteTypes {
     | '/sitemaps/pages.xml'
     | '/$locale/'
     | '/$locale/app/home'
-    | '/$locale/app/shop'
     | '/$locale/app/user'
     | '/$locale/app/welcome'
     | '/$locale/forgot/password'
@@ -607,6 +606,7 @@ export interface FileRouteTypes {
     | '/$locale/app/buyer/search'
     | '/$locale/app/shop/browse'
     | '/$locale/app/shop/cancel'
+    | '/$locale/app/shop/cancelled'
     | '/$locale/app/shop/success'
     | '/$locale/z/$id/unavailable'
     | '/$locale/z/$id/view'
@@ -646,7 +646,6 @@ export interface FileRouteTypes {
     | '/sitemaps/pages.xml'
     | '/$locale'
     | '/$locale/app/home'
-    | '/$locale/app/shop'
     | '/$locale/app/user'
     | '/$locale/app/welcome'
     | '/$locale/forgot/password'
@@ -666,6 +665,7 @@ export interface FileRouteTypes {
     | '/$locale/app/buyer/search'
     | '/$locale/app/shop/browse'
     | '/$locale/app/shop/cancel'
+    | '/$locale/app/shop/cancelled'
     | '/$locale/app/shop/success'
     | '/$locale/z/$id/unavailable'
     | '/$locale/z/$id/view'
@@ -707,7 +707,6 @@ export interface FileRouteTypes {
     | '/sitemaps/pages.xml'
     | '/$locale/'
     | '/$locale/app/home'
-    | '/$locale/app/shop'
     | '/$locale/app/user'
     | '/$locale/app/welcome'
     | '/$locale/forgot/password'
@@ -727,6 +726,7 @@ export interface FileRouteTypes {
     | '/$locale/app/buyer/search'
     | '/$locale/app/shop/browse'
     | '/$locale/app/shop/cancel'
+    | '/$locale/app/shop/cancelled'
     | '/$locale/app/shop/success'
     | '/$locale/z/$id/unavailable'
     | '/$locale/z/$id/view'
@@ -974,13 +974,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleAppUserRouteImport
       parentRoute: typeof LocaleAppRoute
     }
-    '/$locale/app/shop': {
-      id: '/$locale/app/shop'
-      path: '/shop'
-      fullPath: '/$locale/app/shop'
-      preLoaderRoute: typeof LocaleAppShopRouteImport
-      parentRoute: typeof LocaleAppRoute
-    }
     '/$locale/app/home': {
       id: '/$locale/app/home'
       path: '/home'
@@ -1018,24 +1011,31 @@ declare module '@tanstack/react-router' {
     }
     '/$locale/app/shop/success': {
       id: '/$locale/app/shop/success'
-      path: '/success'
+      path: '/shop/success'
       fullPath: '/$locale/app/shop/success'
       preLoaderRoute: typeof LocaleAppShopSuccessRouteImport
-      parentRoute: typeof LocaleAppShopRoute
+      parentRoute: typeof LocaleAppRoute
+    }
+    '/$locale/app/shop/cancelled': {
+      id: '/$locale/app/shop/cancelled'
+      path: '/shop/cancelled'
+      fullPath: '/$locale/app/shop/cancelled'
+      preLoaderRoute: typeof LocaleAppShopCancelledRouteImport
+      parentRoute: typeof LocaleAppRoute
     }
     '/$locale/app/shop/cancel': {
       id: '/$locale/app/shop/cancel'
-      path: '/cancel'
+      path: '/shop/cancel'
       fullPath: '/$locale/app/shop/cancel'
       preLoaderRoute: typeof LocaleAppShopCancelRouteImport
-      parentRoute: typeof LocaleAppShopRoute
+      parentRoute: typeof LocaleAppRoute
     }
     '/$locale/app/shop/browse': {
       id: '/$locale/app/shop/browse'
-      path: '/browse'
+      path: '/shop/browse'
       fullPath: '/$locale/app/shop/browse'
       preLoaderRoute: typeof LocaleAppShopBrowseRouteImport
-      parentRoute: typeof LocaleAppShopRoute
+      parentRoute: typeof LocaleAppRoute
     }
     '/$locale/app/buyer/search': {
       id: '/$locale/app/buyer/search'
@@ -1180,25 +1180,8 @@ declare module '@tanstack/react-router' {
   }
 }
 
-interface LocaleAppShopRouteChildren {
-  LocaleAppShopBrowseRoute: typeof LocaleAppShopBrowseRoute
-  LocaleAppShopCancelRoute: typeof LocaleAppShopCancelRoute
-  LocaleAppShopSuccessRoute: typeof LocaleAppShopSuccessRoute
-}
-
-const LocaleAppShopRouteChildren: LocaleAppShopRouteChildren = {
-  LocaleAppShopBrowseRoute: LocaleAppShopBrowseRoute,
-  LocaleAppShopCancelRoute: LocaleAppShopCancelRoute,
-  LocaleAppShopSuccessRoute: LocaleAppShopSuccessRoute,
-}
-
-const LocaleAppShopRouteWithChildren = LocaleAppShopRoute._addFileChildren(
-  LocaleAppShopRouteChildren,
-)
-
 interface LocaleAppRouteChildren {
   LocaleAppHomeRoute: typeof LocaleAppHomeRoute
-  LocaleAppShopRoute: typeof LocaleAppShopRouteWithChildren
   LocaleAppUserRoute: typeof LocaleAppUserRoute
   LocaleAppWelcomeRoute: typeof LocaleAppWelcomeRoute
   LocaleAppIndexRoute: typeof LocaleAppIndexRoute
@@ -1207,6 +1190,10 @@ interface LocaleAppRouteChildren {
   LocaleAppAgentContinueRoute: typeof LocaleAppAgentContinueRoute
   LocaleAppAgentWelcomeRoute: typeof LocaleAppAgentWelcomeRoute
   LocaleAppBuyerSearchRoute: typeof LocaleAppBuyerSearchRoute
+  LocaleAppShopBrowseRoute: typeof LocaleAppShopBrowseRoute
+  LocaleAppShopCancelRoute: typeof LocaleAppShopCancelRoute
+  LocaleAppShopCancelledRoute: typeof LocaleAppShopCancelledRoute
+  LocaleAppShopSuccessRoute: typeof LocaleAppShopSuccessRoute
   LocaleAppBuyerFavouriteListRoute: typeof LocaleAppBuyerFavouriteListRoute
   LocaleAppBuyerFeedDefaultRoute: typeof LocaleAppBuyerFeedDefaultRoute
   LocaleAppBuyerFeedListRoute: typeof LocaleAppBuyerFeedListRoute
@@ -1226,7 +1213,6 @@ interface LocaleAppRouteChildren {
 
 const LocaleAppRouteChildren: LocaleAppRouteChildren = {
   LocaleAppHomeRoute: LocaleAppHomeRoute,
-  LocaleAppShopRoute: LocaleAppShopRouteWithChildren,
   LocaleAppUserRoute: LocaleAppUserRoute,
   LocaleAppWelcomeRoute: LocaleAppWelcomeRoute,
   LocaleAppIndexRoute: LocaleAppIndexRoute,
@@ -1235,6 +1221,10 @@ const LocaleAppRouteChildren: LocaleAppRouteChildren = {
   LocaleAppAgentContinueRoute: LocaleAppAgentContinueRoute,
   LocaleAppAgentWelcomeRoute: LocaleAppAgentWelcomeRoute,
   LocaleAppBuyerSearchRoute: LocaleAppBuyerSearchRoute,
+  LocaleAppShopBrowseRoute: LocaleAppShopBrowseRoute,
+  LocaleAppShopCancelRoute: LocaleAppShopCancelRoute,
+  LocaleAppShopCancelledRoute: LocaleAppShopCancelledRoute,
+  LocaleAppShopSuccessRoute: LocaleAppShopSuccessRoute,
   LocaleAppBuyerFavouriteListRoute: LocaleAppBuyerFavouriteListRoute,
   LocaleAppBuyerFeedDefaultRoute: LocaleAppBuyerFeedDefaultRoute,
   LocaleAppBuyerFeedListRoute: LocaleAppBuyerFeedListRoute,
