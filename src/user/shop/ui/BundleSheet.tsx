@@ -16,13 +16,12 @@ import { CheckoutButton } from "./CheckoutButton";
 export namespace BundleSheet {
 	export interface Props {
 		bundle: BundleSchema.Type;
-		description: string;
 		isOpen: boolean;
 		onClose(): void;
 	}
 }
 
-export const BundleSheet: FC<BundleSheet.Props> = ({ bundle, description, isOpen, onClose }) => {
+export const BundleSheet: FC<BundleSheet.Props> = ({ bundle, isOpen, onClose }) => {
 	const locale = useLocale();
 	const translator = useTranslator();
 
@@ -65,7 +64,7 @@ export const BundleSheet: FC<BundleSheet.Props> = ({ bundle, description, isOpen
 				<Group>
 					<LabelValue
 						textLabel="Description (label)"
-						textValue={<Typo label={description} />}
+						textValue={<Typo label={bundle.description} />}
 					/>
 				</Group>
 

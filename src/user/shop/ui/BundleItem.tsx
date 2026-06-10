@@ -22,19 +22,10 @@ export const BundleItem: FC<BundleItem.Props> = ({ bundle, className, ...props }
 	const translator = useTranslator();
 	const [isOpen, setIsOpen] = useState(false);
 	const isActive = Boolean(bundle.active);
-	const description =
-		bundle.description?.trim() ||
-		translator.text(`Resource bundle - ${bundle.bundle} (description)`);
-	const price = (
-		<PriceInline
-			price={bundle.price / 100}
-			locale={locale}
-			currency={bundle.currency.toUpperCase()}
-		/>
-	);
 	const open = () => {
 		setIsOpen(true);
 	};
+
 	const openByKeyboard = (event: KeyboardEvent<HTMLDivElement>) => {
 		if (event.key !== "Enter" && event.key !== " ") {
 			return;
@@ -47,7 +38,6 @@ export const BundleItem: FC<BundleItem.Props> = ({ bundle, className, ...props }
 	return (
 		<>
 			<Group
-				{...props}
 				data-ui="BundleItem"
 				data-resource-bundle={bundle.bundle}
 				data-ui-bundle={bundle.bundle}
@@ -55,7 +45,7 @@ export const BundleItem: FC<BundleItem.Props> = ({ bundle, className, ...props }
 				data-ui-theme="light"
 				data-ui-background={isActive ? "alt" : "default"}
 				data-ui-border={true}
-				data-ui-shadow={!isActive}
+				data-ui-shadow={isActive}
 				data-ui-inner="2xl"
 				role="button"
 				tabIndex={0}
@@ -65,9 +55,9 @@ export const BundleItem: FC<BundleItem.Props> = ({ bundle, className, ...props }
 				]}
 				onClick={open}
 				onKeyDown={openByKeyboard}
+				{...props}
 			>
 				<Container
-					data-ui="BundleItem-[Card]"
 					data-ui-flow="horizontal"
 					data-ui-items="center"
 					data-ui-justify="space-between"
@@ -75,7 +65,6 @@ export const BundleItem: FC<BundleItem.Props> = ({ bundle, className, ...props }
 					data-ui-width="full"
 				>
 					<Container
-						data-ui="BundleItem-[CardContent]"
 						data-ui-layout="vertical-flex"
 						data-ui-gap="sm"
 						data-ui-width="full"
@@ -94,14 +83,20 @@ export const BundleItem: FC<BundleItem.Props> = ({ bundle, className, ...props }
 								className="min-w-0"
 							/>
 							<Typo
-								label={price}
+								label={
+									<PriceInline
+										price={bundle.price / 100}
+										locale={locale}
+										currency={bundle.currency.toUpperCase()}
+									/>
+								}
 								data-ui-font="bold"
 								className="shrink-0 whitespace-nowrap"
 							/>
 						</Container>
 
 						<Typo
-							label={description}
+							label={bundle.description}
 							data-ui-opacity="7"
 							data-ui-text="sm"
 							className="line-clamp-3"
@@ -161,7 +156,6 @@ export const BundleItem: FC<BundleItem.Props> = ({ bundle, className, ...props }
 
 			<BundleSheet
 				bundle={bundle}
-				description={description}
 				isOpen={isOpen}
 				onClose={() => {
 					setIsOpen(false);
