@@ -41,12 +41,13 @@ export const BundleItem: FC<BundleItem.Props> = ({ bundle, className, ...props }
 				data-ui="BundleItem"
 				data-resource-bundle={bundle.bundle}
 				data-ui-bundle={bundle.bundle}
+				data-ui-bundle-status={isActive}
 				data-ui-tone={isActive ? "secondary" : "neutral"}
 				data-ui-theme="light"
 				data-ui-background={isActive ? "alt" : "default"}
 				data-ui-border={true}
 				data-ui-shadow={isActive}
-				data-ui-inner="2xl"
+				data-ui-inner="lg"
 				role="button"
 				tabIndex={0}
 				className={[
@@ -58,43 +59,41 @@ export const BundleItem: FC<BundleItem.Props> = ({ bundle, className, ...props }
 				{...props}
 			>
 				<Container
-					data-ui-flow="horizontal"
-					data-ui-items="center"
-					data-ui-justify="space-between"
-					data-ui-gap="default"
+					data-ui-layout="vertical-flex"
+					data-ui-gap="sm"
 					data-ui-width="full"
 				>
 					<Container
-						data-ui-layout="vertical-flex"
-						data-ui-gap="sm"
+						data-ui-flow="horizontal"
+						data-ui-items="start"
+						data-ui-justify="space-between"
+						data-ui-gap="default"
 						data-ui-width="full"
-						className="min-w-0 flex-1 text-left"
 					>
-						<Container
-							data-ui-flow="horizontal"
-							data-ui-items="start"
-							data-ui-justify="space-between"
-							data-ui-gap="default"
-							data-ui-width="full"
-						>
-							<Typo
-								label={bundle.name}
-								preset="subheader"
-								className="min-w-0"
-							/>
-							<Typo
-								label={
-									<PriceInline
-										price={bundle.price / 100}
-										locale={locale}
-										currency={bundle.currency.toUpperCase()}
-									/>
-								}
-								data-ui-font="bold"
-								className="shrink-0 whitespace-nowrap"
-							/>
-						</Container>
+						<Typo
+							label={bundle.name}
+							preset="subheader"
+						/>
 
+						<Typo
+							label={
+								<PriceInline
+									price={bundle.price / 100}
+									locale={locale}
+									currency={bundle.currency.toUpperCase()}
+								/>
+							}
+							data-ui-font="bold"
+						/>
+					</Container>
+
+					<Container
+						data-ui-flow="horizontal"
+						data-ui-items="center"
+						data-ui-justify="space-between"
+						data-ui-gap="default"
+						data-ui-width="full"
+					>
 						<Typo
 							label={bundle.description}
 							data-ui-opacity="7"
@@ -102,55 +101,67 @@ export const BundleItem: FC<BundleItem.Props> = ({ bundle, className, ...props }
 							className="line-clamp-3"
 						/>
 
-						{bundle.active ? (
-							<Container
-								data-ui="BundleItem-[ActiveSummary]"
-								data-ui-layout="vertical-flex"
-								data-ui-gap="xs"
-							>
-								<Typo
-									label={translator.text("Active")}
-									data-ui="BundleItem-[Active]"
-									data-ui-color="lead"
-									data-ui-font="bold"
-									data-ui-text="sm"
-								/>
-
-								{bundle.active.periodEndAt ? (
-									<Container
-										data-ui-flow="horizontal"
-										data-ui-gap="xs"
-									>
-										<Typo
-											label={translator.text(
-												bundle.active.cancelAtPeriodEnd
-													? "Subscription ends summary (label)"
-													: "Subscription renewal summary (label)",
-											)}
-											data-ui-color="lead"
-											data-ui-text="xs"
-										/>
-										<Typo
-											label={toTimeDiff({
-												locale,
-												time: bundle.active.periodEndAt,
-												type: "human",
-											})}
-											data-ui-color="lead"
-											data-ui-text="xs"
-										/>
-									</Container>
-								) : null}
-							</Container>
-						) : null}
+						<Icon
+							icon={ChevronRightIcon}
+							data-ui-text="xl"
+							data-ui-color="lead"
+							className="shrink-0"
+						/>
 					</Container>
 
-					<Icon
-						icon={ChevronRightIcon}
-						data-ui-text="xl"
-						data-ui-color="lead"
-						className="shrink-0"
-					/>
+					{bundle.active ? null : (
+						<Typo
+							label={translator.text("See the bundle detail (label)")}
+							data-ui-color="lead"
+							data-ui-font="bold"
+							data-ui-text="sm"
+						/>
+					)}
+
+					{bundle.active ? (
+						<Container
+							data-ui-layout="horizontal-flex"
+                            data-ui-items="center"
+                            data-ui-justify="space-between"
+							data-ui-gap="xs"
+						>
+							<Typo
+								label={translator.text("Active")}
+								data-ui-color="lead"
+								data-ui-font="normal"
+								data-ui-text="sm"
+							/>
+
+							{bundle.active.periodEndAt ? (
+								<Container
+									data-ui-flow="horizontal"
+									data-ui-gap="default"
+                                    data-ui-items="center"
+								>
+									<Typo
+										label={translator.text(
+											bundle.active.cancelAtPeriodEnd
+												? "Subscription ends summary (label)"
+												: "Subscription renewal summary (label)",
+										)}
+										data-ui-color="lead"
+										data-ui-text="sm"
+									/>
+
+									<Typo
+										label={toTimeDiff({
+											locale,
+											time: bundle.active.periodEndAt,
+											type: "human",
+										})}
+										data-ui-color="lead"
+                                        data-ui-font="bold"
+										data-ui-text="md"
+									/>
+								</Container>
+							) : null}
+						</Container>
+					) : null}
 				</Container>
 			</Group>
 

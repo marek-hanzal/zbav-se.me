@@ -1,5 +1,6 @@
 import type { FC } from "react";
 import { useLocale } from "@/lib/client/locale";
+import { useTranslator } from "@/lib/client/translation";
 import type { MarkSuspense } from "@/lib/client/type";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
@@ -13,11 +14,12 @@ export namespace ShopPage {
 }
 
 export const ShopPage: FC<ShopPage.Props> = ({ _suspense, ...props }) => {
+	const translator = useTranslator();
 	const locale = useLocale();
 
 	return (
 		<TitleContainer
-			textTitle="Shop (title)"
+			textTitle={translator.text("Shop (title)")}
 			left={
 				<BackHomeButton
 					to="/$locale/app/home"

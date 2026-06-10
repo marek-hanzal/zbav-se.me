@@ -10,6 +10,8 @@ Accept transaction (button):
     value: Přijmout a pokračovat
 Acknowledge transaction (button):
     value: Hotovo
+Active:
+    value: Aktivní
 Activity (title):
     value: Oznámení
 Activity - nothing new (label):
@@ -166,10 +168,14 @@ Back to agent welcome page (aria):
     value: Zpět na domovskou stránku práce s agentem
 Back to home (link):
     value: Zpět domů
+Back to shop (button):
+    value: Zpět do obchodu
 Back to sign in:
     value: Zpátky na přihlášení
 Behind corner (label):
     value: Za rohem!
+Bonuses (label):
+    value: Bonusy
 Browse listing on (label):
     value: Jukni se na Zbav-se.mě!
 Buyer activity (hint):
@@ -236,6 +242,8 @@ Buyer score 6:
     dynamic: true
 Cancel current agent work (aria):
     value: Kliknutím zruší aktuální práci agenta
+Cancel subscription renewal (button):
+    value: Zrušit obnovování
 Change password (label):
     value: Změna hesla
 Change password (title):
@@ -346,6 +354,8 @@ Condition not selected:
     value: Stav nemáš vybraný
 Confirm Password:
     value: Potvrdit heslo
+Confirm cancel subscription renewal (button):
+    value: Opravdu zrušit obnovu
 Confirm your new password:
     value: Potvrď nové heslo
 Confirm your password:
@@ -1272,6 +1282,88 @@ Reset your password:
     value: Reset hesla
 Resolve transaction (button):
     value: Vyřízeno
+Resource bundle - package:buyer (description):
+    value: "Méně šumu pro nakupování: uložené feedy, Early Discovery a tokeny na
+        rozšíření."
+    dynamic: true
+Resource bundle - package:master (description):
+    value: Nejvyšší balíček pro podporu projektu a maximum dostupných nástrojů.
+    dynamic: true
+Resource bundle - package:pro (description):
+    value: "Kupující i prodejce v jednom: nejvíc limitů, passů a pohodlí bez cirkusu."
+    dynamic: true
+Resource bundle - package:seller (description):
+    value: "Nástroje pro prodej: více inzerátů, fotky, zvýraznění, data a brand."
+    dynamic: true
+Resource definition - buyer:feature:anti-topper (label):
+    value: Anti-topper
+    dynamic: true
+Resource definition - buyer:feature:history (label):
+    value: Historie trhu
+    dynamic: true
+Resource definition - buyer:feature:listing.early-discovery (label):
+    value: Early Discovery
+    dynamic: true
+Resource definition - buyer:feature:seller.info (label):
+    value: Detail prodejce
+    dynamic: true
+Resource definition - buyer:limit:feed.count (label):
+    value: Uložené feedy
+    dynamic: true
+Resource definition - common:feature:founder (label):
+    value: Founders
+    dynamic: true
+Resource definition - common:item:agent.usage (label):
+    value: Použití asistenta
+    dynamic: true
+Resource definition - common:item:support (label):
+    value: Support
+    dynamic: true
+Resource definition - common:item:token (label):
+    value: Tokeny
+    dynamic: true
+Resource definition - common:limit:agent.handbrake (label):
+    value: Ruční brzda asistenta
+    dynamic: true
+Resource definition - common:limit:agent.token (label):
+    value: Tokenový limit asistenta
+    dynamic: true
+Resource definition - seller:feature:brand (label):
+    value: Brand
+    dynamic: true
+Resource definition - seller:feature:buyer.info (label):
+    value: Detail kupujícího
+    dynamic: true
+Resource definition - seller:feature:listing.early-delivery (label):
+    value: Early Delivery
+    dynamic: true
+Resource definition - seller:feature:listing.info (label):
+    value: Rozšířená data
+    dynamic: true
+Resource definition - seller:feature:listing.longer-expiration (label):
+    value: Delší expirace
+    dynamic: true
+Resource definition - seller:feature:payback (label):
+    value: Payback
+    dynamic: true
+Resource definition - seller:item:listing.early-delivery (label):
+    value: Early Delivery kupón
+    dynamic: true
+Resource definition - seller:item:listing.mark (label):
+    value: Mark kupón
+    dynamic: true
+Resource definition - seller:item:listing.top (label):
+    value: Top kupón
+    dynamic: true
+Resource definition - seller:item:listing.top-maxxi (label):
+    value: Top Maxxi kupón
+    dynamic: true
+Resource definition - seller:limit:listing.count (label):
+    value: Aktivní inzeráty
+    dynamic: true
+Resource definition - seller:limit:listing.gallery.count (label):
+    value: Fotky u inzerátu
+    dynamic: true
 Restriction available in (label):
     value: Čas do aktivace
 Restriction not selected:
@@ -1290,6 +1382,8 @@ Search - empty (label):
     value: Žádné výsledky
 See other feeds (link):
     value: Další seznamy
+See the bundle detail (label):
+    value: Podívej se na detail...
 Seller - listings (label):
     value: Celkový počet inzerátů
 Seller info (button):
@@ -1322,184 +1416,43 @@ Share location (title):
     value: Sdílet adresu
 Share package (button):
     value: Trasování balíčku
-Active:
-    value: Aktivní
-Back to shop (button):
-    value: Zpět do obchodu
-"Resource bundle - package:buyer (description)":
-    value: "Méně šumu pro nakupování: uložené feedy, Early Discovery a tokeny na rozšíření."
-    dynamic: true
-"Resource bundle - package:seller (description)":
-    value: "Nástroje pro prodej: více inzerátů, fotky, zvýraznění, data a brand."
-    dynamic: true
-"Resource bundle - package:pro (description)":
-    value: "Kupující i prodejce v jednom: nejvíc limitů, passů a pohodlí bez cirkusu."
-    dynamic: true
-"Resource bundle - package:master (description)":
-    value: Nejvyšší balíček pro podporu projektu a maximum dostupných nástrojů.
-    dynamic: true
-Bundle features (label):
-    value: Funkce
-Bundle features empty:
-    value: Žádné funkce
-Bundle items (label):
-    value: Položky
-Bundle items empty:
-    value: Žádné položky
-Bundle limits (label):
-    value: Limity
-Bundle limits empty:
-    value: Žádné limity
-Cancel subscription renewal (button):
-    value: Zrušit obnovování
-Checkout payment (label):
-    value: platbu
-Description (label):
-    value: Popis
-Price (label):
-    value: Cena
-"Resource definition - buyer:feature:anti-topper (label)":
-    value: Anti-topper
-    dynamic: true
-"Resource definition - buyer:feature:history (label)":
-    value: Historie trhu
-    dynamic: true
-"Resource definition - buyer:feature:listing.early-discovery (label)":
-    value: Early Discovery
-    dynamic: true
-"Resource definition - buyer:feature:seller.info (label)":
-    value: Detail prodejce
-    dynamic: true
-"Resource definition - buyer:limit:feed.count (label)":
-    value: Uložené feedy
-    dynamic: true
-"Resource definition - common:feature:founder (label)":
-    value: Founders
-    dynamic: true
-"Resource definition - common:item:agent.usage (label)":
-    value: Použití asistenta
-    dynamic: true
-"Resource definition - common:item:support (label)":
-    value: Support
-    dynamic: true
-"Resource definition - common:item:token (label)":
-    value: Tokeny
-    dynamic: true
-"Resource definition - common:limit:agent.handbrake (label)":
-    value: Ruční brzda asistenta
-    dynamic: true
-"Resource definition - common:limit:agent.token (label)":
-    value: Tokenový limit asistenta
-    dynamic: true
-"Resource definition - seller:feature:brand (label)":
-    value: Brand
-    dynamic: true
-"Resource definition - seller:feature:buyer.info (label)":
-    value: Detail kupujícího
-    dynamic: true
-"Resource definition - seller:feature:listing.early-delivery (label)":
-    value: Early Delivery
-    dynamic: true
-"Resource definition - seller:feature:listing.info (label)":
-    value: Rozšířená data
-    dynamic: true
-"Resource definition - seller:feature:listing.longer-expiration (label)":
-    value: Delší expirace
-    dynamic: true
-"Resource definition - seller:feature:payback (label)":
-    value: Payback
-    dynamic: true
-"Resource definition - seller:item:listing.early-delivery (label)":
-    value: Early Delivery kupón
-    dynamic: true
-"Resource definition - seller:item:listing.mark (label)":
-    value: Mark kupón
-    dynamic: true
-"Resource definition - seller:item:listing.top (label)":
-    value: Top kupón
-    dynamic: true
-"Resource definition - seller:item:listing.top-maxxi (label)":
-    value: Top Maxxi kupón
-    dynamic: true
-"Resource definition - seller:limit:listing.count (label)":
-    value: Aktivní inzeráty
-    dynamic: true
-"Resource definition - seller:limit:listing.gallery.count (label)":
-    value: Fotky u inzerátu
-    dynamic: true
-Shop (subtitle):
-    value: Předplatné a balíčky bez schovaných triků. Hnusně dospělé, já vím.
 Shop (title):
-    value: Obchod
-Shop cancel (title):
-    value: Platba zrušena
-Shop cancel status (message):
-    value: Checkout jsi zavřel před potvrzením, takže jsme nic neúčtovali.
-Shop cancel status (title):
-    value: Nic jsme si nevzali
-"Shop success - package:buyer (message)":
-    value: Tvoje předplatné Kupující běží.
-    dynamic: true
-"Shop success - package:seller (message)":
-    value: Tvoje předplatné Prodejce běží.
-    dynamic: true
-"Shop success - package:pro (message)":
-    value: Tvoje předplatné Naplno běží.
-    dynamic: true
-"Shop success - package:master (message)":
-    value: Tvoje předplatné Patron běží.
-    dynamic: true
-"Shop success - extra:token:small (message)":
-    value: Malý tokenový balíček jsme připsali.
-    dynamic: true
-"Shop success - extra:token:medium (message)":
-    value: Střední tokenový balíček jsme připsali.
-    dynamic: true
-"Shop success - extra:token:large (message)":
+    value: Výhody a bonusy
+Shop success - extra:token:large (message):
     value: Velký tokenový balíček jsme připsali.
     dynamic: true
-Shop success generic (message):
-    value: Návrat ze Stripe jsme ověřili a stav jsme srovnali.
-Shop success status (title):
-    value: Platba proběhla
-Shop success (title):
-    value: Hotovo
-Start subscription (button):
-    value: Zaplatit předplatné
-Subscription active (message):
-    value: Předplatné běží. Zrušení jen zastaví další obnovu.
-Subscription active (title):
-    value: Předplatné běží
-Subscription cancel scheduled (title):
-    value: Obnovování je zrušené
-Subscription ends summary (label):
-    value: Končí
-Subscription renewal summary (label):
-    value: Obnova
-Subscription period unknown (label):
-    value: datum zatím neznáme
-Subscription renewal cancelled (label):
-    value: zrušená
-Subscription renews at (label):
-    value: Další obnova
-Subscription valid until (label):
-    value: Běží do
-Confirm cancel subscription renewal (button):
-    value: Opravdu zrušit obnovu
-Shop cancelled (title):
-    value: Obnovování zrušeno
-Shop cancelled status (title):
-    value: Jop, zrušeno
-Shop cancelled status (message):
-    value: Další obnovení jsme zastavili. Aktuální zaplacené období doběhne normálně, protože nejsme platební hydra.
+Shop success - extra:token:medium (message):
+    value: Střední tokenový balíček jsme připsali.
+    dynamic: true
+Shop success - extra:token:small (message):
+    value: Malý tokenový balíček jsme připsali.
+    dynamic: true
+Shop success - package:buyer (message):
+    value: Tvoje předplatné Kupující běží.
+    dynamic: true
+Shop success - package:master (message):
+    value: Tvoje předplatné Patron běží.
+    dynamic: true
+Shop success - package:pro (message):
+    value: Tvoje předplatné Naplno běží.
+    dynamic: true
+Shop success - package:seller (message):
+    value: Tvoje předplatné Prodejce běží.
+    dynamic: true
 Sign in (button):
     value: Přihlásit se
 Sign out:
     value: Odhlásit se
 Something went wrong (error):
     value: Pardon, tohle je teď rozbité.
+Start subscription (button):
+    value: Jdu do toho!
 Submit draft (button):
     value: Publikovat inzerát
+Subscription ends summary (label):
+    value: Výhody končí za
+Subscription renewal summary (label):
+    value: Další platba za
 System update (label):
     value: System update (label)
 This reset link is invalid or expired:
