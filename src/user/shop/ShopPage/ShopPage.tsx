@@ -14,10 +14,10 @@ export namespace ShopPage {
 
 export const ShopPage: FC<ShopPage.Props> = ({ _suspense, ...props }) => {
 	const locale = useLocale();
+
 	return (
 		<TitleContainer
 			textTitle="Shop (title)"
-			textSubtitle="Shop (subtitle)"
 			left={
 				<BackHomeButton
 					to="/$locale/app/home"

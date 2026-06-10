@@ -16,19 +16,21 @@ export const BundleSelect: FC<BundleSelect.Props> = ({ _suspense, ...props }) =>
 	return (
 		<Container
 			data-ui={"BundleSelect"}
-			data-ui-layout="vertical"
-			data-ui-gap="default"
-			data-ui-height="full"
 			data-ui-inner="default"
 			data-ui-scroll="vertical"
 			{...props}
 		>
-			{bundles.map((bundle) => (
-				<BundleItem
-					key={bundle.bundle}
-					bundle={bundle}
-				/>
-			))}
+			<Container
+				data-ui-layout="vertical"
+				data-ui-gap="default"
+			>
+				{bundles.map((bundle) => (
+					<BundleItem
+						key={bundle.bundle}
+						bundle={bundle}
+					/>
+				))}
+			</Container>
 		</Container>
 	);
 };

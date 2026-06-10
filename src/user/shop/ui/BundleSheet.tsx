@@ -25,13 +25,6 @@ export namespace BundleSheet {
 export const BundleSheet: FC<BundleSheet.Props> = ({ bundle, description, isOpen, onClose }) => {
 	const locale = useLocale();
 	const translator = useTranslator();
-	const price = (
-		<PriceInline
-			price={bundle.price / 100}
-			locale={locale}
-			currency={bundle.currency.toUpperCase()}
-		/>
-	);
 
 	return (
 		<BottomSheet
@@ -59,7 +52,13 @@ export const BundleSheet: FC<BundleSheet.Props> = ({ bundle, description, isOpen
 				<Group>
 					<LabelValue
 						textLabel="Price (label)"
-						textValue={price}
+						textValue={
+							<PriceInline
+								price={bundle.price / 100}
+								locale={locale}
+								currency={bundle.currency.toUpperCase()}
+							/>
+						}
 					/>
 				</Group>
 
