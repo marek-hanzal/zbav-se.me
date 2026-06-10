@@ -3,21 +3,22 @@ import type { FC } from "react";
 import { Button } from "@/lib/client/button";
 import { CartIcon } from "@/lib/client/icon";
 import { useLocale } from "@/lib/client/locale";
-import { useTranslator } from "@/lib/client/translation";
+import { PriceInline } from "@/lib/client/price-inline";
+import { Tx } from "@/lib/client/tx";
+import { Typo } from "@/lib/client/typo";
 import { uiSaveButton } from "~/common/ui/ui";
 import { withCheckoutMutation } from "~/user/stripe/mutation/withCheckoutMutation";
-import type { CheckoutBundleEnumSchema } from "~/user/stripe/server/schema/CheckoutBundleEnumSchema";
+import type { BundleSchema } from "~/user/stripe/server/schema/BundleSchema";
 
 export namespace CheckoutButton {
 	export interface Props extends Button.Props {
-		bundle: CheckoutBundleEnumSchema.Type;
+		bundle: BundleSchema.Type;
 	}
 }
 
 export const CheckoutButton: FC<CheckoutButton.Props> = ({ bundle, className, ...props }) => {
 	const locale = useLocale();
 	const navigate = useNavigate();
-	const translator = useTranslator();
 	const checkoutMutation = withCheckoutMutation.useMutation({
 		async onPostMutation({ result }) {
 			await navigate({
@@ -36,6 +37,7 @@ export const CheckoutButton: FC<CheckoutButton.Props> = ({ bundle, className, ..
 			data-ui-bundle={bundle}
 			data-ui-height="content"
 			data-ui-inner="lg"
+			data-ui-gap="default"
 			iconEnabled={CartIcon}
 			iconProps={{
 				"data-ui-text": "xl",
@@ -46,11 +48,27 @@ export const CheckoutButton: FC<CheckoutButton.Props> = ({ bundle, className, ..
 			onClick={() => {
 				checkoutMutation.mutate({
 					locale,
-					bundle,
+					bundle: bundle.bundle,
 				});
 			}}
 		>
-			{translator.text("Start subscription (button)")}
+			<Tx label="Start subscription (button)" />
+
+			<Typo
+				data-ui-font="bold"
+				label={
+					<PriceInline
+						price={bundle.price / 100}
+						locale={locale}
+						currency={bundle.currency.toUpperCase()}
+					/>
+				}
+			/>
+
+			<Tx
+				label="Per month (label)"
+				data-ui-text="sm"
+			/>
 		</Button>
 	);
 };

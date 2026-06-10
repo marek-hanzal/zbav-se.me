@@ -3,8 +3,8 @@ import { BottomSheet } from "@/lib/client/bottom-sheet";
 import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
 import { useLocale } from "@/lib/client/locale";
-import { PriceInline } from "@/lib/client/price-inline";
 import { useTranslator } from "@/lib/client/translation";
+import { Tx } from "@/lib/client/tx";
 import { Typo } from "@/lib/client/typo";
 import { LabelValue, ValueList } from "@/lib/client/value";
 import { toLocaleNumber } from "@/lib/common/to-locale-number";
@@ -30,7 +30,7 @@ export const BundleSheet: FC<BundleSheet.Props> = ({ bundle, isOpen, onClose }) 
 			data-ui="BundleSheet"
 			isOpen={isOpen}
 			onClose={onClose}
-			detent="full"
+			detent="default"
 			contentProps={{
 				disableScroll: true,
 			}}
@@ -41,7 +41,6 @@ export const BundleSheet: FC<BundleSheet.Props> = ({ bundle, isOpen, onClose }) 
 			})}
 		>
 			<Container
-				data-ui="BundleSheet-[Content]"
 				data-ui-layout="vertical-flex"
 				data-ui-gap="default"
 				data-ui-inner="default"
@@ -50,81 +49,120 @@ export const BundleSheet: FC<BundleSheet.Props> = ({ bundle, isOpen, onClose }) 
 			>
 				<Group>
 					<LabelValue
-						textLabel="Price (label)"
-						textValue={
-							<PriceInline
-								price={bundle.price / 100}
-								locale={locale}
-								currency={bundle.currency.toUpperCase()}
-							/>
-						}
-					/>
-				</Group>
-
-				<Group>
-					<LabelValue
-						textLabel="Description (label)"
+						textLabel={translator.text("Plan description (label)")}
 						textValue={<Typo label={bundle.description} />}
 					/>
 				</Group>
 
-				<Group>
-					<ValueList
-						data-ui="BundleSheet-[Items]"
-						textLabel="Bundle items (label)"
-						textEmpty="Bundle items empty"
-						items={bundle.items}
-						renderFn={(item) => (
-							<Typo
-								label={`${toLocaleNumber({
-									number: item.amount,
-									locale,
-								})}× ${translator.text(
-									`Resource definition - ${item.resourceDefinitionId} (label)`,
-								)}`}
-							/>
-						)}
-					/>
-				</Group>
+				{bundle.items.length ? (
+					<Group>
+						<ValueList
+							textLabel={translator.text("Bundle items (label)")}
+							textEmpty="Bundle items empty"
+							items={bundle.items}
+							renderFn={(item) => (
+								<Container
+									data-ui-flow="vertical"
+									data-ui-gap="xs"
+								>
+									<Container
+										data-ui-flow="horizontal"
+										data-ui-gap="sm"
+									>
+										<Tx
+											label={`Resource definition - ${item.resourceDefinitionId} (label)`}
+										/>
 
-				<Group>
-					<ValueList
-						data-ui="BundleSheet-[Limits]"
-						textLabel="Bundle limits (label)"
-						textEmpty="Bundle limits empty"
-						items={bundle.limits}
-						renderFn={(limit) => (
-							<Typo
-								label={`${toLocaleNumber({
-									number: limit.limit,
-									locale,
-								})} ${translator.text(
-									`Resource definition - ${limit.resourceDefinitionId} (label)`,
-								)}`}
-							/>
-						)}
-					/>
-				</Group>
+										<Typo
+											label={`${toLocaleNumber({
+												number: item.amount,
+												locale,
+											})}×`}
+										/>
+									</Container>
 
-				<Group>
-					<ValueList
-						data-ui="BundleSheet-[Features]"
-						textLabel="Bundle features (label)"
-						textEmpty="Bundle features empty"
-						items={bundle.features}
-						renderFn={(feature) => (
-							<Typo
-								label={translator.text(
-									`Resource definition - ${feature.resourceDefinitionId} (label)`,
-								)}
-							/>
-						)}
-					/>
-				</Group>
+									<Tx
+										label={`Resource definition - ${item.resourceDefinitionId} (hint)`}
+										data-ui-text="sm"
+										data-ui-opacity="6"
+									/>
+								</Container>
+							)}
+						/>
+					</Group>
+				) : null}
+
+				{bundle.limits.length ? (
+					<Group>
+						<ValueList
+							textLabel={translator.text("Bundle limits (label)")}
+							textEmpty="Bundle limits empty"
+							items={bundle.limits}
+							renderFn={(limit) => (
+								<Container
+									data-ui-flow="vertical"
+									data-ui-gap="xs"
+									data-ui-width="full"
+								>
+									<Container
+										data-ui-flow="horizontal"
+										data-ui-gap="sm"
+										data-ui-justify="space-between"
+										data-ui-items="center"
+										data-ui-width="full"
+									>
+										<Tx
+											label={`Resource definition - ${limit.resourceDefinitionId} (label)`}
+										/>
+
+										<Typo
+											label={toLocaleNumber({
+												number: limit.limit,
+												locale,
+											})}
+										/>
+									</Container>
+
+									<Tx
+										label={`Resource definition - ${limit.resourceDefinitionId} (hint)`}
+										data-ui-text="sm"
+										data-ui-opacity="6"
+									/>
+								</Container>
+							)}
+						/>
+					</Group>
+				) : null}
+
+				{bundle.features.length ? (
+					<Group>
+						<ValueList
+							textLabel={translator.text("Bundle features (label)")}
+							textEmpty="Bundle features empty"
+							items={bundle.features}
+							renderFn={(feature) => (
+								<Container
+									data-ui-flow="vertical"
+									data-ui-gap="xs"
+								>
+									<Tx
+										label={`Resource definition - ${feature.resourceDefinitionId} (label)`}
+									/>
+
+									<Tx
+										label={`Resource definition - ${feature.resourceDefinitionId} (hint)`}
+										data-ui-text="sm"
+										data-ui-opacity="6"
+									/>
+								</Container>
+							)}
+						/>
+					</Group>
+				) : null}
 
 				<Group>
 					{!bundle.active ? (
-						<CheckoutButton bundle={bundle.bundle} />
+						<CheckoutButton bundle={bundle} />
 					) : !bundle.active.cancelAtPeriodEnd ? (
 						<CancelButton bundle={bundle.bundle} />
 					) : null}

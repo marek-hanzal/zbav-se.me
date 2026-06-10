@@ -178,6 +178,12 @@ Bonuses (label):
     value: Bonusy
 Browse listing on (label):
     value: Jukni se na Zbav-se.mě!
+Bundle features (label):
+    value: Obsažené vychytávky
+Bundle items (label):
+    value: Spotřební položky
+Bundle limits (label):
+    value: Rozšíření použití
 Buyer activity (hint):
     value: >
         Zevrubná aktivita napovídá, zda je kupující jinak aktivní, nastavuje
@@ -1163,6 +1169,8 @@ Password:
     value: Heslo
 Passwords do not match:
     value: Hesla nesedí, zkontrolujte si je.
+Per month (label):
+    value: /měsíčně
 Personal - Email (label):
     value: Email
 Personal - Email (placeholder):
@@ -1189,6 +1197,8 @@ Photo upload placeholder (message):
     value: Ťuknutím vyfoť obrázek nebo si vyber z galerie.
 Photo upload placeholder (title):
     value: Nahraj obrázek
+Plan description (label):
+    value: Co ti nabízím
 Please wait...:
     value: Momentík...
 Price (placeholder):
@@ -1298,17 +1308,32 @@ Resource bundle - package:seller (description):
 Resource definition - buyer:feature:anti-topper (label):
     value: Anti-topper
     dynamic: true
+Resource definition - buyer:feature:anti-topper (hint):
+    value: Schová běžné zvýhodnění v listingu, aby feed nebyl přeplacený cirkus. Top Maxxi zůstává nahoře.
+    dynamic: true
 Resource definition - buyer:feature:history (label):
     value: Historie trhu
     dynamic: true
+Resource definition - buyer:feature:history (hint):
+    value: Umožní ti procházet i starší inzeráty a udělat si obrázek o cenách, nabídce a tom, co se tu reálně prodávalo.
+    dynamic: true
 Resource definition - buyer:feature:listing.early-discovery (label):
-    value: Early Discovery
+    value: Předběžný přístup
+    dynamic: true
+Resource definition - buyer:feature:listing.early-discovery (hint):
+    value: Normálně vidíš nové inzeráty se zpožděním. Tohle ti je ukáže hned a dá ti náskok před ostatními.
     dynamic: true
 Resource definition - buyer:feature:seller.info (label):
-    value: Detail prodejce
+    value: Pokročilý detail prodejce
+    dynamic: true
+Resource definition - buyer:feature:seller.info (hint):
+    value: Ukáže víc signálů o prodejci, abys líp odhadl, jestli mu věřit. Není to křišťálová koule, ale pomůže.
     dynamic: true
 Resource definition - buyer:limit:feed.count (label):
-    value: Uložené feedy
+    value: Uložená vyhledávání
+    dynamic: true
+Resource definition - buyer:limit:feed.count (hint):
+    value: Rozšiřuje, kolik si můžeš uložit nastavených vyhledávání.
     dynamic: true
 Resource definition - common:feature:founder (label):
     value: Founders
@@ -1316,53 +1341,101 @@ Resource definition - common:feature:founder (label):
 Resource definition - common:item:agent.usage (label):
     value: Použití asistenta
     dynamic: true
+Resource definition - common:item:agent.usage (hint):
+    value: Rozšiřuje možnosti použití asistenta. V jednom vlákně může být více použití podle toho, co po něm chceš.
+    dynamic: true
 Resource definition - common:item:support (label):
-    value: Support
+    value: Lidská podpora
+    dynamic: true
+Resource definition - common:item:support (hint):
+    value: Počet vláken, které můžeš otevřít s autorem aplikace.
     dynamic: true
 Resource definition - common:item:token (label):
-    value: Tokeny
+    value: Kredity
+    dynamic: true
+Resource definition - common:item:token (hint):
+    value: Lze je později směnit za dílčí rozšíření aplikace. Nejsou to peníze a nejdou vybrat zpět.
     dynamic: true
 Resource definition - common:limit:agent.handbrake (label):
-    value: Ruční brzda asistenta
+    value: Strop pro asistenta
+    dynamic: true
+Resource definition - common:limit:agent.handbrake (hint):
+    value: Bezpečný horní limit, aby se použití asistenta neutrhlo ze řetězu.
     dynamic: true
 Resource definition - common:limit:agent.token (label):
-    value: Tokenový limit asistenta
+    value: Běžná spotřeba asistenta
+    dynamic: true
+Resource definition - common:limit:agent.token (hint):
+    value: Kolik prostoru asistent má na svoji práci.
     dynamic: true
 Resource definition - seller:feature:brand (label):
-    value: Brand
+    value: Vlastní značka
+    dynamic: true
+Resource definition - seller:feature:brand (hint):
+    value: Umožní ti vystupovat pod stabilní značkou, podle které tě ostatní mohou nejen vyhledávat, ale i sledovat.
     dynamic: true
 Resource definition - seller:feature:buyer.info (label):
     value: Detail kupujícího
+    dynamic: true
+Resource definition - seller:feature:buyer.info (hint):
+    value: Umožní ti líp odhadnout rizika obchodu předtím, než kupujícího přijmeš. Může pomoct proti podvodníkům i jiným verběžím.
     dynamic: true
 Resource definition - seller:feature:listing.early-delivery (label):
     value: Early Delivery
     dynamic: true
 Resource definition - seller:feature:listing.info (label):
-    value: Rozšířená data
+    value: Informace nad inzeráty
+    dynamic: true
+Resource definition - seller:feature:listing.info (hint):
+    value: Můžeš si zobrazit rozšířená data nad svými inzeráty a dozvědět se, jak se jim daří.
     dynamic: true
 Resource definition - seller:feature:listing.longer-expiration (label):
-    value: Delší expirace
+    value: Delší vystavení
+    dynamic: true
+Resource definition - seller:feature:listing.longer-expiration (hint):
+    value: Umožní vystavovat inzerát déle a prodlouží dobu, kdy s tebou kupující mohou otevřít obchod. 
     dynamic: true
 Resource definition - seller:feature:payback (label):
-    value: Payback
+    value: Férovka
+    dynamic: true
+Resource definition - seller:feature:payback (hint):
+    value: Pokud tvoje zváraznění (Top nebo Top Maxxi) je potlačené Anti-Topperem, dostaneš maličký bonus jako kompenzaci.
     dynamic: true
 Resource definition - seller:item:listing.early-delivery (label):
-    value: Early Delivery kupón
+    value: Zveřejnění bez čekání
+    dynamic: true
+Resource definition - seller:item:listing.early-delivery (hint):
+    value: Tento kupón ti umožní instantně zveřejnit inzerát pro všechny.
     dynamic: true
 Resource definition - seller:item:listing.mark (label):
-    value: Mark kupón
+    value: Označení inzerátu
+    dynamic: true
+Resource definition - seller:item:listing.mark (hint):
+    value: Graficky zvýrazní inzerát, ale nemění jeho pořadí v seznamu.
     dynamic: true
 Resource definition - seller:item:listing.top (label):
-    value: Top kupón
+    value: Top
+    dynamic: true
+Resource definition - seller:item:listing.top (hint):
+    value: Po dobu platnosti zvýhodní pozici inzerátu před běžnými inzeráty.
     dynamic: true
 Resource definition - seller:item:listing.top-maxxi (label):
-    value: Top Maxxi kupón
+    value: Top Maxxi
+    dynamic: true
+Resource definition - seller:item:listing.top-maxxi (hint):
+    value: Nejsilnější varianta zvýhodnění. Inzerát označí, předběhne ostatní a jeho působení nelze potlačit.
     dynamic: true
 Resource definition - seller:limit:listing.count (label):
     value: Aktivní inzeráty
     dynamic: true
+Resource definition - seller:limit:listing.count (hint):
+    value: Máš mnohem větší prostor publikovat inzeráty.
+    dynamic: true
 Resource definition - seller:limit:listing.gallery.count (label):
-    value: Fotky u inzerátu
+    value: Fotky
+    dynamic: true
+Resource definition - seller:limit:listing.gallery.count (hint):
+    value: Počet fotek, které na inzerát můžeš navěsit. Po uplynutí bonusu zůstávají.
     dynamic: true
 Restriction available in (label):
     value: Čas do aktivace
@@ -1446,7 +1519,7 @@ Sign out:
 Something went wrong (error):
     value: Pardon, tohle je teď rozbité.
 Start subscription (button):
-    value: Jdu do toho!
+    value: Jdu do toho
 Submit draft (button):
     value: Publikovat inzerát
 Subscription ends summary (label):
