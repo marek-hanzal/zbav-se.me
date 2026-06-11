@@ -1,9 +1,11 @@
 import type { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/ResourceDefinitionEnumSchema";
 import type { ResourceBundleEnumSchema } from "~/user/resource-bundle/server/schema/ResourceBundleEnumSchema";
+import type { ResourceBundleTypeEnumSchema } from "~/user/resource-bundle/server/schema/ResourceBundleTypeEnumSchema";
 
 export const bundles: Record<
 	ResourceBundleEnumSchema.Type,
 	{
+		type: ResourceBundleTypeEnumSchema.Type;
 		items: Partial<
 			Record<
 				ResourceDefinitionEnumSchema.Type,
@@ -28,6 +30,7 @@ export const bundles: Record<
 	 * Paid packages must override these limits explicitly where needed.
 	 */
 	"package:free": {
+		type: "subscription",
 		items: {
 			"common:item:support": {
 				amount: 1,
@@ -59,6 +62,7 @@ export const bundles: Record<
 	 * Buyer expansion package.
 	 */
 	"package:buyer": {
+		type: "subscription",
 		items: {
 			"common:item:support": {
 				amount: 3,
@@ -92,6 +96,7 @@ export const bundles: Record<
 	 * Seller expansion package
 	 */
 	"package:seller": {
+		type: "subscription",
 		items: {
 			"common:item:support": {
 				amount: 3,
@@ -140,6 +145,7 @@ export const bundles: Record<
 	 * This should generally extend seller/buyer plan in the spirit of "I don't want to think about limits".
 	 */
 	"package:pro": {
+		type: "subscription",
 		items: {
 			"common:item:support": {
 				amount: 5,
@@ -199,6 +205,7 @@ export const bundles: Record<
 	 * Think about this as "I want the best available option, regardless of the price".
 	 */
 	"package:master": {
+		type: "subscription",
 		items: {
 			"common:item:support": {
 				amount: 10,
@@ -256,6 +263,7 @@ export const bundles: Record<
 	 * Those packages are extras a user can buy with various setup
 	 */
 	"extra:token:small": {
+		type: "one-off",
 		items: {
 			"common:item:token": {
 				amount: 149,
@@ -265,6 +273,7 @@ export const bundles: Record<
 		features: {},
 	},
 	"extra:token:medium": {
+		type: "one-off",
 		items: {
 			"common:item:token": {
 				amount: 399,
@@ -274,6 +283,7 @@ export const bundles: Record<
 		features: {},
 	},
 	"extra:token:large": {
+		type: "one-off",
 		items: {
 			"common:item:token": {
 				amount: 999,
@@ -283,6 +293,7 @@ export const bundles: Record<
 		features: {},
 	},
 	"extra:mark": {
+		type: "one-off",
 		items: {
 			"seller:item:listing.mark": {
 				amount: 10,
@@ -292,6 +303,7 @@ export const bundles: Record<
 		features: {},
 	},
 	"extra:top": {
+		type: "one-off",
 		items: {
 			"seller:item:listing.top": {
 				amount: 10,
@@ -301,6 +313,7 @@ export const bundles: Record<
 		features: {},
 	},
 	"extra:top-maxxi": {
+		type: "one-off",
 		items: {
 			"seller:item:listing.top-maxxi": {
 				amount: 3,
@@ -310,6 +323,7 @@ export const bundles: Record<
 		features: {},
 	},
 	"extra:brand": {
+		type: "one-off",
 		items: {},
 		limits: {},
 		features: {
@@ -317,6 +331,7 @@ export const bundles: Record<
 		},
 	},
 	"extra:early-delivery": {
+		type: "one-off",
 		items: {
 			"seller:feature:listing.early-delivery": {
 				amount: 5,
@@ -326,6 +341,7 @@ export const bundles: Record<
 		features: {},
 	},
 	"extra:extra-listings": {
+		type: "one-off",
 		items: {},
 		limits: {
 			"seller:limit:listing.count": {
@@ -336,13 +352,14 @@ export const bundles: Record<
 	},
 
 	/**
-	 * Extra bundles not being sold directly
+	 * Promo bundles assigned by the system, not sold directly.
 	 */
 
 	/**
-	 * One-shot welcome bundle assigned to new users.
+	 * One-shot welcome promo assigned to new users.
 	 */
 	"welcome:default": {
+		type: "promo",
 		items: {
 			"common:item:agent.usage": {
 				amount: 75,
@@ -368,9 +385,10 @@ export const bundles: Record<
 		features: {},
 	},
 	/**
-	 * One-shot bundle assigned to founders wave of users.
+	 * One-shot promo assigned to founders wave of users.
 	 */
 	"welcome:founders:promo": {
+		type: "promo",
 		items: {
 			"common:item:support": {
 				amount: 10,
@@ -424,9 +442,10 @@ export const bundles: Record<
 		},
 	},
 	/**
-	 * Permanent bundle assigned to founders wave
+	 * Permanent promo assigned to founders wave.
 	 */
 	"welcome:founders": {
+		type: "promo",
 		items: {},
 		limits: {
 			"buyer:limit:feed.count": {

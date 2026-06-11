@@ -31,6 +31,7 @@ describe("resourceBundleEnsureFx", () => {
 						"assignment.id",
 						"assignment.expiresAt",
 						"bundle.name",
+						"bundle.type",
 					])
 					.where("assignment.userId", "=", buyer.id)
 					.where("bundle.name", "=", buyer.id)
@@ -39,12 +40,14 @@ describe("resourceBundleEnsureFx", () => {
 
 			expect(first.id).toBe(second.id);
 			expect(first.resourceBundleName).toBe(buyer.id);
+			expect(first.resourceBundleType).toBe("user");
 			expect(second.expiresAt).toBe(null);
 			expect(rows).toEqual([
 				{
 					id: first.id,
 					expiresAt: null,
 					name: buyer.id,
+					type: "user",
 				},
 			]);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);

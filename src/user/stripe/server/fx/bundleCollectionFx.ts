@@ -46,6 +46,7 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* ({
 				.select([
 					"id",
 					"name",
+					"type",
 				])
 				.where("name", "in", checkoutBundles)
 				.execute();
@@ -144,6 +145,7 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* ({
 			{
 				id: bundle.id,
 				name: name.data,
+				type: bundle.type,
 			},
 		];
 	});
@@ -313,6 +315,7 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* ({
 						name: product.name,
 						price: product.price,
 						sort: product.sort,
+						type: bundle.type,
 						items: itemsById.get(bundle.id) ?? [],
 						limits: limitsById.get(bundle.id) ?? [],
 						features: featuresById.get(bundle.id) ?? [],

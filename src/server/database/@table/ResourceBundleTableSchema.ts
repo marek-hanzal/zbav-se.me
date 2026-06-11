@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { ResourceBundleTypeEnumSchema } from "~/user/resource-bundle/server/schema/ResourceBundleTypeEnumSchema";
 
 export const ResourceBundleTableSchema = z
 	.looseObject({
@@ -7,6 +8,9 @@ export const ResourceBundleTableSchema = z
 		}),
 		name: z.string().meta({
 			description: "Resource bundle name",
+		}),
+		type: ResourceBundleTypeEnumSchema.meta({
+			description: "Resource bundle business type",
 		}),
 	})
 	.meta({

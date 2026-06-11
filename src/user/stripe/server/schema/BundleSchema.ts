@@ -2,6 +2,7 @@ import { z } from "zod";
 import { ResourceBundleFeatureSchema } from "~/common/resource-bundle-feature/server/schema/ResourceBundleFeatureSchema";
 import { ResourceBundleItemSchema } from "~/common/resource-bundle-item/server/schema/ResourceBundleItemSchema";
 import { ResourceBundleLimitSchema } from "~/common/resource-bundle-limit/server/schema/ResourceBundleLimitSchema";
+import { ResourceBundleTypeEnumSchema } from "~/user/resource-bundle/server/schema/ResourceBundleTypeEnumSchema";
 import { CheckoutBundleEnumSchema } from "~/user/stripe/server/schema/CheckoutBundleEnumSchema";
 
 export const BundleActiveSchema = z
@@ -15,6 +16,7 @@ export const BundleSchema = z
 	.looseObject({
 		active: BundleActiveSchema.nullable(),
 		bundle: CheckoutBundleEnumSchema,
+		type: ResourceBundleTypeEnumSchema,
 		name: z.string().min(1),
 		description: z.string().nullable(),
 		price: z.coerce.number().nonnegative(),

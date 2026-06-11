@@ -132,6 +132,7 @@ export const seedResourceLimitReadModelFx = (database: TestDatabase) =>
 					.values({
 						id: resourceBundleId,
 						name: `Test bundle ${resourceBundleId}`,
+						type: "user",
 					})
 					.execute();
 

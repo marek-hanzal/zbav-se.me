@@ -38,7 +38,7 @@ describe("bundleCollectionFx", () => {
 			"package:pro",
 			"package:master",
 		]);
-
+		expect(bundles.every((bundle) => bundle.type === "subscription")).toBe(true);
 		expect(bundles.every((bundle) => bundle.active === null)).toBe(true);
 	});
 });

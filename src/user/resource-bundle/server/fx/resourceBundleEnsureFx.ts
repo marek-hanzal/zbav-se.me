@@ -33,6 +33,7 @@ export const resourceBundleEnsureFx = Effect.fn("resourceBundleEnsureFx")(functi
 					.values({
 						id: userId,
 						name: userId,
+						type: "user",
 					})
 					.onConflict((oc) => {
 						return oc.column("id").doNothing();
@@ -74,6 +75,7 @@ export const resourceBundleEnsureFx = Effect.fn("resourceBundleEnsureFx")(functi
 						"assignment.id",
 						"assignment.expiresAt",
 						"bundle.name as resourceBundleName",
+						"bundle.type as resourceBundleType",
 					])
 					.where("assignment.userId", "=", userId)
 					.where("assignment.resourceBundleId", "=", userId)

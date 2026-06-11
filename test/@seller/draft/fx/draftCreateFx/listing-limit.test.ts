@@ -39,6 +39,7 @@ describe("draftCreateFx listing limit", () => {
 					.values({
 						id: limitSeed.bundleId,
 						name: `Draft listing limit ${limitSeed.bundleId}`,
+						type: "user",
 					})
 					.execute();
 				const userResourceBundle = await database.kysely
