@@ -313,7 +313,7 @@ export const bundles: Record<
 	},
 	"extra:mark": {
 		type: "extra",
-		access: "protected",
+		access: "public",
 		sort: 40,
 		items: {
 			"seller:item:listing.mark": {
@@ -325,7 +325,7 @@ export const bundles: Record<
 	},
 	"extra:top": {
 		type: "extra",
-		access: "protected",
+		access: "public",
 		sort: 50,
 		items: {
 			"seller:item:listing.top": {
@@ -337,7 +337,7 @@ export const bundles: Record<
 	},
 	"extra:top-maxxi": {
 		type: "extra",
-		access: "protected",
+		access: "public",
 		sort: 60,
 		items: {
 			"seller:item:listing.top-maxxi": {
@@ -349,7 +349,7 @@ export const bundles: Record<
 	},
 	"extra:brand": {
 		type: "extra",
-		access: "protected",
+		access: "public",
 		sort: 70,
 		items: {},
 		limits: {},
@@ -359,7 +359,7 @@ export const bundles: Record<
 	},
 	"extra:early-delivery": {
 		type: "extra",
-		access: "protected",
+		access: "public",
 		sort: 80,
 		items: {
 			"seller:feature:listing.early-delivery": {
@@ -371,7 +371,7 @@ export const bundles: Record<
 	},
 	"extra:extra-listings": {
 		type: "extra",
-		access: "protected",
+		access: "public",
 		sort: 90,
 		items: {},
 		limits: {

@@ -1,6 +1,7 @@
 import { Effect } from "effect";
 import Stripe from "stripe";
 import { describe, expect, it } from "vitest";
+import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
@@ -198,5 +199,47 @@ describe("checkoutFx", () => {
 				}),
 			);
 		}
+	});
+	it("rejects non-public resource bundle checkout before Stripe is touched", async () => {
+		const database = await testabase("stripe-checkout-rejects-non-public-bundle");
+		const blockedAccesses = [
+			"protected",
+			"private",
+		] as const;
+
+		await Effect.gen(function* () {
+			const { buyer } = yield* createUsersFx({});
+
+			for (const access of blockedAccesses) {
+				yield* Effect.promise(() => {
+					return database.kysely
+						.updateTable("resource_bundle")
+						.set({
+							access,
+						})
+						.where("name", "=", "extra:token:small")
+						.executeTakeFirstOrThrow();
+				});
+
+				const result = yield* Effect.either(
+					checkoutFx({
+						userId: buyer.id,
+						bundle: "extra:token:small",
+						locale: "cs",
+						urlSuccess() {
+							return "https://app.test/success";
+						},
+						urlCancel() {
+							return "https://app.test/cancel";
+						},
+					}),
+				);
+
+				expectTaggedErrorFx(result, {
+					tag: "RuntimeErrorFx",
+					message: "Stripe checkout resource bundle is not publicly purchasable",
+				});
+			}
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

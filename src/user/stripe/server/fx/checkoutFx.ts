@@ -44,11 +44,21 @@ export const checkoutFx = Effect.fn("checkoutFx")(function* ({
 			.executeTakeFirst();
 	});
 
-	if (!bundle || bundle.access !== "public") {
+	if (!bundle) {
 		return yield* new NotFoundErrorFx({
 			resource: "resource_bundle",
 			resourceId: bundleName,
 			message: "Stripe checkout resource bundle is missing",
+		});
+	}
+
+	if (bundle.access !== "public") {
+		return yield* new RuntimeErrorFx({
+			message: "Stripe checkout resource bundle is not publicly purchasable",
+			cause: {
+				bundle: bundle.name,
+				access: bundle.access,
+			},
 		});
 	}
 
