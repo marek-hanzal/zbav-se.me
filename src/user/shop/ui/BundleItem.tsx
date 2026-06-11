@@ -121,8 +121,8 @@ export const BundleItem: FC<BundleItem.Props> = ({ bundle, className, ...props }
 					{bundle.active ? (
 						<Container
 							data-ui-layout="horizontal-flex"
-                            data-ui-items="center"
-                            data-ui-justify="space-between"
+							data-ui-items="center"
+							data-ui-justify="space-between"
 							data-ui-gap="xs"
 						>
 							<Typo
@@ -136,7 +136,7 @@ export const BundleItem: FC<BundleItem.Props> = ({ bundle, className, ...props }
 								<Container
 									data-ui-flow="horizontal"
 									data-ui-gap="default"
-                                    data-ui-items="center"
+									data-ui-items="center"
 								>
 									<Typo
 										label={translator.text(
@@ -155,7 +155,7 @@ export const BundleItem: FC<BundleItem.Props> = ({ bundle, className, ...props }
 											type: "human",
 										})}
 										data-ui-color="lead"
-                                        data-ui-font="bold"
+										data-ui-font="bold"
 										data-ui-text="md"
 									/>
 								</Container>

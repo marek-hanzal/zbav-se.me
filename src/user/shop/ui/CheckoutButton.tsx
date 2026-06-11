@@ -33,8 +33,8 @@ export const CheckoutButton: FC<CheckoutButton.Props> = ({ bundle, className, ..
 			{...props}
 			data-ui="CheckoutButton"
 			data-action="checkout"
-			data-resource-bundle={bundle}
-			data-ui-bundle={bundle}
+			data-resource-bundle={bundle.bundle}
+			data-ui-bundle={bundle.bundle}
 			data-ui-height="content"
 			data-ui-inner="lg"
 			data-ui-gap="default"

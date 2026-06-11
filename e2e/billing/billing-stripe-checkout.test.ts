@@ -147,7 +147,13 @@ async function clickBuyerCheckout(page: Page) {
 }
 
 async function expectBuyerSubscriptionActive(page: Page) {
-	await expect(page.locator('[data-ui="BundleItem-[Active]"]').first()).toBeVisible();
+	await expect(
+		page
+			.locator(
+				'[data-ui="BundleItem"][data-resource-bundle="package:buyer"][data-ui-bundle-status="true"]',
+			)
+			.first(),
+	).toBeVisible();
 	await openBuyerBundle(page);
 	await expect(
 		page.locator('[data-ui="CancelButton"][data-resource-bundle="package:buyer"]').last(),
