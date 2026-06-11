@@ -263,7 +263,7 @@ export const bundles: Record<
 	 * Those packages are extras a user can buy with various setup
 	 */
 	"extra:token:small": {
-		type: "one-off",
+		type: "extra",
 		items: {
 			"common:item:token": {
 				amount: 149,
@@ -273,7 +273,7 @@ export const bundles: Record<
 		features: {},
 	},
 	"extra:token:medium": {
-		type: "one-off",
+		type: "extra",
 		items: {
 			"common:item:token": {
 				amount: 399,
@@ -283,7 +283,7 @@ export const bundles: Record<
 		features: {},
 	},
 	"extra:token:large": {
-		type: "one-off",
+		type: "extra",
 		items: {
 			"common:item:token": {
 				amount: 999,
@@ -293,7 +293,7 @@ export const bundles: Record<
 		features: {},
 	},
 	"extra:mark": {
-		type: "one-off",
+		type: "extra",
 		items: {
 			"seller:item:listing.mark": {
 				amount: 10,
@@ -303,7 +303,7 @@ export const bundles: Record<
 		features: {},
 	},
 	"extra:top": {
-		type: "one-off",
+		type: "extra",
 		items: {
 			"seller:item:listing.top": {
 				amount: 10,
@@ -313,7 +313,7 @@ export const bundles: Record<
 		features: {},
 	},
 	"extra:top-maxxi": {
-		type: "one-off",
+		type: "extra",
 		items: {
 			"seller:item:listing.top-maxxi": {
 				amount: 3,
@@ -323,7 +323,7 @@ export const bundles: Record<
 		features: {},
 	},
 	"extra:brand": {
-		type: "one-off",
+		type: "extra",
 		items: {},
 		limits: {},
 		features: {
@@ -331,7 +331,7 @@ export const bundles: Record<
 		},
 	},
 	"extra:early-delivery": {
-		type: "one-off",
+		type: "extra",
 		items: {
 			"seller:feature:listing.early-delivery": {
 				amount: 5,
@@ -341,7 +341,7 @@ export const bundles: Record<
 		features: {},
 	},
 	"extra:extra-listings": {
-		type: "one-off",
+		type: "extra",
 		items: {},
 		limits: {
 			"seller:limit:listing.count": {

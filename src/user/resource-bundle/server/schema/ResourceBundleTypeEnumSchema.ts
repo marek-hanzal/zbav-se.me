@@ -2,21 +2,22 @@ import { z } from "zod";
 
 export const ResourceBundleTypeEnumSchema = z.enum([
 	/**
-	 * Shared catalog bundle backed by a recurring subscription-like package.
+	 * Shared catalog bundle backed by a recurring package.
 	 *
 	 * This type belongs to `package:*` resource bundle names from
-	 * `ResourceBundleEnumSchema`. The bundle is part of the public product catalog
-	 * and can be shown in subscription/shop surfaces.
+	 * `ResourceBundleEnumSchema`. These bundles represent subscription/catalog
+	 * packages shown in subscription/shop surfaces and reconciled from recurring
+	 * Stripe subscriptions.
 	 */
 	"subscription",
 	/**
-	 * Shared catalog bundle paid or activated as a single purchase.
+	 * Shared catalog bundle for extras paid or activated outside subscriptions.
 	 *
 	 * This type belongs to `extra:*` resource bundle names from
-	 * `ResourceBundleEnumSchema`. It is not a recurring package; it represents
+	 * `ResourceBundleEnumSchema`. Extras are not recurring packages; they represent
 	 * credits, one-time unlocks, coupons, or pass activations.
 	 */
-	"one-off",
+	"extra",
 	/**
 	 * Private per-user bundle created by the system for exactly one user.
 	 *
@@ -31,7 +32,7 @@ export const ResourceBundleTypeEnumSchema = z.enum([
 	 *
 	 * This type belongs to `welcome:*` resource bundle names from
 	 * `ResourceBundleEnumSchema`. It is catalogued and seedable, but it is not a
-	 * subscription product and it is not directly purchasable as a one-off bundle.
+	 * subscription product and it is not directly purchasable as an extra bundle.
 	 */
 	"promo",
 ]);

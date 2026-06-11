@@ -32,7 +32,7 @@ export const bundlePurchaseAssignFx = Effect.fn("bundlePurchaseAssignFx")(functi
 					.values({
 						id: genId(),
 						name: key,
-						type: "one-off",
+						type: "extra",
 					})
 					.onConflict((oc) => oc.column("name").doNothing())
 					.returning([
