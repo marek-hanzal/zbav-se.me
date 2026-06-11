@@ -1,12 +1,10 @@
 import { Effect } from "effect";
-import { match, P } from "ts-pattern";
 import { DateServiceFx } from "@/lib/common/date";
 import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
-import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
-import { ResourceBundleEnumSchema } from "~/user/resource-bundle/server/schema/ResourceBundleEnumSchema";
-import { stripeClientFx } from "~/user/stripe/server/fx/stripeClientFx";
 import type { PackageActiveSchema, PackageSchema } from "../schema/PackageSchema";
+import { catalogFx } from "./catalogFx";
+import { stripeClientFx } from "./stripeClientFx";
 
 export namespace packageCollectionFx {
 	export interface Props {
@@ -21,180 +19,75 @@ export const packageCollectionFx = Effect.fn("packageCollectionFx")(function* ({
 	logger.trace("packageCollectionFx", {
 		userId,
 	});
+
 	const date = yield* DateServiceFx;
 	const now = date.now().toJSDate();
-
-	const stripe = yield* stripeClientFx();
-	const {
-		bundles: rawBundles,
-		activeAssignments,
-		items,
-		limits,
-		features,
-	} = yield* withTransactionFx(
-		dbFx(async (kysely) => {
-			const bundles = await kysely
-				.selectFrom("resource_bundle")
-				.select([
-					"id",
-					"name",
-					"sort",
-				])
-				.where("type", "=", "subscription")
-				.where("access", "=", "public")
-				.orderBy("sort", "asc")
-				.execute();
-
-			if (bundles.length === 0) {
-				return {
-					bundles,
-					activeAssignments: [],
-					items: [],
-					limits: [],
-					features: [],
-				};
-			}
-
-			const ids = bundles.map((bundle) => bundle.id);
-
-			const [activeAssignments, items, limits, features] = await Promise.all([
-				kysely
-					.selectFrom("user_resource_bundle as assignment")
-					.innerJoin(
-						"resource_bundle as bundle",
-						"bundle.id",
-						"assignment.resourceBundleId",
-					)
-					.leftJoin(
-						"user_resource_bundle_stripe as stripeLink",
-						"stripeLink.userResourceBundleId",
-						"assignment.id",
-					)
-					.select([
-						"assignment.expiresAt",
-						"bundle.name",
-						"stripeLink.subscriptionId",
-					])
-					.where("assignment.userId", "=", userId)
-					.where("bundle.type", "=", "subscription")
-					.where("bundle.access", "=", "public")
-					.where("assignment.availableAt", "<=", now)
-					.where((eb) =>
-						eb.or([
-							eb("assignment.expiresAt", "is", null),
-							eb("assignment.expiresAt", ">", now),
-						]),
-					)
-					.execute(),
-				kysely
-					.selectFrom("resource_bundle_item")
-					.select([
-						"id",
-						"resourceBundleId",
-						"resourceDefinitionId",
-						"amount",
-					])
-					.where("resourceBundleId", "in", ids)
-					.where("amount", ">", 0)
-					.execute(),
-				kysely
-					.selectFrom("resource_bundle_limit")
-					.select([
-						"id",
-						"resourceBundleId",
-						"resourceDefinitionId",
-						"limit",
-					])
-					.where("resourceBundleId", "in", ids)
-					.where("limit", ">", 0)
-					.execute(),
-				kysely
-					.selectFrom("resource_bundle_feature")
-					.select([
-						"id",
-						"resourceBundleId",
-						"resourceDefinitionId",
-					])
-					.where("resourceBundleId", "in", ids)
-					.execute(),
-			]);
-
-			return {
-				bundles,
-				activeAssignments,
-				items,
-				limits,
-				features,
-			};
-		}),
-	);
-
-	const bundles = rawBundles.flatMap((bundle) => {
-		const name = ResourceBundleEnumSchema.safeParse(bundle.name);
-
-		if (!name.success) {
-			return [];
-		}
-
-		return [
-			{
-				id: bundle.id,
-				name: name.data,
-				sort: bundle.sort,
-			},
-		];
+	const bundles = yield* catalogFx({
+		type: "subscription",
+		priceMode: "recurring",
 	});
 
 	if (bundles.length === 0) {
 		return [];
 	}
 
-	const byName = new Map(
-		bundles.map((bundle) => [
-			bundle.name,
-			bundle,
-		]),
-	);
-	const itemsById = Map.groupBy(items, (item) => item.resourceBundleId);
-	const limitsById = Map.groupBy(limits, (limit) => limit.resourceBundleId);
-	const featuresById = Map.groupBy(features, (feature) => feature.resourceBundleId);
-	const activeRows = activeAssignments.flatMap((assignment) => {
-		const name = ResourceBundleEnumSchema.safeParse(assignment.name);
-
-		if (!name.success) {
-			return [];
-		}
-
-		return [
-			{
-				bundle: name.data,
-				expiresAt: assignment.expiresAt,
-				subscriptionId: assignment.subscriptionId ?? null,
-			},
-		];
+	const activeAssignments = yield* dbFx(async (kysely) => {
+		return kysely
+			.selectFrom("user_resource_bundle as assignment")
+			.leftJoin(
+				"user_resource_bundle_stripe as stripeLink",
+				"stripeLink.userResourceBundleId",
+				"assignment.id",
+			)
+			.select([
+				"assignment.expiresAt",
+				"assignment.resourceBundleId",
+				"stripeLink.subscriptionId",
+			])
+			.where("assignment.userId", "=", userId)
+			.where(
+				"assignment.resourceBundleId",
+				"in",
+				bundles.map((bundle) => bundle.id),
+			)
+			.where("assignment.availableAt", "<=", now)
+			.where((eb) =>
+				eb.or([
+					eb("assignment.expiresAt", "is", null),
+					eb("assignment.expiresAt", ">", now),
+				]),
+			)
+			.execute();
 	});
-	const subscriptionsById = new Map(
-		yield* Effect.promise(async () => {
-			const entries = await Promise.all(
-				activeRows
-					.map((assignment) => assignment.subscriptionId)
-					.filter((subscriptionId): subscriptionId is string => Boolean(subscriptionId))
-					.map(async (subscriptionId) => {
-						const subscription = await stripe.subscriptions.retrieve(subscriptionId);
+	const subscriptionIds = activeAssignments
+		.map((assignment) => assignment.subscriptionId)
+		.filter((subscriptionId): subscriptionId is string => Boolean(subscriptionId));
+	const subscriptionsById = subscriptionIds.length
+		? new Map(
+				yield* Effect.gen(function* () {
+					const stripe = yield* stripeClientFx();
 
-						return [
-							subscription.id,
-							subscription,
-						] as const;
-					}),
-			);
+					return yield* Effect.promise(async () => {
+						const entries = await Promise.all(
+							subscriptionIds.map(async (subscriptionId) => {
+								const subscription =
+									await stripe.subscriptions.retrieve(subscriptionId);
 
-			return entries;
-		}),
-	);
-	const activeByBundle = new Map<ResourceBundleEnumSchema.Type, PackageActiveSchema.Type>();
+								return [
+									subscription.id,
+									subscription,
+								] as const;
+							}),
+						);
 
-	for (const assignment of activeRows) {
+						return entries;
+					});
+				}),
+			)
+		: new Map();
+	const activeByBundleId = new Map<string, PackageActiveSchema.Type>();
+
+	for (const assignment of activeAssignments) {
 		const subscription = assignment.subscriptionId
 			? subscriptionsById.get(assignment.subscriptionId)
 			: null;
@@ -206,128 +99,29 @@ export const packageCollectionFx = Effect.fn("packageCollectionFx")(function* ({
 		const cancelAtPeriodEnd =
 			subscription?.cancel_at_period_end ?? Boolean(assignment.expiresAt);
 
-		activeByBundle.set(assignment.bundle, {
+		activeByBundleId.set(assignment.resourceBundleId, {
 			cancelAtPeriodEnd,
 			periodEndAt: assignment.expiresAt ?? currentPeriodEndAt,
 		});
 	}
 
-	const prices = yield* Effect.promise(() => {
-		return stripe.prices.list({
-			active: true,
-			lookup_keys: bundles.map((bundle) => bundle.name),
-			expand: [
-				"data.product",
-			],
-			limit: 100,
-		});
-	});
-	const pricesByLookupKey = Map.groupBy(
-		prices.data.filter((price) => price.lookup_key),
-		(price) => price.lookup_key ?? "",
-	);
-	const products = bundles.map((bundle) => {
-		const prices = pricesByLookupKey.get(bundle.name) ?? [];
-		const [price] = prices;
-
-		if (!price) {
-			return null;
-		}
-
-		if (typeof price.unit_amount !== "number") {
-			return null;
-		}
-
-		if (prices.length > 1) {
-			logger.warn("Stripe price lookup key is not unique", {
-				lookupKey: bundle.name,
-				priceIds: prices.map((price) => price.id),
+	return bundles.flatMap(({ id, interval, sort: _sort, ...bundle }): PackageSchema.Type[] => {
+		if (!interval) {
+			logger.warn("Stripe package catalog entry is missing recurring interval", {
+				bundle: bundle.bundle,
 			});
 
-			return null;
+			return [];
 		}
 
-		const product = match(price.product)
-			.with(
-				{
-					deleted: true,
-				},
-				() => null,
-			)
-			.with(
-				{
-					description: P.any,
-					id: P.string,
-					metadata: P.any,
-					name: P.string,
-				},
-				(product) => {
-					return product;
-				},
-			)
-			.otherwise(() => null);
-
-		if (!product) {
-			return null;
-		}
-
-		if (!price.recurring?.interval) {
-			logger.warn("Stripe package price is not recurring", {
-				lookupKey: bundle.name,
-				priceId: price.id,
-			});
-
-			return null;
-		}
-
-		return {
-			bundle: bundle.name,
-			currency: price.currency,
-			description: product.description ?? null,
-			id: bundle.id,
-			interval: price.recurring.interval,
-			name: product.name,
-			price: price.unit_amount,
-			sort: bundle.sort,
-		};
-	});
-
-	return products
-		.flatMap(
-			(
-				product,
-			): (PackageSchema.Type & {
-				sort: number;
-			})[] => {
-				if (!product) {
-					return [];
-				}
-
-				const bundle = byName.get(product.bundle);
-
-				if (!bundle) {
-					return [];
-				}
-
-				return [
-					{
-						active: activeByBundle.get(bundle.name) ?? null,
-						bundle: bundle.name,
-						currency: product.currency,
-						description: product.description,
-						interval: product.interval,
-						name: product.name,
-						price: product.price,
-						sort: product.sort,
-						items: itemsById.get(bundle.id) ?? [],
-						limits: limitsById.get(bundle.id) ?? [],
-						features: featuresById.get(bundle.id) ?? [],
-					},
-				];
+		return [
+			{
+				...bundle,
+				active: activeByBundleId.get(id) ?? null,
+				interval,
 			},
-		)
-		.toSorted((left, right) => left.sort - right.sort)
-		.map(({ sort: _sort, ...bundle }) => bundle);
+		];
+	});
 });
 
 export type packageCollectionFx = ReturnType<typeof packageCollectionFx>;

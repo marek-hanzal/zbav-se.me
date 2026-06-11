@@ -3,10 +3,8 @@ import { NotFoundErrorFx } from "@/lib/common/error";
 import { getLoggerFx } from "@/lib/common/log";
 import { userBundleResourcesExpireFx } from "~/user/resource-bundle/server/fx/userBundleResourcesExpireFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
-import { bundleFeatureCloseSyncFx } from "./bundleFeatureCloseSyncFx";
-import { bundleItemCloseSyncFx } from "./bundleItemCloseSyncFx";
+import { bundleCloseCollectionFx } from "./bundleCloseCollectionFx";
 import { bundleKeyLockFx } from "./bundleKeyLockFx";
-import { bundleLimitCloseSyncFx } from "./bundleLimitCloseSyncFx";
 
 export namespace bundleCloseSyncFx {
 	export interface Props {
@@ -34,24 +32,9 @@ export const bundleCloseSyncFx = Effect.fn("bundleCloseSyncFx")(function* ({
 				key,
 			});
 
-			const [items, limits, features] = yield* Effect.all([
-				bundleItemCloseSyncFx({
-					key,
-				}),
-				bundleLimitCloseSyncFx({
-					key,
-				}),
-				bundleFeatureCloseSyncFx({
-					key,
-				}),
-			]);
-			const assignmentIds = [
-				...new Set([
-					...items.map((item) => item.assignmentId),
-					...limits.map((limit) => limit.assignmentId),
-					...features.map((feature) => feature.assignmentId),
-				]),
-			];
+			const assignmentIds = yield* bundleCloseCollectionFx({
+				key,
+			});
 
 			if (assignmentIds.length === 0) {
 				return yield* new NotFoundErrorFx({

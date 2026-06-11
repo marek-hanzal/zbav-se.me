@@ -1,6 +1,5 @@
 import { Effect } from "effect";
 import type { Stripe } from "stripe";
-import { match, P } from "ts-pattern";
 import { stripeClientFx } from "./stripeClientFx";
 
 export namespace subscriptionFetchFx {
@@ -20,20 +19,9 @@ export const subscriptionFetchFx = Effect.fn("subscriptionFetchFx")(function* ({
 	id,
 }: subscriptionFetchFx.Props) {
 	const stripe = yield* stripeClientFx();
+	const subscriptionId = typeof id === "string" ? id : id.id;
 
-	return yield* Effect.promise(() => {
-		return stripe.subscriptions.retrieve(
-			match(id)
-				.with(P.string, (id) => id)
-				.with(
-					{
-						id: P.string,
-					},
-					(subscription) => subscription.id,
-				)
-				.exhaustive(),
-		);
-	});
+	return yield* Effect.promise(() => stripe.subscriptions.retrieve(subscriptionId));
 });
 
 export type subscriptionFetchFx = ReturnType<typeof subscriptionFetchFx>;
