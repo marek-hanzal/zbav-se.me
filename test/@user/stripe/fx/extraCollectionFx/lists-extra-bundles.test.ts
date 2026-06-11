@@ -26,11 +26,11 @@ describe("extraCollectionFx", () => {
 			Effect.runPromise,
 		);
 
-		expect(extras.map((bundle) => bundle.bundle)).toEqual([
-			"extra:token:small",
-			"extra:token:medium",
-			"extra:token:large",
-		]);
+		const extraBundles = ResourceBundleEnumSchema.options.filter((bundle) => {
+			return bundle.startsWith("extra:");
+		});
+
+		expect(extras.map((bundle) => bundle.bundle)).toEqual(extraBundles);
 		expect(extras.every((bundle) => bundle.bundle.startsWith("extra:"))).toBe(true);
 	});
 	it("seeds every extra resource bundle as public", async () => {
