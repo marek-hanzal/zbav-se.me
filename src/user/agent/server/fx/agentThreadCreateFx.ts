@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import type { AgentThreadTableSchema } from "~/server/database/@table/AgentThreadTableSchema";
@@ -19,7 +19,7 @@ export const agentThreadCreateFx = Effect.fn("agentThreadCreateFx")(function* ({
 		userId,
 	});
 
-	const dateContext = yield* DateContextFx;
+	const dateContext = yield* DateServiceFx;
 	const id = genId();
 	const now = dateContext.now().toJSDate();
 

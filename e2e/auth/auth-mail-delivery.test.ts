@@ -109,9 +109,9 @@ test("auth sign up sends verification email", async ({ page, database }) => {
 		recipient: email,
 	});
 
-	await expect(mail.Subject).toBe(subject);
-	await expect(mail.Text).toContain("Kliknutím potvrď svůj email");
-	await expect(mail.Text).toContain("/api/auth/verify-email?token=");
+	expect(mail.Subject).toBe(subject);
+	expect(mail.Text).toContain("Kliknutím potvrď svůj email");
+	expect(mail.Text).toContain("/api/auth/verify-email?token=");
 });
 
 test("auth magic link sends email and signs in", async ({ page, database }) => {
@@ -137,8 +137,8 @@ test("auth magic link sends email and signs in", async ({ page, database }) => {
 		subject,
 	});
 
-	await expect(mail.Subject).toBe(subject);
-	await expect(mail.Text).toContain("/api/auth/magic-link/verify?token=");
+	expect(mail.Subject).toBe(subject);
+	expect(mail.Text).toContain("/api/auth/magic-link/verify?token=");
 
 	await page.goto(parseMagicLink(mail.Text));
 	await page.waitForURL("/cs/app/home");
@@ -165,7 +165,7 @@ test("auth magic link rate limit returns a client-safe error", async ({ page, db
 			headers,
 		});
 
-		await expect(response.ok()).toBe(true);
+		expect(response.ok()).toBe(true);
 	}
 
 	const response = await page.request.post("/api/auth/sign-in/magic-link", {
@@ -174,8 +174,8 @@ test("auth magic link rate limit returns a client-safe error", async ({ page, db
 	});
 	const text = await response.text();
 
-	await expect(response.status()).toBe(429);
-	await expect(text).toContain(expectedMessage);
-	await expect(text).not.toContain("SERVER_ERROR");
-	await expect(text).not.toContain("FiberFailure");
+	expect(response.status()).toBe(429);
+	expect(text).toContain(expectedMessage);
+	expect(text).not.toContain("SERVER_ERROR");
+	expect(text).not.toContain("FiberFailure");
 });

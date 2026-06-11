@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
@@ -31,9 +31,9 @@ export const galleryItemInsertFx = Effect.fn("galleryItemInsertFx")(function* ({
 		...data,
 	});
 
-	const dateContext = yield* DateContextFx;
+	const dateService = yield* DateServiceFx;
 
-	const now = dateContext.now();
+	const now = dateService.now();
 	const id = genId();
 
 	/**

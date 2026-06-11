@@ -4,7 +4,7 @@ import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { UploadContextFx } from "~/user/upload/server/context/UploadContextFx";
+import { UploadConfigFx } from "~/user/upload/server/context/UploadConfigFx";
 import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
 import { uploadFetchFx } from "~/user/upload/server/fx/uploadFetchFx";
 
@@ -14,8 +14,8 @@ describe("uploadFetchFx", () => {
 
 		return Effect.gen(function* () {
 			const users = yield* createUsersFx({});
-			const uploadContext = yield* UploadContextFx;
-			const cdn = uploadContext.cdn.replace(/\/$/, "");
+			const uploadConfig = yield* UploadConfigFx;
+			const cdn = uploadConfig.cdn.replace(/\/$/, "");
 			const ownUploadUrl = `${cdn}/own-upload.jpg`;
 
 			const ownUpload = yield* uploadCreateFx({

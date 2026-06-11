@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { DateContextFx } from "@/lib/common/date";
+import { withDateServiceFx } from "@/lib/common/date";
 import { rateLimitEventFx } from "~/server/rate-limit/server/fx/rateLimitEventFx";
 import { rateLimitFx } from "~/server/rate-limit/server/fx/rateLimitFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
@@ -30,7 +30,7 @@ describe("rateLimitFx", () => {
 					"user:1",
 				],
 			}).pipe(
-				Effect.provideService(DateContextFx, {
+				withDateServiceFx({
 					now: () => fixedNow,
 				}),
 			);
@@ -41,7 +41,7 @@ describe("rateLimitFx", () => {
 					"user:1",
 				],
 			}).pipe(
-				Effect.provideService(DateContextFx, {
+				withDateServiceFx({
 					now: () => fixedNow,
 				}),
 			);
@@ -52,7 +52,7 @@ describe("rateLimitFx", () => {
 					"user:1",
 				],
 			}).pipe(
-				Effect.provideService(DateContextFx, {
+				withDateServiceFx({
 					now: () => fixedNow,
 				}),
 			);

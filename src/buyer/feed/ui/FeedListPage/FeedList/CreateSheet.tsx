@@ -33,7 +33,7 @@ export const CreateSheet: FC<CreateSheet.Props> = ({ _suspense, state, ...props 
 		},
 	});
 	const { data: resourceLimit } = withResourceLimitCheckQuery.useSuspenseQuery({
-		resource: "feed.count",
+		resource: "buyer:limit:feed.count",
 		count: feedCount,
 	});
 	const feedCreateMutation = withFeedQuery.useCreateMutation({

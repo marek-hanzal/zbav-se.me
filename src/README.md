@@ -14,6 +14,7 @@ This is the application code.
 - Buyer and seller transaction worker agents live under `src/buyer/transaction/server/tool/` and `src/seller/transaction/server/tool/`.
 - Buyer feed worker agents live under `src/buyer/feed/server/tool/`.
 - Embedded experiments for AI chat live under `src/user/chat/ui/`, with server env contracts in `src/server/env/ServerAiSchema.ts`.
+- Stripe billing integration lives under `src/user/stripe/`; Stripe remains the billing source of truth and the app mirrors only entitlement state.
 - XML SEO endpoints live in `src/@routes/` as server-only routes, use the shared streaming XML sitemap domain in `src/common/sitemap/`, and keep large listing segmentation logic in the owning public domain server modules.
 
 ## Code Shape

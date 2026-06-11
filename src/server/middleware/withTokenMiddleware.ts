@@ -14,11 +14,11 @@ export const withTokenMiddleware = ({ token }: withTokenMiddleware.Props) => {
 	return createMiddleware().server(async ({ request, next }) => {
 		const bearer = request.headers.get("authorization");
 		const unauthorized = () => {
-			return new Response(
-				JSON.stringify({
+			return Response.json(
+				{
 					type: "error",
 					message: "Shoo! Shooo!!",
-				} satisfies NoticeSchema.Type),
+				} satisfies NoticeSchema.Type,
 				{
 					status: 401,
 					headers: {

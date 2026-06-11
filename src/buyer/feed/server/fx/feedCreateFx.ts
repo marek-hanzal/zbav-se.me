@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import { feedFetchFx } from "~/buyer/feed/server/fx/feedFetchFx";
@@ -30,10 +30,10 @@ export const feedCreateFx = Effect.fn("feedCreateFx")(function* ({
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const dateContext = yield* DateContextFx;
+			const dateService = yield* DateServiceFx;
 
 			const id = genId();
-			const now = dateContext.now();
+			const now = dateService.now();
 
 			const feedCount = yield* feedCountFx({
 				where: {
@@ -46,7 +46,7 @@ export const feedCreateFx = Effect.fn("feedCreateFx")(function* ({
 
 			yield* resourceLimitEnsureFx({
 				count: feedCount + 1,
-				resource: "feed.count",
+				resource: "buyer:limit:feed.count",
 				userId,
 			});
 

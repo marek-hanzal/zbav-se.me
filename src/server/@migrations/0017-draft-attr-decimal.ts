@@ -14,7 +14,7 @@ export const DraftAttrDecimalMigration: Migration = {
 			])
 
 			.addForeignKeyConstraint(
-				"draft_attr_decimal_[draftId]_fk",
+				"dad_[draftId]_fk",
 				[
 					"draftId",
 				],
@@ -25,7 +25,7 @@ export const DraftAttrDecimalMigration: Migration = {
 				(c) => c.onDelete("cascade"),
 			)
 			.addForeignKeyConstraint(
-				"draft_attr_decimal_[fieldId]_fk",
+				"dad_[fieldId]_fk",
 				[
 					"fieldId",
 				],
@@ -39,7 +39,7 @@ export const DraftAttrDecimalMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("draft_attr_decimal_[fieldId-value-draftId]_idx")
+			.createIndex("dad_[fieldId-value-draftId]_idx")
 			.on("draft_attr_decimal")
 			.columns([
 				"fieldId",

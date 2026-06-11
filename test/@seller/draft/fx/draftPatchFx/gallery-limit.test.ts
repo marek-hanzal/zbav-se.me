@@ -1,6 +1,7 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { genId } from "@/lib/common/gen-id";
+import { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/ResourceDefinitionEnumSchema";
 import { draftCreateFx } from "~/seller/draft/server/fx/draftCreateFx";
 import { draftPatchFx } from "~/seller/draft/server/fx/draftPatchFx";
 import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
@@ -51,23 +52,33 @@ describe("draftPatchFx gallery limit", () => {
 					.values({
 						id: limitSeed.bundleId,
 						name: `Draft gallery limit ${limitSeed.bundleId}`,
+						type: "user",
+						access: "protected",
+						sort: 0,
 					})
 					.execute();
-				await database.kysely
-					.insertInto("resource_bundle_limit")
-					.values({
-						id: genId(),
-						resourceBundleId: limitSeed.bundleId,
-						resourceDefinitionId: "listing.gallery.count",
-						limit: GALLERY_LIMIT,
-					})
-					.execute();
-				await database.kysely
+				const userResourceBundle = await database.kysely
 					.insertInto("user_resource_bundle")
 					.values({
 						id: genId(),
 						userId: seller.id,
 						resourceBundleId: limitSeed.bundleId,
+						createdAt: limitSeed.createdAt,
+						availableAt: limitSeed.now,
+						expiresAt: null,
+					})
+					.returning([
+						"id",
+					])
+					.executeTakeFirstOrThrow();
+
+				await database.kysely
+					.insertInto("user_resource_bundle_limit")
+					.values({
+						id: genId(),
+						userResourceBundleId: userResourceBundle.id,
+						resourceDefinitionId: "seller:limit:listing.gallery.count",
+						limit: GALLERY_LIMIT,
 						createdAt: limitSeed.createdAt,
 						availableAt: limitSeed.now,
 						expiresAt: null,
@@ -126,7 +137,7 @@ describe("draftPatchFx gallery limit", () => {
 			expect(patched.withUploadIds).toEqual(atLimitUploadIds);
 			expectTaggedErrorFx(aboveLimit, {
 				tag: "ResourceLimitErrorFx",
-				message: "Resource limit exceeded for [listing.gallery.count]",
+				message: `Resource limit exceeded for [${ResourceDefinitionEnumSchema.enum["seller:limit:listing.gallery.count"]}]`,
 			});
 			expect(galleryItems).toEqual(
 				atLimitUploadIds.map((uploadId, sort) => ({

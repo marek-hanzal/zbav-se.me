@@ -4,12 +4,14 @@ import { describe, expect, it } from "vitest";
 import { keyOf } from "@/lib/common/key-of";
 import { withLoggerFx } from "@/lib/common/log";
 import { ViteEnvSchema } from "~/common/env/ViteEnvSchema";
-import { withS3Fx } from "~/common/s3/server/context/withS3Fx";
+import { withS3ConfigFx } from "~/common/s3/server/context/withS3ConfigFx";
+import { withS3ConfigEnv } from "~/common/s3/server/env/withS3ConfigEnv";
 import { s3PreSignFx } from "~/common/s3/server/fx/s3PreSignFx";
 import { ServerS3Schema } from "~/server/env/ServerS3Schema";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { withUploadFx } from "~/user/upload/server/context/withUploadFx";
+import { withUploadConfigFx } from "~/user/upload/server/context/withUploadConfigFx";
+import { withUploadConfigEnv } from "~/user/upload/server/env/withUploadConfigEnv";
 
 describe("s3PreSignFx", () => {
 	it("generates signed url and CDN path using real S3 config", async () => {
@@ -24,15 +26,8 @@ describe("s3PreSignFx", () => {
 			path: "listing/gallery",
 			extension: "jpg",
 		}).pipe(
-			withS3Fx({
-				api: s3Config.SERVER_S3_API,
-				bucket: s3Config.SERVER_S3_BUCKET,
-				key: s3Config.SERVER_S3_KEY,
-				secret: s3Config.SERVER_S3_SECRET,
-			}),
-			withUploadFx({
-				cdn: viteConfig.VITE_CONTENT_CDN,
-			}),
+			withS3ConfigFx(withS3ConfigEnv()),
+			withUploadConfigFx(withUploadConfigEnv()),
 			withLoggerFx(logger),
 			withRuntimeFx(database),
 			Effect.runPromise,

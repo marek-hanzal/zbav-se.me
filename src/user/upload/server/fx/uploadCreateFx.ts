@@ -1,11 +1,11 @@
 import { Effect } from "effect";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { InvalidRequestErrorFx } from "~/server/error/InvalidRequestErrorFx";
-import { UploadContextFx } from "~/user/upload/server/context/UploadContextFx";
 import type { UploadCreateSchema } from "~/user/upload/server/schema/UploadCreateSchema";
+import { UploadConfigFx } from "../context/UploadConfigFx";
 
 export namespace uploadCreateFx {
 	export interface Props extends UploadCreateSchema.Type {
@@ -25,24 +25,24 @@ export const uploadCreateFx = Effect.fn("uploadCreateFx")(function* ({
 		...data,
 	});
 
-	const uploadContext = yield* UploadContextFx;
-	const dateContext = yield* DateContextFx;
+	const uploadConfig = yield* UploadConfigFx;
+	const dateService = yield* DateServiceFx;
 
 	logger.trace("Checking CDN url", {
 		userId,
 		url,
-		cdn: uploadContext.cdn,
-		isValid: url.startsWith(uploadContext.cdn),
+		cdn: uploadConfig.cdn,
+		isValid: url.startsWith(uploadConfig.cdn),
 	});
 
-	if (!url.startsWith(uploadContext.cdn)) {
+	if (!url.startsWith(uploadConfig.cdn)) {
 		return yield* new InvalidRequestErrorFx({
 			message: "Only content from the CDN can be uploaded",
 		});
 	}
 
 	const id = genId();
-	const now = dateContext.now();
+	const now = dateService.now();
 
 	yield* dbFx(async (kysely) => {
 		return kysely

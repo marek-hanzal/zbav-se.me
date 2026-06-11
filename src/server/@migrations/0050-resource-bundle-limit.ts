@@ -10,7 +10,7 @@ export const ResourceBundleLimitMigration: Migration = {
 			.addColumn("resourceDefinitionId", "text", (col) => col.notNull())
 			.addColumn("limit", "decimal(10, 2)", (col) => col.notNull())
 			.addForeignKeyConstraint(
-				"resource_bundle_limit_[resourceBundleId]_fk",
+				"rbl_[rbId]_fk",
 				[
 					"resourceBundleId",
 				],
@@ -21,7 +21,7 @@ export const ResourceBundleLimitMigration: Migration = {
 				(c) => c.onDelete("cascade"),
 			)
 			.addForeignKeyConstraint(
-				"resource_bundle_limit_[resourceDefinitionId]_fk",
+				"rbl_[rdId]_fk",
 				[
 					"resourceDefinitionId",
 				],
@@ -30,13 +30,10 @@ export const ResourceBundleLimitMigration: Migration = {
 					"name",
 				],
 			)
-			.addUniqueConstraint(
-				"resource_bundle_limit_[resourceBundleId-resourceDefinitionId]_unique_idx",
-				[
-					"resourceBundleId",
-					"resourceDefinitionId",
-				],
-			)
+			.addUniqueConstraint("rbl_[rbId-rdId]_uniq", [
+				"resourceBundleId",
+				"resourceDefinitionId",
+			])
 			.addCheckConstraint("resource_bundle_limit_[limit]_chk", sql`"limit" >= 0`)
 			.execute();
 	},

@@ -8,7 +8,7 @@ export const CategoryMissMigration: Migration = {
 			.addColumn("category", "text", (col) => col.notNull())
 			.addColumn("updatedAt", "timestamptz", (col) => col.notNull())
 			.addColumn("count", "integer", (col) => col.notNull())
-			.addUniqueConstraint("category_miss_[category]_unique_idx", [
+			.addUniqueConstraint("category_miss_[category]_uniq", [
 				"category",
 			])
 			.execute();

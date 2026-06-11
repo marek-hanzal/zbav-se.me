@@ -32,7 +32,7 @@ describe("resourceLimit read model fx", () => {
 					}),
 				);
 
-			const listingTieBreakLimit = yield* fetchLimit(seller.id, "listing.count");
+			const listingTieBreakLimit = yield* fetchLimit(seller.id, "seller:limit:listing.count");
 			const futureListingLimit = yield* atResourceLimitReadModelFx(
 				"2026-05-13T10:00:00.000Z",
 				resourceLimitFetchFx({
@@ -40,7 +40,7 @@ describe("resourceLimit read model fx", () => {
 						userId: seller.id,
 					},
 					where: {
-						resourceDefinitionId: "listing.count",
+						resourceDefinitionId: "seller:limit:listing.count",
 					},
 				}),
 			);
@@ -51,11 +51,11 @@ describe("resourceLimit read model fx", () => {
 						userId: seller.id,
 					},
 					where: {
-						resourceDefinitionId: "listing.gallery.count",
+						resourceDefinitionId: "seller:limit:listing.gallery.count",
 					},
 				}),
 			);
-			const buyerScopedLimit = yield* fetchLimit(buyer.id, "feed.count");
+			const buyerScopedLimit = yield* fetchLimit(buyer.id, "buyer:limit:feed.count");
 
 			expect(listingTieBreakLimit).toMatchObject({
 				limit: 7,

@@ -28,11 +28,11 @@ export const CategoryMigration: Migration = {
 			.addColumn("locale", "text", (col) => col.notNull())
 			.addColumn("discovery", sql`category_discovery_enum`, (col) => col.notNull())
 			.addColumn("restriction", sql`restriction_enum`)
-			.addUniqueConstraint("category_[slug-locale]_unique_idx", [
+			.addUniqueConstraint("category_[slug-locale]_uniq", [
 				"slug",
 				"locale",
 			])
-			.addUniqueConstraint("category_[locale-group-category]_unique_idx", [
+			.addUniqueConstraint("category_[locale-group-category]_uniq", [
 				"locale",
 				"group",
 				"category",
@@ -48,7 +48,7 @@ export const CategoryMigration: Migration = {
         `.execute(db);
 
 		await sql`
-            CREATE INDEX "category_[categoryGroupVec]_hnsw_cos_idx" ON "category" USING hnsw ("categoryGroupVec" vector_cosine_ops)
+            CREATE INDEX "category_[cgVec]_hnsw_cos_idx" ON "category" USING hnsw ("categoryGroupVec" vector_cosine_ops)
         `.execute(db);
 
 		await sql`

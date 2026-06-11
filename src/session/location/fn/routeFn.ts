@@ -3,12 +3,12 @@ import { Effect } from "effect";
 import { z } from "zod";
 import { zodFx } from "@/lib/common/fx";
 import { withLoggerFx } from "@/lib/common/log";
-import { ServerGeoapifySchema } from "~/server/env/ServerGeoapifySchema";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { routeFx } from "~/session/location/server/fx/routeFx";
-import { withLocationFx } from "~/session/location/server/fx/withLocationFx";
 import { RouteSchema } from "~/session/location/server/schema/RouteSchema";
+import { withLocationConfigFx } from "../server/context/withLocationConfigFx";
+import { withLocationConfigEnv } from "../server/env/withLocationConfigEnv";
 
 export namespace routeFn {
 	export type Error = Effect.Effect.Error<routeFx>;
@@ -27,20 +27,19 @@ export const routeFn = createServerFn()
 		]);
 		logger.trace(name, data);
 
-		const geoapifyConfig = ServerGeoapifySchema.parse(process.env);
-
 		const distance = await zodFx({
 			schema: z.number(),
 			dataFx: routeFx({
 				...data,
 			}),
 		}).pipe(
-			withLocationFx({
-				geoapifyToken: geoapifyConfig.SERVER_GEOAPIFY_TOKEN,
-				api: "https://api.geoapify.com",
-				autocomplete: "/v1/geocode/autocomplete",
-				route: "/v1/routematrix",
-			}),
+			withLocationConfigFx(
+				withLocationConfigEnv({
+					api: "https://api.geoapify.com",
+					autocomplete: "/v1/geocode/autocomplete",
+					route: "/v1/routematrix",
+				}),
+			),
 			withLoggerFx(rootLogger),
 			Effect.tapError((error) => {
 				return Effect.sync(() => {

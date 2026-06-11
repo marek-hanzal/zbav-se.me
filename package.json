@@ -4,7 +4,8 @@
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
-		"dev": "dotenv -c development -- portless zbav-se.me vite",
+		"dev:app": "dotenv -c development -- portless zbav-se.me vite",
+		"dev:stripe": "stripe listen --headers \"x-e2e-db:e2e-stripe-billing\" --forward-to https://zbav-se.me.localhost:1355/api/stripe/webhook --skip-verify",
 		"build": "dotenv -c development -- vite build",
 		"e2e:build": "dotenv -c development -- vite build --mode production",
 		"e2e:start": "dotenv -c development -- portless --force zbav-se.me node .output/server/index.mjs",
@@ -74,6 +75,7 @@
 		"react-markdown": "10.1.0",
 		"react-modal-sheet": "5.6.0",
 		"remark-gfm": "4.0.1",
+		"stripe": "^22.2.0",
 		"tailwind-merge": "3.6.0",
 		"timer-node": "5.0.9",
 		"ts-pattern": "5.9.0",

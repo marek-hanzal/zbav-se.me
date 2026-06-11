@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { NotFoundErrorFx } from "@/lib/common/error";
 import { getLoggerFx } from "@/lib/common/log";
 import { hash } from "@/lib/server/hmac";
@@ -27,7 +27,7 @@ export const rateLimitEventFx = Effect.fn("rateLimitEventFx")(function* ({
 		key,
 	});
 
-	const dateContext = yield* DateContextFx;
+	const dateService = yield* DateServiceFx;
 	const hmacConfig = ServerHmacSchema.parse(process.env);
 
 	return yield* withTransactionFx(
@@ -64,7 +64,7 @@ export const rateLimitEventFx = Effect.fn("rateLimitEventFx")(function* ({
 				key,
 				secret: hmacConfig.SERVER_HMAC_SECRET,
 			});
-			const now = dateContext.now();
+			const now = dateService.now();
 
 			const window = yield* getWindowFx({
 				now,

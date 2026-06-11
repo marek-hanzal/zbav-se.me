@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import type { TransactionEntryTableSchema } from "~/server/database/@table/TransactionEntryTableSchema";
@@ -50,7 +50,7 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 			> & {
 				scopeUserId: string;
 			}) {
-				const dateContext = yield* DateContextFx;
+				const dateService = yield* DateServiceFx;
 				const id = genId();
 
 				yield* transactionTransitionFx({
@@ -66,7 +66,7 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 							...data,
 							id,
 							kind,
-							createdAt: dateContext.now().toJSDate(),
+							createdAt: dateService.now().toJSDate(),
 						})
 						.executeTakeFirstOrThrow();
 				});

@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
@@ -20,7 +20,7 @@ export const userRestrictionCreateFx = Effect.fn("userRestrictionCreateFx")(func
 	restriction,
 }: userRestrictionCreateFx.Props) {
 	const userRestrictionContext = yield* UserRestrictionContextFx;
-	const dateContext = yield* DateContextFx;
+	const dateService = yield* DateServiceFx;
 
 	const logger = yield* getLoggerFx("userRestrictionCreateFx");
 	logger.trace("userRestrictionCreateFx", {
@@ -29,7 +29,7 @@ export const userRestrictionCreateFx = Effect.fn("userRestrictionCreateFx")(func
 	});
 
 	const delay = userRestrictionContext.delay[restriction] ?? 0;
-	const availableAt = dateContext
+	const availableAt = dateService
 		.now()
 		.plus({
 			hours: delay,
@@ -39,11 +39,11 @@ export const userRestrictionCreateFx = Effect.fn("userRestrictionCreateFx")(func
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;
-			const dateContext = yield* DateContextFx;
+			const dateService = yield* DateServiceFx;
 
 			const id = genId();
-			const createdAt = dateContext.now().toJSDate();
-			const now = dateContext.now().toJSDate();
+			const createdAt = dateService.now().toJSDate();
+			const now = dateService.now().toJSDate();
 			const isAvailable = availableAt.getTime() <= createdAt.getTime();
 
 			yield* Effect.promise(async () => {

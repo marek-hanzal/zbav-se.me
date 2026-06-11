@@ -2,8 +2,8 @@ import { Effect } from "effect";
 import { linkTo } from "@/lib/common/link-to";
 import { getLoggerFx } from "@/lib/common/log";
 import { InvalidRequestErrorFx } from "~/server/error/InvalidRequestErrorFx";
-import { LocationContextFx } from "~/session/location/server/context/LocationContextFx";
 import type { RouteSchema } from "~/session/location/server/schema/RouteSchema";
+import { LocationConfigFx } from "../context/LocationConfigFx";
 
 export namespace routeFx {
 	export type Props = RouteSchema.Type;
@@ -32,13 +32,13 @@ export const routeFx = Effect.fn("routeFx")(function* ({
 		mode,
 	});
 
-	const context = yield* LocationContextFx;
+	const locationConfig = yield* LocationConfigFx;
 
 	const link = linkTo({
-		base: context.api,
-		href: context.route,
+		base: locationConfig.api,
+		href: locationConfig.route,
 		query: {
-			apiKey: context.geoapifyToken,
+			apiKey: locationConfig.geoapifyToken,
 		},
 	});
 

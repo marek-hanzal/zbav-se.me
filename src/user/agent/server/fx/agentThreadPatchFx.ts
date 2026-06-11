@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { getLoggerFx } from "@/lib/common/log";
 import type { AgentThreadTableSchema } from "~/server/database/@table/AgentThreadTableSchema";
 import { dbFx } from "~/server/database/fx/dbFx";
@@ -28,12 +28,12 @@ export const agentThreadPatchFx = Effect.fn("agentThreadPatchFx")(function* ({
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const dateContext = yield* DateContextFx;
+			const dateService = yield* DateServiceFx;
 			const thread = yield* agentThreadFetchFx({
 				...query,
 				scope,
 			});
-			const updatedAt = dateContext.now().toJSDate();
+			const updatedAt = dateService.now().toJSDate();
 
 			return yield* dbFx(async (kysely) => {
 				return kysely

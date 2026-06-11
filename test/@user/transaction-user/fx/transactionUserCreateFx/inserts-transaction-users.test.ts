@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { DateContextFx } from "@/lib/common/date";
+import { withDateServiceFx } from "@/lib/common/date";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
@@ -42,7 +42,7 @@ describe("transactionUserCreateFx", () => {
 					},
 				],
 			}).pipe(
-				Effect.provideService(DateContextFx, {
+				withDateServiceFx({
 					now: () => fixedNow,
 				}),
 			);

@@ -93,7 +93,7 @@ export const withListingQuery = withEntityQuery({
 						{
 							fetch: {
 								where: {
-									resourceDefinitionId: "listing.count",
+									resourceDefinitionId: "seller:limit:listing.count",
 								},
 							},
 						},
@@ -114,7 +114,7 @@ export const withListingQuery = withEntityQuery({
 						{
 							fetch: {
 								where: {
-									resourceDefinitionId: "listing.count",
+									resourceDefinitionId: "seller:limit:listing.count",
 								},
 							},
 						},

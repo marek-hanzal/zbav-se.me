@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import type { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
 import type { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
@@ -212,8 +212,8 @@ export const createUserRestrictionFx = (
 	},
 ) =>
 	Effect.gen(function* () {
-		const dateContext = yield* DateContextFx;
-		const now = dateContext.now();
+		const dateService = yield* DateServiceFx;
+		const now = dateService.now();
 
 		yield* Effect.promise(() =>
 			database.kysely

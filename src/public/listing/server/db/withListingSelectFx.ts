@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { match } from "ts-pattern";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { selectFx } from "@/lib/common/select";
 import type { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
 import { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
@@ -32,9 +32,9 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 	meta,
 	hasExplicitCategory,
 }: withListingSelectFx.Props) {
-	const dateContext = yield* DateContextFx;
+	const dateService = yield* DateServiceFx;
 	const { kysely } = yield* KyselyContextFx;
-	const now = dateContext.now().toJSDate();
+	const now = dateService.now().toJSDate();
 
 	let select = kysely
 		.selectFrom("listing as l")

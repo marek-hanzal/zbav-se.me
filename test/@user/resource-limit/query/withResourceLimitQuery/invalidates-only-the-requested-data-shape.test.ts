@@ -8,12 +8,12 @@ describe("withResourceLimitQuery invalidator", () => {
 		const queryClient = new QueryClient();
 		const target: ResourceLimitQuerySchema.Type = {
 			where: {
-				resourceDefinitionId: "feed.count",
+				resourceDefinitionId: "buyer:limit:feed.count",
 			},
 		};
 		const other: ResourceLimitQuerySchema.Type = {
 			where: {
-				resourceDefinitionId: "listing.count",
+				resourceDefinitionId: "seller:limit:listing.count",
 			},
 		};
 

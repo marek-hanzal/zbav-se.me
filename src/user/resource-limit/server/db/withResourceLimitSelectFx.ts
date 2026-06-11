@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { match } from "ts-pattern";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { selectFx } from "@/lib/common/select";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import type { ResourceLimitSortSchema } from "../schema/ResourceLimitSortSchema";
@@ -22,36 +22,40 @@ export const withResourceLimitSelectFx = Effect.fn("withResourceLimitSelectFx")(
 	],
 }: withResourceLimitSelectFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
-	const dateContext = yield* DateContextFx;
-	const now = dateContext.now().toJSDate();
+	const dateService = yield* DateServiceFx;
+	const now = dateService.now().toJSDate();
 
 	let query = kysely
-		.selectFrom("user_resource_bundle as urb")
-		.innerJoin("resource_bundle_limit as rbl", "rbl.resourceBundleId", "urb.resourceBundleId")
+		.selectFrom("user_resource_bundle_limit as resourceLimit")
+		.innerJoin(
+			"user_resource_bundle as assignment",
+			"assignment.id",
+			"resourceLimit.userResourceBundleId",
+		)
 		.select([
-			"rbl.id",
-			"rbl.resourceDefinitionId",
-			"urb.createdAt",
-			"urb.availableAt",
-			"urb.expiresAt",
-			sql<number>`rbl.limit::float8`.as("limit"),
+			"resourceLimit.id",
+			"resourceLimit.resourceDefinitionId",
+			"resourceLimit.createdAt",
+			"resourceLimit.availableAt",
+			sql<Date | null>`${sql.ref("resourceLimit.expiresAt")}`.as("expiresAt"),
+			sql<number>`${sql.ref("resourceLimit.limit")}::float8`.as("limit"),
 		])
-		.where("urb.availableAt", "<=", now)
+		.where("resourceLimit.availableAt", "<=", now)
 		.where((eb) => {
 			return eb.or([
-				eb("urb.expiresAt", "is", null),
-				eb("urb.expiresAt", ">", now),
+				eb("resourceLimit.expiresAt", "is", null),
+				eb("resourceLimit.expiresAt", ">", now),
 			]);
 		});
 
 	for (const item of sort) {
 		query = match(item.field)
-			.with("availableAt", () => query.orderBy("urb.availableAt", item.order))
-			.with("createdAt", () => query.orderBy("urb.createdAt", item.order))
-			.with("expiresAt", () => query.orderBy("urb.expiresAt", item.order))
-			.with("limit", () => query.orderBy("rbl.limit", item.order))
+			.with("availableAt", () => query.orderBy("resourceLimit.availableAt", item.order))
+			.with("createdAt", () => query.orderBy("resourceLimit.createdAt", item.order))
+			.with("expiresAt", () => query.orderBy("resourceLimit.expiresAt", item.order))
+			.with("limit", () => query.orderBy("resourceLimit.limit", item.order))
 			.with("resourceDefinitionId", () =>
-				query.orderBy("rbl.resourceDefinitionId", item.order),
+				query.orderBy("resourceLimit.resourceDefinitionId", item.order),
 			)
 			.exhaustive();
 	}
@@ -67,16 +71,16 @@ export const withResourceLimitSelectFx = Effect.fn("withResourceLimitSelectFx")(
 				}
 
 				if (where.id) {
-					query = query.where("rbl.id", "=", where.id);
+					query = query.where("resourceLimit.id", "=", where.id);
 				}
 
 				if (where.userId) {
-					query = query.where("urb.userId", "=", where.userId);
+					query = query.where("assignment.userId", "=", where.userId);
 				}
 
 				if (where.resourceDefinitionId) {
 					query = query.where(
-						"rbl.resourceDefinitionId",
+						"resourceLimit.resourceDefinitionId",
 						"=",
 						where.resourceDefinitionId,
 					);
@@ -84,7 +88,7 @@ export const withResourceLimitSelectFx = Effect.fn("withResourceLimitSelectFx")(
 
 				if (where.resourceDefinitionIdIn && where.resourceDefinitionIdIn.length > 0) {
 					query = query.where(
-						"rbl.resourceDefinitionId",
+						"resourceLimit.resourceDefinitionId",
 						"in",
 						where.resourceDefinitionIdIn,
 					);

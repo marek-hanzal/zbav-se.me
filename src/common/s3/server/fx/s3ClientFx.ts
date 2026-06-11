@@ -1,20 +1,20 @@
 import { Effect } from "effect";
 import { Client } from "minio";
 import { getLoggerFx } from "@/lib/common/log";
-import { S3ContextFx } from "~/common/s3/server/context/S3ContextFx";
+import { s3ConfigFx } from "../context/s3ConfigFx";
 
 export const s3ClientFx = Effect.fn("s3ClientFx")(function* () {
 	const logger = yield* getLoggerFx("s3ClientFx");
 	logger.trace("s3ClientFx");
 
-	const context = yield* S3ContextFx;
+	const s3Config = yield* s3ConfigFx;
 
 	return new Client({
-		endPoint: context.api,
+		endPoint: s3Config.api,
 		port: 443,
 		useSSL: true,
-		accessKey: context.key,
-		secretKey: context.secret,
+		accessKey: s3Config.key,
+		secretKey: s3Config.secret,
 	});
 });
 

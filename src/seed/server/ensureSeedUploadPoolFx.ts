@@ -2,11 +2,11 @@ import { randomUUID } from "node:crypto";
 import { Effect } from "effect";
 import { genId } from "@/lib/common/gen-id";
 import { rangedom } from "@/lib/common/rangedom/rangedom";
-import { S3ContextFx } from "~/common/s3/server/context/S3ContextFx";
+import { s3ConfigFx } from "~/common/s3/server/context/s3ConfigFx";
 import { s3ClientFx } from "~/common/s3/server/fx/s3ClientFx";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
-import { UploadContextFx } from "~/user/upload/server/context/UploadContextFx";
+import { UploadConfigFx } from "~/user/upload/server/context/UploadConfigFx";
 import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
 import { SeedProgressContextFx } from "./SeedProgressContextFx";
 
@@ -55,8 +55,8 @@ export const ensureSeedUploadPoolFx = Effect.fn("ensureSeedUploadPoolFx")(functi
 	targetCount,
 }: ensureSeedUploadPoolFx.Props) {
 	const progress = yield* SeedProgressContextFx;
-	const { bucket } = yield* S3ContextFx;
-	const { cdn } = yield* UploadContextFx;
+	const { bucket } = yield* s3ConfigFx;
+	const { cdn } = yield* UploadConfigFx;
 
 	const existingByUser = yield* dbFx(async (kysely) => {
 		return kysely

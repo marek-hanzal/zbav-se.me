@@ -30,7 +30,7 @@ export const FlagMigration: Migration = {
 				],
 				(c) => c.onDelete("cascade"),
 			)
-			.addUniqueConstraint("listing_flag_[userId-listingId]_unique_idx", [
+			.addUniqueConstraint("listing_flag_[userId-listingId]_uniq", [
 				"userId",
 				"listingId",
 			])

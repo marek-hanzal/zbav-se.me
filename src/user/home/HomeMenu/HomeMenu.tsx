@@ -5,11 +5,15 @@ import { Fade } from "@/lib/client/fade";
 import { withFallback } from "@/lib/client/fallback";
 import { Group } from "@/lib/client/group";
 import type { uiIcon } from "@/lib/client/icon";
+import { LinkTo } from "@/lib/client/link-to";
+import { useLocale } from "@/lib/client/locale";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import { useTranslator } from "@/lib/client/translation";
+import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
 import type { Typo } from "@/lib/client/typo";
 import { LabelValue } from "@/lib/client/value";
+import { uiMenuButton } from "~/common/ui/ui";
 import { AgentLink } from "~/user/home/HomeMenu/link/AgentLink";
 import { DraftLink } from "./link/DraftLink";
 import { DraftListLink } from "./link/DraftListLink";
@@ -40,6 +44,7 @@ export namespace HomeMenu {
  */
 export const HomeMenu = withFallback(({ _suspense, onLinkClick, ...props }: HomeMenu.Props) => {
 	const translator = useTranslator();
+	const locale = useLocale();
 	const containerRef = useRef<HTMLDivElement>(null);
 	const isHome = useMatchRoute()({
 		to: "/$locale/app/home",
@@ -190,6 +195,18 @@ export const HomeMenu = withFallback(({ _suspense, onLinkClick, ...props }: Home
 								data-ui-width={"full"}
 							>
 								<Group data-ui-shadow={false}>
+									<LinkTo
+										icon={"icon-[solar--gift-outline]"}
+										to={"/$locale/app/shop/browse"}
+										params={{
+											locale,
+										}}
+										{...uiMenuButton({})}
+										iconProps={icon}
+									>
+										<Tx label={"Bonuses (label)"} />
+									</LinkTo>
+
 									<MessageLink
 										_suspense={"I know"}
 										iconProps={icon}

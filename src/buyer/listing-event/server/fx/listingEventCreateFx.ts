@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import { listingCheckIfOwnFx } from "~/buyer/listing/server/fx/listingCheckIfOwnFx";
@@ -31,7 +31,7 @@ export const listingEventCreateFx = Effect.fn("listingEventCreateFx")(function* 
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const dateContext = yield* DateContextFx;
+			const dateService = yield* DateServiceFx;
 
 			yield* listingCheckIfOwnFx({
 				userId,
@@ -49,7 +49,7 @@ export const listingEventCreateFx = Effect.fn("listingEventCreateFx")(function* 
 				});
 			}
 
-			const now = dateContext.now();
+			const now = dateService.now();
 
 			yield* listingEventRateLimitFx({
 				listingId,

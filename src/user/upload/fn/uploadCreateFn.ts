@@ -1,14 +1,14 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
+import { withDateServiceFx } from "@/lib/common/date";
 import { zodGuardFx } from "@/lib/common/fx";
 import { withLoggerFx } from "@/lib/common/log";
-import { ViteEnvSchema } from "~/common/env/ViteEnvSchema";
-import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
-import { withUploadFx } from "../server/context/withUploadFx";
+import { withUploadConfigFx } from "../server/context/withUploadConfigFx";
+import { withUploadConfigEnv } from "../server/env/withUploadConfigEnv";
 import { uploadCreateFx } from "../server/fx/uploadCreateFx";
 import { UploadCreateSchema } from "../server/schema/UploadCreateSchema";
 import { UploadSchema } from "../server/schema/UploadSchema";
@@ -32,7 +32,6 @@ export const uploadCreateFn = createServerFn({
 			name,
 		]);
 		logger.trace(name, data);
-		const viteConfig = ViteEnvSchema.parse(process.env);
 
 		return zodGuardFx({
 			schema: UploadSchema,
@@ -42,10 +41,8 @@ export const uploadCreateFn = createServerFn({
 			}),
 		}).pipe(
 			withKyselyFx(database),
-			withDateFx,
-			withUploadFx({
-				cdn: viteConfig.VITE_CONTENT_CDN,
-			}),
+			withDateServiceFx(),
+			withUploadConfigFx(withUploadConfigEnv()),
 			withLoggerFx(rootLogger),
 			Effect.tapError((error) => {
 				return Effect.sync(() => {

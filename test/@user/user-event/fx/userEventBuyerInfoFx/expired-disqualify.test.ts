@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { DateContextFx } from "@/lib/common/date";
+import { withDateServiceFx } from "@/lib/common/date";
 import { userEventBuyerInfoFx } from "~/seller/user-event/server/fx/userEventBuyerInfoFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
@@ -48,7 +48,7 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				Effect.provideService(DateContextFx, {
+				withDateServiceFx({
 					now: () => t1Create,
 				}),
 			);
@@ -61,7 +61,7 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.open",
 				isTerminal: false,
 			}).pipe(
-				Effect.provideService(DateContextFx, {
+				withDateServiceFx({
 					now: () => t1Open,
 				}),
 			);
@@ -74,7 +74,7 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.message",
 				isTerminal: false,
 			}).pipe(
-				Effect.provideService(DateContextFx, {
+				withDateServiceFx({
 					now: () => t1BuyerMsg,
 				}),
 			);
@@ -87,7 +87,7 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.expired",
 				isTerminal: true,
 			}).pipe(
-				Effect.provideService(DateContextFx, {
+				withDateServiceFx({
 					now: () => t1Expired,
 				}),
 			);
@@ -101,7 +101,7 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				Effect.provideService(DateContextFx, {
+				withDateServiceFx({
 					now: () => t2Create,
 				}),
 			);
@@ -114,7 +114,7 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.open",
 				isTerminal: false,
 			}).pipe(
-				Effect.provideService(DateContextFx, {
+				withDateServiceFx({
 					now: () => t2Open,
 				}),
 			);
@@ -127,7 +127,7 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.expired",
 				isTerminal: true,
 			}).pipe(
-				Effect.provideService(DateContextFx, {
+				withDateServiceFx({
 					now: () => t2Expired,
 				}),
 			);

@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { getLoggerFx } from "@/lib/common/log";
 import { TransactionEntrySensitiveKindEnumSchema } from "~/common/user-transaction/enum/TransactionEntrySensitiveKindEnumSchema";
 import type { TransactionPatchCollectionSchema } from "~/seller/transaction/server/schema/TransactionPatchCollectionSchema";
@@ -30,8 +30,8 @@ export const transactionPatchCollectionFx = Effect.fn("transactionPatchCollectio
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const dateContext = yield* DateContextFx;
-			const now = dateContext.now().toJSDate();
+			const dateService = yield* DateServiceFx;
+			const now = dateService.now().toJSDate();
 
 			let { select, queryFx } = yield* withTransactionSelectFx({
 				sort: query.sort,

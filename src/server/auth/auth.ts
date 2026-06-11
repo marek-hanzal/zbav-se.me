@@ -15,6 +15,7 @@ import { createElement } from "react";
 import { match, P } from "ts-pattern";
 import { TranslationContext } from "@/lib/client/translation";
 import type { withDatabaseFx } from "@/lib/common/database";
+import { withDateServiceFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { withLoggerFx } from "@/lib/common/log";
 import type { translator } from "@/lib/common/translation/translator";
@@ -24,7 +25,6 @@ import { EmailVerificationEmail } from "~/email/template/EmailVerificationEmail"
 import { MagicLinkEmail } from "~/email/template/MagicLinkEmail";
 import { PasswordResetEmail } from "~/email/template/PasswordResetEmail";
 import type { Database } from "~/server/database/Database";
-import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { toMailKeyId } from "~/server/email/fn/toMailKeyId";
 import { mailtoFx } from "~/server/email/fx/mailtoFx";
@@ -35,6 +35,7 @@ import { ServerMailSchema } from "~/server/env/ServerMailSchema";
 import { RateLimitErrorFx } from "~/server/error/RateLimitErrorFx";
 import { toRequestSource } from "~/server/middleware/toRequestSource";
 import { rateLimitCheckFx } from "~/server/rate-limit/server/fx/rateLimitCheckFx";
+import { resourceBundleEnsureFx } from "~/user/resource-bundle/server/fx/resourceBundleEnsureFx";
 import { userResourceBundleCreateFx } from "~/user/resource-bundle/server/fx/userResourceBundleCreateFx";
 
 const logger = getRootLogger("auth");
@@ -219,7 +220,7 @@ export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 
 				const rateLimitError = await Effect.forEach(checks, rateLimitCheckFx).pipe(
 					withKyselyFx(database),
-					withDateFx,
+					withDateServiceFx(),
 					withLoggerFx(logger),
 					Effect.as(undefined),
 					Effect.catchTag("RateLimitErrorFx", (error) => Effect.succeed(error)),
@@ -241,12 +242,18 @@ export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 							return;
 						}
 
-						await userResourceBundleCreateFx({
-							userId: user.id,
-							bundle: "free",
+						await Effect.gen(function* () {
+							yield* userResourceBundleCreateFx({
+								userId: user.id,
+								bundle: "package:free",
+							});
+
+							yield* resourceBundleEnsureFx({
+								userId: user.id,
+							});
 						}).pipe(
 							withKyselyFx(database),
-							withDateFx,
+							withDateServiceFx(),
 							withLoggerFx(logger),
 							Effect.runPromise,
 						);

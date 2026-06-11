@@ -14,7 +14,7 @@ export const DraftAttrTextMigration: Migration = {
 			])
 
 			.addForeignKeyConstraint(
-				"draft_attr_text_[draftId]_fk",
+				"dat_[draftId]_fk",
 				[
 					"draftId",
 				],
@@ -25,7 +25,7 @@ export const DraftAttrTextMigration: Migration = {
 				(c) => c.onDelete("cascade"),
 			)
 			.addForeignKeyConstraint(
-				"draft_attr_text_[fieldId]_fk",
+				"dat_[fieldId]_fk",
 				[
 					"fieldId",
 				],
@@ -39,7 +39,7 @@ export const DraftAttrTextMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("draft_attr_text_[fieldId-draftId]_idx")
+			.createIndex("dat_[fieldId-draftId]_idx")
 			.on("draft_attr_text")
 			.columns([
 				"fieldId",

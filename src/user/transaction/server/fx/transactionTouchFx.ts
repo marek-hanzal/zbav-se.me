@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { TransactionContextFx } from "~/user/transaction/server/context/TransactionContextFx";
@@ -19,9 +19,9 @@ export const transactionTouchFx = Effect.fn("transactionTouchFx")(function* ({
 		transactionId,
 	});
 
-	const dateContext = yield* DateContextFx;
+	const dateService = yield* DateServiceFx;
 	const config = yield* TransactionContextFx;
-	const now = dateContext.now();
+	const now = dateService.now();
 
 	yield* dbFx(async (kysely) => {
 		return kysely

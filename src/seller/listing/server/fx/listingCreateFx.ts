@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { match } from "ts-pattern";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import { draftDeleteFx } from "~/seller/draft/server/fx/draftDeleteFx";
@@ -38,7 +38,7 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const dateContext = yield* DateContextFx;
+			const dateService = yield* DateServiceFx;
 			const liveListingCount = yield* listingCountFx({
 				userId,
 				where: {
@@ -51,7 +51,7 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 
 			yield* resourceLimitEnsureFx({
 				count: liveListingCount + 1,
-				resource: "listing.count",
+				resource: "seller:limit:listing.count",
 				userId,
 			});
 
@@ -92,7 +92,7 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 			}
 
 			const { title, categoryId, locationId, priceType, expires } = draft;
-			const now = dateContext.now();
+			const now = dateService.now();
 			const listingId = genId();
 
 			const gallery = yield* galleryInsertFx({

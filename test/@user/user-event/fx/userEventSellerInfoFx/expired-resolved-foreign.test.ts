@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { DateContextFx } from "@/lib/common/date";
+import { withDateServiceFx } from "@/lib/common/date";
 import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
@@ -46,7 +46,7 @@ describe("userEventSellerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				Effect.provideService(DateContextFx, {
+				withDateServiceFx({
 					now: () => t1Create,
 				}),
 			);
@@ -59,7 +59,7 @@ describe("userEventSellerInfoFx", () => {
 				event: "transaction.resolved",
 				isTerminal: true,
 			}).pipe(
-				Effect.provideService(DateContextFx, {
+				withDateServiceFx({
 					now: () => t1Resolved,
 				}),
 			);
@@ -73,7 +73,7 @@ describe("userEventSellerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				Effect.provideService(DateContextFx, {
+				withDateServiceFx({
 					now: () => t2Create,
 				}),
 			);
@@ -86,7 +86,7 @@ describe("userEventSellerInfoFx", () => {
 				event: "transaction.message",
 				isTerminal: false,
 			}).pipe(
-				Effect.provideService(DateContextFx, {
+				withDateServiceFx({
 					now: () => t2SellerMessage,
 				}),
 			);
@@ -99,7 +99,7 @@ describe("userEventSellerInfoFx", () => {
 				event: "transaction.resolved",
 				isTerminal: true,
 			}).pipe(
-				Effect.provideService(DateContextFx, {
+				withDateServiceFx({
 					now: () => t2Resolved,
 				}),
 			);

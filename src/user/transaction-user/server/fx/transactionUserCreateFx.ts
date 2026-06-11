@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import type { TransactionSideEnumSchema } from "~/common/user-transaction/enum/TransactionSideEnumSchema";
@@ -30,8 +30,8 @@ export const transactionUserCreateFx = Effect.fn("transactionUserCreateFx")(func
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const dateContext = yield* DateContextFx;
-			const createdAt = dateContext.now().toJSDate();
+			const dateService = yield* DateServiceFx;
+			const createdAt = dateService.now().toJSDate();
 
 			yield* dbFx(async (kysely) => {
 				return kysely

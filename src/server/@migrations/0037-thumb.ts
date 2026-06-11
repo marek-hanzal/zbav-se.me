@@ -44,7 +44,7 @@ export const ThumbMigration: Migration = {
 				],
 				(c) => c.onDelete("cascade"),
 			)
-			.addUniqueConstraint("thumb_[userId-listingId]_unique_idx", [
+			.addUniqueConstraint("thumb_[userId-listingId]_uniq", [
 				"userId",
 				"listingId",
 			])

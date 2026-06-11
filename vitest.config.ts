@@ -41,6 +41,14 @@ export default defineConfig({
 		include: [
 			"./test/**/*.test.ts",
 		],
+		chaiConfig: {
+			truncateThreshold: 0,
+		},
+		diff: {
+			expand: true,
+			truncateThreshold: 0,
+			maxDepth: 12,
+		},
 		slowTestThreshold: 1_000,
 		passWithNoTests: true,
 		isolate: false,

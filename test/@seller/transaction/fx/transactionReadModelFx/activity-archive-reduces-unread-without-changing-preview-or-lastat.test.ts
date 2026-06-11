@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { DateContextFx } from "@/lib/common/date";
+import { withDateServiceFx } from "@/lib/common/date";
 import { transactionAcceptFx } from "~/seller/transaction/server/fx/transactionAcceptFx";
 import { transactionCollectionFx } from "~/seller/transaction/server/fx/transactionCollectionFx";
 import { transactionFetchFx } from "~/seller/transaction/server/fx/transactionFetchFx";
@@ -14,7 +14,7 @@ import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/tra
 
 const atFx = <A, E, R>(iso: string, eff: Effect.Effect<A, E, R>) =>
 	eff.pipe(
-		Effect.provideService(DateContextFx, {
+		withDateServiceFx({
 			now: () => DateTime.fromISO(iso),
 		}),
 	);

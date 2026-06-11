@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import { draftFetchFx } from "~/seller/draft/server/fx/draftFetchFx";
@@ -28,7 +28,7 @@ export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const dateContext = yield* DateContextFx;
+			const dateService = yield* DateServiceFx;
 			const liveListingCount = yield* listingCountFx({
 				userId,
 				where: {
@@ -41,12 +41,12 @@ export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 
 			yield* resourceLimitEnsureFx({
 				count: liveListingCount + 1,
-				resource: "listing.count",
+				resource: "seller:limit:listing.count",
 				userId,
 			});
 
 			const id = genId();
-			const now = dateContext.now();
+			const now = dateService.now();
 
 			const gallery = yield* galleryInsertFx({
 				access: "public",

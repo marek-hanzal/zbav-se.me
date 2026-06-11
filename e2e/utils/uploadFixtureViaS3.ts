@@ -3,9 +3,9 @@ import path from "node:path";
 import { setTimeout as delay } from "node:timers/promises";
 import { Effect } from "effect";
 import { genId } from "@/lib/common/gen-id";
-import { withS3Fx } from "~/common/s3/server/context/withS3Fx";
+import { withS3ConfigFx } from "~/common/s3/server/context/withS3ConfigFx";
+import { withS3ConfigEnv } from "~/common/s3/server/env/withS3ConfigEnv";
 import { s3PreSignFx } from "~/common/s3/server/fx/s3PreSignFx";
-import { ServerS3Schema } from "~/server/env/ServerS3Schema";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
 import type { testabase } from "./testabase";
@@ -70,7 +70,6 @@ function resolveUploadType(filePath: string) {
 }
 
 export async function uploadFixtureViaS3({ database, userId, path }: uploadFixtureViaS3.Props) {
-	const s3Config = ServerS3Schema.parse(process.env);
 	const body = await readFile(path);
 	const uploadType = resolveUploadType(path);
 
@@ -78,16 +77,7 @@ export async function uploadFixtureViaS3({ database, userId, path }: uploadFixtu
 		userId,
 		path: genId(),
 		extension: uploadType.extension,
-	}).pipe(
-		withRuntimeFx(database),
-		withS3Fx({
-			api: s3Config.SERVER_S3_API,
-			bucket: s3Config.SERVER_S3_BUCKET,
-			key: s3Config.SERVER_S3_KEY,
-			secret: s3Config.SERVER_S3_SECRET,
-		}),
-		Effect.runPromise,
-	);
+	}).pipe(withRuntimeFx(database), withS3ConfigFx(withS3ConfigEnv()), Effect.runPromise);
 
 	const response = await fetch(presign.url, {
 		method: "PUT",

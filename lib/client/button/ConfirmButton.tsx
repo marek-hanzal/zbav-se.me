@@ -68,11 +68,11 @@ export const ConfirmButton: FC<ConfirmButton.Props> = ({
 
 	return (
 		<Button
-			{...props}
-			{...conditionalProps}
 			{...uiButton({
 				className: [],
 			})}
+			{...props}
+			{...conditionalProps}
 			onClick={handleClick}
 		/>
 	);

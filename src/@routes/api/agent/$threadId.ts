@@ -2,9 +2,9 @@ import type { AgentInputItem, RunStreamEvent } from "@openai/agents";
 import { createFileRoute } from "@tanstack/react-router";
 import { Effect } from "effect";
 import { z } from "zod";
+import { withDateServiceFx } from "@/lib/common/date";
 import { withLoggerFx } from "@/lib/common/log";
 import { ViteEnvSchema } from "~/common/env/ViteEnvSchema";
-import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withLocaleMiddleware } from "~/server/middleware/withLocaleMiddleware";
 import { AssistantAgent } from "~/user/agent/AssistantAgent";
@@ -246,7 +246,7 @@ export const Route = createFileRoute("/api/agent/$threadId")({
 											});
 										}).pipe(
 											withKyselyFx(database),
-											withDateFx,
+											withDateServiceFx(),
 											withLoggerFx(rootLogger),
 											Effect.runPromise,
 										);

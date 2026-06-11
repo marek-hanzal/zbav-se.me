@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { DateContextFx } from "@/lib/common/date";
+import { withDateServiceFx } from "@/lib/common/date";
 import { listingEventCreateFx } from "~/buyer/listing-event/server/fx/listingEventCreateFx";
 import { listingEventRateLimitFx } from "~/buyer/listing-event/server/fx/listingEventRateLimitFx";
 import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
@@ -27,7 +27,7 @@ describe("listingEventRateLimitFx", () => {
 				listingId: listing.id,
 				event: "listing.favourite",
 			}).pipe(
-				Effect.provideService(DateContextFx, {
+				withDateServiceFx({
 					now: () => firstWindowNow,
 				}),
 			);
@@ -37,7 +37,7 @@ describe("listingEventRateLimitFx", () => {
 					listingId: listing.id,
 					event: "listing.favourite",
 				}).pipe(
-					Effect.provideService(DateContextFx, {
+					withDateServiceFx({
 						now: () => firstWindowNow,
 					}),
 				),
@@ -76,7 +76,7 @@ describe("listingEventRateLimitFx", () => {
 					listingId: listing.id,
 					event: "like",
 				}).pipe(
-					Effect.provideService(DateContextFx, {
+					withDateServiceFx({
 						now: () => firstWindowNow,
 					}),
 				),
@@ -89,7 +89,7 @@ describe("listingEventRateLimitFx", () => {
 					listingId: listing.id,
 					event: "listing.favourite",
 				}).pipe(
-					Effect.provideService(DateContextFx, {
+					withDateServiceFx({
 						now: () => nextWindowNow,
 					}),
 				),

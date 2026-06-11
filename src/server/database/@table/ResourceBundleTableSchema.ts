@@ -1,4 +1,6 @@
 import { z } from "zod";
+import { AccessEnumSchema } from "~/common/access/AccessEnumSchema";
+import { ResourceBundleTypeEnumSchema } from "~/user/resource-bundle/server/schema/ResourceBundleTypeEnumSchema";
 
 export const ResourceBundleTableSchema = z
 	.looseObject({
@@ -6,7 +8,16 @@ export const ResourceBundleTableSchema = z
 			description: "Unique ID of the resource bundle",
 		}),
 		name: z.string().meta({
-			description: "Unique display name of the resource bundle",
+			description: "Resource bundle name",
+		}),
+		type: ResourceBundleTypeEnumSchema.meta({
+			description: "Resource bundle business type",
+		}),
+		access: AccessEnumSchema.meta({
+			description: "Resource bundle access mode",
+		}),
+		sort: z.int().nonnegative().meta({
+			description: "Resource bundle sorting authority within catalog surfaces",
 		}),
 	})
 	.meta({

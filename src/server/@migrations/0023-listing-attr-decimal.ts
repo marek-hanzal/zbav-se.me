@@ -14,7 +14,7 @@ export const ListingAttrDecimalMigration: Migration = {
 			])
 
 			.addForeignKeyConstraint(
-				"listing_attr_decimal_[listingId]_fk",
+				"lad_[listingId]_fk",
 				[
 					"listingId",
 				],
@@ -25,7 +25,7 @@ export const ListingAttrDecimalMigration: Migration = {
 				(c) => c.onDelete("cascade"),
 			)
 			.addForeignKeyConstraint(
-				"listing_attr_decimal_[fieldId]_fk",
+				"lad_[fieldId]_fk",
 				[
 					"fieldId",
 				],
@@ -39,7 +39,7 @@ export const ListingAttrDecimalMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("listing_attr_decimal_[fieldId-value-listingId]_idx")
+			.createIndex("lad_[fieldId-value-listingId]_idx")
 			.on("listing_attr_decimal")
 			.columns([
 				"fieldId",

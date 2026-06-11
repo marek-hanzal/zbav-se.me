@@ -28,6 +28,7 @@ import { Route as LocalePrivacyRouteImport } from './@routes/$locale/privacy'
 import { Route as LocaleLandingRouteImport } from './@routes/$locale/landing'
 import { Route as LocaleAppRouteImport } from './@routes/$locale/app'
 import { Route as LocaleAppIndexRouteImport } from './@routes/$locale/app/index'
+import { Route as ApiStripeWebhookRouteImport } from './@routes/api/stripe/webhook'
 import { Route as ApiCronCronRouteImport } from './@routes/api/cron/$cron'
 import { Route as ApiAuthSplatRouteImport } from './@routes/api/auth/$'
 import { Route as ApiAgentThreadIdRouteImport } from './@routes/api/agent/$threadId'
@@ -38,12 +39,15 @@ import { Route as LocaleForgotSentRouteImport } from './@routes/$locale/forgot/s
 import { Route as LocaleForgotPasswordRouteImport } from './@routes/$locale/forgot/password'
 import { Route as LocaleAppWelcomeRouteImport } from './@routes/$locale/app/welcome'
 import { Route as LocaleAppUserRouteImport } from './@routes/$locale/app/user'
-import { Route as LocaleAppShopRouteImport } from './@routes/$locale/app/shop'
 import { Route as LocaleAppHomeRouteImport } from './@routes/$locale/app/home'
 import { Route as SitemapsListingsDayChar123pageChar125DotxmlRouteImport } from './@routes/sitemaps/listings/$day/{$page}[.]xml'
 import { Route as ApiPublicMigrationRunRouteImport } from './@routes/api/public/migration/run'
 import { Route as LocaleZIdViewRouteImport } from './@routes/$locale/z/$id/view'
 import { Route as LocaleZIdUnavailableRouteImport } from './@routes/$locale/z/$id/unavailable'
+import { Route as LocaleAppShopSuccessRouteImport } from './@routes/$locale/app/shop/success'
+import { Route as LocaleAppShopCancelledRouteImport } from './@routes/$locale/app/shop/cancelled'
+import { Route as LocaleAppShopCancelRouteImport } from './@routes/$locale/app/shop/cancel'
+import { Route as LocaleAppShopBrowseRouteImport } from './@routes/$locale/app/shop/browse'
 import { Route as LocaleAppBuyerSearchRouteImport } from './@routes/$locale/app/buyer/search'
 import { Route as LocaleAppAgentWelcomeRouteImport } from './@routes/$locale/app/agent/welcome'
 import { Route as LocaleAppAgentContinueRouteImport } from './@routes/$locale/app/agent/continue'
@@ -160,6 +164,11 @@ const LocaleAppIndexRoute = LocaleAppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => LocaleAppRoute,
 } as any)
+const ApiStripeWebhookRoute = ApiStripeWebhookRouteImport.update({
+  id: '/stripe/webhook',
+  path: '/stripe/webhook',
+  getParentRoute: () => ApiRoute,
+} as any)
 const ApiCronCronRoute = ApiCronCronRouteImport.update({
   id: '/cron/$cron',
   path: '/cron/$cron',
@@ -212,11 +221,6 @@ const LocaleAppUserRoute = LocaleAppUserRouteImport.update({
   path: '/user',
   getParentRoute: () => LocaleAppRoute,
 } as any)
-const LocaleAppShopRoute = LocaleAppShopRouteImport.update({
-  id: '/shop',
-  path: '/shop',
-  getParentRoute: () => LocaleAppRoute,
-} as any)
 const LocaleAppHomeRoute = LocaleAppHomeRouteImport.update({
   id: '/home',
   path: '/home',
@@ -242,6 +246,26 @@ const LocaleZIdUnavailableRoute = LocaleZIdUnavailableRouteImport.update({
   id: '/z/$id/unavailable',
   path: '/z/$id/unavailable',
   getParentRoute: () => LocaleRoute,
+} as any)
+const LocaleAppShopSuccessRoute = LocaleAppShopSuccessRouteImport.update({
+  id: '/shop/success',
+  path: '/shop/success',
+  getParentRoute: () => LocaleAppRoute,
+} as any)
+const LocaleAppShopCancelledRoute = LocaleAppShopCancelledRouteImport.update({
+  id: '/shop/cancelled',
+  path: '/shop/cancelled',
+  getParentRoute: () => LocaleAppRoute,
+} as any)
+const LocaleAppShopCancelRoute = LocaleAppShopCancelRouteImport.update({
+  id: '/shop/cancel',
+  path: '/shop/cancel',
+  getParentRoute: () => LocaleAppRoute,
+} as any)
+const LocaleAppShopBrowseRoute = LocaleAppShopBrowseRouteImport.update({
+  id: '/shop/browse',
+  path: '/shop/browse',
+  getParentRoute: () => LocaleAppRoute,
 } as any)
 const LocaleAppBuyerSearchRoute = LocaleAppBuyerSearchRouteImport.update({
   id: '/buyer/search',
@@ -379,7 +403,6 @@ export interface FileRoutesByFullPath {
   '/sitemaps/pages.xml': typeof SitemapsPagesDotxmlRoute
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/app/home': typeof LocaleAppHomeRoute
-  '/$locale/app/shop': typeof LocaleAppShopRoute
   '/$locale/app/user': typeof LocaleAppUserRoute
   '/$locale/app/welcome': typeof LocaleAppWelcomeRoute
   '/$locale/forgot/password': typeof LocaleForgotPasswordRoute
@@ -390,12 +413,17 @@ export interface FileRoutesByFullPath {
   '/api/agent/$threadId': typeof ApiAgentThreadIdRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/cron/$cron': typeof ApiCronCronRoute
+  '/api/stripe/webhook': typeof ApiStripeWebhookRoute
   '/$locale/app/': typeof LocaleAppIndexRoute
   '/$locale/app/activity/$priority': typeof LocaleAppActivityPriorityRoute
   '/$locale/app/agent/$threadId': typeof LocaleAppAgentThreadIdRoute
   '/$locale/app/agent/continue': typeof LocaleAppAgentContinueRoute
   '/$locale/app/agent/welcome': typeof LocaleAppAgentWelcomeRoute
   '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
+  '/$locale/app/shop/browse': typeof LocaleAppShopBrowseRoute
+  '/$locale/app/shop/cancel': typeof LocaleAppShopCancelRoute
+  '/$locale/app/shop/cancelled': typeof LocaleAppShopCancelledRoute
+  '/$locale/app/shop/success': typeof LocaleAppShopSuccessRoute
   '/$locale/z/$id/unavailable': typeof LocaleZIdUnavailableRoute
   '/$locale/z/$id/view': typeof LocaleZIdViewRoute
   '/api/public/migration/run': typeof ApiPublicMigrationRunRoute
@@ -434,7 +462,6 @@ export interface FileRoutesByTo {
   '/sitemaps/pages.xml': typeof SitemapsPagesDotxmlRoute
   '/$locale': typeof LocaleIndexRoute
   '/$locale/app/home': typeof LocaleAppHomeRoute
-  '/$locale/app/shop': typeof LocaleAppShopRoute
   '/$locale/app/user': typeof LocaleAppUserRoute
   '/$locale/app/welcome': typeof LocaleAppWelcomeRoute
   '/$locale/forgot/password': typeof LocaleForgotPasswordRoute
@@ -445,12 +472,17 @@ export interface FileRoutesByTo {
   '/api/agent/$threadId': typeof ApiAgentThreadIdRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/cron/$cron': typeof ApiCronCronRoute
+  '/api/stripe/webhook': typeof ApiStripeWebhookRoute
   '/$locale/app': typeof LocaleAppIndexRoute
   '/$locale/app/activity/$priority': typeof LocaleAppActivityPriorityRoute
   '/$locale/app/agent/$threadId': typeof LocaleAppAgentThreadIdRoute
   '/$locale/app/agent/continue': typeof LocaleAppAgentContinueRoute
   '/$locale/app/agent/welcome': typeof LocaleAppAgentWelcomeRoute
   '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
+  '/$locale/app/shop/browse': typeof LocaleAppShopBrowseRoute
+  '/$locale/app/shop/cancel': typeof LocaleAppShopCancelRoute
+  '/$locale/app/shop/cancelled': typeof LocaleAppShopCancelledRoute
+  '/$locale/app/shop/success': typeof LocaleAppShopSuccessRoute
   '/$locale/z/$id/unavailable': typeof LocaleZIdUnavailableRoute
   '/$locale/z/$id/view': typeof LocaleZIdViewRoute
   '/api/public/migration/run': typeof ApiPublicMigrationRunRoute
@@ -492,7 +524,6 @@ export interface FileRoutesById {
   '/sitemaps/pages.xml': typeof SitemapsPagesDotxmlRoute
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/app/home': typeof LocaleAppHomeRoute
-  '/$locale/app/shop': typeof LocaleAppShopRoute
   '/$locale/app/user': typeof LocaleAppUserRoute
   '/$locale/app/welcome': typeof LocaleAppWelcomeRoute
   '/$locale/forgot/password': typeof LocaleForgotPasswordRoute
@@ -503,12 +534,17 @@ export interface FileRoutesById {
   '/api/agent/$threadId': typeof ApiAgentThreadIdRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/cron/$cron': typeof ApiCronCronRoute
+  '/api/stripe/webhook': typeof ApiStripeWebhookRoute
   '/$locale/app/': typeof LocaleAppIndexRoute
   '/$locale/app/activity/$priority': typeof LocaleAppActivityPriorityRoute
   '/$locale/app/agent/$threadId': typeof LocaleAppAgentThreadIdRoute
   '/$locale/app/agent/continue': typeof LocaleAppAgentContinueRoute
   '/$locale/app/agent/welcome': typeof LocaleAppAgentWelcomeRoute
   '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
+  '/$locale/app/shop/browse': typeof LocaleAppShopBrowseRoute
+  '/$locale/app/shop/cancel': typeof LocaleAppShopCancelRoute
+  '/$locale/app/shop/cancelled': typeof LocaleAppShopCancelledRoute
+  '/$locale/app/shop/success': typeof LocaleAppShopSuccessRoute
   '/$locale/z/$id/unavailable': typeof LocaleZIdUnavailableRoute
   '/$locale/z/$id/view': typeof LocaleZIdViewRoute
   '/api/public/migration/run': typeof ApiPublicMigrationRunRoute
@@ -551,7 +587,6 @@ export interface FileRouteTypes {
     | '/sitemaps/pages.xml'
     | '/$locale/'
     | '/$locale/app/home'
-    | '/$locale/app/shop'
     | '/$locale/app/user'
     | '/$locale/app/welcome'
     | '/$locale/forgot/password'
@@ -562,12 +597,17 @@ export interface FileRouteTypes {
     | '/api/agent/$threadId'
     | '/api/auth/$'
     | '/api/cron/$cron'
+    | '/api/stripe/webhook'
     | '/$locale/app/'
     | '/$locale/app/activity/$priority'
     | '/$locale/app/agent/$threadId'
     | '/$locale/app/agent/continue'
     | '/$locale/app/agent/welcome'
     | '/$locale/app/buyer/search'
+    | '/$locale/app/shop/browse'
+    | '/$locale/app/shop/cancel'
+    | '/$locale/app/shop/cancelled'
+    | '/$locale/app/shop/success'
     | '/$locale/z/$id/unavailable'
     | '/$locale/z/$id/view'
     | '/api/public/migration/run'
@@ -606,7 +646,6 @@ export interface FileRouteTypes {
     | '/sitemaps/pages.xml'
     | '/$locale'
     | '/$locale/app/home'
-    | '/$locale/app/shop'
     | '/$locale/app/user'
     | '/$locale/app/welcome'
     | '/$locale/forgot/password'
@@ -617,12 +656,17 @@ export interface FileRouteTypes {
     | '/api/agent/$threadId'
     | '/api/auth/$'
     | '/api/cron/$cron'
+    | '/api/stripe/webhook'
     | '/$locale/app'
     | '/$locale/app/activity/$priority'
     | '/$locale/app/agent/$threadId'
     | '/$locale/app/agent/continue'
     | '/$locale/app/agent/welcome'
     | '/$locale/app/buyer/search'
+    | '/$locale/app/shop/browse'
+    | '/$locale/app/shop/cancel'
+    | '/$locale/app/shop/cancelled'
+    | '/$locale/app/shop/success'
     | '/$locale/z/$id/unavailable'
     | '/$locale/z/$id/view'
     | '/api/public/migration/run'
@@ -663,7 +707,6 @@ export interface FileRouteTypes {
     | '/sitemaps/pages.xml'
     | '/$locale/'
     | '/$locale/app/home'
-    | '/$locale/app/shop'
     | '/$locale/app/user'
     | '/$locale/app/welcome'
     | '/$locale/forgot/password'
@@ -674,12 +717,17 @@ export interface FileRouteTypes {
     | '/api/agent/$threadId'
     | '/api/auth/$'
     | '/api/cron/$cron'
+    | '/api/stripe/webhook'
     | '/$locale/app/'
     | '/$locale/app/activity/$priority'
     | '/$locale/app/agent/$threadId'
     | '/$locale/app/agent/continue'
     | '/$locale/app/agent/welcome'
     | '/$locale/app/buyer/search'
+    | '/$locale/app/shop/browse'
+    | '/$locale/app/shop/cancel'
+    | '/$locale/app/shop/cancelled'
+    | '/$locale/app/shop/success'
     | '/$locale/z/$id/unavailable'
     | '/$locale/z/$id/view'
     | '/api/public/migration/run'
@@ -849,6 +897,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleAppIndexRouteImport
       parentRoute: typeof LocaleAppRoute
     }
+    '/api/stripe/webhook': {
+      id: '/api/stripe/webhook'
+      path: '/stripe/webhook'
+      fullPath: '/api/stripe/webhook'
+      preLoaderRoute: typeof ApiStripeWebhookRouteImport
+      parentRoute: typeof ApiRoute
+    }
     '/api/cron/$cron': {
       id: '/api/cron/$cron'
       path: '/cron/$cron'
@@ -919,13 +974,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleAppUserRouteImport
       parentRoute: typeof LocaleAppRoute
     }
-    '/$locale/app/shop': {
-      id: '/$locale/app/shop'
-      path: '/shop'
-      fullPath: '/$locale/app/shop'
-      preLoaderRoute: typeof LocaleAppShopRouteImport
-      parentRoute: typeof LocaleAppRoute
-    }
     '/$locale/app/home': {
       id: '/$locale/app/home'
       path: '/home'
@@ -960,6 +1008,34 @@ declare module '@tanstack/react-router' {
       fullPath: '/$locale/z/$id/unavailable'
       preLoaderRoute: typeof LocaleZIdUnavailableRouteImport
       parentRoute: typeof LocaleRoute
+    }
+    '/$locale/app/shop/success': {
+      id: '/$locale/app/shop/success'
+      path: '/shop/success'
+      fullPath: '/$locale/app/shop/success'
+      preLoaderRoute: typeof LocaleAppShopSuccessRouteImport
+      parentRoute: typeof LocaleAppRoute
+    }
+    '/$locale/app/shop/cancelled': {
+      id: '/$locale/app/shop/cancelled'
+      path: '/shop/cancelled'
+      fullPath: '/$locale/app/shop/cancelled'
+      preLoaderRoute: typeof LocaleAppShopCancelledRouteImport
+      parentRoute: typeof LocaleAppRoute
+    }
+    '/$locale/app/shop/cancel': {
+      id: '/$locale/app/shop/cancel'
+      path: '/shop/cancel'
+      fullPath: '/$locale/app/shop/cancel'
+      preLoaderRoute: typeof LocaleAppShopCancelRouteImport
+      parentRoute: typeof LocaleAppRoute
+    }
+    '/$locale/app/shop/browse': {
+      id: '/$locale/app/shop/browse'
+      path: '/shop/browse'
+      fullPath: '/$locale/app/shop/browse'
+      preLoaderRoute: typeof LocaleAppShopBrowseRouteImport
+      parentRoute: typeof LocaleAppRoute
     }
     '/$locale/app/buyer/search': {
       id: '/$locale/app/buyer/search'
@@ -1106,7 +1182,6 @@ declare module '@tanstack/react-router' {
 
 interface LocaleAppRouteChildren {
   LocaleAppHomeRoute: typeof LocaleAppHomeRoute
-  LocaleAppShopRoute: typeof LocaleAppShopRoute
   LocaleAppUserRoute: typeof LocaleAppUserRoute
   LocaleAppWelcomeRoute: typeof LocaleAppWelcomeRoute
   LocaleAppIndexRoute: typeof LocaleAppIndexRoute
@@ -1115,6 +1190,10 @@ interface LocaleAppRouteChildren {
   LocaleAppAgentContinueRoute: typeof LocaleAppAgentContinueRoute
   LocaleAppAgentWelcomeRoute: typeof LocaleAppAgentWelcomeRoute
   LocaleAppBuyerSearchRoute: typeof LocaleAppBuyerSearchRoute
+  LocaleAppShopBrowseRoute: typeof LocaleAppShopBrowseRoute
+  LocaleAppShopCancelRoute: typeof LocaleAppShopCancelRoute
+  LocaleAppShopCancelledRoute: typeof LocaleAppShopCancelledRoute
+  LocaleAppShopSuccessRoute: typeof LocaleAppShopSuccessRoute
   LocaleAppBuyerFavouriteListRoute: typeof LocaleAppBuyerFavouriteListRoute
   LocaleAppBuyerFeedDefaultRoute: typeof LocaleAppBuyerFeedDefaultRoute
   LocaleAppBuyerFeedListRoute: typeof LocaleAppBuyerFeedListRoute
@@ -1134,7 +1213,6 @@ interface LocaleAppRouteChildren {
 
 const LocaleAppRouteChildren: LocaleAppRouteChildren = {
   LocaleAppHomeRoute: LocaleAppHomeRoute,
-  LocaleAppShopRoute: LocaleAppShopRoute,
   LocaleAppUserRoute: LocaleAppUserRoute,
   LocaleAppWelcomeRoute: LocaleAppWelcomeRoute,
   LocaleAppIndexRoute: LocaleAppIndexRoute,
@@ -1143,6 +1221,10 @@ const LocaleAppRouteChildren: LocaleAppRouteChildren = {
   LocaleAppAgentContinueRoute: LocaleAppAgentContinueRoute,
   LocaleAppAgentWelcomeRoute: LocaleAppAgentWelcomeRoute,
   LocaleAppBuyerSearchRoute: LocaleAppBuyerSearchRoute,
+  LocaleAppShopBrowseRoute: LocaleAppShopBrowseRoute,
+  LocaleAppShopCancelRoute: LocaleAppShopCancelRoute,
+  LocaleAppShopCancelledRoute: LocaleAppShopCancelledRoute,
+  LocaleAppShopSuccessRoute: LocaleAppShopSuccessRoute,
   LocaleAppBuyerFavouriteListRoute: LocaleAppBuyerFavouriteListRoute,
   LocaleAppBuyerFeedDefaultRoute: LocaleAppBuyerFeedDefaultRoute,
   LocaleAppBuyerFeedListRoute: LocaleAppBuyerFeedListRoute,
@@ -1211,6 +1293,7 @@ interface ApiRouteChildren {
   ApiAgentThreadIdRoute: typeof ApiAgentThreadIdRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiCronCronRoute: typeof ApiCronCronRoute
+  ApiStripeWebhookRoute: typeof ApiStripeWebhookRoute
   ApiPublicMigrationRunRoute: typeof ApiPublicMigrationRunRoute
 }
 
@@ -1220,6 +1303,7 @@ const ApiRouteChildren: ApiRouteChildren = {
   ApiAgentThreadIdRoute: ApiAgentThreadIdRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiCronCronRoute: ApiCronCronRoute,
+  ApiStripeWebhookRoute: ApiStripeWebhookRoute,
   ApiPublicMigrationRunRoute: ApiPublicMigrationRunRoute,
 }
 

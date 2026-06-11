@@ -44,26 +44,40 @@ type TestDatabase = Awaited<ReturnType<typeof testabase>>;
 
 type WithRequest = <T>(callback: (request: APIRequestContext) => Promise<T>) => Promise<T>;
 
-export const test = base.extend<{
+interface TestOptions {
+	dbName?: string;
+}
+
+interface TestFixtures {
 	appOrigin: string;
 	db: string;
 	database: TestDatabase;
 	withRequest: WithRequest;
-}>({
+}
+
+type TestArgs = TestOptions & TestFixtures;
+
+export const test = base.extend<TestArgs>({
+	dbName: [
+		undefined as string | undefined,
+		{
+			option: true,
+		},
+	],
 	// biome-ignore lint/correctness/noEmptyPattern: Ssst
 	async appOrigin({}, use) {
 		await use(appOrigin);
 	},
-	// biome-ignore lint/correctness/noEmptyPattern: Ssst
-	async db({}, use, testInfo) {
+	async db({ dbName }, use, testInfo) {
 		await use(
-			toDatabaseName(
-				testInfo.file,
-				testInfo.project.name,
-				testInfo.title,
-				testInfo.workerIndex,
-				testInfo.retry,
-			),
+			dbName ??
+				toDatabaseName(
+					testInfo.file,
+					testInfo.project.name,
+					testInfo.title,
+					testInfo.workerIndex,
+					testInfo.retry,
+				),
 		);
 	},
 	async database({ db }, use) {
@@ -123,19 +137,18 @@ export const test = base.extend<{
 
 		await page.context().route("**/*", async (route) => {
 			const request = route.request();
-			const headers = {
-				...request.headers(),
-			};
 			const isAppRequest = new URL(request.url()).origin === appOrigin;
 
-			if (isAppRequest) {
-				headers["x-e2e-db"] = db;
-			} else {
-				delete headers["x-e2e-db"];
+			if (!isAppRequest) {
+				await route.continue();
+				return;
 			}
 
 			await route.continue({
-				headers,
+				headers: {
+					...request.headers(),
+					"x-e2e-db": db,
+				},
 			});
 		});
 

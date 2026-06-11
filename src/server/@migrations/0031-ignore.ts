@@ -30,7 +30,7 @@ export const IgnoreMigration: Migration = {
 				],
 				(c) => c.onDelete("cascade"),
 			)
-			.addUniqueConstraint("listing_ignore_[userId-listingId]_unique_idx", [
+			.addUniqueConstraint("listing_ignore_[userId-listingId]_uniq", [
 				"userId",
 				"listingId",
 			])

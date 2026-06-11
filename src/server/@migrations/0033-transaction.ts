@@ -95,7 +95,7 @@ export const TransactionMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("transaction_[status-statusUpdatedAt]_idx")
+			.createIndex("transaction_[status-suAt]_idx")
 			.on("transaction")
 			.columns([
 				"status",

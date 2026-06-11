@@ -21,7 +21,7 @@ export const CreateButton: FC<CreateButton.Props> = ({ _suspense, className, ...
 		},
 	});
 	const { data: resourceLimit } = withResourceLimitCheckQuery.useSuspenseQuery({
-		resource: "feed.count",
+		resource: "buyer:limit:feed.count",
 		count: feedCount + 1,
 	});
 

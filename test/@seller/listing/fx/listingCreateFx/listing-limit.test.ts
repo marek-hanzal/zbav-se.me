@@ -1,6 +1,7 @@
 import { Effect } from "effect";
 import { describe, it } from "vitest";
 import { genId } from "@/lib/common/gen-id";
+import { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/ResourceDefinitionEnumSchema";
 import { listingCreateFx } from "~/seller/listing/server/fx/listingCreateFx";
 import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
@@ -38,23 +39,33 @@ describe("listingCreateFx listing limit", () => {
 					.values({
 						id: limitSeed.bundleId,
 						name: `Listing limit ${limitSeed.bundleId}`,
+						type: "user",
+						access: "protected",
+						sort: 0,
 					})
 					.execute();
-				await database.kysely
-					.insertInto("resource_bundle_limit")
-					.values({
-						id: genId(),
-						resourceBundleId: limitSeed.bundleId,
-						resourceDefinitionId: "listing.count",
-						limit: limitSeed.limit,
-					})
-					.execute();
-				await database.kysely
+				const userResourceBundle = await database.kysely
 					.insertInto("user_resource_bundle")
 					.values({
 						id: genId(),
 						userId: seller.id,
 						resourceBundleId: limitSeed.bundleId,
+						createdAt: limitSeed.createdAt,
+						availableAt: limitSeed.now,
+						expiresAt: null,
+					})
+					.returning([
+						"id",
+					])
+					.executeTakeFirstOrThrow();
+
+				await database.kysely
+					.insertInto("user_resource_bundle_limit")
+					.values({
+						id: genId(),
+						userResourceBundleId: userResourceBundle.id,
+						resourceDefinitionId: "seller:limit:listing.count",
+						limit: limitSeed.limit,
 						createdAt: limitSeed.createdAt,
 						availableAt: limitSeed.now,
 						expiresAt: null,
@@ -69,7 +80,7 @@ describe("listingCreateFx listing limit", () => {
 
 			expectTaggedErrorFx(result, {
 				tag: "ResourceLimitErrorFx",
-				message: "Resource limit exceeded for [listing.count]",
+				message: `Resource limit exceeded for [${ResourceDefinitionEnumSchema.enum["seller:limit:listing.count"]}]`,
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});

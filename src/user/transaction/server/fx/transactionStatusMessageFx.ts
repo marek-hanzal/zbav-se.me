@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import type { TransactionSideEnumSchema } from "~/common/user-transaction/enum/TransactionSideEnumSchema";
@@ -49,7 +49,7 @@ export const transactionStatusMessageFx = Effect.fn("transactionStatusMessageFx"
 		userId,
 	});
 
-	const dateContext = yield* DateContextFx;
+	const dateService = yield* DateServiceFx;
 	const key: transactionStatusMessageFx.Key = `${request}:${target ?? "null"}`;
 	const kind = KindMap[key as keyof typeof KindMap];
 
@@ -68,7 +68,7 @@ export const transactionStatusMessageFx = Effect.fn("transactionStatusMessageFx"
 				payload: {
 					text: kind,
 				},
-				createdAt: dateContext.now().toJSDate(),
+				createdAt: dateService.now().toJSDate(),
 			})
 			.executeTakeFirstOrThrow();
 	});

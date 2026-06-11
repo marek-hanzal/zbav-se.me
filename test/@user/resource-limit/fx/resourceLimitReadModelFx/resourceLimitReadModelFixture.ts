@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
-import { DateContextFx } from "@/lib/common/date";
+import { withDateServiceFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import type { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/ResourceDefinitionEnumSchema";
 import type { testabase } from "~/test/testabase";
@@ -37,7 +37,7 @@ const limitSeed = (
 
 export const atResourceLimitReadModelFx = <A, E, R>(iso: string, eff: Effect.Effect<A, E, R>) =>
 	eff.pipe(
-		Effect.provideService(DateContextFx, {
+		withDateServiceFx({
 			now: () => DateTime.fromISO(iso),
 		}),
 	);
@@ -59,7 +59,7 @@ export const seedResourceLimitReadModelFx = (database: TestDatabase) =>
 		const seeds = [
 			limitSeed(
 				seller.id,
-				"listing.count",
+				"seller:limit:listing.count",
 				"2026-05-10T08:00:00.000Z",
 				"2026-05-10T08:00:00.000Z",
 				null,
@@ -67,7 +67,7 @@ export const seedResourceLimitReadModelFx = (database: TestDatabase) =>
 			),
 			limitSeed(
 				seller.id,
-				"listing.count",
+				"seller:limit:listing.count",
 				"2026-05-12T08:00:00.000Z",
 				"2026-05-12T08:45:00.000Z",
 				null,
@@ -75,7 +75,7 @@ export const seedResourceLimitReadModelFx = (database: TestDatabase) =>
 			),
 			limitSeed(
 				seller.id,
-				"listing.count",
+				"seller:limit:listing.count",
 				"2026-05-13T08:00:00.000Z",
 				"2026-05-13T08:30:00.000Z",
 				null,
@@ -83,7 +83,7 @@ export const seedResourceLimitReadModelFx = (database: TestDatabase) =>
 			),
 			limitSeed(
 				seller.id,
-				"feed.count",
+				"buyer:limit:feed.count",
 				"2026-05-10T09:00:00.000Z",
 				"2026-05-10T09:00:00.000Z",
 				null,
@@ -91,7 +91,7 @@ export const seedResourceLimitReadModelFx = (database: TestDatabase) =>
 			),
 			limitSeed(
 				seller.id,
-				"listing.gallery.count",
+				"seller:limit:listing.gallery.count",
 				"2026-05-10T10:00:00.000Z",
 				"2026-05-10T10:00:00.000Z",
 				null,
@@ -99,7 +99,7 @@ export const seedResourceLimitReadModelFx = (database: TestDatabase) =>
 			),
 			limitSeed(
 				seller.id,
-				"listing.gallery.count",
+				"seller:limit:listing.gallery.count",
 				"2026-05-12T11:30:00.000Z",
 				"2026-05-12T11:30:00.000Z",
 				null,
@@ -107,7 +107,7 @@ export const seedResourceLimitReadModelFx = (database: TestDatabase) =>
 			),
 			limitSeed(
 				buyer.id,
-				"feed.count",
+				"buyer:limit:feed.count",
 				"2026-05-10T12:00:00.000Z",
 				"2026-05-10T12:00:00.000Z",
 				null,
@@ -115,7 +115,7 @@ export const seedResourceLimitReadModelFx = (database: TestDatabase) =>
 			),
 			limitSeed(
 				buyer.id,
-				"listing.gallery.count",
+				"seller:limit:listing.gallery.count",
 				"2026-05-10T12:00:00.000Z",
 				"2026-05-10T12:00:00.000Z",
 				null,
@@ -132,25 +132,34 @@ export const seedResourceLimitReadModelFx = (database: TestDatabase) =>
 					.values({
 						id: resourceBundleId,
 						name: `Test bundle ${resourceBundleId}`,
+						type: "user",
+						access: "protected",
+						sort: 0,
 					})
 					.execute();
 
-				await database.kysely
-					.insertInto("resource_bundle_limit")
-					.values({
-						id: genId(),
-						resourceBundleId,
-						resourceDefinitionId: seed.resourceDefinitionId,
-						limit: seed.limit,
-					})
-					.execute();
-
-				await database.kysely
+				const userResourceBundle = await database.kysely
 					.insertInto("user_resource_bundle")
 					.values({
 						id: genId(),
 						userId: seed.userId,
 						resourceBundleId,
+						createdAt: date(seed.createdAt),
+						availableAt: date(seed.availableAt),
+						expiresAt: seed.expiresAt ? date(seed.expiresAt) : null,
+					})
+					.returning([
+						"id",
+					])
+					.executeTakeFirstOrThrow();
+
+				await database.kysely
+					.insertInto("user_resource_bundle_limit")
+					.values({
+						id: genId(),
+						userResourceBundleId: userResourceBundle.id,
+						resourceDefinitionId: seed.resourceDefinitionId,
+						limit: seed.limit,
 						createdAt: date(seed.createdAt),
 						availableAt: date(seed.availableAt),
 						expiresAt: seed.expiresAt ? date(seed.expiresAt) : null,

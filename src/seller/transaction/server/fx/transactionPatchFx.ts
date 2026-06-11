@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { getLoggerFx } from "@/lib/common/log";
 import { transactionFetchFx } from "~/seller/transaction/server/fx/transactionFetchFx";
 import type { TransactionPatchSchema } from "~/seller/transaction/server/schema/TransactionPatchSchema";
@@ -31,7 +31,7 @@ export const transactionPatchFx = Effect.fn("transactionPatchFx")(function* ({
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const dateContext = yield* DateContextFx;
+			const dateService = yield* DateServiceFx;
 			const config = yield* TransactionContextFx;
 
 			const transaction = yield* transactionFetchFx({
@@ -39,7 +39,7 @@ export const transactionPatchFx = Effect.fn("transactionPatchFx")(function* ({
 				scope,
 			});
 
-			const now = dateContext.now();
+			const now = dateService.now();
 
 			yield* dbFx(async (kysely) => {
 				return kysely

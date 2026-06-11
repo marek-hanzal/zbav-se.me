@@ -116,7 +116,7 @@ Pozn.: **Obsah je autorita pořadí.** Pořadí kapitol a konceptů v dokumentu 
   - [Předplatné](#koncept-predplatne)
   - [Automatické ukončení: Předplatné (neaktivita)](#koncept-automaticke-ukonceni-predplatneho)
   - [Tokeny: Získávání](#koncept-tokeny-ziskavani)
-  - [Early Access](#koncept-early-access)
+  - [Early Discovery](#koncept-early-discovery)
   - [Early Delivery](#koncept-early-delivery)
   - [Mark](#koncept-mark)
   - [Top](#koncept-top)
@@ -387,7 +387,7 @@ Nechci z feedu dělat video cirkus. Fotky stačí.
 Co je osobní a patří jen do domluvy, nesmí v systému hnít věčně. (Viz [Transakce](#koncept-transakce).)
 
 11) **Férová publikace bez instantního vysávání**
-Nové inzeráty mají [Release window](#koncept-release-window) (baseline férovost). Kdo chce vidět dřív, koupí si [Early Access](#koncept-early-access). Kdo chce publikovat okamžitě, koupí si [Early Delivery](#koncept-early-delivery). Všechno je explicitní a čitelné. (Viz [Release window](#koncept-release-window), [Early Access](#koncept-early-access), [Early Delivery](#koncept-early-delivery).)
+Nové inzeráty mají [Release window](#koncept-release-window) (baseline férovost v nalezitelnosti feedu). Kdo chce objevovat dřív, koupí si [Early Discovery](#koncept-early-discovery). Kdo chce dodat inzerát všem hned, koupí si [Early Delivery](#koncept-early-delivery). Všechno je explicitní a čitelné. (Viz [Release window](#koncept-release-window), [Early Discovery](#koncept-early-discovery), [Early Delivery](#koncept-early-delivery).)
 
 12) **Boosty bez pay-to-win: Anti-topper + Payback**
 Kupující si můžou vypnout zvýraznění ([Anti-topper](#koncept-anti-topper)) bez toho, aby tím „okrádali“ prodejce. Systém to vidí a prodejce dostane [Payback](#koncept-payback). Boosty existují, ale důvěra v systém zůstává. (Viz [Anti-topper](#koncept-anti-topper), [Payback](#koncept-payback).)
@@ -1068,21 +1068,24 @@ Related:
 ### Release window
 ← [předchozí](#koncept-seznam-inzeratu) | [další](#koncept-multi-category) →
 
-Release window je systémový zpoždění publikování inzerátu v listingu. Inzerát existuje, ale pro většinu lidí se v listingu objeví až po čase.
+Release window je systémové zpoždění nalezitelnosti inzerátu ve feedu. Inzerát existuje a přímé odkazy fungují normálně, ale pro většinu lidí se ve feedu objeví až po čase.
+
+Release window není vlastní perk ani oprávnění, které by někdo „získal“. Je to jen popis mechaniky, kterou může pro kupujícího obejít [Early Discovery](#koncept-early-discovery), nebo pro konkrétní inzerát všem zrušit [Early Delivery](#koncept-early-delivery).
 
 Kontrakt:
-- Defaultně platí release window = **+8 hodin** od publikace.
-- „Publikace“ = `createdAt` (inzerát vzniká z draftu, takže je to stabilní a bezpečná autorita).
-- Release window se spustí při vzniku inzerátu a je **neměnný** (krom pravidel Early Access/Early Delivery).
-- Release window je jen viditelnost v listingu. **Neresetuje ani neodkládá** `expiresAt`.
+- Defaultně platí release window = **+12 hodin** od `availableAt` nad inzerátem.
+- `availableAt` je autorita pro to, od kdy se počítá běžná nalezitelnost ve feedu.
+- Release window se spustí od `availableAt` a je **neměnný** (krom pravidel Early Discovery/Early Delivery).
+- Release window je jen nalezitelnost ve feedu/listingu. **Neresetuje ani neodkládá** `expiresAt`.
 - Neexistuje publish/republish.
-- Kdo má [Early Access](#koncept-early-access), release window ignoruje a vidí inzerát v listingu hned.
-- Když prodejce použije [Early Delivery](#koncept-early-delivery), release window se pro ten inzerát ruší pro všechny (listing je hned).
-- Release window je pravidlo listingu. Ostatní brány (hlavně [Citlivost](#koncept-citlivost-inzeratu)) platí pořád.
+- Kdo má [Early Discovery](#koncept-early-discovery), release window ignoruje a vidí ve feedu všechno hned.
+- Když prodejce použije [Early Delivery](#koncept-early-delivery), release window se pro ten inzerát ruší pro všechny (feed ho najde hned).
+- Kupující s Early Discovery nemá proti Early Delivery další bonus; nic se nestackuje.
+- Release window je pravidlo feedu/listingu. Ostatní brány (hlavně [Citlivost](#koncept-citlivost-inzeratu)) platí pořád.
 
 Related:
 - [Seznam inzerátů](#koncept-seznam-inzeratu)
-- [Early Access](#koncept-early-access)
+- [Early Discovery](#koncept-early-discovery)
 - [Early Delivery](#koncept-early-delivery)
 - [Ekonomika](#ekonomika)
 
@@ -2171,7 +2174,7 @@ Scope:
 
 Related:
 - [Ekonomika](#ekonomika)
-- [Early Access](#koncept-early-access)
+- [Early Discovery](#koncept-early-discovery)
 - [Early Delivery](#koncept-early-delivery)
 - [Anti-topper](#koncept-anti-topper)
 - [Mark](#koncept-mark)
@@ -2335,7 +2338,7 @@ Related:
 
 <a id="koncept-tokeny-ziskavani"></a>
 ### Tokeny: Získávání
-← [předchozí](#koncept-automaticke-ukonceni-predplatneho) | [další](#koncept-early-access) →
+← [předchozí](#koncept-automaticke-ukonceni-predplatneho) | [další](#koncept-early-discovery) →
 
 [Tokeny](#koncept-tokeny) získáš:
 - z předplatného (měsíční příděl)
@@ -2358,17 +2361,20 @@ Related:
 
 ---
 
-<a id="koncept-early-access"></a>
-### Early Access
+<a id="koncept-early-discovery"></a>
+### Early Discovery
 ← [předchozí](#koncept-tokeny-ziskavani) | [další](#koncept-early-delivery) →
 
-Early Access je výhoda kupujícího: v listingu vidíš nově publikovaný inzeráty dřív.
+Early Discovery je výhoda kupujícího: ve feedu najdeš nově dostupné inzeráty hned.
 
 Kontrakt:
-- V listingu ignoruju release window, takže inzerát vidíš **hned** (běžně je to až za **+8 hodin**).
-- Maximum posunu je vždycky **8 hodin** (žádný „super-early“).
+- Ovlivňuje pouze nalezitelnost inzerátu v rámci feedu.
+- Přímé odkazy fungují normálně bez ohledu na Early Discovery.
+- Ve feedu ignoruju release window, takže inzerát vidíš **hned** (běžně je to až za **+12 hodin** od `availableAt`).
+- Maximum posunu je vždycky **12 hodin** (žádný „super-early“).
 - Ostatní brány a chování detailu drží [Seznam inzerátů](#koncept-seznam-inzeratu).
-- V nastavení [Feedu](#koncept-hledat) máš extra filtr „Jen Early Access“; ta volba je vidět a funguje jen po dobu, kdy máš aktivní **Early Access**. Jakmile pass skončí, změní se ten přepínač na „Zaplatit si Early Access“.
+- V nastavení [Feedu](#koncept-hledat) máš extra filtr „Jen Early Discovery“; ta volba je vidět a funguje jen po dobu, kdy máš aktivní **Early Discovery**. Jakmile pass skončí, změní se ten přepínač na „Zaplatit si Early Discovery“.
+- Pokud prodejce použije [Early Delivery](#koncept-early-delivery), Early Discovery už k tomu inzerátu nepřidává žádný další bonus.
 
 Related:
 - [Seznam inzerátů](#koncept-seznam-inzeratu)
@@ -2378,14 +2384,15 @@ Related:
 
 <a id="koncept-early-delivery"></a>
 ### Early Delivery
-← [předchozí](#koncept-early-access) | [další](#koncept-mark) →
+← [předchozí](#koncept-early-discovery) | [další](#koncept-mark) →
 
-Early Delivery je výhoda prodávajícího pro konkrétní inzerát: zruší release window pro všechny.
+Early Delivery je výhoda prodávajícího pro konkrétní inzerát: zruší release window pro všechny a přenese váhu placení z kupujícího na prodejce.
 
 Kontrakt:
-- Pro tenhle inzerát ruším release window úplně, takže ho v listingu vidí **hned i lidi bez Early Access**.
-- Maximum posunu je vždycky **8 hodin** (žádný stackování do nekonečna).
-- Brány a chování detailu platí stejně jako u [Early Access](#koncept-early-access) (autorita je [Seznam inzerátů](#koncept-seznam-inzeratu)).
+- Pro tenhle inzerát ruším release window úplně, takže ho ve feedu najdou **hned i lidi bez Early Discovery**.
+- Maximum posunu je vždycky **12 hodin** od `availableAt`.
+- Kupující s [Early Discovery](#koncept-early-discovery) proti Early Delivery už další bonus nemají. Nic se nestackuje.
+- Brány a chování detailu platí stejně jako u [Early Discovery](#koncept-early-discovery) (autorita je [Seznam inzerátů](#koncept-seznam-inzeratu)).
 
 Related:
 - [Seznam inzerátů](#koncept-seznam-inzeratu)
@@ -2534,7 +2541,7 @@ Chování během aktivního passu:
 - Po vypršení [Passu](#koncept-pass) se vrací do režimu `expired` (read-only, mimo standardní feedy).
 
 Hranice:
-- Nic z toho neobchází systémový brány (hlavně [Citlivost](#koncept-citlivost-inzeratu), ignor, Early Access/Early Delivery).
+- Nic z toho neobchází systémový brány (hlavně [Citlivost](#koncept-citlivost-inzeratu), ignor, Early Discovery/Early Delivery).
 - Nad `sold` inzerátem nejde **Kontinuální nabídku** zapnout. `sold` je konec.
 
 Related:
@@ -2788,10 +2795,10 @@ Balíčky jsou měsíční balík oprávnění + příděly. Nejsou to role. Opr
 | [Inzerát: Brand](#koncept-inzerat-brand)                         | -    | ✓        | -                    | ✓                    | **✓**               |
 | [Detail protistrany](#koncept-detail-protistrany)                | -    | ✓        | -                    | -                    | **✓**               |
 | [Anti-topper](#koncept-anti-topper)                              | -    | ✓        | -                    | -                    | **✓**               |
-| [Early Access](#koncept-early-access)                            | -    | ✓        | -                    | -                    | **✓**               |
+| [Early Discovery](#koncept-early-discovery)                      | -    | ✓        | -                    | -                    | **✓**               |
 | [Multi-Category](#koncept-multi-category)                        | -    | ✓        | -                    | -                    | **✓**               |
 | **Kupóny (Měsíčně)**                                             |      |          |                      |                      |                     |
-| [Early Access](#koncept-early-access)                            | -    | -        | 3×                   | -                    | **(Pass)**          |
+| [Early Discovery](#koncept-early-discovery)                      | -    | -        | 3×                   | -                    | **(Pass)**          |
 | [Anti-topper](#koncept-anti-topper)                              | -    | -        | 3×                   | -                    | **(Pass)**          |
 | [Early Delivery](#koncept-early-delivery)                        | -    | -        | -                    | 3×                   | **3×**              |
 | [Mark](#koncept-mark)                                            | -    | 10x      | -                    | 3×                   | **3×**              |
@@ -2826,8 +2833,8 @@ Pozn.:
 
 | Co                                                               | Typ          | Efekt / Trvání                          | Cena (Token) |
 | :--------------------------------------------------------------- | :----------- | :-------------------------------------- | -----------: |
-| [Early Access](#koncept-early-access)                            | Kupón → Pass | 7 dnů                                   | 75           |
-| [Early Delivery](#koncept-early-delivery)                        | Kupón        | Zruší release window pro jeden inzerát  | 20           |
+| [Early Discovery](#koncept-early-discovery)                      | Kupón → Pass | 7 dnů                                   | 75           |
+| [Early Delivery](#koncept-early-delivery)                        | Kupón        | Dodá jeden inzerát všem hned            | 20           |
 | [Anti-topper](#koncept-anti-topper)                              | Kupón → Pass | 7 dnů                                   | Exclusive    |
 | [Mark](#koncept-mark)                                            | Kupón → Pass | 7 dnů                                   | 20           |
 | [Top](#koncept-top)                                              | Kupón → Pass | 7 dnů                                   | 40           |
@@ -3102,7 +3109,7 @@ Related:
   - [Předplatné](#koncept-predplatne)
   - [Automatické ukončení: Předplatné (neaktivita)](#koncept-automaticke-ukonceni-predplatneho)
   - [Tokeny: Získávání](#koncept-tokeny-ziskavani)
-  - [Early Access](#koncept-early-access)
+  - [Early Discovery](#koncept-early-discovery)
   - [Early Delivery](#koncept-early-delivery)
   - [Mark](#koncept-mark)
   - [Top](#koncept-top)

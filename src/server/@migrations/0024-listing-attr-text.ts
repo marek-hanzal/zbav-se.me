@@ -14,7 +14,7 @@ export const ListingAttrTextMigration: Migration = {
 			])
 
 			.addForeignKeyConstraint(
-				"listing_attr_text_[listingId]_fk",
+				"lat_[listingId]_fk",
 				[
 					"listingId",
 				],
@@ -25,7 +25,7 @@ export const ListingAttrTextMigration: Migration = {
 				(c) => c.onDelete("cascade"),
 			)
 			.addForeignKeyConstraint(
-				"listing_attr_text_[fieldId]_fk",
+				"lat_[fieldId]_fk",
 				[
 					"fieldId",
 				],
@@ -39,7 +39,7 @@ export const ListingAttrTextMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("listing_attr_text_[fieldId-listingId]_idx")
+			.createIndex("lat_[fieldId-listingId]_idx")
 			.on("listing_attr_text")
 			.columns([
 				"fieldId",

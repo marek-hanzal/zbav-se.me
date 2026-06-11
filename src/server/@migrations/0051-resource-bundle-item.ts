@@ -9,9 +9,8 @@ export const ResourceBundleItemMigration: Migration = {
 			.addColumn("resourceBundleId", "text", (col) => col.notNull())
 			.addColumn("resourceDefinitionId", "text", (col) => col.notNull())
 			.addColumn("amount", "decimal(10, 2)", (col) => col.notNull())
-			.addColumn("expiration", "integer")
 			.addForeignKeyConstraint(
-				"resource_bundle_item_[resourceBundleId]_fk",
+				"rbi_[rbId]_fk",
 				[
 					"resourceBundleId",
 				],
@@ -22,7 +21,7 @@ export const ResourceBundleItemMigration: Migration = {
 				(c) => c.onDelete("cascade"),
 			)
 			.addForeignKeyConstraint(
-				"resource_bundle_item_[resourceDefinitionId]_fk",
+				"rbi_[rdId]_fk",
 				[
 					"resourceDefinitionId",
 				],
@@ -31,18 +30,11 @@ export const ResourceBundleItemMigration: Migration = {
 					"name",
 				],
 			)
-			.addUniqueConstraint(
-				"resource_bundle_item_[resourceBundleId-resourceDefinitionId]_unique_idx",
-				[
-					"resourceBundleId",
-					"resourceDefinitionId",
-				],
-			)
+			.addUniqueConstraint("rbi_[rbId-rdId]_uniq", [
+				"resourceBundleId",
+				"resourceDefinitionId",
+			])
 			.addCheckConstraint("resource_bundle_item_[amount]_chk", sql`"amount" >= 0`)
-			.addCheckConstraint(
-				"resource_bundle_item_[expiration]_chk",
-				sql`"expiration" IS NULL OR "expiration" >= 0`,
-			)
 			.execute();
 	},
 };
