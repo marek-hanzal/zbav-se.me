@@ -11,15 +11,21 @@ export const ResourceBundleMigration: Migration = {
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("name", "text", (col) => col.notNull())
 			.addColumn("type", sql`resource_bundle_type_enum`, (col) => col.notNull())
+			.addColumn("access", sql`access_enum`, (col) => col.notNull())
+			.addColumn("sort", "integer", (col) => col.notNull())
 			.addUniqueConstraint("resource_bundle_[name]_uniq", [
 				"name",
 			])
 			.execute();
 
 		await db.schema
-			.createIndex("resource_bundle_[type]_idx")
+			.createIndex("resource_bundle_[type-access-sort]_idx")
 			.on("resource_bundle")
-			.column("type")
+			.columns([
+				"type",
+				"access",
+				"sort",
+			])
 			.execute();
 
 		await db
@@ -29,6 +35,8 @@ export const ResourceBundleMigration: Migration = {
 					id: genId(),
 					name,
 					type: bundles[name].type,
+					access: bundles[name].access,
+					sort: bundles[name].sort,
 				})),
 			)
 			.execute();

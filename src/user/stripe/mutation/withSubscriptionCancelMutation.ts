@@ -1,7 +1,7 @@
 import { withMutation } from "@/lib/client/mutation";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { withBundleActiveQuery } from "~/user/resource-bundle/query/withBundleActiveQuery";
-import { withBundleCollectionQuery } from "~/user/stripe/query/withBundleCollectionQuery";
+import { withPackageCollectionQuery } from "~/user/stripe/query/withPackageCollectionQuery";
 import { subscriptionCancelFn } from "../fn/subscriptionCancelFn";
 import type { BillingSubscriptionCancelResultSchema } from "../server/schema/BillingSubscriptionCancelResultSchema";
 import type { BillingSubscriptionCancelSchema } from "../server/schema/BillingSubscriptionCancelSchema";
@@ -34,7 +34,7 @@ export const withSubscriptionCancelMutation = withMutation<
 					withBundleActiveQuery.invalidate(queryClient, {
 						bundle: result.bundle,
 					}),
-					withBundleCollectionQuery.invalidate(queryClient),
+					withPackageCollectionQuery.invalidate(queryClient),
 				]);
 			},
 		},

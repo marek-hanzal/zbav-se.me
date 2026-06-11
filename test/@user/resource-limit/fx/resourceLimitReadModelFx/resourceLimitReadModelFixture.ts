@@ -133,6 +133,8 @@ export const seedResourceLimitReadModelFx = (database: TestDatabase) =>
 						id: resourceBundleId,
 						name: `Test bundle ${resourceBundleId}`,
 						type: "user",
+						access: "protected",
+						sort: 0,
 					})
 					.execute();
 

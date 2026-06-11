@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { BillingCheckoutBundleEnumSchema } from "~/user/stripe/server/schema/BillingCheckoutBundleEnumSchema";
+import { ResourceBundleEnumSchema } from "~/user/resource-bundle/server/schema/ResourceBundleEnumSchema";
 
 export const BillingCheckoutCreateSchema = z
 	.looseObject({
-		bundle: BillingCheckoutBundleEnumSchema,
+		bundle: ResourceBundleEnumSchema,
 		locale: z.string().min(1, "You're missing locale"),
 	})
 	.strip();

@@ -47,6 +47,8 @@ export const subscriptionCancelFx = Effect.fn("subscriptionCancelFx")(function* 
 			])
 			.where("assignment.userId", "=", userId)
 			.where("resourceBundle.name", "=", bundle)
+			.where("resourceBundle.type", "=", "subscription")
+			.where("resourceBundle.access", "=", "public")
 			.where("assignment.availableAt", "<=", now)
 			.where((eb) =>
 				eb.or([

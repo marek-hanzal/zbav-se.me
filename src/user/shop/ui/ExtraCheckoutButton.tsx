@@ -8,15 +8,19 @@ import { Tx } from "@/lib/client/tx";
 import { Typo } from "@/lib/client/typo";
 import { uiSaveButton } from "~/common/ui/ui";
 import { withCheckoutMutation } from "~/user/stripe/mutation/withCheckoutMutation";
-import type { BundleSchema } from "~/user/stripe/server/schema/BundleSchema";
+import type { ExtraSchema } from "~/user/stripe/server/schema/ExtraSchema";
 
-export namespace CheckoutButton {
+export namespace ExtraCheckoutButton {
 	export interface Props extends Button.Props {
-		bundle: BundleSchema.Type;
+		bundle: ExtraSchema.Type;
 	}
 }
 
-export const CheckoutButton: FC<CheckoutButton.Props> = ({ bundle, className, ...props }) => {
+export const ExtraCheckoutButton: FC<ExtraCheckoutButton.Props> = ({
+	bundle,
+	className,
+	...props
+}) => {
 	const locale = useLocale();
 	const navigate = useNavigate();
 	const checkoutMutation = withCheckoutMutation.useMutation({
@@ -31,7 +35,7 @@ export const CheckoutButton: FC<CheckoutButton.Props> = ({ bundle, className, ..
 		<Button
 			{...uiSaveButton({})}
 			{...props}
-			data-ui="CheckoutButton"
+			data-ui="ExtraCheckoutButton"
 			data-action="checkout"
 			data-resource-bundle={bundle.bundle}
 			data-ui-bundle={bundle.bundle}
@@ -52,7 +56,7 @@ export const CheckoutButton: FC<CheckoutButton.Props> = ({ bundle, className, ..
 				});
 			}}
 		>
-			<Tx label="Start subscription (button)" />
+			<Tx label="Buy extra (button)" />
 
 			<Typo
 				data-ui-font="bold"
@@ -63,11 +67,6 @@ export const CheckoutButton: FC<CheckoutButton.Props> = ({ bundle, className, ..
 						currency={bundle.currency.toUpperCase()}
 					/>
 				}
-			/>
-
-			<Tx
-				label="Per month (label)"
-				data-ui-text="sm"
 			/>
 		</Button>
 	);

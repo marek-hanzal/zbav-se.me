@@ -53,6 +53,8 @@ describe("draftPatchFx gallery limit", () => {
 						id: limitSeed.bundleId,
 						name: `Draft gallery limit ${limitSeed.bundleId}`,
 						type: "user",
+						access: "protected",
+						sort: 0,
 					})
 					.execute();
 				const userResourceBundle = await database.kysely

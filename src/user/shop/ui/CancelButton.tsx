@@ -6,11 +6,11 @@ import { useTranslator } from "@/lib/client/translation";
 import { CancelIcon } from "~/common/ui/icon";
 import { uiSaveButton } from "~/common/ui/ui";
 import { withSubscriptionCancelMutation } from "~/user/stripe/mutation/withSubscriptionCancelMutation";
-import type { CheckoutBundleEnumSchema } from "~/user/stripe/server/schema/CheckoutBundleEnumSchema";
+import type { ResourceBundleEnumSchema } from "~/user/resource-bundle/server/schema/ResourceBundleEnumSchema";
 
 export namespace CancelButton {
 	export interface Props extends ConfirmButton.Props {
-		bundle: CheckoutBundleEnumSchema.Type;
+		bundle: ResourceBundleEnumSchema.Type;
 	}
 }
 

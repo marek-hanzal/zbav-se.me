@@ -1,13 +1,11 @@
 import { Effect } from "effect";
 import type Stripe from "stripe";
-import { match } from "ts-pattern";
 import { NotFoundErrorFx } from "@/lib/common/error";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
 import type { BillingCheckoutCreateSchema } from "../schema/BillingCheckoutCreateSchema";
-import { OneOffCheckoutBundleEnumSchema } from "../schema/OneOffCheckoutBundleEnumSchema";
 import { ensureCustomerFx } from "./ensureCustomerFx";
 import { priceFetchFx } from "./priceFetchFx";
 import { stripeClientFx } from "./stripeClientFx";
@@ -19,13 +17,6 @@ export namespace checkoutFx {
 		urlCancel(): string;
 	}
 }
-
-const checkoutModeOf = (bundle: BillingCheckoutCreateSchema.Type["bundle"]) => {
-	return match(OneOffCheckoutBundleEnumSchema.safeParse(bundle).success)
-		.with(true, () => "payment" as const)
-		.with(false, () => "subscription" as const)
-		.exhaustive();
-};
 
 export const checkoutFx = Effect.fn("checkoutFx")(function* ({
 	userId,
@@ -40,23 +31,20 @@ export const checkoutFx = Effect.fn("checkoutFx")(function* ({
 		bundle: bundleName,
 	});
 
-	const stripe = yield* stripeClientFx();
-	const customer = yield* ensureCustomerFx({
-		userId,
-	});
-
 	const bundle = yield* dbFx(async (kysely) => {
 		return kysely
 			.selectFrom("resource_bundle")
 			.select([
 				"id",
 				"name",
+				"type",
+				"access",
 			])
 			.where("name", "=", bundleName)
 			.executeTakeFirst();
 	});
 
-	if (!bundle) {
+	if (!bundle || bundle.access !== "public") {
 		return yield* new NotFoundErrorFx({
 			resource: "resource_bundle",
 			resourceId: bundleName,
@@ -64,10 +52,22 @@ export const checkoutFx = Effect.fn("checkoutFx")(function* ({
 		});
 	}
 
+	if (bundle.type !== "subscription" && bundle.type !== "extra") {
+		return yield* new NotFoundErrorFx({
+			resource: "resource_bundle",
+			resourceId: bundleName,
+			message: "Stripe checkout resource bundle is not purchasable",
+		});
+	}
+
+	const stripe = yield* stripeClientFx();
+	const customer = yield* ensureCustomerFx({
+		userId,
+	});
 	const price = yield* priceFetchFx({
 		lookupKey: bundleName,
 	});
-	const mode = checkoutModeOf(bundleName);
+	const mode = bundle.type === "extra" ? "payment" : "subscription";
 	const bundleKey = `stripe:checkout:${genId()}`;
 
 	/*

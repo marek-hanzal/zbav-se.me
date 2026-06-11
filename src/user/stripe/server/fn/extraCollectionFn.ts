@@ -1,7 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
 import { z } from "zod";
-import { withDateServiceFx } from "@/lib/common/date";
 import { zodGuardFx } from "@/lib/common/fx";
 import { withLoggerFx } from "@/lib/common/log";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
@@ -10,20 +9,20 @@ import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { withStripeConfigFx } from "~/user/stripe/server/context/withStripeConfigFx";
 import { withStripConfigEnv } from "~/user/stripe/server/env/withStripConfigEnv";
-import { bundleCollectionFx } from "../fx/bundleCollectionFx";
-import { BundleSchema } from "../schema/BundleSchema";
+import { extraCollectionFx } from "../fx/extraCollectionFx";
+import { ExtraSchema } from "../schema/ExtraSchema";
 
-export namespace bundleCollectionFn {
-	export type Error = Effect.Effect.Error<bundleCollectionFx>;
+export namespace extraCollectionFn {
+	export type Error = Effect.Effect.Error<extraCollectionFx>;
 }
 
-export const bundleCollectionFn = createServerFn()
+export const extraCollectionFn = createServerFn()
 	.middleware([
 		withLogMiddleware,
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.handler(async ({ context: { database, rootLogger, user }, serverFnMeta: { name } }) => {
+	.handler(async ({ context: { database, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",
 			name,
@@ -31,13 +30,10 @@ export const bundleCollectionFn = createServerFn()
 		logger.trace(name);
 
 		return zodGuardFx({
-			schema: z.array(BundleSchema),
-			dataFx: bundleCollectionFx({
-				userId: user.id,
-			}),
+			schema: z.array(ExtraSchema),
+			dataFx: extraCollectionFx(),
 		}).pipe(
 			withKyselyFx(database),
-			withDateServiceFx(),
 			withStripeConfigFx(withStripConfigEnv()),
 			withLoggerFx(rootLogger),
 			Effect.tapError((error) =>

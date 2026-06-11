@@ -1,3 +1,4 @@
+import type { AccessEnumSchema } from "~/common/access/AccessEnumSchema";
 import type { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/ResourceDefinitionEnumSchema";
 import type { ResourceBundleEnumSchema } from "~/user/resource-bundle/server/schema/ResourceBundleEnumSchema";
 import type { ResourceBundleTypeEnumSchema } from "~/user/resource-bundle/server/schema/ResourceBundleTypeEnumSchema";
@@ -6,6 +7,8 @@ export const bundles: Record<
 	ResourceBundleEnumSchema.Type,
 	{
 		type: ResourceBundleTypeEnumSchema.Type;
+		access: AccessEnumSchema.Type;
+		sort: number;
 		items: Partial<
 			Record<
 				ResourceDefinitionEnumSchema.Type,
@@ -31,6 +34,8 @@ export const bundles: Record<
 	 */
 	"package:free": {
 		type: "subscription",
+		access: "protected",
+		sort: 0,
 		items: {
 			"common:item:support": {
 				amount: 1,
@@ -63,6 +68,8 @@ export const bundles: Record<
 	 */
 	"package:buyer": {
 		type: "subscription",
+		access: "public",
+		sort: 10,
 		items: {
 			"common:item:support": {
 				amount: 3,
@@ -97,6 +104,8 @@ export const bundles: Record<
 	 */
 	"package:seller": {
 		type: "subscription",
+		access: "public",
+		sort: 20,
 		items: {
 			"common:item:support": {
 				amount: 3,
@@ -146,6 +155,8 @@ export const bundles: Record<
 	 */
 	"package:pro": {
 		type: "subscription",
+		access: "public",
+		sort: 30,
 		items: {
 			"common:item:support": {
 				amount: 5,
@@ -206,6 +217,8 @@ export const bundles: Record<
 	 */
 	"package:master": {
 		type: "subscription",
+		access: "public",
+		sort: 40,
 		items: {
 			"common:item:support": {
 				amount: 10,
@@ -264,6 +277,8 @@ export const bundles: Record<
 	 */
 	"extra:token:small": {
 		type: "extra",
+		access: "public",
+		sort: 10,
 		items: {
 			"common:item:token": {
 				amount: 149,
@@ -274,6 +289,8 @@ export const bundles: Record<
 	},
 	"extra:token:medium": {
 		type: "extra",
+		access: "public",
+		sort: 20,
 		items: {
 			"common:item:token": {
 				amount: 399,
@@ -284,6 +301,8 @@ export const bundles: Record<
 	},
 	"extra:token:large": {
 		type: "extra",
+		access: "public",
+		sort: 30,
 		items: {
 			"common:item:token": {
 				amount: 999,
@@ -294,6 +313,8 @@ export const bundles: Record<
 	},
 	"extra:mark": {
 		type: "extra",
+		access: "protected",
+		sort: 40,
 		items: {
 			"seller:item:listing.mark": {
 				amount: 10,
@@ -304,6 +325,8 @@ export const bundles: Record<
 	},
 	"extra:top": {
 		type: "extra",
+		access: "protected",
+		sort: 50,
 		items: {
 			"seller:item:listing.top": {
 				amount: 10,
@@ -314,6 +337,8 @@ export const bundles: Record<
 	},
 	"extra:top-maxxi": {
 		type: "extra",
+		access: "protected",
+		sort: 60,
 		items: {
 			"seller:item:listing.top-maxxi": {
 				amount: 3,
@@ -324,6 +349,8 @@ export const bundles: Record<
 	},
 	"extra:brand": {
 		type: "extra",
+		access: "protected",
+		sort: 70,
 		items: {},
 		limits: {},
 		features: {
@@ -332,6 +359,8 @@ export const bundles: Record<
 	},
 	"extra:early-delivery": {
 		type: "extra",
+		access: "protected",
+		sort: 80,
 		items: {
 			"seller:feature:listing.early-delivery": {
 				amount: 5,
@@ -342,6 +371,8 @@ export const bundles: Record<
 	},
 	"extra:extra-listings": {
 		type: "extra",
+		access: "protected",
+		sort: 90,
 		items: {},
 		limits: {
 			"seller:limit:listing.count": {
@@ -360,6 +391,8 @@ export const bundles: Record<
 	 */
 	"welcome:default": {
 		type: "promo",
+		access: "protected",
+		sort: 10,
 		items: {
 			"common:item:agent.usage": {
 				amount: 75,
@@ -389,6 +422,8 @@ export const bundles: Record<
 	 */
 	"welcome:founders:promo": {
 		type: "promo",
+		access: "protected",
+		sort: 20,
 		items: {
 			"common:item:support": {
 				amount: 10,
@@ -446,6 +481,8 @@ export const bundles: Record<
 	 */
 	"welcome:founders": {
 		type: "promo",
+		access: "protected",
+		sort: 30,
 		items: {},
 		limits: {
 			"buyer:limit:feed.count": {

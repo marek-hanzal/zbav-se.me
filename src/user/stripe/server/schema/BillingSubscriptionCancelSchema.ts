@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { CheckoutBundleEnumSchema } from "~/user/stripe/server/schema/CheckoutBundleEnumSchema";
+import { ResourceBundleEnumSchema } from "~/user/resource-bundle/server/schema/ResourceBundleEnumSchema";
 
 export const BillingSubscriptionCancelSchema = z
 	.looseObject({
-		bundle: CheckoutBundleEnumSchema,
+		bundle: ResourceBundleEnumSchema,
 	})
 	.strip();
 

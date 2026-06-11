@@ -118,7 +118,7 @@ async function openBuyerBundle(page: Page) {
 	}
 
 	const bundleButton = page
-		.locator('[data-ui="BundleItem"][data-resource-bundle="package:buyer"]')
+		.locator('[data-ui="PackageItem"][data-resource-bundle="package:buyer"]')
 		.first();
 
 	await expect(bundleButton).toBeAttached({
@@ -137,7 +137,7 @@ async function clickBuyerCheckout(page: Page) {
 	await openBuyerBundle(page);
 
 	const checkoutButton = page
-		.locator('[data-ui="CheckoutButton"][data-resource-bundle="package:buyer"]')
+		.locator('[data-ui="PackageCheckoutButton"][data-resource-bundle="package:buyer"]')
 		.last();
 
 	await expect(checkoutButton).toBeEnabled({
@@ -150,7 +150,7 @@ async function expectBuyerSubscriptionActive(page: Page) {
 	await expect(
 		page
 			.locator(
-				'[data-ui="BundleItem"][data-resource-bundle="package:buyer"][data-ui-bundle-status="true"]',
+				'[data-ui="PackageItem"][data-resource-bundle="package:buyer"][data-ui-bundle-status="true"]',
 			)
 			.first(),
 	).toBeVisible();

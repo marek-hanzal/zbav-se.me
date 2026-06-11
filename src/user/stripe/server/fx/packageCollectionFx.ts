@@ -4,35 +4,27 @@ import { DateServiceFx } from "@/lib/common/date";
 import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
+import { ResourceBundleEnumSchema } from "~/user/resource-bundle/server/schema/ResourceBundleEnumSchema";
 import { stripeClientFx } from "~/user/stripe/server/fx/stripeClientFx";
-import { CheckoutBundleEnumSchema } from "~/user/stripe/server/schema/CheckoutBundleEnumSchema";
-import type { BundleActiveSchema, BundleSchema } from "../schema/BundleSchema";
+import type { PackageActiveSchema, PackageSchema } from "../schema/PackageSchema";
 
-export namespace bundleCollectionFx {
+export namespace packageCollectionFx {
 	export interface Props {
 		userId: string;
 	}
 }
 
-export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* ({
+export const packageCollectionFx = Effect.fn("packageCollectionFx")(function* ({
 	userId,
-}: bundleCollectionFx.Props) {
-	const logger = yield* getLoggerFx("bundleCollectionFx");
-	logger.trace("bundleCollectionFx", {
+}: packageCollectionFx.Props) {
+	const logger = yield* getLoggerFx("packageCollectionFx");
+	logger.trace("packageCollectionFx", {
 		userId,
 	});
 	const date = yield* DateServiceFx;
 	const now = date.now().toJSDate();
 
 	const stripe = yield* stripeClientFx();
-	const checkoutBundles = CheckoutBundleEnumSchema.options;
-	const orderByName = new Map(
-		checkoutBundles.map((bundle, index) => [
-			bundle,
-			index,
-		]),
-	);
-
 	const {
 		bundles: rawBundles,
 		activeAssignments,
@@ -46,9 +38,11 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* ({
 				.select([
 					"id",
 					"name",
-					"type",
+					"sort",
 				])
-				.where("name", "in", checkoutBundles)
+				.where("type", "=", "subscription")
+				.where("access", "=", "public")
+				.orderBy("sort", "asc")
 				.execute();
 
 			if (bundles.length === 0) {
@@ -82,7 +76,8 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* ({
 						"stripeLink.subscriptionId",
 					])
 					.where("assignment.userId", "=", userId)
-					.where("bundle.name", "in", checkoutBundles)
+					.where("bundle.type", "=", "subscription")
+					.where("bundle.access", "=", "public")
 					.where("assignment.availableAt", "<=", now)
 					.where((eb) =>
 						eb.or([
@@ -135,7 +130,7 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* ({
 	);
 
 	const bundles = rawBundles.flatMap((bundle) => {
-		const name = CheckoutBundleEnumSchema.safeParse(bundle.name);
+		const name = ResourceBundleEnumSchema.safeParse(bundle.name);
 
 		if (!name.success) {
 			return [];
@@ -145,7 +140,7 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* ({
 			{
 				id: bundle.id,
 				name: name.data,
-				type: bundle.type,
+				sort: bundle.sort,
 			},
 		];
 	});
@@ -164,7 +159,7 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* ({
 	const limitsById = Map.groupBy(limits, (limit) => limit.resourceBundleId);
 	const featuresById = Map.groupBy(features, (feature) => feature.resourceBundleId);
 	const activeRows = activeAssignments.flatMap((assignment) => {
-		const name = CheckoutBundleEnumSchema.safeParse(assignment.name);
+		const name = ResourceBundleEnumSchema.safeParse(assignment.name);
 
 		if (!name.success) {
 			return [];
@@ -197,7 +192,7 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* ({
 			return entries;
 		}),
 	);
-	const activeByBundle = new Map<CheckoutBundleEnumSchema.Type, BundleActiveSchema.Type>();
+	const activeByBundle = new Map<ResourceBundleEnumSchema.Type, PackageActiveSchema.Type>();
 
 	for (const assignment of activeRows) {
 		const subscription = assignment.subscriptionId
@@ -276,15 +271,24 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* ({
 			return null;
 		}
 
+		if (!price.recurring?.interval) {
+			logger.warn("Stripe package price is not recurring", {
+				lookupKey: bundle.name,
+				priceId: price.id,
+			});
+
+			return null;
+		}
+
 		return {
 			bundle: bundle.name,
 			currency: price.currency,
 			description: product.description ?? null,
 			id: bundle.id,
-			interval: price.recurring?.interval ?? null,
+			interval: price.recurring.interval,
 			name: product.name,
 			price: price.unit_amount,
-			sort: orderByName.get(bundle.name) ?? Number.POSITIVE_INFINITY,
+			sort: bundle.sort,
 		};
 	});
 
@@ -292,7 +296,7 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* ({
 		.flatMap(
 			(
 				product,
-			): (BundleSchema.Type & {
+			): (PackageSchema.Type & {
 				sort: number;
 			})[] => {
 				if (!product) {
@@ -315,7 +319,6 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* ({
 						name: product.name,
 						price: product.price,
 						sort: product.sort,
-						type: bundle.type,
 						items: itemsById.get(bundle.id) ?? [],
 						limits: limitsById.get(bundle.id) ?? [],
 						features: featuresById.get(bundle.id) ?? [],
@@ -327,4 +330,4 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* ({
 		.map(({ sort: _sort, ...bundle }) => bundle);
 });
 
-export type bundleCollectionFx = ReturnType<typeof bundleCollectionFx>;
+export type packageCollectionFx = ReturnType<typeof packageCollectionFx>;

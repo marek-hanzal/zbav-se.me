@@ -2,26 +2,24 @@ import { z } from "zod";
 import { ResourceBundleFeatureSchema } from "~/common/resource-bundle-feature/server/schema/ResourceBundleFeatureSchema";
 import { ResourceBundleItemSchema } from "~/common/resource-bundle-item/server/schema/ResourceBundleItemSchema";
 import { ResourceBundleLimitSchema } from "~/common/resource-bundle-limit/server/schema/ResourceBundleLimitSchema";
-import { ResourceBundleTypeEnumSchema } from "~/user/resource-bundle/server/schema/ResourceBundleTypeEnumSchema";
-import { CheckoutBundleEnumSchema } from "~/user/stripe/server/schema/CheckoutBundleEnumSchema";
+import { ResourceBundleEnumSchema } from "~/user/resource-bundle/server/schema/ResourceBundleEnumSchema";
 
-export const BundleActiveSchema = z
+export const PackageActiveSchema = z
 	.looseObject({
 		cancelAtPeriodEnd: z.boolean(),
 		periodEndAt: z.coerce.date().nullable(),
 	})
 	.strip();
 
-export const BundleSchema = z
+export const PackageSchema = z
 	.looseObject({
-		active: BundleActiveSchema.nullable(),
-		bundle: CheckoutBundleEnumSchema,
-		type: ResourceBundleTypeEnumSchema,
+		active: PackageActiveSchema.nullable(),
+		bundle: ResourceBundleEnumSchema,
 		name: z.string().min(1),
 		description: z.string().nullable(),
 		price: z.coerce.number().nonnegative(),
 		currency: z.string().min(1),
-		interval: z.string().nullable(),
+		interval: z.string().min(1),
 		items: z.array(
 			ResourceBundleItemSchema.pick({
 				amount: true,
@@ -45,13 +43,13 @@ export const BundleSchema = z
 	})
 	.strip();
 
-export type BundleActiveSchema = typeof BundleActiveSchema;
-export type BundleSchema = typeof BundleSchema;
+export type PackageActiveSchema = typeof PackageActiveSchema;
+export type PackageSchema = typeof PackageSchema;
 
-export namespace BundleActiveSchema {
-	export type Type = z.infer<BundleActiveSchema>;
+export namespace PackageActiveSchema {
+	export type Type = z.infer<PackageActiveSchema>;
 }
 
-export namespace BundleSchema {
-	export type Type = z.infer<BundleSchema>;
+export namespace PackageSchema {
+	export type Type = z.infer<PackageSchema>;
 }

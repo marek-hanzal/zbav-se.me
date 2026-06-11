@@ -1987,3 +1987,41 @@ unused:
     value: unused
 zbav-se.me:
     value: zbav-se.me
+Buy extra (button):
+    value: Koupit
+Extra description (label):
+    value: Co ti přidá
+Extra features (label):
+    value: Výhody
+Extra features empty:
+    value: Bez výhod
+Extra items (label):
+    value: Co dostaneš
+Extra items empty:
+    value: Nic navíc
+Extra limits (label):
+    value: Limity
+Extra limits empty:
+    value: Bez limitů
+Package description (label):
+    value: Co ti nabízí balíček
+Package features (label):
+    value: Výhody
+Package features empty:
+    value: Bez výhod
+Package items (label):
+    value: Co dostaneš
+Package items empty:
+    value: Nic navíc
+Package limits (label):
+    value: Limity
+Package limits empty:
+    value: Bez limitů
+See the extra detail (label):
+    value: Podívej se na detail bonusu...
+See the package detail (label):
+    value: Podívej se na detail předplatného...
+Shop extras (title):
+    value: Jednorázové bonusy
+Shop subscriptions (title):
+    value: Předplatné

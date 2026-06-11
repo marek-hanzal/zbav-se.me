@@ -34,6 +34,8 @@ export const resourceBundleEnsureFx = Effect.fn("resourceBundleEnsureFx")(functi
 						id: userId,
 						name: userId,
 						type: "user",
+						access: "protected",
+						sort: 0,
 					})
 					.onConflict((oc) => {
 						return oc.column("id").doNothing();

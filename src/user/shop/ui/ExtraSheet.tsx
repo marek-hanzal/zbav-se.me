@@ -3,31 +3,28 @@ import { BottomSheet } from "@/lib/client/bottom-sheet";
 import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
 import { useLocale } from "@/lib/client/locale";
-import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
 import { Typo } from "@/lib/client/typo";
 import { LabelValue, ValueList } from "@/lib/client/value";
 import { toLocaleNumber } from "@/lib/common/to-locale-number";
 import { CloseButton } from "~/common/ui/button";
-import type { BundleSchema } from "~/user/stripe/server/schema/BundleSchema";
-import { CancelButton } from "./CancelButton";
-import { CheckoutButton } from "./CheckoutButton";
+import type { ExtraSchema } from "~/user/stripe/server/schema/ExtraSchema";
+import { ExtraCheckoutButton } from "./ExtraCheckoutButton";
 
-export namespace BundleSheet {
+export namespace ExtraSheet {
 	export interface Props {
-		bundle: BundleSchema.Type;
+		bundle: ExtraSchema.Type;
 		isOpen: boolean;
 		onClose(): void;
 	}
 }
 
-export const BundleSheet: FC<BundleSheet.Props> = ({ bundle, isOpen, onClose }) => {
+export const ExtraSheet: FC<ExtraSheet.Props> = ({ bundle, isOpen, onClose }) => {
 	const locale = useLocale();
-	const translator = useTranslator();
 
 	return (
 		<BottomSheet
-			data-ui="BundleSheet"
+			data-ui="ExtraSheet"
 			isOpen={isOpen}
 			onClose={onClose}
 			detent="default"
@@ -49,7 +46,7 @@ export const BundleSheet: FC<BundleSheet.Props> = ({ bundle, isOpen, onClose }) 
 			>
 				<Group>
 					<LabelValue
-						textLabel={translator.text("Plan description (label)")}
+						textLabel={"Extra description (label)"}
 						textValue={<Typo label={bundle.description} />}
 					/>
 				</Group>
@@ -57,8 +54,8 @@ export const BundleSheet: FC<BundleSheet.Props> = ({ bundle, isOpen, onClose }) 
 				{bundle.items.length ? (
 					<Group>
 						<ValueList
-							textLabel={translator.text("Bundle items (label)")}
-							textEmpty="Bundle items empty"
+							textLabel={"Extra items (label)"}
+							textEmpty="Extra items empty"
 							items={bundle.items}
 							renderFn={(item) => (
 								<Container
@@ -95,8 +92,8 @@ export const BundleSheet: FC<BundleSheet.Props> = ({ bundle, isOpen, onClose }) 
 				{bundle.limits.length ? (
 					<Group>
 						<ValueList
-							textLabel={translator.text("Bundle limits (label)")}
-							textEmpty="Bundle limits empty"
+							textLabel={"Extra limits (label)"}
+							textEmpty="Extra limits empty"
 							items={bundle.limits}
 							renderFn={(limit) => (
 								<Container
@@ -137,8 +134,8 @@ export const BundleSheet: FC<BundleSheet.Props> = ({ bundle, isOpen, onClose }) 
 				{bundle.features.length ? (
 					<Group>
 						<ValueList
-							textLabel={translator.text("Bundle features (label)")}
-							textEmpty="Bundle features empty"
+							textLabel={"Extra features (label)"}
+							textEmpty="Extra features empty"
 							items={bundle.features}
 							renderFn={(feature) => (
 								<Container
@@ -161,11 +158,7 @@ export const BundleSheet: FC<BundleSheet.Props> = ({ bundle, isOpen, onClose }) 
 				) : null}
 
 				<Group>
-					{!bundle.active ? (
-						<CheckoutButton bundle={bundle} />
-					) : !bundle.active.cancelAtPeriodEnd ? (
-						<CancelButton bundle={bundle.bundle} />
-					) : null}
+					<ExtraCheckoutButton bundle={bundle} />
 				</Group>
 			</Container>
 		</BottomSheet>

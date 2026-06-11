@@ -16,6 +16,8 @@ export const importResourceBundle: withDatabaseFx.Import<Database> = {
 						id: genId(),
 						name,
 						type: bundles[name].type,
+						access: bundles[name].access,
+						sort: bundles[name].sort,
 					}),
 				),
 			)

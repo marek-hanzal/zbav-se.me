@@ -105,12 +105,12 @@ describe("checkoutFx", () => {
 			);
 		}
 	});
-	liveIt("creates live Stripe one-off checkout session with sync metadata", async () => {
+	liveIt("creates live Stripe extra checkout session with sync metadata", async () => {
 		if (!stripeSecret) {
 			throw new Error("SERVER_STRIPE_SECRET is required");
 		}
 
-		const database = await testabase("stripe-checkout-one-off-sync-metadata");
+		const database = await testabase("stripe-checkout-extra-sync-metadata");
 		const stripe = new Stripe(stripeSecret);
 		const sessionIds: string[] = [];
 		const customerIds: string[] = [];
@@ -162,7 +162,7 @@ describe("checkoutFx", () => {
 				});
 
 				if (!session) {
-					throw new Error("Expected live Stripe one-off checkout session to exist");
+					throw new Error("Expected live Stripe extra checkout session to exist");
 				}
 
 				sessionIds.push(session.id);

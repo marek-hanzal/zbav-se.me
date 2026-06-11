@@ -40,6 +40,8 @@ describe("listingCreateFx listing limit", () => {
 						id: limitSeed.bundleId,
 						name: `Listing limit ${limitSeed.bundleId}`,
 						type: "user",
+						access: "protected",
+						sort: 0,
 					})
 					.execute();
 				const userResourceBundle = await database.kysely

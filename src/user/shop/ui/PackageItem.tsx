@@ -8,16 +8,16 @@ import { PriceInline } from "@/lib/client/price-inline";
 import { useTranslator } from "@/lib/client/translation";
 import { Typo } from "@/lib/client/typo";
 import { toTimeDiff } from "@/lib/common/time";
-import type { BundleSchema } from "~/user/stripe/server/schema/BundleSchema";
-import { BundleSheet } from "./BundleSheet";
+import type { PackageSchema } from "~/user/stripe/server/schema/PackageSchema";
+import { PackageSheet } from "./PackageSheet";
 
-export namespace BundleItem {
+export namespace PackageItem {
 	export interface Props extends Group.Props {
-		bundle: BundleSchema.Type;
+		bundle: PackageSchema.Type;
 	}
 }
 
-export const BundleItem: FC<BundleItem.Props> = ({ bundle, className, ...props }) => {
+export const PackageItem: FC<PackageItem.Props> = ({ bundle, className, ...props }) => {
 	const locale = useLocale();
 	const translator = useTranslator();
 	const [isOpen, setIsOpen] = useState(false);
@@ -38,7 +38,7 @@ export const BundleItem: FC<BundleItem.Props> = ({ bundle, className, ...props }
 	return (
 		<>
 			<Group
-				data-ui="BundleItem"
+				data-ui="PackageItem"
 				data-resource-bundle={bundle.bundle}
 				data-ui-bundle={bundle.bundle}
 				data-ui-bundle-status={isActive}
@@ -111,7 +111,7 @@ export const BundleItem: FC<BundleItem.Props> = ({ bundle, className, ...props }
 
 					{bundle.active ? null : (
 						<Typo
-							label={translator.text("See the bundle detail (label)")}
+							label={translator.text("See the package detail (label)")}
 							data-ui-color="lead"
 							data-ui-font="bold"
 							data-ui-text="sm"
@@ -165,7 +165,7 @@ export const BundleItem: FC<BundleItem.Props> = ({ bundle, className, ...props }
 				</Container>
 			</Group>
 
-			<BundleSheet
+			<PackageSheet
 				bundle={bundle}
 				isOpen={isOpen}
 				onClose={() => {

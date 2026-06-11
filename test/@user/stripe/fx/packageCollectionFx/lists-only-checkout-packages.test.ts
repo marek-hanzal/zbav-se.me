@@ -4,23 +4,23 @@ import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 import { withStripeConfigFx } from "~/user/stripe/server/context/withStripeConfigFx";
-import { bundleCollectionFx } from "~/user/stripe/server/fx/bundleCollectionFx";
+import { packageCollectionFx } from "~/user/stripe/server/fx/packageCollectionFx";
 
 const stripeSecret = process.env.SERVER_STRIPE_SECRET;
 const liveIt = stripeSecret ? it : it.skip;
 
-describe("bundleCollectionFx", () => {
+describe("packageCollectionFx", () => {
 	liveIt("lists only checkout packages in stable checkout order", async () => {
 		if (!stripeSecret) {
 			throw new Error("SERVER_STRIPE_SECRET is required");
 		}
 
-		const database = await testabase("stripe-bundle-collection-checkout-bundles");
+		const database = await testabase("stripe-package-collection-checkout-packages");
 
-		const bundles = await Effect.gen(function* () {
+		const packages = await Effect.gen(function* () {
 			const { buyer } = yield* createUsersFx({});
 
-			return yield* bundleCollectionFx({
+			return yield* packageCollectionFx({
 				userId: buyer.id,
 			});
 		}).pipe(
@@ -32,13 +32,13 @@ describe("bundleCollectionFx", () => {
 			Effect.runPromise,
 		);
 
-		expect(bundles.map((bundle) => bundle.bundle)).toEqual([
+		expect(packages.map((bundle) => bundle.bundle)).toEqual([
 			"package:buyer",
 			"package:seller",
 			"package:pro",
 			"package:master",
 		]);
-		expect(bundles.every((bundle) => bundle.type === "subscription")).toBe(true);
-		expect(bundles.every((bundle) => bundle.active === null)).toBe(true);
+		expect(packages.every((bundle) => bundle.interval === "month")).toBe(true);
+		expect(packages.every((bundle) => bundle.active === null)).toBe(true);
 	});
 });
