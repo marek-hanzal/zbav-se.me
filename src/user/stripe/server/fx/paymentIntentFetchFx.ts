@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import type { Stripe } from "stripe";
+import { match, P } from "ts-pattern";
 import { stripeClientFx } from "./stripeClientFx";
 
 export namespace paymentIntentFetchFx {
@@ -19,14 +20,24 @@ export const paymentIntentFetchFx = Effect.fn("paymentIntentFetchFx")(function* 
 	id,
 }: paymentIntentFetchFx.Props) {
 	const stripe = yield* stripeClientFx();
-	const paymentIntentId = typeof id === "string" ? id : id.id;
 
 	return yield* Effect.promise(() => {
-		return stripe.paymentIntents.retrieve(paymentIntentId, {
-			expand: [
-				"latest_charge",
-			],
-		});
+		return stripe.paymentIntents.retrieve(
+			match(id)
+				.with(P.string, (id) => id)
+				.with(
+					{
+						id: P.string,
+					},
+					(paymentIntent) => paymentIntent.id,
+				)
+				.exhaustive(),
+			{
+				expand: [
+					"latest_charge",
+				],
+			},
+		);
 	});
 });
 

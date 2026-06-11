@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import type { Stripe } from "stripe";
+import { match, P } from "ts-pattern";
 import { stripeClientFx } from "./stripeClientFx";
 
 export namespace sessionFetchFx {
@@ -17,9 +18,20 @@ export namespace sessionFetchFx {
  */
 export const sessionFetchFx = Effect.fn("sessionFetchFx")(function* ({ id }: sessionFetchFx.Props) {
 	const stripe = yield* stripeClientFx();
-	const sessionId = typeof id === "string" ? id : id.id;
 
-	return yield* Effect.promise(() => stripe.checkout.sessions.retrieve(sessionId));
+	return yield* Effect.promise(() => {
+		return stripe.checkout.sessions.retrieve(
+			match(id)
+				.with(P.string, (id) => id)
+				.with(
+					{
+						id: P.string,
+					},
+					(session) => session.id,
+				)
+				.exhaustive(),
+		);
+	});
 });
 
 export type sessionFetchFx = ReturnType<typeof sessionFetchFx>;

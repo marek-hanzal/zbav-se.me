@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { match } from "ts-pattern";
 import { DateServiceFx } from "@/lib/common/date";
 import { NotFoundErrorFx } from "@/lib/common/error";
 import { getLoggerFx } from "@/lib/common/log";
@@ -180,15 +181,43 @@ export const sessionSyncFx = Effect.fn("sessionSyncFx")(function* ({
 		id: session.payment_intent,
 	});
 
-	const latestCharge =
-		typeof paymentIntent.latest_charge === "object" && paymentIntent.latest_charge !== null
-			? paymentIntent.latest_charge
-			: null;
-	const isClosed =
-		Boolean(latestCharge?.refunded) ||
-		session.payment_status !== "paid" ||
-		paymentIntent.status === "canceled" ||
-		session.status === "expired";
+	const isClosed = match({
+		paymentIntent,
+		session,
+	})
+		.with(
+			{
+				session: {
+					payment_status: "paid",
+				},
+				paymentIntent: {
+					status: "canceled",
+				},
+			},
+			{
+				session: {
+					payment_status: "paid",
+					status: "expired",
+				},
+			},
+			{
+				paymentIntent: {
+					latest_charge: {
+						refunded: true,
+					},
+				},
+			},
+			() => true,
+		)
+		.with(
+			{
+				session: {
+					payment_status: "paid",
+				},
+			},
+			() => false,
+		)
+		.otherwise(() => true);
 
 	const createdAt = dateService.ofSeconds(session.created).toJSDate();
 

@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import type { Stripe } from "stripe";
+import { match, P } from "ts-pattern";
 import { DateServiceFx } from "@/lib/common/date";
 import { NotFoundErrorFx } from "@/lib/common/error";
 import { getLoggerFx } from "@/lib/common/log";
@@ -26,11 +27,27 @@ export namespace subscriptionSyncFx {
 }
 
 const subscriptionId = (subscription: string | Stripe.Subscription) => {
-	return typeof subscription === "string" ? subscription : subscription.id;
+	return match(subscription)
+		.with(P.string, (id) => id)
+		.with(
+			{
+				id: P.string,
+			},
+			(subscription) => subscription.id,
+		)
+		.exhaustive();
 };
 
 const customerIdOf = (customer: Stripe.Subscription["customer"]) => {
-	return typeof customer === "string" ? customer : customer.id;
+	return match(customer)
+		.with(P.string, (id) => id)
+		.with(
+			{
+				id: P.string,
+			},
+			(customer) => customer.id,
+		)
+		.exhaustive();
 };
 
 /** Syncs one Stripe subscription into one local user resource bundle. */
@@ -109,7 +126,9 @@ export const subscriptionSyncFx = Effect.fn("subscriptionSyncFx")(function* ({
 		});
 	}
 
-	const active = subscription.status === "active" || subscription.status === "trialing";
+	const active = match(subscription.status)
+		.with(P.union("active", "trialing"), () => true)
+		.otherwise(() => false);
 	const itemEnd =
 		subscription.items.data.map((item) => item.current_period_end).find(Boolean) ??
 		subscription.cancel_at;

@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { match, P } from "ts-pattern";
 import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
@@ -157,7 +158,15 @@ export const catalogFx = Effect.fn("catalogFx")(function* ({ type, priceMode }: 
 			const prices = pricesByLookupKey.get(bundle.name) ?? [];
 			const [price] = prices;
 
-			if (!price || typeof price.unit_amount !== "number") {
+			if (!price) {
+				return [];
+			}
+
+			const amount = match(price.unit_amount)
+				.with(P.number, (amount) => amount)
+				.otherwise(() => null);
+
+			if (amount === null) {
 				return [];
 			}
 
@@ -190,12 +199,23 @@ export const catalogFx = Effect.fn("catalogFx")(function* ({ type, priceMode }: 
 				return [];
 			}
 
-			const product =
-				typeof price.product === "object" &&
-				price.product !== null &&
-				"name" in price.product
-					? price.product
-					: null;
+			const product = match(price.product)
+				.with(
+					{
+						deleted: true,
+					},
+					() => null,
+				)
+				.with(
+					{
+						description: P.any,
+						id: P.string,
+						metadata: P.any,
+						name: P.string,
+					},
+					(product) => product,
+				)
+				.otherwise(() => null);
 
 			if (!product) {
 				return [];
@@ -212,7 +232,7 @@ export const catalogFx = Effect.fn("catalogFx")(function* ({ type, priceMode }: 
 					limits: limitsById.get(bundle.id) ?? [],
 					features: featuresById.get(bundle.id) ?? [],
 					name: product.name,
-					price: price.unit_amount,
+					price: amount,
 					sort: bundle.sort,
 				},
 			];

@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { match, P } from "ts-pattern";
 import { DateServiceFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
@@ -43,19 +44,22 @@ export const webhookFx = Effect.fn("webhookFx")(function* (props: webhookFx.Prop
 			stripeConfig.webhook,
 		);
 	});
-	const object = event.data.object as {
-		customer?:
-			| string
-			| {
-					id?: string;
-			  };
-	};
-	const customerId =
-		typeof object.customer === "string"
-			? object.customer
-			: typeof object.customer?.id === "string"
-				? object.customer.id
-				: null;
+	const customerId = match(event.data.object)
+		.with(
+			{
+				customer: P.string,
+			},
+			(object) => object.customer,
+		)
+		.with(
+			{
+				customer: {
+					id: P.string,
+				},
+			},
+			(object) => object.customer.id,
+		)
+		.otherwise(() => null);
 
 	if (!customerId) {
 		return yield* new InvalidRequestErrorFx({
