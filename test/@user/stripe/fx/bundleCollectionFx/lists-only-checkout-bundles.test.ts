@@ -2,6 +2,7 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
+import { createUsersFx } from "~/test/user/fx/createUsersFx";
 import { withStripeConfigFx } from "~/user/stripe/server/context/withStripeConfigFx";
 import { bundleCollectionFx } from "~/user/stripe/server/fx/bundleCollectionFx";
 
@@ -16,7 +17,13 @@ describe("bundleCollectionFx", () => {
 
 		const database = await testabase("stripe-bundle-collection-checkout-bundles");
 
-		const bundles = await bundleCollectionFx().pipe(
+		const bundles = await Effect.gen(function* () {
+			const { buyer } = yield* createUsersFx({});
+
+			return yield* bundleCollectionFx({
+				userId: buyer.id,
+			});
+		}).pipe(
 			withRuntimeFx(database),
 			withStripeConfigFx({
 				secret: stripeSecret,
@@ -31,5 +38,7 @@ describe("bundleCollectionFx", () => {
 			"package:pro",
 			"package:master",
 		]);
+
+		expect(bundles.every((bundle) => bundle.active === null)).toBe(true);
 	});
 });
