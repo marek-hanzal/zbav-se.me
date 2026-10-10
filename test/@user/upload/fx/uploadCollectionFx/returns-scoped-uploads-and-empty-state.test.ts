@@ -3,10 +3,10 @@ import { describe, expect, it } from "vitest";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { UploadConfigFx } from "~/user/upload/server/context/UploadConfigFx";
-import { uploadCollectionFx } from "~/user/upload/server/fx/uploadCollectionFx";
-import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
-import { uploadFetchFx } from "~/user/upload/server/fx/uploadFetchFx";
+import { UploadConfigFx } from "~/user-upload/context/UploadConfigFx";
+import { uploadCollectionFx } from "~/user-upload/fx/uploadCollectionFx";
+import { uploadCreateFx } from "~/user-upload/fx/uploadCreateFx";
+import { uploadFetchFx } from "~/user-upload/fx/uploadFetchFx";
 
 describe("uploadCollectionFx", () => {
 	it("returns only scoped uploads and stays consistent with fetch", async () => {

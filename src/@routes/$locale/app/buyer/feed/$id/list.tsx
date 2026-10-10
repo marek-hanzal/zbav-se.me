@@ -1,13 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useRef } from "react";
 import z from "zod";
-import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
-import { Content } from "~/buyer/feed/ui/Content";
-import { BackHomeButton } from "~/common/nav/BackHomeButton";
-import { FlowContainer } from "~/common/ui/container";
+import { FlowContainer } from "~/application-ui/ui/container.exports";
+import { withFeedQuery } from "~/buyer-feed/query/withFeedQuery";
+import { Content } from "~/buyer-feed/ui/Content/index";
 import { useLocale } from "~/locale/hook/useLocale";
+import { BackHomeButton } from "~/nav/ui/BackHomeButton.exports";
 import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
-import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
+import { HomeMenuButton } from "~/user-home/ui/HomeMenu/HomeMenuButton";
 
 export const Route = createFileRoute("/$locale/app/buyer/feed/$id/list")({
 	validateSearch: z.object({

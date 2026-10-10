@@ -1,7 +1,7 @@
 import type { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import type { UserEventTableSchema } from "~/server/database/@table/UserEventTableSchema";
-import { computeLoad } from "~/user/user-event/server/fx/computeLoad";
+import type { UserEventTableSchema } from "~/database/schema/UserEventTableSchema";
+import { computeLoad } from "~/user-event/fx/computeLoad";
 
 interface CreateEventProps {
 	id: string;

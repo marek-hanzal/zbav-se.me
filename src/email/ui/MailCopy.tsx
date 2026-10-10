@@ -1,6 +1,6 @@
 import { Link, Text } from "@react-email/components";
 import type { FC } from "react";
-import { theme } from "../theme/theme";
+import { theme } from "~/email/constant/theme";
 
 export namespace MailCopy {
 	export interface Props {

@@ -1,9 +1,9 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { translationSyncFx } from "~/common/translation/server/fx/translationSyncFx";
-import { translationsFx } from "~/common/translation/server/fx/translationsFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
+import { translationSyncFx } from "~/translation/fx/translationSyncFx";
+import { translationsFx } from "~/translation/fx/translationsFx";
 
 describe("translationsFx", () => {
 	it("returns only rows for the requested locale after sync", async () => {

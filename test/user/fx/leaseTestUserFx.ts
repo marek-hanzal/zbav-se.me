@@ -1,9 +1,9 @@
 import { Effect } from "effect";
-import { getFeedDefaultCreate } from "~/buyer/feed/service/getFeedDefaultCreate";
+import { getFeedDefaultCreate } from "~/buyer-feed/service/getFeedDefaultCreate";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { dbFx } from "~/database/fx/dbFx";
+import type { Database } from "~/database/type/Database";
 import { genId } from "~/identity/fn/genId";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import type { Database } from "~/server/database/Database";
-import { dbFx } from "~/server/database/fx/dbFx";
 
 const TEST_USER_KEYS = [
 	"a",

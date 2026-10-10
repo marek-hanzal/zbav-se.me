@@ -1,6 +1,6 @@
 import { DateTime } from "luxon";
-import type { ScheduleSchema } from "~/common/@cron/schema/ScheduleSchema";
-import { withCronFx } from "~/common/@cron/server/withCronFx";
+import { withCronFx } from "~/cron/fx/withCronFx";
+import type { ScheduleSchema } from "~/cron/schema/ScheduleSchema";
 import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
 
 export namespace runCronAtFx {

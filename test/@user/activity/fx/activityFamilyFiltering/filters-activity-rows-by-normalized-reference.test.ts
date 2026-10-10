@@ -1,9 +1,9 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
+import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { withActivitySelectFx } from "~/user/activity/server/db/withActivitySelectFx";
+import { withActivitySelectFx } from "~/user-activity/db/withActivitySelectFx";
 
 describe("activity family", () => {
 	it("filters activity rows by normalized reference", async () => {

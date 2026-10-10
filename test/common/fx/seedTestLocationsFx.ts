@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
+import type { Database } from "~/database/type/Database";
 import type { withDatabaseFx } from "~/database-query/fx/withDatabaseFx";
-import type { Database } from "~/server/database/Database";
 
 export namespace seedTestLocationsFx {
 	export interface Props {

@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
-import { feedGalleryCreateFx } from "~/buyer/feed-gallery/server/fx/feedGalleryCreateFx";
+import { feedCreateFx } from "~/buyer-feed/fx/feedCreateFx";
+import { feedGalleryCreateFx } from "~/buyer-feed-gallery/fx/feedGalleryCreateFx";
 import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";

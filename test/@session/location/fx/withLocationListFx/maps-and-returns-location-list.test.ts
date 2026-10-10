@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { locationAutocompleteFx } from "~/session/location/server/fx/locationAutocompleteFx";
-import { withLocationListFx } from "~/session/location/server/fx/withLocationListFx";
+import { locationAutocompleteFx } from "~/session-location/fx/locationAutocompleteFx";
+import { withLocationListFx } from "~/session-location/fx/withLocationListFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 

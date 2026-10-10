@@ -3,8 +3,8 @@ import { describe, expect, it } from "vitest";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { activityArchiveFx } from "~/user/activity/server/fx/activityArchiveFx";
-import { activityPatchCollectionFx } from "~/user/activity/server/fx/activityPatchCollectionFx";
+import { activityArchiveFx } from "~/user-activity/fx/activityArchiveFx";
+import { activityPatchCollectionFx } from "~/user-activity/fx/activityPatchCollectionFx";
 
 describe("activity bulk mutation scope isolation", () => {
 	it("keeps foreign rows untouched when patching and archiving scoped rows", async () => {

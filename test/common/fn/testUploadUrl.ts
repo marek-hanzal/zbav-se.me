@@ -1,4 +1,4 @@
-import { ViteEnvSchema } from "~/common/env/ViteEnvSchema";
+import { ViteEnvSchema } from "~/application-env/schema/ViteEnvSchema";
 
 export const testUploadUrl = (path: string) => {
 	const viteConfig = ViteEnvSchema.parse(process.env);

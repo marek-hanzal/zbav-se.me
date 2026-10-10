@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { activityCollectionFx } from "~/user/activity/server/fx/activityCollectionFx";
+import { activityCollectionFx } from "~/user-activity/fx/activityCollectionFx";
 
 describe("activity deduplication (PARTITION BY transactionId)", () => {
 	it("buyer-message and seller-message for different transactions are NOT deduplicated together", async () => {

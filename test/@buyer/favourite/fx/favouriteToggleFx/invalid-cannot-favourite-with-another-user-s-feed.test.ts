@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
-import { favouriteToggleFx } from "~/buyer/listing-favourite/server/fx/favouriteToggleFx";
+import { feedCreateFx } from "~/buyer-feed/fx/feedCreateFx";
+import { favouriteToggleFx } from "~/buyer-listing-favourite/fx/favouriteToggleFx";
 import { runToggleEntityErrorContractFx } from "~/test/@buyer/common/fx/runToggleEntityErrorContractFx";
 
 describe("favouriteToggleFx", () => {

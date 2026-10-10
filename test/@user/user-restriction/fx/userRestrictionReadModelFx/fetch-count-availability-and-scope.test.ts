@@ -5,8 +5,8 @@ import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { userRestrictionCountFx } from "~/user/user-restriction/server/fx/userRestrictionCountFx";
-import { userRestrictionFetchFx } from "~/user/user-restriction/server/fx/userRestrictionFetchFx";
+import { userRestrictionCountFx } from "~/user-restriction/fx/userRestrictionCountFx";
+import { userRestrictionFetchFx } from "~/user-restriction/fx/userRestrictionFetchFx";
 
 const atFx = <A, E, R>(iso: string, eff: Effect.Effect<A, E, R>) =>
 	eff.pipe(

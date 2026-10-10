@@ -1,0 +1,125 @@
+import { Effect } from "effect";
+import { sql } from "kysely";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { dbFx } from "~/database/fx/dbFx";
+import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { DateServiceFx } from "~/date/service/DateServiceFx";
+import { genId } from "~/identity/fn/genId";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
+import { UserRestrictionContextFx } from "~/user-restriction/context/UserRestrictionContextFx";
+import type { UserRestrictionCreateSchema } from "~/user-restriction/schema/UserRestrictionCreateSchema";
+
+export namespace userRestrictionCreateFx {
+	export interface Props extends UserRestrictionCreateSchema.Type {
+		userId: string;
+	}
+}
+
+export const userRestrictionCreateFx = Effect.fn("userRestrictionCreateFx")(function* ({
+	userId,
+	restriction,
+}: userRestrictionCreateFx.Props) {
+	const userRestrictionContext = yield* UserRestrictionContextFx;
+	const dateService = yield* DateServiceFx;
+
+	const logger = yield* getLoggerFx("userRestrictionCreateFx");
+	logger.trace("userRestrictionCreateFx", {
+		userId,
+		restriction,
+	});
+
+	const delay = userRestrictionContext.delay[restriction] ?? 0;
+	const availableAt = dateService
+		.now()
+		.plus({
+			hours: delay,
+		})
+		.toJSDate();
+
+	return yield* withTransactionFx(
+		Effect.gen(function* () {
+			const { kysely } = yield* KyselyContextFx;
+			const dateService = yield* DateServiceFx;
+
+			const id = genId();
+			const createdAt = dateService.now().toJSDate();
+			const now = dateService.now().toJSDate();
+			const isAvailable = availableAt.getTime() <= createdAt.getTime();
+
+			yield* Effect.promise(async () => {
+				/**
+				 * Serializes restriction switches per user. `pg_advisory_xact_lock`
+				 * waits until the previous transaction commits/rolls back; it only
+				 * errors early when PostgreSQL `lock_timeout` / `statement_timeout`
+				 * or the application request/connection timeout cancels the query.
+				 */
+				await sql`select pg_advisory_xact_lock(hashtextextended(${userId}, 0))`.execute(
+					kysely,
+				);
+
+				/**
+				 * The rule:
+				 * - if we've to wait, discard only future waiting restrictions
+				 * - if we're not waiting, discard _all_ restrictions as the new one replaces them
+				 */
+				await kysely
+					.updateTable("user_restriction")
+					.set({
+						expiresAt: now,
+					})
+					.$if(delay > 0, (eb) => {
+						return eb.where("availableAt", ">", now);
+					})
+					.where("userId", "=", userId)
+					.execute();
+
+				/**
+				 * If we're waiting, set expiration date on current restriction(s) to
+				 * available date of the new one, so they'll flip properly
+				 */
+				if (delay > 0) {
+					await kysely
+						.updateTable("user_restriction")
+						.set({
+							expiresAt: availableAt,
+						})
+						.where("availableAt", "<=", now)
+						.where((eb) =>
+							eb.or([
+								eb("expiresAt", "is", null),
+								eb("expiresAt", ">", now),
+							]),
+						)
+						.where("userId", "=", userId)
+						.execute();
+				}
+			});
+
+			return yield* dbFx(async (kysely) => {
+				await kysely
+					.insertInto("user_restriction")
+					.values({
+						id,
+						userId,
+						restriction,
+						availableAt,
+						expiresAt: null,
+						createdAt,
+					})
+					.execute();
+
+				return {
+					id,
+					userId,
+					restriction,
+					availableAt,
+					expiresAt: null,
+					createdAt,
+					isAvailable,
+				} as const;
+			});
+		}),
+	);
+});
+
+export type userRestrictionCreateFx = ReturnType<typeof userRestrictionCreateFx>;

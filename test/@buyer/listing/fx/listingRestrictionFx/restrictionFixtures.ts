@@ -1,7 +1,7 @@
 import { Effect } from "effect";
-import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { DateServiceFx } from "~/date/service/DateServiceFx";
 import { genId } from "~/identity/fn/genId";
+import type { RestrictionEnumSchema } from "~/restriction/schema/RestrictionEnumSchema";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import type { testabase } from "~/test/testabase";
 

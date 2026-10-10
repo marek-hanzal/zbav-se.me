@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { transactionPatchFx } from "~/buyer/transaction/server/fx/transactionPatchFx";
+import { transactionPatchFx } from "~/buyer-transaction/fx/transactionPatchFx";
 import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";

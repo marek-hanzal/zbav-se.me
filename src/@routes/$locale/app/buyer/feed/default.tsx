@@ -1,8 +1,8 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
-import { getFeedDefaultCreate } from "~/buyer/feed/service/getFeedDefaultCreate";
-import { withTranslationsQuery } from "~/common/translation/query/withTranslationsQuery";
+import { withFeedQuery } from "~/buyer-feed/query/withFeedQuery";
+import { getFeedDefaultCreate } from "~/buyer-feed/service/getFeedDefaultCreate";
 import { translator } from "~/translation/fn/translator";
+import { withTranslationsQuery } from "~/translation/query/withTranslationsQuery";
 import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
 
 export const Route = createFileRoute("/$locale/app/buyer/feed/default")({

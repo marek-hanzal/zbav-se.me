@@ -1,12 +1,12 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import type { ActivityPriorityEnumSchema } from "~/common/activity/enum/ActivityPriorityEnumSchema";
-import type { ActivityTypeEnumSchema } from "~/common/activity/enum/ActivityTypeEnumSchema";
-import type { ActivityTableSchema } from "~/server/database/@table/ActivityTableSchema";
+import type { ActivityPriorityEnumSchema } from "~/activity/schema/ActivityPriorityEnumSchema";
+import type { ActivityTypeEnumSchema } from "~/activity/schema/ActivityTypeEnumSchema";
+import type { ActivityTableSchema } from "~/database/schema/ActivityTable";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { activityArchiveFx } from "~/user/activity/server/fx/activityArchiveFx";
+import { activityArchiveFx } from "~/user-activity/fx/activityArchiveFx";
 
 type TestDatabase = Awaited<ReturnType<typeof testabase>>;
 

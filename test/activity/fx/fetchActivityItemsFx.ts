@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import type { Database } from "~/server/database/Database";
+import type { Database } from "~/database/type/Database";
 import type { testabase } from "~/test/testabase";
 
 type TestDatabase = Awaited<ReturnType<typeof testabase>>;

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { computeSellerScore } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
+import { computeSellerScore } from "~/buyer-user-event/fx/userEventSellerInfoFx";
 
 describe("userEventSellerInfoFx score derivation", () => {
 	it("scores improved seller inputs above mixed-quality inputs", () => {

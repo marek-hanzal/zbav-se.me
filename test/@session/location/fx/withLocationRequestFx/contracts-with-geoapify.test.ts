@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withLocationRequestFx } from "~/session/location/server/fx/withLocationRequestFx";
+import { withLocationRequestFx } from "~/session-location/fx/withLocationRequestFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 

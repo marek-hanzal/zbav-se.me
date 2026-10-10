@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { resourceBundleEnsureFx } from "~/user/resource-bundle/server/fx/resourceBundleEnsureFx";
+import { resourceBundleEnsureFx } from "~/user-resource-bundle/fx/resourceBundleEnsureFx";
 
 describe("resourceBundleEnsureFx", () => {
 	it("creates the default user bundle assignment idempotently", async () => {

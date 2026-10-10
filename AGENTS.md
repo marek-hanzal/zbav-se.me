@@ -9,7 +9,7 @@
 
 ## Repository and tools
 
-- Application code, shared utilities, and UI primitives live in `src/` under their owning domains. Maintenance CLIs, Vitest tests, Playwright tests, and static assets live in `cli/`, `test/`, `e2e/`, and `public/`.
+- Application code, shared utilities, and UI primitives live in flat `src/<domain>/<kind>/<file>` domains, such as `src/buyer-feed/fx/feedCreateFx.ts`. Domain names carry ownership; do not add umbrella domains or nested domain groups. Maintenance CLIs, Vitest tests, Playwright tests, and static assets live in `cli/`, `test/`, `e2e/`, and `public/`.
 - Import aliases come from `tsconfig.json`: `~/` maps to `src/` and `~/test/` to `test/`. Import concrete modules directly.
 - Tool versions live in `mise.toml`; commands live in `Argcfile.sh`. Run commands from the repo root through `argc` (or `mise exec -- argc` without shell activation).
 - Use npm with `package-lock.json` and `tsx` for TypeScript CLIs. Keep project commands out of `package.json`; it holds package metadata and dependencies.
@@ -19,8 +19,8 @@
 
 ## Domains and server boundaries
 
-- Keep code in its owning domain. `.dependency-cruiser.cjs` defines enforced import boundaries on resolved paths; do not weaken it to make a change pass.
-- Buyer and seller must not import each other; common must not depend on either; public must not import user. Shared runtime modules stay independent of client/server modules, and client/server runtime modules stay separate. The resolved-path rules retain these distinctions when domains share a source root.
+- Keep code in its owning domain. `.dependency-cruiser.cjs` defines enforced import boundaries through declarative groups of resolved paths; do not weaken them to make a change pass. Update the owning groups when adding or moving domains or server modules. See `src/SERVER.md` for server implementation details.
+- Buyer and seller domains must not import each other; shared domains must not depend on either; public domains must not import user domains. Shared runtime modules stay independent of client/server modules, and client/server runtime modules stay separate. Flat paths retain the same logical boundaries through the resolved-path groups.
 - Keep server internals out of client code. Use the approved function/schema surfaces and existing middleware/composition patterns; inject Effect services at the composition edge.
 - Enforce authorization, ownership, sensitivity, bans, lifecycle, limits, and rate limits on the server. UI visibility is not enforcement; never bypass a gate to make a flow work.
 - Preserve Kysely and Zod contracts and inferred function types. Validate external input at the boundary; do not replace shared contracts with duplicate local shapes or unchecked assertions.
@@ -29,7 +29,8 @@
 ## Routes and UI
 
 - Routes live in `src/@routes` and own screen composition directly, alongside route configuration, search validation, guards/loaders, and metadata. Do not introduce `*Page` components or a separate page layer.
-- Keep reusable UI components in the owning domain's local `ui/` folders, query wrappers in `query/`, mutation wrappers in `mutation/`, and business logic in its owning domain.
+- The router-owned route tree is exempt from the flat domain layout. Keep its structure unchanged when reorganizing source domains.
+- Keep reusable UI components in the owning domain's local `ui/` folders, query wrappers in `query/`, mutation wrappers in `mutation/`, and business logic in its owning kind folder. Further nesting is reserved for components that own their child components; keep non-component modules directly inside their kind folder.
 - Read `Route.useParams`, `Route.useSearch`, `Route.useLoaderData`, etc. in route render callbacks and pass the relevant values to reusable components. Domain components must not import concrete route modules or call their Route APIs.
 - Prefer capable, reusable components over screen wrappers. Small amounts of route composition duplication are acceptable; pending and error composition also belong to the route.
 

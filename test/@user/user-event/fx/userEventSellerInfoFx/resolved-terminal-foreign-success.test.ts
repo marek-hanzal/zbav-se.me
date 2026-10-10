@@ -1,12 +1,12 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
+import { userEventSellerInfoFx } from "~/buyer-user-event/fx/userEventSellerInfoFx";
 import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
+import { userEventCreateFx } from "~/user-event/fx/userEventCreateFx";
 
 describe("userEventSellerInfoFx", () => {
 	it("Resolved: counts foreign transaction.success as buyer-terminal for seller resolve", async () => {

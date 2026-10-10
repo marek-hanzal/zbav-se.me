@@ -1,12 +1,12 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { DateServiceFx } from "~/date/service/DateServiceFx";
 import { genId } from "~/identity/fn/genId";
+import type { RestrictionEnumSchema } from "~/restriction/schema/RestrictionEnumSchema";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { categoryCollectionFx } from "~/user/category/server/fx/categoryCollectionFx";
+import { categoryCollectionFx } from "~/user-category/fx/categoryCollectionFx";
 
 type TestDatabase = Awaited<ReturnType<typeof testabase>>;
 type CategoryRestriction = RestrictionEnumSchema.Type;

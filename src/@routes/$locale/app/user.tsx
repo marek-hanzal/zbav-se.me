@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { BackHomeButton } from "~/common/nav/BackHomeButton";
-import { TitleContainer } from "~/common/ui/container";
+import { TitleContainer } from "~/application-ui/ui/container.exports";
 import { useLocale } from "~/locale/hook/useLocale";
+import { BackHomeButton } from "~/nav/ui/BackHomeButton.exports";
 import { useTranslator } from "~/translation/hook/useTranslator";
 import { UserIcon } from "~/ui/constant/UserIcon";
 import { Container } from "~/ui/ui/Container";
@@ -9,13 +9,13 @@ import { Group } from "~/ui/ui/Group";
 import { Icon } from "~/ui/ui/Icon";
 import { LabelValue } from "~/ui/ui/LabelValue";
 import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
-import { TokenUsage } from "~/user/agent/ui/TokenUsage";
-import { useUser } from "~/user/auth/hook/useUser";
-import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
-import { ChangePasswordButton } from "~/user/profile/ui/ChangePasswordButton";
-import { SignOutButton } from "~/user/profile/ui/SignOutButton";
-import { UserRestriction } from "~/user/profile/ui/UserRestriction";
-import { VerifyEmailButton } from "~/user/profile/ui/VerifyEmailButton";
+import { TokenUsage } from "~/user-agent/ui/TokenUsage";
+import { useUser } from "~/user-auth/hook/useUser";
+import { HomeMenuButton } from "~/user-home/ui/HomeMenu/HomeMenuButton";
+import { ChangePasswordButton } from "~/user-profile/ui/ChangePasswordButton";
+import { SignOutButton } from "~/user-profile/ui/SignOutButton";
+import { UserRestriction } from "~/user-profile/ui/UserRestriction";
+import { VerifyEmailButton } from "~/user-profile/ui/VerifyEmailButton";
 
 export const Route = createFileRoute("/$locale/app/user")({
 	component() {

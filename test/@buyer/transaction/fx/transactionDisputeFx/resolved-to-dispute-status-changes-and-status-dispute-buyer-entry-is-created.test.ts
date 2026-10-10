@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { transactionDisputeFx } from "~/buyer/transaction/server/fx/transactionDisputeFx";
+import { transactionDisputeFx } from "~/buyer-transaction/fx/transactionDisputeFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createResolvedScenarioFx } from "~/test/transaction/fx/createResolvedScenarioFx";

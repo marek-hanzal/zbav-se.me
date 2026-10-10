@@ -1,14 +1,14 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { transactionAcceptFx } from "~/seller/transaction/server/fx/transactionAcceptFx";
-import { transactionCollectionFx } from "~/seller/transaction/server/fx/transactionCollectionFx";
-import { transactionCountFx } from "~/seller/transaction/server/fx/transactionCountFx";
+import { transactionAcceptFx } from "~/seller-transaction/fx/transactionAcceptFx";
+import { transactionCollectionFx } from "~/seller-transaction/fx/transactionCollectionFx";
+import { transactionCountFx } from "~/seller-transaction/fx/transactionCountFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { getDefaultListingCreateFx } from "~/test/listing/fx/getDefaultListingCreateFx";
 import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { activityArchiveFx } from "~/user/activity/server/fx/activityArchiveFx";
+import { activityArchiveFx } from "~/user-activity/fx/activityArchiveFx";
 
 describe("seller transactionCollectionFx", () => {
 	it("filters by activity state and statusIn within seller scope", async () => {

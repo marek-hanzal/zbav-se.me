@@ -1,0 +1,36 @@
+import { Effect } from "effect";
+import { withFetchFx } from "~/http/fx/withFetchFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
+import { withUserRestrictionSelectFx } from "~/user-restriction/db/withUserRestrictionSelectFx";
+import type { UserRestrictionQuerySchema } from "~/user-restriction/schema/UserRestrictionQuerySchema";
+import type { UserRestrictionWhereSchema } from "~/user-restriction/schema/UserRestrictionWhereSchema";
+
+export namespace userRestrictionFetchFx {
+	export interface Props extends UserRestrictionQuerySchema.Type {
+		scope: UserRestrictionWhereSchema.Type;
+	}
+}
+
+export const userRestrictionFetchFx = Effect.fn("userRestrictionFetchFx")(function* ({
+	where,
+	scope,
+	sort,
+}: userRestrictionFetchFx.Props) {
+	const logger = yield* getLoggerFx("userRestrictionFetchFx");
+	logger.trace("userRestrictionFetchFx", {
+		where,
+		scope,
+		sort,
+	});
+
+	return yield* withFetchFx({
+		resource: "user_restriction",
+		selectFx: withUserRestrictionSelectFx({
+			sort,
+		}),
+		where,
+		scope,
+	});
+});
+
+export type userRestrictionFetchFx = ReturnType<typeof userRestrictionFetchFx>;

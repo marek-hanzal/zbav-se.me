@@ -1,12 +1,12 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { describe, expect, it } from "vitest";
-import { transactionCollectionFx } from "~/buyer/transaction/server/fx/transactionCollectionFx";
+import { transactionCollectionFx } from "~/buyer-transaction/fx/transactionCollectionFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
+import { transactionEntryCreateFx } from "~/user-transaction-entry/fx/transactionEntryCreateFx";
 
 describe("buyer transaction read model activity and sort", () => {
 	it("filters unread vs archived activity and sorts by last activity timestamp", async () => {

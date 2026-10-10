@@ -1,10 +1,10 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
-import { listingCollectionFx } from "~/buyer/listing/server/fx/listingCollectionFx";
-import { listingCountFx } from "~/buyer/listing/server/fx/listingCountFx";
-import { favouriteCreateFx } from "~/buyer/listing-favourite/server/fx/favouriteCreateFx";
-import { ignoreCreateFx } from "~/buyer/listing-ignore/server/fx/ignoreCreateFx";
+import { feedCreateFx } from "~/buyer-feed/fx/feedCreateFx";
+import { listingCollectionFx } from "~/buyer-listing/fx/listingCollectionFx";
+import { listingCountFx } from "~/buyer-listing/fx/listingCountFx";
+import { favouriteCreateFx } from "~/buyer-listing-favourite/fx/favouriteCreateFx";
+import { ignoreCreateFx } from "~/buyer-listing-ignore/fx/ignoreCreateFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { getDefaultListingCreateFx } from "~/test/listing/fx/getDefaultListingCreateFx";

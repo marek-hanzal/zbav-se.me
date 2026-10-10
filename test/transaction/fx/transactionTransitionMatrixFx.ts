@@ -1,7 +1,7 @@
-import { TransactionEntryKindEnumSchema } from "~/common/user-transaction/enum/TransactionEntryKindEnumSchema";
-import { TransactionSideEnumSchema } from "~/common/user-transaction/enum/TransactionSideEnumSchema";
-import { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
-import type { Transitions } from "~/user/transaction/server/fx/transactionTransitionFx";
+import { TransactionEntryKindEnumSchema } from "~/transaction-contract/schema/TransactionEntryKindEnumSchema";
+import { TransactionSideEnumSchema } from "~/transaction-contract/schema/TransactionSideEnumSchema";
+import { TransactionStatusEnumSchema } from "~/transaction-contract/schema/TransactionStatusEnumSchema";
+import type { Transitions } from "~/user-transaction/fx/transactionTransitionFx";
 
 export type MatrixState = Transitions.Kind | null;
 export type MatrixRequest = Transitions.Kind;

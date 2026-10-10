@@ -74,17 +74,17 @@ export default defineConfig({
 			],
 			reportsDirectory: "./coverage/vitest",
 			include: [
-				"src/**/server/db/**/*Fx.ts",
-				"src/**/server/fx/**/*Fx.ts",
-				"src/server/database/fx/**/*Fx.ts",
+				"src/{buyer-*,seller-*,user-*,public-*,session-*}/{db,fx}/*Fx.ts",
+				"src/{listing-attr,resource-definition,s3,translation,database,listing-spotlight,rate-limit,translator}/{db,fx}/*Fx.ts",
 			],
 			exclude: [
 				"**/*.test.ts",
 				"**/*.d.ts",
 				//
-				"src/server/@migrations/**/*.ts",
-				"src/server/@system/**/*.ts",
-				"src/**/server/tool/**/*.ts",
+				"src/database-migration/**/*.ts",
+				"src/system-migration/**/*.ts",
+				"src/*/tool/**/*.ts",
+				"src/database/fx/databaseFx.ts",
 			],
 			reportOnFailure: false,
 			watermarks: {

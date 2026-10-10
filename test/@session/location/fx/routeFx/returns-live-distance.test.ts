@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { routeFx } from "~/session/location/server/fx/routeFx";
+import { routeFx } from "~/session-location/fx/routeFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 

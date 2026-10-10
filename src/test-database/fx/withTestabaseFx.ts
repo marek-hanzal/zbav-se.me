@@ -2,7 +2,6 @@ import { getLogger } from "@logtape/logtape";
 import { Effect } from "effect";
 import { PostgresDialect, sql } from "kysely";
 import { Pool } from "pg";
-import { getRootLogger } from "~/common/log/getRootLogger";
 import { withDatabaseName } from "~/database-query/fn/withDatabaseName";
 import { withDatabaseFx } from "~/database-query/fx/withDatabaseFx";
 import { withDialectFx } from "~/database-query/fx/withDialectFx";
@@ -11,6 +10,7 @@ import { MigrationContextFx } from "~/database-query/service/MigrationContextFx"
 import { ensureDocker } from "~/docker/fn/ensureDocker";
 import { rmImage } from "~/docker/fn/rmImage";
 import { runImage } from "~/docker/fn/runImage";
+import { getRootLogger } from "~/log/fn/getRootLogger";
 import { shOptional } from "~/shell/fn/shOptional";
 import { waitForConnect } from "~/test-database/fn/waitForConnect";
 

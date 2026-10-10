@@ -3,8 +3,8 @@ import { describe, expect, it } from "vitest";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { userResourceBundleCreateFx } from "~/user/resource-bundle/server/fx/userResourceBundleCreateFx";
-import { ResourceBundleEnumSchema } from "~/user/resource-bundle/server/schema/ResourceBundleEnumSchema";
+import { userResourceBundleCreateFx } from "~/user-resource-bundle/fx/userResourceBundleCreateFx";
+import { ResourceBundleEnumSchema } from "~/user-resource-bundle/schema/ResourceBundleEnumSchema";
 
 describe("userResourceBundleCreateFx", () => {
 	it("assigns the free bundle idempotently", async () => {

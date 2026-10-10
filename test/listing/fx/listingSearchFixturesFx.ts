@@ -1,13 +1,13 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
-import type { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
-import type { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
-import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
-import type { WarrantyEnumSchema } from "~/common/warranty/enum/WarrantyEnumSchema";
 import { DateServiceFx } from "~/date/service/DateServiceFx";
+import type { DeliveryEnumSchema } from "~/delivery/schema/DeliveryEnumSchema";
 import { genId } from "~/identity/fn/genId";
-import { listingSpotlightBuildFx } from "~/server/listing-spotlight/server/fx/listingSpotlightBuildFx";
+import type { ListingStatusEnumSchema } from "~/listing/schema/ListingStatusEnumSchema";
+import { listingSpotlightBuildFx } from "~/listing-spotlight/fx/listingSpotlightBuildFx";
+import type { RestrictionEnumSchema } from "~/restriction/schema/RestrictionEnumSchema";
 import type { testabase } from "~/test/testabase";
+import type { WarrantyEnumSchema } from "~/warranty/schema/WarrantyEnumSchema";
 
 type TestDatabase = Awaited<ReturnType<typeof testabase>>;
 type LocationFixture = {

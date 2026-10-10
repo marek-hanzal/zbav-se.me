@@ -1,12 +1,12 @@
 import { Effect } from "effect";
 import { createElement } from "react";
 import { describe, expect, it } from "vitest";
-import { EmailVerificationEmail } from "~/email/template/EmailVerificationEmail";
-import { renderMailFx } from "~/server/email/fx/renderMailFx";
+import { renderMailFx } from "~/email/fx/renderMailFx";
+import { EmailVerificationEmail } from "~/email/ui/EmailVerificationEmail";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { TranslationContext } from "~/translation/context/TranslationContext";
-import { withTranslatorFx } from "~/translator/server/fx/withTranslatorFx";
+import { withTranslatorFx } from "~/translator/fx/withTranslatorFx";
 
 describe("renderMailFx", () => {
 	it("renders html and text from a React email template", async () => {

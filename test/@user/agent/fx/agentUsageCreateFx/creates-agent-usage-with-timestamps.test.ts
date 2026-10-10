@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { agentUsageCreateFx } from "~/user/agent/server/fx/agentUsageCreateFx";
+import { agentUsageCreateFx } from "~/user-agent/fx/agentUsageCreateFx";
 
 describe("agentUsageCreateFx", () => {
 	it("creates scoped agent usage rows with timestamps", async () => {

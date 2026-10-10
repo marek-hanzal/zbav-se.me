@@ -1,13 +1,13 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { uploadCollectionFx } from "~/public/upload/server/fx/uploadCollectionFx";
-import { uploadFetchFx } from "~/public/upload/server/fx/uploadFetchFx";
+import { uploadCollectionFx } from "~/public-upload/fx/uploadCollectionFx";
+import { uploadFetchFx } from "~/public-upload/fx/uploadFetchFx";
 import { testUploadUrl } from "~/test/common/fn/testUploadUrl";
 import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
+import { uploadCreateFx } from "~/user-upload/fx/uploadCreateFx";
 
 describe("public upload access", () => {
 	it("returns public uploads and rejects private uploads", async () => {

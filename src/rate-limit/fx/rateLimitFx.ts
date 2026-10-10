@@ -1,0 +1,99 @@
+import { Effect } from "effect";
+import { dbFx } from "~/database/fx/dbFx";
+import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { RateLimitRuleTableSchema } from "~/database/schema/RateLimitRuleTableSchema";
+import { DateServiceFx } from "~/date/service/DateServiceFx";
+import { NotFoundErrorFx } from "~/error/error/NotFoundErrorFx";
+import { hash } from "~/hmac/fn/hash";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
+import { getWindowFx } from "~/rate-limit/fx/getWindowFx";
+import type { RateLimitQuerySchema } from "~/rate-limit/schema/RateLimitQuerySchema";
+import { ServerHmacSchema } from "~/server-env/schema/ServerHmacSchema";
+
+export namespace rateLimitFx {
+	export interface Props extends RateLimitQuerySchema.Type {
+		//
+	}
+}
+
+/**
+ * Returns current snapshot (info) of rate limit
+ */
+export const rateLimitFx = Effect.fn("rateLimitFx")(function* ({ rule, key }: rateLimitFx.Props) {
+	const logger = yield* getLoggerFx("rateLimitFx");
+	logger.trace("rateLimitFx", {
+		rule,
+		key,
+	});
+
+	const dateService = yield* DateServiceFx;
+	const hmacConfig = ServerHmacSchema.parse(process.env);
+
+	return yield* withTransactionFx(
+		Effect.gen(function* () {
+			const rateLimitRuleRow = yield* dbFx(async (kysely) => {
+				return kysely
+					.selectFrom("rate_limit_rule")
+					.select([
+						"window",
+						"limit",
+					])
+					.where("name", "=", rule)
+					.executeTakeFirst();
+			});
+
+			if (!rateLimitRuleRow) {
+				logger.trace(`Rate limit rule '${rule}' was not found`, {
+					rule,
+				});
+
+				return yield* new NotFoundErrorFx({
+					resource: "rate-limit-rule",
+					resourceId: rule,
+					message: `Rate limit rule '${rule}' was not found`,
+				});
+			}
+
+			const rateLimitRule = RateLimitRuleTableSchema.pick({
+				window: true,
+				limit: true,
+			}).parse(rateLimitRuleRow);
+
+			const hashedKey = hash({
+				key,
+				secret: hmacConfig.SERVER_HMAC_SECRET,
+			});
+
+			const now = dateService.now();
+
+			const window = yield* getWindowFx({
+				now,
+				seconds: rateLimitRule.window,
+			});
+
+			const current = yield* dbFx(async (kysely) => {
+				return kysely
+					.selectFrom("rate_limit_event as rle")
+					.select([
+						"rle.count",
+					])
+					.where("rle.rule", "=", rule)
+					.where("rle.key", "=", hashedKey)
+					.where("rle.window", "=", window.toJSDate())
+					.executeTakeFirst();
+			});
+			const count = current?.count ?? 0;
+
+			return {
+				rule,
+				key: hashedKey,
+				window: window.toJSDate(),
+				count,
+				limit: rateLimitRule.limit,
+				seconds: rateLimitRule.window,
+			} as const;
+		}),
+	);
+});
+
+export type rateLimitFx = ReturnType<typeof rateLimitFx>;

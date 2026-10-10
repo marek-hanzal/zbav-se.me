@@ -4,11 +4,11 @@ import { testUploadUrl } from "~/test/common/fn/testUploadUrl";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { galleryCountFx } from "~/user/gallery/server/fx/galleryCountFx";
-import { galleryCreateFx } from "~/user/gallery/server/fx/galleryCreateFx";
-import { galleryFetchFx } from "~/user/gallery/server/fx/galleryFetchFx";
-import { galleryItemInsertFx } from "~/user/gallery-item/server/fx/galleryItemInsertFx";
-import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
+import { galleryCountFx } from "~/user-gallery/fx/galleryCountFx";
+import { galleryCreateFx } from "~/user-gallery/fx/galleryCreateFx";
+import { galleryFetchFx } from "~/user-gallery/fx/galleryFetchFx";
+import { galleryItemInsertFx } from "~/user-gallery-item/fx/galleryItemInsertFx";
+import { uploadCreateFx } from "~/user-upload/fx/uploadCreateFx";
 
 describe("gallery contract fx", () => {
 	it("creates a scoped gallery, fetches nested items in order, and keeps count isolated", async () => {

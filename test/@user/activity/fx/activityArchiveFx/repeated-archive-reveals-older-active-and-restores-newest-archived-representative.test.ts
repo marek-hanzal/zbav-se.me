@@ -1,15 +1,15 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
+import type { ActivityTableSchema } from "~/database/schema/ActivityTable";
 import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
-import type { ActivityTableSchema } from "~/server/database/@table/ActivityTableSchema";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { activityArchiveFx } from "~/user/activity/server/fx/activityArchiveFx";
-import { activityCollectionFx } from "~/user/activity/server/fx/activityCollectionFx";
-import { activityCountFx } from "~/user/activity/server/fx/activityCountFx";
-import { activityFetchFx } from "~/user/activity/server/fx/activityFetchFx";
+import { activityArchiveFx } from "~/user-activity/fx/activityArchiveFx";
+import { activityCollectionFx } from "~/user-activity/fx/activityCollectionFx";
+import { activityCountFx } from "~/user-activity/fx/activityCountFx";
+import { activityFetchFx } from "~/user-activity/fx/activityFetchFx";
 
 type SeedActivity = Pick<
 	ActivityTableSchema.Type,

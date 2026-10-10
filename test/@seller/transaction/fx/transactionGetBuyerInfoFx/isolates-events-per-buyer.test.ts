@@ -2,12 +2,12 @@ import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
-import { transactionGetBuyerInfoFx } from "~/seller/transaction/server/fx/transactionGetBuyerInfoFx";
+import { transactionGetBuyerInfoFx } from "~/seller-transaction/fx/transactionGetBuyerInfoFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
+import { userEventCreateFx } from "~/user-event/fx/userEventCreateFx";
 
 describe("transactionGetBuyerInfoFx", () => {
 	it("returns buyer events only for the buyer behind the requested transaction", async () => {

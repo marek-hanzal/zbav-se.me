@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Effect } from "effect";
-import { toStreamResponse } from "~/common/sitemap";
+import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
-import { withListingBucketsFx } from "~/public/listing/server/fx/withListingBucketsFx";
-import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
-import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
-import { withOriginMiddleware } from "~/server/middleware/withOriginMiddleware";
+import { withListingBucketsFx } from "~/public-listing/fx/withListingBucketsFx";
+import { withDatabaseMiddleware } from "~/request-middleware/middleware/withDatabaseMiddleware";
+import { withOriginMiddleware } from "~/request-middleware/middleware/withOriginMiddleware";
+import { toStreamResponse } from "~/sitemap/fn/index";
 
 export const Route = createFileRoute("/sitemap.xml")({
 	server: {

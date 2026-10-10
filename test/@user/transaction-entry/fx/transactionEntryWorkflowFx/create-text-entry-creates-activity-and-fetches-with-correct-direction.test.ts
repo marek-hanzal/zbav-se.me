@@ -6,10 +6,10 @@ import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { transactionEntryCollectionFx } from "~/user/transaction-entry/server/fx/transactionEntryCollectionFx";
-import { transactionEntryCountFx } from "~/user/transaction-entry/server/fx/transactionEntryCountFx";
-import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
-import { transactionEntryFetchFx } from "~/user/transaction-entry/server/fx/transactionEntryFetchFx";
+import { transactionEntryCollectionFx } from "~/user-transaction-entry/fx/transactionEntryCollectionFx";
+import { transactionEntryCountFx } from "~/user-transaction-entry/fx/transactionEntryCountFx";
+import { transactionEntryCreateFx } from "~/user-transaction-entry/fx/transactionEntryCreateFx";
+import { transactionEntryFetchFx } from "~/user-transaction-entry/fx/transactionEntryFetchFx";
 
 describe("transactionEntry workflow", () => {
 	it("creates text entry, notifies counterparty and maps direction per viewer", async () => {

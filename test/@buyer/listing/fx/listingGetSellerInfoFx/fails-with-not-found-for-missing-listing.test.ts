@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { describe, it } from "vitest";
-import { listingGetSellerInfoFx } from "~/buyer/listing/server/fx/listingGetSellerInfoFx";
+import { listingGetSellerInfoFx } from "~/buyer-listing/fx/listingGetSellerInfoFx";
 import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";

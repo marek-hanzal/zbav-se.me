@@ -6,7 +6,7 @@ tx({
 	packages: [
 		`${import.meta.dirname}/..`,
 	],
-	output: `${import.meta.dirname}/../src/server/@migrations/translation`,
+	output: `${import.meta.dirname}/../src/database-migration/data`,
 	locales,
 	sources: TranslationSources,
 });

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getFeedDefaultCreate } from "~/buyer/feed/service/getFeedDefaultCreate";
+import { getFeedDefaultCreate } from "~/buyer-feed/service/getFeedDefaultCreate";
 
 describe("getFeedDefaultCreate", () => {
 	it("builds the default user feed with stable query defaults", () => {

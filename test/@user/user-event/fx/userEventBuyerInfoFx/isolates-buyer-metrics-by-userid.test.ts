@@ -2,11 +2,11 @@ import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
-import { userEventBuyerInfoFx } from "~/seller/user-event/server/fx/userEventBuyerInfoFx";
+import { userEventBuyerInfoFx } from "~/seller-user-event/fx/userEventBuyerInfoFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
+import { userEventCreateFx } from "~/user-event/fx/userEventCreateFx";
 
 describe("userEventBuyerInfoFx", () => {
 	it("isolates buyer metrics by userId and does not mix other buyers' events", async () => {

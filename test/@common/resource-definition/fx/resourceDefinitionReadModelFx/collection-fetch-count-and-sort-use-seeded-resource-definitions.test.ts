@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/ResourceDefinitionEnumSchema";
-import { resourceDefinitionCollectionFx } from "~/common/resource-definition/server/fx/resourceDefinitionCollectionFx";
-import { resourceDefinitionFetchFx } from "~/common/resource-definition/server/fx/resourceDefinitionFetchFx";
+import { resourceDefinitionCollectionFx } from "~/resource-definition/fx/resourceDefinitionCollectionFx";
+import { resourceDefinitionFetchFx } from "~/resource-definition/fx/resourceDefinitionFetchFx";
+import { ResourceDefinitionEnumSchema } from "~/resource-definition/schema/ResourceDefinitionEnumSchema";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 

@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-import type { UserEventTableSchema } from "~/server/database/@table/UserEventTableSchema";
+import type { UserEventTableSchema } from "~/database/schema/UserEventTableSchema";
 
 const createSellerTerminalRatioEvent = (
 	id: string,

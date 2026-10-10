@@ -1,13 +1,13 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { listingCollectionFx } from "~/buyer/listing/server/fx/listingCollectionFx";
-import { listingCountFx } from "~/buyer/listing/server/fx/listingCountFx";
+import { listingCollectionFx } from "~/buyer-listing/fx/listingCollectionFx";
+import { listingCountFx } from "~/buyer-listing/fx/listingCountFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { patchCategoryDiscoveryFx } from "~/test/listing/fx/listingSearchFixturesFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { categoryFetchFx } from "~/user/category/server/fx/categoryFetchFx";
+import { categoryFetchFx } from "~/user-category/fx/categoryFetchFx";
 
 describe("buyer listing discovery flow", () => {
 	it("hides explicit categories unless the buyer query asks for a category", async () => {

@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { pathOf } from "~/common/route/pathOf";
-import { withOriginMiddleware } from "~/server/middleware/withOriginMiddleware";
+import { withOriginMiddleware } from "~/request-middleware/middleware/withOriginMiddleware";
+import { pathOf } from "~/route/fn/pathOf";
 
 const blocked = [
 	"/api",

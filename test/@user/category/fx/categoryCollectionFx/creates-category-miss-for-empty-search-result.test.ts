@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { categoryCollectionFx } from "~/user/category/server/fx/categoryCollectionFx";
+import { categoryCollectionFx } from "~/user-category/fx/categoryCollectionFx";
 
 describe("categoryCollectionFx", () => {
 	it("creates category miss when collection is empty", async () => {

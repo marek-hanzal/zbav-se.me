@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getFeedDefaultCreate } from "~/buyer/feed/service/getFeedDefaultCreate";
+import { getFeedDefaultCreate } from "~/buyer-feed/service/getFeedDefaultCreate";
 
 describe("getFeedDefaultCreate", () => {
 	it("allows overriding the feed type", () => {

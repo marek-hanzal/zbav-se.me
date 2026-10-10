@@ -3,8 +3,8 @@ import { useRef } from "react";
 import { z } from "zod";
 import { Container } from "~/ui/ui/Container";
 import { Fade } from "~/ui/ui/Fade";
-import { WithEmail } from "~/user/auth/ui/SignIn/WithEmail";
-import { WithMagic } from "~/user/auth/ui/SignIn/WithMagic";
+import { WithEmail } from "~/user-auth/ui/WithEmail";
+import { WithMagic } from "~/user-auth/ui/WithMagic";
 
 const appOrigin = import.meta.env.VITE_ORIGIN;
 

@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { listingEventCreateFx } from "~/buyer/listing-event/server/fx/listingEventCreateFx";
-import { listingEventRateLimitFx } from "~/buyer/listing-event/server/fx/listingEventRateLimitFx";
+import { listingEventCreateFx } from "~/buyer-listing-event/fx/listingEventCreateFx";
+import { listingEventRateLimitFx } from "~/buyer-listing-event/fx/listingEventRateLimitFx";
 import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
 import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";

@@ -4,8 +4,8 @@ import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { transactionTouchFx } from "~/user/transaction/server/fx/transactionTouchFx";
-import { transactionUpdateStatusFx } from "~/user/transaction/server/fx/transactionUpdateStatusFx";
+import { transactionTouchFx } from "~/user-transaction/fx/transactionTouchFx";
+import { transactionUpdateStatusFx } from "~/user-transaction/fx/transactionUpdateStatusFx";
 
 describe("transaction core", () => {
 	it("updates status, cleans sensitive data on terminal transition, and extends expiration on touch", async () => {

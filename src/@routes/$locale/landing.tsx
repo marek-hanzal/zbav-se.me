@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Suspense } from "react";
+import { HeroImage } from "~/application-ui/ui/img.exports";
+import { Logo } from "~/application-ui/ui/logo.exports";
 import face from "~/assets/face.webp";
-import { HeroImage } from "~/common/ui/img";
-import { Logo } from "~/common/ui/logo";
-import { History } from "~/public/ui/History";
-import { HistoryPending } from "~/public/ui/HistoryPending";
+import { History } from "~/public-ui/ui/History";
+import { HistoryPending } from "~/public-ui/ui/HistoryPending";
 import { useTranslator } from "~/translation/hook/useTranslator";
 import { Tx } from "~/translation/ui/Tx";
 import { ChevronRightIcon } from "~/ui/constant/ChevronRightIcon";

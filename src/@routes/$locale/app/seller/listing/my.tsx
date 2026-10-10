@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Suspense } from "react";
-import { BackHomeButton } from "~/common/nav/BackHomeButton";
-import { TitleContainer } from "~/common/ui/container";
+import { TitleContainer } from "~/application-ui/ui/container.exports";
 import { useLocale } from "~/locale/hook/useLocale";
-import { ListingList } from "~/seller/listing/ui/ListingList";
+import { BackHomeButton } from "~/nav/ui/BackHomeButton.exports";
+import { ListingList } from "~/seller-listing/ui/ListingList/index";
 import { useTranslator } from "~/translation/hook/useTranslator";
-import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
+import { HomeMenuButton } from "~/user-home/ui/HomeMenu/HomeMenuButton";
 
 export const Route = createFileRoute("/$locale/app/seller/listing/my")({
 	component() {

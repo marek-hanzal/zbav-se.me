@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { transactionSuccessFx } from "~/buyer/transaction/server/fx/transactionSuccessFx";
+import { transactionSuccessFx } from "~/buyer-transaction/fx/transactionSuccessFx";
 import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";

@@ -1,15 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
-import { getFeedDefaultCreate } from "~/buyer/feed/service/getFeedDefaultCreate";
-import { SearchEditor } from "~/buyer/search/ui/SearchEditor";
-import { BackHomeButton } from "~/common/nav/BackHomeButton";
-import { withTranslationsQuery } from "~/common/translation/query/withTranslationsQuery";
-import { TitleContainer } from "~/common/ui/container";
+import { TitleContainer } from "~/application-ui/ui/container.exports";
+import { withFeedQuery } from "~/buyer-feed/query/withFeedQuery";
+import { getFeedDefaultCreate } from "~/buyer-feed/service/getFeedDefaultCreate";
+import { SearchEditor } from "~/buyer-search/ui/SearchEditor";
 import { useLocale } from "~/locale/hook/useLocale";
+import { BackHomeButton } from "~/nav/ui/BackHomeButton.exports";
 import { translator } from "~/translation/fn/translator";
 import { useTranslator } from "~/translation/hook/useTranslator";
+import { withTranslationsQuery } from "~/translation/query/withTranslationsQuery";
 import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
-import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
+import { HomeMenuButton } from "~/user-home/ui/HomeMenu/HomeMenuButton";
 
 export const Route = createFileRoute("/$locale/app/buyer/search")({
 	async loader({ context: { queryClient }, params: { locale } }) {

@@ -5,8 +5,8 @@ import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
-import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
+import { transactionEntryCreateFx } from "~/user-transaction-entry/fx/transactionEntryCreateFx";
+import { uploadCreateFx } from "~/user-upload/fx/uploadCreateFx";
 
 describe("transactionEntryWorkflowFx", () => {
 	it("gallery entry persists gallery items in correct sort order", async () => {

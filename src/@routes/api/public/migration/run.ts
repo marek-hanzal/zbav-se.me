@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ServerMigrationSchema } from "~/server/env/ServerMigrationSchema";
-import { withTokenMiddleware } from "~/server/middleware/withTokenMiddleware";
+import { withTokenMiddleware } from "~/request-middleware/middleware/withTokenMiddleware";
+import { ServerMigrationSchema } from "~/server-env/schema/ServerMigrationSchema";
 
 export const Route = createFileRoute("/api/public/migration/run")({
 	server: {

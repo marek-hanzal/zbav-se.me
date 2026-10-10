@@ -1,3 +1,3 @@
-import { runSeedApp } from "~/seed";
+import { runSeedApp } from "~/seed/fn/runSeedApp";
 
 await runSeedApp();

@@ -3,8 +3,8 @@ import { describe, expect, it } from "vitest";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { agentThreadCollectionFx } from "~/user/agent/server/fx/agentThreadCollectionFx";
-import { agentThreadCountFx } from "~/user/agent/server/fx/agentThreadCountFx";
+import { agentThreadCollectionFx } from "~/user-agent/fx/agentThreadCollectionFx";
+import { agentThreadCountFx } from "~/user-agent/fx/agentThreadCountFx";
 
 type TestDatabase = Awaited<ReturnType<typeof testabase>>;
 

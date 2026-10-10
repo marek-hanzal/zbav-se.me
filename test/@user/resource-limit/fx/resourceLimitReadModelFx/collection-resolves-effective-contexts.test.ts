@@ -1,9 +1,9 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/ResourceDefinitionEnumSchema";
+import { ResourceDefinitionEnumSchema } from "~/resource-definition/schema/ResourceDefinitionEnumSchema";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { resourceLimitCollectionFx } from "~/user/resource-limit/server/fx/resourceLimitCollectionFx";
+import { resourceLimitCollectionFx } from "~/user-resource-limit/fx/resourceLimitCollectionFx";
 import {
 	atResourceLimitReadModelFx,
 	seedResourceLimitReadModelFx,

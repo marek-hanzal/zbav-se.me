@@ -1,5 +1,5 @@
 import { type FC, Suspense } from "react";
-import { getRootLogger } from "~/common/log/getRootLogger";
+import { getRootLogger } from "~/log/fn/getRootLogger";
 import { useRenderLogger } from "~/ui/hook/useRenderLogger";
 import { Container } from "~/ui/ui/Container";
 import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";

@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { listingCollectionFx } from "~/buyer/listing/server/fx/listingCollectionFx";
-import { listingCountFx } from "~/buyer/listing/server/fx/listingCountFx";
+import { listingCollectionFx } from "~/buyer-listing/fx/listingCollectionFx";
+import { listingCountFx } from "~/buyer-listing/fx/listingCountFx";
 import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";

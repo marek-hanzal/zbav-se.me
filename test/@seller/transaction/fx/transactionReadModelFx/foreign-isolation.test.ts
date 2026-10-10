@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { transactionCollectionFx } from "~/seller/transaction/server/fx/transactionCollectionFx";
-import { transactionFetchFx } from "~/seller/transaction/server/fx/transactionFetchFx";
+import { transactionCollectionFx } from "~/seller-transaction/fx/transactionCollectionFx";
+import { transactionFetchFx } from "~/seller-transaction/fx/transactionFetchFx";
 import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { getDefaultListingCreateFx } from "~/test/listing/fx/getDefaultListingCreateFx";

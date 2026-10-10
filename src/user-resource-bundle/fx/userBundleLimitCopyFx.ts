@@ -1,0 +1,70 @@
+import { Effect } from "effect";
+import { dbFx } from "~/database/fx/dbFx";
+import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { genId } from "~/identity/fn/genId";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
+
+export namespace userBundleLimitCopyFx {
+	export interface Props {
+		/** Source resource_bundle template ID. */
+		bundleId: string;
+		/** Target user_resource_bundle ID. */
+		assignmentId: string;
+		createdAt: Date;
+		availableAt: Date;
+		/** Concrete snapshot expiration; null/undefined writes non-expiring rows. */
+		expiresAt?: Date | null;
+	}
+}
+
+/** Copies limit rows from a bundle template into one user bundle snapshot. */
+export const userBundleLimitCopyFx = Effect.fn("userBundleLimitCopyFx")(function* ({
+	bundleId,
+	assignmentId,
+	createdAt,
+	availableAt,
+	expiresAt,
+}: userBundleLimitCopyFx.Props) {
+	const logger = yield* getLoggerFx("userBundleLimitCopyFx");
+	logger.trace("userBundleLimitCopyFx", {
+		bundleId,
+		assignmentId,
+	});
+
+	return yield* withTransactionFx(
+		Effect.gen(function* () {
+			const limits = yield* dbFx(async (kysely) => {
+				return kysely
+					.selectFrom("resource_bundle_limit")
+					.selectAll()
+					.where("resourceBundleId", "=", bundleId)
+					.execute();
+			});
+
+			return yield* Effect.forEach(
+				limits,
+				(limit) => {
+					return dbFx(async (kysely) => {
+						await kysely
+							.insertInto("user_resource_bundle_limit")
+							.values({
+								id: genId(),
+								userResourceBundleId: assignmentId,
+								resourceDefinitionId: limit.resourceDefinitionId,
+								limit: limit.limit,
+								createdAt,
+								availableAt,
+								expiresAt: expiresAt ?? null,
+							})
+							.execute();
+					});
+				},
+				{
+					discard: true,
+				},
+			);
+		}),
+	);
+});
+
+export type userBundleLimitCopyFx = ReturnType<typeof userBundleLimitCopyFx>;

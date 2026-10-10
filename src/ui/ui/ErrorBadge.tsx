@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { TypoIcon } from "~/common/ui/typo/index";
+import { TypoIcon } from "~/application-ui/ui/typo.exports";
 import { useTranslator } from "~/translation/hook/useTranslator";
 import { Tx } from "~/translation/ui/Tx";
 import { Badge } from "~/ui/ui/Badge";

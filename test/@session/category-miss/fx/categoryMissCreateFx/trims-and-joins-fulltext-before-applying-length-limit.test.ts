@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { categoryMissCreateFx } from "~/session/category-miss/server/fx/categoryMissCreateFx";
+import { categoryMissCreateFx } from "~/session-category-miss/fx/categoryMissCreateFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 

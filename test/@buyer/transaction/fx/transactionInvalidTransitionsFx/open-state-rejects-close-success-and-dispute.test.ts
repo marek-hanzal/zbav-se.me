@@ -1,9 +1,9 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { describe, expect, it } from "vitest";
-import { transactionCloseFx } from "~/buyer/transaction/server/fx/transactionCloseFx";
-import { transactionDisputeFx } from "~/buyer/transaction/server/fx/transactionDisputeFx";
-import { transactionSuccessFx } from "~/buyer/transaction/server/fx/transactionSuccessFx";
+import { transactionCloseFx } from "~/buyer-transaction/fx/transactionCloseFx";
+import { transactionDisputeFx } from "~/buyer-transaction/fx/transactionDisputeFx";
+import { transactionSuccessFx } from "~/buyer-transaction/fx/transactionSuccessFx";
 import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";

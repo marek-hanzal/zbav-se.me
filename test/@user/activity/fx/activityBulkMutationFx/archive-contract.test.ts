@@ -3,8 +3,8 @@ import { describe, expect, it } from "vitest";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { activityArchiveFx } from "~/user/activity/server/fx/activityArchiveFx";
-import { activityCountFx } from "~/user/activity/server/fx/activityCountFx";
+import { activityArchiveFx } from "~/user-activity/fx/activityArchiveFx";
+import { activityCountFx } from "~/user-activity/fx/activityCountFx";
 
 describe("activity bulk mutation archive contract", () => {
 	it("archives only scoped rows matched by reference filters and keeps counts consistent", async () => {

@@ -5,8 +5,8 @@ import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { userEventCollectionFx } from "~/user/user-event/server/fx/userEventCollectionFx";
-import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
+import { userEventCollectionFx } from "~/user-event/fx/userEventCollectionFx";
+import { userEventCreateFx } from "~/user-event/fx/userEventCreateFx";
 
 describe("userEventCollectionFx", () => {
 	it("filters by scope and source while keeping the requested sort order", async () => {

@@ -1,0 +1,31 @@
+import { Effect } from "effect";
+import { dbFx } from "~/database/fx/dbFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
+import type { FieldOptionCreateSchema } from "~/user-field-option/schema/FieldOptionCreateSchema";
+
+export namespace fieldOptionCreateFx {
+	export interface Props extends FieldOptionCreateSchema.Type {
+		//
+	}
+}
+
+export const fieldOptionCreateFx = Effect.fn("fieldOptionCreateFx")(function* (
+	data: fieldOptionCreateFx.Props,
+) {
+	const logger = yield* getLoggerFx("fieldOptionCreateFx");
+	logger.trace("fieldOptionCreateFx", {
+		...data,
+	});
+
+	return yield* dbFx(async (kysely) => {
+		return kysely
+			.insertInto("field_option")
+			.values({
+				...data,
+			})
+			.returningAll()
+			.executeTakeFirstOrThrow();
+	});
+});
+
+export type fieldOptionCreateFx = ReturnType<typeof fieldOptionCreateFx>;

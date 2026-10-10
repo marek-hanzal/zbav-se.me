@@ -1,9 +1,9 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/ResourceDefinitionEnumSchema";
 import { genId } from "~/identity/fn/genId";
-import { draftCreateFx } from "~/seller/draft/server/fx/draftCreateFx";
-import { draftPatchFx } from "~/seller/draft/server/fx/draftPatchFx";
+import { ResourceDefinitionEnumSchema } from "~/resource-definition/schema/ResourceDefinitionEnumSchema";
+import { draftCreateFx } from "~/seller-draft/fx/draftCreateFx";
+import { draftPatchFx } from "~/seller-draft/fx/draftPatchFx";
 import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";

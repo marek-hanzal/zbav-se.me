@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
-import type { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/ResourceDefinitionEnumSchema";
 import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
 import { genId } from "~/identity/fn/genId";
+import type { ResourceDefinitionEnumSchema } from "~/resource-definition/schema/ResourceDefinitionEnumSchema";
 import type { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 

@@ -1,14 +1,14 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { transactionCollectionFx } from "~/buyer/transaction/server/fx/transactionCollectionFx";
-import { transactionAcceptFx } from "~/seller/transaction/server/fx/transactionAcceptFx";
+import { transactionCollectionFx } from "~/buyer-transaction/fx/transactionCollectionFx";
+import { transactionAcceptFx } from "~/seller-transaction/fx/transactionAcceptFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { getDefaultListingCreateFx } from "~/test/listing/fx/getDefaultListingCreateFx";
 import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { activityArchiveFx } from "~/user/activity/server/fx/activityArchiveFx";
-import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
+import { activityArchiveFx } from "~/user-activity/fx/activityArchiveFx";
+import { transactionEntryCreateFx } from "~/user-transaction-entry/fx/transactionEntryCreateFx";
 
 describe("buyer transactionCollectionFx", () => {
 	it("reveals older seller-message activity before moving an open transaction back to buyer-to-seller", async () => {

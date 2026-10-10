@@ -5,7 +5,7 @@ import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { transactionResolveFx } from "~/user/transaction/server/fx/transactionResolveFx";
+import { transactionResolveFx } from "~/user-transaction/fx/transactionResolveFx";
 
 describe("transactionResolveFx", () => {
 	it("resolves buyer and seller access and denies outsider", async () => {

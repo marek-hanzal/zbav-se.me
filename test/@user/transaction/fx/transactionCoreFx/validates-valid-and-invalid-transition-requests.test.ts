@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { transactionTransitionFx } from "~/user/transaction/server/fx/transactionTransitionFx";
+import { transactionTransitionFx } from "~/user-transaction/fx/transactionTransitionFx";
 
 describe("transaction core", () => {
 	it("validates valid and invalid transition requests", async () => {

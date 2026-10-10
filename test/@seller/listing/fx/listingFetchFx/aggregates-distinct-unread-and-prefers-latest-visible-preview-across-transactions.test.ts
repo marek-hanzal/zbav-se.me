@@ -1,14 +1,14 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { transactionCreateFx } from "~/buyer/transaction/server/fx/transactionCreateFx";
-import { listingCollectionFx } from "~/seller/listing/server/fx/listingCollectionFx";
-import { listingFetchFx } from "~/seller/listing/server/fx/listingFetchFx";
-import { transactionAcceptFx } from "~/seller/transaction/server/fx/transactionAcceptFx";
+import { transactionCreateFx } from "~/buyer-transaction/fx/transactionCreateFx";
+import { listingCollectionFx } from "~/seller-listing/fx/listingCollectionFx";
+import { listingFetchFx } from "~/seller-listing/fx/listingFetchFx";
+import { transactionAcceptFx } from "~/seller-transaction/fx/transactionAcceptFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
+import { transactionEntryCreateFx } from "~/user-transaction-entry/fx/transactionEntryCreateFx";
 
 describe("seller listing transaction read model", () => {
 	it("counts unread by distinct transaction and keeps preview on the latest visible activity across transactions", async () => {

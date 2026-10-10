@@ -4,9 +4,9 @@ import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { UploadConfigFx } from "~/user/upload/server/context/UploadConfigFx";
-import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
-import { uploadFetchFx } from "~/user/upload/server/fx/uploadFetchFx";
+import { UploadConfigFx } from "~/user-upload/context/UploadConfigFx";
+import { uploadCreateFx } from "~/user-upload/fx/uploadCreateFx";
+import { uploadFetchFx } from "~/user-upload/fx/uploadFetchFx";
 
 describe("uploadFetchFx", () => {
 	it("fetches scoped upload and rejects missing or foreign upload", async () => {

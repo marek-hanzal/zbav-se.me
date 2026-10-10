@@ -1,8 +1,8 @@
-import { getRootLogger } from "~/common/log/getRootLogger";
+import type { Database } from "~/database/type/Database";
 import { withDatabaseFx } from "~/database-query/fx/withDatabaseFx";
 import { withMigrationFx } from "~/database-query/fx/withMigrationFx";
-import type { Database } from "~/server/database/Database";
-import { ServerDatabaseSchema } from "~/server/env/ServerDatabaseSchema";
+import { getRootLogger } from "~/log/fn/getRootLogger";
+import { ServerDatabaseSchema } from "~/server-env/schema/ServerDatabaseSchema";
 import { testabase as coolTestabase } from "~/test-database/fn/testabase";
 
 export namespace testabase {

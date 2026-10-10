@@ -5,10 +5,10 @@ import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { userRestrictionCollectionFx } from "~/user/user-restriction/server/fx/userRestrictionCollectionFx";
-import { userRestrictionCountFx } from "~/user/user-restriction/server/fx/userRestrictionCountFx";
-import { userRestrictionCreateFx } from "~/user/user-restriction/server/fx/userRestrictionCreateFx";
-import { withUserRestrictionContextFx } from "~/user/user-restriction/server/fx/withUserRestrictionContextFx";
+import { userRestrictionCollectionFx } from "~/user-restriction/fx/userRestrictionCollectionFx";
+import { userRestrictionCountFx } from "~/user-restriction/fx/userRestrictionCountFx";
+import { userRestrictionCreateFx } from "~/user-restriction/fx/userRestrictionCreateFx";
+import { withUserRestrictionContextFx } from "~/user-restriction/fx/withUserRestrictionContextFx";
 
 type TestDatabase = Awaited<ReturnType<typeof testabase>>;
 

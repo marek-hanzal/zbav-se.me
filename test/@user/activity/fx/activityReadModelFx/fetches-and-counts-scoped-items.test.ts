@@ -3,9 +3,9 @@ import { describe, expect, it } from "vitest";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { activityCollectionFx } from "~/user/activity/server/fx/activityCollectionFx";
-import { activityCountFx } from "~/user/activity/server/fx/activityCountFx";
-import { activityFetchFx } from "~/user/activity/server/fx/activityFetchFx";
+import { activityCollectionFx } from "~/user-activity/fx/activityCollectionFx";
+import { activityCountFx } from "~/user-activity/fx/activityCountFx";
+import { activityFetchFx } from "~/user-activity/fx/activityFetchFx";
 
 describe("activity read model", () => {
 	it("fetches and counts scoped items", async () => {

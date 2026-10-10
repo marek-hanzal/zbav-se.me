@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { computeBuyerCloser } from "~/seller/user-event/server/fx/userEventBuyerInfoFx";
+import { computeBuyerCloser } from "~/seller-user-event/fx/userEventBuyerInfoFx";
 import { createBuyerTerminalRatioSource } from "./terminalRatioFixture";
 
 describe("userEventBuyerInfoFx terminal ratio", () => {

@@ -1,0 +1,30 @@
+import { getRootLogger } from "~/log/fn/getRootLogger";
+import { withQuery } from "~/query/fn/withQuery";
+import { categoryAttrOfFn } from "~/user-category/fn/categoryAttrOfFn";
+
+export namespace withCategoryAttrOfQuery {
+	export interface Data {
+		categoryId: string;
+	}
+}
+
+export const withCategoryAttrOfQuery = withQuery({
+	logger: getRootLogger([
+		"query",
+		"withCategoryAttrOfQuery",
+	]),
+	errors: {} as {
+		query: categoryAttrOfFn.Error;
+	},
+	keys(data: withCategoryAttrOfQuery.Data) {
+		return [
+			"category-attr-of",
+			data,
+		];
+	},
+	async queryFn(data: withCategoryAttrOfQuery.Data) {
+		return categoryAttrOfFn({
+			data,
+		});
+	},
+});

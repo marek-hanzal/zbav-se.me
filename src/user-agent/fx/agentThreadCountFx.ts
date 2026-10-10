@@ -1,0 +1,31 @@
+import { Effect } from "effect";
+import { withCountFx } from "~/database-query/fx/withCountFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
+import { withAgentThreadSelectFx } from "~/user-agent/db/withAgentThreadSelectFx";
+import type { AgentThreadCountQuerySchema } from "~/user-agent/schema/AgentThreadCountQuerySchema";
+import type { AgentThreadWhereSchema } from "~/user-agent/schema/AgentThreadWhereSchema";
+
+export namespace agentThreadCountFx {
+	export interface Props extends AgentThreadCountQuerySchema.Type {
+		scope: AgentThreadWhereSchema.Type;
+	}
+}
+
+export const agentThreadCountFx = Effect.fn("agentThreadCountFx")(function* ({
+	where,
+	scope,
+}: agentThreadCountFx.Props) {
+	const logger = yield* getLoggerFx("agentThreadCountFx");
+	logger.trace("agentThreadCountFx", {
+		where,
+		scope,
+	});
+
+	return yield* withCountFx({
+		selectFx: withAgentThreadSelectFx({}),
+		where,
+		scope,
+	});
+});
+
+export type agentThreadCountFx = ReturnType<typeof agentThreadCountFx>;

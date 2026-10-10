@@ -1,12 +1,12 @@
 import { Effect } from "effect";
-import { getRootLogger } from "~/common/log/getRootLogger";
+import { runAuthMigration } from "~/authentication/fn/runAuthMigration";
+import { imports } from "~/database/constant/imports";
+import { withKyselyFx } from "~/database/fx/withKyselyFx";
+import type { Database } from "~/database/type/Database";
+import { migrations } from "~/database-migration/constant/migrations";
 import { withDatabaseFx } from "~/database-query/fx/withDatabaseFx";
 import { MigrationContextFx } from "~/database-query/service/MigrationContextFx";
-import { migrations } from "~/server/@migrations/migrations";
-import { runAuthMigration } from "~/server/auth/runAuthMigration";
-import type { Database } from "~/server/database/Database";
-import { imports } from "~/server/database/databaseFx/imports";
-import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
+import { getRootLogger } from "~/log/fn/getRootLogger";
 import { translationSyncNodeFx } from "./translationSyncNodeFx";
 
 export const testDatabaseFx = withDatabaseFx<Database>({

@@ -6,7 +6,7 @@ import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { transactionUserCreateFx } from "~/user/transaction-user/server/fx/transactionUserCreateFx";
+import { transactionUserCreateFx } from "~/user-transaction-user/fx/transactionUserCreateFx";
 
 describe("transactionUserCreateFx", () => {
 	it("inserts transaction participants with expected sides", async () => {

@@ -3,9 +3,9 @@ import { describe, expect, it } from "vitest";
 import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { fieldOptionCollectionFx } from "~/user/field-option/server/fx/fieldOptionCollectionFx";
-import { fieldOptionCountFx } from "~/user/field-option/server/fx/fieldOptionCountFx";
-import { fieldOptionFetchFx } from "~/user/field-option/server/fx/fieldOptionFetchFx";
+import { fieldOptionCollectionFx } from "~/user-field-option/fx/fieldOptionCollectionFx";
+import { fieldOptionCountFx } from "~/user-field-option/fx/fieldOptionCountFx";
+import { fieldOptionFetchFx } from "~/user-field-option/fx/fieldOptionFetchFx";
 
 describe("field option read model", () => {
 	it("filters, sorts, fetches, and counts field options consistently", async () => {

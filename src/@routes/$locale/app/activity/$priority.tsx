@@ -1,12 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Suspense } from "react";
-import { ActivityPriorityEnumSchema } from "~/common/activity/enum/ActivityPriorityEnumSchema";
-import { BackHomeButton } from "~/common/nav/BackHomeButton";
-import { TitleContainer } from "~/common/ui/container";
+import { ActivityPriorityEnumSchema } from "~/activity/schema/ActivityPriorityEnumSchema";
+import { TitleContainer } from "~/application-ui/ui/container.exports";
 import { useLocale } from "~/locale/hook/useLocale";
+import { BackHomeButton } from "~/nav/ui/BackHomeButton.exports";
 import { useTranslator } from "~/translation/hook/useTranslator";
-import { ActivityList } from "~/user/activity/ui/ActivityList";
-import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
+import { ActivityList } from "~/user-activity/ui/ActivityList/index";
+import { HomeMenuButton } from "~/user-home/ui/HomeMenu/HomeMenuButton";
 
 export const Route = createFileRoute("/$locale/app/activity/$priority")({
 	component() {

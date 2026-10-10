@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { TaggedErrorSerializationAdapter } from "~/error/serialization/TaggedErrorSerializationAdapter";
-import { RateLimitErrorFx } from "~/server/error/RateLimitErrorFx";
+import { RateLimitErrorFx } from "~/server-error/error/RateLimitErrorFx";
 
 const rateLimitError = new RateLimitErrorFx({
 	message: "Too many magic link requests. Please try again later.",

@@ -9,7 +9,7 @@ import {
 	statusStateOptions,
 	transitionKey,
 } from "~/test/transaction/fx/transactionTransitionMatrixFx";
-import { transactionTransitionFx } from "~/user/transaction/server/fx/transactionTransitionFx";
+import { transactionTransitionFx } from "~/user-transaction/fx/transactionTransitionFx";
 
 describe("transaction core", () => {
 	it("matches the full transaction transition matrix", async () => {

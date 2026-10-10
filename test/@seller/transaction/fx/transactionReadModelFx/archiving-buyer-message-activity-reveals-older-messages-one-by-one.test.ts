@@ -1,15 +1,15 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { describe, expect, it } from "vitest";
-import { transactionAcceptFx } from "~/seller/transaction/server/fx/transactionAcceptFx";
-import { transactionCollectionFx } from "~/seller/transaction/server/fx/transactionCollectionFx";
-import { transactionFetchFx } from "~/seller/transaction/server/fx/transactionFetchFx";
+import { transactionAcceptFx } from "~/seller-transaction/fx/transactionAcceptFx";
+import { transactionCollectionFx } from "~/seller-transaction/fx/transactionCollectionFx";
+import { transactionFetchFx } from "~/seller-transaction/fx/transactionFetchFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { activityArchiveFx } from "~/user/activity/server/fx/activityArchiveFx";
-import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
+import { activityArchiveFx } from "~/user-activity/fx/activityArchiveFx";
+import { transactionEntryCreateFx } from "~/user-transaction-entry/fx/transactionEntryCreateFx";
 
 type TestDatabase = Awaited<ReturnType<typeof testabase>>;
 

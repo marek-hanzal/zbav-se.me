@@ -1,0 +1,60 @@
+import { z } from "zod";
+import { ListingTableSchema } from "~/database/schema/ListingTableSchema";
+import { ThumbEnumSchema } from "~/listing/schema/ThumbEnumSchema";
+import { RestrictionEnumSchema } from "~/restriction/schema/RestrictionEnumSchema";
+import { LocationSchema } from "~/session-location/schema/LocationSchema";
+import { CategorySchema } from "~/user-category/schema/CategorySchema";
+
+export const ListingSchema = z
+	.looseObject({
+		...ListingTableSchema.shape,
+		location: LocationSchema,
+		category: CategorySchema,
+		distance: z.number().nullable().meta({
+			description:
+				"Distance from the input location to the listing (in km; meta lat/lon must be provided)",
+		}),
+		my: z.boolean().meta({
+			description: "Whether the listing belongs to the current user",
+		}),
+		isFavourite: z.boolean().meta({
+			description: "Whether the user has this listing in favourites",
+		}),
+		isIgnored: z.boolean().meta({
+			description: "Whether the user ignored this listing",
+		}),
+		hasFlag: z.boolean().meta({
+			description: "Whether the user flagged this listing",
+		}),
+		isActive: z.boolean().meta({
+			description: "Whether the listing is currently live and not yet expired",
+		}),
+		transactionId: z.string().nullable().meta({
+			description: "Whether the user has a transaction with this listing",
+		}),
+		thumb: ThumbEnumSchema.nullable().meta({
+			description: "Thumb type provided by the user (like/dislike) or null if not present",
+		}),
+		withRestriction: RestrictionEnumSchema.meta({
+			description: `
+Effective restriction applied on the listing.
+            `.trim(),
+		}),
+	})
+	.omit({
+		userId: true,
+		galleryId: true,
+		withLocation: true,
+		withTitle: true,
+	})
+	.strip()
+	.meta({
+		id: "Listing",
+		description: "Listing data",
+	});
+
+export type ListingSchema = typeof ListingSchema;
+
+export namespace ListingSchema {
+	export type Type = z.infer<ListingSchema>;
+}

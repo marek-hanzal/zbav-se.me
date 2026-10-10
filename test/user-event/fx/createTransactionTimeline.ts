@@ -1,5 +1,5 @@
 import type { DateTime } from "luxon";
-import type { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
+import type { userEventCreateFx } from "~/user-event/fx/userEventCreateFx";
 
 namespace createTransactionTimeline {
 	export interface Step {

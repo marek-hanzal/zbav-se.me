@@ -1,7 +1,7 @@
 import type { ComponentProps, FC } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { HeroImage } from "~/common/ui/img/index";
+import { HeroImage } from "~/application-ui/ui/img.exports";
 import type { uiButton } from "~/ui/fn/uiButton";
 import { uiContainer } from "~/ui/fn/uiContainer";
 import { uiLinkTo } from "~/ui/fn/uiLinkTo";

@@ -1,14 +1,14 @@
 import { getLogger } from "@logtape/logtape";
 import type { Effect } from "effect";
+import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
 import { withLoggerFx } from "~/log/fx/withLoggerFx";
-import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
-import { ServerGeoapifySchema } from "~/server/env/ServerGeoapifySchema";
-import { withLocationConfigFx } from "~/session/location/server/context/withLocationConfigFx";
+import { ServerGeoapifySchema } from "~/server-env/schema/ServerGeoapifySchema";
+import { withLocationConfigFx } from "~/session-location/context/withLocationConfigFx";
 import type { testabase } from "~/test/testabase";
-import { withTransactionContextFx } from "~/user/transaction/server/context/withTransactionContextFx";
-import { withUploadConfigFx } from "~/user/upload/server/context/withUploadConfigFx";
-import { withUploadConfigEnv } from "~/user/upload/server/env/withUploadConfigEnv";
+import { withTransactionContextFx } from "~/user-transaction/context/withTransactionContextFx";
+import { withUploadConfigFx } from "~/user-upload/context/withUploadConfigFx";
+import { withUploadConfigEnv } from "~/user-upload/schema/withUploadConfigEnv";
 
 type TestDatabase = Awaited<ReturnType<typeof testabase>>;
 

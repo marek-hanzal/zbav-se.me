@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { describe, it } from "vitest";
-import { rateLimitEventFx } from "~/server/rate-limit/server/fx/rateLimitEventFx";
+import { rateLimitEventFx } from "~/rate-limit/fx/rateLimitEventFx";
 import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";

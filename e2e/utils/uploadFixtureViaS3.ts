@@ -2,12 +2,12 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { setTimeout as delay } from "node:timers/promises";
 import { Effect } from "effect";
-import { withS3ConfigFx } from "~/common/s3/server/context/withS3ConfigFx";
-import { withS3ConfigEnv } from "~/common/s3/server/env/withS3ConfigEnv";
-import { s3PreSignFx } from "~/common/s3/server/fx/s3PreSignFx";
 import { genId } from "~/identity/fn/genId";
+import { withS3ConfigFx } from "~/s3/context/withS3ConfigFx";
+import { s3PreSignFx } from "~/s3/fx/s3PreSignFx";
+import { withS3ConfigEnv } from "~/s3/schema/withS3ConfigEnv";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
+import { uploadCreateFx } from "~/user-upload/fx/uploadCreateFx";
 import type { testabase } from "./testabase";
 
 type TestDatabase = Awaited<ReturnType<typeof testabase>>;

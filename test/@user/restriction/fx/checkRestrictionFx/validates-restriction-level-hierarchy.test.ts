@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
-import { checkRestrictionFx } from "~/user/restriction/server/fx/checkRestrictionFx";
+import type { RestrictionEnumSchema } from "~/restriction/schema/RestrictionEnumSchema";
+import { checkRestrictionFx } from "~/user-restriction/fx/checkRestrictionFx";
 
 const restrictionLevels = [
 	"none",

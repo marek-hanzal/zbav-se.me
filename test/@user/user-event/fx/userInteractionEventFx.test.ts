@@ -4,7 +4,7 @@ import { keyOf } from "~/hash/fn/keyOf";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { userInteractionEventFx } from "~/user/user-event/server/fx/userInteractionEventFx";
+import { userInteractionEventFx } from "~/user-event/fx/userInteractionEventFx";
 
 describe("userInteractionEventFx", () => {
 	it("writes one user-scoped event and one foreign-scoped event", async () => {

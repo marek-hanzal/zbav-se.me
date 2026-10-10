@@ -3,8 +3,8 @@ import { describe, expect, it } from "vitest";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { activityCountFx } from "~/user/activity/server/fx/activityCountFx";
-import { activityPatchCollectionFx } from "~/user/activity/server/fx/activityPatchCollectionFx";
+import { activityCountFx } from "~/user-activity/fx/activityCountFx";
+import { activityPatchCollectionFx } from "~/user-activity/fx/activityPatchCollectionFx";
 
 describe("activityPatchCollectionFx", () => {
 	it("patches only scoped matching items and leaves foreign rows untouched", async () => {

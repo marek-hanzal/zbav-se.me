@@ -11,7 +11,7 @@ import {
 	Text,
 } from "@react-email/components";
 import type { FC, ReactNode } from "react";
-import { theme } from "../theme/theme";
+import { theme } from "~/email/constant/theme";
 
 export namespace MailLayout {
 	export interface Props {

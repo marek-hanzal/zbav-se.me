@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { agentUsageDeleteCollectionFx } from "~/user/agent/server/fx/agentUsageDeleteCollectionFx";
+import { agentUsageDeleteCollectionFx } from "~/user-agent/fx/agentUsageDeleteCollectionFx";
 
 const seedAgentUsage = async (
 	database: Awaited<ReturnType<typeof import("~/test/testabase").testabase>>,

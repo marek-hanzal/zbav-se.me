@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { withCronFx } from "~/common/@cron/server/withCronFx";
+import { withCronFx } from "~/cron/fx/withCronFx";
 import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";

@@ -5,7 +5,7 @@ import { keepPreviousData, QueryClient } from "@tanstack/react-query";
 import { persistQueryClient } from "@tanstack/react-query-persist-client";
 import { createRouter } from "@tanstack/react-router";
 import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
-import { Logo } from "~/common/ui/logo";
+import { Logo } from "~/application-ui/ui/logo.exports";
 import { Container } from "~/ui/ui/Container";
 import { routeTree } from "./_route";
 

@@ -6,10 +6,10 @@ import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
-import { transactionEntryFetchFx } from "~/user/transaction-entry/server/fx/transactionEntryFetchFx";
-import { transactionEntryGalleryFetchFx } from "~/user/transaction-entry/server/fx/transactionEntryGalleryFetchFx";
-import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
+import { transactionEntryCreateFx } from "~/user-transaction-entry/fx/transactionEntryCreateFx";
+import { transactionEntryFetchFx } from "~/user-transaction-entry/fx/transactionEntryFetchFx";
+import { transactionEntryGalleryFetchFx } from "~/user-transaction-entry/fx/transactionEntryGalleryFetchFx";
+import { uploadCreateFx } from "~/user-upload/fx/uploadCreateFx";
 
 describe("transactionEntry workflow", () => {
 	it("creates gallery entry with ordered items and blocks outsider access", async () => {

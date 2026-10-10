@@ -1,12 +1,12 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { galleryCollectionFx } from "~/public/gallery/server/fx/galleryCollectionFx";
-import { galleryFetchFx } from "~/public/gallery/server/fx/galleryFetchFx";
+import { galleryCollectionFx } from "~/public-gallery/fx/galleryCollectionFx";
+import { galleryFetchFx } from "~/public-gallery/fx/galleryFetchFx";
 import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { galleryInsertFx } from "~/user/gallery/server/fx/galleryInsertFx";
+import { galleryInsertFx } from "~/user-gallery/fx/galleryInsertFx";
 
 describe("public gallery access", () => {
 	it("returns public galleries and rejects private galleries", async () => {

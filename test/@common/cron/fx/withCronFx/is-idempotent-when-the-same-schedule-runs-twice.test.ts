@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import type { ScheduleSchema } from "~/common/@cron/schema/ScheduleSchema";
-import { withCronFx } from "~/common/@cron/server/withCronFx";
+import { withCronFx } from "~/cron/fx/withCronFx";
+import type { ScheduleSchema } from "~/cron/schema/ScheduleSchema";
 import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";

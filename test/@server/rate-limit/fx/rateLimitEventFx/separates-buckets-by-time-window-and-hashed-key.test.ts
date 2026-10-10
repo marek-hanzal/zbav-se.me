@@ -3,8 +3,8 @@ import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
 import { hash } from "~/hmac/fn/hash";
-import { ServerHmacSchema } from "~/server/env/ServerHmacSchema";
-import { rateLimitEventFx } from "~/server/rate-limit/server/fx/rateLimitEventFx";
+import { rateLimitEventFx } from "~/rate-limit/fx/rateLimitEventFx";
+import { ServerHmacSchema } from "~/server-env/schema/ServerHmacSchema";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 

@@ -4,7 +4,7 @@ import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { activityFetchFx } from "~/user/activity/server/fx/activityFetchFx";
+import { activityFetchFx } from "~/user-activity/fx/activityFetchFx";
 
 describe("activity read model", () => {
 	it("denies foreign access", async () => {

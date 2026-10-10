@@ -6,7 +6,7 @@ This repo stays public for transparency and learning, but it is **not open sourc
 
 ## What is here
 
-- `src/` - app code, routes, domains, server runtime, shared utilities, and UI primitives
+- `src/` - flat app and shared domains in `<domain>/<kind>/<file>` format, plus routes and assets
 - `cli/` - local maintenance and generation scripts
 - `test/` - Vitest suites and fixtures
 - `e2e/` - Playwright setup and helpers
@@ -93,7 +93,7 @@ underlying tool's full option reference.
 | `verify` | Run `check`, `test`, `e2e`, then `build` sequentially. | Writes test/build artifacts; stops at the first failure. Does not run `fix` or update dependencies. |
 | `deps:update` | Update all dependency versions through Syncpack, then install with npm. | May include major upgrades; changes the manifest, lockfile, and installed dependencies. |
 | `seed` | Open the interactive seed CLI; needs the intended database. | Selected operations may reset or change application data. |
-| `translations` | Extract translation keys through the TypeScript CLI. | Rewrites generated translation data under `src/server/@migrations/translation`. |
+| `translations` | Extract translation keys through the TypeScript CLI. | Rewrites generated translation data under `src/database-migration/data`. |
 | `env:sync` | Legacy GitHub/Vercel environment sync; needs credentials and `@env/<environment>.json`. | Replaces remote variables and secrets. Retained until Terraform replaces it. |
 
 `check` never runs automatic repairs, tests, or builds. It checks manifest ordering
@@ -109,8 +109,8 @@ help. Do not add an extra `--` separator. Aggregate commands (`check`, `verify`,
 and `deps:update`) accept no trailing arguments. For example:
 
 ```bash
-argc check:style src/user
-argc fix src/user
+argc check:style src/user-upload
+argc fix src/user-upload
 argc test test/@user/resource-bundle
 argc e2e --grep registration
 argc e2e --headed
@@ -256,7 +256,7 @@ available address. E2E builds need the Node server preset, supplied here through
 `NITRO_PRESET`. Build outputs are shared with `argc build`, so run these commands
 sequentially. Verification does not start or restart the development app or proxy.
 
-Vitest coverage is scoped to server-side `Fx` and DB `Fx` business flows. Thin `Fn` wrappers, routes, UI, tools, migrations, and seed scripts are intentionally out of the coverage denominator.
+Vitest coverage is scoped to server-side `Fx` and DB `Fx` business flows in the owning flat domains. Thin `Fn` wrappers, shared runtime utilities, routes, UI, tools, migrations, and seed scripts are intentionally out of the coverage denominator. Update the coverage scope when adding a covered business domain.
 
 The Playwright e2e flow uses `x-e2e-db` to select the per-test database. That header is ignored unless `SERVER_E2E=e2e` is present.
 Playwright runs e2e files in parallel by default. Use `E2E_WORKERS=<count> argc e2e` to tune local or CI concurrency.
@@ -288,7 +288,8 @@ share the same `QueryClient` implementation and types.
 - Dependency cleanup decisions in this repository are evidence-based from source usage.
 - `knip` is treated as a candidate signal, not as the source of truth.
 - `dependency-cruiser` rules work on resolved source paths under `src/`, not on import alias strings.
-- Server-crossing import rules should use resolved `src/...` paths and keep only the approved server surfaces open, such as `server/fn` and `server/schema`, from the non-server side of the app. Type-only imports and `src/@routes` server glue are exempt.
+- Declarative resolved-path groups preserve buyer, seller, shared, public, user, and runtime ownership across flat domains. Update the relevant groups in `.dependency-cruiser.cjs` when adding or moving modules.
+- Server-crossing import rules keep only approved function/schema surfaces open from the non-server side of the app. Server implementation details live in [`src/SERVER.md`](./src/SERVER.md). Type-only imports and `src/@routes` server glue are exempt.
 
 ## MCP
 

@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { ignoreCollectionFx } from "~/buyer/listing-ignore/server/fx/ignoreCollectionFx";
-import { ignoreCountFx } from "~/buyer/listing-ignore/server/fx/ignoreCountFx";
-import { ignoreFetchFx } from "~/buyer/listing-ignore/server/fx/ignoreFetchFx";
-import { ignoreToggleFx } from "~/buyer/listing-ignore/server/fx/ignoreToggleFx";
+import { ignoreCollectionFx } from "~/buyer-listing-ignore/fx/ignoreCollectionFx";
+import { ignoreCountFx } from "~/buyer-listing-ignore/fx/ignoreCountFx";
+import { ignoreFetchFx } from "~/buyer-listing-ignore/fx/ignoreFetchFx";
+import { ignoreToggleFx } from "~/buyer-listing-ignore/fx/ignoreToggleFx";
 import { runToggleReadModelContractFx } from "~/test/@buyer/common/fx/runToggleReadModelContractFx";
 
 describe("ignore read model", () => {

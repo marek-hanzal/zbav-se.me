@@ -4,7 +4,7 @@ import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { transactionStatusMessageFx } from "~/user/transaction/server/fx/transactionStatusMessageFx";
+import { transactionStatusMessageFx } from "~/user-transaction/fx/transactionStatusMessageFx";
 
 describe("transactionStatusMessageFx", () => {
 	it("ignores unmapped request and target combinations", async () => {

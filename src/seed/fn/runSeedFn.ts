@@ -1,10 +1,10 @@
 import { Effect } from "effect";
-import type { SeedProgressEvent } from "~/seed/seed/SeedProgressEvent";
-import type { SeedRunConfigSchema } from "~/seed/seed/SeedRunConfig";
-import type { SeedRunSummary } from "~/seed/seed/SeedRunSummary";
-import { listingSeedFx } from "~/seed/server/listingSeedFx";
-import { withSeedProgressContextFx } from "~/seed/server/SeedProgressContextFx";
-import { withSeedRuntimeFx } from "~/seed/server/withSeedRuntimeFx";
+import { withSeedProgressContextFx } from "~/seed/context/SeedProgressContextFx";
+import { listingSeedFx } from "~/seed/fx/listingSeedFx";
+import { withSeedRuntimeFx } from "~/seed/fx/withSeedRuntimeFx";
+import type { SeedRunConfigSchema } from "~/seed/schema/SeedRunConfig";
+import type { SeedProgressEvent } from "~/seed/type/SeedProgressEvent";
+import type { SeedRunSummary } from "~/seed/type/SeedRunSummary";
 
 export const runSeedEffect = (
 	config: SeedRunConfigSchema.Type,

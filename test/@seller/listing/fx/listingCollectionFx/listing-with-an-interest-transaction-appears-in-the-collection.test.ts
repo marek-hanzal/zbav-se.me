@@ -1,12 +1,12 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { listingCollectionFx } from "~/seller/listing/server/fx/listingCollectionFx";
-import { listingFetchFx } from "~/seller/listing/server/fx/listingFetchFx";
+import { listingCollectionFx } from "~/seller-listing/fx/listingCollectionFx";
+import { listingFetchFx } from "~/seller-listing/fx/listingFetchFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
+import { transactionEntryCreateFx } from "~/user-transaction-entry/fx/transactionEntryCreateFx";
 
 describe("listingCollectionFx (seller dashboard transactions)", () => {
 	it("listing with an interest transaction appears in the collection", async () => {

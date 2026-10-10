@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
-import { getFeedDefaultCreate } from "~/buyer/feed/service/getFeedDefaultCreate";
+import { feedCreateFx } from "~/buyer-feed/fx/feedCreateFx";
+import { getFeedDefaultCreate } from "~/buyer-feed/service/getFeedDefaultCreate";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { expect, test } from "../test";

@@ -1,10 +1,10 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { feedCollectionFx } from "~/buyer/feed/server/fx/feedCollectionFx";
-import { feedCountFx } from "~/buyer/feed/server/fx/feedCountFx";
-import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
-import { feedFetchFx } from "~/buyer/feed/server/fx/feedFetchFx";
-import { feedPatchFx } from "~/buyer/feed/server/fx/feedPatchFx";
+import { feedCollectionFx } from "~/buyer-feed/fx/feedCollectionFx";
+import { feedCountFx } from "~/buyer-feed/fx/feedCountFx";
+import { feedCreateFx } from "~/buyer-feed/fx/feedCreateFx";
+import { feedFetchFx } from "~/buyer-feed/fx/feedFetchFx";
+import { feedPatchFx } from "~/buyer-feed/fx/feedPatchFx";
 import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";

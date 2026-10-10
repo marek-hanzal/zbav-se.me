@@ -1,14 +1,14 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { transactionCreateFx } from "~/buyer/transaction/server/fx/transactionCreateFx";
-import { listingCollectionFx } from "~/seller/listing/server/fx/listingCollectionFx";
-import { transactionAcceptFx } from "~/seller/transaction/server/fx/transactionAcceptFx";
+import { transactionCreateFx } from "~/buyer-transaction/fx/transactionCreateFx";
+import { listingCollectionFx } from "~/seller-listing/fx/listingCollectionFx";
+import { transactionAcceptFx } from "~/seller-transaction/fx/transactionAcceptFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { activityArchiveFx } from "~/user/activity/server/fx/activityArchiveFx";
-import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
+import { activityArchiveFx } from "~/user-activity/fx/activityArchiveFx";
+import { transactionEntryCreateFx } from "~/user-transaction-entry/fx/transactionEntryCreateFx";
 
 describe("seller listing flows", () => {
 	it("stays in buyer-to-seller until every buyer-message under the listing is archived", async () => {

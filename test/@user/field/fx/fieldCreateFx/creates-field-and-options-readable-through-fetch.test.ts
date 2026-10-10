@@ -2,10 +2,10 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { fieldCreateFx } from "~/user/field/server/fx/fieldCreateFx";
-import { fieldFetchFx } from "~/user/field/server/fx/fieldFetchFx";
-import { fieldOptionCreateFx } from "~/user/field-option/server/fx/fieldOptionCreateFx";
-import { fieldOptionFetchFx } from "~/user/field-option/server/fx/fieldOptionFetchFx";
+import { fieldCreateFx } from "~/user-field/fx/fieldCreateFx";
+import { fieldFetchFx } from "~/user-field/fx/fieldFetchFx";
+import { fieldOptionCreateFx } from "~/user-field-option/fx/fieldOptionCreateFx";
+import { fieldOptionFetchFx } from "~/user-field-option/fx/fieldOptionFetchFx";
 
 describe("field create fx", () => {
 	it("creates a field and field options that are immediately readable through fetch wrappers", async () => {

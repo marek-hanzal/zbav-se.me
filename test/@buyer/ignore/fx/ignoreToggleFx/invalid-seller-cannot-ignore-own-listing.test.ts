@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { ignoreToggleFx } from "~/buyer/listing-ignore/server/fx/ignoreToggleFx";
+import { ignoreToggleFx } from "~/buyer-listing-ignore/fx/ignoreToggleFx";
 import { runToggleEntityErrorContractFx } from "~/test/@buyer/common/fx/runToggleEntityErrorContractFx";
 
 describe("ignoreToggleFx", () => {

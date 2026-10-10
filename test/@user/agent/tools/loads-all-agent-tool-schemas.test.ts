@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { AssistantAgent } from "~/user/agent/AssistantAgent";
+import { AssistantAgent } from "~/user-agent/service/AssistantAgent";
 
 describe("AssistantAgent tool schemas", () => {
 	test("loads every registered tool with an object parameter schema", () => {

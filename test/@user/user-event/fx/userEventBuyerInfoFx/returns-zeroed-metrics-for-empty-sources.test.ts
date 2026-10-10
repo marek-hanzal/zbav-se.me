@@ -4,7 +4,7 @@ import {
 	computeBuyerDecision,
 	computeBuyerExpired,
 	computeBuyerReaction,
-} from "~/seller/user-event/server/fx/userEventBuyerInfoFx";
+} from "~/seller-user-event/fx/userEventBuyerInfoFx";
 
 describe("userEventBuyerInfoFx edge cases", () => {
 	it("returns zeroed metrics for empty sources", () => {

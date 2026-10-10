@@ -1,13 +1,13 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { listingGetSellerInfoFx } from "~/buyer/listing/server/fx/listingGetSellerInfoFx";
+import { listingGetSellerInfoFx } from "~/buyer-listing/fx/listingGetSellerInfoFx";
 import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
+import { userEventCreateFx } from "~/user-event/fx/userEventCreateFx";
 
 describe("listingGetSellerInfoFx", () => {
 	it("returns seller events only for the seller behind the requested listing", async () => {

@@ -1,11 +1,11 @@
 import path from "node:path";
 import type { Locator, Page } from "@playwright/test";
 import { Effect } from "effect";
-import { transactionCreateFx } from "~/buyer/transaction/server/fx/transactionCreateFx";
-import { TransactionEntrySensitiveKindEnumSchema } from "~/common/user-transaction/enum/TransactionEntrySensitiveKindEnumSchema";
+import { transactionCreateFx } from "~/buyer-transaction/fx/transactionCreateFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { leaseTestUserFx, TEST_USER_PASSWORD } from "~/test/user/fx/leaseTestUserFx";
+import { TransactionEntrySensitiveKindEnumSchema } from "~/transaction-contract/schema/TransactionEntrySensitiveKindEnumSchema";
 import { expect, test } from "../test";
 import { uploadFixtureViaS3 } from "../utils/uploadFixtureViaS3";
 

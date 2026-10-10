@@ -1,10 +1,10 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { transactionCloseFx } from "~/buyer/transaction/server/fx/transactionCloseFx";
-import { transactionCollectionFx } from "~/buyer/transaction/server/fx/transactionCollectionFx";
-import { transactionDisputeFx } from "~/buyer/transaction/server/fx/transactionDisputeFx";
-import { transactionRejectFx } from "~/buyer/transaction/server/fx/transactionRejectFx";
-import { transactionSuccessFx } from "~/buyer/transaction/server/fx/transactionSuccessFx";
+import { transactionCloseFx } from "~/buyer-transaction/fx/transactionCloseFx";
+import { transactionCollectionFx } from "~/buyer-transaction/fx/transactionCollectionFx";
+import { transactionDisputeFx } from "~/buyer-transaction/fx/transactionDisputeFx";
+import { transactionRejectFx } from "~/buyer-transaction/fx/transactionRejectFx";
+import { transactionSuccessFx } from "~/buyer-transaction/fx/transactionSuccessFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";

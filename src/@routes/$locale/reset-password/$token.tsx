@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { z } from "zod";
-import { useAppForm } from "~/common/ui/form";
-import { Logo } from "~/common/ui/logo";
+import { useAppForm } from "~/application-ui/hook/form.exports";
+import { Logo } from "~/application-ui/ui/logo.exports";
 import { onSubmit } from "~/form/fn/onSubmit";
 import { FormField } from "~/form/ui/FormField";
 import { useLocale } from "~/locale/hook/useLocale";
@@ -12,7 +12,7 @@ import { Container } from "~/ui/ui/Container";
 import { ErrorBadge } from "~/ui/ui/ErrorBadge";
 import { LinkTo } from "~/ui/ui/LinkTo";
 import { Status } from "~/ui/ui/Status";
-import { withResetPasswordMutation } from "~/user/auth/mutation/withResetPasswordMutation";
+import { withResetPasswordMutation } from "~/user-auth/mutation/withResetPasswordMutation";
 
 const ResetPasswordSearchSchema = z
 	.looseObject({

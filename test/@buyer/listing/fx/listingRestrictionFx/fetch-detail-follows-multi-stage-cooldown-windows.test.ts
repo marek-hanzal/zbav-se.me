@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { listingFetchFx } from "~/buyer/listing/server/fx/listingFetchFx";
+import { listingFetchFx } from "~/buyer-listing/fx/listingFetchFx";
 import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
 import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";

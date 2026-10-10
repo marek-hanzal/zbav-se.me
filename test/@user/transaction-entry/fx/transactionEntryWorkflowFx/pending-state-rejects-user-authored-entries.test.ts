@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { transactionAcceptFx } from "~/seller/transaction/server/fx/transactionAcceptFx";
+import { transactionAcceptFx } from "~/seller-transaction/fx/transactionAcceptFx";
 import { fetchActivityItemsFx } from "~/test/activity/fx/fetchActivityItemsFx";
 import { testUploadUrl } from "~/test/common/fn/testUploadUrl";
 import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
@@ -9,11 +9,11 @@ import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { transactionEntryCollectionFx } from "~/user/transaction-entry/server/fx/transactionEntryCollectionFx";
-import { transactionEntryCountFx } from "~/user/transaction-entry/server/fx/transactionEntryCountFx";
-import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
-import { transactionEntryFetchFx } from "~/user/transaction-entry/server/fx/transactionEntryFetchFx";
-import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
+import { transactionEntryCollectionFx } from "~/user-transaction-entry/fx/transactionEntryCollectionFx";
+import { transactionEntryCountFx } from "~/user-transaction-entry/fx/transactionEntryCountFx";
+import { transactionEntryCreateFx } from "~/user-transaction-entry/fx/transactionEntryCreateFx";
+import { transactionEntryFetchFx } from "~/user-transaction-entry/fx/transactionEntryFetchFx";
+import { uploadCreateFx } from "~/user-upload/fx/uploadCreateFx";
 
 describe("transactionEntry workflow", () => {
 	it("allows buyer text in interest without seller visibility or activity", async () => {

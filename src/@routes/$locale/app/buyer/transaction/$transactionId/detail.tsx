@@ -1,13 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Transaction } from "~/buyer/transaction/ui/Transaction/Transaction";
-import { getRootLogger } from "~/common/log/getRootLogger";
-import { BackHomeButton } from "~/common/nav/BackHomeButton";
-import { TitleContainer } from "~/common/ui/container";
+import { TitleContainer } from "~/application-ui/ui/container.exports";
+import { Transaction } from "~/buyer-transaction/ui/Transaction/Transaction";
 import { useLocale } from "~/locale/hook/useLocale";
+import { getRootLogger } from "~/log/fn/getRootLogger";
+import { BackHomeButton } from "~/nav/ui/BackHomeButton.exports";
 import { useTranslator } from "~/translation/hook/useTranslator";
 import { useRenderLogger } from "~/ui/hook/useRenderLogger";
 import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
-import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
+import { HomeMenuButton } from "~/user-home/ui/HomeMenu/HomeMenuButton";
 
 export const Route = createFileRoute("/$locale/app/buyer/transaction/$transactionId/detail")({
 	pendingComponent: () => {

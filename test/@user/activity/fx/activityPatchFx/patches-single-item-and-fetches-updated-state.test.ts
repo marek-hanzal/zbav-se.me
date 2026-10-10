@@ -4,9 +4,9 @@ import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { activityCountFx } from "~/user/activity/server/fx/activityCountFx";
-import { activityFetchFx } from "~/user/activity/server/fx/activityFetchFx";
-import { activityPatchFx } from "~/user/activity/server/fx/activityPatchFx";
+import { activityCountFx } from "~/user-activity/fx/activityCountFx";
+import { activityFetchFx } from "~/user-activity/fx/activityFetchFx";
+import { activityPatchFx } from "~/user-activity/fx/activityPatchFx";
 
 describe("activityPatchFx", () => {
 	it("patches a single item and exposes the updated state via fetch/count", async () => {

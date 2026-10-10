@@ -2,18 +2,18 @@ import { Effect } from "effect";
 import { PostgresDialect, sql } from "kysely";
 import { Pool } from "pg";
 import { describe, expect, it } from "vitest";
-import { getRootLogger } from "~/common/log/getRootLogger";
+import type { Database } from "~/database/type/Database";
 import { withDatabaseName } from "~/database-query/fn/withDatabaseName";
 import { withDatabaseFx } from "~/database-query/fx/withDatabaseFx";
 import { withDialectFx } from "~/database-query/fx/withDialectFx";
 import { MigrationContextFx } from "~/database-query/service/MigrationContextFx";
-import type { Database } from "~/server/database/Database";
-import { ServerDatabaseSchema } from "~/server/env/ServerDatabaseSchema";
+import { getRootLogger } from "~/log/fn/getRootLogger";
+import { ServerDatabaseSchema } from "~/server-env/schema/ServerDatabaseSchema";
 import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { userExPatchFx } from "~/user/user-ex/server/fx/userExPatchFx";
+import { userExPatchFx } from "~/user-ex/fx/userExPatchFx";
 
 describe("userExPatchFx", () => {
 	it("creates when missing, updates when existing, and hits conflict branch on concurrent create", async () => {

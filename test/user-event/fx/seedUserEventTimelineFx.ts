@@ -1,9 +1,9 @@
 import { Effect } from "effect";
 import type { DateTime } from "luxon";
+import { dbFx } from "~/database/fx/dbFx";
 import { keyOf } from "~/hash/fn/keyOf";
 import { genId } from "~/identity/fn/genId";
-import { dbFx } from "~/server/database/fx/dbFx";
-import type { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
+import type { userEventCreateFx } from "~/user-event/fx/userEventCreateFx";
 
 export namespace seedUserEventTimelineFx {
 	export interface Event {

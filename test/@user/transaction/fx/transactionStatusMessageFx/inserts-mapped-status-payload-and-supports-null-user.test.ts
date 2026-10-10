@@ -4,7 +4,7 @@ import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { transactionStatusMessageFx } from "~/user/transaction/server/fx/transactionStatusMessageFx";
+import { transactionStatusMessageFx } from "~/user-transaction/fx/transactionStatusMessageFx";
 
 describe("transactionStatusMessageFx", () => {
 	it("writes mapped entries with payload text and allows null user for system statuses", async () => {

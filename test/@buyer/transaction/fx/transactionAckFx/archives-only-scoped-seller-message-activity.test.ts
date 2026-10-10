@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { transactionAckFx } from "~/buyer/transaction/server/fx/transactionAckFx";
-import type { ActivityTableSchema } from "~/server/database/@table/ActivityTableSchema";
+import { transactionAckFx } from "~/buyer-transaction/fx/transactionAckFx";
+import type { ActivityTableSchema } from "~/database/schema/ActivityTable";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";

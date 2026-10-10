@@ -3,9 +3,9 @@ import { describe, expect, it } from "vitest";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { galleryCollectionFx } from "~/user/gallery/server/fx/galleryCollectionFx";
-import { galleryCountFx } from "~/user/gallery/server/fx/galleryCountFx";
-import { galleryInsertFx } from "~/user/gallery/server/fx/galleryInsertFx";
+import { galleryCollectionFx } from "~/user-gallery/fx/galleryCollectionFx";
+import { galleryCountFx } from "~/user-gallery/fx/galleryCountFx";
+import { galleryInsertFx } from "~/user-gallery/fx/galleryInsertFx";
 
 describe("galleryCollectionFx", () => {
 	it("returns scoped galleries and stays consistent with count and empty state", async () => {

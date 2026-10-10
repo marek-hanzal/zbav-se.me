@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { agentThreadCreateSessionFx } from "~/user/agent/server/fx/agentThreadCreateSessionFx";
+import { agentThreadCreateSessionFx } from "~/user-agent/fx/agentThreadCreateSessionFx";
 
 describe("agentThreadCreateSessionFx", () => {
 	it("archives all user threads and creates a new active thread", async () => {

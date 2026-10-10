@@ -4,10 +4,10 @@ import { describe, expect, it } from "vitest";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { agentStreamCollectionFx } from "~/user/agent/server/fx/agentStreamCollectionFx";
-import { agentStreamDeleteCollectionFx } from "~/user/agent/server/fx/agentStreamDeleteCollectionFx";
-import { agentStreamFetchFx } from "~/user/agent/server/fx/agentStreamFetchFx";
-import { agentUsageCollectionFx } from "~/user/agent/server/fx/agentUsageCollectionFx";
+import { agentStreamCollectionFx } from "~/user-agent/fx/agentStreamCollectionFx";
+import { agentStreamDeleteCollectionFx } from "~/user-agent/fx/agentStreamDeleteCollectionFx";
+import { agentStreamFetchFx } from "~/user-agent/fx/agentStreamFetchFx";
+import { agentUsageCollectionFx } from "~/user-agent/fx/agentUsageCollectionFx";
 
 type TestDatabase = Awaited<ReturnType<typeof testabase>>;
 

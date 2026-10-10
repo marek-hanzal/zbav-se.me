@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { agentThreadPatchFx } from "~/user/agent/server/fx/agentThreadPatchFx";
+import { agentThreadPatchFx } from "~/user-agent/fx/agentThreadPatchFx";
 
 describe("agentThreadPatchFx", () => {
 	it("bumps updatedAt for an empty patch", async () => {

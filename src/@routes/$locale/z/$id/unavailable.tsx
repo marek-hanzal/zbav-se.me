@@ -1,11 +1,11 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
-import { withTranslationsQuery } from "~/common/translation/query/withTranslationsQuery";
-import { FlowContainer } from "~/common/ui/container";
-import { Logo } from "~/common/ui/logo";
-import { uiCtaLinkButton } from "~/common/ui/ui";
+import { uiCtaLinkButton } from "~/application-ui/fn/ui.exports";
+import { FlowContainer } from "~/application-ui/ui/container.exports";
+import { Logo } from "~/application-ui/ui/logo.exports";
 import { useLocale } from "~/locale/hook/useLocale";
 import { translator as coolTranslator } from "~/translation/fn/translator";
 import { useTranslator } from "~/translation/hook/useTranslator";
+import { withTranslationsQuery } from "~/translation/query/withTranslationsQuery";
 import { Tx } from "~/translation/ui/Tx";
 import { ChevronRightIcon } from "~/ui/constant/ChevronRightIcon";
 import { Container } from "~/ui/ui/Container";

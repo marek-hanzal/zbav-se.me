@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { describe, it } from "vitest";
-import { flagToggleFx } from "~/buyer/listing-flag/server/fx/flagToggleFx";
+import { flagToggleFx } from "~/buyer-listing-flag/fx/flagToggleFx";
 import { runToggleEntityContractFx } from "~/test/@buyer/common/fx/runToggleEntityContractFx";
 
 describe("flagToggleFx", () => {

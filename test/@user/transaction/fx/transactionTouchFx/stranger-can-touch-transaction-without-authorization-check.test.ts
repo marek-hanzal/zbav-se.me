@@ -4,7 +4,7 @@ import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { transactionTouchFx } from "~/user/transaction/server/fx/transactionTouchFx";
+import { transactionTouchFx } from "~/user-transaction/fx/transactionTouchFx";
 
 describe("transactionTouchFx", () => {
 	it("allows a stranger (non-participant) to touch the transaction - authorization gap", async () => {

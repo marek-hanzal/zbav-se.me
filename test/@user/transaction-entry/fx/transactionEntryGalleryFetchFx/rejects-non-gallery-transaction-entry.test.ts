@@ -5,8 +5,8 @@ import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
-import { transactionEntryGalleryFetchFx } from "~/user/transaction-entry/server/fx/transactionEntryGalleryFetchFx";
+import { transactionEntryCreateFx } from "~/user-transaction-entry/fx/transactionEntryCreateFx";
+import { transactionEntryGalleryFetchFx } from "~/user-transaction-entry/fx/transactionEntryGalleryFetchFx";
 
 describe("transactionEntryGalleryFetchFx", () => {
 	it("rejects non-gallery transaction entries", async () => {

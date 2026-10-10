@@ -4,10 +4,10 @@ import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { transactionEntryCollectionFx } from "~/user/transaction-entry/server/fx/transactionEntryCollectionFx";
-import { transactionEntryCountFx } from "~/user/transaction-entry/server/fx/transactionEntryCountFx";
-import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
-import { transactionEntryFetchFx } from "~/user/transaction-entry/server/fx/transactionEntryFetchFx";
+import { transactionEntryCollectionFx } from "~/user-transaction-entry/fx/transactionEntryCollectionFx";
+import { transactionEntryCountFx } from "~/user-transaction-entry/fx/transactionEntryCountFx";
+import { transactionEntryCreateFx } from "~/user-transaction-entry/fx/transactionEntryCreateFx";
+import { transactionEntryFetchFx } from "~/user-transaction-entry/fx/transactionEntryFetchFx";
 
 describe("transactionEntry read model", () => {
 	it("filters entries by kind, actor and ids for participants", async () => {

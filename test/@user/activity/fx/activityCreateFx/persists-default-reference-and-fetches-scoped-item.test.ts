@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { activityCreateFx } from "~/user/activity/server/fx/activityCreateFx";
+import { activityCreateFx } from "~/user-activity/fx/activityCreateFx";
 
 describe("activityCreateFx", () => {
 	it("persists default reference, keeps archivedAt null and stays scoped to owner", async () => {

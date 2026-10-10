@@ -170,7 +170,7 @@ seed() {
 
 # @cmd Generate translation data from source code
 #
-# Effects: rewrites generated locale files in src/server/@migrations/translation.
+# Effects: rewrites generated locale files in src/database-migration/data.
 # Preserves existing translations and dynamic keys; removes obsolete static keys.
 # @arg args~ Arguments passed to the translation CLI
 translations() {

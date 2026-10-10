@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate, useRouter } from "@tanstack/react-router";
 import { z } from "zod";
-import { useAppForm } from "~/common/ui/form";
-import { Logo } from "~/common/ui/logo";
+import { useAppForm } from "~/application-ui/hook/form.exports";
+import { Logo } from "~/application-ui/ui/logo.exports";
 import { onSubmit } from "~/form/fn/onSubmit";
 import { FormField } from "~/form/ui/FormField";
 import { useLocale } from "~/locale/hook/useLocale";
@@ -12,7 +12,7 @@ import { Container } from "~/ui/ui/Container";
 import { ErrorBadge } from "~/ui/ui/ErrorBadge";
 import { LinkTo } from "~/ui/ui/LinkTo";
 import { Status } from "~/ui/ui/Status";
-import { withPasswordResetRequestMutation } from "~/user/auth/mutation/withPasswordResetRequestMutation";
+import { withPasswordResetRequestMutation } from "~/user-auth/mutation/withPasswordResetRequestMutation";
 
 export const Route = createFileRoute("/$locale/forgot/password")({
 	component() {

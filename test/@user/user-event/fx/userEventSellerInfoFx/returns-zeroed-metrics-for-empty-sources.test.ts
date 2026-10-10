@@ -4,7 +4,7 @@ import {
 	computeSellerReaction,
 	computeSellerRejected,
 	computeSellerResolved,
-} from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
+} from "~/buyer-user-event/fx/userEventSellerInfoFx";
 
 describe("userEventSellerInfoFx edge cases", () => {
 	it("returns zeroed metrics for empty sources", () => {

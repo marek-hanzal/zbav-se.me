@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { listingCollectionFx } from "~/buyer/listing/server/fx/listingCollectionFx";
-import { listingCountFx } from "~/buyer/listing/server/fx/listingCountFx";
+import { listingCollectionFx } from "~/buyer-listing/fx/listingCollectionFx";
+import { listingCountFx } from "~/buyer-listing/fx/listingCountFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";

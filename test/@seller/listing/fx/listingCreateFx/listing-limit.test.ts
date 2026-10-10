@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { describe, it } from "vitest";
-import { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/ResourceDefinitionEnumSchema";
 import { genId } from "~/identity/fn/genId";
-import { listingCreateFx } from "~/seller/listing/server/fx/listingCreateFx";
+import { ResourceDefinitionEnumSchema } from "~/resource-definition/schema/ResourceDefinitionEnumSchema";
+import { listingCreateFx } from "~/seller-listing/fx/listingCreateFx";
 import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";

@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { transactionCreateFx } from "~/buyer/transaction/server/fx/transactionCreateFx";
+import { transactionCreateFx } from "~/buyer-transaction/fx/transactionCreateFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 
 export namespace createPendingScenarioFx {

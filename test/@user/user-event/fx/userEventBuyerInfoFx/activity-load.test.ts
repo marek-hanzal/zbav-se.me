@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { computeBuyerScore } from "~/seller/user-event/server/fx/userEventBuyerInfoFx";
+import { computeBuyerScore } from "~/seller-user-event/fx/userEventBuyerInfoFx";
 
 describe("userEventBuyerInfoFx activity/load", () => {
 	it("adds activity and load bonuses to the buyer score", () => {

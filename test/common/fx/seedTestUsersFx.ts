@@ -1,11 +1,11 @@
 import { Effect } from "effect";
+import { auth } from "~/authentication/fn/auth";
+import type { Database } from "~/database/type/Database";
 import type { withDatabaseFx } from "~/database-query/fx/withDatabaseFx";
 import { genId } from "~/identity/fn/genId";
-import { auth } from "~/server/auth/auth";
-import type { Database } from "~/server/database/Database";
 import { TEST_USER_PASSWORD, toLeasedTestUserEmail } from "~/test/user/fx/leaseTestUserFx";
 import { translator } from "~/translation/fn/translator";
-import { ResourceBundleEnumSchema } from "~/user/resource-bundle/server/schema/ResourceBundleEnumSchema";
+import { ResourceBundleEnumSchema } from "~/user-resource-bundle/schema/ResourceBundleEnumSchema";
 
 const TEST_USER_KEYS = [
 	"a",

@@ -1,13 +1,13 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
+import type { RestrictionEnumSchema } from "~/restriction/schema/RestrictionEnumSchema";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { userRestrictionCollectionFx } from "~/user/user-restriction/server/fx/userRestrictionCollectionFx";
-import { userRestrictionCreateFx } from "~/user/user-restriction/server/fx/userRestrictionCreateFx";
-import { withUserRestrictionContextFx } from "~/user/user-restriction/server/fx/withUserRestrictionContextFx";
-import type { UserRestrictionSchema } from "~/user/user-restriction/server/schema/UserRestrictionSchema";
+import { userRestrictionCollectionFx } from "~/user-restriction/fx/userRestrictionCollectionFx";
+import { userRestrictionCreateFx } from "~/user-restriction/fx/userRestrictionCreateFx";
+import { withUserRestrictionContextFx } from "~/user-restriction/fx/withUserRestrictionContextFx";
+import type { UserRestrictionSchema } from "~/user-restriction/schema/UserRestrictionSchema";
 
 type TestDatabase = Awaited<ReturnType<typeof testabase>>;
 type Restriction = RestrictionEnumSchema.Type;

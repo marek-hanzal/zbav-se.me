@@ -1,0 +1,70 @@
+import { Effect } from "effect";
+import { dbFx } from "~/database/fx/dbFx";
+import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { genId } from "~/identity/fn/genId";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
+
+export namespace userBundleItemCopyFx {
+	export interface Props {
+		/** Source resource_bundle template ID. */
+		bundleId: string;
+		/** Target user_resource_bundle ID. */
+		assignmentId: string;
+		createdAt: Date;
+		availableAt: Date;
+		/** Concrete snapshot expiration; null/undefined writes non-expiring rows. */
+		expiresAt?: Date | null;
+	}
+}
+
+/** Copies item rows from a bundle template into one user bundle snapshot. */
+export const userBundleItemCopyFx = Effect.fn("userBundleItemCopyFx")(function* ({
+	bundleId,
+	assignmentId,
+	createdAt,
+	availableAt,
+	expiresAt,
+}: userBundleItemCopyFx.Props) {
+	const logger = yield* getLoggerFx("userBundleItemCopyFx");
+	logger.trace("userBundleItemCopyFx", {
+		bundleId,
+		assignmentId,
+	});
+
+	return yield* withTransactionFx(
+		Effect.gen(function* () {
+			const items = yield* dbFx(async (kysely) => {
+				return kysely
+					.selectFrom("resource_bundle_item")
+					.selectAll()
+					.where("resourceBundleId", "=", bundleId)
+					.execute();
+			});
+
+			return yield* Effect.forEach(
+				items,
+				(item) => {
+					return dbFx(async (kysely) => {
+						await kysely
+							.insertInto("user_resource_bundle_item")
+							.values({
+								id: genId(),
+								userResourceBundleId: assignmentId,
+								resourceDefinitionId: item.resourceDefinitionId,
+								amount: item.amount,
+								createdAt,
+								availableAt,
+								expiresAt: expiresAt ?? null,
+							})
+							.execute();
+					});
+				},
+				{
+					discard: true,
+				},
+			);
+		}),
+	);
+});
+
+export type userBundleItemCopyFx = ReturnType<typeof userBundleItemCopyFx>;

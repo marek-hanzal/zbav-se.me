@@ -1,17 +1,17 @@
 import { getLogger } from "@logtape/logtape";
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { ViteEnvSchema } from "~/common/env/ViteEnvSchema";
-import { withS3ConfigFx } from "~/common/s3/server/context/withS3ConfigFx";
-import { withS3ConfigEnv } from "~/common/s3/server/env/withS3ConfigEnv";
-import { s3PreSignFx } from "~/common/s3/server/fx/s3PreSignFx";
+import { ViteEnvSchema } from "~/application-env/schema/ViteEnvSchema";
 import { keyOf } from "~/hash/fn/keyOf";
 import { withLoggerFx } from "~/log/fx/withLoggerFx";
-import { ServerS3Schema } from "~/server/env/ServerS3Schema";
+import { withS3ConfigFx } from "~/s3/context/withS3ConfigFx";
+import { s3PreSignFx } from "~/s3/fx/s3PreSignFx";
+import { withS3ConfigEnv } from "~/s3/schema/withS3ConfigEnv";
+import { ServerS3Schema } from "~/server-env/schema/ServerS3Schema";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { withUploadConfigFx } from "~/user/upload/server/context/withUploadConfigFx";
-import { withUploadConfigEnv } from "~/user/upload/server/env/withUploadConfigEnv";
+import { withUploadConfigFx } from "~/user-upload/context/withUploadConfigFx";
+import { withUploadConfigEnv } from "~/user-upload/schema/withUploadConfigEnv";
 
 describe("s3PreSignFx", () => {
 	it("generates signed url and CDN path using real S3 config", async () => {

@@ -1,13 +1,13 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
+import { RestrictionEnumSchema } from "~/restriction/schema/RestrictionEnumSchema";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { withUserRestrictionActiveSelectFx } from "~/user/user-restriction/server/db/withUserRestrictionActiveSelectFx";
+import { withUserRestrictionActiveSelectFx } from "~/user-restriction/db/withUserRestrictionActiveSelectFx";
 
 const atFx = <A, E, R>(iso: string, eff: Effect.Effect<A, E, R>) =>
 	eff.pipe(

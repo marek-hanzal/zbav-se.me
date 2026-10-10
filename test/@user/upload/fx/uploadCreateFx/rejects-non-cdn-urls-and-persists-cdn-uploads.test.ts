@@ -4,8 +4,8 @@ import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { UploadConfigFx } from "~/user/upload/server/context/UploadConfigFx";
-import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
+import { UploadConfigFx } from "~/user-upload/context/UploadConfigFx";
+import { uploadCreateFx } from "~/user-upload/fx/uploadCreateFx";
 
 describe("uploadCreateFx", () => {
 	it("rejects non-CDN URLs and persists CDN uploads", async () => {

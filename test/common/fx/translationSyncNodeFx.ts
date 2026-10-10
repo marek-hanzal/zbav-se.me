@@ -1,9 +1,9 @@
 import { readdir, readFile } from "node:fs/promises";
 import { basename, extname, join } from "node:path";
 import { Effect } from "effect";
-import { translationSyncWithFilesFx } from "~/common/translation/server/fx/translationSyncWithFilesFx";
+import { translationSyncWithFilesFx } from "~/translation/fx/translationSyncWithFilesFx";
 
-const translationDirectory = join(process.cwd(), "src/server/@migrations/translation");
+const translationDirectory = join(process.cwd(), "src/database-migration/data");
 
 export namespace translationSyncNodeFx {
 	export type File = translationSyncWithFilesFx.File;

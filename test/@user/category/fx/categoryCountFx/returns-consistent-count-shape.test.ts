@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { categoryCountFx } from "~/user/category/server/fx/categoryCountFx";
+import { categoryCountFx } from "~/user-category/fx/categoryCountFx";
 
 describe("categoryCountFx", () => {
 	it("returns count contract for seeded categories", async () => {

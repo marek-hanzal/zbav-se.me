@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { agentStreamDeleteCollectionFx } from "~/user/agent/server/fx/agentStreamDeleteCollectionFx";
+import { agentStreamDeleteCollectionFx } from "~/user-agent/fx/agentStreamDeleteCollectionFx";
 
 const seedAgentStream = async (
 	database: Awaited<ReturnType<typeof import("~/test/testabase").testabase>>,

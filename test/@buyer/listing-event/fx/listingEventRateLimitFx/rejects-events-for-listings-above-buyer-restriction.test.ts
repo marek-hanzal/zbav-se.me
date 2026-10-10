@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { listingEventCreateFx } from "~/buyer/listing-event/server/fx/listingEventCreateFx";
+import { listingEventCreateFx } from "~/buyer-listing-event/fx/listingEventCreateFx";
 import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";

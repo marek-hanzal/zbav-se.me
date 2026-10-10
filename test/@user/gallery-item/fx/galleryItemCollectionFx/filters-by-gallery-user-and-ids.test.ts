@@ -4,12 +4,12 @@ import { testUploadUrl } from "~/test/common/fn/testUploadUrl";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { galleryInsertFx } from "~/user/gallery/server/fx/galleryInsertFx";
-import { galleryItemCollectionFx } from "~/user/gallery-item/server/fx/galleryItemCollectionFx";
-import { galleryItemCountFx } from "~/user/gallery-item/server/fx/galleryItemCountFx";
-import { galleryItemFetchFx } from "~/user/gallery-item/server/fx/galleryItemFetchFx";
-import { galleryItemInsertFx } from "~/user/gallery-item/server/fx/galleryItemInsertFx";
-import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
+import { galleryInsertFx } from "~/user-gallery/fx/galleryInsertFx";
+import { galleryItemCollectionFx } from "~/user-gallery-item/fx/galleryItemCollectionFx";
+import { galleryItemCountFx } from "~/user-gallery-item/fx/galleryItemCountFx";
+import { galleryItemFetchFx } from "~/user-gallery-item/fx/galleryItemFetchFx";
+import { galleryItemInsertFx } from "~/user-gallery-item/fx/galleryItemInsertFx";
+import { uploadCreateFx } from "~/user-upload/fx/uploadCreateFx";
 
 describe("galleryItemCollectionFx", () => {
 	it("filters by gallery, owner scope and ids while keeping count consistent", async () => {

@@ -5,8 +5,8 @@ import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { agentStreamDeleteFx } from "~/user/agent/server/fx/agentStreamDeleteFx";
-import { agentStreamFetchFx } from "~/user/agent/server/fx/agentStreamFetchFx";
+import { agentStreamDeleteFx } from "~/user-agent/fx/agentStreamDeleteFx";
+import { agentStreamFetchFx } from "~/user-agent/fx/agentStreamFetchFx";
 
 const seedAgentStream = async (
 	database: Awaited<ReturnType<typeof import("~/test/testabase").testabase>>,

@@ -1,14 +1,14 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
-import { feedFetchFx } from "~/buyer/feed/server/fx/feedFetchFx";
-import { feedGalleryCreateFx } from "~/buyer/feed-gallery/server/fx/feedGalleryCreateFx";
+import { feedCreateFx } from "~/buyer-feed/fx/feedCreateFx";
+import { feedFetchFx } from "~/buyer-feed/fx/feedFetchFx";
+import { feedGalleryCreateFx } from "~/buyer-feed-gallery/fx/feedGalleryCreateFx";
 import { testUploadUrl } from "~/test/common/fn/testUploadUrl";
 import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
+import { uploadCreateFx } from "~/user-upload/fx/uploadCreateFx";
 
 describe("feedGalleryCreateFx", () => {
 	it("replaces gallery items and updates feed hero upload to the first item", async () => {

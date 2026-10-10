@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { thumbCreateFx } from "~/buyer/thumb/server/fx/thumbCreateFx";
+import { thumbCreateFx } from "~/buyer-thumb/fx/thumbCreateFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";

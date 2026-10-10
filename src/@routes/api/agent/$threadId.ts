@@ -2,17 +2,17 @@ import type { AgentInputItem, RunStreamEvent } from "@openai/agents";
 import { createFileRoute } from "@tanstack/react-router";
 import { Effect } from "effect";
 import { z } from "zod";
-import { ViteEnvSchema } from "~/common/env/ViteEnvSchema";
+import { ViteEnvSchema } from "~/application-env/schema/ViteEnvSchema";
+import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
 import { withLoggerFx } from "~/log/fx/withLoggerFx";
-import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
-import { withLocaleMiddleware } from "~/server/middleware/withLocaleMiddleware";
-import { AssistantAgent } from "~/user/agent/AssistantAgent";
-import { agentThreadFetchFx } from "~/user/agent/server/fx/agentThreadFetchFx";
-import { agentUsageCreateFx } from "~/user/agent/server/fx/agentUsageCreateFx";
-import { withRunnerMiddleware } from "~/user/agent/server/middleware/withRunnerMiddleware";
-import { KyselySession } from "~/user/agent/server/session/KyselySession";
-import { withUserRestrictionMiddleware } from "~/user/restriction/middleware/withUserRestrictionMiddleware";
+import { withLocaleMiddleware } from "~/request-middleware/middleware/withLocaleMiddleware";
+import { agentThreadFetchFx } from "~/user-agent/fx/agentThreadFetchFx";
+import { agentUsageCreateFx } from "~/user-agent/fx/agentUsageCreateFx";
+import { withRunnerMiddleware } from "~/user-agent/middleware/withRunnerMiddleware";
+import { AssistantAgent } from "~/user-agent/service/AssistantAgent";
+import { KyselySession } from "~/user-agent/session/KyselySession";
+import { withUserRestrictionMiddleware } from "~/user-restriction/middleware/withUserRestrictionMiddleware";
 
 const AgentRequestSchema: z.ZodType<AgentInputItem[]> = z
 	.array(z.unknown())

@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { categoryCollectionFx } from "~/public/category/server/fx/categoryCollectionFx";
-import { categoryCountFx } from "~/public/category/server/fx/categoryCountFx";
-import { categoryFetchFx as publicCategoryFetchFx } from "~/public/category/server/fx/categoryFetchFx";
+import { categoryCollectionFx } from "~/public-category/fx/categoryCollectionFx";
+import { categoryCountFx } from "~/public-category/fx/categoryCountFx";
+import { categoryFetchFx as publicCategoryFetchFx } from "~/public-category/fx/categoryFetchFx";
 import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";

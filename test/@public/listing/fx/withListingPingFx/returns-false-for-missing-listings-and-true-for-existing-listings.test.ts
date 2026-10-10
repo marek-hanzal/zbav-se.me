@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withListingPingFx } from "~/public/listing/server/fx/withListingPingFx";
+import { withListingPingFx } from "~/public-listing/fx/withListingPingFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";

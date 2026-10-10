@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { activityCollectionFx } from "~/user/activity/server/fx/activityCollectionFx";
+import { activityCollectionFx } from "~/user-activity/fx/activityCollectionFx";
 
 describe("activity deduplication edge cases", () => {
 	it("does not deduplicate messages across different users sharing the same transaction id", async () => {

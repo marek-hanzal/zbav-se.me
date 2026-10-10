@@ -1,15 +1,15 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { transactionSuccessFx } from "~/buyer/transaction/server/fx/transactionSuccessFx";
-import { listingCollectionFx } from "~/seller/listing/server/fx/listingCollectionFx";
-import { listingCountFx } from "~/seller/listing/server/fx/listingCountFx";
+import { transactionSuccessFx } from "~/buyer-transaction/fx/transactionSuccessFx";
+import { listingCollectionFx } from "~/seller-listing/fx/listingCollectionFx";
+import { listingCountFx } from "~/seller-listing/fx/listingCountFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { createResolvedScenarioFx } from "~/test/transaction/fx/createResolvedScenarioFx";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { activityArchiveFx } from "~/user/activity/server/fx/activityArchiveFx";
+import { activityArchiveFx } from "~/user-activity/fx/activityArchiveFx";
 
 describe("seller listing inbox flows", () => {
 	it("filters buyer-to-seller, seller-to-buyer and archived listings inside seller scope", async () => {

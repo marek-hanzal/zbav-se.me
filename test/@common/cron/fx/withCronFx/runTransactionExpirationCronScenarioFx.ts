@@ -1,15 +1,15 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
-import { transactionDisputeFx } from "~/buyer/transaction/server/fx/transactionDisputeFx";
-import type { ScheduleSchema } from "~/common/@cron/schema/ScheduleSchema";
-import { withCronFx } from "~/common/@cron/server/withCronFx";
-import { TransactionEntrySensitiveKindEnumSchema } from "~/common/user-transaction/enum/TransactionEntrySensitiveKindEnumSchema";
+import { transactionDisputeFx } from "~/buyer-transaction/fx/transactionDisputeFx";
+import { withCronFx } from "~/cron/fx/withCronFx";
+import type { ScheduleSchema } from "~/cron/schema/ScheduleSchema";
 import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
 import type { testabase } from "~/test/testabase";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { createResolvedScenarioFx } from "~/test/transaction/fx/createResolvedScenarioFx";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
+import { TransactionEntrySensitiveKindEnumSchema } from "~/transaction-contract/schema/TransactionEntrySensitiveKindEnumSchema";
 
 type TestDatabase = Awaited<ReturnType<typeof testabase>>;
 

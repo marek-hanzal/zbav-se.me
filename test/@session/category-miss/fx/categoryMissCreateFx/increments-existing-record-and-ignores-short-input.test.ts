@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withCategoryMissQueryBuilderFx } from "~/session/category-miss/server/db/withCategoryMissQueryBuilderFx";
-import { withCategoryMissSelectFx } from "~/session/category-miss/server/db/withCategoryMissSelectFx";
-import { categoryMissCreateFx } from "~/session/category-miss/server/fx/categoryMissCreateFx";
+import { withCategoryMissQueryBuilderFx } from "~/session-category-miss/db/withCategoryMissQueryBuilderFx";
+import { withCategoryMissSelectFx } from "~/session-category-miss/db/withCategoryMissSelectFx";
+import { categoryMissCreateFx } from "~/session-category-miss/fx/categoryMissCreateFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 
