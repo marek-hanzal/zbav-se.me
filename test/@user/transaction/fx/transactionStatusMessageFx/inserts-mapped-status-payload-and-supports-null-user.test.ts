@@ -1,14 +1,14 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { transactionStatusMessageFx } from "~/user/transaction/server/fx/transactionStatusMessageFx";
+import { transactionStatusMessageFx } from "~/user-transaction/fx/transactionStatusMessageFx";
 
 describe("transactionStatusMessageFx", () => {
 	it("writes mapped entries with payload text and allows null user for system statuses", async () => {
-		const database = await testabase("transactionStatusMessageFx-direct");
+		const database = await testabaseFn("transactionStatusMessageFx-direct");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -73,6 +73,6 @@ describe("transactionStatusMessageFx", () => {
 					text: "status-expired",
 				},
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

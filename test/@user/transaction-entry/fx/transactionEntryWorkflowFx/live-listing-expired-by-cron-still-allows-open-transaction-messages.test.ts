@@ -1,20 +1,20 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { DateContextFx } from "@/lib/common/date";
-import { transactionCreateFx } from "~/buyer/transaction/server/fx/transactionCreateFx";
-import { withCronFx } from "~/common/@cron/server/withCronFx";
-import { transactionAcceptFx } from "~/seller/transaction/server/fx/transactionAcceptFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { transactionCreateFx } from "~/buyer-transaction/fx/transactionCreateFx";
+import { withCronFx } from "~/cron/fx/withCronFx";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
+import { transactionAcceptFx } from "~/seller-transaction/fx/transactionAcceptFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
+import { transactionEntryCreateFx } from "~/user-transaction-entry/fx/transactionEntryCreateFx";
 
 const atFx = <A, E, R>(iso: string, eff: Effect.Effect<A, E, R>) =>
 	eff.pipe(
-		Effect.provideService(DateContextFx, {
-			now: () =>
+		withDateServiceFn({
+			nowFn: () =>
 				DateTime.fromISO(iso, {
 					setZone: true,
 				}),
@@ -23,7 +23,7 @@ const atFx = <A, E, R>(iso: string, eff: Effect.Effect<A, E, R>) =>
 
 describe("transactionEntry workflow", () => {
 	it("allows new messages in an open transaction after hourly cron expires the parent listing", async () => {
-		const database = await testabase("transactionEntry-live-listing-expired-by-cron");
+		const database = await testabaseFn("transactionEntry-live-listing-expired-by-cron");
 
 		return Effect.gen(function* () {
 			const users = yield* createUsersFx({});
@@ -91,6 +91,6 @@ describe("transactionEntry workflow", () => {
 			expect(entry.payload).toEqual({
 				text: "The listing expired in cron, but the chat must still work.",
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

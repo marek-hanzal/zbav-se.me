@@ -1,0 +1,75 @@
+import { useCallback, useEffect, useRef } from "react";
+import { withListingEventCreateMutation } from "~/buyer-listing-event/mutation/withListingEventCreateMutation";
+import type { ListingEventEnumSchema } from "~/listing/schema/ListingEventEnumSchema";
+import { useLogger } from "~/log/hook/useLogger";
+import { useVisible } from "~/visibility/hook/useVisible";
+
+export namespace useListingEvent {
+	export interface Props {
+		/**
+		 * This switch _is not reactive_. It's useful when you _know_ you're not interested in event tracking
+		 */
+		enabled: boolean;
+		listingId: string;
+		event: ListingEventEnumSchema.Type;
+		timeoutMs: number;
+	}
+}
+
+export const useListingEvent = ({
+	enabled,
+	listingId,
+	event,
+	timeoutMs,
+}: useListingEvent.Props) => {
+	const logger = useLogger({
+		name: [
+			"hook",
+			"useListingEvent",
+		],
+	});
+	const useStore = useVisible();
+	const visible = useStore((state) => state.getByIdFn(listingId)?.visible ?? false);
+	const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+
+	const listingEventCreateMutation = withListingEventCreateMutation.useMutation({});
+
+	const createFn = useCallback(
+		(listingId: string, event: ListingEventEnumSchema.Type) => {
+			listingEventCreateMutation.mutate({
+				listingId,
+				event,
+			});
+		},
+		[
+			listingEventCreateMutation,
+		],
+	);
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies: We're watching only visible flag
+	useEffect(() => {
+		if (!enabled) {
+			return;
+		}
+
+		clearTimeout(timerRef.current);
+
+		if (visible) {
+			timerRef.current = setTimeout(() => {
+				logger.trace("Scheduling event", {
+					listingId,
+					event,
+					timeoutMs,
+				});
+				createFn(listingId, event);
+			}, timeoutMs);
+		}
+
+		return () => {
+			clearTimeout(timerRef.current);
+		};
+	}, [
+		enabled,
+		visible,
+	]);
+};

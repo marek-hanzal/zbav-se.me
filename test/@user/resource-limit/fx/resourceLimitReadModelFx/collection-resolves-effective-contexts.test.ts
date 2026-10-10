@@ -1,8 +1,9 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
-import { resourceLimitCollectionFx } from "~/user/resource-limit/server/fx/resourceLimitCollectionFx";
+import { ResourceDefinitionEnumSchema } from "~/resource-definition/schema/ResourceDefinitionEnumSchema";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
+import { resourceLimitCollectionFx } from "~/user-resource-limit/fx/resourceLimitCollectionFx";
 import {
 	atResourceLimitReadModelFx,
 	seedResourceLimitReadModelFx,
@@ -10,7 +11,7 @@ import {
 
 describe("resourceLimit read model fx", () => {
 	it("collection resolves effective resource bundle limits", async () => {
-		const database = await testabase("resource-limit-collection");
+		const database = await testabaseFn("resource-limit-collection");
 
 		return Effect.gen(function* () {
 			const { seller } = yield* seedResourceLimitReadModelFx(database);
@@ -58,13 +59,17 @@ describe("resourceLimit read model fx", () => {
 
 			expect(sellerCollection).toHaveLength(4);
 			expect(sellerCollection.map((item) => item.resourceDefinitionId)).toEqual([
-				"feed.count",
-				"listing.count",
-				"listing.count",
-				"listing.gallery.count",
+				ResourceDefinitionEnumSchema.enum["buyer:limit:feed.count"],
+				ResourceDefinitionEnumSchema.enum["seller:limit:listing.count"],
+				ResourceDefinitionEnumSchema.enum["seller:limit:listing.count"],
+				ResourceDefinitionEnumSchema.enum["seller:limit:listing.gallery.count"],
 			]);
 			expect(
-				sellerCollection.find((item) => item.resourceDefinitionId === "feed.count"),
+				sellerCollection.find(
+					(item) =>
+						item.resourceDefinitionId ===
+						ResourceDefinitionEnumSchema.enum["buyer:limit:feed.count"],
+				),
 			).toMatchObject({
 				limit: 4,
 			});
@@ -78,23 +83,27 @@ describe("resourceLimit read model fx", () => {
 			).toEqual(
 				expect.arrayContaining([
 					{
-						resourceDefinitionId: "listing.count",
+						resourceDefinitionId:
+							ResourceDefinitionEnumSchema.enum["seller:limit:listing.count"],
 						limit: 2,
 					},
 					{
-						resourceDefinitionId: "listing.count",
+						resourceDefinitionId:
+							ResourceDefinitionEnumSchema.enum["seller:limit:listing.count"],
 						limit: 7,
 					},
 					{
-						resourceDefinitionId: "feed.count",
+						resourceDefinitionId:
+							ResourceDefinitionEnumSchema.enum["buyer:limit:feed.count"],
 						limit: 4,
 					},
 					{
-						resourceDefinitionId: "listing.gallery.count",
+						resourceDefinitionId:
+							ResourceDefinitionEnumSchema.enum["seller:limit:listing.gallery.count"],
 						limit: 10,
 					},
 				]),
 			);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

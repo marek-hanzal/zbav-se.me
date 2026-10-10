@@ -1,18 +1,18 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { transactionCollectionFx } from "~/buyer/transaction/server/fx/transactionCollectionFx";
-import { transactionCountFx } from "~/buyer/transaction/server/fx/transactionCountFx";
-import { transactionFetchFx } from "~/buyer/transaction/server/fx/transactionFetchFx";
-import { transactionAcceptFx } from "~/seller/transaction/server/fx/transactionAcceptFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { transactionCollectionFx } from "~/buyer-transaction/fx/transactionCollectionFx";
+import { transactionCountFx } from "~/buyer-transaction/fx/transactionCountFx";
+import { transactionFetchFx } from "~/buyer-transaction/fx/transactionFetchFx";
+import { transactionAcceptFx } from "~/seller-transaction/fx/transactionAcceptFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { getDefaultListingCreateFx } from "~/test/listing/fx/getDefaultListingCreateFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("buyer transaction read model fetch and count", () => {
 	it("filters fetch and count by ids inside buyer scope", async () => {
-		const database = await testabase("buyerTransactionReadModelFx-filters-fetch-count");
+		const database = await testabaseFn("buyerTransactionReadModelFx-filters-fetch-count");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -73,6 +73,6 @@ describe("buyer transaction read model fetch and count", () => {
 			expect(typeof fetched.unread).toBe("number");
 			expect(fetched.unread).toBe(1);
 			expect(fetched.status).toBe("trade");
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

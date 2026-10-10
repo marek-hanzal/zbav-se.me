@@ -1,0 +1,87 @@
+import { Effect } from "effect";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
+import { InvalidRequestErrorFx } from "~/server-error/error/InvalidRequestErrorFx";
+import { LocationConfigFx } from "~/session-location/context/LocationConfigFx";
+import type { RouteSchema } from "~/session-location/schema/RouteSchema";
+import { linkToFn } from "~/url/fn/linkToFn";
+
+export namespace routeFx {
+	export type Props = RouteSchema.Type;
+
+	export interface MatrixEntry {
+		distance: number;
+		time: number;
+		source_index: number;
+		target_index: number;
+	}
+
+	export interface MatrixResponse {
+		sources_to_targets: MatrixEntry[][];
+	}
+}
+
+export const routeFx = Effect.fn("routeFx")(function* ({
+	source,
+	target,
+	mode = "drive",
+}: routeFx.Props) {
+	const logger = yield* getLoggerFx("routeFx");
+	logger.trace("routeFx", {
+		source,
+		target,
+		mode,
+	});
+
+	const locationConfig = yield* LocationConfigFx;
+
+	const link = linkToFn({
+		base: locationConfig.api,
+		href: locationConfig.route,
+		query: {
+			apiKey: locationConfig.geoapifyToken,
+		},
+	});
+
+	const response = yield* Effect.promise(async () => {
+		return fetch(link, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				mode,
+				sources: [
+					{
+						location: [
+							source.lon,
+							source.lat,
+						],
+					},
+				],
+				targets: [
+					{
+						location: [
+							target.lon,
+							target.lat,
+						],
+					},
+				],
+				units: "metric",
+			}),
+		}).then((res) => {
+			return res.json() as unknown as routeFx.MatrixResponse;
+		});
+	});
+
+	const distance = response.sources_to_targets[0]?.[0]?.distance;
+
+	if (typeof distance !== "number") {
+		return yield* new InvalidRequestErrorFx({
+			message: "Route distance could not be resolved",
+		});
+	}
+
+	return distance;
+});
+
+export type routeFx = ReturnType<typeof routeFx>;

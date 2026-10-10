@@ -1,17 +1,17 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { transactionEntryCollectionFx } from "~/user/transaction-entry/server/fx/transactionEntryCollectionFx";
-import { transactionEntryCountFx } from "~/user/transaction-entry/server/fx/transactionEntryCountFx";
-import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
-import { transactionEntryFetchFx } from "~/user/transaction-entry/server/fx/transactionEntryFetchFx";
+import { transactionEntryCollectionFx } from "~/user-transaction-entry/fx/transactionEntryCollectionFx";
+import { transactionEntryCountFx } from "~/user-transaction-entry/fx/transactionEntryCountFx";
+import { transactionEntryCreateFx } from "~/user-transaction-entry/fx/transactionEntryCreateFx";
+import { transactionEntryFetchFx } from "~/user-transaction-entry/fx/transactionEntryFetchFx";
 
 describe("transactionEntry read model", () => {
 	it("filters entries by kind, actor and ids for participants", async () => {
-		const database = await testabase("transactionEntryReadModelFx-filters");
+		const database = await testabaseFn("transactionEntryReadModelFx-filters");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -122,6 +122,6 @@ describe("transactionEntry read model", () => {
 			expect(fetched.id).toBe(sellerLocation.id);
 			expect(fetched.kind).toBe("location");
 			expect(fetched.direction).toBe("in");
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

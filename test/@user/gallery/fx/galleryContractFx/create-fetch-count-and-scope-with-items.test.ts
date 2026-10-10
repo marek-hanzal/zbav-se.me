@@ -1,18 +1,18 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { testUploadUrl } from "~/test/common/fn/testUploadUrl";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { testUploadUrlFn } from "~/test/common/fn/testUploadUrlFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { galleryCountFx } from "~/user/gallery/server/fx/galleryCountFx";
-import { galleryCreateFx } from "~/user/gallery/server/fx/galleryCreateFx";
-import { galleryFetchFx } from "~/user/gallery/server/fx/galleryFetchFx";
-import { galleryItemInsertFx } from "~/user/gallery-item/server/fx/galleryItemInsertFx";
-import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
+import { galleryCountFx } from "~/user-gallery/fx/galleryCountFx";
+import { galleryCreateFx } from "~/user-gallery/fx/galleryCreateFx";
+import { galleryFetchFx } from "~/user-gallery/fx/galleryFetchFx";
+import { galleryItemInsertFx } from "~/user-gallery-item/fx/galleryItemInsertFx";
+import { uploadCreateFx } from "~/user-upload/fx/uploadCreateFx";
 
 describe("gallery contract fx", () => {
 	it("creates a scoped gallery, fetches nested items in order, and keeps count isolated", async () => {
-		const database = await testabase("gallery-contract-create-fetch-count");
+		const database = await testabaseFn("gallery-contract-create-fetch-count");
 
 		return Effect.gen(function* () {
 			const { seller, buyer } = yield* createUsersFx({});
@@ -20,17 +20,17 @@ describe("gallery contract fx", () => {
 			const firstUpload = yield* uploadCreateFx({
 				userId: seller.id,
 				access: "private",
-				url: testUploadUrl("gallery-contract-first.jpg"),
+				url: testUploadUrlFn("gallery-contract-first.jpg"),
 			});
 			const secondUpload = yield* uploadCreateFx({
 				userId: seller.id,
 				access: "private",
-				url: testUploadUrl("gallery-contract-second.jpg"),
+				url: testUploadUrlFn("gallery-contract-second.jpg"),
 			});
 			const foreignUpload = yield* uploadCreateFx({
 				userId: buyer.id,
 				access: "private",
-				url: testUploadUrl("gallery-contract-foreign.jpg"),
+				url: testUploadUrlFn("gallery-contract-foreign.jpg"),
 			});
 
 			const created = yield* galleryCreateFx({
@@ -96,6 +96,6 @@ describe("gallery contract fx", () => {
 			]);
 			expect(sellerCount).toBe(1);
 			expect(buyerCount).toBe(1);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

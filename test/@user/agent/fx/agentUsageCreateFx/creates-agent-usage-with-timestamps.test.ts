@@ -1,13 +1,13 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { agentUsageCreateFx } from "~/user/agent/server/fx/agentUsageCreateFx";
+import { agentUsageCreateFx } from "~/user-agent/fx/agentUsageCreateFx";
 
 describe("agentUsageCreateFx", () => {
 	it("creates scoped agent usage rows with timestamps", async () => {
-		const database = await testabase("agentUsageCreateFx-contract");
+		const database = await testabaseFn("agentUsageCreateFx-contract");
 
 		return Effect.gen(function* () {
 			const { seller } = yield* createUsersFx({});
@@ -66,6 +66,6 @@ describe("agentUsageCreateFx", () => {
 			expect(rows[1]?.createdAt).toBeInstanceOf(Date);
 			expect(rows[0]?.requests).toBe(1);
 			expect(rows[1]?.requests).toBe(2);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

@@ -1,19 +1,19 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import type { ActivityPriorityEnumSchema } from "~/common/activity/enum/ActivityPriorityEnumSchema";
-import type { ActivityTypeEnumSchema } from "~/common/activity/enum/ActivityTypeEnumSchema";
-import type { ActivityTableSchema } from "~/server/database/@table/ActivityTableSchema";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import type { ActivityPriorityEnumSchema } from "~/activity/schema/ActivityPriorityEnumSchema";
+import type { ActivityTypeEnumSchema } from "~/activity/schema/ActivityTypeEnumSchema";
+import type { ActivityTableSchema } from "~/database/schema/ActivityTable";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { activityArchiveFx } from "~/user/activity/server/fx/activityArchiveFx";
+import { activityArchiveFx } from "~/user-activity/fx/activityArchiveFx";
 
 /**
  * Inserts activity rows directly into the DB — bypasses activityCreateFx so tests
  * are not coupled to the full transaction/listing lifecycle.
  */
-const seedActivity = async (
-	database: Awaited<ReturnType<typeof import("~/test/testabase").testabase>>,
+const seedActivityFn = async (
+	database: Awaited<ReturnType<typeof import("~/test/testabaseFn").testabaseFn>>,
 	rows: Array<
 		Pick<ActivityTableSchema.Type, "family" | "payload"> & {
 			id: string;
@@ -38,13 +38,13 @@ const seedActivity = async (
 
 describe("activityArchiveFx", () => {
 	it("archives by family: only transaction items get archived, reactions survive", async () => {
-		const database = await testabase("activityArchive-by-family");
+		const database = await testabaseFn("activityArchive-by-family");
 
 		return Effect.gen(function* () {
 			const user = yield* leaseTestUserFx({});
 
 			yield* Effect.promise(() =>
-				seedActivity(database, [
+				seedActivityFn(database, [
 					{
 						id: "family-tx",
 						userId: user.id,
@@ -102,6 +102,6 @@ describe("activityArchiveFx", () => {
 
 			expect(txItem.archivedAt).not.toBeNull();
 			expect(reactionItem.archivedAt).toBeNull();
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

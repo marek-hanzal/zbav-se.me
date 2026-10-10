@@ -1,17 +1,17 @@
 import { Effect } from "effect";
-import { withTestabaseFx } from "@/lib/server/test";
+import type { TestProject } from "vitest/node";
 import { seedTestLocationsFx } from "~/test/common/fx/seedTestLocationsFx";
 import { seedTestUsersFx } from "~/test/common/fx/seedTestUsersFx";
 import { testDatabaseFx } from "~/test/common/fx/testDatabaseFx";
+import { withTestabaseFx } from "~/test-database/fx/withTestabaseFx";
 
-export default async function globalSetup() {
-	return withTestabaseFx({
+export default async function globalSetupFn(project: TestProject) {
+	const testDatabase = await withTestabaseFx({
 		image: "nhost/postgres:17-20260320-1",
 		name: "zbav-seme-test-postgres",
-		port: 55432,
 		template: "test",
 		databaseFx: testDatabaseFx,
-		onMigrate: (database) => {
+		onMigrateFn: (database) => {
 			return Effect.gen(function* () {
 				yield* seedTestLocationsFx({
 					database,
@@ -22,4 +22,7 @@ export default async function globalSetup() {
 			}).pipe(Effect.runPromise);
 		},
 	}).pipe(Effect.runPromise);
+
+	project.provide("testDatabaseDsn", testDatabase.dsn);
+	return testDatabase.cleanupFn;
 }

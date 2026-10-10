@@ -1,14 +1,14 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { transactionStatusMessageFx } from "~/user/transaction/server/fx/transactionStatusMessageFx";
+import { transactionStatusMessageFx } from "~/user-transaction/fx/transactionStatusMessageFx";
 
 describe("transactionStatusMessageFx", () => {
 	it("ignores unmapped request and target combinations", async () => {
-		const database = await testabase("transactionStatusMessageFx-noop");
+		const database = await testabaseFn("transactionStatusMessageFx-noop");
 
 		return Effect.gen(function* () {
 			const { seller, buyer } = yield* createUsersFx({});
@@ -30,7 +30,7 @@ describe("transactionStatusMessageFx", () => {
 			const beforeCount = yield* Effect.promise(() =>
 				database.kysely
 					.selectFrom("transaction_entry")
-					.select((eb) => eb.fn.countAll<number>().as("count"))
+					.select((ebFn) => ebFn.fn.countAll<number>().as("count"))
 					.where("transactionId", "=", transaction.id)
 					.executeTakeFirstOrThrow(),
 			);
@@ -51,12 +51,12 @@ describe("transactionStatusMessageFx", () => {
 			const afterCount = yield* Effect.promise(() =>
 				database.kysely
 					.selectFrom("transaction_entry")
-					.select((eb) => eb.fn.countAll<number>().as("count"))
+					.select((ebFn) => ebFn.fn.countAll<number>().as("count"))
 					.where("transactionId", "=", transaction.id)
 					.executeTakeFirstOrThrow(),
 			);
 
 			expect(afterCount.count).toBe(beforeCount.count);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

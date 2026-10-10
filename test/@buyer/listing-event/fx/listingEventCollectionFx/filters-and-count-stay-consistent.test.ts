@@ -1,16 +1,16 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { listingEventCollectionFx } from "~/buyer/listing-event/server/fx/listingEventCollectionFx";
-import { listingEventCountFx } from "~/buyer/listing-event/server/fx/listingEventCountFx";
-import { listingEventCreateFx } from "~/buyer/listing-event/server/fx/listingEventCreateFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { listingEventCollectionFx } from "~/buyer-listing-event/fx/listingEventCollectionFx";
+import { listingEventCountFx } from "~/buyer-listing-event/fx/listingEventCountFx";
+import { listingEventCreateFx } from "~/buyer-listing-event/fx/listingEventCreateFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
 describe("listingEvent read model", () => {
 	it("filters events by listing and ids while keeping count consistent", async () => {
-		const database = await testabase("listingEvent-collection-contract");
+		const database = await testabaseFn("listingEvent-collection-contract");
 
 		return Effect.gen(function* () {
 			const { seller, buyer, stranger } = yield* createUsersFx({});
@@ -91,6 +91,6 @@ describe("listingEvent read model", () => {
 			expect(onlyFavourite).toHaveLength(1);
 			expect(onlyFavourite[0]?.id).toBe(favourite.id);
 			expect(empty).toEqual([]);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

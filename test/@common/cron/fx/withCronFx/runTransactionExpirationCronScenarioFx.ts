@@ -1,22 +1,22 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
-import { DateContextFx } from "@/lib/common/date";
-import { transactionDisputeFx } from "~/buyer/transaction/server/fx/transactionDisputeFx";
-import type { ScheduleSchema } from "~/common/@cron/schema/ScheduleSchema";
-import { withCronFx } from "~/common/@cron/server/withCronFx";
-import { TransactionEntrySensitiveKindEnumSchema } from "~/common/user-transaction/enum/TransactionEntrySensitiveKindEnumSchema";
-import type { testabase } from "~/test/testabase";
+import { transactionDisputeFx } from "~/buyer-transaction/fx/transactionDisputeFx";
+import { withCronFx } from "~/cron/fx/withCronFx";
+import type { ScheduleSchema } from "~/cron/schema/ScheduleSchema";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
+import type { testabaseFn } from "~/test/testabaseFn";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { createResolvedScenarioFx } from "~/test/transaction/fx/createResolvedScenarioFx";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
+import { TransactionEntrySensitiveKindEnumSchema } from "~/transaction-contract/schema/TransactionEntrySensitiveKindEnumSchema";
 
-type TestDatabase = Awaited<ReturnType<typeof testabase>>;
+type TestDatabase = Awaited<ReturnType<typeof testabaseFn>>;
 
 const atFx = <A, E, R>(iso: string, eff: Effect.Effect<A, E, R>) =>
 	eff.pipe(
-		Effect.provideService(DateContextFx, {
-			now: () =>
+		withDateServiceFn({
+			nowFn: () =>
 				DateTime.fromISO(iso, {
 					setZone: true,
 				}),

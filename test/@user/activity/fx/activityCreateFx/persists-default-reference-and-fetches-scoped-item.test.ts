@@ -1,13 +1,13 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { activityCreateFx } from "~/user/activity/server/fx/activityCreateFx";
+import { activityCreateFx } from "~/user-activity/fx/activityCreateFx";
 
 describe("activityCreateFx", () => {
 	it("persists default reference, keeps archivedAt null and stays scoped to owner", async () => {
-		const database = await testabase("activityCreateFx-contract");
+		const database = await testabaseFn("activityCreateFx-contract");
 
 		return Effect.gen(function* () {
 			const owner = yield* leaseTestUserFx({});
@@ -67,6 +67,6 @@ describe("activityCreateFx", () => {
 			);
 
 			expect(foreignRead).toBeUndefined();
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

@@ -1,12 +1,12 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
-import { favouriteToggleFx } from "~/buyer/listing-favourite/server/fx/favouriteToggleFx";
-import { runToggleEntityContractFx } from "~/test/@buyer/common/fx/runToggleEntityContractFx";
+import { feedCreateFx } from "~/buyer-feed/fx/feedCreateFx";
+import { favouriteToggleFx } from "~/buyer-listing-favourite/fx/favouriteToggleFx";
+import { runToggleEntityContractFn } from "~/test/@buyer/common/fx/runToggleEntityContractFn";
 
 describe("favouriteToggleFx", () => {
 	it("toggle off: deletes favourite, creates unfavourite event and activity", async () => {
-		return runToggleEntityContractFx({
+		return runToggleEntityContractFn({
 			databaseName: "favouriteToggle-off",
 			userSlug: "fav-toggle-off",
 			createExtraFx: ({ users }) =>
@@ -53,7 +53,7 @@ describe("favouriteToggleFx", () => {
 
 					return events.map((event) => event.event);
 				}),
-			assertRecordOn: (record, { extra: feed }) => {
+			assertRecordOnFn: (record, { extra: feed }) => {
 				expect(record.feedId).toBe(feed.id);
 			},
 			onEvent: "listing.favourite",
@@ -70,7 +70,7 @@ describe("favouriteToggleFx", () => {
 						.where("type", "=", "listing.favourite")
 						.executeTakeFirst(),
 				),
-			assertActivityOn: (activity) => {
+			assertActivityOnFn: (activity) => {
 				expect(activity.family).toBe("reaction");
 			},
 			activityOffFx: ({ database, users }) =>

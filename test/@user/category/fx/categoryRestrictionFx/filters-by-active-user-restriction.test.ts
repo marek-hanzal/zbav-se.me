@@ -1,14 +1,14 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { DateContextFx } from "@/lib/common/date";
-import { genId } from "@/lib/common/gen-id";
-import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { DateServiceFx } from "~/date/service/DateServiceFx";
+import { genIdFn } from "~/identity/fn/genIdFn";
+import type { RestrictionEnumSchema } from "~/restriction/schema/RestrictionEnumSchema";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { categoryCollectionFx } from "~/user/category/server/fx/categoryCollectionFx";
+import { categoryCollectionFx } from "~/user-category/fx/categoryCollectionFx";
 
-type TestDatabase = Awaited<ReturnType<typeof testabase>>;
+type TestDatabase = Awaited<ReturnType<typeof testabaseFn>>;
 type CategoryRestriction = RestrictionEnumSchema.Type;
 
 interface RestrictionRecord {
@@ -31,10 +31,10 @@ const restrictionLevels = [
 	"restricted",
 ] as const satisfies CategoryRestriction[];
 
-const createRestrictedCategories = (database: TestDatabase, slugPrefix: string) =>
+const createRestrictedCategoriesFx = (database: TestDatabase, slugPrefix: string) =>
 	Effect.promise(async () => {
 		const categories = restrictionLevels.map((restriction, index) => ({
-			id: genId(),
+			id: genIdFn(),
 			group: `Restriction fixture ${slugPrefix}`,
 			category: `Restriction fixture ${restriction}`,
 			slug: `${slugPrefix}-${restriction}`,
@@ -49,7 +49,7 @@ const createRestrictedCategories = (database: TestDatabase, slugPrefix: string) 
 		return categories.map((category) => category.id);
 	});
 
-const createUserRestrictions = (
+const createUserRestrictionsFx = (
 	database: TestDatabase,
 	props: {
 		userId: string;
@@ -61,15 +61,15 @@ const createUserRestrictions = (
 			return;
 		}
 
-		const dateContext = yield* DateContextFx;
-		const now = dateContext.now();
+		const dateContext = yield* DateServiceFx;
+		const now = dateContext.nowFn();
 
 		yield* Effect.promise(() =>
 			database.kysely
 				.insertInto("user_restriction")
 				.values(
 					props.records.map((record) => ({
-						id: genId(),
+						id: genIdFn(),
 						userId: props.userId,
 						restriction: record.restriction,
 						availableAt: now
@@ -89,7 +89,7 @@ const createUserRestrictions = (
 		);
 	});
 
-const fetchAvailableRestrictions = (userId: string, categoryIdIn: string[]) =>
+const fetchAvailableRestrictionsFx = (userId: string, categoryIdIn: string[]) =>
 	categoryCollectionFx({
 		userId,
 		scope: {},
@@ -109,7 +109,7 @@ const fetchAvailableRestrictions = (userId: string, categoryIdIn: string[]) =>
 		),
 	);
 
-const fetchRestrictionFlags = (userId: string, categoryIdIn: string[]) =>
+const fetchRestrictionFlagsFx = (userId: string, categoryIdIn: string[]) =>
 	categoryCollectionFx({
 		userId,
 		scope: {},
@@ -133,7 +133,7 @@ const fetchRestrictionFlags = (userId: string, categoryIdIn: string[]) =>
 
 describe("user category restriction scope", () => {
 	it("filters categories by the latest active user restriction", async () => {
-		const database = await testabase("user-category-active-restriction-scope");
+		const database = await testabaseFn("user-category-active-restriction-scope");
 
 		const scenarios = [
 			{
@@ -215,21 +215,21 @@ describe("user category restriction scope", () => {
 		] satisfies Scenario[];
 
 		return Effect.gen(function* () {
-			const categoryIdIn = yield* createRestrictedCategories(database, "restriction-scope");
+			const categoryIdIn = yield* createRestrictedCategoriesFx(database, "restriction-scope");
 
 			for (const scenario of scenarios) {
 				const user = yield* leaseTestUserFx({});
 
-				yield* createUserRestrictions(database, {
+				yield* createUserRestrictionsFx(database, {
 					userId: user.id,
 					records: scenario.records,
 				});
 
-				const restrictions = yield* fetchAvailableRestrictions(user.id, categoryIdIn);
+				const restrictions = yield* fetchAvailableRestrictionsFx(user.id, categoryIdIn);
 
 				expect(restrictions, scenario.name).toEqual(scenario.expectedRestrictions);
 
-				const restrictionFlags = yield* fetchRestrictionFlags(user.id, categoryIdIn);
+				const restrictionFlags = yield* fetchRestrictionFlagsFx(user.id, categoryIdIn);
 				const expectedRestrictions: readonly CategoryRestriction[] =
 					scenario.expectedRestrictions;
 				const expectedRestrictionFlags = restrictionLevels.map((restriction) => ({
@@ -239,6 +239,6 @@ describe("user category restriction scope", () => {
 
 				expect(restrictionFlags, scenario.name).toEqual(expectedRestrictionFlags);
 			}
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

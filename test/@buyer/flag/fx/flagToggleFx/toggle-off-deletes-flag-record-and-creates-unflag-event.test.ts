@@ -1,11 +1,11 @@
 import { Effect } from "effect";
 import { describe, it } from "vitest";
-import { flagToggleFx } from "~/buyer/listing-flag/server/fx/flagToggleFx";
-import { runToggleEntityContractFx } from "~/test/@buyer/common/fx/runToggleEntityContractFx";
+import { flagToggleFx } from "~/buyer-listing-flag/fx/flagToggleFx";
+import { runToggleEntityContractFn } from "~/test/@buyer/common/fx/runToggleEntityContractFn";
 
 describe("flagToggleFx", () => {
 	it("toggle off: deletes flag record and creates unflag event", async () => {
-		return runToggleEntityContractFx({
+		return runToggleEntityContractFn({
 			databaseName: "flagToggle-off",
 			userSlug: "flag-toggle-off",
 			toggleOnFx: ({ users, listing }) =>
@@ -42,7 +42,7 @@ describe("flagToggleFx", () => {
 
 					return events.map((event) => event.event);
 				}),
-			assertRecordOn: () => {},
+			assertRecordOnFn: () => {},
 			onEvent: "listing.flag",
 			offEvent: "unflag",
 			activityOnFx: ({ database, users }) =>

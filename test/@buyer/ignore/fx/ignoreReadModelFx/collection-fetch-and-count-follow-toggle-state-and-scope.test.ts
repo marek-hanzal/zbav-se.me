@@ -1,13 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { ignoreCollectionFx } from "~/buyer/listing-ignore/server/fx/ignoreCollectionFx";
-import { ignoreCountFx } from "~/buyer/listing-ignore/server/fx/ignoreCountFx";
-import { ignoreFetchFx } from "~/buyer/listing-ignore/server/fx/ignoreFetchFx";
-import { ignoreToggleFx } from "~/buyer/listing-ignore/server/fx/ignoreToggleFx";
-import { runToggleReadModelContractFx } from "~/test/@buyer/common/fx/runToggleReadModelContractFx";
+import { ignoreCollectionFx } from "~/buyer-listing-ignore/fx/ignoreCollectionFx";
+import { ignoreCountFx } from "~/buyer-listing-ignore/fx/ignoreCountFx";
+import { ignoreFetchFx } from "~/buyer-listing-ignore/fx/ignoreFetchFx";
+import { ignoreToggleFx } from "~/buyer-listing-ignore/fx/ignoreToggleFx";
+import { runToggleReadModelContractFn } from "~/test/@buyer/common/fx/runToggleReadModelContractFn";
 
 describe("ignore read model", () => {
 	it("collection, fetch and count reflect toggle state and respect scope", async () => {
-		return runToggleReadModelContractFx({
+		return runToggleReadModelContractFn({
 			databaseName: "ignoreReadModelFx",
 			userSlug: "ignore-read",
 			toggleOnFx: ({ users, listing }) =>
@@ -65,7 +65,7 @@ describe("ignore read model", () => {
 						listingId: listing.id,
 					},
 				}),
-			assertFetched: (item, { listing }) => {
+			assertFetchedFn: (item, { listing }) => {
 				expect(item.listingId).toBe(listing.id);
 			},
 		});

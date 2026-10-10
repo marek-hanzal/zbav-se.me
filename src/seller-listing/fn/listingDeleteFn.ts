@@ -1,0 +1,56 @@
+import { createServerFn } from "@tanstack/react-start";
+import { Effect } from "effect";
+import { withKyselyFn } from "~/database/fn/withKyselyFn";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
+import { withLoggerFn } from "~/log/fn/withLoggerFn";
+import { withDatabaseMiddleware } from "~/request-middleware/middleware/withDatabaseMiddleware";
+import { withLogMiddleware } from "~/request-middleware/middleware/withLogMiddleware";
+import { withUserMiddleware } from "~/request-middleware/middleware/withUserMiddleware";
+import { listingDeleteFx } from "~/seller-listing/fx/listingDeleteFx";
+import { ListingQuerySchema } from "~/seller-listing/schema/ListingQuerySchema";
+import { ListingSchema } from "~/seller-listing/schema/ListingSchema";
+import { zodGuardFx } from "~/validation/fx/zodGuardFx";
+
+export namespace listingDeleteFn {
+	export type Error = Effect.Error<listingDeleteFx>;
+}
+
+export const listingDeleteFn = createServerFn({
+	method: "POST",
+})
+	.middleware([
+		withLogMiddleware,
+		withDatabaseMiddleware,
+		withUserMiddleware,
+	])
+	.validator(ListingQuerySchema)
+	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
+		const logger = rootLogger.getChild([
+			"fn",
+			name,
+		]);
+		logger.trace(name, data);
+
+		return zodGuardFx({
+			schema: ListingSchema,
+			dataFx: listingDeleteFx({
+				...data,
+				userId: user.id,
+				scope: {
+					userId: user.id,
+				},
+			}),
+		}).pipe(
+			withKyselyFn(database),
+			withLoggerFn(rootLogger),
+			withDateServiceFn(),
+			Effect.tapError((error) => {
+				return Effect.sync(() => {
+					logger.error(error._tag, {
+						error,
+					});
+				});
+			}),
+			Effect.runPromise,
+		);
+	});

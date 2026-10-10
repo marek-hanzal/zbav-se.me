@@ -1,22 +1,23 @@
 import { Effect } from "effect";
-import { MigrationContextFx, withDatabaseFx } from "@/lib/common/database";
-import { getRootLogger } from "~/common/log/getRootLogger";
-import { migrations } from "~/server/@migrations/migrations";
-import { runAuthMigration } from "~/server/auth/runAuthMigration";
-import type { Database } from "~/server/database/Database";
-import { imports } from "~/server/database/databaseFx/imports";
-import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
+import { runAuthMigrationFn } from "~/authentication/fn/runAuthMigrationFn";
+import { imports } from "~/database/constant/imports";
+import { withKyselyFn } from "~/database/fn/withKyselyFn";
+import type { Database } from "~/database/type/Database";
+import { migrations } from "~/database-migration/constant/migrations";
+import { withDatabaseFx } from "~/database-query/fx/withDatabaseFx";
+import { MigrationContextFx } from "~/database-query/service/MigrationContextFx";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
 import { translationSyncNodeFx } from "./translationSyncNodeFx";
 
 export const testDatabaseFx = withDatabaseFx<Database>({
-	logger: getRootLogger([
+	logger: getRootLoggerFn([
 		"db",
 	]),
-	async onPreMigration({ dialect }) {
-		await runAuthMigration(dialect);
+	async onPreMigrationFn({ dialect }) {
+		await runAuthMigrationFn(dialect);
 	},
-	async onPostMigration(instance) {
-		await translationSyncNodeFx().pipe(withKyselyFx(instance), Effect.runPromise);
+	async onPostMigrationFn(instance) {
+		await translationSyncNodeFx().pipe(withKyselyFn(instance), Effect.runPromise);
 	},
 	imports,
 }).pipe(Effect.provideService(MigrationContextFx, migrations));

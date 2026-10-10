@@ -24,3 +24,20 @@ temp
 test-results
 tmp-*
 tsconfig.tsbuildinfo
+
+# Terraform state and local bootstrap configuration contain credentials.
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+*.tfvars
+*.tfvars.json
+crash.log
+crash.*.log
+infra/bootstrap/.backend.s3.tfbackend
+infra/app/.backend.s3.tfbackend
+
+# Encrypted SOPS JSON and public recipients are committed; private age identities are not.
+*.agekey
+infra/.secrets.enc.*
+.release/

@@ -1,14 +1,14 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { listingGetSellerInfoFx } from "~/buyer/listing/server/fx/listingGetSellerInfoFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { listingGetSellerInfoFx } from "~/buyer-listing/fx/listingGetSellerInfoFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("listingGetSellerInfoFx", () => {
 	it("returns seller listings count as a number", async () => {
-		const database = await testabase("listingGetSellerInfoFx-listings-number");
+		const database = await testabaseFn("listingGetSellerInfoFx-listings-number");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -24,6 +24,6 @@ describe("listingGetSellerInfoFx", () => {
 
 			expect(typeof sellerInfo.listings).toBe("number");
 			expect(sellerInfo.listings).toBe(2);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

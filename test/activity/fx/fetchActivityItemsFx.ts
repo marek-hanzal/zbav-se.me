@@ -1,8 +1,8 @@
 import { Effect } from "effect";
-import type { Database } from "~/server/database/Database";
-import type { testabase } from "~/test/testabase";
+import type { Database } from "~/database/type/Database";
+import type { testabaseFn } from "~/test/testabaseFn";
 
-type TestDatabase = Awaited<ReturnType<typeof testabase>>;
+type TestDatabase = Awaited<ReturnType<typeof testabaseFn>>;
 
 export namespace fetchActivityItemsFx {
 	export interface Props {

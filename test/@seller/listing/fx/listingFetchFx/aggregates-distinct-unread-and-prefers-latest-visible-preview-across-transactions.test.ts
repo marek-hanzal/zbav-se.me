@@ -1,18 +1,18 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { transactionCreateFx } from "~/buyer/transaction/server/fx/transactionCreateFx";
-import { listingCollectionFx } from "~/seller/listing/server/fx/listingCollectionFx";
-import { listingFetchFx } from "~/seller/listing/server/fx/listingFetchFx";
-import { transactionAcceptFx } from "~/seller/transaction/server/fx/transactionAcceptFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { transactionCreateFx } from "~/buyer-transaction/fx/transactionCreateFx";
+import { listingCollectionFx } from "~/seller-listing/fx/listingCollectionFx";
+import { listingFetchFx } from "~/seller-listing/fx/listingFetchFx";
+import { transactionAcceptFx } from "~/seller-transaction/fx/transactionAcceptFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
+import { transactionEntryCreateFx } from "~/user-transaction-entry/fx/transactionEntryCreateFx";
 
 describe("seller listing transaction read model", () => {
 	it("counts unread by distinct transaction and keeps preview on the latest visible activity across transactions", async () => {
-		const database = await testabase("seller-listing-distinct-unread-preview");
+		const database = await testabaseFn("seller-listing-distinct-unread-preview");
 
 		return Effect.gen(function* () {
 			const { seller, buyer, stranger } = yield* createUsersFx({});
@@ -101,6 +101,6 @@ describe("seller listing transaction read model", () => {
 			expect(collectionItem?.withLastAt?.getTime()).toBeLessThan(
 				hiddenNewestPendingEntry.createdAt.getTime(),
 			);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

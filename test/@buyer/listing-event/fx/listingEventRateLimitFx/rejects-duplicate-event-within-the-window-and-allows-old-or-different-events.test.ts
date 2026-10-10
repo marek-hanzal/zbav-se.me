@@ -1,18 +1,18 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { DateContextFx } from "@/lib/common/date";
-import { listingEventCreateFx } from "~/buyer/listing-event/server/fx/listingEventCreateFx";
-import { listingEventRateLimitFx } from "~/buyer/listing-event/server/fx/listingEventRateLimitFx";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { listingEventCreateFx } from "~/buyer-listing-event/fx/listingEventCreateFx";
+import { listingEventRateLimitFx } from "~/buyer-listing-event/fx/listingEventRateLimitFx";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("listingEventRateLimitFx", () => {
 	it("rejects duplicate event within the window and allows old or different events", async () => {
-		const database = await testabase("listingEventRateLimitFx-window");
+		const database = await testabaseFn("listingEventRateLimitFx-window");
 		const firstWindowNow = DateTime.fromISO("2026-05-11T10:05:45.000Z");
 		const nextWindowNow = DateTime.fromISO("2026-05-11T10:16:00.000Z");
 
@@ -27,23 +27,23 @@ describe("listingEventRateLimitFx", () => {
 				listingId: listing.id,
 				event: "listing.favourite",
 			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now: () => firstWindowNow,
+				withDateServiceFn({
+					nowFn: () => firstWindowNow,
 				}),
 			);
 
-			const duplicate = yield* Effect.either(
+			const duplicate = yield* Effect.result(
 				listingEventRateLimitFx({
 					listingId: listing.id,
 					event: "listing.favourite",
 				}).pipe(
-					Effect.provideService(DateContextFx, {
-						now: () => firstWindowNow,
+					withDateServiceFn({
+						nowFn: () => firstWindowNow,
 					}),
 				),
 			);
 
-			const duplicateError = expectTaggedErrorFx(duplicate, {
+			const duplicateError = expectTaggedErrorFn(duplicate, {
 				tag: "RateLimitErrorFx",
 				message: "You have already created this event",
 			}) as {
@@ -71,31 +71,31 @@ describe("listingEventRateLimitFx", () => {
 
 			expect(duplicateCount).toHaveLength(1);
 
-			const differentEvent = yield* Effect.either(
+			const differentEvent = yield* Effect.result(
 				listingEventRateLimitFx({
 					listingId: listing.id,
 					event: "like",
 				}).pipe(
-					Effect.provideService(DateContextFx, {
-						now: () => firstWindowNow,
+					withDateServiceFn({
+						nowFn: () => firstWindowNow,
 					}),
 				),
 			);
 
-			expect(differentEvent._tag).toBe("Right");
+			expect(differentEvent._tag).toBe("Success");
 
-			const nextWindowEvent = yield* Effect.either(
+			const nextWindowEvent = yield* Effect.result(
 				listingEventRateLimitFx({
 					listingId: listing.id,
 					event: "listing.favourite",
 				}).pipe(
-					Effect.provideService(DateContextFx, {
-						now: () => nextWindowNow,
+					withDateServiceFn({
+						nowFn: () => nextWindowNow,
 					}),
 				),
 			);
 
-			expect(nextWindowEvent._tag).toBe("Right");
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+			expect(nextWindowEvent._tag).toBe("Success");
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

@@ -1,6 +1,6 @@
 import { Button } from "@react-email/components";
 import type { CSSProperties, FC } from "react";
-import { theme } from "../theme/theme";
+import { theme } from "~/email/constant/theme";
 
 export namespace MailButton {
 	export interface Props {

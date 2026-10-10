@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { toStreamResponse } from "~/common/sitemap";
 import { locales } from "~/locales";
-import { withOriginMiddleware } from "~/server/middleware/withOriginMiddleware";
+import { withOriginMiddleware } from "~/request-middleware/middleware/withOriginMiddleware";
+import { toStreamResponse } from "~/sitemap/fn/index";
 
 const pages = [
 	"/$locale/landing",

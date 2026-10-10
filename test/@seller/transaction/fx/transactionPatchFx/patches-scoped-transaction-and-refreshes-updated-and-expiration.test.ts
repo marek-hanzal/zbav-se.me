@@ -1,23 +1,23 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { DateContextFx } from "@/lib/common/date";
-import { transactionPatchFx } from "~/seller/transaction/server/fx/transactionPatchFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
+import { transactionPatchFx } from "~/seller-transaction/fx/transactionPatchFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
 const atFx = <A, E, R>(iso: string, eff: Effect.Effect<A, E, R>) =>
 	eff.pipe(
-		Effect.provideService(DateContextFx, {
-			now: () => DateTime.fromISO(iso),
+		withDateServiceFn({
+			nowFn: () => DateTime.fromISO(iso),
 		}),
 	);
 
 describe("transactionPatchFx", () => {
 	it("patches a scoped seller transaction and refreshes updatedAt and expiresAt from the current time", async () => {
-		const database = await testabase("transactionPatchFx-scoped-success");
+		const database = await testabaseFn("transactionPatchFx-scoped-success");
 
 		return Effect.gen(function* () {
 			const { seller, buyer } = yield* createUsersFx({});
@@ -80,6 +80,6 @@ describe("transactionPatchFx", () => {
 			expect(after.expiresAt.toISOString()).toBe("2026-05-08T15:30:00.000Z");
 			expect(after.updatedAt.getTime()).toBeGreaterThan(before.updatedAt.getTime());
 			expect(after.expiresAt.getTime()).toBeGreaterThan(before.expiresAt.getTime());
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

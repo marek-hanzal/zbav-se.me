@@ -1,12 +1,12 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { categoryMissCreateFx } from "~/session/category-miss/server/fx/categoryMissCreateFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { categoryMissCreateFx } from "~/session-category-miss/fx/categoryMissCreateFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 
 describe("categoryMissCreateFx", () => {
 	it("trims joined fulltext but keeps inner spacing when applying the length limit", async () => {
-		const database = await testabase("categoryMissCreateFx-trim-join-limit");
+		const database = await testabaseFn("categoryMissCreateFx-trim-join-limit");
 
 		return Effect.gen(function* () {
 			yield* categoryMissCreateFx({
@@ -44,6 +44,6 @@ describe("categoryMissCreateFx", () => {
 					count: 1,
 				},
 			]);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

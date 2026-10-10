@@ -1,25 +1,25 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { listingCollectionFx } from "~/buyer/listing/server/fx/listingCollectionFx";
-import type { ListingWhereSchema } from "~/buyer/listing/server/schema/ListingWhereSchema";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { listingCollectionFx } from "~/buyer-listing/fx/listingCollectionFx";
+import type { ListingWhereSchema } from "~/buyer-listing/schema/ListingWhereSchema";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { createRestrictionProbeListings, createUserRestriction } from "./restrictionFixtures";
+import { createRestrictionProbeListingsFx, createUserRestrictionFx } from "./restrictionFixtures";
 
 describe("buyer listing restriction category input scope", () => {
 	it("does not let where or scope category inputs bypass user restriction", async () => {
-		const database = await testabase("buyer-listing-restriction-category-inputs");
+		const database = await testabaseFn("buyer-listing-restriction-category-inputs");
 
 		return Effect.gen(function* () {
 			const users = yield* createUsersFx({});
-			const fixtures = yield* createRestrictionProbeListings(database, {
+			const fixtures = yield* createRestrictionProbeListingsFx(database, {
 				sellerId: users.seller.id,
 				title: "Buyer category input restriction marker",
 				slugPrefix: "buyer-category-input-restriction",
 			});
 
-			yield* createUserRestriction(database, {
+			yield* createUserRestrictionFx(database, {
 				userId: users.buyer.id,
 				restriction: "adult",
 				availableAtOffsetMinutes: -10,
@@ -79,6 +79,6 @@ describe("buyer listing restriction category input scope", () => {
 
 				expect(collection, item.name).toEqual([]);
 			}
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

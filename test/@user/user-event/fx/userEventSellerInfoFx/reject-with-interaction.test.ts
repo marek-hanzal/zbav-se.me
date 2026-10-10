@@ -1,18 +1,18 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { userEventSellerInfoFx } from "~/buyer-user-event/fx/userEventSellerInfoFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { createTransactionTimeline } from "~/test/user-event/fx/createTransactionTimeline";
+import { createTransactionTimelineFn } from "~/test/user-event/fx/createTransactionTimelineFn";
 import { seedUserEventTimelineFx } from "~/test/user-event/fx/seedUserEventTimelineFx";
 
 describe("userEventSellerInfoFx", {
 	timeout: 4_000,
 }, () => {
 	it("Seller rejects after interaction - should not count as rejected without interaction", async () => {
-		const database = await testabase("userEventSellerInfoFx-reject-with-interaction");
+		const database = await testabaseFn("userEventSellerInfoFx-reject-with-interaction");
 
 		// Base time: 89 days ago (within 90 day cutoff)
 		const baseTime = DateTime.now().minus({
@@ -53,7 +53,7 @@ describe("userEventSellerInfoFx", {
 			yield* seedUserEventTimelineFx({
 				userId: seller.id,
 				events: [
-					...createTransactionTimeline({
+					...createTransactionTimelineFn({
 						group: "tx-1",
 						steps: [
 							{
@@ -76,7 +76,7 @@ describe("userEventSellerInfoFx", {
 							},
 						],
 					}),
-					...createTransactionTimeline({
+					...createTransactionTimelineFn({
 						group: "tx-2",
 						steps: [
 							{
@@ -99,7 +99,7 @@ describe("userEventSellerInfoFx", {
 							},
 						],
 					}),
-					...createTransactionTimeline({
+					...createTransactionTimelineFn({
 						group: "tx-3",
 						steps: [
 							{
@@ -136,6 +136,6 @@ describe("userEventSellerInfoFx", {
 			expect(result.reaction.total).toBe(3);
 			expect(result.reaction.reactions).toBe(3); // All three have reactions (reject events)
 			expect(result.reaction.terminal).toBe(0);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

@@ -1,16 +1,16 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { transactionCloseFx } from "~/buyer/transaction/server/fx/transactionCloseFx";
-import { transactionAcceptFx } from "~/seller/transaction/server/fx/transactionAcceptFx";
-import { transactionResolveFx } from "~/seller/transaction/server/fx/transactionResolveFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { transactionCloseFx } from "~/buyer-transaction/fx/transactionCloseFx";
+import { transactionAcceptFx } from "~/seller-transaction/fx/transactionAcceptFx";
+import { transactionResolveFx } from "~/seller-transaction/fx/transactionResolveFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("transactionLifecycleEdgeCases (buyer)", () => {
 	it("multiple entries: verify all transaction entries are created correctly", async () => {
-		const database = await testabase("buyerCloseFx-multiple-entries");
+		const database = await testabaseFn("buyerCloseFx-multiple-entries");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -62,6 +62,6 @@ describe("transactionLifecycleEdgeCases (buyer)", () => {
 			expect(kinds).toContain("status-resolved");
 			expect(kinds).toContain("status-closed");
 			expect(entries.length).toBeGreaterThanOrEqual(3);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

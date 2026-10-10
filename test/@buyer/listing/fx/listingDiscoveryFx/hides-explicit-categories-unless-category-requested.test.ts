@@ -1,17 +1,17 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { listingCollectionFx } from "~/buyer/listing/server/fx/listingCollectionFx";
-import { listingCountFx } from "~/buyer/listing/server/fx/listingCountFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { listingCollectionFx } from "~/buyer-listing/fx/listingCollectionFx";
+import { listingCountFx } from "~/buyer-listing/fx/listingCountFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { patchCategoryDiscoveryFx } from "~/test/listing/fx/listingSearchFixturesFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { categoryFetchFx } from "~/user/category/server/fx/categoryFetchFx";
+import { categoryFetchFx } from "~/user-category/fx/categoryFetchFx";
 
 describe("buyer listing discovery flow", () => {
 	it("hides explicit categories unless the buyer query asks for a category", async () => {
-		const database = await testabase("buyer-listing-category-discovery-flow");
+		const database = await testabaseFn("buyer-listing-category-discovery-flow");
 
 		return Effect.gen(function* () {
 			const users = yield* createUsersFx({});
@@ -88,6 +88,6 @@ describe("buyer listing discovery flow", () => {
 			expect(explicitByCategoryIn.map((item) => item.id)).toEqual([
 				explicitListing.id,
 			]);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

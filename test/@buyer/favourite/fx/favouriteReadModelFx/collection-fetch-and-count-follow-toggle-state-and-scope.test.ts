@@ -1,14 +1,14 @@
 import { describe, expect, it } from "vitest";
-import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
-import { favouriteCollectionFx } from "~/buyer/listing-favourite/server/fx/favouriteCollectionFx";
-import { favouriteCountFx } from "~/buyer/listing-favourite/server/fx/favouriteCountFx";
-import { favouriteFetchFx } from "~/buyer/listing-favourite/server/fx/favouriteFetchFx";
-import { favouriteToggleFx } from "~/buyer/listing-favourite/server/fx/favouriteToggleFx";
-import { runToggleReadModelContractFx } from "~/test/@buyer/common/fx/runToggleReadModelContractFx";
+import { feedCreateFx } from "~/buyer-feed/fx/feedCreateFx";
+import { favouriteCollectionFx } from "~/buyer-listing-favourite/fx/favouriteCollectionFx";
+import { favouriteCountFx } from "~/buyer-listing-favourite/fx/favouriteCountFx";
+import { favouriteFetchFx } from "~/buyer-listing-favourite/fx/favouriteFetchFx";
+import { favouriteToggleFx } from "~/buyer-listing-favourite/fx/favouriteToggleFx";
+import { runToggleReadModelContractFn } from "~/test/@buyer/common/fx/runToggleReadModelContractFn";
 
 describe("favourite read model", () => {
 	it("collection, fetch and count reflect toggle state and respect scope", async () => {
-		return runToggleReadModelContractFx({
+		return runToggleReadModelContractFn({
 			databaseName: "favouriteReadModelFx",
 			userSlug: "favourite-read",
 			createExtraFx: ({ users }) =>
@@ -75,7 +75,7 @@ describe("favourite read model", () => {
 						listingId: listing.id,
 					},
 				}),
-			assertFetched: (item, { listing, extra: feed }) => {
+			assertFetchedFn: (item, { listing, extra: feed }) => {
 				expect(item.listingId).toBe(listing.id);
 				expect(item.feedId).toBe(feed.id);
 			},

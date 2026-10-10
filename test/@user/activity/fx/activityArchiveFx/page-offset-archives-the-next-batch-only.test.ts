@@ -1,14 +1,14 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import type { ActivityPriorityEnumSchema } from "~/common/activity/enum/ActivityPriorityEnumSchema";
-import type { ActivityTypeEnumSchema } from "~/common/activity/enum/ActivityTypeEnumSchema";
-import type { ActivityTableSchema } from "~/server/database/@table/ActivityTableSchema";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import type { ActivityPriorityEnumSchema } from "~/activity/schema/ActivityPriorityEnumSchema";
+import type { ActivityTypeEnumSchema } from "~/activity/schema/ActivityTypeEnumSchema";
+import type { ActivityTableSchema } from "~/database/schema/ActivityTable";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { activityArchiveFx } from "~/user/activity/server/fx/activityArchiveFx";
+import { activityArchiveFx } from "~/user-activity/fx/activityArchiveFx";
 
-type TestDatabase = Awaited<ReturnType<typeof testabase>>;
+type TestDatabase = Awaited<ReturnType<typeof testabaseFn>>;
 
 const seedActivityFx = (
 	database: TestDatabase,
@@ -36,7 +36,7 @@ const seedActivityFx = (
 
 describe("activityArchiveFx", () => {
 	it("uses cursor page offsets to archive only the next matching batch", async () => {
-		const database = await testabase("activityArchive-page-offset");
+		const database = await testabaseFn("activityArchive-page-offset");
 
 		return Effect.gen(function* () {
 			const user = yield* leaseTestUserFx({});
@@ -125,6 +125,6 @@ describe("activityArchiveFx", () => {
 			expect(rows[0]?.archivedAt).toBeNull();
 			expect(rows[1]?.archivedAt).not.toBeNull();
 			expect(rows[2]?.archivedAt).toBeNull();
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

@@ -1,13 +1,13 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { activityCollectionFx } from "~/user/activity/server/fx/activityCollectionFx";
+import { activityCollectionFx } from "~/user-activity/fx/activityCollectionFx";
 
 describe("activity deduplication (PARTITION BY transactionId)", () => {
 	it("multiple seller-message entries for same transactionId collapse into one (latest)", async () => {
-		const database = await testabase("activityDedup-seller-message");
+		const database = await testabaseFn("activityDedup-seller-message");
 
 		return Effect.gen(function* () {
 			const buyer = yield* leaseTestUserFx({});
@@ -100,6 +100,6 @@ describe("activity deduplication (PARTITION BY transactionId)", () => {
 			const sellerMessageItems = collection.filter((item) => item.type === "seller-message");
 			expect(sellerMessageItems).toHaveLength(1);
 			expect(sellerMessageItems[0]?.id).toBe("dedup-seller-3");
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

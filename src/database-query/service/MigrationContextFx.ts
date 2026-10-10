@@ -1,0 +1,10 @@
+import { Context } from "effect";
+import type { Migration } from "kysely/migration";
+
+export type MigrationContext = Record<string, Migration>;
+
+export class MigrationContextFx extends Context.Service<MigrationContextFx, MigrationContext>()(
+	"MigrationContextFx",
+) {
+	//
+}

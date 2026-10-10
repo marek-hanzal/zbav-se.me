@@ -1,0 +1,32 @@
+import { Effect } from "effect";
+import { withFetchFx } from "~/http/fx/withFetchFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
+import { withLocationSelectFx } from "~/session-location/db/withLocationSelectFx";
+import type { LocationQuerySchema } from "~/session-location/schema/LocationQuerySchema";
+
+export namespace locationFetchFx {
+	export interface Props extends LocationQuerySchema.Type {
+		//
+	}
+}
+
+export const locationFetchFx = Effect.fn("locationFetchFx")(function* ({
+	where,
+	sort,
+}: locationFetchFx.Props) {
+	const logger = yield* getLoggerFx("locationFetchFx");
+	logger.trace("locationFetchFx", {
+		where,
+		sort,
+	});
+
+	return yield* withFetchFx({
+		resource: "location",
+		selectFx: withLocationSelectFx({
+			sort,
+		}),
+		where,
+	});
+});
+
+export type locationFetchFx = ReturnType<typeof locationFetchFx>;

@@ -1,14 +1,14 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { transactionPatchCollectionFx } from "~/seller/transaction/server/fx/transactionPatchCollectionFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { transactionPatchCollectionFx } from "~/seller-transaction/fx/transactionPatchCollectionFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("transactionPatchCollectionFx — foreign isolation", () => {
 	it("only patches scoped transactions and leaves stranger transactions unchanged", async () => {
-		const database = await testabase("transactionPatchCollectionFx-foreign-isolation");
+		const database = await testabaseFn("transactionPatchCollectionFx-foreign-isolation");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -64,6 +64,6 @@ describe("transactionPatchCollectionFx — foreign isolation", () => {
 
 			expect(ownTx.status).toBe("trade");
 			expect(strangerTx.status).toBe("interest"); // Should remain unchanged
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

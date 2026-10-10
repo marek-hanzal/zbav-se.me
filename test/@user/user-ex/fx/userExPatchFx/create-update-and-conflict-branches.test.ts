@@ -1,37 +1,33 @@
 import { Effect } from "effect";
 import { PostgresDialect, sql } from "kysely";
 import { Pool } from "pg";
-import { describe, expect, it } from "vitest";
-import {
-	MigrationContextFx,
-	withDatabaseFx,
-	withDatabaseName,
-	withDialectFx,
-} from "@/lib/common/database";
-import { getRootLogger } from "~/common/log/getRootLogger";
-import type { Database } from "~/server/database/Database";
-import { ServerDatabaseSchema } from "~/server/env/ServerDatabaseSchema";
-import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { describe, expect, inject, it } from "vitest";
+import type { Database } from "~/database/type/Database";
+import { withDatabaseNameFn } from "~/database-query/fn/withDatabaseNameFn";
+import { withDialectFn } from "~/database-query/fn/withDialectFn";
+import { withDatabaseFx } from "~/database-query/fx/withDatabaseFx";
+import { MigrationContextFx } from "~/database-query/service/MigrationContextFx";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { expectErrorFn } from "~/test/common/fx/expectErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { userExPatchFx } from "~/user/user-ex/server/fx/userExPatchFx";
+import { userExPatchFx } from "~/user-ex/fx/userExPatchFx";
 
 describe("userExPatchFx", () => {
 	it("creates when missing, updates when existing, and hits conflict branch on concurrent create", async () => {
-		const database = await testabase("userExPatchFx-create-update-conflict");
-		const databaseConfig = ServerDatabaseSchema.parse(process.env);
+		const database = await testabaseFn("userExPatchFx-create-update-conflict");
 		const secondDatabase = await withDatabaseFx<Database>({
-			logger: getRootLogger([
+			logger: getRootLoggerFn([
 				"db",
 			]),
 		}).pipe(
-			withDialectFx(
+			withDialectFn(
 				new PostgresDialect({
 					pool: new Pool({
-						connectionString: withDatabaseName({
-							dsn: databaseConfig.SERVER_DATABASE_URL,
-							name: "userExPatchFx-create-update-conflict",
+						connectionString: withDatabaseNameFn({
+							dsn: inject("testDatabaseDsn"),
+							name: database.databaseName,
 						}),
 						application_name: "userExPatchFx:secondary",
 						max: 1,
@@ -42,8 +38,8 @@ describe("userExPatchFx", () => {
 			Effect.runPromise,
 		);
 
-		const runtime = withRuntimeFx(database);
-		const secondRuntime = withRuntimeFx(secondDatabase);
+		const runtimeFx = withRuntimeFn(database);
+		const secondRuntimeFx = withRuntimeFn(secondDatabase);
 
 		try {
 			return await Effect.gen(function* () {
@@ -99,18 +95,18 @@ describe("userExPatchFx", () => {
 							patch: {
 								locationId: null,
 							},
-						}).pipe(runtime, Effect.either, Effect.runPromise),
+						}).pipe(runtimeFx, Effect.result, Effect.runPromise),
 						userExPatchFx({
 							userId: users.buyer.id,
 							patch: {
 								locationId: null,
 							},
-						}).pipe(secondRuntime, Effect.either, Effect.runPromise),
+						}).pipe(secondRuntimeFx, Effect.result, Effect.runPromise),
 					]),
 				);
 
-				const conflicts = parallel.filter((item) => item._tag === "Left");
-				const successes = parallel.filter((item) => item._tag === "Right");
+				const conflicts = parallel.filter((item) => item._tag === "Failure");
+				const successes = parallel.filter((item) => item._tag === "Success");
 				const conflict = conflicts[0];
 
 				expect(successes.length).toBeGreaterThan(0);
@@ -120,7 +116,7 @@ describe("userExPatchFx", () => {
 					throw new Error("Expected at least one conflict branch result");
 				}
 
-				expectErrorFx(conflict);
+				expectErrorFn(conflict);
 
 				const buyerUserEx = yield* Effect.promise(() =>
 					database.kysely
@@ -131,7 +127,7 @@ describe("userExPatchFx", () => {
 				);
 
 				expect(buyerUserEx).toHaveLength(1);
-			}).pipe(runtime, Effect.runPromise);
+			}).pipe(runtimeFx, Effect.runPromise);
 		} finally {
 			await secondDatabase.kysely.destroy();
 		}

@@ -1,0 +1,44 @@
+import { Effect } from "effect";
+import { withTransactionSelectFx } from "~/buyer-transaction/db/withTransactionSelectFx";
+import type { TransactionQuerySchema } from "~/buyer-transaction/schema/TransactionQuerySchema";
+import type { TransactionWhereSchema } from "~/buyer-transaction/schema/TransactionWhereSchema";
+import { withCollectionFx } from "~/database-query/fx/withCollectionFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
+
+export namespace transactionCollectionFx {
+	export interface Props extends TransactionQuerySchema.Type {
+		scope: TransactionWhereSchema.Type;
+	}
+}
+
+export const transactionCollectionFx = Effect.fn("transactionCollectionFx")(function* ({
+	where,
+	scope,
+	cursor = {
+		page: 0,
+		size: 10,
+	},
+	limit,
+	sort,
+}: transactionCollectionFx.Props) {
+	const logger = yield* getLoggerFx("transactionCollectionFx", "transaction");
+	logger.trace("transactionCollectionFx", {
+		where,
+		scope,
+		cursor,
+		limit,
+		sort,
+	});
+
+	return yield* withCollectionFx({
+		selectFx: withTransactionSelectFx({
+			sort,
+		}),
+		cursor,
+		limit,
+		where,
+		scope,
+	});
+});
+
+export type transactionCollectionFx = ReturnType<typeof transactionCollectionFx>;

@@ -1,0 +1,69 @@
+import type { FC } from "react";
+import { withListingQuery } from "~/seller-listing/query/withListingQuery";
+import type { ListingWhereSchema } from "~/seller-listing/schema/ListingWhereSchema";
+import { TransactionListingList } from "~/seller-listing/ui/TransactionListingList/index";
+import { Container } from "~/ui/ui/Container";
+import { Typo } from "~/ui/ui/Typo";
+
+export namespace ListGroup {
+	export interface Props extends Container.Props {
+		where: ListingWhereSchema.Type;
+		label: string;
+		refetchInterval: number;
+		typoProps?: Typo.PropsEx;
+	}
+}
+
+export const ListGroup: FC<ListGroup.Props> = ({
+	where,
+	label,
+	refetchInterval,
+	typoProps,
+	...props
+}) => {
+	const { data: transactionListingCollection } = withListingQuery.useIdsQuery(
+		{
+			where: {
+				...where,
+				withTransaction: true,
+			},
+			cursor: {
+				page: 0,
+				size: 1000,
+			},
+			sort: [
+				{
+					field: "withLastAt",
+					order: "desc",
+				},
+			],
+		},
+		{
+			refetchInterval,
+		},
+	);
+
+	if (transactionListingCollection.length === 0) {
+		return null;
+	}
+
+	return (
+		<Container
+			data-ui={"ListGroup[Container]"}
+			data-ui-layout="vertical-flex"
+			data-ui-gap="default"
+			{...props}
+		>
+			<Typo
+				label={label}
+				data-ui-font="bold"
+				data-ui-text="lg"
+				data-ui-color="text"
+				className={"text-center"}
+				{...typoProps}
+			/>
+
+			<TransactionListingList transactionListingIds={transactionListingCollection} />
+		</Container>
+	);
+};

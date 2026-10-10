@@ -1,18 +1,18 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { describe, expect, it } from "vitest";
-import { transactionCloseFx } from "~/buyer/transaction/server/fx/transactionCloseFx";
-import { transactionDisputeFx } from "~/buyer/transaction/server/fx/transactionDisputeFx";
-import { transactionSuccessFx } from "~/buyer/transaction/server/fx/transactionSuccessFx";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { transactionCloseFx } from "~/buyer-transaction/fx/transactionCloseFx";
+import { transactionDisputeFx } from "~/buyer-transaction/fx/transactionDisputeFx";
+import { transactionSuccessFx } from "~/buyer-transaction/fx/transactionSuccessFx";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("buyer transaction invalid transitions", () => {
 	it("rejects close, success and dispute while the transaction is still open", async () => {
-		const database = await testabase("buyerTransactionFx-invalid-open-transitions");
+		const database = await testabaseFn("buyerTransactionFx-invalid-open-transitions");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -26,46 +26,46 @@ describe("buyer transaction invalid transitions", () => {
 			const beforeEntries = yield* Effect.promise(() =>
 				database.kysely
 					.selectFrom("transaction_entry")
-					.select((eb) => eb.fn.countAll<number>().as("count"))
+					.select((ebFn) => ebFn.fn.countAll<number>().as("count"))
 					.where("transactionId", "=", transactionId)
 					.executeTakeFirstOrThrow(),
 			);
 			const beforeActivity = yield* Effect.promise(() =>
 				database.kysely
 					.selectFrom("activity")
-					.select((eb) => eb.fn.countAll<number>().as("count"))
+					.select((ebFn) => ebFn.fn.countAll<number>().as("count"))
 					.where(sql<boolean>`reference @> ARRAY[${transactionId}]::text[]`)
 					.executeTakeFirstOrThrow(),
 			);
 
-			const closeResult = yield* Effect.either(
+			const closeResult = yield* Effect.result(
 				transactionCloseFx({
 					transactionId,
 					userId: buyer.id,
 				}),
 			);
-			const successResult = yield* Effect.either(
+			const successResult = yield* Effect.result(
 				transactionSuccessFx({
 					transactionId,
 					userId: buyer.id,
 				}),
 			);
-			const disputeResult = yield* Effect.either(
+			const disputeResult = yield* Effect.result(
 				transactionDisputeFx({
 					transactionId,
 					userId: buyer.id,
 				}),
 			);
 
-			expectTaggedErrorFx(closeResult, {
+			expectTaggedErrorFn(closeResult, {
 				tag: "InvalidRequestErrorFx",
 				message: "Invalid transaction status transition from trade to closed for buyer",
 			});
-			expectTaggedErrorFx(successResult, {
+			expectTaggedErrorFn(successResult, {
 				tag: "InvalidRequestErrorFx",
 				message: "Invalid transaction status transition from trade to success for buyer",
 			});
-			expectTaggedErrorFx(disputeResult, {
+			expectTaggedErrorFn(disputeResult, {
 				tag: "InvalidRequestErrorFx",
 				message: "Invalid transaction status transition from trade to dispute for buyer",
 			});
@@ -80,14 +80,14 @@ describe("buyer transaction invalid transitions", () => {
 			const afterEntries = yield* Effect.promise(() =>
 				database.kysely
 					.selectFrom("transaction_entry")
-					.select((eb) => eb.fn.countAll<number>().as("count"))
+					.select((ebFn) => ebFn.fn.countAll<number>().as("count"))
 					.where("transactionId", "=", transactionId)
 					.executeTakeFirstOrThrow(),
 			);
 			const afterActivity = yield* Effect.promise(() =>
 				database.kysely
 					.selectFrom("activity")
-					.select((eb) => eb.fn.countAll<number>().as("count"))
+					.select((ebFn) => ebFn.fn.countAll<number>().as("count"))
 					.where(sql<boolean>`reference @> ARRAY[${transactionId}]::text[]`)
 					.executeTakeFirstOrThrow(),
 			);
@@ -95,6 +95,6 @@ describe("buyer transaction invalid transitions", () => {
 			expect(afterTransaction.status).toBe("trade");
 			expect(afterEntries.count).toBe(beforeEntries.count);
 			expect(afterActivity.count).toBe(beforeActivity.count);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

@@ -1,15 +1,15 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
-import { fieldCollectionFx } from "~/user/field/server/fx/fieldCollectionFx";
-import { fieldCountFx } from "~/user/field/server/fx/fieldCountFx";
-import { fieldFetchFx } from "~/user/field/server/fx/fieldFetchFx";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
+import { fieldCollectionFx } from "~/user-field/fx/fieldCollectionFx";
+import { fieldCountFx } from "~/user-field/fx/fieldCountFx";
+import { fieldFetchFx } from "~/user-field/fx/fieldFetchFx";
 
 describe("field read model", () => {
 	it("filters, sorts, fetches, counts, and expands field options consistently", async () => {
-		const database = await testabase("field-read-model-contract");
+		const database = await testabaseFn("field-read-model-contract");
 
 		return Effect.gen(function* () {
 			const enumFields = yield* fieldCollectionFx({
@@ -57,7 +57,7 @@ describe("field read model", () => {
 					},
 				],
 			});
-			const missingField = yield* Effect.either(
+			const missingField = yield* Effect.result(
 				fieldFetchFx({
 					scope: {},
 					where: {
@@ -91,9 +91,9 @@ describe("field read model", () => {
 			expect(colorField.options.at(-1)?.value).toBe("multicolor");
 			expect(textFieldCount).toBe(textFieldCollection.length);
 			expect(textFieldCollection.every((item) => item.type === "text")).toBe(true);
-			expectTaggedErrorFx(missingField, {
+			expectTaggedErrorFn(missingField, {
 				tag: "NotFoundErrorFx",
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

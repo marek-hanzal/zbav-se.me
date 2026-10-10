@@ -1,30 +1,30 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { DateContextFx } from "@/lib/common/date";
-import { listingCollectionFx } from "~/buyer/listing/server/fx/listingCollectionFx";
-import { listingCountFx } from "~/buyer/listing/server/fx/listingCountFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { listingCollectionFx } from "~/buyer-listing/fx/listingCollectionFx";
+import { listingCountFx } from "~/buyer-listing/fx/listingCountFx";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { createRestrictionProbeListings, createUserRestriction } from "./restrictionFixtures";
+import { createRestrictionProbeListingsFx, createUserRestrictionFx } from "./restrictionFixtures";
 
 const atFx = <A, E, R>(iso: string, eff: Effect.Effect<A, E, R>) =>
 	eff.pipe(
-		Effect.provideService(DateContextFx, {
-			now: () => DateTime.fromISO(iso),
+		withDateServiceFn({
+			nowFn: () => DateTime.fromISO(iso),
 		}),
 	);
 
 describe("buyer listing restriction cooldown flow", () => {
 	it("changes visible listings only when the next restriction window actually becomes active", async () => {
-		const database = await testabase("buyer-listing-restriction-multi-stage-cooldown");
+		const database = await testabaseFn("buyer-listing-restriction-multi-stage-cooldown");
 
 		return Effect.gen(function* () {
 			const users = yield* createUsersFx({});
 			const fixtures = yield* atFx(
 				"2026-04-28T10:00:00.000Z",
-				createRestrictionProbeListings(database, {
+				createRestrictionProbeListingsFx(database, {
 					sellerId: users.seller.id,
 					title: "Buyer staged cooldown restriction marker",
 					slugPrefix: "buyer-staged-cooldown-restriction",
@@ -33,7 +33,7 @@ describe("buyer listing restriction cooldown flow", () => {
 
 			yield* atFx(
 				"2026-04-28T10:00:00.000Z",
-				createUserRestriction(database, {
+				createUserRestrictionFx(database, {
 					userId: users.buyer.id,
 					restriction: "adult",
 					availableAtOffsetMinutes: -10,
@@ -42,7 +42,7 @@ describe("buyer listing restriction cooldown flow", () => {
 			);
 			yield* atFx(
 				"2026-04-28T10:00:00.000Z",
-				createUserRestriction(database, {
+				createUserRestrictionFx(database, {
 					userId: users.buyer.id,
 					restriction: "restricted",
 					availableAtOffsetMinutes: 60,
@@ -51,7 +51,7 @@ describe("buyer listing restriction cooldown flow", () => {
 			);
 			yield* atFx(
 				"2026-04-28T10:00:00.000Z",
-				createUserRestriction(database, {
+				createUserRestrictionFx(database, {
 					userId: users.buyer.id,
 					restriction: "adult-relaxed",
 					availableAtOffsetMinutes: 120,
@@ -130,6 +130,6 @@ describe("buyer listing restriction cooldown flow", () => {
 				fixtures.noneListing.id,
 			]);
 			expect(afterSecondFlipCount).toBe(afterSecondFlip.length);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

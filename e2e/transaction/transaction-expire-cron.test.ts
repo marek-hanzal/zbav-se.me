@@ -1,251 +1,192 @@
 import path from "node:path";
-import type { Locator, Page } from "@playwright/test";
 import { Effect } from "effect";
-import { transactionCreateFx } from "~/buyer/transaction/server/fx/transactionCreateFx";
-import { TransactionEntrySensitiveKindEnumSchema } from "~/common/user-transaction/enum/TransactionEntrySensitiveKindEnumSchema";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { transactionCreateFx } from "~/buyer-transaction/fx/transactionCreateFx";
+import { TransactionEntryTableSchema } from "~/database/schema/TransactionEntryTable";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
-import { leaseTestUserFx, TEST_USER_PASSWORD } from "~/test/user/fx/leaseTestUserFx";
-import { expect, test } from "../test";
-import { uploadFixtureViaS3 } from "../utils/uploadFixtureViaS3";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
+import { TransactionEntrySensitiveKindEnumSchema } from "~/transaction-contract/schema/TransactionEntrySensitiveKindEnumSchema";
+import { expect, testFn } from "../testFn";
+import { uploadFixtureViaS3Fn } from "../utils/uploadFixtureViaS3Fn";
 
 const fixturePath = path.resolve(import.meta.dirname, "../fixtures/listing-create-image.jpg");
 
-function cronHeaders(db: string) {
-	const token = process.env.SERVER_CRON_TOKEN;
+testFn.setTimeout(120_000);
 
-	if (!token) {
-		throw new Error("SERVER_CRON_TOKEN is required for cron e2e tests");
-	}
+for (const role of [
+	"buyer",
+	"seller",
+] as const) {
+	testFn(
+		`${role} sees cron-expired transaction as a system message`,
+		async ({ page, database, signInFn, withRequestFn }) => {
+			const { sellerUser, buyerUser } = await testFn.step(
+				"Lease seller and buyer",
+				async () =>
+					Effect.gen(function* () {
+						const sellerUser = yield* leaseTestUserFx({
+							key: "a",
+						});
+						const buyerUser = yield* leaseTestUserFx({
+							key: "b",
+						});
 
-	return {
-		authorization: `Bearer ${token}`,
-		"x-e2e-db": db,
-	};
-}
+						return {
+							sellerUser,
+							buyerUser,
+						};
+					}).pipe(withRuntimeFn(database), Effect.runPromise),
+			);
+			const { transaction, locationId } = await testFn.step(
+				"Upload fixture and prepare a transaction",
+				async () => {
+					const upload = await uploadFixtureViaS3Fn({
+						database,
+						userId: sellerUser.id,
+						path: fixturePath,
+					});
+					const listing = await createListingFx(sellerUser.id, {
+						title: `E2E ${role} expired transaction ${Date.now()}`,
+						uploadId: upload.id,
+					}).pipe(withRuntimeFn(database), Effect.runPromise);
 
-async function signIn(
-	page: Page,
-	user: {
-		email: string;
-	},
-) {
-	await page.goto("/cs/landing");
-	await page.locator('[data-action="goto sign-in"]').click();
-	await page.waitForURL("/cs/sign-in");
-	await page.locator('[data-ui="SignInPage[EmailInput]"]').fill(user.email);
-	await page.locator('[data-ui="SignInPage[PasswordInput]"]').fill(TEST_USER_PASSWORD);
-	await page.locator('[data-action="sign in"]').click();
-	await page.waitForURL("/cs/app/home");
-}
+					const transaction = await transactionCreateFx({
+						listingId: listing.id,
+						userId: buyerUser.id,
+					}).pipe(withRuntimeFn(database), Effect.runPromise);
 
-async function expectImageLoaded(locator: Locator) {
-	await expect(locator).toBeVisible();
-	await expect
-		.poll(async () => {
-			return locator.evaluate((img) => {
-				return img instanceof HTMLImageElement && img.complete && img.naturalWidth > 0;
+					return {
+						transaction,
+						locationId: listing.locationId,
+					};
+				},
+			);
+
+			await testFn.step(
+				"Expire the transaction and add sensitive and ordinary entries",
+				async () => {
+					await database.kysely
+						.updateTable("transaction")
+						.set({
+							expiresAt: new Date(Date.now() - 60_000),
+						})
+						.where("id", "=", transaction.id)
+						.execute();
+
+					const createdAt = new Date();
+					const payloadByKind = {
+						location: {
+							locationId,
+						},
+						package: {
+							link: "https://example.com/e2e-tracking",
+							number: `e2e-${transaction.id}`,
+						},
+						personal: {
+							name: "E2E Buyer",
+							phone: "+420123456789",
+							email: buyerUser.email,
+						},
+					};
+
+					await database.kysely
+						.insertInto("transaction_entry")
+						.values([
+							...TransactionEntrySensitiveKindEnumSchema.options.map((kind) =>
+								TransactionEntryTableSchema.parse({
+									id: `${transaction.id}-${kind}`,
+									transactionId: transaction.id,
+									kind,
+									userId: kind === "package" ? sellerUser.id : buyerUser.id,
+									payload: payloadByKind[kind],
+									createdAt,
+								}),
+							),
+							{
+								id: `${transaction.id}-text`,
+								transactionId: transaction.id,
+								kind: "text" as const,
+								userId: buyerUser.id,
+								payload: {
+									text: "keep me",
+								},
+								createdAt,
+							},
+						])
+						.execute();
+				},
+			);
+
+			await testFn.step("Run the real expiration cron endpoint", async () => {
+				const token = process.env.SERVER_CRON_TOKEN;
+
+				if (!token) throw new Error("SERVER_CRON_TOKEN is required for cron e2e tests");
+
+				await withRequestFn(async (request) => {
+					const response = await request.post("/api/cron/04", {
+						headers: {
+							authorization: `Bearer ${token}`,
+						},
+						timeout: 10_000,
+					});
+
+					await expect(response).toBeOK();
+					expect(await response.json()).toEqual({
+						type: "info",
+						message: "Done [04]",
+					});
+				});
 			});
-		})
-		.toBe(true);
-}
 
-test.setTimeout(120_000);
+			await testFn.step(
+				"Verify expiration and removal of every sensitive entry kind",
+				async () => {
+					const expiredTransaction = await database.kysely
+						.selectFrom("transaction")
+						.select("status")
+						.where("id", "=", transaction.id)
+						.executeTakeFirstOrThrow();
+					const entries = await database.kysely
+						.selectFrom("transaction_entry")
+						.select([
+							"id",
+							"kind",
+							"payload",
+						])
+						.where("transactionId", "=", transaction.id)
+						.execute();
+					const remainingKinds = entries.map(({ kind }) => kind);
 
-test("buyer sees cron-expired transaction as a system message", async ({
-	page,
-	database,
-	db,
-	appOrigin,
-}) => {
-	const { sellerUser, buyerUser } = await Effect.gen(function* () {
-		const sellerUser = yield* leaseTestUserFx({
-			key: "a",
-		});
-		const buyerUser = yield* leaseTestUserFx({
-			key: "b",
-		});
+					expect(expiredTransaction.status).toBe("expired");
 
-		return {
-			sellerUser,
-			buyerUser,
-		};
-	}).pipe(withRuntimeFx(database), Effect.runPromise);
+					for (const kind of TransactionEntrySensitiveKindEnumSchema.options) {
+						expect(remainingKinds).not.toContain(kind);
+					}
 
-	const title = `E2E expired transaction ${Date.now()}`;
-	const upload = await uploadFixtureViaS3({
-		database,
-		userId: sellerUser.id,
-		path: fixturePath,
-	});
-
-	const listing = await createListingFx(sellerUser.id, {
-		title,
-		uploadId: upload.id,
-	}).pipe(withRuntimeFx(database), Effect.runPromise);
-
-	await signIn(page, buyerUser);
-
-	await page.locator('[data-action="open listings"]').click();
-	await page.waitForURL(/\/cs\/app\/buyer\/feed\/[^/]+\/list$/);
-
-	await expect(page.getByText(title)).toBeVisible();
-	await page.locator(`[data-action="open listing detail"][data-id="${listing.id}"]`).click();
-
-	await expect(page.locator('[data-ui="ListingSheet"]')).toBeVisible();
-	await expectImageLoaded(page.locator('[data-ui="ListingSheet"] img').first());
-
-	await page.locator('[data-action="create transaction"]').click();
-	await expect(page.locator('[data-action="open transactions"]')).toBeVisible();
-	await page.locator('[data-action="open transactions"]').click();
-	await page.waitForURL(/\/cs\/app\/buyer\/transaction\/[^/]+\/detail$/);
-
-	const transaction = await database.kysely
-		.selectFrom("transaction")
-		.select("id")
-		.where("listingId", "=", listing.id)
-		.where("userId", "=", buyerUser.id)
-		.executeTakeFirstOrThrow();
-
-	await database.kysely
-		.updateTable("transaction")
-		.set({
-			expiresAt: new Date("2026-05-10T03:59:59.000Z"),
-		})
-		.where("id", "=", transaction.id)
-		.execute();
-
-	await database.kysely
-		.insertInto("transaction_entry")
-		.values([
-			...TransactionEntrySensitiveKindEnumSchema.options.map((kind) => ({
-				id: `${transaction.id}-${kind}`,
-				transactionId: transaction.id,
-				kind,
-				userId: buyerUser.id,
-				payload: {
-					text: kind,
+					expect(entries).toEqual(
+						expect.arrayContaining([
+							expect.objectContaining({
+								id: `${transaction.id}-text`,
+								kind: "text",
+								payload: {
+									text: "keep me",
+								},
+							}),
+							expect.objectContaining({
+								kind: "status-expired",
+							}),
+						]),
+					);
 				},
-				createdAt: new Date("2026-05-10T03:50:00.000Z"),
-			})),
-			{
-				id: `${transaction.id}-text`,
-				transactionId: transaction.id,
-				kind: "text" as const,
-				userId: buyerUser.id,
-				payload: {
-					text: "keep me",
-				},
-				createdAt: new Date("2026-05-10T03:50:00.000Z"),
-			},
-		])
-		.execute();
+			);
 
-	const cronResponse = await fetch(new URL("/api/cron/04", appOrigin), {
-		method: "POST",
-		headers: cronHeaders(db),
-	});
-
-	expect(cronResponse.ok).toBe(true);
-
-	await page.goto(`/cs/app/buyer/transaction/${transaction.id}/detail`);
-	await expect(
-		page.getByText("Automaticky ukončený obchod, dlouho se nic nedělo."),
-	).toBeVisible();
-
-	await expect
-		.poll(async () => {
-			const expiredTransaction = await database.kysely
-				.selectFrom("transaction")
-				.select("status")
-				.where("id", "=", transaction.id)
-				.executeTakeFirstOrThrow();
-
-			return expiredTransaction.status;
-		})
-		.toBe("expired");
-
-	const remainingKinds = await database.kysely
-		.selectFrom("transaction_entry")
-		.select("kind")
-		.where("transactionId", "=", transaction.id)
-		.execute();
-
-	expect(remainingKinds.map(({ kind }) => kind)).not.toEqual(
-		expect.arrayContaining(Array.from(TransactionEntrySensitiveKindEnumSchema.options)),
+			await testFn.step(`Sign in as ${role} and read the system message`, async () => {
+				await signInFn(role === "buyer" ? buyerUser : sellerUser);
+				await page.goto(`/cs/app/${role}/transaction/${transaction.id}/detail`);
+				await expect(
+					page.getByText("Automaticky ukončený obchod, dlouho se nic nedělo."),
+				).toBeVisible();
+			});
+		},
 	);
-	expect(remainingKinds.map(({ kind }) => kind)).toContain("text");
-	expect(remainingKinds.map(({ kind }) => kind)).toContain("status-expired");
-});
-
-test("seller sees cron-expired transaction as a system message", async ({
-	page,
-	database,
-	db,
-	appOrigin,
-}) => {
-	const { sellerUser, buyerUser } = await Effect.gen(function* () {
-		const sellerUser = yield* leaseTestUserFx({
-			key: "a",
-		});
-		const buyerUser = yield* leaseTestUserFx({
-			key: "b",
-		});
-
-		return {
-			sellerUser,
-			buyerUser,
-		};
-	}).pipe(withRuntimeFx(database), Effect.runPromise);
-
-	const title = `E2E seller expired transaction ${Date.now()}`;
-	const upload = await uploadFixtureViaS3({
-		database,
-		userId: sellerUser.id,
-		path: fixturePath,
-	});
-
-	const listing = await createListingFx(sellerUser.id, {
-		title,
-		uploadId: upload.id,
-	}).pipe(withRuntimeFx(database), Effect.runPromise);
-
-	const transaction = await transactionCreateFx({
-		listingId: listing.id,
-		userId: buyerUser.id,
-	}).pipe(withRuntimeFx(database), Effect.runPromise);
-
-	await database.kysely
-		.updateTable("transaction")
-		.set({
-			expiresAt: new Date("2026-05-10T03:59:59.000Z"),
-		})
-		.where("id", "=", transaction.id)
-		.execute();
-
-	await signIn(page, sellerUser);
-
-	const cronResponse = await fetch(new URL("/api/cron/04", appOrigin), {
-		method: "POST",
-		headers: cronHeaders(db),
-	});
-
-	expect(cronResponse.ok).toBe(true);
-
-	await page.goto(`/cs/app/seller/transaction/${transaction.id}/detail`);
-	await expect(
-		page.getByText("Automaticky ukončený obchod, dlouho se nic nedělo."),
-	).toBeVisible();
-
-	await expect
-		.poll(async () => {
-			const expiredTransaction = await database.kysely
-				.selectFrom("transaction")
-				.select("status")
-				.where("id", "=", transaction.id)
-				.executeTakeFirstOrThrow();
-
-			return expiredTransaction.status;
-		})
-		.toBe("expired");
-});
+}

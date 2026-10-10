@@ -1,15 +1,15 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { activityCollectionFx } from "~/user/activity/server/fx/activityCollectionFx";
-import { activityCountFx } from "~/user/activity/server/fx/activityCountFx";
-import { activityFetchFx } from "~/user/activity/server/fx/activityFetchFx";
+import { activityCollectionFx } from "~/user-activity/fx/activityCollectionFx";
+import { activityCountFx } from "~/user-activity/fx/activityCountFx";
+import { activityFetchFx } from "~/user-activity/fx/activityFetchFx";
 
 describe("activity read model", () => {
 	it("fetches and counts scoped items", async () => {
-		const database = await testabase("activityReadModelFx-fetch-count-scope");
+		const database = await testabaseFn("activityReadModelFx-fetch-count-scope");
 
 		return Effect.gen(function* () {
 			const user = yield* leaseTestUserFx({});
@@ -129,6 +129,6 @@ describe("activity read model", () => {
 			expect(fetched.userId).toBe(user.id);
 			expect(reactionCount).toBe(2);
 			expect(archivedCount).toBe(1);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

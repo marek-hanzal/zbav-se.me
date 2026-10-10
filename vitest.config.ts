@@ -1,6 +1,6 @@
 import { resolve } from "node:path";
 import react from "@vitejs/plugin-react";
-import { defineConfig } from "vitest/config";
+import { defaultExclude, defineConfig } from "vitest/config";
 
 export default defineConfig({
 	build: {
@@ -20,38 +20,67 @@ export default defineConfig({
 		alias: [
 			{
 				find: /^~\/test\//,
-				replacement: `${resolve(__dirname, "./test")}/`,
+				replacement: `${resolve(import.meta.dirname, "./test")}/`,
 			},
 			{
 				find: /^~\//,
-				replacement: `${resolve(__dirname, "./src")}/`,
-			},
-			{
-				find: /^@\/lib\//,
-				replacement: `${resolve(__dirname, "./lib")}/`,
+				replacement: `${resolve(import.meta.dirname, "./src")}/`,
 			},
 		],
 	},
 	test: {
-		globalSetup: [
-			"./test/init.ts",
-		],
 		environment: "node",
 		globals: true,
-		include: [
-			"./test/**/*.test.ts",
+		projects: [
+			{
+				test: {
+					name: "unit",
+					include: [
+						"./test/**/*.unit.test.ts",
+					],
+				},
+			},
+			{
+				test: {
+					name: "integration",
+					include: [
+						"./test/**/*.test.ts",
+					],
+					exclude: [
+						...defaultExclude,
+						"**/*.unit.test.ts",
+						"**/*.external.test.ts",
+					],
+					globalSetup: [
+						"./test/init.ts",
+					],
+				},
+			},
+			{
+				test: {
+					name: "external",
+					include: [
+						"./test/**/*.external.test.ts",
+					],
+				},
+			},
 		],
+		chaiConfig: {
+			truncateThreshold: 0,
+		},
+		diff: {
+			expand: true,
+			truncateThreshold: 0,
+			maxDepth: 12,
+		},
 		slowTestThreshold: 1_000,
-		passWithNoTests: true,
-		isolate: false,
+		passWithNoTests: false,
+		isolate: true,
+		restoreMocks: true,
+		unstubGlobals: true,
+		unstubEnvs: true,
 		sequence: {
 			shuffle: false,
-		},
-		benchmark: {
-			compare: "benchmark.json",
-			reporters: [
-				"default",
-			],
 		},
 		//
 		/**
@@ -76,19 +105,19 @@ export default defineConfig({
 			],
 			reportsDirectory: "./coverage/vitest",
 			include: [
-				"src/**/server/db/**/*Fx.ts",
-				"src/**/server/fx/**/*Fx.ts",
-				"src/server/database/fx/**/*Fx.ts",
+				"src/{buyer-*,seller-*,user-*,public-*,session-*}/{db,fx}/*Fx.ts",
+				"src/{listing-attr,resource-definition,s3,translation,database,listing-spotlight,rate-limit,translator}/{db,fx}/*Fx.ts",
 			],
 			exclude: [
 				"**/*.test.ts",
 				"**/*.d.ts",
 				//
-				"src/server/@migrations/**/*.ts",
-				"src/server/@system/**/*.ts",
-				"src/**/server/tool/**/*.ts",
+				"src/database-migration/**/*.ts",
+				"src/system-migration/**/*.ts",
+				"src/*/tool/**/*.ts",
+				"src/database/fx/databaseFx.ts",
 			],
-			reportOnFailure: false,
+			reportOnFailure: true,
 			watermarks: {
 				statements: [
 					45,
@@ -108,7 +137,6 @@ export default defineConfig({
 				],
 			},
 		},
-		bail: 1,
 		silent: false,
 		ui: false,
 	},

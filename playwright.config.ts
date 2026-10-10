@@ -1,31 +1,33 @@
 import { defineConfig, devices } from "@playwright/test";
 
 const appOrigin = process.env.VITE_ORIGIN ?? "https://zbav-se.me.localhost:1355";
-const e2eWorkers = Number.parseInt(process.env.E2E_WORKERS ?? "8", 10);
+const e2eWorkers = Number(process.env.E2E_WORKERS ?? "8");
+if (!Number.isInteger(e2eWorkers) || e2eWorkers < 1) {
+	throw new Error("E2E_WORKERS must be a positive integer");
+}
 
 export default defineConfig({
 	testDir: "./e2e",
-	globalSetup: "./e2e/init.ts",
 	outputDir: "./results",
 	timeout: 60_000,
 	workers: e2eWorkers,
 	webServer: [
 		{
 			name: "App",
-			command: "bunx run-s e2e:build e2e:start",
+			command: "bash cli/e2e-server.sh",
 			url: new URL("/api/e2e", appOrigin).toString(),
 			ignoreHTTPSErrors: true,
 			reuseExistingServer: false,
 			timeout: 60_000,
 			env: {
 				...process.env,
-				SERVER_DATABASE_URL: "postgresql://postgres:postgres@localhost:55432/postgres",
 				SERVER_E2E: "e2e",
 			},
 		},
 	],
 	failOnFlakyTests: true,
-	fullyParallel: false,
+	forbidOnly: Boolean(process.env.CI),
+	fullyParallel: true,
 	reporter: process.env.CI
 		? [
 				[
@@ -37,31 +39,36 @@ export default defineConfig({
 						open: "never",
 					},
 				],
+				[
+					"json",
+					{
+						outputFile: "./results/report.json",
+					},
+				],
 			]
 		: [
 				[
 					"list",
+				],
+				[
+					"json",
+					{
+						outputFile: "./results/report.json",
+					},
 				],
 			],
 	use: {
 		baseURL: appOrigin,
 		ignoreHTTPSErrors: true,
 		locale: "cs-CZ",
+		serviceWorkers: "block",
 		trace: "retain-on-failure",
-		screenshot: "on",
-		video: "on",
+		screenshot: "only-on-failure",
+		video: "retain-on-failure",
 	},
 	projects: [
 		{
 			name: "mobile",
-			use: {
-				browserName: "chromium",
-				headless: true,
-				...devices["iPhone SE"],
-			},
-		},
-		{
-			name: "dev",
 			use: {
 				browserName: "chromium",
 				headless: true,

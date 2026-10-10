@@ -1,1 +1,0 @@
-export { RestrictionSelect } from "./RestrictionSelect";

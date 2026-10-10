@@ -1,15 +1,15 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { listingCollectionFx } from "~/public/listing/server/fx/listingCollectionFx";
-import { listingCountFx } from "~/public/listing/server/fx/listingCountFx";
-import { listingFetchFx } from "~/public/listing/server/fx/listingFetchFx";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { listingCollectionFx } from "~/public-listing/fx/listingCollectionFx";
+import { listingCountFx } from "~/public-listing/fx/listingCountFx";
+import { listingFetchFx } from "~/public-listing/fx/listingFetchFx";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
-type TestDatabase = Awaited<ReturnType<typeof testabase>>;
+type TestDatabase = Awaited<ReturnType<typeof testabaseFn>>;
 
 type CategoryFixture = {
 	id: string;
@@ -58,7 +58,7 @@ const patchCategoryFx = (
 
 describe("public listing visibility", () => {
 	it("respects category discovery, listing/category restrictions and public fulltext", async () => {
-		const database = await testabase("public-listing-visibility-and-discovery");
+		const database = await testabaseFn("public-listing-visibility-and-discovery");
 
 		return Effect.gen(function* () {
 			const users = yield* createUsersFx({});
@@ -141,7 +141,7 @@ describe("public listing visibility", () => {
 					],
 				},
 			});
-			const hiddenExplicitFetch = yield* Effect.either(
+			const hiddenExplicitFetch = yield* Effect.result(
 				listingFetchFx({
 					scope: {},
 					where: {
@@ -156,7 +156,7 @@ describe("public listing visibility", () => {
 					categoryId: explicitCategory.id,
 				},
 			});
-			const blockedFetch = yield* Effect.either(
+			const blockedFetch = yield* Effect.result(
 				listingFetchFx({
 					scope: {},
 					where: {
@@ -186,12 +186,12 @@ describe("public listing visibility", () => {
 			]);
 			expect(visibleExplicitFetch.id).toBe(explicitListing.id);
 			expect(visibleExplicitFetch.withRestriction).toBe("none");
-			expectTaggedErrorFx(hiddenExplicitFetch, {
+			expectTaggedErrorFn(hiddenExplicitFetch, {
 				tag: "NotFoundErrorFx",
 			});
-			expectTaggedErrorFx(blockedFetch, {
+			expectTaggedErrorFn(blockedFetch, {
 				tag: "NotFoundErrorFx",
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

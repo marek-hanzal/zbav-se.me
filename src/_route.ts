@@ -9,85 +9,64 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './@routes/__root'
-import { Route as SitemapDotxmlRouteImport } from './@routes/sitemap[.]xml'
-import { Route as RobotsDottxtRouteImport } from './@routes/robots[.]txt'
-import { Route as McpRouteImport } from './@routes/mcp'
-import { Route as ApiRouteImport } from './@routes/api'
-import { Route as DotwellKnownRouteImport } from './@routes/[.]well-known'
-import { Route as LocaleRouteImport } from './@routes/$locale'
 import { Route as IndexRouteImport } from './@routes/index'
+import { Route as LocaleRouteImport } from './@routes/$locale'
+import { Route as DotwellKnownRouteImport } from './@routes/[.]well-known'
+import { Route as ApiRouteImport } from './@routes/api'
+import { Route as McpRouteImport } from './@routes/mcp'
+import { Route as RobotsDottxtRouteImport } from './@routes/robots[.]txt'
+import { Route as SitemapDotxmlRouteImport } from './@routes/sitemap[.]xml'
 import { Route as LocaleIndexRouteImport } from './@routes/$locale/index'
-import { Route as SitemapsPagesDotxmlRouteImport } from './@routes/sitemaps/pages[.]xml'
-import { Route as RedirectSignInRouteImport } from './@routes/redirect/sign-in'
-import { Route as ApiHealthRouteImport } from './@routes/api/health'
-import { Route as ApiE2eRouteImport } from './@routes/api/e2e'
-import { Route as LocaleTosRouteImport } from './@routes/$locale/tos'
-import { Route as LocaleSignUpRouteImport } from './@routes/$locale/sign-up'
-import { Route as LocaleSignInRouteImport } from './@routes/$locale/sign-in'
-import { Route as LocalePrivacyRouteImport } from './@routes/$locale/privacy'
-import { Route as LocaleLandingRouteImport } from './@routes/$locale/landing'
 import { Route as LocaleAppRouteImport } from './@routes/$locale/app'
+import { Route as LocaleLandingRouteImport } from './@routes/$locale/landing'
+import { Route as LocalePrivacyRouteImport } from './@routes/$locale/privacy'
+import { Route as LocaleSignInRouteImport } from './@routes/$locale/sign-in'
+import { Route as LocaleSignUpRouteImport } from './@routes/$locale/sign-up'
+import { Route as LocaleTosRouteImport } from './@routes/$locale/tos'
+import { Route as ApiE2eRouteImport } from './@routes/api/e2e'
+import { Route as ApiHealthRouteImport } from './@routes/api/health'
+import { Route as RedirectSignInRouteImport } from './@routes/redirect/sign-in'
+import { Route as SitemapsPagesDotxmlRouteImport } from './@routes/sitemaps/pages[.]xml'
 import { Route as LocaleAppIndexRouteImport } from './@routes/$locale/app/index'
-import { Route as ApiCronCronRouteImport } from './@routes/api/cron/$cron'
-import { Route as ApiAuthSplatRouteImport } from './@routes/api/auth/$'
-import { Route as ApiAgentThreadIdRouteImport } from './@routes/api/agent/$threadId'
-import { Route as LocaleZChar123idChar125DotmdRouteImport } from './@routes/$locale/z/{$id}[.]md'
-import { Route as LocaleStatusMagicLinkRouteImport } from './@routes/$locale/status/magic-link'
-import { Route as LocaleResetPasswordTokenRouteImport } from './@routes/$locale/reset-password/$token'
-import { Route as LocaleForgotSentRouteImport } from './@routes/$locale/forgot/sent'
-import { Route as LocaleForgotPasswordRouteImport } from './@routes/$locale/forgot/password'
-import { Route as LocaleAppWelcomeRouteImport } from './@routes/$locale/app/welcome'
-import { Route as LocaleAppUserRouteImport } from './@routes/$locale/app/user'
-import { Route as LocaleAppShopRouteImport } from './@routes/$locale/app/shop'
 import { Route as LocaleAppHomeRouteImport } from './@routes/$locale/app/home'
-import { Route as SitemapsListingsDayChar123pageChar125DotxmlRouteImport } from './@routes/sitemaps/listings/$day/{$page}[.]xml'
-import { Route as ApiPublicMigrationRunRouteImport } from './@routes/api/public/migration/run'
-import { Route as LocaleZIdViewRouteImport } from './@routes/$locale/z/$id/view'
-import { Route as LocaleZIdUnavailableRouteImport } from './@routes/$locale/z/$id/unavailable'
-import { Route as LocaleAppBuyerSearchRouteImport } from './@routes/$locale/app/buyer/search'
-import { Route as LocaleAppAgentWelcomeRouteImport } from './@routes/$locale/app/agent/welcome'
-import { Route as LocaleAppAgentContinueRouteImport } from './@routes/$locale/app/agent/continue'
-import { Route as LocaleAppAgentThreadIdRouteImport } from './@routes/$locale/app/agent/$threadId'
+import { Route as LocaleAppUserRouteImport } from './@routes/$locale/app/user'
+import { Route as LocaleAppWelcomeRouteImport } from './@routes/$locale/app/welcome'
+import { Route as LocaleForgotPasswordRouteImport } from './@routes/$locale/forgot/password'
+import { Route as LocaleForgotSentRouteImport } from './@routes/$locale/forgot/sent'
+import { Route as LocaleResetPasswordTokenRouteImport } from './@routes/$locale/reset-password/$token'
+import { Route as LocaleStatusMagicLinkRouteImport } from './@routes/$locale/status/magic-link'
+import { Route as LocaleZChar123idChar125DotmdRouteImport } from './@routes/$locale/z/{$id}[.]md'
+import { Route as ApiAgentThreadIdRouteImport } from './@routes/api/agent/$threadId'
+import { Route as ApiAuthSplatRouteImport } from './@routes/api/auth/$'
+import { Route as ApiCronCronRouteImport } from './@routes/api/cron/$cron'
 import { Route as LocaleAppActivityPriorityRouteImport } from './@routes/$locale/app/activity/$priority'
-import { Route as LocaleAppSellerTransactionListRouteImport } from './@routes/$locale/app/seller/transaction/list'
-import { Route as LocaleAppSellerListingMyRouteImport } from './@routes/$locale/app/seller/listing/my'
-import { Route as LocaleAppSellerDraftResolveRouteImport } from './@routes/$locale/app/seller/draft/resolve'
-import { Route as LocaleAppSellerDraftListRouteImport } from './@routes/$locale/app/seller/draft/list'
-import { Route as LocaleAppBuyerTransactionListRouteImport } from './@routes/$locale/app/buyer/transaction/list'
-import { Route as LocaleAppBuyerFeedListRouteImport } from './@routes/$locale/app/buyer/feed/list'
-import { Route as LocaleAppBuyerFeedDefaultRouteImport } from './@routes/$locale/app/buyer/feed/default'
+import { Route as LocaleAppAgentThreadIdRouteImport } from './@routes/$locale/app/agent/$threadId'
+import { Route as LocaleAppAgentContinueRouteImport } from './@routes/$locale/app/agent/continue'
+import { Route as LocaleAppAgentWelcomeRouteImport } from './@routes/$locale/app/agent/welcome'
+import { Route as LocaleAppBuyerSearchRouteImport } from './@routes/$locale/app/buyer/search'
+import { Route as LocaleZIdUnavailableRouteImport } from './@routes/$locale/z/$id/unavailable'
+import { Route as LocaleZIdViewRouteImport } from './@routes/$locale/z/$id/view'
+import { Route as ApiPublicMigrationRunRouteImport } from './@routes/api/public/migration/run'
+import { Route as SitemapsListingsDayChar123pageChar125DotxmlRouteImport } from './@routes/sitemaps/listings/$day/{$page}[.]xml'
 import { Route as LocaleAppBuyerFavouriteListRouteImport } from './@routes/$locale/app/buyer/favourite/list'
-import { Route as LocaleAppSellerTransactionTransactionIdDetailRouteImport } from './@routes/$locale/app/seller/transaction/$transactionId/detail'
-import { Route as LocaleAppSellerTransactionListingIdListRouteImport } from './@routes/$locale/app/seller/transaction/$listingId/list'
-import { Route as LocaleAppSellerDraftIdEditRouteImport } from './@routes/$locale/app/seller/draft/$id/edit'
-import { Route as LocaleAppBuyerTransactionTransactionIdDetailRouteImport } from './@routes/$locale/app/buyer/transaction/$transactionId/detail'
-import { Route as LocaleAppBuyerListingIdViewRouteImport } from './@routes/$locale/app/buyer/listing/$id/view'
+import { Route as LocaleAppBuyerFeedDefaultRouteImport } from './@routes/$locale/app/buyer/feed/default'
+import { Route as LocaleAppBuyerFeedListRouteImport } from './@routes/$locale/app/buyer/feed/list'
+import { Route as LocaleAppBuyerTransactionListRouteImport } from './@routes/$locale/app/buyer/transaction/list'
+import { Route as LocaleAppSellerDraftListRouteImport } from './@routes/$locale/app/seller/draft/list'
+import { Route as LocaleAppSellerDraftResolveRouteImport } from './@routes/$locale/app/seller/draft/resolve'
+import { Route as LocaleAppSellerListingMyRouteImport } from './@routes/$locale/app/seller/listing/my'
+import { Route as LocaleAppSellerTransactionListRouteImport } from './@routes/$locale/app/seller/transaction/list'
 import { Route as LocaleAppBuyerFeedIdListRouteImport } from './@routes/$locale/app/buyer/feed/$id/list'
+import { Route as LocaleAppBuyerListingIdViewRouteImport } from './@routes/$locale/app/buyer/listing/$id/view'
+import { Route as LocaleAppBuyerTransactionTransactionIdDetailRouteImport } from './@routes/$locale/app/buyer/transaction/$transactionId/detail'
+import { Route as LocaleAppSellerDraftIdEditRouteImport } from './@routes/$locale/app/seller/draft/$id/edit'
+import { Route as LocaleAppSellerTransactionListingIdListRouteImport } from './@routes/$locale/app/seller/transaction/$listingId/list'
+import { Route as LocaleAppSellerTransactionTransactionIdDetailRouteImport } from './@routes/$locale/app/seller/transaction/$transactionId/detail'
 import { Route as LocaleAppBuyerFeedIdFavouriteListRouteImport } from './@routes/$locale/app/buyer/feed/$id/favourite/list'
 
-const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
-  id: '/sitemap.xml',
-  path: '/sitemap.xml',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
-  id: '/robots.txt',
-  path: '/robots.txt',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const McpRoute = McpRouteImport.update({
-  id: '/mcp',
-  path: '/mcp',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiRoute = ApiRouteImport.update({
-  id: '/api',
-  path: '/api',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DotwellKnownRoute = DotwellKnownRouteImport.update({
-  id: '/.well-known',
-  path: '/.well-known',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LocaleRoute = LocaleRouteImport.update({
@@ -95,9 +74,29 @@ const LocaleRoute = LocaleRouteImport.update({
   path: '/$locale',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const DotwellKnownRoute = DotwellKnownRouteImport.update({
+  id: '/.well-known',
+  path: '/.well-known',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiRoute = ApiRouteImport.update({
+  id: '/api',
+  path: '/api',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const McpRoute = McpRouteImport.update({
+  id: '/mcp',
+  path: '/mcp',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
+  id: '/robots.txt',
+  path: '/robots.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LocaleIndexRoute = LocaleIndexRouteImport.update({
@@ -105,44 +104,9 @@ const LocaleIndexRoute = LocaleIndexRouteImport.update({
   path: '/',
   getParentRoute: () => LocaleRoute,
 } as any)
-const SitemapsPagesDotxmlRoute = SitemapsPagesDotxmlRouteImport.update({
-  id: '/sitemaps/pages.xml',
-  path: '/sitemaps/pages.xml',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RedirectSignInRoute = RedirectSignInRouteImport.update({
-  id: '/redirect/sign-in',
-  path: '/redirect/sign-in',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiHealthRoute = ApiHealthRouteImport.update({
-  id: '/health',
-  path: '/health',
-  getParentRoute: () => ApiRoute,
-} as any)
-const ApiE2eRoute = ApiE2eRouteImport.update({
-  id: '/e2e',
-  path: '/e2e',
-  getParentRoute: () => ApiRoute,
-} as any)
-const LocaleTosRoute = LocaleTosRouteImport.update({
-  id: '/tos',
-  path: '/tos',
-  getParentRoute: () => LocaleRoute,
-} as any)
-const LocaleSignUpRoute = LocaleSignUpRouteImport.update({
-  id: '/sign-up',
-  path: '/sign-up',
-  getParentRoute: () => LocaleRoute,
-} as any)
-const LocaleSignInRoute = LocaleSignInRouteImport.update({
-  id: '/sign-in',
-  path: '/sign-in',
-  getParentRoute: () => LocaleRoute,
-} as any)
-const LocalePrivacyRoute = LocalePrivacyRouteImport.update({
-  id: '/privacy',
-  path: '/privacy',
+const LocaleAppRoute = LocaleAppRouteImport.update({
+  id: '/app',
+  path: '/app',
   getParentRoute: () => LocaleRoute,
 } as any)
 const LocaleLandingRoute = LocaleLandingRouteImport.update({
@@ -150,40 +114,74 @@ const LocaleLandingRoute = LocaleLandingRouteImport.update({
   path: '/landing',
   getParentRoute: () => LocaleRoute,
 } as any)
-const LocaleAppRoute = LocaleAppRouteImport.update({
-  id: '/app',
-  path: '/app',
+const LocalePrivacyRoute = LocalePrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => LocaleRoute,
+} as any)
+const LocaleSignInRoute = LocaleSignInRouteImport.update({
+  id: '/sign-in',
+  path: '/sign-in',
+  getParentRoute: () => LocaleRoute,
+} as any)
+const LocaleSignUpRoute = LocaleSignUpRouteImport.update({
+  id: '/sign-up',
+  path: '/sign-up',
+  getParentRoute: () => LocaleRoute,
+} as any)
+const LocaleTosRoute = LocaleTosRouteImport.update({
+  id: '/tos',
+  path: '/tos',
+  getParentRoute: () => LocaleRoute,
+} as any)
+const ApiE2eRoute = ApiE2eRouteImport.update({
+  id: '/e2e',
+  path: '/e2e',
+  getParentRoute: () => ApiRoute,
+} as any)
+const ApiHealthRoute = ApiHealthRouteImport.update({
+  id: '/health',
+  path: '/health',
+  getParentRoute: () => ApiRoute,
+} as any)
+const RedirectSignInRoute = RedirectSignInRouteImport.update({
+  id: '/redirect/sign-in',
+  path: '/redirect/sign-in',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapsPagesDotxmlRoute = SitemapsPagesDotxmlRouteImport.update({
+  id: '/sitemaps/pages.xml',
+  path: '/sitemaps/pages.xml',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const LocaleAppIndexRoute = LocaleAppIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => LocaleAppRoute,
 } as any)
-const ApiCronCronRoute = ApiCronCronRouteImport.update({
-  id: '/cron/$cron',
-  path: '/cron/$cron',
-  getParentRoute: () => ApiRoute,
+const LocaleAppHomeRoute = LocaleAppHomeRouteImport.update({
+  id: '/home',
+  path: '/home',
+  getParentRoute: () => LocaleAppRoute,
 } as any)
-const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
-  id: '/auth/$',
-  path: '/auth/$',
-  getParentRoute: () => ApiRoute,
+const LocaleAppUserRoute = LocaleAppUserRouteImport.update({
+  id: '/user',
+  path: '/user',
+  getParentRoute: () => LocaleAppRoute,
 } as any)
-const ApiAgentThreadIdRoute = ApiAgentThreadIdRouteImport.update({
-  id: '/agent/$threadId',
-  path: '/agent/$threadId',
-  getParentRoute: () => ApiRoute,
+const LocaleAppWelcomeRoute = LocaleAppWelcomeRouteImport.update({
+  id: '/welcome',
+  path: '/welcome',
+  getParentRoute: () => LocaleAppRoute,
 } as any)
-const LocaleZChar123idChar125DotmdRoute =
-  LocaleZChar123idChar125DotmdRouteImport.update({
-    id: '/z/{$id}.md',
-    path: '/z/{$id}.md',
-    getParentRoute: () => LocaleRoute,
-  } as any)
-const LocaleStatusMagicLinkRoute = LocaleStatusMagicLinkRouteImport.update({
-  id: '/status/magic-link',
-  path: '/status/magic-link',
+const LocaleForgotPasswordRoute = LocaleForgotPasswordRouteImport.update({
+  id: '/forgot/password',
+  path: '/forgot/password',
+  getParentRoute: () => LocaleRoute,
+} as any)
+const LocaleForgotSentRoute = LocaleForgotSentRouteImport.update({
+  id: '/forgot/sent',
+  path: '/forgot/sent',
   getParentRoute: () => LocaleRoute,
 } as any)
 const LocaleResetPasswordTokenRoute =
@@ -192,76 +190,31 @@ const LocaleResetPasswordTokenRoute =
     path: '/reset-password/$token',
     getParentRoute: () => LocaleRoute,
   } as any)
-const LocaleForgotSentRoute = LocaleForgotSentRouteImport.update({
-  id: '/forgot/sent',
-  path: '/forgot/sent',
+const LocaleStatusMagicLinkRoute = LocaleStatusMagicLinkRouteImport.update({
+  id: '/status/magic-link',
+  path: '/status/magic-link',
   getParentRoute: () => LocaleRoute,
 } as any)
-const LocaleForgotPasswordRoute = LocaleForgotPasswordRouteImport.update({
-  id: '/forgot/password',
-  path: '/forgot/password',
-  getParentRoute: () => LocaleRoute,
-} as any)
-const LocaleAppWelcomeRoute = LocaleAppWelcomeRouteImport.update({
-  id: '/welcome',
-  path: '/welcome',
-  getParentRoute: () => LocaleAppRoute,
-} as any)
-const LocaleAppUserRoute = LocaleAppUserRouteImport.update({
-  id: '/user',
-  path: '/user',
-  getParentRoute: () => LocaleAppRoute,
-} as any)
-const LocaleAppShopRoute = LocaleAppShopRouteImport.update({
-  id: '/shop',
-  path: '/shop',
-  getParentRoute: () => LocaleAppRoute,
-} as any)
-const LocaleAppHomeRoute = LocaleAppHomeRouteImport.update({
-  id: '/home',
-  path: '/home',
-  getParentRoute: () => LocaleAppRoute,
-} as any)
-const SitemapsListingsDayChar123pageChar125DotxmlRoute =
-  SitemapsListingsDayChar123pageChar125DotxmlRouteImport.update({
-    id: '/sitemaps/listings/$day/{$page}.xml',
-    path: '/sitemaps/listings/$day/{$page}.xml',
-    getParentRoute: () => rootRouteImport,
+const LocaleZChar123idChar125DotmdRoute =
+  LocaleZChar123idChar125DotmdRouteImport.update({
+    id: '/z/{$id}.md',
+    path: '/z/{$id}.md',
+    getParentRoute: () => LocaleRoute,
   } as any)
-const ApiPublicMigrationRunRoute = ApiPublicMigrationRunRouteImport.update({
-  id: '/public/migration/run',
-  path: '/public/migration/run',
-  getParentRoute: () => ApiRoute,
-} as any)
-const LocaleZIdViewRoute = LocaleZIdViewRouteImport.update({
-  id: '/z/$id/view',
-  path: '/z/$id/view',
-  getParentRoute: () => LocaleRoute,
-} as any)
-const LocaleZIdUnavailableRoute = LocaleZIdUnavailableRouteImport.update({
-  id: '/z/$id/unavailable',
-  path: '/z/$id/unavailable',
-  getParentRoute: () => LocaleRoute,
-} as any)
-const LocaleAppBuyerSearchRoute = LocaleAppBuyerSearchRouteImport.update({
-  id: '/buyer/search',
-  path: '/buyer/search',
-  getParentRoute: () => LocaleAppRoute,
-} as any)
-const LocaleAppAgentWelcomeRoute = LocaleAppAgentWelcomeRouteImport.update({
-  id: '/agent/welcome',
-  path: '/agent/welcome',
-  getParentRoute: () => LocaleAppRoute,
-} as any)
-const LocaleAppAgentContinueRoute = LocaleAppAgentContinueRouteImport.update({
-  id: '/agent/continue',
-  path: '/agent/continue',
-  getParentRoute: () => LocaleAppRoute,
-} as any)
-const LocaleAppAgentThreadIdRoute = LocaleAppAgentThreadIdRouteImport.update({
+const ApiAgentThreadIdRoute = ApiAgentThreadIdRouteImport.update({
   id: '/agent/$threadId',
   path: '/agent/$threadId',
-  getParentRoute: () => LocaleAppRoute,
+  getParentRoute: () => ApiRoute,
+} as any)
+const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
+  id: '/auth/$',
+  path: '/auth/$',
+  getParentRoute: () => ApiRoute,
+} as any)
+const ApiCronCronRoute = ApiCronCronRouteImport.update({
+  id: '/cron/$cron',
+  path: '/cron/$cron',
+  getParentRoute: () => ApiRoute,
 } as any)
 const LocaleAppActivityPriorityRoute =
   LocaleAppActivityPriorityRouteImport.update({
@@ -269,22 +222,68 @@ const LocaleAppActivityPriorityRoute =
     path: '/activity/$priority',
     getParentRoute: () => LocaleAppRoute,
   } as any)
-const LocaleAppSellerTransactionListRoute =
-  LocaleAppSellerTransactionListRouteImport.update({
-    id: '/seller/transaction/list',
-    path: '/seller/transaction/list',
+const LocaleAppAgentThreadIdRoute = LocaleAppAgentThreadIdRouteImport.update({
+  id: '/agent/$threadId',
+  path: '/agent/$threadId',
+  getParentRoute: () => LocaleAppRoute,
+} as any)
+const LocaleAppAgentContinueRoute = LocaleAppAgentContinueRouteImport.update({
+  id: '/agent/continue',
+  path: '/agent/continue',
+  getParentRoute: () => LocaleAppRoute,
+} as any)
+const LocaleAppAgentWelcomeRoute = LocaleAppAgentWelcomeRouteImport.update({
+  id: '/agent/welcome',
+  path: '/agent/welcome',
+  getParentRoute: () => LocaleAppRoute,
+} as any)
+const LocaleAppBuyerSearchRoute = LocaleAppBuyerSearchRouteImport.update({
+  id: '/buyer/search',
+  path: '/buyer/search',
+  getParentRoute: () => LocaleAppRoute,
+} as any)
+const LocaleZIdUnavailableRoute = LocaleZIdUnavailableRouteImport.update({
+  id: '/z/$id/unavailable',
+  path: '/z/$id/unavailable',
+  getParentRoute: () => LocaleRoute,
+} as any)
+const LocaleZIdViewRoute = LocaleZIdViewRouteImport.update({
+  id: '/z/$id/view',
+  path: '/z/$id/view',
+  getParentRoute: () => LocaleRoute,
+} as any)
+const ApiPublicMigrationRunRoute = ApiPublicMigrationRunRouteImport.update({
+  id: '/public/migration/run',
+  path: '/public/migration/run',
+  getParentRoute: () => ApiRoute,
+} as any)
+const SitemapsListingsDayChar123pageChar125DotxmlRoute =
+  SitemapsListingsDayChar123pageChar125DotxmlRouteImport.update({
+    id: '/sitemaps/listings/$day/{$page}.xml',
+    path: '/sitemaps/listings/$day/{$page}.xml',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const LocaleAppBuyerFavouriteListRoute =
+  LocaleAppBuyerFavouriteListRouteImport.update({
+    id: '/buyer/favourite/list',
+    path: '/buyer/favourite/list',
     getParentRoute: () => LocaleAppRoute,
   } as any)
-const LocaleAppSellerListingMyRoute =
-  LocaleAppSellerListingMyRouteImport.update({
-    id: '/seller/listing/my',
-    path: '/seller/listing/my',
+const LocaleAppBuyerFeedDefaultRoute =
+  LocaleAppBuyerFeedDefaultRouteImport.update({
+    id: '/buyer/feed/default',
+    path: '/buyer/feed/default',
     getParentRoute: () => LocaleAppRoute,
   } as any)
-const LocaleAppSellerDraftResolveRoute =
-  LocaleAppSellerDraftResolveRouteImport.update({
-    id: '/seller/draft/resolve',
-    path: '/seller/draft/resolve',
+const LocaleAppBuyerFeedListRoute = LocaleAppBuyerFeedListRouteImport.update({
+  id: '/buyer/feed/list',
+  path: '/buyer/feed/list',
+  getParentRoute: () => LocaleAppRoute,
+} as any)
+const LocaleAppBuyerTransactionListRoute =
+  LocaleAppBuyerTransactionListRouteImport.update({
+    id: '/buyer/transaction/list',
+    path: '/buyer/transaction/list',
     getParentRoute: () => LocaleAppRoute,
   } as any)
 const LocaleAppSellerDraftListRoute =
@@ -293,51 +292,28 @@ const LocaleAppSellerDraftListRoute =
     path: '/seller/draft/list',
     getParentRoute: () => LocaleAppRoute,
   } as any)
-const LocaleAppBuyerTransactionListRoute =
-  LocaleAppBuyerTransactionListRouteImport.update({
-    id: '/buyer/transaction/list',
-    path: '/buyer/transaction/list',
+const LocaleAppSellerDraftResolveRoute =
+  LocaleAppSellerDraftResolveRouteImport.update({
+    id: '/seller/draft/resolve',
+    path: '/seller/draft/resolve',
     getParentRoute: () => LocaleAppRoute,
   } as any)
-const LocaleAppBuyerFeedListRoute = LocaleAppBuyerFeedListRouteImport.update({
-  id: '/buyer/feed/list',
-  path: '/buyer/feed/list',
-  getParentRoute: () => LocaleAppRoute,
-} as any)
-const LocaleAppBuyerFeedDefaultRoute =
-  LocaleAppBuyerFeedDefaultRouteImport.update({
-    id: '/buyer/feed/default',
-    path: '/buyer/feed/default',
+const LocaleAppSellerListingMyRoute =
+  LocaleAppSellerListingMyRouteImport.update({
+    id: '/seller/listing/my',
+    path: '/seller/listing/my',
     getParentRoute: () => LocaleAppRoute,
   } as any)
-const LocaleAppBuyerFavouriteListRoute =
-  LocaleAppBuyerFavouriteListRouteImport.update({
-    id: '/buyer/favourite/list',
-    path: '/buyer/favourite/list',
+const LocaleAppSellerTransactionListRoute =
+  LocaleAppSellerTransactionListRouteImport.update({
+    id: '/seller/transaction/list',
+    path: '/seller/transaction/list',
     getParentRoute: () => LocaleAppRoute,
   } as any)
-const LocaleAppSellerTransactionTransactionIdDetailRoute =
-  LocaleAppSellerTransactionTransactionIdDetailRouteImport.update({
-    id: '/seller/transaction/$transactionId/detail',
-    path: '/seller/transaction/$transactionId/detail',
-    getParentRoute: () => LocaleAppRoute,
-  } as any)
-const LocaleAppSellerTransactionListingIdListRoute =
-  LocaleAppSellerTransactionListingIdListRouteImport.update({
-    id: '/seller/transaction/$listingId/list',
-    path: '/seller/transaction/$listingId/list',
-    getParentRoute: () => LocaleAppRoute,
-  } as any)
-const LocaleAppSellerDraftIdEditRoute =
-  LocaleAppSellerDraftIdEditRouteImport.update({
-    id: '/seller/draft/$id/edit',
-    path: '/seller/draft/$id/edit',
-    getParentRoute: () => LocaleAppRoute,
-  } as any)
-const LocaleAppBuyerTransactionTransactionIdDetailRoute =
-  LocaleAppBuyerTransactionTransactionIdDetailRouteImport.update({
-    id: '/buyer/transaction/$transactionId/detail',
-    path: '/buyer/transaction/$transactionId/detail',
+const LocaleAppBuyerFeedIdListRoute =
+  LocaleAppBuyerFeedIdListRouteImport.update({
+    id: '/buyer/feed/$id/list',
+    path: '/buyer/feed/$id/list',
     getParentRoute: () => LocaleAppRoute,
   } as any)
 const LocaleAppBuyerListingIdViewRoute =
@@ -346,10 +322,28 @@ const LocaleAppBuyerListingIdViewRoute =
     path: '/buyer/listing/$id/view',
     getParentRoute: () => LocaleAppRoute,
   } as any)
-const LocaleAppBuyerFeedIdListRoute =
-  LocaleAppBuyerFeedIdListRouteImport.update({
-    id: '/buyer/feed/$id/list',
-    path: '/buyer/feed/$id/list',
+const LocaleAppBuyerTransactionTransactionIdDetailRoute =
+  LocaleAppBuyerTransactionTransactionIdDetailRouteImport.update({
+    id: '/buyer/transaction/$transactionId/detail',
+    path: '/buyer/transaction/$transactionId/detail',
+    getParentRoute: () => LocaleAppRoute,
+  } as any)
+const LocaleAppSellerDraftIdEditRoute =
+  LocaleAppSellerDraftIdEditRouteImport.update({
+    id: '/seller/draft/$id/edit',
+    path: '/seller/draft/$id/edit',
+    getParentRoute: () => LocaleAppRoute,
+  } as any)
+const LocaleAppSellerTransactionListingIdListRoute =
+  LocaleAppSellerTransactionListingIdListRouteImport.update({
+    id: '/seller/transaction/$listingId/list',
+    path: '/seller/transaction/$listingId/list',
+    getParentRoute: () => LocaleAppRoute,
+  } as any)
+const LocaleAppSellerTransactionTransactionIdDetailRoute =
+  LocaleAppSellerTransactionTransactionIdDetailRouteImport.update({
+    id: '/seller/transaction/$transactionId/detail',
+    path: '/seller/transaction/$transactionId/detail',
     getParentRoute: () => LocaleAppRoute,
   } as any)
 const LocaleAppBuyerFeedIdFavouriteListRoute =
@@ -379,7 +373,6 @@ export interface FileRoutesByFullPath {
   '/sitemaps/pages.xml': typeof SitemapsPagesDotxmlRoute
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/app/home': typeof LocaleAppHomeRoute
-  '/$locale/app/shop': typeof LocaleAppShopRoute
   '/$locale/app/user': typeof LocaleAppUserRoute
   '/$locale/app/welcome': typeof LocaleAppWelcomeRoute
   '/$locale/forgot/password': typeof LocaleForgotPasswordRoute
@@ -434,7 +427,6 @@ export interface FileRoutesByTo {
   '/sitemaps/pages.xml': typeof SitemapsPagesDotxmlRoute
   '/$locale': typeof LocaleIndexRoute
   '/$locale/app/home': typeof LocaleAppHomeRoute
-  '/$locale/app/shop': typeof LocaleAppShopRoute
   '/$locale/app/user': typeof LocaleAppUserRoute
   '/$locale/app/welcome': typeof LocaleAppWelcomeRoute
   '/$locale/forgot/password': typeof LocaleForgotPasswordRoute
@@ -492,7 +484,6 @@ export interface FileRoutesById {
   '/sitemaps/pages.xml': typeof SitemapsPagesDotxmlRoute
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/app/home': typeof LocaleAppHomeRoute
-  '/$locale/app/shop': typeof LocaleAppShopRoute
   '/$locale/app/user': typeof LocaleAppUserRoute
   '/$locale/app/welcome': typeof LocaleAppWelcomeRoute
   '/$locale/forgot/password': typeof LocaleForgotPasswordRoute
@@ -551,7 +542,6 @@ export interface FileRouteTypes {
     | '/sitemaps/pages.xml'
     | '/$locale/'
     | '/$locale/app/home'
-    | '/$locale/app/shop'
     | '/$locale/app/user'
     | '/$locale/app/welcome'
     | '/$locale/forgot/password'
@@ -606,7 +596,6 @@ export interface FileRouteTypes {
     | '/sitemaps/pages.xml'
     | '/$locale'
     | '/$locale/app/home'
-    | '/$locale/app/shop'
     | '/$locale/app/user'
     | '/$locale/app/welcome'
     | '/$locale/forgot/password'
@@ -663,7 +652,6 @@ export interface FileRouteTypes {
     | '/sitemaps/pages.xml'
     | '/$locale/'
     | '/$locale/app/home'
-    | '/$locale/app/shop'
     | '/$locale/app/user'
     | '/$locale/app/welcome'
     | '/$locale/forgot/password'
@@ -716,39 +704,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/sitemap.xml': {
-      id: '/sitemap.xml'
-      path: '/sitemap.xml'
-      fullPath: '/sitemap.xml'
-      preLoaderRoute: typeof SitemapDotxmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/robots.txt': {
-      id: '/robots.txt'
-      path: '/robots.txt'
-      fullPath: '/robots.txt'
-      preLoaderRoute: typeof RobotsDottxtRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/mcp': {
-      id: '/mcp'
-      path: '/mcp'
-      fullPath: '/mcp'
-      preLoaderRoute: typeof McpRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api': {
-      id: '/api'
-      path: '/api'
-      fullPath: '/api'
-      preLoaderRoute: typeof ApiRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/.well-known': {
-      id: '/.well-known'
-      path: '/.well-known'
-      fullPath: '/.well-known'
-      preLoaderRoute: typeof DotwellKnownRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/$locale': {
@@ -758,11 +718,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/.well-known': {
+      id: '/.well-known'
+      path: '/.well-known'
+      fullPath: '/.well-known'
+      preLoaderRoute: typeof DotwellKnownRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api': {
+      id: '/api'
+      path: '/api'
+      fullPath: '/api'
+      preLoaderRoute: typeof ApiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mcp': {
+      id: '/mcp'
+      path: '/mcp'
+      fullPath: '/mcp'
+      preLoaderRoute: typeof McpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/robots.txt': {
+      id: '/robots.txt'
+      path: '/robots.txt'
+      fullPath: '/robots.txt'
+      preLoaderRoute: typeof RobotsDottxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/$locale/': {
@@ -772,60 +760,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleIndexRouteImport
       parentRoute: typeof LocaleRoute
     }
-    '/sitemaps/pages.xml': {
-      id: '/sitemaps/pages.xml'
-      path: '/sitemaps/pages.xml'
-      fullPath: '/sitemaps/pages.xml'
-      preLoaderRoute: typeof SitemapsPagesDotxmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/redirect/sign-in': {
-      id: '/redirect/sign-in'
-      path: '/redirect/sign-in'
-      fullPath: '/redirect/sign-in'
-      preLoaderRoute: typeof RedirectSignInRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/health': {
-      id: '/api/health'
-      path: '/health'
-      fullPath: '/api/health'
-      preLoaderRoute: typeof ApiHealthRouteImport
-      parentRoute: typeof ApiRoute
-    }
-    '/api/e2e': {
-      id: '/api/e2e'
-      path: '/e2e'
-      fullPath: '/api/e2e'
-      preLoaderRoute: typeof ApiE2eRouteImport
-      parentRoute: typeof ApiRoute
-    }
-    '/$locale/tos': {
-      id: '/$locale/tos'
-      path: '/tos'
-      fullPath: '/$locale/tos'
-      preLoaderRoute: typeof LocaleTosRouteImport
-      parentRoute: typeof LocaleRoute
-    }
-    '/$locale/sign-up': {
-      id: '/$locale/sign-up'
-      path: '/sign-up'
-      fullPath: '/$locale/sign-up'
-      preLoaderRoute: typeof LocaleSignUpRouteImport
-      parentRoute: typeof LocaleRoute
-    }
-    '/$locale/sign-in': {
-      id: '/$locale/sign-in'
-      path: '/sign-in'
-      fullPath: '/$locale/sign-in'
-      preLoaderRoute: typeof LocaleSignInRouteImport
-      parentRoute: typeof LocaleRoute
-    }
-    '/$locale/privacy': {
-      id: '/$locale/privacy'
-      path: '/privacy'
-      fullPath: '/$locale/privacy'
-      preLoaderRoute: typeof LocalePrivacyRouteImport
+    '/$locale/app': {
+      id: '/$locale/app'
+      path: '/app'
+      fullPath: '/$locale/app'
+      preLoaderRoute: typeof LocaleAppRouteImport
       parentRoute: typeof LocaleRoute
     }
     '/$locale/landing': {
@@ -835,95 +774,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleLandingRouteImport
       parentRoute: typeof LocaleRoute
     }
-    '/$locale/app': {
-      id: '/$locale/app'
-      path: '/app'
-      fullPath: '/$locale/app'
-      preLoaderRoute: typeof LocaleAppRouteImport
+    '/$locale/privacy': {
+      id: '/$locale/privacy'
+      path: '/privacy'
+      fullPath: '/$locale/privacy'
+      preLoaderRoute: typeof LocalePrivacyRouteImport
       parentRoute: typeof LocaleRoute
+    }
+    '/$locale/sign-in': {
+      id: '/$locale/sign-in'
+      path: '/sign-in'
+      fullPath: '/$locale/sign-in'
+      preLoaderRoute: typeof LocaleSignInRouteImport
+      parentRoute: typeof LocaleRoute
+    }
+    '/$locale/sign-up': {
+      id: '/$locale/sign-up'
+      path: '/sign-up'
+      fullPath: '/$locale/sign-up'
+      preLoaderRoute: typeof LocaleSignUpRouteImport
+      parentRoute: typeof LocaleRoute
+    }
+    '/$locale/tos': {
+      id: '/$locale/tos'
+      path: '/tos'
+      fullPath: '/$locale/tos'
+      preLoaderRoute: typeof LocaleTosRouteImport
+      parentRoute: typeof LocaleRoute
+    }
+    '/api/e2e': {
+      id: '/api/e2e'
+      path: '/e2e'
+      fullPath: '/api/e2e'
+      preLoaderRoute: typeof ApiE2eRouteImport
+      parentRoute: typeof ApiRoute
+    }
+    '/api/health': {
+      id: '/api/health'
+      path: '/health'
+      fullPath: '/api/health'
+      preLoaderRoute: typeof ApiHealthRouteImport
+      parentRoute: typeof ApiRoute
+    }
+    '/redirect/sign-in': {
+      id: '/redirect/sign-in'
+      path: '/redirect/sign-in'
+      fullPath: '/redirect/sign-in'
+      preLoaderRoute: typeof RedirectSignInRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemaps/pages.xml': {
+      id: '/sitemaps/pages.xml'
+      path: '/sitemaps/pages.xml'
+      fullPath: '/sitemaps/pages.xml'
+      preLoaderRoute: typeof SitemapsPagesDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/$locale/app/': {
       id: '/$locale/app/'
       path: '/'
       fullPath: '/$locale/app/'
       preLoaderRoute: typeof LocaleAppIndexRouteImport
-      parentRoute: typeof LocaleAppRoute
-    }
-    '/api/cron/$cron': {
-      id: '/api/cron/$cron'
-      path: '/cron/$cron'
-      fullPath: '/api/cron/$cron'
-      preLoaderRoute: typeof ApiCronCronRouteImport
-      parentRoute: typeof ApiRoute
-    }
-    '/api/auth/$': {
-      id: '/api/auth/$'
-      path: '/auth/$'
-      fullPath: '/api/auth/$'
-      preLoaderRoute: typeof ApiAuthSplatRouteImport
-      parentRoute: typeof ApiRoute
-    }
-    '/api/agent/$threadId': {
-      id: '/api/agent/$threadId'
-      path: '/agent/$threadId'
-      fullPath: '/api/agent/$threadId'
-      preLoaderRoute: typeof ApiAgentThreadIdRouteImport
-      parentRoute: typeof ApiRoute
-    }
-    '/$locale/z/{$id}.md': {
-      id: '/$locale/z/{$id}.md'
-      path: '/z/{$id}.md'
-      fullPath: '/$locale/z/{$id}.md'
-      preLoaderRoute: typeof LocaleZChar123idChar125DotmdRouteImport
-      parentRoute: typeof LocaleRoute
-    }
-    '/$locale/status/magic-link': {
-      id: '/$locale/status/magic-link'
-      path: '/status/magic-link'
-      fullPath: '/$locale/status/magic-link'
-      preLoaderRoute: typeof LocaleStatusMagicLinkRouteImport
-      parentRoute: typeof LocaleRoute
-    }
-    '/$locale/reset-password/$token': {
-      id: '/$locale/reset-password/$token'
-      path: '/reset-password/$token'
-      fullPath: '/$locale/reset-password/$token'
-      preLoaderRoute: typeof LocaleResetPasswordTokenRouteImport
-      parentRoute: typeof LocaleRoute
-    }
-    '/$locale/forgot/sent': {
-      id: '/$locale/forgot/sent'
-      path: '/forgot/sent'
-      fullPath: '/$locale/forgot/sent'
-      preLoaderRoute: typeof LocaleForgotSentRouteImport
-      parentRoute: typeof LocaleRoute
-    }
-    '/$locale/forgot/password': {
-      id: '/$locale/forgot/password'
-      path: '/forgot/password'
-      fullPath: '/$locale/forgot/password'
-      preLoaderRoute: typeof LocaleForgotPasswordRouteImport
-      parentRoute: typeof LocaleRoute
-    }
-    '/$locale/app/welcome': {
-      id: '/$locale/app/welcome'
-      path: '/welcome'
-      fullPath: '/$locale/app/welcome'
-      preLoaderRoute: typeof LocaleAppWelcomeRouteImport
-      parentRoute: typeof LocaleAppRoute
-    }
-    '/$locale/app/user': {
-      id: '/$locale/app/user'
-      path: '/user'
-      fullPath: '/$locale/app/user'
-      preLoaderRoute: typeof LocaleAppUserRouteImport
-      parentRoute: typeof LocaleAppRoute
-    }
-    '/$locale/app/shop': {
-      id: '/$locale/app/shop'
-      path: '/shop'
-      fullPath: '/$locale/app/shop'
-      preLoaderRoute: typeof LocaleAppShopRouteImport
       parentRoute: typeof LocaleAppRoute
     }
     '/$locale/app/home': {
@@ -933,53 +844,81 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleAppHomeRouteImport
       parentRoute: typeof LocaleAppRoute
     }
-    '/sitemaps/listings/$day/{$page}.xml': {
-      id: '/sitemaps/listings/$day/{$page}.xml'
-      path: '/sitemaps/listings/$day/{$page}.xml'
-      fullPath: '/sitemaps/listings/$day/{$page}.xml'
-      preLoaderRoute: typeof SitemapsListingsDayChar123pageChar125DotxmlRouteImport
-      parentRoute: typeof rootRouteImport
+    '/$locale/app/user': {
+      id: '/$locale/app/user'
+      path: '/user'
+      fullPath: '/$locale/app/user'
+      preLoaderRoute: typeof LocaleAppUserRouteImport
+      parentRoute: typeof LocaleAppRoute
     }
-    '/api/public/migration/run': {
-      id: '/api/public/migration/run'
-      path: '/public/migration/run'
-      fullPath: '/api/public/migration/run'
-      preLoaderRoute: typeof ApiPublicMigrationRunRouteImport
+    '/$locale/app/welcome': {
+      id: '/$locale/app/welcome'
+      path: '/welcome'
+      fullPath: '/$locale/app/welcome'
+      preLoaderRoute: typeof LocaleAppWelcomeRouteImport
+      parentRoute: typeof LocaleAppRoute
+    }
+    '/$locale/forgot/password': {
+      id: '/$locale/forgot/password'
+      path: '/forgot/password'
+      fullPath: '/$locale/forgot/password'
+      preLoaderRoute: typeof LocaleForgotPasswordRouteImport
+      parentRoute: typeof LocaleRoute
+    }
+    '/$locale/forgot/sent': {
+      id: '/$locale/forgot/sent'
+      path: '/forgot/sent'
+      fullPath: '/$locale/forgot/sent'
+      preLoaderRoute: typeof LocaleForgotSentRouteImport
+      parentRoute: typeof LocaleRoute
+    }
+    '/$locale/reset-password/$token': {
+      id: '/$locale/reset-password/$token'
+      path: '/reset-password/$token'
+      fullPath: '/$locale/reset-password/$token'
+      preLoaderRoute: typeof LocaleResetPasswordTokenRouteImport
+      parentRoute: typeof LocaleRoute
+    }
+    '/$locale/status/magic-link': {
+      id: '/$locale/status/magic-link'
+      path: '/status/magic-link'
+      fullPath: '/$locale/status/magic-link'
+      preLoaderRoute: typeof LocaleStatusMagicLinkRouteImport
+      parentRoute: typeof LocaleRoute
+    }
+    '/$locale/z/{$id}.md': {
+      id: '/$locale/z/{$id}.md'
+      path: '/z/{$id}.md'
+      fullPath: '/$locale/z/{$id}.md'
+      preLoaderRoute: typeof LocaleZChar123idChar125DotmdRouteImport
+      parentRoute: typeof LocaleRoute
+    }
+    '/api/agent/$threadId': {
+      id: '/api/agent/$threadId'
+      path: '/agent/$threadId'
+      fullPath: '/api/agent/$threadId'
+      preLoaderRoute: typeof ApiAgentThreadIdRouteImport
       parentRoute: typeof ApiRoute
     }
-    '/$locale/z/$id/view': {
-      id: '/$locale/z/$id/view'
-      path: '/z/$id/view'
-      fullPath: '/$locale/z/$id/view'
-      preLoaderRoute: typeof LocaleZIdViewRouteImport
-      parentRoute: typeof LocaleRoute
+    '/api/auth/$': {
+      id: '/api/auth/$'
+      path: '/auth/$'
+      fullPath: '/api/auth/$'
+      preLoaderRoute: typeof ApiAuthSplatRouteImport
+      parentRoute: typeof ApiRoute
     }
-    '/$locale/z/$id/unavailable': {
-      id: '/$locale/z/$id/unavailable'
-      path: '/z/$id/unavailable'
-      fullPath: '/$locale/z/$id/unavailable'
-      preLoaderRoute: typeof LocaleZIdUnavailableRouteImport
-      parentRoute: typeof LocaleRoute
+    '/api/cron/$cron': {
+      id: '/api/cron/$cron'
+      path: '/cron/$cron'
+      fullPath: '/api/cron/$cron'
+      preLoaderRoute: typeof ApiCronCronRouteImport
+      parentRoute: typeof ApiRoute
     }
-    '/$locale/app/buyer/search': {
-      id: '/$locale/app/buyer/search'
-      path: '/buyer/search'
-      fullPath: '/$locale/app/buyer/search'
-      preLoaderRoute: typeof LocaleAppBuyerSearchRouteImport
-      parentRoute: typeof LocaleAppRoute
-    }
-    '/$locale/app/agent/welcome': {
-      id: '/$locale/app/agent/welcome'
-      path: '/agent/welcome'
-      fullPath: '/$locale/app/agent/welcome'
-      preLoaderRoute: typeof LocaleAppAgentWelcomeRouteImport
-      parentRoute: typeof LocaleAppRoute
-    }
-    '/$locale/app/agent/continue': {
-      id: '/$locale/app/agent/continue'
-      path: '/agent/continue'
-      fullPath: '/$locale/app/agent/continue'
-      preLoaderRoute: typeof LocaleAppAgentContinueRouteImport
+    '/$locale/app/activity/$priority': {
+      id: '/$locale/app/activity/$priority'
+      path: '/activity/$priority'
+      fullPath: '/$locale/app/activity/$priority'
+      preLoaderRoute: typeof LocaleAppActivityPriorityRouteImport
       parentRoute: typeof LocaleAppRoute
     }
     '/$locale/app/agent/$threadId': {
@@ -989,53 +928,60 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleAppAgentThreadIdRouteImport
       parentRoute: typeof LocaleAppRoute
     }
-    '/$locale/app/activity/$priority': {
-      id: '/$locale/app/activity/$priority'
-      path: '/activity/$priority'
-      fullPath: '/$locale/app/activity/$priority'
-      preLoaderRoute: typeof LocaleAppActivityPriorityRouteImport
+    '/$locale/app/agent/continue': {
+      id: '/$locale/app/agent/continue'
+      path: '/agent/continue'
+      fullPath: '/$locale/app/agent/continue'
+      preLoaderRoute: typeof LocaleAppAgentContinueRouteImport
       parentRoute: typeof LocaleAppRoute
     }
-    '/$locale/app/seller/transaction/list': {
-      id: '/$locale/app/seller/transaction/list'
-      path: '/seller/transaction/list'
-      fullPath: '/$locale/app/seller/transaction/list'
-      preLoaderRoute: typeof LocaleAppSellerTransactionListRouteImport
+    '/$locale/app/agent/welcome': {
+      id: '/$locale/app/agent/welcome'
+      path: '/agent/welcome'
+      fullPath: '/$locale/app/agent/welcome'
+      preLoaderRoute: typeof LocaleAppAgentWelcomeRouteImport
       parentRoute: typeof LocaleAppRoute
     }
-    '/$locale/app/seller/listing/my': {
-      id: '/$locale/app/seller/listing/my'
-      path: '/seller/listing/my'
-      fullPath: '/$locale/app/seller/listing/my'
-      preLoaderRoute: typeof LocaleAppSellerListingMyRouteImport
+    '/$locale/app/buyer/search': {
+      id: '/$locale/app/buyer/search'
+      path: '/buyer/search'
+      fullPath: '/$locale/app/buyer/search'
+      preLoaderRoute: typeof LocaleAppBuyerSearchRouteImport
       parentRoute: typeof LocaleAppRoute
     }
-    '/$locale/app/seller/draft/resolve': {
-      id: '/$locale/app/seller/draft/resolve'
-      path: '/seller/draft/resolve'
-      fullPath: '/$locale/app/seller/draft/resolve'
-      preLoaderRoute: typeof LocaleAppSellerDraftResolveRouteImport
-      parentRoute: typeof LocaleAppRoute
+    '/$locale/z/$id/unavailable': {
+      id: '/$locale/z/$id/unavailable'
+      path: '/z/$id/unavailable'
+      fullPath: '/$locale/z/$id/unavailable'
+      preLoaderRoute: typeof LocaleZIdUnavailableRouteImport
+      parentRoute: typeof LocaleRoute
     }
-    '/$locale/app/seller/draft/list': {
-      id: '/$locale/app/seller/draft/list'
-      path: '/seller/draft/list'
-      fullPath: '/$locale/app/seller/draft/list'
-      preLoaderRoute: typeof LocaleAppSellerDraftListRouteImport
-      parentRoute: typeof LocaleAppRoute
+    '/$locale/z/$id/view': {
+      id: '/$locale/z/$id/view'
+      path: '/z/$id/view'
+      fullPath: '/$locale/z/$id/view'
+      preLoaderRoute: typeof LocaleZIdViewRouteImport
+      parentRoute: typeof LocaleRoute
     }
-    '/$locale/app/buyer/transaction/list': {
-      id: '/$locale/app/buyer/transaction/list'
-      path: '/buyer/transaction/list'
-      fullPath: '/$locale/app/buyer/transaction/list'
-      preLoaderRoute: typeof LocaleAppBuyerTransactionListRouteImport
-      parentRoute: typeof LocaleAppRoute
+    '/api/public/migration/run': {
+      id: '/api/public/migration/run'
+      path: '/public/migration/run'
+      fullPath: '/api/public/migration/run'
+      preLoaderRoute: typeof ApiPublicMigrationRunRouteImport
+      parentRoute: typeof ApiRoute
     }
-    '/$locale/app/buyer/feed/list': {
-      id: '/$locale/app/buyer/feed/list'
-      path: '/buyer/feed/list'
-      fullPath: '/$locale/app/buyer/feed/list'
-      preLoaderRoute: typeof LocaleAppBuyerFeedListRouteImport
+    '/sitemaps/listings/$day/{$page}.xml': {
+      id: '/sitemaps/listings/$day/{$page}.xml'
+      path: '/sitemaps/listings/$day/{$page}.xml'
+      fullPath: '/sitemaps/listings/$day/{$page}.xml'
+      preLoaderRoute: typeof SitemapsListingsDayChar123pageChar125DotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/$locale/app/buyer/favourite/list': {
+      id: '/$locale/app/buyer/favourite/list'
+      path: '/buyer/favourite/list'
+      fullPath: '/$locale/app/buyer/favourite/list'
+      preLoaderRoute: typeof LocaleAppBuyerFavouriteListRouteImport
       parentRoute: typeof LocaleAppRoute
     }
     '/$locale/app/buyer/feed/default': {
@@ -1045,39 +991,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleAppBuyerFeedDefaultRouteImport
       parentRoute: typeof LocaleAppRoute
     }
-    '/$locale/app/buyer/favourite/list': {
-      id: '/$locale/app/buyer/favourite/list'
-      path: '/buyer/favourite/list'
-      fullPath: '/$locale/app/buyer/favourite/list'
-      preLoaderRoute: typeof LocaleAppBuyerFavouriteListRouteImport
+    '/$locale/app/buyer/feed/list': {
+      id: '/$locale/app/buyer/feed/list'
+      path: '/buyer/feed/list'
+      fullPath: '/$locale/app/buyer/feed/list'
+      preLoaderRoute: typeof LocaleAppBuyerFeedListRouteImport
       parentRoute: typeof LocaleAppRoute
     }
-    '/$locale/app/seller/transaction/$transactionId/detail': {
-      id: '/$locale/app/seller/transaction/$transactionId/detail'
-      path: '/seller/transaction/$transactionId/detail'
-      fullPath: '/$locale/app/seller/transaction/$transactionId/detail'
-      preLoaderRoute: typeof LocaleAppSellerTransactionTransactionIdDetailRouteImport
+    '/$locale/app/buyer/transaction/list': {
+      id: '/$locale/app/buyer/transaction/list'
+      path: '/buyer/transaction/list'
+      fullPath: '/$locale/app/buyer/transaction/list'
+      preLoaderRoute: typeof LocaleAppBuyerTransactionListRouteImport
       parentRoute: typeof LocaleAppRoute
     }
-    '/$locale/app/seller/transaction/$listingId/list': {
-      id: '/$locale/app/seller/transaction/$listingId/list'
-      path: '/seller/transaction/$listingId/list'
-      fullPath: '/$locale/app/seller/transaction/$listingId/list'
-      preLoaderRoute: typeof LocaleAppSellerTransactionListingIdListRouteImport
+    '/$locale/app/seller/draft/list': {
+      id: '/$locale/app/seller/draft/list'
+      path: '/seller/draft/list'
+      fullPath: '/$locale/app/seller/draft/list'
+      preLoaderRoute: typeof LocaleAppSellerDraftListRouteImport
       parentRoute: typeof LocaleAppRoute
     }
-    '/$locale/app/seller/draft/$id/edit': {
-      id: '/$locale/app/seller/draft/$id/edit'
-      path: '/seller/draft/$id/edit'
-      fullPath: '/$locale/app/seller/draft/$id/edit'
-      preLoaderRoute: typeof LocaleAppSellerDraftIdEditRouteImport
+    '/$locale/app/seller/draft/resolve': {
+      id: '/$locale/app/seller/draft/resolve'
+      path: '/seller/draft/resolve'
+      fullPath: '/$locale/app/seller/draft/resolve'
+      preLoaderRoute: typeof LocaleAppSellerDraftResolveRouteImport
       parentRoute: typeof LocaleAppRoute
     }
-    '/$locale/app/buyer/transaction/$transactionId/detail': {
-      id: '/$locale/app/buyer/transaction/$transactionId/detail'
-      path: '/buyer/transaction/$transactionId/detail'
-      fullPath: '/$locale/app/buyer/transaction/$transactionId/detail'
-      preLoaderRoute: typeof LocaleAppBuyerTransactionTransactionIdDetailRouteImport
+    '/$locale/app/seller/listing/my': {
+      id: '/$locale/app/seller/listing/my'
+      path: '/seller/listing/my'
+      fullPath: '/$locale/app/seller/listing/my'
+      preLoaderRoute: typeof LocaleAppSellerListingMyRouteImport
+      parentRoute: typeof LocaleAppRoute
+    }
+    '/$locale/app/seller/transaction/list': {
+      id: '/$locale/app/seller/transaction/list'
+      path: '/seller/transaction/list'
+      fullPath: '/$locale/app/seller/transaction/list'
+      preLoaderRoute: typeof LocaleAppSellerTransactionListRouteImport
+      parentRoute: typeof LocaleAppRoute
+    }
+    '/$locale/app/buyer/feed/$id/list': {
+      id: '/$locale/app/buyer/feed/$id/list'
+      path: '/buyer/feed/$id/list'
+      fullPath: '/$locale/app/buyer/feed/$id/list'
+      preLoaderRoute: typeof LocaleAppBuyerFeedIdListRouteImport
       parentRoute: typeof LocaleAppRoute
     }
     '/$locale/app/buyer/listing/$id/view': {
@@ -1087,11 +1047,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleAppBuyerListingIdViewRouteImport
       parentRoute: typeof LocaleAppRoute
     }
-    '/$locale/app/buyer/feed/$id/list': {
-      id: '/$locale/app/buyer/feed/$id/list'
-      path: '/buyer/feed/$id/list'
-      fullPath: '/$locale/app/buyer/feed/$id/list'
-      preLoaderRoute: typeof LocaleAppBuyerFeedIdListRouteImport
+    '/$locale/app/buyer/transaction/$transactionId/detail': {
+      id: '/$locale/app/buyer/transaction/$transactionId/detail'
+      path: '/buyer/transaction/$transactionId/detail'
+      fullPath: '/$locale/app/buyer/transaction/$transactionId/detail'
+      preLoaderRoute: typeof LocaleAppBuyerTransactionTransactionIdDetailRouteImport
+      parentRoute: typeof LocaleAppRoute
+    }
+    '/$locale/app/seller/draft/$id/edit': {
+      id: '/$locale/app/seller/draft/$id/edit'
+      path: '/seller/draft/$id/edit'
+      fullPath: '/$locale/app/seller/draft/$id/edit'
+      preLoaderRoute: typeof LocaleAppSellerDraftIdEditRouteImport
+      parentRoute: typeof LocaleAppRoute
+    }
+    '/$locale/app/seller/transaction/$listingId/list': {
+      id: '/$locale/app/seller/transaction/$listingId/list'
+      path: '/seller/transaction/$listingId/list'
+      fullPath: '/$locale/app/seller/transaction/$listingId/list'
+      preLoaderRoute: typeof LocaleAppSellerTransactionListingIdListRouteImport
+      parentRoute: typeof LocaleAppRoute
+    }
+    '/$locale/app/seller/transaction/$transactionId/detail': {
+      id: '/$locale/app/seller/transaction/$transactionId/detail'
+      path: '/seller/transaction/$transactionId/detail'
+      fullPath: '/$locale/app/seller/transaction/$transactionId/detail'
+      preLoaderRoute: typeof LocaleAppSellerTransactionTransactionIdDetailRouteImport
       parentRoute: typeof LocaleAppRoute
     }
     '/$locale/app/buyer/feed/$id/favourite/list': {
@@ -1106,7 +1087,6 @@ declare module '@tanstack/react-router' {
 
 interface LocaleAppRouteChildren {
   LocaleAppHomeRoute: typeof LocaleAppHomeRoute
-  LocaleAppShopRoute: typeof LocaleAppShopRoute
   LocaleAppUserRoute: typeof LocaleAppUserRoute
   LocaleAppWelcomeRoute: typeof LocaleAppWelcomeRoute
   LocaleAppIndexRoute: typeof LocaleAppIndexRoute
@@ -1134,7 +1114,6 @@ interface LocaleAppRouteChildren {
 
 const LocaleAppRouteChildren: LocaleAppRouteChildren = {
   LocaleAppHomeRoute: LocaleAppHomeRoute,
-  LocaleAppShopRoute: LocaleAppShopRoute,
   LocaleAppUserRoute: LocaleAppUserRoute,
   LocaleAppWelcomeRoute: LocaleAppWelcomeRoute,
   LocaleAppIndexRoute: LocaleAppIndexRoute,

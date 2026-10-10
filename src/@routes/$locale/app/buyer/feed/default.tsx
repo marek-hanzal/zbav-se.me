@@ -1,9 +1,9 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import { SpinnerContainer } from "@/lib/client/spinner";
-import { translator } from "@/lib/common/translation";
-import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
-import { getFeedDefaultCreate } from "~/buyer/feed/service/getFeedDefaultCreate";
-import { withTranslationsQuery } from "~/common/translation/query/withTranslationsQuery";
+import { withFeedQuery } from "~/buyer-feed/query/withFeedQuery";
+import { getFeedDefaultCreateFn } from "~/buyer-feed/service/getFeedDefaultCreateFn";
+import { translatorFn } from "~/translation/fn/translatorFn";
+import { withTranslationsQuery } from "~/translation/query/withTranslationsQuery";
+import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
 
 export const Route = createFileRoute("/$locale/app/buyer/feed/default")({
 	/**
@@ -15,14 +15,14 @@ export const Route = createFileRoute("/$locale/app/buyer/feed/default")({
 	 * The idea is to _ensure_ we've a feed a user _can_ customize
 	 */
 	async loader({ context: { queryClient }, params: { locale } }) {
-		const t = translator({
-			translations: await withTranslationsQuery.ensure(queryClient, {
+		const t = translatorFn({
+			translations: await withTranslationsQuery.ensureFn(queryClient, {
 				locale,
 			}),
 		});
 		const feed =
 			(await withFeedQuery
-				.ensureEntityQuery(queryClient, {
+				.ensureEntityQueryFn(queryClient, {
 					where: {
 						type: "user",
 					},
@@ -39,7 +39,7 @@ export const Route = createFileRoute("/$locale/app/buyer/feed/default")({
 				.catch(() => undefined)) ??
 			(await withFeedQuery.createFn(
 				queryClient,
-				getFeedDefaultCreate(t.text("Feed name (default)")),
+				getFeedDefaultCreateFn(t.textFn("Feed name (default)")),
 				[
 					"collection",
 					"count",

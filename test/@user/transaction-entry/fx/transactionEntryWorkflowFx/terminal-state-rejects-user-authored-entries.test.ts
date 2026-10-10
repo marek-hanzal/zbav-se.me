@@ -1,16 +1,16 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { transactionCloseFx } from "~/buyer/transaction/server/fx/transactionCloseFx";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { transactionCloseFx } from "~/buyer-transaction/fx/transactionCloseFx";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createResolvedScenarioFx } from "~/test/transaction/fx/createResolvedScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
+import { transactionEntryCreateFx } from "~/user-transaction-entry/fx/transactionEntryCreateFx";
 
 describe("transactionEntry workflow", () => {
 	it("rejects user-authored entries after the transaction is closed", async () => {
-		const database = await testabase("transactionEntry-terminal-rejects-authored");
+		const database = await testabaseFn("transactionEntry-terminal-rejects-authored");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -26,7 +26,7 @@ describe("transactionEntry workflow", () => {
 				userId: buyer.id,
 			});
 
-			const sellerText = yield* Effect.either(
+			const sellerText = yield* Effect.result(
 				transactionEntryCreateFx({
 					userId: seller.id,
 					transactionId,
@@ -36,7 +36,7 @@ describe("transactionEntry workflow", () => {
 					},
 				}),
 			);
-			const buyerPersonal = yield* Effect.either(
+			const buyerPersonal = yield* Effect.result(
 				transactionEntryCreateFx({
 					userId: buyer.id,
 					transactionId,
@@ -49,10 +49,10 @@ describe("transactionEntry workflow", () => {
 				}),
 			);
 
-			expectTaggedErrorFx(sellerText, {
+			expectTaggedErrorFn(sellerText, {
 				tag: "InvalidRequestErrorFx",
 			});
-			expectTaggedErrorFx(buyerPersonal, {
+			expectTaggedErrorFn(buyerPersonal, {
 				tag: "InvalidRequestErrorFx",
 			});
 
@@ -69,6 +69,6 @@ describe("transactionEntry workflow", () => {
 			);
 
 			expect(transactionEntries).toHaveLength(0);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

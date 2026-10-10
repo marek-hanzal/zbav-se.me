@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { pathOf } from "~/common/route/pathOf";
-import { withOriginMiddleware } from "~/server/middleware/withOriginMiddleware";
+import { withOriginMiddleware } from "~/request-middleware/middleware/withOriginMiddleware";
+import { pathOfFn } from "~/route/fn/pathOfFn";
 
 const blocked = [
 	"/api",
@@ -24,7 +24,7 @@ export const Route = createFileRoute("/robots.txt")({
 						...blocked.map((rule) => {
 							return `Disallow: ${rule}`;
 						}),
-						`Sitemap: ${new URL(pathOf("/sitemap.xml"), origin).toString()}`,
+						`Sitemap: ${new URL(pathOfFn("/sitemap.xml"), origin).toString()}`,
 					].join("\n"),
 					{
 						headers: {

@@ -1,15 +1,15 @@
 import type { AgentInputItem } from "@openai/agents-core";
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { agentStreamCollectionFx } from "~/user/agent/server/fx/agentStreamCollectionFx";
-import { agentStreamDeleteCollectionFx } from "~/user/agent/server/fx/agentStreamDeleteCollectionFx";
-import { agentStreamFetchFx } from "~/user/agent/server/fx/agentStreamFetchFx";
-import { agentUsageCollectionFx } from "~/user/agent/server/fx/agentUsageCollectionFx";
+import { agentStreamCollectionFx } from "~/user-agent/fx/agentStreamCollectionFx";
+import { agentStreamDeleteCollectionFx } from "~/user-agent/fx/agentStreamDeleteCollectionFx";
+import { agentStreamFetchFx } from "~/user-agent/fx/agentStreamFetchFx";
+import { agentUsageCollectionFx } from "~/user-agent/fx/agentUsageCollectionFx";
 
-type TestDatabase = Awaited<ReturnType<typeof testabase>>;
+type TestDatabase = Awaited<ReturnType<typeof testabaseFn>>;
 
 interface AgentStreamSeedRow {
 	id: string;
@@ -30,19 +30,19 @@ interface AgentUsageSeedRow {
 	createdAt: Date;
 }
 
-const seedAgentStream = (database: TestDatabase, rows: AgentStreamSeedRow[]) =>
+const seedAgentStreamFx = (database: TestDatabase, rows: AgentStreamSeedRow[]) =>
 	Effect.promise(async () => {
-		await seedAgentThreads(database, rows);
+		await seedAgentThreadsFn(database, rows);
 		await database.kysely.insertInto("agent_stream").values(rows).execute();
 	});
 
-const seedAgentUsage = (database: TestDatabase, rows: AgentUsageSeedRow[]) =>
+const seedAgentUsageFx = (database: TestDatabase, rows: AgentUsageSeedRow[]) =>
 	Effect.promise(async () => {
-		await seedAgentThreads(database, rows);
+		await seedAgentThreadsFn(database, rows);
 		await database.kysely.insertInto("agent_usage").values(rows).execute();
 	});
 
-const seedAgentThreads = async (
+const seedAgentThreadsFn = async (
 	database: TestDatabase,
 	rows: Array<{
 		userId: string;
@@ -83,12 +83,12 @@ const seedAgentThreads = async (
 
 describe("agent read models", () => {
 	it("collections, fetch and delete collection apply user and thread scopes", async () => {
-		const database = await testabase("agent-read-model-flow");
+		const database = await testabaseFn("agent-read-model-flow");
 
 		return Effect.gen(function* () {
 			const { seller, stranger } = yield* createUsersFx({});
 
-			yield* seedAgentStream(database, [
+			yield* seedAgentStreamFx(database, [
 				{
 					id: "agent-read-stream-a-1",
 					userId: seller.id,
@@ -134,7 +134,7 @@ describe("agent read models", () => {
 					sort: 1,
 				},
 			]);
-			yield* seedAgentUsage(database, [
+			yield* seedAgentUsageFx(database, [
 				{
 					id: "agent-read-usage-a-1",
 					userId: seller.id,
@@ -234,6 +234,6 @@ describe("agent read models", () => {
 			expect(remaining.map((item) => item.id)).toEqual([
 				"agent-read-stream-b-1",
 			]);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

@@ -1,0 +1,74 @@
+import { useRouter } from "@tanstack/react-router";
+import { type FC, useState } from "react";
+import { EmailIcon } from "~/application-ui/constant/icon.exports";
+import { useLocale } from "~/locale/hook/useLocale";
+import { Tx } from "~/translation/ui/Tx";
+import { Button } from "~/ui/ui/Button";
+import { Container } from "~/ui/ui/Container";
+import { ErrorBadge } from "~/ui/ui/ErrorBadge";
+import { withEmailVerificationRequestMutation } from "~/user-auth/mutation/withEmailVerificationRequestMutation";
+
+export namespace VerifyEmailButton {
+	export interface Props extends Container.Props {
+		email: string;
+	}
+}
+
+export const VerifyEmailButton: FC<VerifyEmailButton.Props> = ({ email, ...props }) => {
+	const locale = useLocale();
+	const router = useRouter();
+	const [isSent, setIsSentFn] = useState(false);
+	const mutation = withEmailVerificationRequestMutation.useMutation({
+		onSuccess() {
+			setIsSentFn(true);
+		},
+	});
+
+	const link = router.buildLocation({
+		to: "/$locale/app/user",
+		params: {
+			locale,
+		},
+	});
+	const callbackURL = new URL(link.href, import.meta.env.VITE_ORIGIN).toString();
+
+	return (
+		<Container
+			data-ui="VerifyEmailButton[Container]"
+			data-ui-layout="vertical-flex"
+			data-ui-items="start"
+			data-ui-gap="sm"
+			data-ui-width="full"
+			{...props}
+		>
+			<Button
+				iconEnabled={EmailIcon}
+				data-action={"send verification email"}
+				onClick={() => {
+					setIsSentFn(false);
+					mutation.mutate({
+						email,
+						callbackURL,
+					});
+				}}
+				disabled={mutation.isPending}
+				loading={mutation.isPending}
+				data-ui-tone="neutral"
+				data-ui-theme="light"
+				data-ui-size="md"
+				data-ui-width="full"
+				data-ui-text="md"
+			>
+				{isSent ? (
+					<Tx
+						label={"Verification email sent. Check your inbox."}
+						data-ui-color="lead"
+					/>
+				) : (
+					<Tx label={"Send verification email"} />
+				)}
+			</Button>
+			<ErrorBadge error={mutation.error} />
+		</Container>
+	);
+};

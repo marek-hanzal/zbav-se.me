@@ -1,36 +1,41 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { userResourceBundleCreateFx } from "~/user/resource-bundle/server/fx/userResourceBundleCreateFx";
+import { userResourceBundleCreateFx } from "~/user-resource-bundle/fx/userResourceBundleCreateFx";
+import { ResourceBundleEnumSchema } from "~/user-resource-bundle/schema/ResourceBundleEnumSchema";
 
 describe("userResourceBundleCreateFx", () => {
 	it("assigns the free bundle idempotently", async () => {
-		const database = await testabase("user-resource-bundle-create");
+		const database = await testabaseFn("user-resource-bundle-create");
 
 		return Effect.gen(function* () {
 			const { seller } = yield* createUsersFx({});
 
 			const first = yield* userResourceBundleCreateFx({
 				userId: seller.id,
-				bundle: "free",
+				bundle: ResourceBundleEnumSchema.enum["package:free"],
 			});
 			const second = yield* userResourceBundleCreateFx({
 				userId: seller.id,
-				bundle: "free",
+				bundle: ResourceBundleEnumSchema.enum["package:free"],
 			});
 
 			const rows = yield* Effect.promise(() =>
 				database.kysely
-					.selectFrom("user_resource_bundle as urb")
-					.innerJoin("resource_bundle as rb", "rb.id", "urb.resourceBundleId")
+					.selectFrom("user_resource_bundle as assignment")
+					.innerJoin(
+						"resource_bundle as bundle",
+						"bundle.id",
+						"assignment.resourceBundleId",
+					)
 					.select([
-						"urb.id",
-						"rb.name",
+						"assignment.id",
+						"bundle.name",
 					])
-					.where("urb.userId", "=", seller.id)
-					.where("rb.name", "=", "free")
+					.where("assignment.userId", "=", seller.id)
+					.where("bundle.name", "=", ResourceBundleEnumSchema.enum["package:free"])
 					.execute(),
 			);
 
@@ -38,9 +43,9 @@ describe("userResourceBundleCreateFx", () => {
 			expect(rows).toEqual([
 				{
 					id: first.id,
-					name: "free",
+					name: ResourceBundleEnumSchema.enum["package:free"],
 				},
 			]);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

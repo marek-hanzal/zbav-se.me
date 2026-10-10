@@ -1,11 +1,11 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { flagToggleFx } from "~/buyer/listing-flag/server/fx/flagToggleFx";
-import { runToggleEntityErrorContractFx } from "~/test/@buyer/common/fx/runToggleEntityErrorContractFx";
+import { flagToggleFx } from "~/buyer-listing-flag/fx/flagToggleFx";
+import { runToggleEntityErrorContractFn } from "~/test/@buyer/common/fx/runToggleEntityErrorContractFn";
 
 describe("flagToggleFx", () => {
 	it("invalid: seller cannot flag own listing", async () => {
-		return runToggleEntityErrorContractFx({
+		return runToggleEntityErrorContractFn({
 			databaseName: "flagToggle-own-listing",
 			userSlug: "flag-own",
 			expectedError: {

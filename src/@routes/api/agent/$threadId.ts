@@ -2,17 +2,17 @@ import type { AgentInputItem, RunStreamEvent } from "@openai/agents";
 import { createFileRoute } from "@tanstack/react-router";
 import { Effect } from "effect";
 import { z } from "zod";
-import { withLoggerFx } from "@/lib/common/log";
-import { ViteEnvSchema } from "~/common/env/ViteEnvSchema";
-import { withDateFx } from "~/server/database/fx/withDateFx";
-import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
-import { withLocaleMiddleware } from "~/server/middleware/withLocaleMiddleware";
-import { AssistantAgent } from "~/user/agent/AssistantAgent";
-import { agentThreadFetchFx } from "~/user/agent/server/fx/agentThreadFetchFx";
-import { agentUsageCreateFx } from "~/user/agent/server/fx/agentUsageCreateFx";
-import { withRunnerMiddleware } from "~/user/agent/server/middleware/withRunnerMiddleware";
-import { KyselySession } from "~/user/agent/server/session/KyselySession";
-import { withUserRestrictionMiddleware } from "~/user/restriction/middleware/withUserRestrictionMiddleware";
+import { ViteEnvSchema } from "~/application-env/schema/ViteEnvSchema";
+import { withKyselyFn } from "~/database/fn/withKyselyFn";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
+import { withLoggerFn } from "~/log/fn/withLoggerFn";
+import { withLocaleMiddleware } from "~/request-middleware/middleware/withLocaleMiddleware";
+import { agentThreadFetchFx } from "~/user-agent/fx/agentThreadFetchFx";
+import { agentUsageCreateFx } from "~/user-agent/fx/agentUsageCreateFx";
+import { withRunnerMiddleware } from "~/user-agent/middleware/withRunnerMiddleware";
+import { AssistantAgent } from "~/user-agent/service/AssistantAgent";
+import { KyselySession } from "~/user-agent/session/KyselySession";
+import { withUserRestrictionMiddleware } from "~/user-restriction/middleware/withUserRestrictionMiddleware";
 
 const AgentRequestSchema: z.ZodType<AgentInputItem[]> = z
 	.array(z.unknown())
@@ -37,18 +37,18 @@ type UsageSnapshot = {
 	total: number;
 };
 
-const emptyUsageSnapshot = (): UsageSnapshot => ({
+const emptyUsageSnapshotFn = (): UsageSnapshot => ({
 	requests: 0,
 	input: 0,
 	output: 0,
 	total: 0,
 });
 
-const hasUsage = ({ requests, input, output, total }: UsageSnapshot) => {
+const hasUsageFn = ({ requests, input, output, total }: UsageSnapshot) => {
 	return requests > 0 || input > 0 || output > 0 || total > 0;
 };
 
-const isUsageReadyEvent = (event: RunStreamEvent) => {
+const isUsageReadyEventFn = (event: RunStreamEvent) => {
 	/**
 	 * The Agents SDK exposes exact token usage only when a model response stream
 	 * emits `response_done`. In multi-step agent runs this can happen multiple times
@@ -107,7 +107,7 @@ export const Route = createFileRoute("/api/agent/$threadId")({
 								userId: user.id,
 							},
 						});
-					}).pipe(withKyselyFx(database), withLoggerFx(rootLogger), Effect.runPromise);
+					}).pipe(withKyselyFn(database), withLoggerFn(rootLogger), Effect.runPromise);
 				} catch (error) {
 					logger.error("Invalid request (thread not found)", {
 						userId: user.id,
@@ -132,7 +132,7 @@ export const Route = createFileRoute("/api/agent/$threadId")({
 				});
 
 				const abortController = new AbortController();
-				const abortRunner = () => {
+				const abortRunnerFn = () => {
 					if (!abortController.signal.aborted) {
 						abortController.abort();
 					}
@@ -145,9 +145,9 @@ export const Route = createFileRoute("/api/agent/$threadId")({
 								closed: false,
 								heartbeat: undefined,
 							};
-							const abortListener = () => {
+							const abortListenerFn = () => {
 								if (request.signal.aborted) {
-									abortRunner();
+									abortRunnerFn();
 								}
 							};
 
@@ -158,10 +158,10 @@ export const Route = createFileRoute("/api/agent/$threadId")({
 							 * a closed SSE connection could leave the model request running until
 							 * the provider or runtime times it out.
 							 */
-							request.signal.addEventListener("abort", abortListener, {
+							request.signal.addEventListener("abort", abortListenerFn, {
 								once: true,
 							});
-							abortListener();
+							abortListenerFn();
 
 							try {
 								controller.enqueue(encoder.encode(": connected\n\n"));
@@ -211,9 +211,9 @@ export const Route = createFileRoute("/api/agent/$threadId")({
 
 								logger.trace("Run created");
 
-								let persistedUsage = emptyUsageSnapshot();
+								let persistedUsage = emptyUsageSnapshotFn();
 
-								const flushUsage = async () => {
+								const flushUsageFn = async () => {
 									/**
 									 * `stream.state.usage` is cumulative for the whole run. Persist only
 									 * the delta since the last successful write, otherwise every
@@ -233,7 +233,7 @@ export const Route = createFileRoute("/api/agent/$threadId")({
 										output: currentUsage.output - persistedUsage.output,
 									} satisfies UsageSnapshot;
 
-									if (!hasUsage(usage)) {
+									if (!hasUsageFn(usage)) {
 										return;
 									}
 
@@ -245,9 +245,9 @@ export const Route = createFileRoute("/api/agent/$threadId")({
 												...usage,
 											});
 										}).pipe(
-											withKyselyFx(database),
-											withDateFx,
-											withLoggerFx(rootLogger),
+											withKyselyFn(database),
+											withDateServiceFn(),
+											withLoggerFn(rootLogger),
 											Effect.runPromise,
 										);
 
@@ -288,8 +288,8 @@ export const Route = createFileRoute("/api/agent/$threadId")({
 											break;
 										}
 
-										if (isUsageReadyEvent(event)) {
-											await flushUsage();
+										if (isUsageReadyEventFn(event)) {
+											await flushUsageFn();
 										}
 									}
 
@@ -308,7 +308,7 @@ export const Route = createFileRoute("/api/agent/$threadId")({
 									 * This catches any completed model request that updated SDK usage but
 									 * did not pass through the regular event-loop flush path.
 									 */
-									await flushUsage();
+									await flushUsageFn();
 								}
 							} catch (error) {
 								logger.error("Agent stream failed", {
@@ -350,7 +350,7 @@ export const Route = createFileRoute("/api/agent/$threadId")({
 								 * for validation-successful requests regardless of model, persistence,
 								 * or client connection failures.
 								 */
-								request.signal.removeEventListener("abort", abortListener);
+								request.signal.removeEventListener("abort", abortListenerFn);
 
 								clearInterval(state.heartbeat);
 								state.heartbeat = undefined;
@@ -366,7 +366,7 @@ export const Route = createFileRoute("/api/agent/$threadId")({
 							}
 						},
 						cancel() {
-							abortRunner();
+							abortRunnerFn();
 						},
 					}),
 					{

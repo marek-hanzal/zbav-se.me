@@ -1,13 +1,13 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { activityPatchCollectionFx } from "~/user/activity/server/fx/activityPatchCollectionFx";
+import { activityPatchCollectionFx } from "~/user-activity/fx/activityPatchCollectionFx";
 
 describe("activity bulk mutation patch contract", () => {
 	it("patches only scoped rows matched by combined filters", async () => {
-		const database = await testabase("activityBulkMutationFx-patch");
+		const database = await testabaseFn("activityBulkMutationFx-patch");
 		const archivedAt = new Date("2026-04-01T14:00:00.000Z");
 
 		return Effect.gen(function* () {
@@ -137,6 +137,6 @@ describe("activity bulk mutation patch contract", () => {
 				"bulk-owner-a",
 				"bulk-owner-b",
 			]);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

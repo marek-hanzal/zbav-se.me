@@ -1,18 +1,19 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { genId } from "@/lib/common/gen-id";
-import { draftCreateFx } from "~/seller/draft/server/fx/draftCreateFx";
-import { draftPatchFx } from "~/seller/draft/server/fx/draftPatchFx";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { genIdFn } from "~/identity/fn/genIdFn";
+import { ResourceDefinitionEnumSchema } from "~/resource-definition/schema/ResourceDefinitionEnumSchema";
+import { draftCreateFx } from "~/seller-draft/fx/draftCreateFx";
+import { draftPatchFx } from "~/seller-draft/fx/draftPatchFx";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
 const GALLERY_LIMIT = 3;
 
 const seedGalleryLimitFx = (userId: string) =>
 	Effect.promise(async () => {
-		const bundleId = genId();
+		const bundleId = genIdFn();
 		const now = new Date();
 
 		return {
@@ -28,9 +29,9 @@ const seedUploadIdsFx = (count: number, userId: string) =>
 		return Array.from({
 			length: count,
 		}).map(() => ({
-			id: genId(),
+			id: genIdFn(),
 			userId,
-			url: `https://cdn.zbav-se.me/${genId()}.jpg`,
+			url: `https://cdn.zbav-se.me/${genIdFn()}.jpg`,
 			access: "private" as const,
 			createdAt: new Date(),
 		}));
@@ -38,7 +39,7 @@ const seedUploadIdsFx = (count: number, userId: string) =>
 
 describe("draftPatchFx gallery limit", () => {
 	it("allows gallery item count at the limit and rejects count above it", async () => {
-		const database = await testabase("draft-patch-gallery-limit");
+		const database = await testabaseFn("draft-patch-gallery-limit");
 
 		return Effect.gen(function* () {
 			const { seller } = yield* createUsersFx({});
@@ -51,23 +52,33 @@ describe("draftPatchFx gallery limit", () => {
 					.values({
 						id: limitSeed.bundleId,
 						name: `Draft gallery limit ${limitSeed.bundleId}`,
+						type: "user",
+						access: "protected",
+						sort: 0,
 					})
 					.execute();
-				await database.kysely
-					.insertInto("resource_bundle_limit")
-					.values({
-						id: genId(),
-						resourceBundleId: limitSeed.bundleId,
-						resourceDefinitionId: "listing.gallery.count",
-						limit: GALLERY_LIMIT,
-					})
-					.execute();
-				await database.kysely
+				const userResourceBundle = await database.kysely
 					.insertInto("user_resource_bundle")
 					.values({
-						id: genId(),
+						id: genIdFn(),
 						userId: seller.id,
 						resourceBundleId: limitSeed.bundleId,
+						createdAt: limitSeed.createdAt,
+						availableAt: limitSeed.now,
+						expiresAt: null,
+					})
+					.returning([
+						"id",
+					])
+					.executeTakeFirstOrThrow();
+
+				await database.kysely
+					.insertInto("user_resource_bundle_limit")
+					.values({
+						id: genIdFn(),
+						userResourceBundleId: userResourceBundle.id,
+						resourceDefinitionId: "seller:limit:listing.gallery.count",
+						limit: GALLERY_LIMIT,
 						createdAt: limitSeed.createdAt,
 						availableAt: limitSeed.now,
 						expiresAt: null,
@@ -110,7 +121,7 @@ describe("draftPatchFx gallery limit", () => {
 				patch: {
 					uploadIds: aboveLimitUploadIds,
 				},
-			}).pipe(Effect.either);
+			}).pipe(Effect.result);
 			const galleryItems = yield* Effect.promise(() =>
 				database.kysely
 					.selectFrom("gallery_item")
@@ -124,9 +135,9 @@ describe("draftPatchFx gallery limit", () => {
 			);
 
 			expect(patched.withUploadIds).toEqual(atLimitUploadIds);
-			expectTaggedErrorFx(aboveLimit, {
+			expectTaggedErrorFn(aboveLimit, {
 				tag: "ResourceLimitErrorFx",
-				message: "Resource limit exceeded for [listing.gallery.count]",
+				message: `Resource limit exceeded for [${ResourceDefinitionEnumSchema.enum["seller:limit:listing.gallery.count"]}]`,
 			});
 			expect(galleryItems).toEqual(
 				atLimitUploadIds.map((uploadId, sort) => ({
@@ -134,6 +145,6 @@ describe("draftPatchFx gallery limit", () => {
 					sort,
 				})),
 			);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

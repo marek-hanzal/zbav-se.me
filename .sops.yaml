@@ -1,0 +1,3 @@
+creation_rules:
+  - path_regex: ^infra/.*\.enc\.json$
+    age: ["age1dleg2945vvq6r9ccqzcpk29c0lkxee0f94lsdn6v8ems7h9sayrquuf7jy"]

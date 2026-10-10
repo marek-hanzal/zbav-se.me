@@ -1,16 +1,16 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { DateContextFx } from "@/lib/common/date";
-import { userEventBuyerInfoFx } from "~/seller/user-event/server/fx/userEventBuyerInfoFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
+import { userEventBuyerInfoFx } from "~/seller-user-event/fx/userEventBuyerInfoFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
+import { userEventCreateFx } from "~/user-event/fx/userEventCreateFx";
 
 describe("userEventBuyerInfoFx", () => {
 	it("isolates buyer metrics by userId and does not mix other buyers' events", async () => {
-		const database = await testabase("userEventBuyerInfoFx-isolation");
+		const database = await testabaseFn("userEventBuyerInfoFx-isolation");
 
 		return Effect.gen(function* () {
 			const buyerA = yield* leaseTestUserFx({});
@@ -24,8 +24,8 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now: () =>
+				withDateServiceFn({
+					nowFn: () =>
 						DateTime.now().minus({
 							days: 10,
 						}),
@@ -39,8 +39,8 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.message",
 				isTerminal: false,
 			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now: () =>
+				withDateServiceFn({
+					nowFn: () =>
 						DateTime.now().minus({
 							days: 9,
 						}),
@@ -55,8 +55,8 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now: () =>
+				withDateServiceFn({
+					nowFn: () =>
 						DateTime.now().minus({
 							days: 8,
 						}),
@@ -73,6 +73,6 @@ describe("userEventBuyerInfoFx", () => {
 			expect(buyerAInfo).not.toBeNull();
 			expect(buyerAInfo?.reaction.total).toBe(1);
 			expect(buyerBInfo).toBeNull();
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

@@ -1,15 +1,15 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
-import { fieldCreateFx } from "~/user/field/server/fx/fieldCreateFx";
-import { fieldFetchFx } from "~/user/field/server/fx/fieldFetchFx";
-import { fieldOptionCreateFx } from "~/user/field-option/server/fx/fieldOptionCreateFx";
-import { fieldOptionFetchFx } from "~/user/field-option/server/fx/fieldOptionFetchFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
+import { fieldCreateFx } from "~/user-field/fx/fieldCreateFx";
+import { fieldFetchFx } from "~/user-field/fx/fieldFetchFx";
+import { fieldOptionCreateFx } from "~/user-field-option/fx/fieldOptionCreateFx";
+import { fieldOptionFetchFx } from "~/user-field-option/fx/fieldOptionFetchFx";
 
 describe("field create fx", () => {
 	it("creates a field and field options that are immediately readable through fetch wrappers", async () => {
-		const database = await testabase("field-create-and-option-create-contract");
+		const database = await testabaseFn("field-create-and-option-create-contract");
 
 		return Effect.gen(function* () {
 			const field = yield* fieldCreateFx({
@@ -55,6 +55,6 @@ describe("field create fx", () => {
 			]);
 			expect(fetchedOption.fieldId).toBe(field.name);
 			expect(fetchedOption.value).toBe("pro");
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

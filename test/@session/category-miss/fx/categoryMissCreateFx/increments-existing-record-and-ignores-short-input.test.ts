@@ -1,14 +1,14 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withCategoryMissQueryBuilderFx } from "~/session/category-miss/server/db/withCategoryMissQueryBuilderFx";
-import { withCategoryMissSelectFx } from "~/session/category-miss/server/db/withCategoryMissSelectFx";
-import { categoryMissCreateFx } from "~/session/category-miss/server/fx/categoryMissCreateFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withCategoryMissQueryBuilderFx } from "~/session-category-miss/db/withCategoryMissQueryBuilderFx";
+import { withCategoryMissSelectFx } from "~/session-category-miss/db/withCategoryMissSelectFx";
+import { categoryMissCreateFx } from "~/session-category-miss/fx/categoryMissCreateFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 
 describe("categoryMissCreateFx", () => {
 	it("ignores short input and increments existing category miss rows", async () => {
-		const database = await testabase("categoryMissCreateFx");
+		const database = await testabaseFn("categoryMissCreateFx");
 
 		return Effect.gen(function* () {
 			yield* categoryMissCreateFx({
@@ -133,6 +133,6 @@ describe("categoryMissCreateFx", () => {
 			]);
 			expect(category.category).toBe("monitory");
 			expect(category.count).toBe(1);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

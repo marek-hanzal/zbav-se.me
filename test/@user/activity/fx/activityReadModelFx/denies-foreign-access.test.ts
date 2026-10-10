@@ -1,14 +1,14 @@
 import { Effect } from "effect";
 import { describe, it } from "vitest";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { activityFetchFx } from "~/user/activity/server/fx/activityFetchFx";
+import { activityFetchFx } from "~/user-activity/fx/activityFetchFx";
 
 describe("activity read model", () => {
 	it("denies foreign access", async () => {
-		const database = await testabase("activityReadModelFx-fetch-foreign");
+		const database = await testabaseFn("activityReadModelFx-fetch-foreign");
 
 		return Effect.gen(function* () {
 			const user = yield* leaseTestUserFx({});
@@ -37,7 +37,7 @@ describe("activity read model", () => {
 					.execute(),
 			);
 
-			const foreignFetch = yield* Effect.either(
+			const foreignFetch = yield* Effect.result(
 				activityFetchFx({
 					scope: {
 						userId: user.id,
@@ -48,9 +48,9 @@ describe("activity read model", () => {
 				}),
 			);
 
-			expectTaggedErrorFx(foreignFetch, {
+			expectTaggedErrorFn(foreignFetch, {
 				tag: "NotFoundErrorFx",
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

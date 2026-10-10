@@ -1,0 +1,36 @@
+import { Effect } from "effect";
+import { withFavouriteSelectFx } from "~/buyer-listing-favourite/db/withFavouriteSelectFx";
+import type { FavouriteQuerySchema } from "~/buyer-listing-favourite/schema/FavouriteQuerySchema";
+import type { FavouriteWhereSchema } from "~/buyer-listing-favourite/schema/FavouriteWhereSchema";
+import { withFetchFx } from "~/http/fx/withFetchFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
+
+export namespace favouriteFetchFx {
+	export interface Props extends FavouriteQuerySchema.Type {
+		scope: FavouriteWhereSchema.Type;
+	}
+}
+
+export const favouriteFetchFx = Effect.fn("favouriteFetchFx")(function* ({
+	where,
+	scope,
+	sort,
+}: favouriteFetchFx.Props) {
+	const logger = yield* getLoggerFx("favouriteFetchFx", "listing_favourite");
+	logger.trace("Request", {
+		where,
+		scope,
+		sort,
+	});
+
+	return yield* withFetchFx({
+		resource: "listing_favourite",
+		selectFx: withFavouriteSelectFx({
+			sort,
+		}),
+		where,
+		scope,
+	});
+});
+
+export type favouriteFetchFx = ReturnType<typeof favouriteFetchFx>;

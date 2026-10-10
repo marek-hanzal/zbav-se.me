@@ -1,14 +1,14 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { listingCollectionFx } from "~/seller/listing/server/fx/listingCollectionFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { listingCollectionFx } from "~/seller-listing/fx/listingCollectionFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("listingCollectionFx (seller)", () => {
 	it("seller does not see other sellers' listings", async () => {
-		const database = await testabase("sellerListing-isolation");
+		const database = await testabaseFn("sellerListing-isolation");
 
 		return Effect.gen(function* () {
 			const seller1 = yield* leaseTestUserFx({});
@@ -27,6 +27,6 @@ describe("listingCollectionFx (seller)", () => {
 			const ids = collection.map((l) => l.id);
 			expect(ids).toContain(listing1.id);
 			expect(ids).not.toContain(listing2.id);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

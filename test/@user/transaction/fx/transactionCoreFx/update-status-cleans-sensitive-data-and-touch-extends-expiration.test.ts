@@ -1,15 +1,15 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { transactionTouchFx } from "~/user/transaction/server/fx/transactionTouchFx";
-import { transactionUpdateStatusFx } from "~/user/transaction/server/fx/transactionUpdateStatusFx";
+import { transactionTouchFx } from "~/user-transaction/fx/transactionTouchFx";
+import { transactionUpdateStatusFx } from "~/user-transaction/fx/transactionUpdateStatusFx";
 
 describe("transaction core", () => {
 	it("updates status, cleans sensitive data on terminal transition, and extends expiration on touch", async () => {
-		const database = await testabase("transactionCore-update-touch");
+		const database = await testabaseFn("transactionCore-update-touch");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -110,6 +110,6 @@ describe("transaction core", () => {
 			);
 
 			expect(remainingSensitive).toHaveLength(0);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

@@ -1,15 +1,15 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { transactionPatchCollectionFx } from "~/seller/transaction/server/fx/transactionPatchCollectionFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { transactionPatchCollectionFx } from "~/seller-transaction/fx/transactionPatchCollectionFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { getDefaultListingCreateFx } from "~/test/listing/fx/getDefaultListingCreateFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
 describe("transactionPatchCollectionFx", () => {
 	it("updates only scoped seller transactions and refreshes statusUpdatedAt", async () => {
-		const database = await testabase("transactionPatchCollectionFx-scope");
+		const database = await testabaseFn("transactionPatchCollectionFx-scope");
 
 		return Effect.gen(function* () {
 			const { seller, buyer, stranger } = yield* createUsersFx({});
@@ -95,6 +95,6 @@ describe("transactionPatchCollectionFx", () => {
 			expect(strangerAfter.statusUpdatedAt.getTime()).toBe(
 				strangerBefore.statusUpdatedAt.getTime(),
 			);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

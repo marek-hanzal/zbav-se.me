@@ -1,18 +1,18 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { userEventBuyerInfoFx } from "~/seller/user-event/server/fx/userEventBuyerInfoFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { userEventBuyerInfoFx } from "~/seller-user-event/fx/userEventBuyerInfoFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { createTransactionTimeline } from "~/test/user-event/fx/createTransactionTimeline";
+import { createTransactionTimelineFn } from "~/test/user-event/fx/createTransactionTimelineFn";
 import { seedUserEventTimelineFx } from "~/test/user-event/fx/seedUserEventTimelineFx";
 
 describe("userEventBuyerInfoFx", {
 	timeout: 4_000,
 }, () => {
 	it("Mixed behavior - combines good reactions, one closer and one ghosted thread", async () => {
-		const database = await testabase("userEventBuyerInfoFx-mixed-behavior");
+		const database = await testabaseFn("userEventBuyerInfoFx-mixed-behavior");
 
 		return Effect.gen(function* () {
 			const buyer = yield* leaseTestUserFx({});
@@ -24,7 +24,7 @@ describe("userEventBuyerInfoFx", {
 			yield* seedUserEventTimelineFx({
 				userId: buyer.id,
 				events: [
-					...createTransactionTimeline({
+					...createTransactionTimelineFn({
 						group: "tx-1",
 						steps: [
 							{
@@ -62,7 +62,7 @@ describe("userEventBuyerInfoFx", {
 							},
 						],
 					}),
-					...createTransactionTimeline({
+					...createTransactionTimelineFn({
 						group: "tx-2",
 						steps: [
 							{
@@ -99,7 +99,7 @@ describe("userEventBuyerInfoFx", {
 							},
 						],
 					}),
-					...createTransactionTimeline({
+					...createTransactionTimelineFn({
 						group: "tx-3",
 						steps: [
 							{
@@ -131,7 +131,7 @@ describe("userEventBuyerInfoFx", {
 							},
 						],
 					}),
-					...createTransactionTimeline({
+					...createTransactionTimelineFn({
 						group: "tx-4",
 						steps: [
 							{
@@ -180,6 +180,6 @@ describe("userEventBuyerInfoFx", {
 			expect(result.activity.bucket).toBe("high");
 			expect(result.score.score).toBeGreaterThanOrEqual(40);
 			expect(result.score.score).toBeLessThan(85);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

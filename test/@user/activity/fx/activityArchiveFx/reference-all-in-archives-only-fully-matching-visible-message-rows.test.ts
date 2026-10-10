@@ -1,16 +1,16 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import type { ActivityPriorityEnumSchema } from "~/common/activity/enum/ActivityPriorityEnumSchema";
-import type { ActivityTypeEnumSchema } from "~/common/activity/enum/ActivityTypeEnumSchema";
-import type { ActivityTableSchema } from "~/server/database/@table/ActivityTableSchema";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import type { ActivityPriorityEnumSchema } from "~/activity/schema/ActivityPriorityEnumSchema";
+import type { ActivityTypeEnumSchema } from "~/activity/schema/ActivityTypeEnumSchema";
+import type { ActivityTableSchema } from "~/database/schema/ActivityTable";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { activityArchiveFx } from "~/user/activity/server/fx/activityArchiveFx";
-import { activityCollectionFx } from "~/user/activity/server/fx/activityCollectionFx";
-import { activityCountFx } from "~/user/activity/server/fx/activityCountFx";
+import { activityArchiveFx } from "~/user-activity/fx/activityArchiveFx";
+import { activityCollectionFx } from "~/user-activity/fx/activityCollectionFx";
+import { activityCountFx } from "~/user-activity/fx/activityCountFx";
 
-type TestDatabase = Awaited<ReturnType<typeof testabase>>;
+type TestDatabase = Awaited<ReturnType<typeof testabaseFn>>;
 
 const seedActivityFx = (
 	database: TestDatabase,
@@ -27,7 +27,7 @@ const seedActivityFx = (
 
 describe("activityArchiveFx", () => {
 	it("archives only fully matching visible message rows when referenceAllIn is used", async () => {
-		const database = await testabase("activityArchive-reference-all-visible-message");
+		const database = await testabaseFn("activityArchive-reference-all-visible-message");
 
 		return Effect.gen(function* () {
 			const user = yield* leaseTestUserFx({});
@@ -170,6 +170,6 @@ describe("activityArchiveFx", () => {
 				rows.find((row) => row.id === "partial-reference-message")?.archivedAt,
 			).toBeNull();
 			expect(rows.find((row) => row.id === "matching-reaction")?.archivedAt).toBeNull();
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

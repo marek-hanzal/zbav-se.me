@@ -1,16 +1,16 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { fetchActivityItemsFx } from "~/test/activity/fx/fetchActivityItemsFx";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
+import { transactionEntryCreateFx } from "~/user-transaction-entry/fx/transactionEntryCreateFx";
 
 describe("transactionEntry workflow", () => {
 	it("rejects empty gallery payload and does not create touch, activity or entry side effects", async () => {
-		const database = await testabase("transactionEntry-empty-gallery");
+		const database = await testabaseFn("transactionEntry-empty-gallery");
 
 		return Effect.gen(function* () {
 			const { seller, buyer } = yield* createUsersFx({});
@@ -32,7 +32,7 @@ describe("transactionEntry workflow", () => {
 			const beforeEntryCount = yield* Effect.promise(() =>
 				database.kysely
 					.selectFrom("transaction_entry")
-					.select((eb) => eb.fn.countAll<number>().as("count"))
+					.select((ebFn) => ebFn.fn.countAll<number>().as("count"))
 					.where("transactionId", "=", transactionId)
 					.executeTakeFirstOrThrow(),
 			);
@@ -42,7 +42,7 @@ describe("transactionEntry workflow", () => {
 				type: "buyer-message",
 			});
 
-			const result = yield* Effect.either(
+			const result = yield* Effect.result(
 				transactionEntryCreateFx({
 					userId: buyer.id,
 					transactionId,
@@ -53,7 +53,7 @@ describe("transactionEntry workflow", () => {
 				}),
 			);
 
-			expectTaggedErrorFx(result, {
+			expectTaggedErrorFn(result, {
 				tag: "InvalidRequestErrorFx",
 				message: "At least one upload is required",
 			});
@@ -71,7 +71,7 @@ describe("transactionEntry workflow", () => {
 			const afterEntryCount = yield* Effect.promise(() =>
 				database.kysely
 					.selectFrom("transaction_entry")
-					.select((eb) => eb.fn.countAll<number>().as("count"))
+					.select((ebFn) => ebFn.fn.countAll<number>().as("count"))
 					.where("transactionId", "=", transactionId)
 					.executeTakeFirstOrThrow(),
 			);
@@ -89,6 +89,6 @@ describe("transactionEntry workflow", () => {
 			);
 			expect(afterEntryCount.count).toBe(beforeEntryCount.count);
 			expect(sellerActivity).toHaveLength(beforeSellerActivity.length);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Container } from "@/lib/client/container";
-import { Status } from "@/lib/client/status";
-import { useTranslator } from "@/lib/client/translation";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Container } from "~/ui/ui/Container";
+import { Status } from "~/ui/ui/Status";
 
 export const Route = createFileRoute("/$locale/privacy")({
 	component() {
@@ -9,10 +9,10 @@ export const Route = createFileRoute("/$locale/privacy")({
 		return (
 			<Container>
 				<Status
-					textTitle={translator.text(
+					textTitle={translator.textFn(
 						"Privacy policy not available in this language (title)",
 					)}
-					textMessage={translator.text(
+					textMessage={translator.textFn(
 						"Privacy policy not available in this language (description)",
 					)}
 				/>

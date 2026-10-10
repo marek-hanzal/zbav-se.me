@@ -15,7 +15,6 @@ Záměrně držíme rozsah dat **co nejmenší**.
 - **Účet**: e‑mail a heslo (hesla **neukládáme v čitelné podobě**, nikdo je nemůže přečíst – ani my)  
 - **Obsah**: fotky a popisy u inzerátů (fotky jsou doručované přes CDN)  
 - **Lokalita inzerátu**: držíme **jen lokálně** u tebe v zařízení; na náš server se **neposílá**  
-- **Platby (kredit)**: platby zpracovává **[Stripe](https://stripe.com/)** – **číslo karty u nás neukládáme**; můžeme vidět technické údaje o transakci (částka, měna, status, anonymní identifikátory) kvůli účetnictví a řešení problémů  
 - **E‑maily**: posíláme **jen transakční** (registrace, reset hesla, souhrny, bezpečnostní upozornění); žádný přímý marketing bez tvého souhlasu  
 - **Nápověda adres**: při vyhledávání adres tvůj dotaz zpracuje **[Geoapify](https://www.geoapify.com/)** (může krátce zpracovat technická metadata jako IP kvůli doručení služby)  
 - **Cookies**: pouze **nezbytné** pro přihlášení a běh aplikace (žádná analytika třetích stran)
@@ -24,9 +23,8 @@ Záměrně držíme rozsah dat **co nejmenší**.
 ---
 
 ## 2) K čemu data používáme (účely) a na jakém základě (právní základy)
-- **Poskytnutí služby** (registrace, přihlášení, vedení účtu, inzerce, dobití kreditu) – **plnění smlouvy**  
+- **Poskytnutí služby** (registrace, přihlášení, vedení účtu, inzerce) – **plnění smlouvy**
 - **Bezpečnost a prevence zneužití** (např. ochrana proti útokům, řešení incidentů) – **oprávněný zájem**  
-- **Účetnictví a daně** (transakční záznamy o kreditu) – **právní povinnost**  
 - **Souhlas** – pouze pro volitelné věci, které dnes **nepoužíváme** (např. marketingové e‑maily nebo analytika); pokud bychom je přidali, vyžádáme si souhlas předem
 
 ---
@@ -35,14 +33,13 @@ Záměrně držíme rozsah dat **co nejmenší**.
 - **Hosting aplikace**: [Vercel](https://vercel.com/) – [DPA](https://vercel.com/legal/dpa), [Security & Compliance](https://vercel.com/docs/security/compliance)  
 - **Databáze**: [Neon](https://neon.tech/) *(EU – Frankfurt, preferováno)* – [DPA](https://neon.com/dpa)  
 - **CDN a úložiště fotek**: [Bunny.net](https://bunny.net/) *(EU – Frankfurt, preferováno)* – [GDPR info](https://bunny.net/gdpr/), [Privacy](https://bunny.net/privacy/)  
-- **Platby**: [Stripe](https://stripe.com/) *(údaje o kartě jdou Stripe; my číslo karty nevidíme)* – [DPA](https://stripe.com/legal/dpa), [Data Transfers Addendum](https://stripe.com/legal/dta), [Privacy Center](https://stripe.com/legal/privacy-center)  
 - **Nápověda adres**: [Geoapify](https://www.geoapify.com/) – [Privacy Policy](https://www.geoapify.com/privacy-policy/)  
 - **E‑mailový odesílatel**: *(doplníme název, až vybereme poskytovatele)*
 
 Všem partnerům dáváme jen to **nezbytné minimum** a vážeme je **smlouvami o zpracování** a bezpečnostními požadavky.
 
 
-*Poznámka:* U poskytovatelů, kde může dojít k přeshraničnímu přenosu (např. Stripe, Vercel), se opíráme o jejich **DPA/DTA** a **SCC**. Vždy předáváme jen **nezbytné minimum** údajů.
+*Poznámka:* U poskytovatelů, kde může dojít k přeshraničnímu přenosu (např. Vercel), se opíráme o jejich **DPA/DTA** a **SCC**. Vždy předáváme jen **nezbytné minimum** údajů.
 
 ---
 
@@ -57,7 +54,6 @@ Cílíme na **EU** a preferujeme **Frankfurt (DE)**. Některé části infrastru
 ## 5) Jak dlouho údaje držíme (retence)
 - **Účet (e‑mail)**: po dobu existence účtu a krátce poté (typicky **do 6 měsíců**) kvůli bezpečnosti a prokázání souladu  
 - **Obsah inzerátů**: dokud jsou veřejné; po smazání mohou krátce zůstat v **cache CDN**  
-- **Platby/kredit**: údaje o transakcích drží primárně Stripe; u nás jen nezbytné minimum. Pokud nám zákon uloží účetní povinnost, uchováváme daňové doklady až **10 let**
 - **E‑mailové logy**: jen nezbytné minimum a po **co nejkratší dobu** (typicky dny až jednotky týdnů u poskytovatele)
 
 ---
@@ -105,7 +101,6 @@ Když se něco změní (třeba přidáme analytiku nebo nového poskytovatele), 
 - **Vercel** – hosting aplikace; region EU preferován; logy/telemetrie jen v nezbytném rozsahu ([DPA](https://vercel.com/legal/dpa))
 - **Neon (PostgreSQL)** – databáze; region **Frankfurt (DE)** ([DPA](https://neon.com/dpa))
 - **Bunny.net** – CDN a úložiště obrázků; regiony EU preferovány ([GDPR](https://bunny.net/gdpr/))
-- **Stripe** – zpracování plateb; čísla karet u nás neukládáme ([DPA](https://stripe.com/legal/dpa), [DTA](https://stripe.com/legal/dta))
 - **Geoapify** – vyhledávání adres; dotazy jdou přímo poskytovateli ([Privacy](https://www.geoapify.com/privacy-policy/))
 
 *Tento seznam se může měnit; aktuální znění vždy v této politice.*

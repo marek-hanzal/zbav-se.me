@@ -1,18 +1,18 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { userEventSellerInfoFx } from "~/buyer-user-event/fx/userEventSellerInfoFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { createTransactionTimeline } from "~/test/user-event/fx/createTransactionTimeline";
+import { createTransactionTimelineFn } from "~/test/user-event/fx/createTransactionTimelineFn";
 import { seedUserEventTimelineFx } from "~/test/user-event/fx/seedUserEventTimelineFx";
 
 describe("userEventSellerInfoFx", {
 	timeout: 4_000,
 }, () => {
 	it("Expired transactions - buyer pings, seller doesn't act, transaction expires", async () => {
-		const database = await testabase("userEventSellerInfoFx-expired-transactions");
+		const database = await testabaseFn("userEventSellerInfoFx-expired-transactions");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -23,7 +23,7 @@ describe("userEventSellerInfoFx", {
 			yield* seedUserEventTimelineFx({
 				userId: seller.id,
 				events: [
-					...createTransactionTimeline({
+					...createTransactionTimelineFn({
 						group: "tx-1",
 						steps: [
 							{
@@ -42,7 +42,7 @@ describe("userEventSellerInfoFx", {
 							},
 						],
 					}),
-					...createTransactionTimeline({
+					...createTransactionTimelineFn({
 						group: "tx-2",
 						steps: [
 							{
@@ -71,7 +71,7 @@ describe("userEventSellerInfoFx", {
 							},
 						],
 					}),
-					...createTransactionTimeline({
+					...createTransactionTimelineFn({
 						group: "tx-3",
 						steps: [
 							{
@@ -113,6 +113,6 @@ describe("userEventSellerInfoFx", {
 			expect(result.expired.total).toBe(3);
 			expect(result.expired.expired).toBe(2);
 			expect(result.expired.percent).toBeCloseTo(66.67, 1);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

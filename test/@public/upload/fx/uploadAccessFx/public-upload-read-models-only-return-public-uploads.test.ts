@@ -1,17 +1,17 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { uploadCollectionFx } from "~/public/upload/server/fx/uploadCollectionFx";
-import { uploadFetchFx } from "~/public/upload/server/fx/uploadFetchFx";
-import { testUploadUrl } from "~/test/common/fn/testUploadUrl";
-import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { uploadCollectionFx } from "~/public-upload/fx/uploadCollectionFx";
+import { uploadFetchFx } from "~/public-upload/fx/uploadFetchFx";
+import { testUploadUrlFn } from "~/test/common/fn/testUploadUrlFn";
+import { expectErrorFn } from "~/test/common/fx/expectErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
+import { uploadCreateFx } from "~/user-upload/fx/uploadCreateFx";
 
 describe("public upload access", () => {
 	it("returns public uploads and rejects private uploads", async () => {
-		const database = await testabase("public-upload-access");
+		const database = await testabaseFn("public-upload-access");
 
 		return Effect.gen(function* () {
 			const user = yield* leaseTestUserFx({});
@@ -19,17 +19,17 @@ describe("public upload access", () => {
 			const publicUpload = yield* uploadCreateFx({
 				access: "public",
 				userId: user.id,
-				url: testUploadUrl("public-upload.jpg"),
+				url: testUploadUrlFn("public-upload.jpg"),
 			});
 			const privateUpload = yield* uploadCreateFx({
 				access: "private",
 				userId: user.id,
-				url: testUploadUrl("private-upload.jpg"),
+				url: testUploadUrlFn("private-upload.jpg"),
 			});
 			const protectedUpload = yield* uploadCreateFx({
 				access: "protected",
 				userId: user.id,
-				url: testUploadUrl("protected-upload.jpg"),
+				url: testUploadUrlFn("protected-upload.jpg"),
 			});
 
 			const fetched = yield* uploadFetchFx({
@@ -41,7 +41,7 @@ describe("public upload access", () => {
 			const collection = yield* uploadCollectionFx({
 				scope: {},
 			});
-			const privateFetch = yield* Effect.either(
+			const privateFetch = yield* Effect.result(
 				uploadFetchFx({
 					where: {
 						id: privateUpload.id,
@@ -54,7 +54,7 @@ describe("public upload access", () => {
 			expect(collection.map((item) => item.id)).toContain(publicUpload.id);
 			expect(collection.map((item) => item.id)).not.toContain(privateUpload.id);
 			expect(collection.map((item) => item.id)).not.toContain(protectedUpload.id);
-			expectErrorFx(privateFetch);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+			expectErrorFn(privateFetch);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

@@ -1,0 +1,45 @@
+import type { FC } from "react";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { ValueList } from "~/ui/ui/ValueList";
+
+export namespace ConditionValueList {
+	export interface Props
+		extends Omit<
+			ValueList.PropsEx<{
+				id: string;
+				condition: string;
+			}>,
+			"items" | "renderFn"
+		> {
+		conditionIn: number[];
+	}
+}
+
+/**
+ * Renders a read-only list of condition values in a consistent label/value style.
+ * Use it in detail or preview views when you need to show multiple condition entries clearly.
+ */
+export const ConditionValueList: FC<ConditionValueList.Props> = ({ conditionIn, ...props }) => {
+	const translator = useTranslator();
+	return (
+		<ValueList
+			data-ui={"ConditionValueList"}
+			textLabel={translator.textFn("Listing condition (label)")}
+			textEmpty={translator.textFn("Listing condition not selected")}
+			items={conditionIn.map((item) => ({
+				id: String(item),
+				condition: String(item),
+			}))}
+			renderFn={(item) => translator.textFn(`Condition ${item.condition} (label)`)}
+			wrapperProps={{
+				...(conditionIn.length > 0
+					? {
+							"data-ui-tone": "neutral",
+							"data-ui-theme": "light",
+						}
+					: undefined),
+			}}
+			{...props}
+		/>
+	);
+};

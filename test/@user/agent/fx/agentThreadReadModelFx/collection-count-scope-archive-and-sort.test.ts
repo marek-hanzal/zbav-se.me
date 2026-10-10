@@ -1,12 +1,12 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { agentThreadCollectionFx } from "~/user/agent/server/fx/agentThreadCollectionFx";
-import { agentThreadCountFx } from "~/user/agent/server/fx/agentThreadCountFx";
+import { agentThreadCollectionFx } from "~/user-agent/fx/agentThreadCollectionFx";
+import { agentThreadCountFx } from "~/user-agent/fx/agentThreadCountFx";
 
-type TestDatabase = Awaited<ReturnType<typeof testabase>>;
+type TestDatabase = Awaited<ReturnType<typeof testabaseFn>>;
 
 type AgentThreadSeedRow = {
 	id: string;
@@ -21,7 +21,7 @@ const seedAgentThreadsFx = (database: TestDatabase, rows: AgentThreadSeedRow[]) 
 
 describe("agentThread read model", () => {
 	it("filters by user and archived state and keeps count aligned with collection order", async () => {
-		const database = await testabase("agent-thread-read-model-contract");
+		const database = await testabaseFn("agent-thread-read-model-contract");
 
 		return Effect.gen(function* () {
 			const { seller, stranger } = yield* createUsersFx({});
@@ -128,6 +128,6 @@ describe("agentThread read model", () => {
 			]);
 			expect(activeCount).toBe(activeThreads.length);
 			expect(archivedCount).toBe(archivedThreads.length);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

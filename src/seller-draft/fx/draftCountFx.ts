@@ -1,0 +1,36 @@
+import { Effect } from "effect";
+import { withCountFx } from "~/database-query/fx/withCountFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
+import { withDraftSelectFx } from "~/seller-draft/db/withDraftSelectFx";
+import type { DraftCountQuerySchema } from "~/seller-draft/schema/DraftCountQuerySchema";
+import type { DraftWhereSchema } from "~/seller-draft/schema/DraftWhereSchema";
+
+export namespace draftCountFx {
+	export interface Props extends DraftCountQuerySchema.Type {
+		userId: string;
+		scope: DraftWhereSchema.Type;
+	}
+}
+
+export const draftCountFx = Effect.fn("draftCountFx")(function* ({
+	userId,
+	where,
+	scope,
+}: draftCountFx.Props) {
+	const logger = yield* getLoggerFx("draftCountFx");
+	logger.trace("draftCountFx", {
+		where,
+		scope,
+	});
+
+	return yield* withCountFx({
+		selectFx: withDraftSelectFx({
+			userId,
+			sort: [],
+		}),
+		where,
+		scope,
+	});
+});
+
+export type draftCountFx = ReturnType<typeof draftCountFx>;

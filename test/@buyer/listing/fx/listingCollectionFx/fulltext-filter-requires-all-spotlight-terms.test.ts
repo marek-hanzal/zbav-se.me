@@ -1,15 +1,15 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { listingCollectionFx } from "~/buyer/listing/server/fx/listingCollectionFx";
-import { listingCountFx } from "~/buyer/listing/server/fx/listingCountFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { listingCollectionFx } from "~/buyer-listing/fx/listingCollectionFx";
+import { listingCountFx } from "~/buyer-listing/fx/listingCountFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
 describe("buyer listing fulltext spotlight", () => {
 	it("requires every fulltext term to match listing spotlight rows", async () => {
-		const database = await testabase("buyer-listing-fulltext-and");
+		const database = await testabaseFn("buyer-listing-fulltext-and");
 
 		return Effect.gen(function* () {
 			const users = yield* createUsersFx({});
@@ -55,6 +55,6 @@ describe("buyer listing fulltext spotlight", () => {
 				targetListing.id,
 			]);
 			expect(count).toBe(1);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

@@ -1,0 +1,47 @@
+import { z } from "zod";
+import { ActivityFamilyEnumSchema } from "~/activity/schema/ActivityFamilyEnumSchema";
+import { ActivityPriorityEnumSchema } from "~/activity/schema/ActivityPriorityEnumSchema";
+import { ActivityTypeEnumSchema } from "~/activity/schema/ActivityTypeEnumSchema";
+import { WhereSchema } from "~/query/schema/WhereSchema";
+
+export const ActivityWhereSchema = z
+	.looseObject({
+		...WhereSchema.shape,
+		userId: z.string().optional().meta({
+			description: "Activity owner filter",
+		}),
+		reference: z.string().optional().meta({
+			description: "Match activity rows whose reference array contains this key",
+		}),
+		referenceIn: z.array(z.string()).min(1).optional().meta({
+			description: "Match activity rows whose reference array overlaps any of these keys",
+		}),
+		referenceAllIn: z.array(z.string()).min(1).optional().meta({
+			description: "Match activity rows whose reference array contains all of these keys",
+		}),
+		family: ActivityFamilyEnumSchema.optional(),
+		type: ActivityTypeEnumSchema.optional(),
+		priority: ActivityPriorityEnumSchema.optional(),
+		archivedAtIsNull: z.boolean().optional().meta({
+			description: "Filter archived/null state",
+		}),
+		timestampGte: z.coerce.date().optional().meta({
+			description: "Lower timestamp bound",
+			type: "string",
+		}),
+		timestampLte: z.coerce.date().optional().meta({
+			description: "Upper timestamp bound",
+			type: "string",
+		}),
+	})
+	.strip()
+	.meta({
+		id: "ActivityWhere",
+		description: "App-level where filters",
+	});
+
+export type ActivityWhereSchema = typeof ActivityWhereSchema;
+
+export namespace ActivityWhereSchema {
+	export type Type = z.infer<ActivityWhereSchema>;
+}

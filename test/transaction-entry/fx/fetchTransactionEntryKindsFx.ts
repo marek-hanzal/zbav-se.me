@@ -1,7 +1,7 @@
 import { Effect } from "effect";
-import type { testabase } from "~/test/testabase";
+import type { testabaseFn } from "~/test/testabaseFn";
 
-type TestDatabase = Awaited<ReturnType<typeof testabase>>;
+type TestDatabase = Awaited<ReturnType<typeof testabaseFn>>;
 
 export namespace fetchTransactionEntryKindsFx {
 	export interface Props {

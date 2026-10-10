@@ -1,10 +1,10 @@
-import { expect, test } from "../test";
-import { createUser } from "../utils/createUser";
+import { expect, testFn } from "../testFn";
+import { createUserFn } from "../utils/createUserFn";
 
-test("auth sign up", async ({ page, database }) => {
+testFn("auth sign up", async ({ page, database }) => {
 	void database;
 
-	const user = createUser();
+	const user = createUserFn();
 
 	await page.goto("/cs/landing");
 
@@ -12,12 +12,12 @@ test("auth sign up", async ({ page, database }) => {
 
 	await page.waitForURL("/cs/sign-up");
 
-	await page.locator('[data-ui="SignUpPage[EmailInput]"]').fill(user.email);
-	await page.locator('[data-ui="SignUpPage[PasswordInput]"]').fill(user.password);
-	await page.locator('[data-ui="SignUpPage[ConfirmPasswordInput]"]').fill(user.password);
+	await page.locator('[data-ui="SignUp-[EmailInput]"]').fill(user.email);
+	await page.locator('[data-ui="SignUp-[PasswordInput]"]').fill(user.password);
+	await page.locator('[data-ui="SignUp-[ConfirmPasswordInput]"]').fill(user.password);
 	await page.locator('[data-action="sign up"]').click();
 
 	await page.waitForURL("/cs/app/welcome");
 
-	await expect(page.locator('[data-ui="WelcomePage"]')).toBeVisible();
+	await expect(page.locator('[data-ui="Welcome[Container]"]')).toBeVisible();
 });

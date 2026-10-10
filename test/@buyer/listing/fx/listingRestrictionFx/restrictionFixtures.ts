@@ -1,14 +1,14 @@
 import { Effect } from "effect";
-import { DateContextFx } from "@/lib/common/date";
-import { genId } from "@/lib/common/gen-id";
-import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
+import { DateServiceFx } from "~/date/service/DateServiceFx";
+import { genIdFn } from "~/identity/fn/genIdFn";
+import type { RestrictionEnumSchema } from "~/restriction/schema/RestrictionEnumSchema";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
-import type { testabase } from "~/test/testabase";
+import type { testabaseFn } from "~/test/testabaseFn";
 
-export type TestDatabase = Awaited<ReturnType<typeof testabase>>;
+export type TestDatabase = Awaited<ReturnType<typeof testabaseFn>>;
 export type Restriction = RestrictionEnumSchema.Type;
 
-export const createRestrictedCategory = (
+export const createRestrictedCategoryFx = (
 	database: TestDatabase,
 	props: {
 		slug: string;
@@ -17,7 +17,7 @@ export const createRestrictedCategory = (
 ) =>
 	Effect.promise(async () => {
 		const category = {
-			id: genId(),
+			id: genIdFn(),
 			group: "Buyer listing restriction fixture",
 			category: `Buyer listing restriction ${props.slug}`,
 			slug: props.slug,
@@ -32,7 +32,7 @@ export const createRestrictedCategory = (
 		return category;
 	});
 
-export const createUserRestriction = (
+export const createUserRestrictionFx = (
 	database: TestDatabase,
 	props: {
 		userId: string;
@@ -43,14 +43,14 @@ export const createUserRestriction = (
 	},
 ) =>
 	Effect.gen(function* () {
-		const dateContext = yield* DateContextFx;
-		const now = dateContext.now();
+		const dateContext = yield* DateServiceFx;
+		const now = dateContext.nowFn();
 
 		yield* Effect.promise(() =>
 			database.kysely
 				.insertInto("user_restriction")
 				.values({
-					id: genId(),
+					id: genIdFn(),
 					userId: props.userId,
 					restriction: props.restriction,
 					availableAt: now
@@ -76,7 +76,7 @@ export const createUserRestriction = (
 		);
 	});
 
-export const createRestrictionProbeListings = (
+export const createRestrictionProbeListingsFx = (
 	database: TestDatabase,
 	props: {
 		sellerId: string;
@@ -85,15 +85,15 @@ export const createRestrictionProbeListings = (
 	},
 ) =>
 	Effect.gen(function* () {
-		const noneCategory = yield* createRestrictedCategory(database, {
+		const noneCategory = yield* createRestrictedCategoryFx(database, {
 			slug: `${props.slugPrefix}-none`,
 			restriction: "none",
 		});
-		const adultCategory = yield* createRestrictedCategory(database, {
+		const adultCategory = yield* createRestrictedCategoryFx(database, {
 			slug: `${props.slugPrefix}-adult`,
 			restriction: "adult",
 		});
-		const restrictedCategory = yield* createRestrictedCategory(database, {
+		const restrictedCategory = yield* createRestrictedCategoryFx(database, {
 			slug: `${props.slugPrefix}-restricted`,
 			restriction: "restricted",
 		});

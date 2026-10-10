@@ -1,16 +1,16 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { DateContextFx } from "@/lib/common/date";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { userEventCollectionFx } from "~/user/user-event/server/fx/userEventCollectionFx";
-import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
+import { userEventCollectionFx } from "~/user-event/fx/userEventCollectionFx";
+import { userEventCreateFx } from "~/user-event/fx/userEventCreateFx";
 
 describe("userEventCollectionFx", () => {
 	it("filters by scope and source while keeping the requested sort order", async () => {
-		const database = await testabase("userEventCollectionFx-contract");
+		const database = await testabaseFn("userEventCollectionFx-contract");
 
 		return Effect.gen(function* () {
 			const { buyer, stranger } = yield* createUsersFx({});
@@ -24,8 +24,8 @@ describe("userEventCollectionFx", () => {
 				event: "transaction.message",
 				isTerminal: false,
 			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now: () => now,
+				withDateServiceFn({
+					nowFn: () => now,
 				}),
 			);
 
@@ -37,8 +37,8 @@ describe("userEventCollectionFx", () => {
 				event: "transaction.message",
 				isTerminal: false,
 			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now: () =>
+				withDateServiceFn({
+					nowFn: () =>
 						now.minus({
 							days: 1,
 						}),
@@ -53,8 +53,8 @@ describe("userEventCollectionFx", () => {
 				event: "like",
 				isTerminal: false,
 			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now: () =>
+				withDateServiceFn({
+					nowFn: () =>
 						now.minus({
 							days: 2,
 						}),
@@ -68,8 +68,8 @@ describe("userEventCollectionFx", () => {
 				event: "transaction.message",
 				isTerminal: false,
 			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now: () =>
+				withDateServiceFn({
+					nowFn: () =>
 						now.minus({
 							days: 3,
 						}),
@@ -107,6 +107,6 @@ describe("userEventCollectionFx", () => {
 			expect(collection.every((event) => event.userId === buyer.id)).toBe(true);
 			expect(collection.every((event) => event.source === "transaction")).toBe(true);
 			expect(collection.every((event) => event.event === "transaction.message")).toBe(true);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

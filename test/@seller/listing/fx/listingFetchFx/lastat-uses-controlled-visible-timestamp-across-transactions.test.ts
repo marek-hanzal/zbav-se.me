@@ -1,27 +1,27 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { DateContextFx } from "@/lib/common/date";
-import { transactionCreateFx } from "~/buyer/transaction/server/fx/transactionCreateFx";
-import { listingCollectionFx } from "~/seller/listing/server/fx/listingCollectionFx";
-import { listingFetchFx } from "~/seller/listing/server/fx/listingFetchFx";
-import { transactionAcceptFx } from "~/seller/transaction/server/fx/transactionAcceptFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { transactionCreateFx } from "~/buyer-transaction/fx/transactionCreateFx";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
+import { listingCollectionFx } from "~/seller-listing/fx/listingCollectionFx";
+import { listingFetchFx } from "~/seller-listing/fx/listingFetchFx";
+import { transactionAcceptFx } from "~/seller-transaction/fx/transactionAcceptFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
+import { transactionEntryCreateFx } from "~/user-transaction-entry/fx/transactionEntryCreateFx";
 
 const atFx = <A, E, R>(iso: string, eff: Effect.Effect<A, E, R>) =>
 	eff.pipe(
-		Effect.provideService(DateContextFx, {
-			now: () => DateTime.fromISO(iso),
+		withDateServiceFn({
+			nowFn: () => DateTime.fromISO(iso),
 		}),
 	);
 
 describe("seller listing transaction read model", () => {
 	it("uses the latest visible timestamp across transactions and ignores newer hidden interest text", async () => {
-		const database = await testabase("seller-listing-lastat-controlled-timestamps");
+		const database = await testabaseFn("seller-listing-lastat-controlled-timestamps");
 
 		return Effect.gen(function* () {
 			const { seller, buyer, stranger } = yield* createUsersFx({});
@@ -101,6 +101,6 @@ describe("seller listing transaction read model", () => {
 			expect(fetched.withLastAt?.toISOString()).toBe("2026-04-02T11:30:00.000Z");
 			expect(collection[0]?.withTransactionEntry?.id).toBe(visibleEntry.id);
 			expect(collection[0]?.withLastAt?.toISOString()).toBe("2026-04-02T11:30:00.000Z");
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

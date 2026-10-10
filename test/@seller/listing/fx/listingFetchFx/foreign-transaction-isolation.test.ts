@@ -1,17 +1,17 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { listingCollectionFx } from "~/seller/listing/server/fx/listingCollectionFx";
-import { listingFetchFx } from "~/seller/listing/server/fx/listingFetchFx";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { listingCollectionFx } from "~/seller-listing/fx/listingCollectionFx";
+import { listingFetchFx } from "~/seller-listing/fx/listingFetchFx";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { getDefaultListingCreateFx } from "~/test/listing/fx/getDefaultListingCreateFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("seller listing transaction foreign isolation", () => {
 	it("keeps foreign seller listings out", async () => {
-		const database = await testabase("seller-listing-transaction-foreign");
+		const database = await testabaseFn("seller-listing-transaction-foreign");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -43,7 +43,7 @@ describe("seller listing transaction foreign isolation", () => {
 					],
 				},
 			});
-			const foreignFetch = yield* Effect.either(
+			const foreignFetch = yield* Effect.result(
 				listingFetchFx({
 					userId: seller.id,
 					scope: {
@@ -57,9 +57,9 @@ describe("seller listing transaction foreign isolation", () => {
 
 			expect(mixedIds).toHaveLength(1);
 			expect(mixedIds[0]?.id).toBe(ownScenario.listingId);
-			expectTaggedErrorFx(foreignFetch, {
+			expectTaggedErrorFn(foreignFetch, {
 				tag: "NotFoundErrorFx",
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

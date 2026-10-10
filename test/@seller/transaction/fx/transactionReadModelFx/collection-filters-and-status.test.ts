@@ -1,18 +1,18 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { transactionSuccessFx } from "~/buyer/transaction/server/fx/transactionSuccessFx";
-import { transactionAcceptFx } from "~/seller/transaction/server/fx/transactionAcceptFx";
-import { transactionCollectionFx } from "~/seller/transaction/server/fx/transactionCollectionFx";
-import { transactionResolveFx } from "~/seller/transaction/server/fx/transactionResolveFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { transactionSuccessFx } from "~/buyer-transaction/fx/transactionSuccessFx";
+import { transactionAcceptFx } from "~/seller-transaction/fx/transactionAcceptFx";
+import { transactionCollectionFx } from "~/seller-transaction/fx/transactionCollectionFx";
+import { transactionResolveFx } from "~/seller-transaction/fx/transactionResolveFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { getDefaultListingCreateFx } from "~/test/listing/fx/getDefaultListingCreateFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("seller transaction read model collection filters", () => {
 	it("filters collection rows by status and listing inside seller scope", async () => {
-		const database = await testabase("sellerTransactionReadModelFx-filters-collection");
+		const database = await testabaseFn("sellerTransactionReadModelFx-filters-collection");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -84,6 +84,6 @@ describe("seller transaction read model collection filters", () => {
 			expect(byListing[0]?.id).toBe(openScenario.transactionId);
 			expect(openOnly).toHaveLength(1);
 			expect(openOnly[0]?.id).toBe(openScenario.transactionId);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

@@ -1,15 +1,15 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { transactionPatchFx } from "~/seller/transaction/server/fx/transactionPatchFx";
-import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { transactionPatchFx } from "~/seller-transaction/fx/transactionPatchFx";
+import { expectErrorFn } from "~/test/common/fx/expectErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
 describe("transactionPatchFx", () => {
 	it("rejects a foreign seller patch and keeps the transaction unchanged", async () => {
-		const database = await testabase("transactionPatchFx-foreign-seller");
+		const database = await testabaseFn("transactionPatchFx-foreign-seller");
 
 		return Effect.gen(function* () {
 			const users = yield* createUsersFx({});
@@ -34,7 +34,7 @@ describe("transactionPatchFx", () => {
 					.executeTakeFirstOrThrow(),
 			);
 
-			const foreignAttempt = yield* Effect.either(
+			const foreignAttempt = yield* Effect.result(
 				transactionPatchFx({
 					userId: stranger.id,
 					patch: {
@@ -51,7 +51,7 @@ describe("transactionPatchFx", () => {
 				}),
 			);
 
-			expectErrorFx(foreignAttempt);
+			expectErrorFn(foreignAttempt);
 
 			const transactionAfter = yield* Effect.promise(() =>
 				database.kysely
@@ -68,6 +68,6 @@ describe("transactionPatchFx", () => {
 			expect(transactionAfter.statusUpdatedAt.getTime()).toBe(
 				transactionBefore.statusUpdatedAt.getTime(),
 			);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

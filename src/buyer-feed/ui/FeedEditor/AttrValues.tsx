@@ -1,0 +1,55 @@
+import type { FC } from "react";
+import type { FeedSchema } from "~/buyer-feed/schema/FeedSchema";
+import { AttrValue } from "~/buyer-feed/ui/FeedEditor/AttrValue";
+import { Tx } from "~/translation/ui/Tx";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import { Container } from "~/ui/ui/Container";
+import { withCategoryAttrOfQuery } from "~/user-category/query/withCategoryAttrOfQuery";
+import type { useView } from "~/view/hook/useView";
+
+export namespace AttrValues {
+	export interface Props extends MarkSuspense.Props {
+		feed: FeedSchema.Type;
+		view: useView.Use<any>;
+	}
+}
+
+export const AttrValues: FC<AttrValues.Props> = ({ _suspense, feed, view }) => {
+	const { data: fields } = withCategoryAttrOfQuery.useSuspenseQuery({
+		categoryId: feed.query?.where?.categoryId ?? "<unknown>",
+	});
+
+	if (!fields.length) {
+		return null;
+	}
+
+	return (
+		<>
+			<Tx
+				label="Feed - dynamic fields (title)"
+				data-ui-tone="neutral"
+				data-ui-theme="light"
+				data-ui-text="md"
+				data-ui-color="lead"
+				data-ui-opacity="8"
+				className={"text-center"}
+			/>
+
+			<Container
+				data-ui-flow={"vertical"}
+				data-ui-gap={"default"}
+			>
+				{fields.map((field) => {
+					return (
+						<AttrValue
+							key={`feed-attr-${field.name}`}
+							field={field}
+							attr={feed.query?.where?.attrs?.[field.name]}
+							view={view}
+						/>
+					);
+				})}
+			</Container>
+		</>
+	);
+};

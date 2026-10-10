@@ -1,22 +1,27 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { translator } from "@/lib/common/translation";
-import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
-import { getFeedDefaultCreate } from "~/buyer/feed/service/getFeedDefaultCreate";
-import { SearchPage } from "~/buyer/search/ui/SearchPage/SearchPage";
-import { SearchPagePending } from "~/buyer/search/ui/SearchPage/SearchPagePending";
-import { withTranslationsQuery } from "~/common/translation/query/withTranslationsQuery";
+import { TitleContainer } from "~/application-ui/ui/container.exports";
+import { withFeedQuery } from "~/buyer-feed/query/withFeedQuery";
+import { getFeedDefaultCreateFn } from "~/buyer-feed/service/getFeedDefaultCreateFn";
+import { SearchEditor } from "~/buyer-search/ui/SearchEditor";
+import { useLocale } from "~/locale/hook/useLocale";
+import { BackHomeButton } from "~/nav/ui/BackHomeButton.exports";
+import { translatorFn } from "~/translation/fn/translatorFn";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { withTranslationsQuery } from "~/translation/query/withTranslationsQuery";
+import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
+import { HomeMenuButton } from "~/user-home/ui/HomeMenu/HomeMenuButton";
 
 export const Route = createFileRoute("/$locale/app/buyer/search")({
 	async loader({ context: { queryClient }, params: { locale } }) {
-		const t = translator({
-			translations: await withTranslationsQuery.ensure(queryClient, {
+		const t = translatorFn({
+			translations: await withTranslationsQuery.ensureFn(queryClient, {
 				locale,
 			}),
 		});
 
 		return (
 			(await withFeedQuery
-				.ensureEntityQuery(queryClient, {
+				.ensureEntityQueryFn(queryClient, {
 					where: {
 						type: "search",
 					},
@@ -30,12 +35,70 @@ export const Route = createFileRoute("/$locale/app/buyer/search")({
 				.catch(() => undefined)) ??
 			(await withFeedQuery.createFn(
 				queryClient,
-				getFeedDefaultCreate(t.text("Search (title)"), "search"),
+				getFeedDefaultCreateFn(t.textFn("Search (title)"), "search"),
 			))
 		);
 	},
-	pendingComponent: SearchPagePending,
+	pendingComponent: () => {
+		const translator = useTranslator();
+		const locale = useLocale();
+
+		return (
+			<TitleContainer
+				data-ui={"Search[TitleContainer.pending]"}
+				textTitle={translator.textFn("Search (title)")}
+				left={
+					<BackHomeButton
+						to="/$locale/app/home"
+						params={{
+							locale,
+						}}
+					/>
+				}
+				data-ui-layout="vertical-header-content"
+				right={<HomeMenuButton />}
+			>
+				<SpinnerContainer />
+			</TitleContainer>
+		);
+	},
 	component() {
-		return <SearchPage _suspense={"I know"} />;
+		const translator = useTranslator();
+		const locale = useLocale();
+		const {
+			data: { id: feedId },
+		} = withFeedQuery.useEntityQuery({
+			where: {
+				type: "search",
+			},
+			sort: [
+				{
+					field: "updatedAt",
+					order: "desc",
+				},
+			],
+		});
+
+		return (
+			<TitleContainer
+				data-ui={"Search[TitleContainer]"}
+				textTitle={translator.textFn("Search (title)")}
+				left={
+					<BackHomeButton
+						to="/$locale/app/home"
+						params={{
+							locale,
+						}}
+					/>
+				}
+				data-ui-layout="vertical-header-content"
+				right={<HomeMenuButton />}
+			>
+				<SearchEditor
+					_suspense={"I know"}
+					feedId={feedId}
+				/>
+			</TitleContainer>
+		);
 	},
 });

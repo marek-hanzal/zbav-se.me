@@ -1,16 +1,16 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { transactionCreateFx } from "~/buyer/transaction/server/fx/transactionCreateFx";
-import { transactionAcceptFx } from "~/seller/transaction/server/fx/transactionAcceptFx";
-import { transactionResolveFx } from "~/seller/transaction/server/fx/transactionResolveFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { transactionCreateFx } from "~/buyer-transaction/fx/transactionCreateFx";
+import { transactionAcceptFx } from "~/seller-transaction/fx/transactionAcceptFx";
+import { transactionResolveFx } from "~/seller-transaction/fx/transactionResolveFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("transactionResolveFx — sold cleanup", () => {
 	it("deletes sensitive entries for other transactions moved to sold", async () => {
-		const database = await testabase("transactionResolveFx-sold-cleanup");
+		const database = await testabaseFn("transactionResolveFx-sold-cleanup");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -104,6 +104,6 @@ describe("transactionResolveFx — sold cleanup", () => {
 			expect(kinds).not.toContain("personal");
 			expect(kinds).toContain("text");
 			expect(kinds).toContain("status-sold");
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

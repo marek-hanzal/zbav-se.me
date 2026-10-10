@@ -1,16 +1,16 @@
 import { Effect } from "effect";
 import { describe, it } from "vitest";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
-import { transactionEntryGalleryFetchFx } from "~/user/transaction-entry/server/fx/transactionEntryGalleryFetchFx";
+import { transactionEntryCreateFx } from "~/user-transaction-entry/fx/transactionEntryCreateFx";
+import { transactionEntryGalleryFetchFx } from "~/user-transaction-entry/fx/transactionEntryGalleryFetchFx";
 
 describe("transactionEntryGalleryFetchFx", () => {
 	it("rejects non-gallery transaction entries", async () => {
-		const database = await testabase("transactionEntryGalleryFetchFx-non-gallery");
+		const database = await testabaseFn("transactionEntryGalleryFetchFx-non-gallery");
 
 		return Effect.gen(function* () {
 			const { buyer, seller } = yield* createUsersFx({});
@@ -27,7 +27,7 @@ describe("transactionEntryGalleryFetchFx", () => {
 				},
 			});
 
-			const result = yield* Effect.either(
+			const result = yield* Effect.result(
 				transactionEntryGalleryFetchFx({
 					userId: buyer.id,
 					where: {
@@ -36,10 +36,10 @@ describe("transactionEntryGalleryFetchFx", () => {
 				}),
 			);
 
-			expectTaggedErrorFx(result, {
+			expectTaggedErrorFn(result, {
 				tag: "NotFoundErrorFx",
 				message: "Gallery not found",
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

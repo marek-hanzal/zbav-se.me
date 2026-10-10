@@ -1,15 +1,15 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
-import { DateContextFx } from "@/lib/common/date";
-import { genId } from "@/lib/common/gen-id";
-import type { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
-import type { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
-import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
-import type { WarrantyEnumSchema } from "~/common/warranty/enum/WarrantyEnumSchema";
-import { listingSpotlightBuildFx } from "~/server/listing-spotlight/server/fx/listingSpotlightBuildFx";
-import type { testabase } from "~/test/testabase";
+import { DateServiceFx } from "~/date/service/DateServiceFx";
+import type { DeliveryEnumSchema } from "~/delivery/schema/DeliveryEnumSchema";
+import { genIdFn } from "~/identity/fn/genIdFn";
+import type { ListingStatusEnumSchema } from "~/listing/schema/ListingStatusEnumSchema";
+import { listingSpotlightBuildFx } from "~/listing-spotlight/fx/listingSpotlightBuildFx";
+import type { RestrictionEnumSchema } from "~/restriction/schema/RestrictionEnumSchema";
+import type { testabaseFn } from "~/test/testabaseFn";
+import type { WarrantyEnumSchema } from "~/warranty/schema/WarrantyEnumSchema";
 
-type TestDatabase = Awaited<ReturnType<typeof testabase>>;
+type TestDatabase = Awaited<ReturnType<typeof testabaseFn>>;
 type LocationFixture = {
 	id: string;
 	query: string;
@@ -189,7 +189,7 @@ export const createRestrictedCategoryFx = (
 ) =>
 	Effect.promise(async () => {
 		const category = {
-			id: genId(),
+			id: genIdFn(),
 			group: "Listing restriction fixture",
 			category: `Listing restriction ${props.restriction}`,
 			slug: props.slug,
@@ -212,14 +212,14 @@ export const createUserRestrictionFx = (
 	},
 ) =>
 	Effect.gen(function* () {
-		const dateContext = yield* DateContextFx;
-		const now = dateContext.now();
+		const dateService = yield* DateServiceFx;
+		const now = dateService.nowFn();
 
 		yield* Effect.promise(() =>
 			database.kysely
 				.insertInto("user_restriction")
 				.values({
-					id: genId(),
+					id: genIdFn(),
 					userId: props.userId,
 					restriction: props.restriction,
 					availableAt: now

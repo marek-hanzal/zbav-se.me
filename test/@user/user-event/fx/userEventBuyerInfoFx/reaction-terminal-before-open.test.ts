@@ -1,15 +1,15 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { userEventBuyerInfoFx } from "~/seller/user-event/server/fx/userEventBuyerInfoFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { userEventBuyerInfoFx } from "~/seller-user-event/fx/userEventBuyerInfoFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { seedUserEventTimelineFx } from "~/test/user-event/fx/seedUserEventTimelineFx";
 
 describe("userEventBuyerInfoFx", () => {
 	it("Reaction: seller terminal before open counts as terminal reaction", async () => {
-		const database = await testabase("userEventBuyerInfoFx-reaction-terminal-before-open");
+		const database = await testabaseFn("userEventBuyerInfoFx-reaction-terminal-before-open");
 
 		return Effect.gen(function* () {
 			const buyer = yield* leaseTestUserFx({});
@@ -77,6 +77,6 @@ describe("userEventBuyerInfoFx", () => {
 			expect(result.reaction.reactions).toBe(0);
 			expect(result.reaction.terminal).toBe(2);
 			expect(result.reaction.percent).toBe(100);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

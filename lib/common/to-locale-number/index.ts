@@ -1,1 +1,0 @@
-export { toLocaleNumber } from "./toLocaleNumber";

@@ -1,19 +1,19 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { testUploadUrl } from "~/test/common/fn/testUploadUrl";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { testUploadUrlFn } from "~/test/common/fn/testUploadUrlFn";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
-import { transactionEntryFetchFx } from "~/user/transaction-entry/server/fx/transactionEntryFetchFx";
-import { transactionEntryGalleryFetchFx } from "~/user/transaction-entry/server/fx/transactionEntryGalleryFetchFx";
-import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
+import { transactionEntryCreateFx } from "~/user-transaction-entry/fx/transactionEntryCreateFx";
+import { transactionEntryFetchFx } from "~/user-transaction-entry/fx/transactionEntryFetchFx";
+import { transactionEntryGalleryFetchFx } from "~/user-transaction-entry/fx/transactionEntryGalleryFetchFx";
+import { uploadCreateFx } from "~/user-upload/fx/uploadCreateFx";
 
 describe("transactionEntry workflow", () => {
 	it("creates gallery entry with ordered items and blocks outsider access", async () => {
-		const database = await testabase("transactionEntry-gallery-workflow");
+		const database = await testabaseFn("transactionEntry-gallery-workflow");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -28,12 +28,12 @@ describe("transactionEntry workflow", () => {
 			const firstUpload = yield* uploadCreateFx({
 				access: "private",
 				userId: buyer.id,
-				url: testUploadUrl("transaction-entry-gallery-1.jpg"),
+				url: testUploadUrlFn("transaction-entry-gallery-1.jpg"),
 			});
 			const secondUpload = yield* uploadCreateFx({
 				access: "private",
 				userId: buyer.id,
-				url: testUploadUrl("transaction-entry-gallery-2.jpg"),
+				url: testUploadUrlFn("transaction-entry-gallery-2.jpg"),
 			});
 
 			const entry = yield* transactionEntryCreateFx({
@@ -134,7 +134,7 @@ describe("transactionEntry workflow", () => {
 			]);
 			expect(sellerGallery.id).toBe(entry.payload.galleryId);
 
-			const outsiderView = yield* Effect.either(
+			const outsiderView = yield* Effect.result(
 				transactionEntryFetchFx({
 					userId: outsider.id,
 					where: {
@@ -142,7 +142,7 @@ describe("transactionEntry workflow", () => {
 					},
 				}),
 			);
-			const outsiderGallery = yield* Effect.either(
+			const outsiderGallery = yield* Effect.result(
 				transactionEntryGalleryFetchFx({
 					userId: outsider.id,
 					where: {
@@ -151,10 +151,10 @@ describe("transactionEntry workflow", () => {
 				}),
 			);
 
-			expectTaggedErrorFx(outsiderView, {
+			expectTaggedErrorFn(outsiderView, {
 				tag: "NotFoundErrorFx",
 			});
-			expectTaggedErrorFx(outsiderGallery, {
+			expectTaggedErrorFn(outsiderGallery, {
 				tag: "NotFoundErrorFx",
 			});
 
@@ -180,6 +180,6 @@ describe("transactionEntry workflow", () => {
 					sort: 1,
 				},
 			]);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

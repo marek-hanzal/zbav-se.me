@@ -1,15 +1,15 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { DateContextFx } from "@/lib/common/date";
-import { rateLimitCheckFx } from "~/server/rate-limit/server/fx/rateLimitCheckFx";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
+import { rateLimitCheckFx } from "~/rate-limit/fx/rateLimitCheckFx";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 
 describe("rateLimitCheckFx", () => {
 	it("preserves custom too-many-requests messages", async () => {
-		const database = await testabase("rateLimitCheckFx-custom-message");
+		const database = await testabaseFn("rateLimitCheckFx-custom-message");
 		const fixedNow = DateTime.fromISO("2026-05-11T10:05:45.000Z");
 
 		return Effect.gen(function* () {
@@ -24,7 +24,7 @@ describe("rateLimitCheckFx", () => {
 					.execute(),
 			);
 
-			const result = yield* Effect.either(
+			const result = yield* Effect.result(
 				rateLimitCheckFx({
 					rule: "listing:flag",
 					key: [
@@ -33,13 +33,13 @@ describe("rateLimitCheckFx", () => {
 					],
 					message: "You have already flagged this listing",
 				}).pipe(
-					Effect.provideService(DateContextFx, {
-						now: () => fixedNow,
+					withDateServiceFn({
+						nowFn: () => fixedNow,
 					}),
 				),
 			);
 
-			const error = expectTaggedErrorFx(result, {
+			const error = expectTaggedErrorFn(result, {
 				tag: "RateLimitErrorFx",
 				message: "You have already flagged this listing",
 			}) as {
@@ -53,6 +53,6 @@ describe("rateLimitCheckFx", () => {
 			expect(error.limit).toBe(0);
 			expect(error.count).toBe(1);
 			expect(error.exceeded).toBe(1);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

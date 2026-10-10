@@ -1,11 +1,11 @@
 import { Effect } from "effect";
 import { describe, it } from "vitest";
-import { ignoreToggleFx } from "~/buyer/listing-ignore/server/fx/ignoreToggleFx";
-import { runToggleEntityContractFx } from "~/test/@buyer/common/fx/runToggleEntityContractFx";
+import { ignoreToggleFx } from "~/buyer-listing-ignore/fx/ignoreToggleFx";
+import { runToggleEntityContractFn } from "~/test/@buyer/common/fx/runToggleEntityContractFn";
 
 describe("ignoreToggleFx", () => {
 	it("toggle off: deletes ignore record, creates unignore event and seller activity", async () => {
-		return runToggleEntityContractFx({
+		return runToggleEntityContractFn({
 			databaseName: "ignoreToggle-off",
 			userSlug: "ignore-toggle-off",
 			toggleOnFx: ({ users, listing }) =>
@@ -42,7 +42,7 @@ describe("ignoreToggleFx", () => {
 
 					return events.map((event) => event.event);
 				}),
-			assertRecordOn: () => {},
+			assertRecordOnFn: () => {},
 			onEvent: "listing.ignore",
 			offEvent: "unignore",
 			activityOnFx: ({ database, users }) =>

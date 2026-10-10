@@ -1,19 +1,19 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { listingCollectionFx } from "~/buyer/listing/server/fx/listingCollectionFx";
-import { listingCountFx } from "~/buyer/listing/server/fx/listingCountFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { listingCollectionFx } from "~/buyer-listing/fx/listingCollectionFx";
+import { listingCountFx } from "~/buyer-listing/fx/listingCountFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import {
 	createRestrictedCategoryFx,
 	createUserRestrictionFx,
 } from "~/test/listing/fx/listingSearchFixturesFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
 describe("buyer listing discovery flow", () => {
 	it("filters listings by active buyer restriction regardless of category input", async () => {
-		const database = await testabase("buyer-listing-active-restriction-scope");
+		const database = await testabaseFn("buyer-listing-active-restriction-scope");
 
 		return Effect.gen(function* () {
 			const users = yield* createUsersFx({});
@@ -116,6 +116,6 @@ describe("buyer listing discovery flow", () => {
 			expect(adultIds).not.toContain(restrictedCategoryListing.id);
 			expect(adultIds).not.toContain(restrictedListingRestriction.id);
 			expect(explicitRestrictedCollection).toEqual([]);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

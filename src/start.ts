@@ -1,6 +1,6 @@
 import { createCsrfMiddleware, createStart } from "@tanstack/react-start";
-import { TaggedErrorSerializationAdapter } from "@/lib/common/error";
-import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
+import { TaggedErrorSerializationAdapter } from "~/error/serialization/TaggedErrorSerializationAdapter";
+import { withLogMiddleware } from "~/request-middleware/middleware/withLogMiddleware";
 
 const csrfMiddleware = createCsrfMiddleware({
 	filter: (ctx) => ctx.handlerType === "serverFn",

@@ -1,7 +1,7 @@
 import { Effect } from "effect";
-import { locationAutocompleteFx } from "~/session/location/server/fx/locationAutocompleteFx";
+import { locationAutocompleteFx } from "~/session-location/fx/locationAutocompleteFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { categoryFetchFx } from "~/user/category/server/fx/categoryFetchFx";
+import { categoryFetchFx } from "~/user-category/fx/categoryFetchFx";
 
 export const getDefaultListingCreateFx = Effect.gen(function* () {
 	const user = yield* leaseTestUserFx({});

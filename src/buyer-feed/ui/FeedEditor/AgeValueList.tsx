@@ -1,0 +1,45 @@
+import type { FC } from "react";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { ValueList } from "~/ui/ui/ValueList";
+
+export namespace AgeValueList {
+	export interface Props
+		extends Omit<
+			ValueList.PropsEx<{
+				id: string;
+				age: string;
+			}>,
+			"items" | "renderFn"
+		> {
+		ageIn: number[];
+	}
+}
+
+/**
+ * Renders a read-only list of age values in a consistent label/value style.
+ * Use it in detail or preview views when you need to show multiple age entries clearly.
+ */
+export const AgeValueList: FC<AgeValueList.Props> = ({ ageIn, ...props }) => {
+	const translator = useTranslator();
+	return (
+		<ValueList
+			data-ui={"AgeValueList"}
+			textLabel={translator.textFn("Feed age (label)")}
+			textEmpty={translator.textFn("Feed age not selected")}
+			items={ageIn.map((item) => ({
+				id: String(item),
+				age: String(item),
+			}))}
+			renderFn={(item) => translator.textFn(`Age ${item.age} (label)`)}
+			wrapperProps={{
+				...(ageIn.length > 0
+					? {
+							"data-ui-tone": "neutral",
+							"data-ui-theme": "light",
+						}
+					: undefined),
+			}}
+			{...props}
+		/>
+	);
+};

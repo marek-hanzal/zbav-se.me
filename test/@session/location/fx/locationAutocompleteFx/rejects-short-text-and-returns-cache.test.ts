@@ -1,16 +1,16 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { locationAutocompleteFx } from "~/session/location/server/fx/locationAutocompleteFx";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { locationAutocompleteFx } from "~/session-location/fx/locationAutocompleteFx";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 
 describe("locationAutocompleteFx", () => {
 	it("rejects short input and returns persisted cached locations", async () => {
-		const database = await testabase("locationAutocompleteFx-cache");
+		const database = await testabaseFn("locationAutocompleteFx-cache");
 
 		return Effect.gen(function* () {
-			const shortText = yield* Effect.either(
+			const shortText = yield* Effect.result(
 				locationAutocompleteFx({
 					text: "Pr",
 					lang: "cs",
@@ -23,11 +23,11 @@ describe("locationAutocompleteFx", () => {
 				limit: 1,
 			});
 
-			expectTaggedErrorFx(shortText, {
+			expectTaggedErrorFn(shortText, {
 				tag: "TextTooShortErrorFx",
 			});
 			expect(cached).toHaveLength(1);
 			expect(cached[0]?.id).toBe("loc_test_praha");
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

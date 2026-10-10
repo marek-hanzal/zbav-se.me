@@ -1,6 +1,197 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { ForgotPasswordPage } from "~/user/auth/ui/ForgotPasswordPage";
+import { createFileRoute, useNavigate, useRouter } from "@tanstack/react-router";
+import { z } from "zod";
+import { useAppForm } from "~/application-ui/hook/form.exports";
+import { Logo } from "~/application-ui/ui/logo.exports";
+import { onSubmitFn } from "~/form/fn/onSubmitFn";
+import { FormField } from "~/form/ui/FormField";
+import { useLocale } from "~/locale/hook/useLocale";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Tx } from "~/translation/ui/Tx";
+import { ChevronRightIcon } from "~/ui/constant/ChevronRightIcon";
+import { Container } from "~/ui/ui/Container";
+import { ErrorBadge } from "~/ui/ui/ErrorBadge";
+import { LinkTo } from "~/ui/ui/LinkTo";
+import { Status } from "~/ui/ui/Status";
+import { withPasswordResetRequestMutation } from "~/user-auth/mutation/withPasswordResetRequestMutation";
 
 export const Route = createFileRoute("/$locale/forgot/password")({
-	component: ForgotPasswordPage,
+	component() {
+		const locale = useLocale();
+		const navigateFn = useNavigate();
+		const router = useRouter();
+		const translator = useTranslator();
+		const schema = useFormSchema();
+
+		const mutation = withPasswordResetRequestMutation.useMutation({
+			async onPostMutationFn() {
+				await navigateFn({
+					to: "/$locale/forgot/sent",
+					params: {
+						locale,
+					},
+				});
+			},
+		});
+
+		const form = useAppForm({
+			defaultValues: {
+				email: "",
+			} satisfies z.infer<FormSchema>,
+			validators: {
+				onMount: schema,
+				onSubmit: schema,
+			},
+			onSubmit: onSubmitFn({
+				mapFn: async ({ values }) => {
+					const link = router.buildLocation({
+						to: "/$locale/reset-password/$token",
+						params: {
+							locale,
+							token: "-placeholder-",
+						},
+					});
+					const redirectTo = new URL(link.href, import.meta.env.VITE_ORIGIN).toString();
+
+					return {
+						email: values.email,
+						redirectTo,
+					};
+				},
+				mutation,
+			}),
+		});
+
+		return (
+			<Container
+				data-ui="ForgotPassword[Container]"
+				data-ui-layout="vertical-centered"
+				data-ui-height="full"
+				data-ui-width="full"
+				data-ui-inner="default"
+			>
+				<Container
+					data-ui-layout="vertical-flex"
+					data-ui-scroll="vertical"
+					data-ui-width="full"
+					data-ui-height="content"
+				>
+					<Status
+						icon={
+							<LinkTo
+								to={"/$locale/landing"}
+								params={{
+									locale,
+								}}
+							>
+								<Logo />
+							</LinkTo>
+						}
+						textTitle={translator.textFn("Reset your password")}
+						data-ui-inner="default"
+					>
+						<form
+							onSubmit={(e) => {
+								e.preventDefault();
+								e.stopPropagation();
+								void form.handleSubmit();
+							}}
+							className={"space-y-2"}
+						>
+							<form.AppField name={"email"}>
+								{(field) => (
+									<FormField
+										id={field.name}
+										name={field.name}
+										label={<Tx label={"Email"} />}
+										meta={field.state.meta}
+									>
+										{(props) => (
+											<field.TextInput
+												data-ui={"ForgotPassword-[EmailInput]"}
+												type={"email"}
+												autoComplete={"email"}
+												autoFocus
+												placeholder={translator.textFn("Enter your email")}
+												value={field.state.value ?? ""}
+												onBlur={field.handleBlur}
+												onChange={(e) => field.handleChange(e.target.value)}
+												{...props}
+											/>
+										)}
+									</FormField>
+								)}
+							</form.AppField>
+
+							<Container
+								data-ui-layout="vertical-flex"
+								data-ui-width="full"
+								data-ui-items="center"
+								data-ui-gap="lg"
+							>
+								<form.Subscribe
+									selector={(store) => ({
+										isValid: store.isValid,
+										isSubmitting: store.isSubmitting,
+									})}
+								>
+									{({ isValid, isSubmitting }) => (
+										<>
+											<form.SubmitButton
+												data-action={"send reset link"}
+												data-ui={"ForgotPassword-[SubmitButton]"}
+												iconEnabled={ChevronRightIcon}
+												iconPosition={"right"}
+												disabled={!isValid || isSubmitting}
+											>
+												{mutation.isPending ? (
+													<Tx label={"Please wait..."} />
+												) : (
+													<Tx label={"Send reset link"} />
+												)}
+											</form.SubmitButton>
+
+											<ErrorBadge
+												placeholder
+												error={mutation.error}
+											/>
+										</>
+									)}
+								</form.Subscribe>
+
+								<LinkTo
+									to={"/$locale/sign-in"}
+									params={{
+										locale,
+									}}
+								>
+									<Tx
+										label={"Back to sign in"}
+										data-ui-tone="link"
+										data-ui-theme="light"
+										data-ui-text="md"
+										data-ui-color="lead"
+									/>
+								</LinkTo>
+							</Container>
+						</form>
+					</Status>
+				</Container>
+			</Container>
+		);
+	},
 });
+
+const useFormSchema = () => {
+	const translator = useTranslator();
+
+	return z
+		.looseObject({
+			email: z.email({
+				error() {
+					return translator.textFn("Invalid email address");
+				},
+			}),
+		})
+		.strip();
+};
+type FormSchema = ReturnType<typeof useFormSchema>;

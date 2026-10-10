@@ -1,17 +1,62 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { TransactionDetailPage } from "~/seller/transaction/ui/TransactionDetailPage";
-import { TransactionDetailPendingPage } from "~/seller/transaction/ui/TransactionDetailPage/TransactionDetailPendingPage";
+import { TitleContainer } from "~/application-ui/ui/container.exports";
+import { useLocale } from "~/locale/hook/useLocale";
+import { BackHomeButton } from "~/nav/ui/BackHomeButton.exports";
+import { withTransactionQuery } from "~/seller-transaction/query/withTransactionQuery";
+import { Transaction } from "~/seller-transaction/ui/Transaction";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
+import { HomeMenuButton } from "~/user-home/ui/HomeMenu/HomeMenuButton";
 
 export const Route = createFileRoute("/$locale/app/seller/transaction/$transactionId/detail")({
-	pendingComponent: TransactionDetailPendingPage,
+	pendingComponent: () => {
+		const translator = useTranslator();
+		const locale = useLocale();
+
+		return (
+			<TitleContainer
+				textTitle={translator.textFn("Messages (title)")}
+				left={
+					<BackHomeButton
+						to="/$locale/app/seller/transaction/list"
+						params={{
+							locale,
+						}}
+					/>
+				}
+				right={<HomeMenuButton />}
+			>
+				<SpinnerContainer />
+			</TitleContainer>
+		);
+	},
 	component() {
 		const { transactionId } = Route.useParams();
 
+		const translator = useTranslator();
+		const locale = useLocale();
+		const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId);
+
 		return (
-			<TransactionDetailPage
-				_suspense={"I know"}
-				transactionId={transactionId}
-			/>
+			<TitleContainer
+				textTitle={translator.textFn("Messages (title)")}
+				left={
+					<BackHomeButton
+						to="/$locale/app/seller/transaction/$listingId/list"
+						params={{
+							locale,
+							listingId: transaction.listingId,
+						}}
+					/>
+				}
+				right={<HomeMenuButton />}
+			>
+				<Transaction
+					_suspense={"I know"}
+					transactionId={transactionId}
+					refresh={1_000 * 5}
+				/>
+			</TitleContainer>
 		);
 	},
 });

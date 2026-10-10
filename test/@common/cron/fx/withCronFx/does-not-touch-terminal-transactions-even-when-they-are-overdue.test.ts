@@ -1,26 +1,26 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { DateContextFx } from "@/lib/common/date";
-import { transactionCloseFx } from "~/buyer/transaction/server/fx/transactionCloseFx";
-import { transactionCreateFx } from "~/buyer/transaction/server/fx/transactionCreateFx";
-import { transactionRejectFx } from "~/buyer/transaction/server/fx/transactionRejectFx";
-import { transactionSuccessFx } from "~/buyer/transaction/server/fx/transactionSuccessFx";
-import type { ScheduleSchema } from "~/common/@cron/schema/ScheduleSchema";
-import { withCronFx } from "~/common/@cron/server/withCronFx";
-import { transactionAcceptFx } from "~/seller/transaction/server/fx/transactionAcceptFx";
-import { transactionResolveFx } from "~/seller/transaction/server/fx/transactionResolveFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { transactionCloseFx } from "~/buyer-transaction/fx/transactionCloseFx";
+import { transactionCreateFx } from "~/buyer-transaction/fx/transactionCreateFx";
+import { transactionRejectFx } from "~/buyer-transaction/fx/transactionRejectFx";
+import { transactionSuccessFx } from "~/buyer-transaction/fx/transactionSuccessFx";
+import { withCronFx } from "~/cron/fx/withCronFx";
+import type { ScheduleSchema } from "~/cron/schema/ScheduleSchema";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
+import { transactionAcceptFx } from "~/seller-transaction/fx/transactionAcceptFx";
+import { transactionResolveFx } from "~/seller-transaction/fx/transactionResolveFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { createResolvedScenarioFx } from "~/test/transaction/fx/createResolvedScenarioFx";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
 const atFx = <A, E, R>(iso: string, eff: Effect.Effect<A, E, R>) =>
 	eff.pipe(
-		Effect.provideService(DateContextFx, {
-			now: () =>
+		withDateServiceFn({
+			nowFn: () =>
 				DateTime.fromISO(iso, {
 					setZone: true,
 				}),
@@ -43,7 +43,7 @@ const _ScheduleCases = [
 
 describe("withCronFx transaction expiration", () => {
 	it("does not touch terminal transactions even when they are overdue", async () => {
-		const database = await testabase("withCronFx-transaction-expiration-terminal");
+		const database = await testabaseFn("withCronFx-transaction-expiration-terminal");
 
 		return Effect.gen(function* () {
 			const { seller, buyer, stranger } = yield* createUsersFx({});
@@ -191,6 +191,6 @@ describe("withCronFx transaction expiration", () => {
 			);
 
 			expect(transactionEntries).toHaveLength(0);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

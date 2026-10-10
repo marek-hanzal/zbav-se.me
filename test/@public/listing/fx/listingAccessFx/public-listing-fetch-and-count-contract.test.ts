@@ -1,19 +1,19 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { listingCollectionFx } from "~/public/listing/server/fx/listingCollectionFx";
-import { listingCountFx } from "~/public/listing/server/fx/listingCountFx";
-import { listingFetchFx } from "~/public/listing/server/fx/listingFetchFx";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { listingCollectionFx } from "~/public-listing/fx/listingCollectionFx";
+import { listingCountFx } from "~/public-listing/fx/listingCountFx";
+import { listingFetchFx } from "~/public-listing/fx/listingFetchFx";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { patchCategoryDiscoveryFx } from "~/test/listing/fx/listingSearchFixturesFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { categoryFetchFx } from "~/user/category/server/fx/categoryFetchFx";
+import { categoryFetchFx } from "~/user-category/fx/categoryFetchFx";
 
 describe("public listing fetch/count contract", () => {
 	it("keeps fetch and count aligned with public visibility rules", async () => {
-		const database = await testabase("public-listing-fetch-count-contract");
+		const database = await testabaseFn("public-listing-fetch-count-contract");
 
 		return Effect.gen(function* () {
 			const users = yield* createUsersFx({});
@@ -57,7 +57,7 @@ describe("public listing fetch/count contract", () => {
 					id: implicitListing.id,
 				},
 			});
-			const explicitHiddenFetch = yield* Effect.either(
+			const explicitHiddenFetch = yield* Effect.result(
 				listingFetchFx({
 					scope: {},
 					where: {
@@ -72,7 +72,7 @@ describe("public listing fetch/count contract", () => {
 					categoryId: explicitCategory.id,
 				},
 			});
-			const blockedFetch = yield* Effect.either(
+			const blockedFetch = yield* Effect.result(
 				listingFetchFx({
 					scope: {},
 					where: {
@@ -105,11 +105,11 @@ describe("public listing fetch/count contract", () => {
 
 			expect(visibleFetch.id).toBe(implicitListing.id);
 			expect(visibleFetch.withRestriction).toBe("none");
-			expectTaggedErrorFx(explicitHiddenFetch, {
+			expectTaggedErrorFn(explicitHiddenFetch, {
 				tag: "NotFoundErrorFx",
 			});
 			expect(explicitVisibleFetch.id).toBe(explicitListing.id);
-			expectTaggedErrorFx(blockedFetch, {
+			expectTaggedErrorFn(blockedFetch, {
 				tag: "NotFoundErrorFx",
 			});
 			expect(defaultCollection.map((item) => item.id)).toContain(implicitListing.id);
@@ -120,6 +120,6 @@ describe("public listing fetch/count contract", () => {
 				explicitListing.id,
 			]);
 			expect(explicitCount).toBe(explicitCollection.length);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

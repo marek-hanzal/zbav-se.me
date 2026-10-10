@@ -1,13 +1,13 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { agentThreadPatchFx } from "~/user/agent/server/fx/agentThreadPatchFx";
+import { agentThreadPatchFx } from "~/user-agent/fx/agentThreadPatchFx";
 
 describe("agentThreadPatchFx", () => {
 	it("bumps updatedAt for an empty patch", async () => {
-		const database = await testabase("agentThreadPatchFx-empty-patch");
+		const database = await testabaseFn("agentThreadPatchFx-empty-patch");
 
 		return Effect.gen(function* () {
 			const { seller } = yield* createUsersFx({});
@@ -42,6 +42,6 @@ describe("agentThreadPatchFx", () => {
 			expect(thread.createdAt).toEqual(originalDate);
 			expect(thread.updatedAt.getTime()).toBeGreaterThan(originalDate.getTime());
 			expect(thread.archivedAt).toBeNull();
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

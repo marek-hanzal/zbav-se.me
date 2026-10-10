@@ -1,0 +1,89 @@
+import { Effect } from "effect";
+import { feedCountFx } from "~/buyer-feed/fx/feedCountFx";
+import { feedFetchFx } from "~/buyer-feed/fx/feedFetchFx";
+import type { FeedCreateSchema } from "~/buyer-feed/schema/FeedCreateSchema";
+import { dbFx } from "~/database/fx/dbFx";
+import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { DateServiceFx } from "~/date/service/DateServiceFx";
+import { genIdFn } from "~/identity/fn/genIdFn";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
+import { ConflictErrorFx } from "~/server-error/error/ConflictErrorFx";
+import { resourceLimitEnsureFx } from "~/user-resource-limit/fx/resourceLimitEnsureFx";
+
+export namespace feedCreateFx {
+	export interface Props extends FeedCreateSchema.Type {
+		userId: string;
+	}
+}
+
+export const feedCreateFx = Effect.fn("feedCreateFx")(function* ({
+	userId,
+	query,
+	...data
+}: feedCreateFx.Props) {
+	const logger = yield* getLoggerFx("feedCreateFx");
+	logger.trace("feedCreateFx", {
+		userId,
+		query,
+		...data,
+	});
+
+	return yield* withTransactionFx(
+		Effect.gen(function* () {
+			const dateService = yield* DateServiceFx;
+
+			const id = genIdFn();
+			const now = dateService.nowFn();
+
+			const feedCount = yield* feedCountFx({
+				where: {
+					type: "user",
+				},
+				scope: {
+					userId,
+				},
+			});
+
+			yield* resourceLimitEnsureFx({
+				count: feedCount + 1,
+				resource: "buyer:limit:feed.count",
+				userId,
+			});
+
+			yield* dbFx(
+				async (kysely) => {
+					return kysely
+						.insertInto("feed")
+						.values({
+							...data,
+							id,
+							userId,
+							uploadId: null,
+							query: JSON.stringify(query) as any,
+							createdAt: now.toJSDate(),
+							updatedAt: now.toJSDate(),
+						})
+						.executeTakeFirstOrThrow();
+				},
+				{
+					"23505": (e) =>
+						new ConflictErrorFx({
+							message: "Feed already exists",
+							cause: e,
+						}),
+				},
+			);
+
+			return yield* feedFetchFx({
+				where: {
+					id,
+				},
+				scope: {
+					userId,
+				},
+			});
+		}),
+	);
+});
+
+export type feedCreateFx = ReturnType<typeof feedCreateFx>;

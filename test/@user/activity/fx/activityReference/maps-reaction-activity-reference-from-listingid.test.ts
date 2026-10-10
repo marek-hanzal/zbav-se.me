@@ -1,14 +1,14 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { thumbCreateFx } from "~/buyer/thumb/server/fx/thumbCreateFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { thumbCreateFx } from "~/buyer-thumb/fx/thumbCreateFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("activity reference", () => {
 	it("maps reaction activity reference from listingId", async () => {
-		const database = await testabase("activityReference-thumb-create");
+		const database = await testabaseFn("activityReference-thumb-create");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -40,6 +40,6 @@ describe("activity reference", () => {
 			expect(activity.reference).toEqual([
 				listing.id,
 			]);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

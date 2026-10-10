@@ -1,15 +1,15 @@
 import type { AgentInputItem } from "@openai/agents-core";
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { agentStreamDeleteFx } from "~/user/agent/server/fx/agentStreamDeleteFx";
-import { agentStreamFetchFx } from "~/user/agent/server/fx/agentStreamFetchFx";
+import { agentStreamDeleteFx } from "~/user-agent/fx/agentStreamDeleteFx";
+import { agentStreamFetchFx } from "~/user-agent/fx/agentStreamFetchFx";
 
-const seedAgentStream = async (
-	database: Awaited<ReturnType<typeof import("~/test/testabase").testabase>>,
+const seedAgentStreamFn = async (
+	database: Awaited<ReturnType<typeof import("~/test/testabaseFn").testabaseFn>>,
 	rows: Array<{
 		id: string;
 		userId: string;
@@ -33,14 +33,14 @@ const seedAgentStream = async (
 
 describe("agentStreamDeleteFx", () => {
 	it("deletes scoped agent stream rows and rejects foreign access", async () => {
-		const database = await testabase("agentStreamDeleteFx-contract");
+		const database = await testabaseFn("agentStreamDeleteFx-contract");
 
 		return Effect.gen(function* () {
 			const alice = yield* leaseTestUserFx({});
 			const bob = yield* leaseTestUserFx({});
 
 			yield* Effect.promise(() =>
-				seedAgentStream(database, [
+				seedAgentStreamFn(database, [
 					{
 						id: "agent-stream-alice",
 						userId: alice.id,
@@ -77,7 +77,7 @@ describe("agentStreamDeleteFx", () => {
 
 			expect(deleted.id).toBe("agent-stream-alice");
 
-			const aliceAfterDelete = yield* Effect.either(
+			const aliceAfterDelete = yield* Effect.result(
 				agentStreamFetchFx({
 					where: {
 						id: "agent-stream-alice",
@@ -87,7 +87,7 @@ describe("agentStreamDeleteFx", () => {
 					},
 				}),
 			);
-			const foreignDelete = yield* Effect.either(
+			const foreignDelete = yield* Effect.result(
 				agentStreamDeleteFx({
 					where: {
 						id: "agent-stream-bob",
@@ -106,13 +106,13 @@ describe("agentStreamDeleteFx", () => {
 				},
 			});
 
-			expectTaggedErrorFx(aliceAfterDelete, {
+			expectTaggedErrorFn(aliceAfterDelete, {
 				tag: "NotFoundErrorFx",
 			});
-			expectTaggedErrorFx(foreignDelete, {
+			expectTaggedErrorFn(foreignDelete, {
 				tag: "NotFoundErrorFx",
 			});
 			expect(bobStillThere.id).toBe("agent-stream-bob");
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

@@ -1,0 +1,110 @@
+import type { FC } from "react";
+import { z } from "zod";
+import { useAppForm } from "~/application-ui/hook/form.exports";
+import { Dial } from "~/application-ui/ui/Dial/index";
+import { withFeedQuery } from "~/buyer-feed/query/withFeedQuery";
+import type { FeedSchema } from "~/buyer-feed/schema/FeedSchema";
+import { SaveContainer } from "~/container/ui/SaveContainer";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Container } from "~/ui/ui/Container";
+
+const FormSchema = z
+	.looseObject({
+		price: z.number().nullable(),
+	})
+	.strip();
+
+export namespace PriceMinPatch {
+	export interface Props extends Container.Props {
+		feed: FeedSchema.Type;
+		onSettledFn?(): void;
+		onCancelFn(): void;
+	}
+}
+
+export const PriceMinPatch: FC<PriceMinPatch.Props> = ({
+	feed,
+	onSettledFn,
+	onCancelFn,
+	...props
+}) => {
+	const translator = useTranslator();
+	const mutation = withFeedQuery.usePatchMutation({
+		onSettled: onSettledFn,
+	});
+	const form = useAppForm({
+		defaultValues: {
+			price: feed.query.where?.priceMin ?? null,
+		},
+		validators: {
+			onMount: FormSchema,
+			onChange: FormSchema,
+			onBlur: FormSchema,
+			onSubmit: FormSchema,
+		},
+		async onSubmit({ value }) {
+			return mutation.mutateAsync({
+				query: {
+					where: {
+						id: feed.id,
+					},
+				},
+				patch: {
+					query: {
+						...feed.query,
+						where: {
+							...feed.query?.where,
+							priceMin: value.price ?? undefined,
+						},
+					},
+				},
+			});
+		},
+	});
+
+	return (
+		<Container
+			data-ui={"PriceMinPatch"}
+			data-ui-layout="vertical-content-footer"
+			data-ui-height="full"
+			data-ui-width="full"
+			data-ui-inner="default"
+			data-ui-gap="default"
+			{...props}
+		>
+			<form.AppField name={"price"}>
+				{(price) => (
+					<Dial
+						value={
+							typeof price.state.value === "number" ? price.state.value : undefined
+						}
+						onChangeFn={(value) => {
+							price.handleChange(value ?? null);
+							price.handleBlur();
+						}}
+						placeholder={translator.textFn("Minimum price (placeholder)")}
+						allowDecimals
+					/>
+				)}
+			</form.AppField>
+
+			<form.Subscribe
+				selector={(state) => ({
+					isValid: state.isValid,
+					isSubmitting: state.isSubmitting,
+				})}
+			>
+				{({ isValid, isSubmitting }) => (
+					<SaveContainer
+						onCancelFn={onCancelFn}
+						onSaveFn={() => {
+							form.handleSubmit();
+						}}
+						loading={isSubmitting}
+						disabled={!isValid || isSubmitting}
+					/>
+				)}
+			</form.Subscribe>
+		</Container>
+	);
+};

@@ -5,8 +5,8 @@ import { keepPreviousData, QueryClient } from "@tanstack/react-query";
 import { persistQueryClient } from "@tanstack/react-query-persist-client";
 import { createRouter } from "@tanstack/react-router";
 import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
-import { Container } from "@/lib/client/container";
-import { Logo } from "~/common/ui/logo";
+import { Logo } from "~/application-ui/ui/logo.exports";
+import { Container } from "~/ui/ui/Container";
 import { routeTree } from "./_route";
 
 export async function getRouter() {
@@ -118,6 +118,6 @@ export async function getRouter() {
 
 declare module "@tanstack/react-router" {
 	interface Register {
-		router: ReturnType<typeof getRouter>;
+		router: Awaited<ReturnType<typeof getRouter>>;
 	}
 }

@@ -1,0 +1,71 @@
+import { sql } from "kysely";
+import type { Migration } from "kysely/migration";
+import { toEnumGuardFn } from "~/enum/fn/toEnumGuardFn";
+import type { ThumbEnumSchema } from "~/listing/schema/ThumbEnumSchema";
+
+export const ThumbMigration: Migration = {
+	async up(db) {
+		await db.schema
+			.createType("thumb_enum")
+			.asEnum(
+				toEnumGuardFn<ThumbEnumSchema.Type>()([
+					"like",
+					"dislike",
+				] as const),
+			)
+			.execute();
+
+		await db.schema
+			.createTable("thumb")
+			.addColumn("id", "text", (col) => col.primaryKey().notNull())
+			.addColumn("listingId", "text", (col) => col.notNull())
+			.addColumn("userId", "text", (col) => col.notNull())
+			.addColumn("type", sql`thumb_enum`, (col) => col.notNull())
+			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
+			.addForeignKeyConstraint(
+				"thumb_[userId]_fk",
+				[
+					"userId",
+				],
+				"user",
+				[
+					"id",
+				],
+				(c) => c.onDelete("cascade"),
+			)
+			.addForeignKeyConstraint(
+				"thumb_[listingId]_fk",
+				[
+					"listingId",
+				],
+				"listing",
+				[
+					"id",
+				],
+				(c) => c.onDelete("cascade"),
+			)
+			.addUniqueConstraint("thumb_[userId-listingId]_uniq", [
+				"userId",
+				"listingId",
+			])
+			.execute();
+
+		await db.schema
+			.createIndex("thumb_[listingId-type]_idx")
+			.on("thumb")
+			.columns([
+				"listingId",
+				"type",
+			])
+			.execute();
+
+		await db.schema
+			.createIndex("thumb_[userId-createdAt]_idx")
+			.on("thumb")
+			.columns([
+				"userId",
+				"createdAt",
+			])
+			.execute();
+	},
+};

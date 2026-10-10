@@ -1,0 +1,18 @@
+import { z } from "zod";
+import { WhereSchema } from "~/query/schema/WhereSchema";
+
+export const GalleryWhereSchema = z
+	.looseObject({
+		...WhereSchema.shape,
+	})
+	.strip()
+	.meta({
+		id: "PublicGalleryWhere",
+		description: "Public gallery app-based filters",
+	});
+
+export type GalleryWhereSchema = typeof GalleryWhereSchema;
+
+export namespace GalleryWhereSchema {
+	export type Type = z.infer<GalleryWhereSchema>;
+}

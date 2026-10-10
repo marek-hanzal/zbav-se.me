@@ -1,0 +1,16 @@
+import { Context } from "effect";
+import type { RestrictionEnumSchema } from "~/restriction/schema/RestrictionEnumSchema";
+
+export interface UserRestrictionContext {
+	/**
+	 * Delay in hours before the new user restriction becomes available.
+	 */
+	delay: Partial<Record<RestrictionEnumSchema.Type, number>>;
+}
+
+export class UserRestrictionContextFx extends Context.Service<
+	UserRestrictionContextFx,
+	UserRestrictionContext
+>()("UserRestrictionContextFx") {
+	//
+}

@@ -1,33 +1,49 @@
 import { Effect } from "effect";
-import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
-import { getFeedDefaultCreate } from "~/buyer/feed/service/getFeedDefaultCreate";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { genIdFn } from "~/identity/fn/genIdFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { expect, test } from "../test";
+import { expect, testFn } from "../testFn";
 
-test("registers the shared user in database B", async ({ page, database, db }) => {
-	return Effect.gen(function* () {
-		const seller = yield* leaseTestUserFx({
-			key: "a",
+testFn.use({
+	dbName: "database-routing",
+});
+
+testFn("application requests read database B", async ({ page, database, db, withRequestFn }) => {
+	const user = await leaseTestUserFx({
+		key: "a",
+	}).pipe(withRuntimeFn(database), Effect.runPromise);
+	const email = `routing-b-${genIdFn()}@x32.cz`;
+
+	await database.kysely
+		.updateTable("user")
+		.set({
+			email,
+		})
+		.where("id", "=", user.id)
+		.execute();
+
+	await withRequestFn(async (request) => {
+		const response = await request.post("/api/auth/sign-in/email", {
+			data: {
+				email,
+				password: user.password,
+			},
 		});
 
-		yield* feedCreateFx({
-			...getFeedDefaultCreate(`E2E feed B ${db}`),
-			userId: seller.id,
+		expect(response.ok()).toBe(true);
+		expect(response.headers()["x-e2e-db"]).toBe(db);
+		expect(await response.json()).toMatchObject({
+			user: {
+				id: user.id,
+				email,
+			},
 		});
+	});
 
-		const response = yield* Effect.promise(async () => {
-			const result = await page.goto("/api/e2e");
+	const response = await page.goto("/api/e2e");
 
-			if (result === null) {
-				throw new Error("Expected /api/e2e navigation response");
-			}
-
-			return await result.json();
-		});
-
-		expect(response).toEqual({
-			db,
-		});
-	}).pipe(withRuntimeFx(database), Effect.runPromise);
+	expect(response).not.toBeNull();
+	expect(await response?.json()).toEqual({
+		db,
+	});
 });

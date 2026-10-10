@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { match } from "ts-pattern";
-import { toLocaleNumber } from "@/lib/common/to-locale-number";
-import { listingAttrOfFn } from "~/common/listing-attr/fn/listingAttrOfFn";
-import { withListingQuery } from "~/public/listing/query/withListingQuery";
-import { withTranslationMiddleware } from "~/server/middleware/withTranslationMiddleware";
+import { listingAttrOfFn } from "~/listing-attr/fn/listingAttrOfFn";
+import { toLocaleNumberFn } from "~/number/fn/toLocaleNumberFn";
+import { withListingQuery } from "~/public-listing/query/withListingQuery";
+import { withTranslationMiddleware } from "~/request-middleware/middleware/withTranslationMiddleware";
 
 export const Route = createFileRoute("/$locale/z/{$id}.md")({
 	server: {
@@ -27,45 +27,47 @@ export const Route = createFileRoute("/$locale/z/{$id}.md")({
 				match(listing.priceType)
 					.with("fixed", "haggle", (priceType) => {
 						md.push(
-							`${translator.text(`Listing price - ${priceType}`)} | ${toLocaleNumber({
-								locale,
-								number: listing.price,
-							})} ${listing.currency}`,
+							`${translator.textFn(`Listing price - ${priceType}`)} | ${toLocaleNumberFn(
+								{
+									locale,
+									number: listing.price,
+								},
+							)} ${listing.currency}`,
 						);
 					})
 					.with("ask", "free", "haulaway", (priceType) => {
-						md.push(translator.text(`Listing price - ${priceType}`));
+						md.push(translator.textFn(`Listing price - ${priceType}`));
 					})
 					.exhaustive();
 
 				md.push(`${listing.location.address}\n`);
 
-				md.push(`### ${translator.text("Listing gallery (label)")}`);
+				md.push(`### ${translator.textFn("Listing gallery (label)")}`);
 				listing.withImageUrl.forEach((url) => {
 					md.push(`- ${url}`);
 				});
 
 				if (listing.description) {
-					md.push(`### ${translator.text("Listing description (label)")}`);
+					md.push(`### ${translator.textFn("Listing description (label)")}`);
 					md.push(listing.description);
 				}
 
 				if (listing.delivery.length) {
-					md.push(`\n### ${translator.text("Listing delivery (label)")}`);
+					md.push(`\n### ${translator.textFn("Listing delivery (label)")}`);
 					listing.delivery.forEach((item) => {
 						md.push(`- ${item}`);
 					});
 				}
 
 				if (listing.pros.length) {
-					md.push(`\n### ${translator.text("Listing - Pros (label)")}`);
+					md.push(`\n### ${translator.textFn("Listing - Pros (label)")}`);
 					listing.pros.forEach((value) => {
 						md.push(`- ${value}`);
 					});
 				}
 
 				if (listing.cons.length) {
-					md.push(`\n### ${translator.text("Listing - Cons (label)")}`);
+					md.push(`\n### ${translator.textFn("Listing - Cons (label)")}`);
 					listing.cons.forEach((value) => {
 						md.push(`- ${value}`);
 					});
@@ -80,14 +82,14 @@ export const Route = createFileRoute("/$locale/z/{$id}.md")({
 				});
 
 				if (attrs.length) {
-					md.push(`\n### ${translator.text("Listing - extras (label)")}`);
+					md.push(`\n### ${translator.textFn("Listing - extras (label)")}`);
 					md.push(
-						`| ${translator.text("Extra attr - label (label)")} | ${translator.text("Extra attr - value (label)")} |`,
+						`| ${translator.textFn("Extra attr - label (label)")} | ${translator.textFn("Extra attr - value (label)")} |`,
 					);
 					md.push("| - | - |");
 					attrs.forEach((attr) => {
 						md.push(
-							`| ${translator.text(`Field - ${attr.name}`)} | ${match(attr)
+							`| ${translator.textFn(`Field - ${attr.name}`)} | ${match(attr)
 								.with(
 									{
 										type: "number",
@@ -99,7 +101,7 @@ export const Route = createFileRoute("/$locale/z/{$id}.md")({
 										type: "range",
 									},
 									(attr) => {
-										return toLocaleNumber({
+										return toLocaleNumberFn({
 											number: attr.value,
 											locale,
 										});
@@ -136,7 +138,7 @@ export const Route = createFileRoute("/$locale/z/{$id}.md")({
 									(attr) => {
 										return attr.value
 											.map((item) =>
-												translator.text(`${attr.name} - ${item}`, item),
+												translator.textFn(`${attr.name} - ${item}`, item),
 											)
 											.join(", ");
 									},

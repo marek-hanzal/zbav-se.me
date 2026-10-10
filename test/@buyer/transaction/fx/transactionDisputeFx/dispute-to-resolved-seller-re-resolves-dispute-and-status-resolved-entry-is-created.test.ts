@@ -1,15 +1,15 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { transactionDisputeFx } from "~/buyer/transaction/server/fx/transactionDisputeFx";
-import { transactionResolveFx } from "~/seller/transaction/server/fx/transactionResolveFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { transactionDisputeFx } from "~/buyer-transaction/fx/transactionDisputeFx";
+import { transactionResolveFx } from "~/seller-transaction/fx/transactionResolveFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createResolvedScenarioFx } from "~/test/transaction/fx/createResolvedScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("transactionDisputeFx (buyer)", () => {
 	it("dispute → resolved: seller re-resolves dispute and status-resolved entry is created", async () => {
-		const database = await testabase("buyerDisputeFx-dispute-to-resolved");
+		const database = await testabaseFn("buyerDisputeFx-dispute-to-resolved");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -52,6 +52,6 @@ describe("transactionDisputeFx (buyer)", () => {
 			const kinds = entries.map((e) => e.kind);
 			expect(kinds).toContain("status-dispute-buyer");
 			expect(kinds.filter((k) => k === "status-resolved")).toHaveLength(2);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

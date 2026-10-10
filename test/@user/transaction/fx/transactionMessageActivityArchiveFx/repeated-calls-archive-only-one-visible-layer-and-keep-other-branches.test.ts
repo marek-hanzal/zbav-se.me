@@ -1,14 +1,14 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { DateContextFx } from "@/lib/common/date";
-import type { ActivityTableSchema } from "~/server/database/@table/ActivityTableSchema";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import type { ActivityTableSchema } from "~/database/schema/ActivityTable";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { activityCountFx } from "~/user/activity/server/fx/activityCountFx";
-import { activityFetchFx } from "~/user/activity/server/fx/activityFetchFx";
-import { transactionMessageActivityArchiveFx } from "~/user/transaction/server/fx/transactionMessageActivityArchiveFx";
+import { activityCountFx } from "~/user-activity/fx/activityCountFx";
+import { activityFetchFx } from "~/user-activity/fx/activityFetchFx";
+import { transactionMessageActivityArchiveFx } from "~/user-transaction/fx/transactionMessageActivityArchiveFx";
 
 type SeedActivity = Pick<
 	ActivityTableSchema.Type,
@@ -25,13 +25,13 @@ type SeedActivity = Pick<
 
 const atFx = <A, E, R>(iso: string, eff: Effect.Effect<A, E, R>) =>
 	eff.pipe(
-		Effect.provideService(DateContextFx, {
-			now: () => DateTime.fromISO(iso),
+		withDateServiceFn({
+			nowFn: () => DateTime.fromISO(iso),
 		}),
 	);
 
-const seedActivity = async (
-	database: Awaited<ReturnType<typeof testabase>>,
+const seedActivityFn = async (
+	database: Awaited<ReturnType<typeof testabaseFn>>,
 	rows: SeedActivity[],
 ) => {
 	await database.kysely.insertInto("activity").values(rows).execute();
@@ -39,7 +39,7 @@ const seedActivity = async (
 
 describe("transactionMessageActivityArchiveFx", () => {
 	it("archives one visible scoped layer at a time and leaves sibling branches untouched", async () => {
-		const database = await testabase(
+		const database = await testabaseFn(
 			"transactionMessageActivityArchiveFx-repeated-scoped-layers",
 		);
 
@@ -47,7 +47,7 @@ describe("transactionMessageActivityArchiveFx", () => {
 			const owner = yield* leaseTestUserFx({});
 
 			yield* Effect.promise(() =>
-				seedActivity(database, [
+				seedActivityFn(database, [
 					{
 						id: "target-old",
 						userId: owner.id,
@@ -247,6 +247,6 @@ describe("transactionMessageActivityArchiveFx", () => {
 			expect(archivedById.get("keep-different-listing-different-transaction")).toBeNull();
 			expect(archivedById.get("keep-same-listing-different-transaction")).toBeNull();
 			expect(archivedById.get("keep-wrong-type")).toBeNull();
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

@@ -1,14 +1,14 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { transactionTouchFx } from "~/user/transaction/server/fx/transactionTouchFx";
+import { transactionTouchFx } from "~/user-transaction/fx/transactionTouchFx";
 
 describe("transactionTouchFx", () => {
 	it("allows a stranger (non-participant) to touch the transaction - authorization gap", async () => {
-		const database = await testabase("transactionTouchFx-authorization-gap");
+		const database = await testabaseFn("transactionTouchFx-authorization-gap");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -42,6 +42,6 @@ describe("transactionTouchFx", () => {
 			// Transaction was touched by stranger - this should fail but currently succeeds
 			expect(after.updatedAt).toBeDefined();
 			expect(after.expiresAt).toBeDefined();
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

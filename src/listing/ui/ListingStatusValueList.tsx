@@ -1,0 +1,46 @@
+import type { FC } from "react";
+import type { ListingStatusEnumSchema } from "~/listing/schema/ListingStatusEnumSchema";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { ValueList } from "~/ui/ui/ValueList";
+
+export namespace ListingStatusValueList {
+	export interface Props
+		extends Omit<
+			ValueList.PropsEx<{
+				id: string;
+				status: string;
+			}>,
+			"items" | "renderFn"
+		> {
+		statusIn: ListingStatusEnumSchema.Type[];
+	}
+}
+
+export const ListingStatusValueList: FC<ListingStatusValueList.Props> = ({
+	statusIn,
+	...props
+}) => {
+	const translator = useTranslator();
+
+	return (
+		<ValueList
+			data-ui={"ListingStatusValueList"}
+			textLabel={translator.textFn("Listing status (label)")}
+			textEmpty={translator.textFn("Listing status not selected")}
+			items={statusIn.map((status) => ({
+				id: status,
+				status,
+			}))}
+			renderFn={(item) => translator.textFn(`Listing status - ${item.status}`)}
+			wrapperProps={{
+				...(statusIn.length > 0
+					? {
+							"data-ui-tone": "neutral",
+							"data-ui-theme": "light",
+						}
+					: undefined),
+			}}
+			{...props}
+		/>
+	);
+};

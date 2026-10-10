@@ -1,0 +1,18 @@
+import type { AgentStreamQuerySchema } from "~/user-agent/schema/AgentStreamQuerySchema";
+
+export const AgentStreamItemsQueryFn = (threadId: string) =>
+	({
+		where: {
+			threadId,
+		},
+		sort: [
+			{
+				field: "sort",
+				order: "asc",
+			},
+		],
+		cursor: {
+			page: 0,
+			size: 512,
+		},
+	}) satisfies AgentStreamQuerySchema.Type;

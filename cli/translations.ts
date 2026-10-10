@@ -1,12 +1,12 @@
-import { TranslationSources } from "@/lib/client/translation";
-import { tx } from "@/lib/server/tx";
 import { locales } from "~/locales";
+import { TranslationSources } from "~/translation/constant/TranslationSources";
+import { txFn } from "~/translation-tooling/fn/txFn";
 
-tx({
+txFn({
 	packages: [
-		`${__dirname}/..`,
+		`${import.meta.dirname}/..`,
 	],
-	output: `${__dirname}/../src/server/@migrations/translation`,
+	output: `${import.meta.dirname}/../src/database-migration/data`,
 	locales,
 	sources: TranslationSources,
 });

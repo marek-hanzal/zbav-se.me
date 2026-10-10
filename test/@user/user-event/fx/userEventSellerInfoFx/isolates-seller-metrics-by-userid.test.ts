@@ -1,15 +1,15 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { userEventSellerInfoFx } from "~/buyer-user-event/fx/userEventSellerInfoFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { seedUserEventTimelineFx } from "~/test/user-event/fx/seedUserEventTimelineFx";
 
 describe("userEventSellerInfoFx", () => {
 	it("isolates seller metrics by userId and does not mix other sellers' events", async () => {
-		const database = await testabase("userEventSellerInfoFx-isolation");
+		const database = await testabaseFn("userEventSellerInfoFx-isolation");
 
 		return Effect.gen(function* () {
 			const sellerA = yield* leaseTestUserFx({});
@@ -67,6 +67,6 @@ describe("userEventSellerInfoFx", () => {
 			expect(sellerAInfo).not.toBeNull();
 			expect(sellerAInfo?.reaction.total).toBe(1);
 			expect(sellerBInfo).toBeNull();
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

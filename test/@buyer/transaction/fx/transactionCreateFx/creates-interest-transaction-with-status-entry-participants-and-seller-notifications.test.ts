@@ -1,15 +1,15 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { keyOf } from "@/lib/common/key-of";
-import { transactionCreateFx } from "~/buyer/transaction/server/fx/transactionCreateFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { transactionCreateFx } from "~/buyer-transaction/fx/transactionCreateFx";
+import { keyOfFn } from "~/hash/fn/keyOfFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
 describe("transactionCreateFx", () => {
 	it("creates interest transaction with status entry, participants and seller notifications", async () => {
-		const database = await testabase("transactionCreateFx-direct");
+		const database = await testabaseFn("transactionCreateFx-direct");
 
 		return Effect.gen(function* () {
 			const { seller, buyer } = yield* createUsersFx({});
@@ -71,7 +71,7 @@ describe("transactionCreateFx", () => {
 						"event",
 						"group",
 					])
-					.where("group", "=", keyOf(transaction.id))
+					.where("group", "=", keyOfFn(transaction.id))
 					.where("event", "=", "transaction.create")
 					.execute(),
 			);
@@ -126,6 +126,6 @@ describe("transactionCreateFx", () => {
 						item.payload.transactionId === transaction.id,
 				),
 			).toBe(true);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

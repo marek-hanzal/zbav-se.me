@@ -1,9 +1,9 @@
 import { Effect } from "effect";
 import type { DateTime } from "luxon";
-import { genId } from "@/lib/common/gen-id";
-import { keyOf } from "@/lib/common/key-of";
-import { dbFx } from "~/server/database/fx/dbFx";
-import type { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
+import { dbFx } from "~/database/fx/dbFx";
+import { keyOfFn } from "~/hash/fn/keyOfFn";
+import { genIdFn } from "~/identity/fn/genIdFn";
+import type { userEventCreateFx } from "~/user-event/fx/userEventCreateFx";
 
 export namespace seedUserEventTimelineFx {
 	export interface Event {
@@ -30,9 +30,9 @@ export const seedUserEventTimelineFx = Effect.fn("seedUserEventTimelineFx")(func
 			.insertInto("user_event")
 			.values(
 				events.map((entry) => ({
-					id: genId(),
+					id: genIdFn(),
 					userId,
-					group: keyOf(entry.group),
+					group: keyOfFn(entry.group),
 					scope: entry.scope,
 					source: entry.source,
 					event: entry.event,

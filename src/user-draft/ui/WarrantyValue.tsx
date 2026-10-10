@@ -1,0 +1,31 @@
+import type { FC } from "react";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { LabelValue } from "~/ui/ui/LabelValue";
+import type { WarrantyEnumSchema } from "~/warranty/schema/WarrantyEnumSchema";
+
+export namespace WarrantyValue {
+	export interface Props extends LabelValue.PropsEx {
+		warranty: WarrantyEnumSchema.Type | null | undefined;
+	}
+}
+
+/**
+ * Renders a read-only warranty value with consistent formatting and empty-state handling.
+ * Use it in detail cards, summaries, and previews where editable controls are not needed.
+ */
+export const WarrantyValue: FC<WarrantyValue.Props> = ({ warranty, ...props }) => {
+	const translator = useTranslator();
+	return (
+		<LabelValue
+			data-ui={"WarrantyValue[LabelValue]"}
+			textLabel={translator.textFn("Listing warranty (label)")}
+			textValue={warranty ? translator.textFn(`Listing warranty - ${warranty}`) : null}
+			textEmpty={translator.textFn("Warranty not selected")}
+			textHint={translator.textFn("Listing warranty (hint)")}
+			wrapperProps={{
+				"data-ui-tone": warranty ? "neutral" : "secondary",
+			}}
+			{...props}
+		/>
+	);
+};

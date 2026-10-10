@@ -1,21 +1,21 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { expectErrorFn } from "~/test/common/fx/expectErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { UploadContextFx } from "~/user/upload/server/context/UploadContextFx";
-import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
-import { uploadFetchFx } from "~/user/upload/server/fx/uploadFetchFx";
+import { UploadConfigFx } from "~/user-upload/context/UploadConfigFx";
+import { uploadCreateFx } from "~/user-upload/fx/uploadCreateFx";
+import { uploadFetchFx } from "~/user-upload/fx/uploadFetchFx";
 
 describe("uploadFetchFx", () => {
 	it("fetches scoped upload and rejects missing or foreign upload", async () => {
-		const database = await testabase("uploadFetchFx-contract");
+		const database = await testabaseFn("uploadFetchFx-contract");
 
 		return Effect.gen(function* () {
 			const users = yield* createUsersFx({});
-			const uploadContext = yield* UploadContextFx;
-			const cdn = uploadContext.cdn.replace(/\/$/, "");
+			const uploadConfig = yield* UploadConfigFx;
+			const cdn = uploadConfig.cdn.replace(/\/$/, "");
 			const ownUploadUrl = `${cdn}/own-upload.jpg`;
 
 			const ownUpload = yield* uploadCreateFx({
@@ -41,7 +41,7 @@ describe("uploadFetchFx", () => {
 			expect(fetched.id).toBe(ownUpload.id);
 			expect(fetched.url).toBe(ownUploadUrl);
 
-			const foreign = yield* Effect.either(
+			const foreign = yield* Effect.result(
 				uploadFetchFx({
 					where: {
 						id: foreignUpload.id,
@@ -51,9 +51,9 @@ describe("uploadFetchFx", () => {
 					},
 				}),
 			);
-			expectErrorFx(foreign);
+			expectErrorFn(foreign);
 
-			const missing = yield* Effect.either(
+			const missing = yield* Effect.result(
 				uploadFetchFx({
 					where: {
 						id: "missing-upload-id",
@@ -63,7 +63,7 @@ describe("uploadFetchFx", () => {
 					},
 				}),
 			);
-			expectErrorFx(missing);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+			expectErrorFn(missing);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

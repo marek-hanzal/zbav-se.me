@@ -1,18 +1,18 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
-import { feedDeleteFx } from "~/buyer/feed/server/fx/feedDeleteFx";
-import { feedFetchFx } from "~/buyer/feed/server/fx/feedFetchFx";
-import { feedPatchFx } from "~/buyer/feed/server/fx/feedPatchFx";
-import { feedResolveFx } from "~/buyer/feed/server/fx/feedResolveFx";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { feedCreateFx } from "~/buyer-feed/fx/feedCreateFx";
+import { feedDeleteFx } from "~/buyer-feed/fx/feedDeleteFx";
+import { feedFetchFx } from "~/buyer-feed/fx/feedFetchFx";
+import { feedPatchFx } from "~/buyer-feed/fx/feedPatchFx";
+import { feedResolveFx } from "~/buyer-feed/fx/feedResolveFx";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("feedLifecycleFx", () => {
 	it("resolves for owner, rejects foreign access, and deletes feed cleanly", async () => {
-		const database = await testabase("feedLifecycle-access");
+		const database = await testabaseFn("feedLifecycle-access");
 
 		return Effect.gen(function* () {
 			const owner = yield* leaseTestUserFx({});
@@ -32,19 +32,19 @@ describe("feedLifecycleFx", () => {
 
 			expect(resolved.id).toBe(feed.id);
 
-			const foreignResolution = yield* Effect.either(
+			const foreignResolution = yield* Effect.result(
 				feedResolveFx({
 					userId: stranger.id,
 					feedId: feed.id,
 				}),
 			);
 
-			expectTaggedErrorFx(foreignResolution, {
+			expectTaggedErrorFn(foreignResolution, {
 				tag: "AccessDeniedErrorFx",
 				message: "You are not allowed to access this feed",
 			});
 
-			const foreignPatch = yield* Effect.either(
+			const foreignPatch = yield* Effect.result(
 				feedPatchFx({
 					scope: {
 						userId: stranger.id,
@@ -59,7 +59,7 @@ describe("feedLifecycleFx", () => {
 					},
 				}),
 			);
-			const foreignDelete = yield* Effect.either(
+			const foreignDelete = yield* Effect.result(
 				feedDeleteFx({
 					scope: {
 						userId: stranger.id,
@@ -70,10 +70,10 @@ describe("feedLifecycleFx", () => {
 				}),
 			);
 
-			expectTaggedErrorFx(foreignPatch, {
+			expectTaggedErrorFn(foreignPatch, {
 				tag: "NotFoundErrorFx",
 			});
-			expectTaggedErrorFx(foreignDelete, {
+			expectTaggedErrorFn(foreignDelete, {
 				tag: "NotFoundErrorFx",
 			});
 
@@ -88,7 +88,7 @@ describe("feedLifecycleFx", () => {
 
 			expect(deleted.id).toBe(feed.id);
 
-			const missing = yield* Effect.either(
+			const missing = yield* Effect.result(
 				feedFetchFx({
 					scope: {
 						userId: owner.id,
@@ -99,9 +99,9 @@ describe("feedLifecycleFx", () => {
 				}),
 			);
 
-			expectTaggedErrorFx(missing, {
+			expectTaggedErrorFn(missing, {
 				tag: "NotFoundErrorFx",
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

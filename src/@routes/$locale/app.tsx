@@ -1,6 +1,6 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
-import { AgentRuntimeProvider } from "~/user/agent/runtime";
-import { getSessionFn } from "~/user/auth/fn/getSessionFn";
+import { AgentRuntimeProvider } from "~/user-agent/runtime/index";
+import { getSessionFn } from "~/user-auth/fn/getSessionFn";
 
 export const Route = createFileRoute("/$locale/app")({
 	async loader({ location, params: { locale } }) {

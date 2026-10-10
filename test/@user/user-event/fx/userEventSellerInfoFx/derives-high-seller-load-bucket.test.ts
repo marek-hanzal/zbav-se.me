@@ -1,11 +1,11 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { userEventSellerInfoFx } from "~/buyer-user-event/fx/userEventSellerInfoFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { createTransactionTimeline } from "~/test/user-event/fx/createTransactionTimeline";
+import { createTransactionTimelineFn } from "~/test/user-event/fx/createTransactionTimelineFn";
 import { seedUserEventTimelineFx } from "~/test/user-event/fx/seedUserEventTimelineFx";
 
 interface SeedSellerEventsProps {
@@ -15,14 +15,14 @@ interface SeedSellerEventsProps {
 	withUserAction?: boolean;
 }
 
-const createLoadEvents = ({
+const createLoadEventsFn = ({
 	activeTransactions,
 	userId,
 }: Pick<SeedSellerEventsProps, "activeTransactions" | "userId">) =>
 	Array.from({
 		length: activeTransactions,
 	}).flatMap((_, index) =>
-		createTransactionTimeline({
+		createTransactionTimelineFn({
 			group: `tx-${userId}-${index}`,
 			steps: [
 				{
@@ -41,14 +41,14 @@ describe("userEventSellerInfoFx", {
 	timeout: 4_000,
 }, () => {
 	it("derives high seller load bucket", async () => {
-		const database = await testabase("userEventSellerInfoFx-load-high");
+		const database = await testabaseFn("userEventSellerInfoFx-load-high");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
 
 			yield* seedUserEventTimelineFx({
 				userId: seller.id,
-				events: createLoadEvents({
+				events: createLoadEventsFn({
 					userId: seller.id,
 					activeTransactions: 4,
 				}),
@@ -59,6 +59,6 @@ describe("userEventSellerInfoFx", {
 			});
 
 			expect(result?.load.bucket).toBe("high");
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

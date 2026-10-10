@@ -1,12 +1,12 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { categoryCollectionFx } from "~/public/category/server/fx/categoryCollectionFx";
-import { categoryCountFx } from "~/public/category/server/fx/categoryCountFx";
-import { categoryFetchFx } from "~/public/category/server/fx/categoryFetchFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { categoryCollectionFx } from "~/public-category/fx/categoryCollectionFx";
+import { categoryCountFx } from "~/public-category/fx/categoryCountFx";
+import { categoryFetchFx } from "~/public-category/fx/categoryFetchFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 
-type TestDatabase = Awaited<ReturnType<typeof testabase>>;
+type TestDatabase = Awaited<ReturnType<typeof testabaseFn>>;
 
 type CategoryFixture = {
 	id: string;
@@ -63,7 +63,7 @@ const insertSpotlightFx = (
 
 describe("public category search", () => {
 	it("filters through spotlight text and locale while keeping fetch/count/sort consistent", async () => {
-		const database = await testabase("public-category-search-filters");
+		const database = await testabaseFn("public-category-search-filters");
 
 		return Effect.gen(function* () {
 			const spotlightCategory = yield* categoryBySlugFx(
@@ -165,6 +165,6 @@ describe("public category search", () => {
 			]);
 			expect(fetched.id).toBe(spotlightCategory.id);
 			expect(fetched.locale).toBe("en");
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

@@ -1,14 +1,14 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { activityArchiveFx } from "~/user/activity/server/fx/activityArchiveFx";
-import { activityCountFx } from "~/user/activity/server/fx/activityCountFx";
+import { activityArchiveFx } from "~/user-activity/fx/activityArchiveFx";
+import { activityCountFx } from "~/user-activity/fx/activityCountFx";
 
 describe("activity bulk mutation archive contract", () => {
 	it("archives only scoped rows matched by reference filters and keeps counts consistent", async () => {
-		const database = await testabase("activityBulkMutationFx-archive");
+		const database = await testabaseFn("activityBulkMutationFx-archive");
 
 		return Effect.gen(function* () {
 			const owner = yield* leaseTestUserFx({});
@@ -129,6 +129,6 @@ describe("activity bulk mutation archive contract", () => {
 
 			expect(ownerActive).toBe(1);
 			expect(strangerActive).toBe(1);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

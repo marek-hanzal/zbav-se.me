@@ -1,18 +1,18 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { listingCollectionFx } from "~/public/listing/server/fx/listingCollectionFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { listingCollectionFx } from "~/public-listing/fx/listingCollectionFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import {
 	patchListingSearchFixtureFx,
 	seedLocationFixtureFx,
 } from "~/test/listing/fx/listingSearchFixturesFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
 describe("public listing geo sort", () => {
 	it("sorts nearest and farthest listings when reference location metadata is provided", async () => {
-		const database = await testabase("public-listing-geo-sort");
+		const database = await testabaseFn("public-listing-geo-sort");
 
 		return Effect.gen(function* () {
 			const users = yield* createUsersFx({});
@@ -117,6 +117,6 @@ describe("public listing geo sort", () => {
 				ostravaListing.id,
 				brnoListing.id,
 			]);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

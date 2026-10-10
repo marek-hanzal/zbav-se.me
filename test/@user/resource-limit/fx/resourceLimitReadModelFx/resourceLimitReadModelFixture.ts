@@ -1,12 +1,12 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
-import { DateContextFx } from "@/lib/common/date";
-import { genId } from "@/lib/common/gen-id";
-import type { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/ResourceDefinitionEnumSchema";
-import type { testabase } from "~/test/testabase";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
+import { genIdFn } from "~/identity/fn/genIdFn";
+import type { ResourceDefinitionEnumSchema } from "~/resource-definition/schema/ResourceDefinitionEnumSchema";
+import type { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
-type TestDatabase = Awaited<ReturnType<typeof testabase>>;
+type TestDatabase = Awaited<ReturnType<typeof testabaseFn>>;
 
 interface ResourceBundleLimitSeed {
 	userId: string;
@@ -17,9 +17,9 @@ interface ResourceBundleLimitSeed {
 	limit: number;
 }
 
-const date = (iso: string) => new Date(iso);
+const dateFn = (iso: string) => new Date(iso);
 
-const limitSeed = (
+const limitSeedFn = (
 	userId: string,
 	resourceDefinitionId: ResourceDefinitionEnumSchema.Type,
 	availableAt: string,
@@ -37,8 +37,8 @@ const limitSeed = (
 
 export const atResourceLimitReadModelFx = <A, E, R>(iso: string, eff: Effect.Effect<A, E, R>) =>
 	eff.pipe(
-		Effect.provideService(DateContextFx, {
-			now: () => DateTime.fromISO(iso),
+		withDateServiceFn({
+			nowFn: () => DateTime.fromISO(iso),
 		}),
 	);
 
@@ -57,65 +57,65 @@ export const seedResourceLimitReadModelFx = (database: TestDatabase) =>
 		});
 
 		const seeds = [
-			limitSeed(
+			limitSeedFn(
 				seller.id,
-				"listing.count",
+				"seller:limit:listing.count",
 				"2026-05-10T08:00:00.000Z",
 				"2026-05-10T08:00:00.000Z",
 				null,
 				2,
 			),
-			limitSeed(
+			limitSeedFn(
 				seller.id,
-				"listing.count",
+				"seller:limit:listing.count",
 				"2026-05-12T08:00:00.000Z",
 				"2026-05-12T08:45:00.000Z",
 				null,
 				7,
 			),
-			limitSeed(
+			limitSeedFn(
 				seller.id,
-				"listing.count",
+				"seller:limit:listing.count",
 				"2026-05-13T08:00:00.000Z",
 				"2026-05-13T08:30:00.000Z",
 				null,
 				99,
 			),
-			limitSeed(
+			limitSeedFn(
 				seller.id,
-				"feed.count",
+				"buyer:limit:feed.count",
 				"2026-05-10T09:00:00.000Z",
 				"2026-05-10T09:00:00.000Z",
 				null,
 				4,
 			),
-			limitSeed(
+			limitSeedFn(
 				seller.id,
-				"listing.gallery.count",
+				"seller:limit:listing.gallery.count",
 				"2026-05-10T10:00:00.000Z",
 				"2026-05-10T10:00:00.000Z",
 				null,
 				10,
 			),
-			limitSeed(
+			limitSeedFn(
 				seller.id,
-				"listing.gallery.count",
+				"seller:limit:listing.gallery.count",
 				"2026-05-12T11:30:00.000Z",
 				"2026-05-12T11:30:00.000Z",
 				null,
 				25,
 			),
-			limitSeed(
+			limitSeedFn(
 				buyer.id,
-				"feed.count",
+				"buyer:limit:feed.count",
 				"2026-05-10T12:00:00.000Z",
 				"2026-05-10T12:00:00.000Z",
 				null,
 				1,
 			),
-			limitSeed(
+			limitSeedFn(
 				buyer.id,
-				"listing.gallery.count",
+				"seller:limit:listing.gallery.count",
 				"2026-05-10T12:00:00.000Z",
 				"2026-05-10T12:00:00.000Z",
 				null,
@@ -125,35 +125,44 @@ export const seedResourceLimitReadModelFx = (database: TestDatabase) =>
 
 		yield* Effect.promise(async () => {
 			for (const seed of seeds) {
-				const resourceBundleId = genId();
+				const resourceBundleId = genIdFn();
 
 				await database.kysely
 					.insertInto("resource_bundle")
 					.values({
 						id: resourceBundleId,
 						name: `Test bundle ${resourceBundleId}`,
+						type: "user",
+						access: "protected",
+						sort: 0,
 					})
 					.execute();
 
-				await database.kysely
-					.insertInto("resource_bundle_limit")
-					.values({
-						id: genId(),
-						resourceBundleId,
-						resourceDefinitionId: seed.resourceDefinitionId,
-						limit: seed.limit,
-					})
-					.execute();
-
-				await database.kysely
+				const userResourceBundle = await database.kysely
 					.insertInto("user_resource_bundle")
 					.values({
-						id: genId(),
+						id: genIdFn(),
 						userId: seed.userId,
 						resourceBundleId,
-						createdAt: date(seed.createdAt),
-						availableAt: date(seed.availableAt),
-						expiresAt: seed.expiresAt ? date(seed.expiresAt) : null,
+						createdAt: dateFn(seed.createdAt),
+						availableAt: dateFn(seed.availableAt),
+						expiresAt: seed.expiresAt ? dateFn(seed.expiresAt) : null,
+					})
+					.returning([
+						"id",
+					])
+					.executeTakeFirstOrThrow();
+
+				await database.kysely
+					.insertInto("user_resource_bundle_limit")
+					.values({
+						id: genIdFn(),
+						userResourceBundleId: userResourceBundle.id,
+						resourceDefinitionId: seed.resourceDefinitionId,
+						limit: seed.limit,
+						createdAt: dateFn(seed.createdAt),
+						availableAt: dateFn(seed.availableAt),
+						expiresAt: seed.expiresAt ? dateFn(seed.expiresAt) : null,
 					})
 					.execute();
 			}

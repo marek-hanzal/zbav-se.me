@@ -1,3 +1,4 @@
+import { spawnSync } from "node:child_process";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 import process from "node:process";
@@ -10,6 +11,21 @@ interface ParsedEnvFile {
 	secrets: EnvMap;
 }
 
+interface VercelEnvResponse {
+	envs?: VercelEnv[];
+}
+
+interface VercelEnvOperationResponse {
+	failed?: unknown[];
+}
+
+interface VercelEnvPayload {
+	key: string;
+	target: readonly string[];
+	type: "plain" | "sensitive";
+	value: string;
+}
+
 interface VercelEnv {
 	id: string;
 	key: string;
@@ -20,28 +36,28 @@ interface VercelEnv {
 const REPO = "marek-hanzal/zbav-se.me";
 const ENV_DIRECTORY = "@env";
 
-function printUsage(reason?: string, exitCode = 1): never {
-	const availableEnvironments = listAvailableEnvironments();
+function printUsageFn(reason?: string, exitCode = 1): never {
+	const availableEnvironments = listAvailableEnvironmentsFn();
 
 	if (reason) {
 		console.error(reason);
 		console.error("");
 	}
 
-	console.error("Usage: bun run env:sync <environment> <vercel-project-id>");
+	console.error("Usage: argc env-sync <environment> <vercel-project-id>");
 	console.error("");
 	console.error(`Available environments: ${availableEnvironments.join(", ") || "(none found)"}`);
 	console.error("");
 	console.error("Examples:");
 
 	for (const environment of availableEnvironments) {
-		console.error(`  bun run env:sync ${environment} prj_xxx`);
+		console.error(`  argc env-sync ${environment} prj_xxx`);
 	}
 
 	process.exit(exitCode);
 }
 
-function listAvailableEnvironments() {
+function listAvailableEnvironmentsFn() {
 	const absoluteDirectory = path.resolve(process.cwd(), ENV_DIRECTORY);
 
 	if (!existsSync(absoluteDirectory)) {
@@ -54,21 +70,21 @@ function listAvailableEnvironments() {
 		.sort((left, right) => left.localeCompare(right));
 }
 
-function resolveEnvFilePath(input: string) {
+function resolveEnvFilePathFn(input: string) {
 	const absolutePath = path.resolve(process.cwd(), ENV_DIRECTORY, `${input}.json`);
 
 	if (!existsSync(absolutePath)) {
-		printUsage(`Environment file not found: ${absolutePath}`, 1);
+		printUsageFn(`Environment file not found: ${absolutePath}`, 1);
 	}
 
 	return absolutePath;
 }
 
-function parseEnvFile(filePath: string): ParsedEnvFile {
+function parseEnvFileFn(filePath: string): ParsedEnvFile {
 	const source = readFileSync(filePath, "utf8");
 	const parsed = JSON.parse(source) as Partial<Pick<ParsedEnvFile, "variables" | "secrets">>;
-	const variables = withEnvMap(parsed.variables);
-	const secrets = withEnvMap(parsed.secrets);
+	const variables = withEnvMapFn(parsed.variables);
+	const secrets = withEnvMapFn(parsed.secrets);
 
 	return {
 		environment: path.basename(filePath, ".json"),
@@ -77,7 +93,7 @@ function parseEnvFile(filePath: string): ParsedEnvFile {
 	};
 }
 
-function withEnvMap(source: unknown): EnvMap {
+function withEnvMapFn(source: unknown): EnvMap {
 	if (!source || typeof source !== "object" || Array.isArray(source)) {
 		return {};
 	}
@@ -95,12 +111,12 @@ function withEnvMap(source: unknown): EnvMap {
 	return envMap;
 }
 
-function syncGitHub(parsedEnvFile: ParsedEnvFile) {
+function syncGitHubFn(parsedEnvFile: ParsedEnvFile) {
 	const { environment, variables, secrets } = parsedEnvFile;
 
 	console.log(`Syncing GitHub environment "${environment}"...`);
 
-	const existingVars = listGhNames([
+	const existingVars = listGhNamesFn([
 		"gh",
 		"variable",
 		"list",
@@ -114,7 +130,7 @@ function syncGitHub(parsedEnvFile: ParsedEnvFile) {
 		".[].name",
 	]);
 
-	const existingSecs = listGhNames([
+	const existingSecs = listGhNamesFn([
 		"gh",
 		"secret",
 		"list",
@@ -132,7 +148,7 @@ function syncGitHub(parsedEnvFile: ParsedEnvFile) {
 
 	for (const name of existingVars) {
 		console.log(`  Deleting variable ${name}`);
-		runGh([
+		runGhFn([
 			"gh",
 			"variable",
 			"delete",
@@ -146,7 +162,7 @@ function syncGitHub(parsedEnvFile: ParsedEnvFile) {
 
 	for (const name of existingSecs) {
 		console.log(`  Deleting secret ${name}`);
-		runGh([
+		runGhFn([
 			"gh",
 			"secret",
 			"delete",
@@ -164,7 +180,7 @@ function syncGitHub(parsedEnvFile: ParsedEnvFile) {
 	console.log(`Creating ${varEntries.length} variables and ${secEntries.length} secrets...`);
 	for (const [name, value] of varEntries) {
 		console.log(`  Setting variable ${name}`);
-		runGh([
+		runGhFn([
 			"gh",
 			"variable",
 			"set",
@@ -181,7 +197,7 @@ function syncGitHub(parsedEnvFile: ParsedEnvFile) {
 
 	for (const [name, value] of secEntries) {
 		console.log(`  Setting secret ${name}`);
-		runGh([
+		runGhFn([
 			"gh",
 			"secret",
 			"set",
@@ -199,7 +215,7 @@ function syncGitHub(parsedEnvFile: ParsedEnvFile) {
 	console.log(`GitHub environment "${environment}" synced.`);
 }
 
-async function syncVercel(parsedEnvFile: ParsedEnvFile, projectId: string) {
+async function syncVercelFn(parsedEnvFile: ParsedEnvFile, projectId: string) {
 	const { environment, variables, secrets } = parsedEnvFile;
 
 	console.log(`Syncing Vercel environment "${environment}"...`);
@@ -216,14 +232,14 @@ async function syncVercel(parsedEnvFile: ParsedEnvFile, projectId: string) {
 	const allKeys = Object.keys(variables).concat(Object.keys(secrets));
 	const sensitiveKeys = new Set(Object.keys(secrets));
 
-	const existingEnvs = fetchExistingEnvs(projectId, orgId, token);
+	const existingEnvs = fetchExistingEnvsFn(projectId, orgId, token);
 	const existingToDelete = existingEnvs.filter(
 		(env) => env.system !== true && env.target?.includes(target),
 	);
 
 	if (existingToDelete.length > 0) {
 		console.log(`Deleting ${existingToDelete.length} existing Vercel envs...`);
-		deleteExistingEnvs(
+		deleteExistingEnvsFn(
 			projectId,
 			orgId,
 			token,
@@ -246,18 +262,18 @@ async function syncVercel(parsedEnvFile: ParsedEnvFile, projectId: string) {
 		});
 
 	console.log(`Creating ${payload.length} Vercel envs...`);
-	createEnvs(projectId, orgId, token, payload);
+	createEnvsFn(projectId, orgId, token, payload);
 
 	console.log(`Vercel environment "${environment}" synced.`);
 }
 
-function fetchExistingEnvs(projectId: string, orgId: string, token: string): VercelEnv[] {
+function fetchExistingEnvsFn(projectId: string, orgId: string, token: string): VercelEnv[] {
 	const url = new URL(`https://api.vercel.com/v10/projects/${projectId}/env`);
 	url.searchParams.set("teamId", orgId);
 
-	const proc = Bun.spawnSync({
-		cmd: [
-			"curl",
+	const proc = spawnSync(
+		"curl",
+		[
 			"-s",
 			"-X",
 			"GET",
@@ -267,22 +283,21 @@ function fetchExistingEnvs(projectId: string, orgId: string, token: string): Ver
 			"Content-Type: application/json",
 			url.toString(),
 		],
-		stdout: "pipe",
-		stderr: "pipe",
-	});
+		{
+			encoding: "utf8",
+		},
+	);
 
-	if (proc.exitCode !== 0) {
-		const stderr = new TextDecoder().decode(proc.stderr).trim();
+	if (proc.status !== 0) {
+		const stderr = proc.error?.message ?? proc.stderr?.trim() ?? "Command failed.";
 		throw new Error(`Failed to fetch Vercel envs: ${stderr}`);
 	}
 
-	const body = JSON.parse(new TextDecoder().decode(proc.stdout)) as {
-		envs?: VercelEnv[];
-	};
+	const body = JSON.parse(proc.stdout) as VercelEnvResponse;
 	return body.envs ?? [];
 }
 
-function deleteExistingEnvs(projectId: string, orgId: string, token: string, ids: string[]) {
+function deleteExistingEnvsFn(projectId: string, orgId: string, token: string, ids: string[]) {
 	if (ids.length === 0) return;
 
 	const url = new URL(`https://api.vercel.com/v1/projects/${projectId}/env`);
@@ -292,9 +307,9 @@ function deleteExistingEnvs(projectId: string, orgId: string, token: string, ids
 		ids,
 	});
 
-	const proc = Bun.spawnSync({
-		cmd: [
-			"curl",
+	const proc = spawnSync(
+		"curl",
+		[
 			"-s",
 			"-X",
 			"DELETE",
@@ -306,26 +321,22 @@ function deleteExistingEnvs(projectId: string, orgId: string, token: string, ids
 			body,
 			url.toString(),
 		],
-		stdout: "pipe",
-		stderr: "pipe",
-	});
+		{
+			encoding: "utf8",
+		},
+	);
 
-	if (proc.exitCode !== 0) {
-		const stderr = new TextDecoder().decode(proc.stderr).trim();
+	if (proc.status !== 0) {
+		const stderr = proc.error?.message ?? proc.stderr?.trim() ?? "Command failed.";
 		throw new Error(`Failed to delete Vercel envs: ${stderr}`);
 	}
 }
 
-function createEnvs(
+function createEnvsFn(
 	projectId: string,
 	orgId: string,
 	token: string,
-	payload: Array<{
-		key: string;
-		target: readonly string[];
-		type: "plain" | "sensitive";
-		value: string;
-	}>,
+	payload: VercelEnvPayload[],
 ) {
 	const url = new URL(`https://api.vercel.com/v10/projects/${projectId}/env`);
 	url.searchParams.set("teamId", orgId);
@@ -333,9 +344,9 @@ function createEnvs(
 
 	const body = JSON.stringify(payload);
 
-	const proc = Bun.spawnSync({
-		cmd: [
-			"curl",
+	const proc = spawnSync(
+		"curl",
+		[
 			"-s",
 			"-X",
 			"POST",
@@ -347,25 +358,24 @@ function createEnvs(
 			body,
 			url.toString(),
 		],
-		stdout: "pipe",
-		stderr: "pipe",
-	});
+		{
+			encoding: "utf8",
+		},
+	);
 
-	if (proc.exitCode !== 0) {
-		const stderr = new TextDecoder().decode(proc.stderr).trim();
+	if (proc.status !== 0) {
+		const stderr = proc.error?.message ?? proc.stderr?.trim() ?? "Command failed.";
 		throw new Error(`Failed to create Vercel envs: ${stderr}`);
 	}
 
-	const response = JSON.parse(new TextDecoder().decode(proc.stdout)) as {
-		failed?: unknown[];
-	};
+	const response = JSON.parse(proc.stdout) as VercelEnvOperationResponse;
 	if (Array.isArray(response.failed) && response.failed.length > 0) {
 		throw new Error(`Vercel reported ${response.failed.length} failed env operations.`);
 	}
 }
 
-function listGhNames(cmd: string[]) {
-	const stdout = runGh(cmd);
+function listGhNamesFn(cmd: string[]) {
+	const stdout = runGhFn(cmd);
 
 	return stdout
 		.split("\n")
@@ -373,50 +383,50 @@ function listGhNames(cmd: string[]) {
 		.filter(Boolean);
 }
 
-function runGh(cmd: string[]) {
-	const proc = Bun.spawnSync({
-		cmd,
-		stdout: "pipe",
-		stderr: "pipe",
+function runGhFn(cmd: string[]) {
+	const [command, ...args] = cmd;
+	if (!command) throw new Error("Missing command.");
+	const proc = spawnSync(command, args, {
+		encoding: "utf8",
 	});
 
-	if (proc.exitCode !== 0) {
-		const stderr = new TextDecoder().decode(proc.stderr).trim();
-		throw new Error(stderr || `Command failed: ${cmd.join(" ")}`);
+	if (proc.status !== 0) {
+		const stderr = proc.error?.message ?? proc.stderr?.trim() ?? "Command failed.";
+		throw new Error(stderr || `Command failed: ${command}`);
 	}
 
-	return new TextDecoder().decode(proc.stdout).trim();
+	return proc.stdout.trim();
 }
 
-async function main() {
+async function mainFn() {
 	const envInput = process.argv[2];
 	const vercelProjectId = process.argv[3];
 
 	if (envInput === "--help" || envInput === "-h") {
-		printUsage(undefined, 0);
+		printUsageFn(undefined, 0);
 	}
 
 	if (!envInput || !vercelProjectId) {
-		printUsage("Missing environment name or Vercel project ID.", 1);
+		printUsageFn("Missing environment name or Vercel project ID.", 1);
 	}
 
-	const filePath = resolveEnvFilePath(envInput);
-	const parsedEnvFile = parseEnvFile(filePath);
+	const filePath = resolveEnvFilePathFn(envInput);
+	const parsedEnvFile = parseEnvFileFn(filePath);
 
 	console.log(
 		`Syncing "${parsedEnvFile.environment}" environment to GitHub and Vercel (${vercelProjectId})...`,
 	);
 
 	await Promise.all([
-		syncGitHub(parsedEnvFile),
-		syncVercel(parsedEnvFile, vercelProjectId),
+		syncGitHubFn(parsedEnvFile),
+		syncVercelFn(parsedEnvFile, vercelProjectId),
 	]);
 
 	console.log(`Environment "${parsedEnvFile.environment}" synced to GitHub and Vercel.`);
 }
 
 try {
-	await main();
+	await mainFn();
 } catch (error) {
 	const message = error instanceof Error ? error.message : String(error);
 	console.error(message);

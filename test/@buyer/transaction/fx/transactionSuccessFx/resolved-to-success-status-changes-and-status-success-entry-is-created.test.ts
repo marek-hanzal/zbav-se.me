@@ -1,14 +1,14 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { transactionSuccessFx } from "~/buyer/transaction/server/fx/transactionSuccessFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { transactionSuccessFx } from "~/buyer-transaction/fx/transactionSuccessFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createResolvedScenarioFx } from "~/test/transaction/fx/createResolvedScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("transactionSuccessFx (buyer)", () => {
 	it("resolved → success: status changes and status-success entry is created", async () => {
-		const database = await testabase("buyerSuccessFx-resolved-to-success");
+		const database = await testabaseFn("buyerSuccessFx-resolved-to-success");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -45,6 +45,6 @@ describe("transactionSuccessFx (buyer)", () => {
 			const kinds = entries.map((e) => e.kind);
 			expect(kinds).toContain("status-resolved");
 			expect(kinds).toContain("status-success");
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

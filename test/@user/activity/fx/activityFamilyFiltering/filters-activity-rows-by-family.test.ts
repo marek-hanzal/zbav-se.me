@@ -1,13 +1,13 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
-import { testabase } from "~/test/testabase";
+import { withKyselyFn } from "~/database/fn/withKyselyFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { withActivitySelectFx } from "~/user/activity/server/db/withActivitySelectFx";
+import { withActivitySelectFx } from "~/user-activity/db/withActivitySelectFx";
 
 describe("activity family", () => {
 	it("filters activity rows by family", async () => {
-		const database = await testabase("activityFamilyFiltering-message");
+		const database = await testabaseFn("activityFamilyFiltering-message");
 
 		return Effect.gen(function* () {
 			const user = yield* leaseTestUserFx({});
@@ -63,6 +63,6 @@ describe("activity family", () => {
 			expect(rows).toHaveLength(1);
 			expect(rows[0]?.id).toBe("activity-message");
 			expect(rows[0]?.family).toBe("transaction");
-		}).pipe(withKyselyFx(database), Effect.runPromise);
+		}).pipe(withKyselyFn(database), Effect.runPromise);
 	});
 });

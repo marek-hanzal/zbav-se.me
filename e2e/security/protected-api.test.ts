@@ -1,9 +1,9 @@
-import { expect, test } from "../test";
+import { expect, testFn } from "../testFn";
 
 const invalidAuthorization = "Bearer definitely-not-the-token";
 
-test("cron endpoint rejects requests without a valid token", async ({ withRequest }) => {
-	await withRequest(async (request) => {
+testFn("cron endpoint rejects requests without a valid token", async ({ withRequestFn }) => {
+	await withRequestFn(async (request) => {
 		const missingTokenResponse = await request.post("/api/cron/hourly");
 		const invalidTokenResponse = await request.post("/api/cron/hourly", {
 			headers: {
@@ -18,8 +18,8 @@ test("cron endpoint rejects requests without a valid token", async ({ withReques
 	});
 });
 
-test("migration endpoint rejects requests without a valid token", async ({ withRequest }) => {
-	await withRequest(async (request) => {
+testFn("migration endpoint rejects requests without a valid token", async ({ withRequestFn }) => {
+	await withRequestFn(async (request) => {
 		const missingTokenResponse = await request.post("/api/public/migration/run");
 		const invalidTokenResponse = await request.post("/api/public/migration/run", {
 			headers: {

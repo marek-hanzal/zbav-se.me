@@ -26,18 +26,14 @@
 		],
 		"types": [
 			"vite/client",
-			"@types/bun",
 			"node"
 		],
-		"jsx": "preserve",
+		"jsx": "react-jsx",
 		"jsxImportSource": "react",
 		"incremental": true,
 		"paths": {
 			"~/*": [
 				"./src/*"
-			],
-			"@/lib/*": [
-				"./lib/*"
 			],
 			"~/test/*": [
 				"./test/*"

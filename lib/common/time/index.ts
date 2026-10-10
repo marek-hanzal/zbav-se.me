@@ -1,1 +1,0 @@
-export { toTimeDiff } from "./toTimeDiff";

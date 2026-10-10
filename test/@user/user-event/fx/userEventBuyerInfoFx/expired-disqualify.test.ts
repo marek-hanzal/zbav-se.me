@@ -1,16 +1,16 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { DateContextFx } from "@/lib/common/date";
-import { userEventBuyerInfoFx } from "~/seller/user-event/server/fx/userEventBuyerInfoFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
+import { userEventBuyerInfoFx } from "~/seller-user-event/fx/userEventBuyerInfoFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
+import { userEventCreateFx } from "~/user-event/fx/userEventCreateFx";
 
 describe("userEventBuyerInfoFx", () => {
 	it("Expired: buyer action after seller ping disqualifies from expired", async () => {
-		const database = await testabase("userEventBuyerInfoFx-expired-disqualify");
+		const database = await testabaseFn("userEventBuyerInfoFx-expired-disqualify");
 
 		return Effect.gen(function* () {
 			const buyer = yield* leaseTestUserFx({});
@@ -48,8 +48,8 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now: () => t1Create,
+				withDateServiceFn({
+					nowFn: () => t1Create,
 				}),
 			);
 
@@ -61,8 +61,8 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.open",
 				isTerminal: false,
 			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now: () => t1Open,
+				withDateServiceFn({
+					nowFn: () => t1Open,
 				}),
 			);
 
@@ -74,8 +74,8 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.message",
 				isTerminal: false,
 			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now: () => t1BuyerMsg,
+				withDateServiceFn({
+					nowFn: () => t1BuyerMsg,
 				}),
 			);
 
@@ -87,8 +87,8 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.expired",
 				isTerminal: true,
 			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now: () => t1Expired,
+				withDateServiceFn({
+					nowFn: () => t1Expired,
 				}),
 			);
 
@@ -101,8 +101,8 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now: () => t2Create,
+				withDateServiceFn({
+					nowFn: () => t2Create,
 				}),
 			);
 
@@ -114,8 +114,8 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.open",
 				isTerminal: false,
 			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now: () => t2Open,
+				withDateServiceFn({
+					nowFn: () => t2Open,
 				}),
 			);
 
@@ -127,8 +127,8 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.expired",
 				isTerminal: true,
 			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now: () => t2Expired,
+				withDateServiceFn({
+					nowFn: () => t2Expired,
 				}),
 			);
 
@@ -142,6 +142,6 @@ describe("userEventBuyerInfoFx", () => {
 			expect(result.expired.total).toBe(2);
 			expect(result.expired.expired).toBe(1);
 			expect(result.expired.percent).toBe(50);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

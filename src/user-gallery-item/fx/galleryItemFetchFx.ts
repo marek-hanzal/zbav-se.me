@@ -1,0 +1,36 @@
+import { Effect } from "effect";
+import { withFetchFx } from "~/http/fx/withFetchFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
+import { withGalleryItemSelectFx } from "~/user-gallery-item/db/withGalleryItemSelectFx";
+import type { GalleryItemQuerySchema } from "~/user-gallery-item/schema/GalleryItemQuerySchema";
+import type { GalleryItemWhereSchema } from "~/user-gallery-item/schema/GalleryItemWhereSchema";
+
+export namespace galleryItemFetchFx {
+	export interface Props extends GalleryItemQuerySchema.Type {
+		scope: GalleryItemWhereSchema.Type;
+	}
+}
+
+export const galleryItemFetchFx = Effect.fn("galleryItemFetchFx")(function* ({
+	where,
+	scope,
+	sort,
+}: galleryItemFetchFx.Props) {
+	const logger = yield* getLoggerFx("galleryItemFetchFx");
+	logger.trace("galleryItemFetchFx", {
+		where,
+		scope,
+		sort,
+	});
+
+	return yield* withFetchFx({
+		resource: "gallery-item",
+		selectFx: withGalleryItemSelectFx({
+			sort,
+		}),
+		where,
+		scope,
+	});
+});
+
+export type galleryItemFetchFx = ReturnType<typeof galleryItemFetchFx>;

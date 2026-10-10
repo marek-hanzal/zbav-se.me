@@ -1,15 +1,15 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { listingFetchFx } from "~/seller/listing/server/fx/listingFetchFx";
-import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { listingFetchFx } from "~/seller-listing/fx/listingFetchFx";
+import { expectErrorFn } from "~/test/common/fx/expectErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
 describe("seller listingFetchFx", () => {
 	it("fetches own listing and rejects foreign listing", async () => {
-		const database = await testabase("seller-listingFetchFx-scope");
+		const database = await testabaseFn("seller-listingFetchFx-scope");
 
 		return Effect.gen(function* () {
 			const users = yield* createUsersFx({});
@@ -35,7 +35,7 @@ describe("seller listingFetchFx", () => {
 			expect(fetched.title).toBe("Seller own listing");
 			expect(fetched.withRestriction).toBe("none");
 
-			const foreign = yield* Effect.either(
+			const foreign = yield* Effect.result(
 				listingFetchFx({
 					userId: users.seller.id,
 					where: {
@@ -47,7 +47,7 @@ describe("seller listingFetchFx", () => {
 				}),
 			);
 
-			expectErrorFx(foreign);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+			expectErrorFn(foreign);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

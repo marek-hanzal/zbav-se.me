@@ -1,1 +1,0 @@
-export { GalleryButton } from "./GalleryButton";

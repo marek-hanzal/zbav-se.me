@@ -1,16 +1,16 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
-import { feedPatchFx } from "~/buyer/feed/server/fx/feedPatchFx";
-import { feedResolveFx } from "~/buyer/feed/server/fx/feedResolveFx";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { feedCreateFx } from "~/buyer-feed/fx/feedCreateFx";
+import { feedPatchFx } from "~/buyer-feed/fx/feedPatchFx";
+import { feedResolveFx } from "~/buyer-feed/fx/feedResolveFx";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
 describe("feed contract", () => {
 	it("supports custom resolve denial message and advances updatedAt on patch", async () => {
-		const database = await testabase("feed-contract-resolve-patch");
+		const database = await testabaseFn("feed-contract-resolve-patch");
 
 		return Effect.gen(function* () {
 			const { seller: owner, stranger } = yield* createUsersFx({});
@@ -62,7 +62,7 @@ describe("feed contract", () => {
 					.where("id", "=", feed.id)
 					.executeTakeFirstOrThrow(),
 			);
-			const foreignResolve = yield* Effect.either(
+			const foreignResolve = yield* Effect.result(
 				feedResolveFx({
 					userId: stranger.id,
 					feedId: feed.id,
@@ -77,10 +77,10 @@ describe("feed contract", () => {
 			expect(afterPatch.updatedAt.getTime()).toBeGreaterThanOrEqual(
 				beforePatch.updatedAt.getTime(),
 			);
-			expectTaggedErrorFx(foreignResolve, {
+			expectTaggedErrorFn(foreignResolve, {
 				tag: "AccessDeniedErrorFx",
 				message: "Custom deny message",
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

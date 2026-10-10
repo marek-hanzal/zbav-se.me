@@ -1,31 +1,31 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { listingCollectionFx } from "~/buyer/listing/server/fx/listingCollectionFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { listingCollectionFx } from "~/buyer-listing/fx/listingCollectionFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { createRestrictionProbeListings, createUserRestriction } from "./restrictionFixtures";
+import { createRestrictionProbeListingsFx, createUserRestrictionFx } from "./restrictionFixtures";
 
 describe("buyer listing active restriction ordering", () => {
 	it("ignores expired rows when resolving the active user restriction", async () => {
-		const database = await testabase("buyer-listing-restriction-expired");
+		const database = await testabaseFn("buyer-listing-restriction-expired");
 
 		return Effect.gen(function* () {
 			const users = yield* createUsersFx({});
-			const fixtures = yield* createRestrictionProbeListings(database, {
+			const fixtures = yield* createRestrictionProbeListingsFx(database, {
 				sellerId: users.seller.id,
 				title: "Buyer expired restriction marker",
 				slugPrefix: "buyer-expired-restriction",
 			});
 
-			yield* createUserRestriction(database, {
+			yield* createUserRestrictionFx(database, {
 				userId: users.buyer.id,
 				restriction: "restricted",
 				availableAtOffsetMinutes: -60,
 				expiresAtOffsetMinutes: -5,
 				createdAtOffsetMinutes: -60,
 			});
-			yield* createUserRestriction(database, {
+			yield* createUserRestrictionFx(database, {
 				userId: users.buyer.id,
 				restriction: "adult",
 				availableAtOffsetMinutes: -30,
@@ -53,6 +53,6 @@ describe("buyer listing active restriction ordering", () => {
 			);
 			expect(ids).not.toContain(fixtures.restrictedCategoryListing.id);
 			expect(ids).not.toContain(fixtures.restrictedListingRestriction.id);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });
