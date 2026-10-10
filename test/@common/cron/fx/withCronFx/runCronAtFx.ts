@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
 import { withCronFx } from "~/cron/fx/withCronFx";
 import type { ScheduleSchema } from "~/cron/schema/ScheduleSchema";
-import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
 
 export namespace runCronAtFx {
 	export interface Props {
@@ -14,8 +14,8 @@ export const runCronAtFx = ({ now, schedule }: runCronAtFx.Props) => {
 	return withCronFx({
 		schedule,
 	}).pipe(
-		withDateServiceFx({
-			now: () =>
+		withDateServiceFn({
+			nowFn: () =>
 				DateTime.fromISO(now, {
 					setZone: true,
 				}),

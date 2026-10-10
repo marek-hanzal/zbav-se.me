@@ -3,11 +3,11 @@ import { BackspaceIcon } from "~/application-ui/constant/BackspaceIcon";
 import { ClearIcon } from "~/application-ui/constant/ClearIcon";
 import { Item } from "~/application-ui/ui/Dial/Item";
 import { Value } from "~/application-ui/ui/Dial/Value";
-import { tvc } from "~/ui/fn/tvc";
+import { tvcFn } from "~/ui/fn/tvcFn";
 import { Container } from "~/ui/ui/Container";
 import { Icon } from "~/ui/ui/Icon";
 
-const digit = (current: string, digit: number | string, limit = 8): string => {
+const digitFn = (current: string, digit: number | string, limit = 8): string => {
 	let value = `${current}${digit}`.replace(/^0+(?=\d)/, "");
 	if (value[0] === ".") {
 		value = value.slice(1);
@@ -31,33 +31,39 @@ const icons = {
 export namespace Dial {
 	export interface Props extends Omit<Container.Props, "onChange"> {
 		value: number | undefined;
-		onChange(value: number | undefined): void;
+		onChangeFn(value: number | undefined): void;
 		placeholder: string;
 		allowDecimals: boolean;
 		max?: number;
 	}
 }
 
-export const Dial: FC<Dial.Props> = ({ value, onChange, placeholder, allowDecimals, ...props }) => {
-	const [internalValue, setInternalValue] = useState<string | undefined>(
+export const Dial: FC<Dial.Props> = ({
+	value,
+	onChangeFn,
+	placeholder,
+	allowDecimals,
+	...props
+}) => {
+	const [internalValue, setInternalValueFn] = useState<string | undefined>(
 		value !== undefined ? String(value) : undefined,
 	);
 
 	useEffect(() => {
-		setInternalValue(value !== undefined ? String(value) : undefined);
+		setInternalValueFn(value !== undefined ? String(value) : undefined);
 	}, [
 		value,
 	]);
 
-	const handleChange = (nextValue: string | undefined) => {
-		setInternalValue(nextValue);
+	const handleChangeFn = (nextValue: string | undefined) => {
+		setInternalValueFn(nextValue);
 
 		if (!nextValue) {
-			onChange(undefined);
+			onChangeFn(undefined);
 			return;
 		}
 
-		onChange(Number.parseFloat(nextValue));
+		onChangeFn(Number.parseFloat(nextValue));
 	};
 
 	return (
@@ -89,7 +95,7 @@ export const Dial: FC<Dial.Props> = ({ value, onChange, placeholder, allowDecima
 					icon={BackspaceIcon}
 					data-action={"dial backspace"}
 					onClick={() => {
-						handleChange(internalValue?.slice(0, -1) || undefined);
+						handleChangeFn(internalValue?.slice(0, -1) || undefined);
 					}}
 					data-ui-tone="secondary"
 					data-ui-theme="light"
@@ -99,7 +105,7 @@ export const Dial: FC<Dial.Props> = ({ value, onChange, placeholder, allowDecima
 			</Container>
 
 			<div
-				className={tvc([
+				className={tvcFn([
 					"grid",
 					"grid-cols-3",
 					"gap-2",
@@ -118,7 +124,7 @@ export const Dial: FC<Dial.Props> = ({ value, onChange, placeholder, allowDecima
 						icon={icons[(index + 1) as keyof typeof icons]}
 						data-action={`dial digit ${index + 1}`}
 						onClick={() => {
-							handleChange(digit(internalValue || "", index + 1));
+							handleChangeFn(digitFn(internalValue || "", index + 1));
 						}}
 						disabled={false}
 					/>
@@ -129,7 +135,7 @@ export const Dial: FC<Dial.Props> = ({ value, onChange, placeholder, allowDecima
 					data-action={"dial decimal"}
 					disabled={!allowDecimals || !internalValue || internalValue.includes(".")}
 					onClick={() => {
-						handleChange(digit(internalValue || "", "."));
+						handleChangeFn(digitFn(internalValue || "", "."));
 					}}
 				/>
 
@@ -138,7 +144,7 @@ export const Dial: FC<Dial.Props> = ({ value, onChange, placeholder, allowDecima
 					data-action={"dial digit 0"}
 					disabled={false}
 					onClick={() => {
-						handleChange(digit(internalValue || "", 0));
+						handleChangeFn(digitFn(internalValue || "", 0));
 					}}
 				/>
 
@@ -147,7 +153,7 @@ export const Dial: FC<Dial.Props> = ({ value, onChange, placeholder, allowDecima
 					data-action={"dial clear"}
 					disabled={!internalValue}
 					onClick={() => {
-						handleChange(undefined);
+						handleChangeFn(undefined);
 					}}
 				/>
 			</div>

@@ -1,6 +1,6 @@
 import { match } from "ts-pattern";
 import { ListItemPending } from "~/list-item/ui/ListItemPending";
-import { withFallback } from "~/ui/fn/withFallback";
+import { withFallbackFn } from "~/ui/fn/withFallbackFn";
 import type { MarkSuspense } from "~/ui/type/MarkSuspense";
 import { withActivityQuery } from "~/user-activity/query/withActivityQuery";
 import { ActivityBuyerMessageItem } from "~/user-activity/ui/ActivityBuyerMessageItem";
@@ -18,7 +18,7 @@ export namespace ActivityItem {
 	}
 }
 
-export const ActivityItem = withFallback(({ _suspense, activityId }: ActivityItem.Props) => {
+export const ActivityItem = withFallbackFn(({ _suspense, activityId }: ActivityItem.Props) => {
 	const { data: item } = withActivityQuery.useFetchQuery(activityId);
 
 	return match(item)

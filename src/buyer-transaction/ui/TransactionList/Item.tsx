@@ -1,11 +1,11 @@
 import { withTransactionQuery } from "~/buyer-transaction/query/withTransactionQuery";
-import { toTimeDiff } from "~/date/fn/toTimeDiff";
-import { useUpload } from "~/gallery/hook/useUpload";
+import { toTimeDiffFn } from "~/date/fn/toTimeDiffFn";
+import { getUploadFn } from "~/gallery/fn/getUploadFn";
 import { ListItem } from "~/list-item/ui/ListItem";
 import { ListItemPending } from "~/list-item/ui/ListItemPending";
 import { useLocale } from "~/locale/hook/useLocale";
 import { Tx } from "~/translation/ui/Tx";
-import { withFallback } from "~/ui/fn/withFallback";
+import { withFallbackFn } from "~/ui/fn/withFallbackFn";
 import type { MarkSuspense } from "~/ui/type/MarkSuspense";
 import { Container } from "~/ui/ui/Container";
 import { LinkTo } from "~/ui/ui/LinkTo";
@@ -16,10 +16,10 @@ export namespace Item {
 	}
 }
 
-export const Item = withFallback(({ _suspense, transactionId, ...props }: Item.Props) => {
+export const Item = withFallbackFn(({ _suspense, transactionId, ...props }: Item.Props) => {
 	const locale = useLocale();
 	const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId);
-	const hero = useUpload(transaction.withImageUrl);
+	const hero = getUploadFn(transaction.withImageUrl);
 
 	return (
 		<LinkTo
@@ -78,7 +78,7 @@ export const Item = withFallback(({ _suspense, transactionId, ...props }: Item.P
 						/> */}
 
 						<Tx
-							label={toTimeDiff({
+							label={toTimeDiffFn({
 								locale,
 								time: transaction.entry.createdAt,
 							})}

@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { FavouriteIcon } from "~/application-ui/constant/icon.exports";
-import { uiCtaLinkButton } from "~/application-ui/fn/ui.exports";
+import { uiCtaLinkButtonFn } from "~/application-ui/fn/ui.exports";
 import { useLocale } from "~/locale/hook/useLocale";
 import { EmptyStatus } from "~/status/ui/EmptyStatus";
 import { useTranslator } from "~/translation/hook/useTranslator";
@@ -22,8 +22,8 @@ export const Empty: FC<Empty.Props> = (props) => {
 		<EmptyStatus
 			data-ui={"Empty[EmptyStatus]"}
 			icon={FavouriteIcon}
-			textTitle={translator.text("No items in favourites (title)")}
-			textMessage={translator.text("No items in favourites (message)")}
+			textTitle={translator.textFn("No items in favourites (title)")}
+			textMessage={translator.textFn("No items in favourites (message)")}
 			action={
 				<LinkTo
 					data-action={"go to listings"}
@@ -33,7 +33,7 @@ export const Empty: FC<Empty.Props> = (props) => {
 					params={{
 						locale,
 					}}
-					{...uiCtaLinkButton({})}
+					{...uiCtaLinkButtonFn({})}
 				>
 					<Tx label={"Go to listings (button)"} />
 				</LinkTo>

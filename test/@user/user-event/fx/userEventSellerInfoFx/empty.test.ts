@@ -1,12 +1,12 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { userEventSellerInfoFx } from "~/buyer-user-event/fx/userEventSellerInfoFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 
 describe("userEventSellerInfoFx", () => {
 	it("Empty user's info returns nothing", async () => {
-		const kysely = await testabase("userEventSellerInfoFx-empty");
+		const kysely = await testabaseFn("userEventSellerInfoFx-empty");
 
 		return Effect.gen(function* () {
 			const result = yield* userEventSellerInfoFx({
@@ -14,6 +14,6 @@ describe("userEventSellerInfoFx", () => {
 			});
 
 			expect(result).toBeNull();
-		}).pipe(withRuntimeFx(kysely), Effect.runPromise);
+		}).pipe(withRuntimeFn(kysely), Effect.runPromise);
 	});
 });

@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { useLocale } from "~/locale/hook/useLocale";
-import { toLocaleNumber } from "~/number/fn/toLocaleNumber";
+import { toLocaleNumberFn } from "~/number/fn/toLocaleNumberFn";
 import { Tx } from "~/translation/ui/Tx";
 import { Container } from "~/ui/ui/Container";
 import { Typo } from "~/ui/ui/Typo";
@@ -36,7 +36,7 @@ export const Distance: FC<Distance.Props> = ({ distance, ...props }) => {
 			data-ui-items={"center"}
 		>
 			<Typo
-				label={toLocaleNumber({
+				label={toLocaleNumberFn({
 					locale,
 					number: distance,
 					maximumFractionDigits: 0,

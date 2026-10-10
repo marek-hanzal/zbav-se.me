@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import type { IgnoreCreateSchema } from "~/buyer-listing-ignore/schema/IgnoreCreateSchema";
 import { dbFx } from "~/database/fx/dbFx";
 import { DateServiceFx } from "~/date/service/DateServiceFx";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import { getLoggerFx } from "~/log/fx/getLoggerFx";
 
 export namespace ignoreCreateFx {
@@ -23,7 +23,7 @@ export const ignoreCreateFx = Effect.fn("ignoreCreateFx")(function* ({
 
 	const dateContext = yield* DateServiceFx;
 
-	const id = genId();
+	const id = genIdFn();
 
 	return yield* dbFx(async (kysely) => {
 		return kysely
@@ -32,7 +32,7 @@ export const ignoreCreateFx = Effect.fn("ignoreCreateFx")(function* ({
 				id,
 				userId,
 				listingId,
-				createdAt: dateContext.now().toJSDate(),
+				createdAt: dateContext.nowFn().toJSDate(),
 			})
 			.onConflict((eb) => eb.doNothing())
 			.returningAll()

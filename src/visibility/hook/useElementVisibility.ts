@@ -1,16 +1,16 @@
 import { type RefObject, useEffect, useLayoutEffect, useRef } from "react";
-import { createVisibilityStore } from "~/visibility/fn/createVisibilityStore";
+import { createVisibilityStoreFn } from "~/visibility/fn/createVisibilityStoreFn";
 
-function clearTimerMap(map: Map<string, ReturnType<typeof setTimeout>>) {
+function clearTimerMapFn(map: Map<string, ReturnType<typeof setTimeout>>) {
 	for (const t of map.values()) {
 		clearTimeout(t);
 	}
 	map.clear();
 }
 
-function delayById(
+function delayByIdFn(
 	id: string,
-	apply: () => void,
+	applyFn: () => void,
 	map: Map<string, ReturnType<typeof setTimeout>>,
 	delayMs: number | undefined,
 ) {
@@ -21,12 +21,12 @@ function delayById(
 	}
 
 	if (!delayMs) {
-		apply();
+		applyFn();
 		return;
 	}
 
 	const t = setTimeout(() => {
-		apply();
+		applyFn();
 		map.delete(id);
 	}, delayMs);
 
@@ -57,8 +57,8 @@ export function useElementVisibility({
 	proximity,
 	delayMs = 250,
 	attribute = "data-visible-item",
-}: useElementVisibility.Props): createVisibilityStore.Hook {
-	const storeRef = useRef(createVisibilityStore());
+}: useElementVisibility.Props): createVisibilityStoreFn.Hook {
+	const storeRef = useRef(createVisibilityStoreFn());
 
 	const visibleTimers = useRef(new Map<string, ReturnType<typeof setTimeout>>());
 	const topTimers = useRef(new Map<string, ReturnType<typeof setTimeout>>());
@@ -66,9 +66,9 @@ export function useElementVisibility({
 
 	useEffect(() => {
 		return () => {
-			clearTimerMap(visibleTimers.current);
-			clearTimerMap(topTimers.current);
-			clearTimerMap(bottomTimers.current);
+			clearTimerMapFn(visibleTimers.current);
+			clearTimerMapFn(topTimers.current);
+			clearTimerMapFn(bottomTimers.current);
 		};
 	}, []);
 
@@ -82,9 +82,9 @@ export function useElementVisibility({
 		const threshold = visible?.threshold ?? 0.005;
 		const overscan = proximity?.overscan ?? 2;
 
-		const store = storeRef.current;
+		const storeFn = storeRef.current;
 
-		const getId = (entry: IntersectionObserverEntry) =>
+		const getIdFn = (entry: IntersectionObserverEntry) =>
 			entry.target.getAttribute(attribute)?.trim() || null;
 
 		/* ───────────────── visible ───────────────── */
@@ -92,17 +92,17 @@ export function useElementVisibility({
 		const visibleIo = new IntersectionObserver(
 			(entries) => {
 				for (const entry of entries) {
-					const id = getId(entry);
+					const id = getIdFn(entry);
 					if (!id) {
 						continue;
 					}
 
-					delayById(
+					delayByIdFn(
 						id,
 						() =>
-							store
+							storeFn
 								.getState()
-								.setVisible(
+								.setVisibleFn(
 									id,
 									entry.isIntersecting && entry.intersectionRatio > 0,
 								),
@@ -123,17 +123,17 @@ export function useElementVisibility({
 		const topIo = new IntersectionObserver(
 			(entries) => {
 				for (const entry of entries) {
-					const id = getId(entry);
+					const id = getIdFn(entry);
 					if (!id) {
 						continue;
 					}
 
-					delayById(
+					delayByIdFn(
 						id,
 						() =>
-							store
+							storeFn
 								.getState()
-								.setTop(id, entry.isIntersecting && entry.intersectionRatio > 0),
+								.setTopFn(id, entry.isIntersecting && entry.intersectionRatio > 0),
 						topTimers.current,
 						delayMs,
 					);
@@ -151,17 +151,20 @@ export function useElementVisibility({
 		const bottomIo = new IntersectionObserver(
 			(entries) => {
 				for (const entry of entries) {
-					const id = getId(entry);
+					const id = getIdFn(entry);
 					if (!id) {
 						continue;
 					}
 
-					delayById(
+					delayByIdFn(
 						id,
 						() =>
-							store
+							storeFn
 								.getState()
-								.setBottom(id, entry.isIntersecting && entry.intersectionRatio > 0),
+								.setBottomFn(
+									id,
+									entry.isIntersecting && entry.intersectionRatio > 0,
+								),
 						bottomTimers.current,
 						delayMs,
 					);
@@ -174,7 +177,7 @@ export function useElementVisibility({
 			},
 		);
 
-		const observe = (node: Element) => {
+		const observeFn = (node: Element) => {
 			if (!node.hasAttribute(attribute)) {
 				return;
 			}
@@ -183,7 +186,7 @@ export function useElementVisibility({
 			bottomIo.observe(node);
 		};
 
-		const unobserve = (node: Element) => {
+		const unobserveFn = (node: Element) => {
 			if (!node.hasAttribute(attribute)) {
 				return;
 			}
@@ -194,7 +197,7 @@ export function useElementVisibility({
 
 			const id = node.getAttribute(attribute)?.trim();
 			if (id) {
-				store.getState().removeById(id);
+				storeFn.getState().removeByIdFn(id);
 				visibleTimers.current.delete(id);
 				topTimers.current.delete(id);
 				bottomTimers.current.delete(id);
@@ -209,12 +212,12 @@ export function useElementVisibility({
 
 				for (const n of m.addedNodes) {
 					if (n instanceof Element) {
-						observe(n);
+						observeFn(n);
 					}
 				}
 				for (const n of m.removedNodes) {
 					if (n instanceof Element) {
-						unobserve(n);
+						unobserveFn(n);
 					}
 				}
 			}
@@ -226,15 +229,15 @@ export function useElementVisibility({
 		});
 
 		for (const node of Array.from(root.children)) {
-			observe(node);
+			observeFn(node);
 		}
 
 		return () => {
-			store.getState().clear();
+			storeFn.getState().clearFn();
 			//
-			clearTimerMap(visibleTimers.current);
-			clearTimerMap(topTimers.current);
-			clearTimerMap(bottomTimers.current);
+			clearTimerMapFn(visibleTimers.current);
+			clearTimerMapFn(topTimers.current);
+			clearTimerMapFn(bottomTimers.current);
 			//
 			mo.disconnect();
 			//

@@ -11,14 +11,19 @@ import { WarrantySelect } from "~/warranty/ui/WarrantySelect";
 export namespace WarrantyPatch {
 	export interface Props extends Container.Props {
 		feed: FeedSchema.Type;
-		onCancel(): void;
-		onSettled?(): void;
+		onCancelFn(): void;
+		onSettledFn?(): void;
 	}
 }
 
-export const WarrantyPatch: FC<WarrantyPatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
+export const WarrantyPatch: FC<WarrantyPatch.Props> = ({
+	feed,
+	onSettledFn,
+	onCancelFn,
+	...props
+}) => {
 	const patchMutation = withFeedQuery.usePatchMutation({
-		onSettled,
+		onSettled: onSettledFn,
 	});
 	const selection = useSelection<EntitySchema.Type>({
 		mode: "multi",
@@ -43,8 +48,8 @@ export const WarrantyPatch: FC<WarrantyPatch.Props> = ({ feed, onSettled, onCanc
 			<WarrantySelect selection={selection} />
 
 			<SaveContainer
-				onCancel={onCancel}
-				onSave={() => {
+				onCancelFn={onCancelFn}
+				onSaveFn={() => {
 					patchMutation.mutate({
 						query: {
 							where: {
@@ -57,7 +62,7 @@ export const WarrantyPatch: FC<WarrantyPatch.Props> = ({ feed, onSettled, onCanc
 								where: {
 									...feed.query?.where,
 									warrantyIn:
-										selection.optional.multiId() as WarrantyEnumSchema.Type[],
+										selection.optional.multiIdFn() as WarrantyEnumSchema.Type[],
 								},
 							},
 						},

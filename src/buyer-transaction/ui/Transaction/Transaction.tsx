@@ -1,7 +1,7 @@
 import { type FC, useRef } from "react";
 import { TransactionHero } from "~/buyer-transaction/ui/Transaction/TransactionHero";
 import { TransactionInput } from "~/buyer-transaction/ui/Transaction/TransactionInput";
-import { getRootLogger } from "~/log/fn/getRootLogger";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
 import { useRenderLogger } from "~/ui/hook/useRenderLogger";
 import type { MarkSuspense } from "~/ui/type/MarkSuspense";
 import { Container } from "~/ui/ui/Container";
@@ -24,7 +24,7 @@ export const Transaction: FC<Transaction.Props> = ({
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	useRenderLogger({
-		logger: getRootLogger(),
+		logger: getRootLoggerFn(),
 		name: "Transaction",
 	});
 

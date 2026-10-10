@@ -16,19 +16,19 @@ export const PasswordResetEmail: FC<PasswordResetEmail.Props> = ({ resetUrl }) =
 
 	return (
 		<MailLayout
-			footer={translator.text("Password reset email footer")}
-			lead={translator.text("Password reset email message")}
-			preview={translator.text("Password reset email subject")}
-			title={translator.text("Password reset email title")}
+			footer={translator.textFn("Password reset email footer")}
+			lead={translator.textFn("Password reset email message")}
+			preview={translator.textFn("Password reset email subject")}
+			title={translator.textFn("Password reset email title")}
 		>
 			<Section className={"mt-8"}>
 				<MailButton href={resetUrl}>
-					{translator.text("Password reset email action")}
+					{translator.textFn("Password reset email action")}
 				</MailButton>
 			</Section>
 
 			<MailCopy
-				hint={translator.text(
+				hint={translator.textFn(
 					"If the button does not work, copy this link into your browser:",
 				)}
 				value={resetUrl}

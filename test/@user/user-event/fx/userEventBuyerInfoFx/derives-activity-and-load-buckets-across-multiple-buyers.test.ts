@@ -1,23 +1,23 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
 import { userEventBuyerInfoFx } from "~/seller-user-event/fx/userEventBuyerInfoFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { userEventCreateFx } from "~/user-event/fx/userEventCreateFx";
 
 describe("userEventBuyerInfoFx", () => {
 	it("derives activity and load buckets across multiple buyers without separate microtests", async () => {
-		const database = await testabase("userEventBuyerInfoFx-bucket-derivation");
+		const database = await testabaseFn("userEventBuyerInfoFx-bucket-derivation");
 
 		return Effect.gen(function* () {
 			const highBuyer = yield* leaseTestUserFx({});
 			const mediumBuyer = yield* leaseTestUserFx({});
 			const lowBuyer = yield* leaseTestUserFx({});
 
-			const seedBuyer = ({
+			const seedBuyerFx = ({
 				userId,
 				activeTransactions,
 				lastActionDaysAgo,
@@ -36,8 +36,8 @@ describe("userEventBuyerInfoFx", () => {
 							event: "transaction.create",
 							isTerminal: false,
 						}).pipe(
-							withDateServiceFx({
-								now: () =>
+							withDateServiceFn({
+								nowFn: () =>
 									DateTime.now().minus({
 										days: lastActionDaysAgo + 5 + index,
 									}),
@@ -53,8 +53,8 @@ describe("userEventBuyerInfoFx", () => {
 						event: "transaction.message",
 						isTerminal: false,
 					}).pipe(
-						withDateServiceFx({
-							now: () =>
+						withDateServiceFn({
+							nowFn: () =>
 								DateTime.now().minus({
 									days: lastActionDaysAgo,
 								}),
@@ -62,17 +62,17 @@ describe("userEventBuyerInfoFx", () => {
 					);
 				});
 
-			yield* seedBuyer({
+			yield* seedBuyerFx({
 				userId: highBuyer.id,
 				activeTransactions: 5,
 				lastActionDaysAgo: 5,
 			});
-			yield* seedBuyer({
+			yield* seedBuyerFx({
 				userId: mediumBuyer.id,
 				activeTransactions: 3,
 				lastActionDaysAgo: 45,
 			});
-			yield* seedBuyer({
+			yield* seedBuyerFx({
 				userId: lowBuyer.id,
 				activeTransactions: 1,
 				lastActionDaysAgo: 75,
@@ -96,6 +96,6 @@ describe("userEventBuyerInfoFx", () => {
 
 			expect(low?.load.bucket).toBe("low");
 			expect(low?.activity.bucket).toBe("low");
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

@@ -25,21 +25,21 @@ const FormSchema = z
 export namespace RestrictionPatch {
 	export interface Props extends TitleContainer.Props {
 		draft: DraftSchema.Type;
-		onCancel(): void;
+		onCancelFn(): void;
 		view: useView.Use<"default">;
 	}
 }
 
 export const RestrictionPatch: FC<RestrictionPatch.Props> = ({
 	draft,
-	onCancel,
+	onCancelFn,
 	view,
 	...props
 }) => {
 	const translator = useTranslator();
 	const mutation = withDraftQuery.usePatchMutation({
 		onSuccess() {
-			view.set("default");
+			view.setFn("default");
 		},
 		invalidate: [
 			"collection",
@@ -80,7 +80,7 @@ export const RestrictionPatch: FC<RestrictionPatch.Props> = ({
 		deps: [
 			draft,
 		],
-		onSelect(item) {
+		onSelectFn(item) {
 			form.setFieldValue("restriction", (item?.id as RestrictionEnumSchema.Type) ?? null);
 			form.setFieldMeta("restriction", (meta) => ({
 				...meta,
@@ -92,7 +92,7 @@ export const RestrictionPatch: FC<RestrictionPatch.Props> = ({
 	return (
 		<TitleContainer
 			data-ui={"RestrictionPatch"}
-			textTitle={translator.text("Listing restriction (title)")}
+			textTitle={translator.textFn("Listing restriction (title)")}
 			left={<EditAction />}
 			{...props}
 		>
@@ -120,8 +120,8 @@ export const RestrictionPatch: FC<RestrictionPatch.Props> = ({
 				>
 					{({ isValid, isSubmitting }) => (
 						<SaveContainer
-							onCancel={onCancel}
-							onSave={() => {
+							onCancelFn={onCancelFn}
+							onSaveFn={() => {
 								form.handleSubmit();
 							}}
 							loading={isSubmitting}

@@ -2,19 +2,19 @@ import { withListingQuery } from "~/buyer-listing/query/withListingQuery";
 import type { ListingSchema } from "~/buyer-listing/schema/ListingSchema";
 import { favouriteToggleFn } from "~/buyer-listing-favourite/fn/favouriteToggleFn";
 import type { FavouriteToggleSchema } from "~/buyer-listing-favourite/schema/FavouriteToggleSchema";
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withMutation } from "~/mutation/fn/withMutation";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withMutationFn } from "~/mutation/fn/withMutationFn";
 
-export const withFavouriteToggleMutation = withMutation<
+export const withFavouriteToggleMutation = withMutationFn<
 	FavouriteToggleSchema.Type,
 	ListingSchema.Type,
 	favouriteToggleFn.Error
 >({
-	logger: getRootLogger([
+	logger: getRootLoggerFn([
 		"mutation",
 		"withFavouriteToggleMutation",
 	]),
-	keys(variables) {
+	keysFn(variables) {
 		return [
 			"listing_favourite",
 			"toggle",
@@ -28,7 +28,7 @@ export const withFavouriteToggleMutation = withMutation<
 	},
 	invalidate: [
 		{
-			async invalidate(queryClient, result) {
+			async invalidateFn(queryClient, result) {
 				result && withListingQuery.updateFn(queryClient, result);
 			},
 		},

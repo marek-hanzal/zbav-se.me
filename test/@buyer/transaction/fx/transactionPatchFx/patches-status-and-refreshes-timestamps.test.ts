@@ -2,15 +2,15 @@ import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import { transactionPatchFx } from "~/buyer-transaction/fx/transactionPatchFx";
-import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
 describe("transactionPatchFx", () => {
 	it("patches transaction data and refreshes updatedAt and expiresAt", async () => {
-		const database = await testabase("buyerTransactionPatchFx-refreshes-timestamps");
+		const database = await testabaseFn("buyerTransactionPatchFx-refreshes-timestamps");
 
 		return Effect.gen(function* () {
 			const users = yield* createUsersFx({});
@@ -49,8 +49,8 @@ describe("transactionPatchFx", () => {
 					userId: users.buyer.id,
 				},
 			}).pipe(
-				withDateServiceFx({
-					now: () => fixedNow,
+				withDateServiceFn({
+					nowFn: () => fixedNow,
 				}),
 			);
 
@@ -66,6 +66,6 @@ describe("transactionPatchFx", () => {
 			);
 			expect(patched.updatedAt.getTime()).not.toBe(before.updatedAt.getTime());
 			expect(patched.expiresAt.getTime()).not.toBe(before.expiresAt.getTime());
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

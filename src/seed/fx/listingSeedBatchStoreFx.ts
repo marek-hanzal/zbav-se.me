@@ -4,7 +4,7 @@ import path from "node:path";
 import { Effect } from "effect";
 import type { SeedListingPlan } from "~/seed/fx/listingSeedPlanFx";
 
-const toBatchFilePath = (directory: string, batchIndex: number) => {
+const toBatchFilePathFn = (directory: string, batchIndex: number) => {
 	return path.join(directory, `listing-seed-batch-${String(batchIndex).padStart(6, "0")}.json`);
 };
 
@@ -51,7 +51,7 @@ export const writeListingSeedBatchFx = Effect.fn("writeListingSeedBatchFx")(func
 	batchIndex: number;
 	plans: SeedListingPlan[];
 }) {
-	const filePath = toBatchFilePath(directory, batchIndex);
+	const filePath = toBatchFilePathFn(directory, batchIndex);
 
 	yield* Effect.tryPromise({
 		try: async () => {

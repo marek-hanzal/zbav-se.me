@@ -1,17 +1,17 @@
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withQuery } from "~/query/fn/withQuery";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withQueryFn } from "~/query/fn/withQueryFn";
 import { listingValidateFn } from "~/seller-listing/fn/listingValidateFn";
 import type { ListingValidateSchema } from "~/seller-listing/schema/ListingValidateSchema";
 
-export const withListingValidationQuery = withQuery({
-	logger: getRootLogger([
+export const withListingValidationQuery = withQueryFn({
+	logger: getRootLoggerFn([
 		"query",
 		"withListingValidationQuery",
 	]),
 	errors: {} as {
 		query: listingValidateFn.Error;
 	},
-	keys(data: ListingValidateSchema.Type) {
+	keysFn(data: ListingValidateSchema.Type) {
 		return [
 			"listing",
 			"validation",

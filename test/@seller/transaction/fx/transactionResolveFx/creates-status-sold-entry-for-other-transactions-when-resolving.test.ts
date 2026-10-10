@@ -3,14 +3,14 @@ import { describe, expect, it } from "vitest";
 import { transactionCreateFx } from "~/buyer-transaction/fx/transactionCreateFx";
 import { transactionAcceptFx } from "~/seller-transaction/fx/transactionAcceptFx";
 import { transactionResolveFx } from "~/seller-transaction/fx/transactionResolveFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("transactionResolveFx — sold status entry", () => {
 	it("creates status-sold entry for other transactions when resolving one transaction", async () => {
-		const database = await testabase("transactionResolveFx-sold-entry");
+		const database = await testabaseFn("transactionResolveFx-sold-entry");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -67,6 +67,6 @@ describe("transactionResolveFx — sold status entry", () => {
 			expect(soldEntries).toHaveLength(1);
 			// biome-ignore lint/style/noNonNullAssertion: Ssst
 			expect(soldEntries[0]!.kind).toBe("status-sold");
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

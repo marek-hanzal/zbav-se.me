@@ -53,8 +53,8 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ _suspense, draftId }) => {
 		defaultPanel: "default",
 	});
 
-	const onDone = useCallback(() => {
-		editor.set("default");
+	const onDoneFn = useCallback(() => {
+		editor.setFn("default");
 	}, [
 		editor,
 	]);
@@ -88,7 +88,7 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ _suspense, draftId }) => {
 				<GalleryPatch
 					_suspense={_suspense}
 					draft={draft}
-					onCancel={onDone}
+					onCancelFn={onDoneFn}
 					view={editor}
 				/>
 			</editor.Panel>
@@ -96,7 +96,7 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ _suspense, draftId }) => {
 			<editor.Panel name={"title"}>
 				<TitlePatch
 					draft={draft}
-					onCancel={onDone}
+					onCancelFn={onDoneFn}
 					view={editor}
 				/>
 			</editor.Panel>
@@ -104,7 +104,7 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ _suspense, draftId }) => {
 			<editor.Panel name={"category"}>
 				<CategoryPatch
 					draft={draft}
-					onCancel={onDone}
+					onCancelFn={onDoneFn}
 					view={editor}
 				/>
 			</editor.Panel>
@@ -112,7 +112,7 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ _suspense, draftId }) => {
 			<editor.Panel name={"location"}>
 				<LocationPatch
 					draft={draft}
-					onCancel={onDone}
+					onCancelFn={onDoneFn}
 					view={editor}
 				/>
 			</editor.Panel>
@@ -120,7 +120,7 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ _suspense, draftId }) => {
 			<editor.Panel name={"priceType"}>
 				<PriceTypePatch
 					draft={draft}
-					onCancel={onDone}
+					onCancelFn={onDoneFn}
 					view={editor}
 				/>
 			</editor.Panel>
@@ -128,7 +128,7 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ _suspense, draftId }) => {
 			<editor.Panel name={"price"}>
 				<PricePatch
 					draft={draft}
-					onCancel={onDone}
+					onCancelFn={onDoneFn}
 					view={editor}
 				/>
 			</editor.Panel>
@@ -136,7 +136,7 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ _suspense, draftId }) => {
 			<editor.Panel name={"expires"}>
 				<ExpiresPatch
 					draft={draft}
-					onCancel={onDone}
+					onCancelFn={onDoneFn}
 					view={editor}
 				/>
 			</editor.Panel>
@@ -144,7 +144,7 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ _suspense, draftId }) => {
 			<editor.Panel name={"condition"}>
 				<ConditionPatch
 					draft={draft}
-					onCancel={onDone}
+					onCancelFn={onDoneFn}
 					view={editor}
 				/>
 			</editor.Panel>
@@ -152,7 +152,7 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ _suspense, draftId }) => {
 			<editor.Panel name={"age"}>
 				<AgePatch
 					draft={draft}
-					onCancel={onDone}
+					onCancelFn={onDoneFn}
 					view={editor}
 				/>
 			</editor.Panel>
@@ -160,7 +160,7 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ _suspense, draftId }) => {
 			<editor.Panel name={"delivery"}>
 				<DeliveryPatch
 					draft={draft}
-					onCancel={onDone}
+					onCancelFn={onDoneFn}
 					view={editor}
 				/>
 			</editor.Panel>
@@ -168,7 +168,7 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ _suspense, draftId }) => {
 			<editor.Panel name={"warranty"}>
 				<WarrantyPatch
 					draft={draft}
-					onCancel={onDone}
+					onCancelFn={onDoneFn}
 					view={editor}
 				/>
 			</editor.Panel>
@@ -176,7 +176,7 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ _suspense, draftId }) => {
 			<editor.Panel name={"restriction"}>
 				<RestrictionPatch
 					draft={draft}
-					onCancel={onDone}
+					onCancelFn={onDoneFn}
 					view={editor}
 				/>
 			</editor.Panel>
@@ -184,7 +184,7 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ _suspense, draftId }) => {
 			<editor.Panel name={"description"}>
 				<DescriptionPatch
 					draft={draft}
-					onCancel={onDone}
+					onCancelFn={onDoneFn}
 					view={editor}
 				/>
 			</editor.Panel>
@@ -192,7 +192,7 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ _suspense, draftId }) => {
 			<editor.Panel name={"pros"}>
 				<ProsPatch
 					draft={draft}
-					onCancel={onDone}
+					onCancelFn={onDoneFn}
 					view={editor}
 				/>
 			</editor.Panel>
@@ -200,7 +200,7 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ _suspense, draftId }) => {
 			<editor.Panel name={"cons"}>
 				<ConsPatch
 					draft={draft}
-					onCancel={onDone}
+					onCancelFn={onDoneFn}
 					view={editor}
 				/>
 			</editor.Panel>

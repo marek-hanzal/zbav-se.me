@@ -5,7 +5,7 @@ import type { FeedCreateSchema } from "~/buyer-feed/schema/FeedCreateSchema";
 import { dbFx } from "~/database/fx/dbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { DateServiceFx } from "~/date/service/DateServiceFx";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { ConflictErrorFx } from "~/server-error/error/ConflictErrorFx";
 import { resourceLimitEnsureFx } from "~/user-resource-limit/fx/resourceLimitEnsureFx";
@@ -32,8 +32,8 @@ export const feedCreateFx = Effect.fn("feedCreateFx")(function* ({
 		Effect.gen(function* () {
 			const dateService = yield* DateServiceFx;
 
-			const id = genId();
-			const now = dateService.now();
+			const id = genIdFn();
+			const now = dateService.nowFn();
 
 			const feedCount = yield* feedCountFx({
 				where: {

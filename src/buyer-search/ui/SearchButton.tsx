@@ -2,22 +2,22 @@ import { SearchIcon } from "~/application-ui/constant/icon.exports";
 import { withFeedQuery } from "~/buyer-feed/query/withFeedQuery";
 import { withListingQuery } from "~/buyer-listing/query/withListingQuery";
 import { useLocale } from "~/locale/hook/useLocale";
-import { toLocaleNumber } from "~/number/fn/toLocaleNumber";
+import { toLocaleNumberFn } from "~/number/fn/toLocaleNumberFn";
 import { Tx } from "~/translation/ui/Tx";
-import type { uiLinkTo } from "~/ui/fn/uiLinkTo";
-import { withFallback } from "~/ui/fn/withFallback";
+import type { uiLinkToFn } from "~/ui/fn/uiLinkToFn";
+import { withFallbackFn } from "~/ui/fn/withFallbackFn";
 import type { MarkSuspense } from "~/ui/type/MarkSuspense";
 import { Badge } from "~/ui/ui/Badge";
 import { Container } from "~/ui/ui/Container";
 import { LinkTo } from "~/ui/ui/LinkTo";
 
 export namespace SearchButton {
-	export interface Props extends uiLinkTo.Component<{}>, MarkSuspense.Props {
+	export interface Props extends uiLinkToFn.Component<{}>, MarkSuspense.Props {
 		feedId: string;
 	}
 }
 
-export const SearchButton = withFallback(
+export const SearchButton = withFallbackFn(
 	({ _suspense, feedId, className, ...props }: SearchButton.Props) => {
 		const locale = useLocale();
 		const { data: feed } = withFeedQuery.useFetchQuery(feedId);
@@ -77,7 +77,7 @@ export const SearchButton = withFallback(
 						>
 							{listingCount > 9
 								? "9+"
-								: toLocaleNumber({
+								: toLocaleNumberFn({
 										number: listingCount,
 										locale,
 									})}

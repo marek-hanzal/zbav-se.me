@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { selectFx } from "~/database-query/fx/selectFx";
+import { selectFn } from "~/database-query/fn/selectFn";
 import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import type { AgentStreamSortSchema } from "~/user-agent/schema/AgentStreamSortSchema";
 import type { AgentStreamWhereSchema } from "~/user-agent/schema/AgentStreamWhereSchema";
@@ -25,7 +25,7 @@ export const withAgentStreamSelectFx = Effect.fn("withAgentStreamSelectFx")(func
 			.exhaustive();
 	}
 
-	return selectFx({
+	return selectFn({
 		select: select.select([
 			"as.id",
 			"as.userId",

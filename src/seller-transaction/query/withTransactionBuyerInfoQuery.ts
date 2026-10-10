@@ -1,18 +1,18 @@
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withQuery } from "~/query/fn/withQuery";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withQueryFn } from "~/query/fn/withQueryFn";
 import { transactionBuyerInfoFn } from "~/seller-transaction/fn/transactionBuyerInfoFn";
 import type { TransactionBuyerInfoSchema } from "~/seller-transaction/schema/TransactionBuyerInfoSchema";
 import type { TransactionQuerySchema } from "~/seller-transaction/schema/TransactionQuerySchema";
 
-export const withTransactionBuyerInfoQuery = withQuery({
-	logger: getRootLogger([
+export const withTransactionBuyerInfoQuery = withQueryFn({
+	logger: getRootLoggerFn([
 		"query",
 		"withTransactionBuyerInfoQuery",
 	]),
 	errors: {} as {
 		query: transactionBuyerInfoFn.Error;
 	},
-	keys(data: TransactionQuerySchema.Type) {
+	keysFn(data: TransactionQuerySchema.Type) {
 		return [
 			"seller",
 			"transaction",

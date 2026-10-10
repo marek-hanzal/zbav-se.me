@@ -10,14 +10,19 @@ import { CategorySelect } from "~/user-category/ui/CategorySelect/index";
 export namespace CategoryPatch {
 	export interface Props extends Container.Props {
 		feed: FeedSchema.Type;
-		onSettled?(): void;
-		onCancel(): void;
+		onSettledFn?(): void;
+		onCancelFn(): void;
 	}
 }
 
-export const CategoryPatch: FC<CategoryPatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
+export const CategoryPatch: FC<CategoryPatch.Props> = ({
+	feed,
+	onSettledFn,
+	onCancelFn,
+	...props
+}) => {
 	const patchMutation = withFeedQuery.usePatchMutation({
-		onSettled,
+		onSettled: onSettledFn,
 	});
 	const selection = useSelection<EntitySchema.Type>({
 		mode: "single",
@@ -33,7 +38,7 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({ feed, onSettled, onCanc
 		],
 	});
 
-	const categoryId = selection.optional.singleId() ?? undefined;
+	const categoryId = selection.optional.singleIdFn() ?? undefined;
 
 	return (
 		<Container
@@ -52,8 +57,8 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({ feed, onSettled, onCanc
 			/>
 
 			<SaveContainer
-				onCancel={onCancel}
-				onSave={() => {
+				onCancelFn={onCancelFn}
+				onSaveFn={() => {
 					patchMutation.mutate({
 						query: {
 							where: {
@@ -65,7 +70,7 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({ feed, onSettled, onCanc
 								...feed.query,
 								where: {
 									...feed.query?.where,
-									categoryId: selection.optional.singleId(),
+									categoryId: selection.optional.singleIdFn(),
 									attrs: {},
 								},
 							},

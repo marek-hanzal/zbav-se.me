@@ -45,7 +45,7 @@ export const activityArchiveFx = Effect.fn("activityArchiveFx")(function* ({
 				select = yield* queryFx(select, layer);
 			}
 
-			const archivedAt = dateContext.now().toJSDate();
+			const archivedAt = dateContext.nowFn().toJSDate();
 			const selectIds = select
 				.clearSelect()
 				.select("i.id")

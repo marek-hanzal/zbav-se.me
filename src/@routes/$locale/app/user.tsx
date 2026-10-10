@@ -26,7 +26,7 @@ export const Route = createFileRoute("/$locale/app/user")({
 		return (
 			<TitleContainer
 				data-ui={"User[TitleContainer]"}
-				textTitle={translator.text("User profile (title)")}
+				textTitle={translator.textFn("User profile (title)")}
 				left={
 					<BackHomeButton
 						to="/$locale/app/home"
@@ -61,8 +61,8 @@ export const Route = createFileRoute("/$locale/app/user")({
 
 					<Group>
 						<LabelValue
-							textLabel={translator.text("User email (label)")}
-							textHint={translator.text(
+							textLabel={translator.textFn("User email (label)")}
+							textHint={translator.textFn(
 								user.emailVerified
 									? "Your email is verified."
 									: "Your email is not verified yet.",
@@ -79,8 +79,8 @@ export const Route = createFileRoute("/$locale/app/user")({
 
 					<Group>
 						<LabelValue
-							textLabel={translator.text("Token usage (label)")}
-							textHint={translator.text("Token usage (hint)")}
+							textLabel={translator.textFn("Token usage (label)")}
+							textHint={translator.textFn("Token usage (hint)")}
 							textValue={<TokenUsage data-ui-justify={"start"} />}
 						/>
 					</Group>
@@ -103,7 +103,7 @@ export const Route = createFileRoute("/$locale/app/user")({
 		return (
 			<TitleContainer
 				data-ui={"UserPending[TitleContainer]"}
-				textTitle={translator.text("User profile (title)")}
+				textTitle={translator.textFn("User profile (title)")}
 				left={
 					<BackHomeButton
 						to="/$locale/app/home"

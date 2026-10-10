@@ -12,13 +12,13 @@ export namespace CopyIconAction {
 }
 
 export const CopyIconAction: FC<CopyIconAction.Props> = ({ text, ...props }) => {
-	const [success, setSuccess] = useState(false);
+	const [success, setSuccessFn] = useState(false);
 
 	const copy = useCopy({
 		onSuccess() {
-			setSuccess(true);
+			setSuccessFn(true);
 			setTimeout(() => {
-				setSuccess(false);
+				setSuccessFn(false);
 			}, 1500);
 		},
 	});

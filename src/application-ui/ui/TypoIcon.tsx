@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { tvc } from "~/ui/fn/tvc";
+import { tvcFn } from "~/ui/fn/tvcFn";
 import { Container } from "~/ui/ui/Container";
 import { Icon } from "~/ui/ui/Icon";
 
@@ -38,7 +38,7 @@ export const TypoIcon: FC<TypoIcon.Props> = ({
 			/>
 
 			<div
-				className={tvc([
+				className={tvcFn([
 					"flex",
 					"flex-col",
 					"items-start",

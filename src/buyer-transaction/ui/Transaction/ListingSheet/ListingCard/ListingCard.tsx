@@ -3,7 +3,7 @@ import { withListingQuery } from "~/buyer-listing/query/withListingQuery";
 import { HeroSection } from "~/buyer-transaction/ui/Transaction/ListingSheet/ListingCard/HeroSection";
 import { InfoSection } from "~/buyer-transaction/ui/Transaction/ListingSheet/ListingCard/InfoSection";
 import { AttrSection } from "~/listing-attr/ui/AttrSection";
-import { getRootLogger } from "~/log/fn/getRootLogger";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
 import { useRenderLogger } from "~/ui/hook/useRenderLogger";
 import type { MarkSuspense } from "~/ui/type/MarkSuspense";
 import { Container } from "~/ui/ui/Container";
@@ -26,7 +26,7 @@ export const ListingCard: FC<ListingCard.Props> = ({
 	const { data: listing } = withListingQuery.useFetchQuery(listingId);
 
 	useRenderLogger({
-		logger: getRootLogger(),
+		logger: getRootLoggerFn(),
 		name: "ListingCard",
 		meta: {
 			listingId,

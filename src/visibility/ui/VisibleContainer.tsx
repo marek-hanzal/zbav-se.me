@@ -16,25 +16,25 @@ export namespace VisibleContainer {
 		/**
 		 * Should be stable function
 		 */
-		placeholder: Placeholder.Render;
+		placeholderFn: Placeholder.Render;
 	}
 }
 
 export const VisibleContainer: FC<VisibleContainer.Props> = ({
 	id,
-	placeholder,
+	placeholderFn,
 	children,
 	...props
 }) => {
 	const useStore = useVisible();
-	const visible = useStore((state) => state.getById(id)?.isVisible ?? false);
+	const visible = useStore((state) => state.getByIdFn(id)?.isVisible ?? false);
 
 	const node = useMemo(() => {
-		return visible ? children : placeholder();
+		return visible ? children : placeholderFn();
 	}, [
 		visible,
 		children,
-		placeholder,
+		placeholderFn,
 	]);
 
 	return (

@@ -1,8 +1,8 @@
 import type { RunStreamEvent } from "@openai/agents-core";
 import { type FC, useMemo } from "react";
 import { Container } from "~/ui/ui/Container";
+import { getResponseStreamEventFn } from "~/user-agent/fn/getResponseStreamEventFn";
 import { withAgentLiveQuery } from "~/user-agent/query/withAgentLiveQuery";
-import { getResponseStreamEvent } from "~/user-agent/type/getResponseStreamEvent";
 import { AssistantMessage } from "~/user-agent/ui/Agent/LiveList/AssistantMessage";
 import { ErrorMessage } from "~/user-agent/ui/Agent/LiveList/ErrorMessage";
 import { Reasoning } from "~/user-agent/ui/Agent/LiveList/Reasoning";
@@ -96,7 +96,7 @@ function useLiveEntries(events: RunStreamEvent[] | undefined): useLiveEntries.Li
 		const entries: useLiveEntries.LiveEntry[] = [];
 
 		for (const event of events ?? []) {
-			const responseEvent = getResponseStreamEvent(event);
+			const responseEvent = getResponseStreamEventFn(event);
 
 			if (!responseEvent) {
 				continue;

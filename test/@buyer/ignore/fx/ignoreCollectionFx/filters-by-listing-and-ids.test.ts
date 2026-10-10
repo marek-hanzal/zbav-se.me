@@ -3,14 +3,14 @@ import { describe, expect, it } from "vitest";
 import { ignoreCollectionFx } from "~/buyer-listing-ignore/fx/ignoreCollectionFx";
 import { ignoreCountFx } from "~/buyer-listing-ignore/fx/ignoreCountFx";
 import { ignoreToggleFx } from "~/buyer-listing-ignore/fx/ignoreToggleFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
 describe("ignoreCollectionFx", () => {
 	it("filters by listing and idIn while staying scoped to the current user", async () => {
-		const database = await testabase("ignoreCollectionFx-contract");
+		const database = await testabaseFn("ignoreCollectionFx-contract");
 
 		return Effect.gen(function* () {
 			const { seller, buyer, stranger } = yield* createUsersFx({});
@@ -84,6 +84,6 @@ describe("ignoreCollectionFx", () => {
 			expect(byIds[0]?.id).toBe(firstIgnore.id);
 			expect(count).toBe(1);
 			expect(strangerCollection).toEqual([]);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

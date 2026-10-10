@@ -4,7 +4,7 @@ import { withTransactionQuery } from "~/buyer-transaction/query/withTransactionQ
 import { ListingSheet } from "~/buyer-transaction/ui/Transaction/ListingSheet/index";
 import type { ListingPriceSchema } from "~/listing/schema/ListingPriceSchema";
 import { ListingPrice } from "~/listing/ui/ListingPrice";
-import { getRootLogger } from "~/log/fn/getRootLogger";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
 import { useTranslator } from "~/translation/hook/useTranslator";
 import { useRenderLogger } from "~/ui/hook/useRenderLogger";
 import type { MarkSuspense } from "~/ui/type/MarkSuspense";
@@ -25,11 +25,11 @@ export const TransactionHero: FC<TransactionHero.Props> = ({
 }) => {
 	const translator = useTranslator();
 	const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId);
-	const [detail, setDetail] = useState(false);
+	const [detail, setDetailFn] = useState(false);
 	const [hero] = transaction.withImageUrl;
 
 	useRenderLogger({
-		logger: getRootLogger(),
+		logger: getRootLoggerFn(),
 		name: "TransactionHero",
 	});
 
@@ -40,7 +40,7 @@ export const TransactionHero: FC<TransactionHero.Props> = ({
 				data-action={"open transaction detail"}
 				data-ui-position="relative"
 				data-ui-height="content"
-				onClick={() => setDetail((prev) => !prev)}
+				onClick={() => setDetailFn((prev) => !prev)}
 				{...props}
 			>
 				<HeroImage
@@ -52,14 +52,14 @@ export const TransactionHero: FC<TransactionHero.Props> = ({
 				<Container data-ui-inner={"default"}>
 					<Group>
 						<LabelValue
-							textLabel={translator.text("Listing price (label)")}
+							textLabel={translator.textFn("Listing price (label)")}
 							textValue={
 								<ListingPrice price={transaction as ListingPriceSchema.Type} />
 							}
 						/>
 
 						<LabelValue
-							textLabel={translator.text("Listing location (label)")}
+							textLabel={translator.textFn("Listing location (label)")}
 							textValue={transaction.location.address}
 							textValueProps={{
 								"data-ui-truncate": false,
@@ -76,7 +76,7 @@ export const TransactionHero: FC<TransactionHero.Props> = ({
 				listingId={transaction.listingId}
 				state={{
 					value: detail,
-					set: setDetail,
+					setFn: setDetailFn,
 				}}
 			/>
 		</>

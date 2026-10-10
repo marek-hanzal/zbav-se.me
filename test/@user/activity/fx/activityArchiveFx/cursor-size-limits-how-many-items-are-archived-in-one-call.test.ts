@@ -3,8 +3,8 @@ import { describe, expect, it } from "vitest";
 import type { ActivityPriorityEnumSchema } from "~/activity/schema/ActivityPriorityEnumSchema";
 import type { ActivityTypeEnumSchema } from "~/activity/schema/ActivityTypeEnumSchema";
 import type { ActivityTableSchema } from "~/database/schema/ActivityTable";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { activityArchiveFx } from "~/user-activity/fx/activityArchiveFx";
 
@@ -12,8 +12,8 @@ import { activityArchiveFx } from "~/user-activity/fx/activityArchiveFx";
  * Inserts activity rows directly into the DB — bypasses activityCreateFx so tests
  * are not coupled to the full transaction/listing lifecycle.
  */
-const seedActivity = async (
-	database: Awaited<ReturnType<typeof import("~/test/testabase").testabase>>,
+const seedActivityFn = async (
+	database: Awaited<ReturnType<typeof import("~/test/testabaseFn").testabaseFn>>,
 	rows: Array<
 		Pick<ActivityTableSchema.Type, "family" | "payload"> & {
 			id: string;
@@ -38,13 +38,13 @@ const seedActivity = async (
 
 describe("activityArchiveFx", () => {
 	it("cursor size limits how many items are archived in one call", async () => {
-		const database = await testabase("activityArchive-cursor-limit");
+		const database = await testabaseFn("activityArchive-cursor-limit");
 
 		return Effect.gen(function* () {
 			const user = yield* leaseTestUserFx({});
 
 			yield* Effect.promise(() =>
-				seedActivity(database, [
+				seedActivityFn(database, [
 					{
 						id: "cursor-1",
 						userId: user.id,
@@ -113,6 +113,6 @@ describe("activityArchiveFx", () => {
 
 			expect(archivedCount).toBe(2);
 			expect(activeCount).toBe(1);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

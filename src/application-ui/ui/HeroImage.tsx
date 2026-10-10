@@ -7,7 +7,7 @@ import {
 	useState,
 } from "react";
 import { useTranslator } from "~/translation/hook/useTranslator";
-import type { uiContainer } from "~/ui/fn/uiContainer";
+import type { uiContainerFn } from "~/ui/fn/uiContainerFn";
 import { Container } from "~/ui/ui/Container";
 import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
 import { Status } from "~/ui/ui/Status";
@@ -29,7 +29,7 @@ export namespace HeroImage {
 	 * Extends native `<img>` props plus UI-system container props (`ui`, `className`)
 	 * so the image can be styled consistently across app surfaces.
 	 */
-	export interface Props extends uiContainer.Component<ComponentProps<"img">> {
+	export interface Props extends uiContainerFn.Component<ComponentProps<"img">> {
 		/**
 		 * Controls whether the component should render at all.
 		 *
@@ -77,15 +77,15 @@ export const HeroImage: FC<HeroImage.Props> = ({
 	spinner,
 	invisible,
 	wrapperProps,
-	onLoad,
-	onError,
+	onLoad: onLoadFn,
+	onError: onErrorFn,
 	//
 	className,
 	//
 	...props
 }) => {
 	const translator = useTranslator();
-	const [state, setState] = useState<ImageState>({
+	const [state, setStateFn] = useState<ImageState>({
 		src: props.src,
 		status: "loading",
 	});
@@ -99,7 +99,7 @@ export const HeroImage: FC<HeroImage.Props> = ({
 		}
 
 		if (img.complete) {
-			setState({
+			setStateFn({
 				src: props.src,
 				status: img.naturalWidth > 0 ? "loaded" : "error",
 			});
@@ -138,19 +138,19 @@ export const HeroImage: FC<HeroImage.Props> = ({
 				referrerPolicy={"origin"}
 				crossOrigin={"anonymous"}
 				onLoad={(e) => {
-					setState({
+					setStateFn({
 						src: props.src,
 						status: "loaded",
 					});
-					onLoad?.(e);
+					onLoadFn?.(e);
 				}}
 				onError={(e) => {
 					console.error(e);
-					setState({
+					setStateFn({
 						src: props.src,
 						status: "error",
 					});
-					onError?.(e);
+					onErrorFn?.(e);
 				}}
 				style={{
 					opacity: status === "loaded" ? 1 : 0,
@@ -185,7 +185,7 @@ export const HeroImage: FC<HeroImage.Props> = ({
 				>
 					<Status
 						icon={"icon-[ph--image-broken-duotone]"}
-						textTitle={translator.text("Image not available anymore")}
+						textTitle={translator.textFn("Image not available anymore")}
 						{...errorStatusProps}
 					/>
 				</Container>

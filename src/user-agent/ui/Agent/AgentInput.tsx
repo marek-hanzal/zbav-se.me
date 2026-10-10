@@ -24,8 +24,8 @@ export namespace AgentInput {
 
 export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 	const translator = useTranslator();
-	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
-	const [uploads, setUploads] = useState<UploadSchema.Type[]>([]);
+	const [isGalleryOpen, setIsGalleryOpenFn] = useState(false);
+	const [uploads, setUploadsFn] = useState<UploadSchema.Type[]>([]);
 	const uploadIds = uploads.map(({ id }) => id);
 	const { data: tokens } = withAgentTokensQuery.useSuspenseQuery({
 		where: {
@@ -41,18 +41,18 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 				access="private"
 				state={{
 					value: isGalleryOpen,
-					set: setIsGalleryOpen,
+					setFn: setIsGalleryOpenFn,
 				}}
 				withMutation={withProxyMutation}
-				toMutation={(uploadIds) => ({
+				toMutationFn={(uploadIds) => ({
 					uploadIds,
 				})}
-				onSuccess={async (result) => {
-					setUploads(result);
-					setIsGalleryOpen(false);
+				onSuccessFn={async (result) => {
+					setUploadsFn(result);
+					setIsGalleryOpenFn(false);
 				}}
-				onCancel={() => {
-					setIsGalleryOpen(false);
+				onCancelFn={() => {
+					setIsGalleryOpenFn(false);
 				}}
 				defaultUploadIds={uploadIds}
 				detent={"default"}
@@ -79,7 +79,7 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 						]}
 						data-ui-inner={"default"}
 						onClick={() => {
-							setIsGalleryOpen(true);
+							setIsGalleryOpenFn(true);
 						}}
 					>
 						<Container
@@ -134,7 +134,7 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 						<Button
 							data-action={"clear queued agent messages"}
 							iconEnabled={"icon-[solar--close-circle-linear]"}
-							onClick={chat.clearQueue}
+							onClick={chat.clearQueueFn}
 							iconProps={{
 								"data-ui-text": "lg",
 							}}
@@ -155,32 +155,32 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 					className={[
 						"relative",
 					]}
-					onSubmit={async (text) => {
-						chat.submit(
+					onSubmitFn={async (text) => {
+						chat.submitFn(
 							uploads.length > 0
-								? chat.input.image(
+								? chat.input.imageFn(
 										text,
 										uploads.map(({ url }) => url),
 									)
-								: chat.input.text(text),
+								: chat.input.textFn(text),
 						);
-						setUploads([]);
+						setUploadsFn([]);
 					}}
-					placeholder={translator.text("Write to an agent")}
+					placeholder={translator.textFn("Write to an agent")}
 					loading={chat.isPending}
 					disableSubmit={chat.isQueueFull}
 					buttonProps={{
-						"aria-label": translator.text("Send message to agent (aria)"),
+						"aria-label": translator.textFn("Send message to agent (aria)"),
 					}}
 					cancel={
 						<Button
 							data-action={"stop agent stream"}
 							iconEnabled={"icon-[solar--stop-linear]"}
-							onClick={chat.cancel}
+							onClick={chat.cancelFn}
 							iconProps={{
 								"data-ui-text": "xl",
 							}}
-							aria-label={translator.text("Cancel current agent work (aria)")}
+							aria-label={translator.textFn("Cancel current agent work (aria)")}
 							data-ui-justify="center"
 							data-ui-items="center"
 							data-ui-tone="brand"
@@ -194,15 +194,15 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 					}
 					left={
 						<TransactionMenuButton
-							aria-label={translator.text("Open agent menu options (aria)")}
+							aria-label={translator.textFn("Open agent menu options (aria)")}
 						>
-							{(close) => (
+							{(closeFn) => (
 								<AgentMenu
-									close={close}
+									closeFn={closeFn}
 									isPending={chat.isPending}
 									galleryState={{
 										value: isGalleryOpen,
-										set: setIsGalleryOpen,
+										setFn: setIsGalleryOpenFn,
 									}}
 								/>
 							)}

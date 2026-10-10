@@ -23,7 +23,7 @@ export const PriceValue: FC<PriceValue.Props> = ({ price, currency, ...props }) 
 	return (
 		<LabelValue
 			data-ui={"PriceValue"}
-			textLabel={translator.text("Price (title)")}
+			textLabel={translator.textFn("Price (title)")}
 			textValue={
 				hasPrice ? (
 					<PriceInline
@@ -33,7 +33,7 @@ export const PriceValue: FC<PriceValue.Props> = ({ price, currency, ...props }) 
 					/>
 				) : null
 			}
-			textEmpty={translator.text("Price not set")}
+			textEmpty={translator.textFn("Price not set")}
 			{...props}
 		/>
 	);

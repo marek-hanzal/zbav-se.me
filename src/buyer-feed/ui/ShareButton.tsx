@@ -16,13 +16,13 @@ export const ShareButton: FC<ShareButton.Props> = ({ listingId }) => {
 	const router = useRouter();
 	const locale = useLocale();
 	const translator = useTranslator();
-	const [success, setSuccess] = useState(false);
+	const [success, setSuccessFn] = useState(false);
 
 	const copy = useCopy({
 		onSuccess() {
-			setSuccess(true);
+			setSuccessFn(true);
 			setTimeout(() => {
-				setSuccess(false);
+				setSuccessFn(false);
 			}, 1500);
 		},
 	});
@@ -55,7 +55,7 @@ export const ShareButton: FC<ShareButton.Props> = ({ listingId }) => {
 				});
 			}}
 		>
-			{translator.text("Share listing (label)")}
+			{translator.textFn("Share listing (label)")}
 		</Button>
 	);
 };

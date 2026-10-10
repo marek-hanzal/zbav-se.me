@@ -28,14 +28,14 @@ export const statusStateOptions: readonly MatrixState[] = [
 	...requestOptions,
 ];
 
-export const transitionKey = ({ status, request, side }: ExpectedTransition) => {
+export const transitionKeyFn = ({ status, request, side }: ExpectedTransition) => {
 	return `${status ?? "null"}:${request}:${side ?? "null"}`;
 };
 
-export const buildExpectedTransitions = () => {
+export const buildExpectedTransitionsFn = () => {
 	const expectedTransitions: ExpectedTransition[] = [];
 
-	const addForStates = (
+	const addForStatesFn = (
 		states: readonly MatrixState[],
 		transitions: readonly Omit<ExpectedTransition, "status">[],
 	) => {
@@ -49,7 +49,7 @@ export const buildExpectedTransitions = () => {
 		}
 	};
 
-	addForStates(
+	addForStatesFn(
 		[
 			null,
 		],
@@ -65,7 +65,7 @@ export const buildExpectedTransitions = () => {
 		],
 	);
 
-	addForStates(
+	addForStatesFn(
 		[
 			"interest",
 			"status-interest",
@@ -110,7 +110,7 @@ export const buildExpectedTransitions = () => {
 		],
 	);
 
-	addForStates(
+	addForStatesFn(
 		[
 			"trade",
 			"status-trade",
@@ -187,7 +187,7 @@ export const buildExpectedTransitions = () => {
 		],
 	);
 
-	addForStates(
+	addForStatesFn(
 		[
 			"resolved",
 			"status-resolved",
@@ -236,7 +236,7 @@ export const buildExpectedTransitions = () => {
 		],
 	);
 
-	addForStates(
+	addForStatesFn(
 		[
 			"dispute",
 			"status-dispute-buyer",

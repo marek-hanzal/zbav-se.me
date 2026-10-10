@@ -1,24 +1,24 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
-import { genId } from "~/identity/fn/genId";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
+import { genIdFn } from "~/identity/fn/genIdFn";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { categoryFetchFx } from "~/user-category/fx/categoryFetchFx";
 
 const atFx = <A, E, R>(iso: string, eff: Effect.Effect<A, E, R>) =>
 	eff.pipe(
-		withDateServiceFx({
-			now: () => DateTime.fromISO(iso),
+		withDateServiceFn({
+			nowFn: () => DateTime.fromISO(iso),
 		}),
 	);
 
 describe("user category restriction fetch flow", () => {
 	it("keeps fetch-withrestriction aligned with staged cooldown boundaries", async () => {
-		const database = await testabase("user-category-fetch-multi-stage-cooldown");
+		const database = await testabaseFn("user-category-fetch-multi-stage-cooldown");
 
 		return Effect.gen(function* () {
 			const user = yield* leaseTestUserFx({});
@@ -28,7 +28,7 @@ describe("user category restriction fetch flow", () => {
 					.insertInto("category")
 					.values([
 						{
-							id: genId(),
+							id: genIdFn(),
 							group: "Restriction fetch fixture",
 							category: "Restriction fetch none",
 							slug: "restriction-fetch-none",
@@ -38,7 +38,7 @@ describe("user category restriction fetch flow", () => {
 							restriction: "none",
 						},
 						{
-							id: genId(),
+							id: genIdFn(),
 							group: "Restriction fetch fixture",
 							category: "Restriction fetch adult",
 							slug: "restriction-fetch-adult",
@@ -48,7 +48,7 @@ describe("user category restriction fetch flow", () => {
 							restriction: "adult",
 						},
 						{
-							id: genId(),
+							id: genIdFn(),
 							group: "Restriction fetch fixture",
 							category: "Restriction fetch restricted",
 							slug: "restriction-fetch-restricted",
@@ -66,7 +66,7 @@ describe("user category restriction fetch flow", () => {
 					.insertInto("user_restriction")
 					.values([
 						{
-							id: genId(),
+							id: genIdFn(),
 							userId: user.id,
 							restriction: "adult",
 							availableAt: new Date("2026-05-01T09:55:00.000Z"),
@@ -74,7 +74,7 @@ describe("user category restriction fetch flow", () => {
 							createdAt: new Date("2026-05-01T09:55:00.000Z"),
 						},
 						{
-							id: genId(),
+							id: genIdFn(),
 							userId: user.id,
 							restriction: "restricted",
 							availableAt: new Date("2026-05-01T10:30:00.000Z"),
@@ -82,7 +82,7 @@ describe("user category restriction fetch flow", () => {
 							createdAt: new Date("2026-05-01T10:01:00.000Z"),
 						},
 						{
-							id: genId(),
+							id: genIdFn(),
 							userId: user.id,
 							restriction: "none",
 							availableAt: new Date("2026-05-01T11:30:00.000Z"),
@@ -153,15 +153,15 @@ describe("user category restriction fetch flow", () => {
 			);
 
 			expect(beforeFirstBoundaryAdult.slug).toBe("restriction-fetch-adult");
-			expectTaggedErrorFx(beforeFirstBoundaryRestricted, {
+			expectTaggedErrorFn(beforeFirstBoundaryRestricted, {
 				tag: "NotFoundErrorFx",
 			});
 			expect(duringRestrictedWindow.slug).toBe("restriction-fetch-restricted");
-			expectTaggedErrorFx(afterReturnToNoneAdult, {
+			expectTaggedErrorFn(afterReturnToNoneAdult, {
 				tag: "NotFoundErrorFx",
 			});
 			expect(unrestrictedFetchStillWorks.slug).toBe("restriction-fetch-restricted");
 			expect(unrestrictedFetchStillWorks.isRestricted).toBe(true);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

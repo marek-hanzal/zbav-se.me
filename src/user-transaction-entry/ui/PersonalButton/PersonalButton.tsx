@@ -11,29 +11,29 @@ import { PersonalControl } from "~/user-transaction-entry/ui/PersonalButton/Pers
 
 export namespace PersonalButton {
 	export interface Props extends Button.Props {
-		close?: TransactionMenuButton.Close;
+		closeFn?: TransactionMenuButton.Close;
 		transactionId: string;
-		onPostMutation?: () => Promise<void>;
+		onPostMutationFn?: () => Promise<void>;
 	}
 }
 
 export const PersonalButton: FC<PersonalButton.Props> = ({
-	close,
+	closeFn,
 	transactionId,
-	onPostMutation,
+	onPostMutationFn,
 	...props
 }) => {
 	const translator = useTranslator();
-	const [isOpen, setIsOpen] = useState(false);
+	const [isOpen, setIsOpenFn] = useState(false);
 	const mutation = withTransactionEntryQuery.useCreateMutation({
 		invalidate: [
 			"collection",
 			"count",
 		],
-		async onPostMutation() {
-			await onPostMutation?.();
-			setIsOpen(false);
-			close?.();
+		async onPostMutationFn() {
+			await onPostMutationFn?.();
+			setIsOpenFn(false);
+			closeFn?.();
 		},
 	});
 
@@ -43,7 +43,7 @@ export const PersonalButton: FC<PersonalButton.Props> = ({
 				data-ui="PersonalButton"
 				iconEnabled={"icon-[solar--card-2-linear]"}
 				onClick={() => {
-					setIsOpen(true);
+					setIsOpenFn(true);
 				}}
 				{...props}
 			>
@@ -53,20 +53,20 @@ export const PersonalButton: FC<PersonalButton.Props> = ({
 			<BottomSheet
 				isOpen={isOpen}
 				onClose={() => {
-					setIsOpen(false);
+					setIsOpenFn(false);
 				}}
 				detent={"default"}
 				withHeader
-				header={({ close }) => ({
-					title: translator.text("Share contact info (title)"),
-					right: <CloseButton onClick={close} />,
+				headerFn={({ closeFn }) => ({
+					title: translator.textFn("Share contact info (title)"),
+					right: <CloseButton onClick={closeFn} />,
 				})}
 			>
 				<PersonalControl
-					onCancel={() => {
-						setIsOpen(false);
+					onCancelFn={() => {
+						setIsOpenFn(false);
 					}}
-					onSave={async (payload) => {
+					onSaveFn={async (payload) => {
 						return mutation.mutateAsync({
 							transactionId,
 							kind: "personal",

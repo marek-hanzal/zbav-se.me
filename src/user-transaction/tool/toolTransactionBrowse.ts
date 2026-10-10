@@ -2,11 +2,11 @@ import { tool } from "@openai/agents";
 import { stringify } from "csv-stringify/sync";
 import { z } from "zod";
 import { transactionCollectionFn as buyerTransactionCollectionFn } from "~/buyer-transaction/fn/transactionCollectionFn";
-import { getRootLogger } from "~/log/fn/getRootLogger";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
 import { transactionCollectionFn as sellerTransactionCollectionFn } from "~/seller-transaction/fn/transactionCollectionFn";
 import { TransactionStatusEnumSchema } from "~/transaction-contract/schema/TransactionStatusEnumSchema";
 
-const logger = getRootLogger([
+const logger = getRootLoggerFn([
 	"tool",
 	"toolTransactionBrowse",
 ]);

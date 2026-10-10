@@ -2,14 +2,14 @@ import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import { ResourceDefinitionEnumSchema } from "~/resource-definition/schema/ResourceDefinitionEnumSchema";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 import { userResourceBundleCreateFx } from "~/user-resource-bundle/fx/userResourceBundleCreateFx";
 
 describe("userResourceBundleCreateFx", () => {
 	it("copies bundle template resources into user-owned snapshot rows", async () => {
-		const database = await testabase("user-resource-bundle-create-snapshot");
+		const database = await testabaseFn("user-resource-bundle-create-snapshot");
 
 		return Effect.gen(function* () {
 			const { buyer } = yield* createUsersFx({});
@@ -134,6 +134,6 @@ describe("userResourceBundleCreateFx", () => {
 						ResourceDefinitionEnumSchema.enum["buyer:feature:seller.info"],
 				},
 			]);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

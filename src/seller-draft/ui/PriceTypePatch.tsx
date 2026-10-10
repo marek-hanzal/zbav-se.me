@@ -25,16 +25,16 @@ const PriceTypeSchema = z
 export namespace PriceTypePatch {
 	export interface Props extends TitleContainer.Props {
 		draft: DraftSchema.Type;
-		onCancel(): void;
+		onCancelFn(): void;
 		view: useView.Use<"expires" | "price">;
 	}
 }
 
-export const PriceTypePatch: FC<PriceTypePatch.Props> = ({ draft, onCancel, view, ...props }) => {
+export const PriceTypePatch: FC<PriceTypePatch.Props> = ({ draft, onCancelFn, view, ...props }) => {
 	const translator = useTranslator();
 	const mutation = withDraftQuery.usePatchMutation({
 		onSuccess({ priceType }) {
-			view.set(priceType === "fixed" || priceType === "haggle" ? "price" : "expires");
+			view.setFn(priceType === "fixed" || priceType === "haggle" ? "price" : "expires");
 		},
 		invalidate: [
 			"collection",
@@ -76,7 +76,7 @@ export const PriceTypePatch: FC<PriceTypePatch.Props> = ({ draft, onCancel, view
 		deps: [
 			draft,
 		],
-		onSelect(item) {
+		onSelectFn(item) {
 			if (!item) {
 				return;
 			}
@@ -87,7 +87,7 @@ export const PriceTypePatch: FC<PriceTypePatch.Props> = ({ draft, onCancel, view
 	return (
 		<TitleContainer
 			data-ui={"PriceTypePatch"}
-			textTitle={translator.text("Price type (title)")}
+			textTitle={translator.textFn("Price type (title)")}
 			left={<EditAction />}
 			{...props}
 		>
@@ -110,8 +110,8 @@ export const PriceTypePatch: FC<PriceTypePatch.Props> = ({ draft, onCancel, view
 				>
 					{({ isValid, isSubmitting }) => (
 						<SaveContainer
-							onCancel={onCancel}
-							onSave={() => {
+							onCancelFn={onCancelFn}
+							onSaveFn={() => {
 								form.handleSubmit();
 							}}
 							loading={isSubmitting}

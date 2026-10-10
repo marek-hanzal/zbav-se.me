@@ -31,7 +31,7 @@ export const transactionPatchCollectionFx = Effect.fn("transactionPatchCollectio
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const dateService = yield* DateServiceFx;
-			const now = dateService.now().toJSDate();
+			const now = dateService.nowFn().toJSDate();
 
 			let { select, queryFx } = yield* withTransactionSelectFx({
 				sort: query.sort,

@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { uiSelectButton } from "~/application-ui/fn/ui.exports";
+import { uiSelectButtonFn } from "~/application-ui/fn/ui.exports";
 import type { EntitySchema } from "~/entity/schema/EntitySchema";
 import type { useSelection } from "~/selection/hook/useSelection";
 import { Tx } from "~/translation/ui/Tx";
@@ -17,15 +17,15 @@ export const Item: FC<Item.Props> = ({ priceType, selection }) => {
 	const item = {
 		id: priceType,
 	};
-	const isSelected = selection.isSelected(priceType);
+	const isSelected = selection.isSelectedFn(priceType);
 
 	return (
 		<Button
 			data-action={`select price type ${priceType}`}
 			onClick={() => {
-				selection.toggle(item);
+				selection.toggleFn(item);
 			}}
-			{...uiSelectButton({
+			{...uiSelectButtonFn({
 				name: `Item-${priceType}`,
 				isSelected,
 				"data-ui-flow": "horizontal",

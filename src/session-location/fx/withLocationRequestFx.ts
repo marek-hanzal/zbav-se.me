@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { LocationConfigFx } from "~/session-location/context/LocationConfigFx";
-import { linkTo } from "~/url/fn/linkTo";
+import { linkToFn } from "~/url/fn/linkToFn";
 
 export namespace withLocationRequestFx {
 	/**
@@ -48,7 +48,7 @@ export const withLocationRequestFx = Effect.fn("withLocationRequestFx")(function
 
 	const locationConfig = yield* LocationConfigFx;
 
-	const link = linkTo({
+	const link = linkToFn({
 		base: locationConfig.api,
 		href: locationConfig.autocomplete,
 		query: {

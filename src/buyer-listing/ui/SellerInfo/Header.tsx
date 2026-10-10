@@ -1,8 +1,8 @@
 import type { FC } from "react";
 import type { SellerInfoSchema } from "~/buyer-listing/schema/SellerInfoSchema";
-import { toTimeDiff } from "~/date/fn/toTimeDiff";
+import { toTimeDiffFn } from "~/date/fn/toTimeDiffFn";
 import { useLocale } from "~/locale/hook/useLocale";
-import { toLocaleNumber } from "~/number/fn/toLocaleNumber";
+import { toLocaleNumberFn } from "~/number/fn/toLocaleNumberFn";
 import { useTranslator } from "~/translation/hook/useTranslator";
 import { Group } from "~/ui/ui/Group";
 import { LabelValue } from "~/ui/ui/LabelValue";
@@ -20,8 +20,8 @@ export const Header: FC<Header.Props> = ({ sellerInfo }) => {
 	return (
 		<Group>
 			<LabelValue
-				textLabel={translator.text("User registered (label)")}
-				textValue={toTimeDiff({
+				textLabel={translator.textFn("User registered (label)")}
+				textValue={toTimeDiffFn({
 					locale,
 					time: sellerInfo.registered,
 					type: "relative",
@@ -29,8 +29,8 @@ export const Header: FC<Header.Props> = ({ sellerInfo }) => {
 			/>
 
 			<LabelValue
-				textLabel={translator.text("Seller - listings (label)")}
-				textValue={toLocaleNumber({
+				textLabel={translator.textFn("Seller - listings (label)")}
+				textValue={toLocaleNumberFn({
 					locale,
 					number: sellerInfo.listings,
 				})}

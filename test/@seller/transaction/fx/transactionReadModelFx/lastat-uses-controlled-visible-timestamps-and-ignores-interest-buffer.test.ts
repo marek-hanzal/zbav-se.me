@@ -1,26 +1,26 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
 import { transactionAcceptFx } from "~/seller-transaction/fx/transactionAcceptFx";
 import { transactionCollectionFx } from "~/seller-transaction/fx/transactionCollectionFx";
 import { transactionFetchFx } from "~/seller-transaction/fx/transactionFetchFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 import { transactionEntryCreateFx } from "~/user-transaction-entry/fx/transactionEntryCreateFx";
 
 const atFx = <A, E, R>(iso: string, eff: Effect.Effect<A, E, R>) =>
 	eff.pipe(
-		withDateServiceFx({
-			now: () => DateTime.fromISO(iso),
+		withDateServiceFn({
+			nowFn: () => DateTime.fromISO(iso),
 		}),
 	);
 
 describe("seller transaction read model", () => {
 	it("uses exact visible activity timestamps for lastAt and ignores newer hidden interest text", async () => {
-		const database = await testabase("seller-transaction-lastat-controlled-timestamps");
+		const database = await testabaseFn("seller-transaction-lastat-controlled-timestamps");
 
 		return Effect.gen(function* () {
 			const { seller, buyer, stranger } = yield* createUsersFx({});
@@ -107,6 +107,6 @@ describe("seller transaction read model", () => {
 			expect(visibleFetched.lastAt.toISOString()).toBe("2026-04-02T11:30:00.000Z");
 			expect(hiddenFetched.entry.kind).toBe("status-interest");
 			expect(hiddenFetched.lastAt.toISOString()).toBe("2026-04-02T10:00:00.000Z");
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

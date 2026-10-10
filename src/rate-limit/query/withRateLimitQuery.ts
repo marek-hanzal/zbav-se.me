@@ -1,18 +1,18 @@
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withQuery } from "~/query/fn/withQuery";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withQueryFn } from "~/query/fn/withQueryFn";
 import { rateLimitFn } from "~/rate-limit/fn/rateLimitFn";
 import type { RateLimitQuerySchema } from "~/rate-limit/schema/RateLimitQuerySchema";
 import type { RateLimitSchema } from "~/rate-limit/schema/RateLimitSchema";
 
-export const withRateLimitQuery = withQuery({
-	logger: getRootLogger([
+export const withRateLimitQuery = withQueryFn({
+	logger: getRootLoggerFn([
 		"query",
 		"withRateLimitQuery",
 	]),
 	errors: {} as {
 		query: rateLimitFn.Error;
 	},
-	keys(data: RateLimitQuerySchema.Type) {
+	keysFn(data: RateLimitQuerySchema.Type) {
 		return [
 			"rate-limit",
 			data,

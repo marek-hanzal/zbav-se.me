@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { selectFx } from "~/database-query/fx/selectFx";
+import { selectFn } from "~/database-query/fn/selectFn";
 import type { AgentThreadSortSchema } from "~/user-agent/schema/AgentThreadSortSchema";
 import type { AgentThreadWhereSchema } from "~/user-agent/schema/AgentThreadWhereSchema";
 
@@ -25,7 +25,7 @@ export const withAgentThreadSelectFx = Effect.fn("withAgentThreadSelectFx")(func
 			.exhaustive();
 	}
 
-	return selectFx({
+	return selectFn({
 		select: select.selectAll("at"),
 		queryFx(select, where: AgentThreadWhereSchema.Type) {
 			return Effect.gen(function* () {

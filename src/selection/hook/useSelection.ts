@@ -11,55 +11,55 @@ export namespace useSelection {
 		initial?: T[];
 		deps?: DependencyList;
 		/** Called in single mode when exactly one item is selected (always with value) */
-		onSingle?: (item: T) => void;
+		onSingleFn?: (item: T) => void;
 		/** Called on any change (including empty) — also in single mode */
-		onMulti?: (items: T[]) => void;
+		onMultiFn?: (items: T[]) => void;
 		/** Called in single mode with the selected item or undefined */
-		onSelect?: (item: T | undefined) => void;
+		onSelectFn?: (item: T | undefined) => void;
 	}
 
 	export interface Required<T extends EntitySchema.Type> {
-		single(): T;
-		singleId(): string;
-		multi(): [
+		singleFn(): T;
+		singleIdFn(): string;
+		multiFn(): [
 			T,
 			...T[],
 		];
-		multiId(): [
+		multiIdFn(): [
 			string,
 			...string[],
 		];
 	}
 
 	export interface Optional<T extends EntitySchema.Type> {
-		single(): T | undefined;
-		singleId(): string | undefined;
-		multi(): T[];
-		multiId(): string[];
+		singleFn(): T | undefined;
+		singleIdFn(): string | undefined;
+		multiFn(): T[];
+		multiIdFn(): string[];
 	}
 
 	export interface Use<T extends EntitySchema.Type> {
 		selection: T[];
 		mode: Mode;
 
-		set(items: T[]): void;
-		single(item: T): void;
-		multi(item: T): void;
-		toggle(item: T): void;
-		remove(item: T): void;
+		setFn(items: T[]): void;
+		singleFn(item: T): void;
+		multiFn(item: T): void;
+		toggleFn(item: T): void;
+		removeFn(item: T): void;
 
-		isSelected(id: string): boolean;
+		isSelectedFn(id: string): boolean;
 		hasAny: boolean;
 
 		/** Clear selection */
-		clear(): void;
+		clearFn(): void;
 		/** Count of selected items */
 		count: number;
 
 		/** Return true if ANY of provided items are selected */
-		some(items: T[]): boolean;
+		someFn(items: T[]): boolean;
 		/** Return true if ALL of provided items are selected */
-		every(items: T[]): boolean;
+		everyFn(items: T[]): boolean;
 
 		required: Required<T>;
 		optional: Optional<T>;
@@ -70,34 +70,34 @@ export function useSelection<T extends EntitySchema.Type>({
 	mode,
 	initial = [],
 	deps = [],
-	onSingle,
-	onMulti,
-	onSelect,
+	onSingleFn,
+	onMultiFn,
+	onSelectFn,
 }: useSelection.Props<T>): useSelection.Use<T> {
-	const [selection, setSelection] = useState<T[]>(() => normalize(initial, mode));
+	const [selection, setSelectionFn] = useState<T[]>(() => normalizeFn(initial, mode));
 	const selectionRef = useRef(selection);
 	selectionRef.current = selection;
 	const isInitialDepsEffectRef = useRef(true);
 
 	/** Dispatch callbacks immediately from actions (never on mount) */
-	const dispatch = useCallback(
+	const dispatchFn = useCallback(
 		(next: T[]) => {
 			if (mode === "single") {
 				const item = next[0];
-				onSelect?.(item);
-				if (item) onSingle?.(item);
+				onSelectFn?.(item);
+				if (item) onSingleFn?.(item);
 				// Always notify onMulti even in single mode (including empty)
-				onMulti?.(next);
+				onMultiFn?.(next);
 				return;
 			}
 			// Multi mode: always report (including empty)
-			onMulti?.(next);
+			onMultiFn?.(next);
 		},
 		[
 			mode,
-			onMulti,
-			onSelect,
-			onSingle,
+			onMultiFn,
+			onSelectFn,
+			onSingleFn,
 		],
 	);
 
@@ -107,65 +107,65 @@ export function useSelection<T extends EntitySchema.Type>({
 			return;
 		}
 
-		const normalized = normalize(initial, mode);
+		const normalized = normalizeFn(initial, mode);
 		selectionRef.current = normalized;
-		setSelection(normalized);
-		dispatch(normalized);
+		setSelectionFn(normalized);
+		dispatchFn(normalized);
 		// biome-ignore lint/correctness/useExhaustiveDependencies: deps is the hook API; callers decide when initial should be re-applied
 	}, deps);
 
 	/** Centralized setter that normalizes and dispatches */
-	const apply = useCallback(
+	const applyFn = useCallback(
 		(next: T[]) => {
-			const normalized = normalize(next, mode);
+			const normalized = normalizeFn(next, mode);
 			selectionRef.current = normalized;
-			setSelection(normalized);
-			dispatch(normalized);
+			setSelectionFn(normalized);
+			dispatchFn(normalized);
 		},
 		[
 			mode,
-			dispatch,
+			dispatchFn,
 		],
 	);
 
 	/** Replace with exactly one item */
-	const single = useCallback(
+	const singleFn = useCallback(
 		(item: T) => {
-			apply([
+			applyFn([
 				item,
 			]);
 		},
 		[
-			apply,
+			applyFn,
 		],
 	);
 
 	/** Add to multi (no duplicates). If already present, still dispatch current state. */
-	const multi = useCallback(
+	const multiFn = useCallback(
 		(item: T) => {
 			const prev = selectionRef.current;
 			if (prev.some((p) => p.id === item.id)) {
-				apply(prev);
+				applyFn(prev);
 				return;
 			}
-			apply([
+			applyFn([
 				...prev,
 				item,
 			]);
 		},
 		[
-			apply,
+			applyFn,
 		],
 	);
 
 	/** Toggle respecting current mode */
-	const toggle = useCallback(
+	const toggleFn = useCallback(
 		(item: T) => {
 			const prev = selectionRef.current;
 			const idx = prev.findIndex((p) => p.id === item.id);
 
 			if (mode === "single") {
-				apply(
+				applyFn(
 					idx >= 0
 						? []
 						: [
@@ -178,51 +178,51 @@ export function useSelection<T extends EntitySchema.Type>({
 			if (idx >= 0) {
 				const next = prev.slice();
 				next.splice(idx, 1);
-				apply(next);
+				applyFn(next);
 				return;
 			}
 
-			apply([
+			applyFn([
 				...prev,
 				item,
 			]);
 		},
 		[
 			mode,
-			apply,
+			applyFn,
 		],
 	);
 
 	/** Remove specific item */
-	const remove = useCallback(
+	const removeFn = useCallback(
 		(item: T) => {
 			const prev = selectionRef.current;
-			apply(prev.filter((p) => p.id !== item.id));
+			applyFn(prev.filter((p) => p.id !== item.id));
 		},
 		[
-			apply,
+			applyFn,
 		],
 	);
 
 	/** Clear selection */
-	const clear = useCallback(() => {
-		apply([]);
+	const clearFn = useCallback(() => {
+		applyFn([]);
 	}, [
-		apply,
+		applyFn,
 	]);
 
 	/** Replace with items (normalized inside) */
-	const set = useCallback(
+	const setFn = useCallback(
 		(items: T[]) => {
-			apply(items);
+			applyFn(items);
 		},
 		[
-			apply,
+			applyFn,
 		],
 	);
 
 	// ----- Derived helpers (stable) -----
-	const requiredSingle = useCallback((): T => {
+	const requiredSingleFn = useCallback((): T => {
 		if (mode === "single" && selection.length === 1) {
 			const it = selection[0];
 			if (!it) throw new Error("Invalid selection state");
@@ -234,14 +234,14 @@ export function useSelection<T extends EntitySchema.Type>({
 		selection,
 	]);
 
-	const requiredSingleId = useCallback(
-		(): string => requiredSingle().id,
+	const requiredSingleIdFn = useCallback(
+		(): string => requiredSingleFn().id,
 		[
-			requiredSingle,
+			requiredSingleFn,
 		],
 	);
 
-	const requiredMulti = useCallback((): [
+	const requiredMultiFn = useCallback((): [
 		T,
 		...T[],
 	] => {
@@ -256,7 +256,7 @@ export function useSelection<T extends EntitySchema.Type>({
 		selection,
 	]);
 
-	const requiredMultiId = useCallback((): [
+	const requiredMultiIdFn = useCallback((): [
 		string,
 		...string[],
 	] => {
@@ -271,41 +271,41 @@ export function useSelection<T extends EntitySchema.Type>({
 		selection,
 	]);
 
-	const optionalSingle = useCallback(
+	const optionalSingleFn = useCallback(
 		(): T | undefined => (selection.length >= 1 ? selection[0] : undefined),
 		[
 			selection,
 		],
 	);
 
-	const optionalSingleId = useCallback(
+	const optionalSingleIdFn = useCallback(
 		(): string | undefined => (selection.length >= 1 ? selection[0]?.id : undefined),
 		[
 			selection,
 		],
 	);
 
-	const optionalMulti = useCallback(
+	const optionalMultiFn = useCallback(
 		(): T[] => selection,
 		[
 			selection,
 		],
 	);
-	const optionalMultiId = useCallback(
+	const optionalMultiIdFn = useCallback(
 		(): string[] => selection.map((x) => x.id),
 		[
 			selection,
 		],
 	);
 
-	const some = useCallback(
+	const someFn = useCallback(
 		(items: T[]): boolean => items.some((item) => selection.some((sel) => sel.id === item.id)),
 		[
 			selection,
 		],
 	);
 
-	const every = useCallback(
+	const everyFn = useCallback(
 		(items: T[]): boolean => items.every((item) => selection.some((sel) => sel.id === item.id)),
 		[
 			selection,
@@ -316,53 +316,53 @@ export function useSelection<T extends EntitySchema.Type>({
 		() => ({
 			selection,
 			mode,
-			single,
-			multi,
-			toggle,
-			remove,
-			set,
+			singleFn,
+			multiFn,
+			toggleFn,
+			removeFn,
+			setFn,
 
-			isSelected: (id: string) => selection.some((p) => p.id === id),
+			isSelectedFn: (id: string) => selection.some((p) => p.id === id),
 			hasAny: selection.length > 0,
 
-			clear,
+			clearFn,
 			count: selection.length,
 
-			some,
-			every,
+			someFn,
+			everyFn,
 
 			required: {
-				single: requiredSingle,
-				singleId: requiredSingleId,
-				multi: requiredMulti,
-				multiId: requiredMultiId,
+				singleFn: requiredSingleFn,
+				singleIdFn: requiredSingleIdFn,
+				multiFn: requiredMultiFn,
+				multiIdFn: requiredMultiIdFn,
 			},
 			optional: {
-				single: optionalSingle,
-				singleId: optionalSingleId,
-				multi: optionalMulti,
-				multiId: optionalMultiId,
+				singleFn: optionalSingleFn,
+				singleIdFn: optionalSingleIdFn,
+				multiFn: optionalMultiFn,
+				multiIdFn: optionalMultiIdFn,
 			},
 		}),
 		[
 			selection,
 			mode,
-			single,
-			multi,
-			toggle,
-			remove,
-			set,
-			clear,
-			requiredSingle,
-			requiredSingleId,
-			requiredMulti,
-			requiredMultiId,
-			optionalSingle,
-			optionalSingleId,
-			optionalMulti,
-			optionalMultiId,
-			some,
-			every,
+			singleFn,
+			multiFn,
+			toggleFn,
+			removeFn,
+			setFn,
+			clearFn,
+			requiredSingleFn,
+			requiredSingleIdFn,
+			requiredMultiFn,
+			requiredMultiIdFn,
+			optionalSingleFn,
+			optionalSingleIdFn,
+			optionalMultiFn,
+			optionalMultiIdFn,
+			someFn,
+			everyFn,
 		],
 	);
 }
@@ -370,7 +370,7 @@ export function useSelection<T extends EntitySchema.Type>({
 // ========================================================================================
 
 /** Deduplicate by id, keep first occurrence */
-function dedupeById<T extends EntitySchema.Type>(arr: readonly T[]): T[] {
+function dedupeByIdFn<T extends EntitySchema.Type>(arr: readonly T[]): T[] {
 	const seen = new Set<string>();
 	const out: T[] = [];
 	for (const it of arr) {
@@ -382,10 +382,10 @@ function dedupeById<T extends EntitySchema.Type>(arr: readonly T[]): T[] {
 	return out;
 }
 
-function normalize<T extends EntitySchema.Type>(
+function normalizeFn<T extends EntitySchema.Type>(
 	selection: readonly T[],
 	mode: useSelection.Mode,
 ): T[] {
-	const cleaned = dedupeById(selection);
+	const cleaned = dedupeByIdFn(selection);
 	return mode === "single" ? cleaned.slice(0, 1) : cleaned;
 }

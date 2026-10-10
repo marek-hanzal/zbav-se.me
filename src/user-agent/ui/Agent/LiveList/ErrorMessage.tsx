@@ -3,7 +3,7 @@ import { type FC, useMemo } from "react";
 import { useTranslator } from "~/translation/hook/useTranslator";
 import { Container } from "~/ui/ui/Container";
 import { Typo } from "~/ui/ui/Typo";
-import { getResponseStreamEvent } from "~/user-agent/type/getResponseStreamEvent";
+import { getResponseStreamEventFn } from "~/user-agent/fn/getResponseStreamEventFn";
 
 export namespace ErrorMessage {
 	export interface Props extends Container.Props {
@@ -42,7 +42,7 @@ function useErrorState(events: RunStreamEvent[] | undefined) {
 
 	return useMemo(() => {
 		const errorEvent = (events ?? [])
-			.map(getResponseStreamEvent)
+			.map(getResponseStreamEventFn)
 			.filter((event) => event !== null)
 			.findLast((event) => event.type === "response.failed");
 
@@ -51,7 +51,7 @@ function useErrorState(events: RunStreamEvent[] | undefined) {
 		}
 
 		return {
-			message: translator.text(errorEvent.response.error?.message ?? "Agent stream failed"),
+			message: translator.textFn(errorEvent.response.error?.message ?? "Agent stream failed"),
 		} as const;
 	}, [
 		events,

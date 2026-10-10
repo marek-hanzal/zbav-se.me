@@ -10,8 +10,8 @@ import {
 } from "@logtape/logtape";
 import { getPrettyFormatter } from "@logtape/pretty";
 import { createMiddleware } from "@tanstack/react-start";
-import { genId } from "~/identity/fn/genId";
-import { getRootLogger } from "~/log/fn/getRootLogger";
+import { genIdFn } from "~/identity/fn/genIdFn";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
 import { withDevEnvMiddleware } from "~/request-middleware/middleware/withDevEnvMiddleware";
 
 const contextLocalStorage = new AsyncLocalStorage<Record<string, unknown>>();
@@ -22,7 +22,7 @@ export const withLogMiddleware = createMiddleware()
 	.middleware([
 		withDevEnvMiddleware,
 	])
-	.server(async ({ next, context: { isDev } }) => {
+	.server(async ({ next: nextFn, context: { isDev } }) => {
 		const level: LogLevel = "trace";
 
 		flag &&
@@ -93,13 +93,13 @@ export const withLogMiddleware = createMiddleware()
 		flag = false;
 
 		const context = {
-			traceId: genId(),
+			traceId: genIdFn(),
 		} as const;
 
 		return withContext(context, async () => {
-			return next({
+			return nextFn({
 				context: {
-					rootLogger: getRootLogger().with(context),
+					rootLogger: getRootLoggerFn().with(context),
 				},
 			});
 		});

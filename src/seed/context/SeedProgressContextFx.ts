@@ -3,11 +3,11 @@ import type { SeedProgressEvent } from "~/seed/type/SeedProgressEvent";
 import type { SeedRunSummary } from "~/seed/type/SeedRunSummary";
 
 export interface SeedProgress {
-	startPhase(input: { name: string; total: number }): Effect.Effect<void>;
-	advance(input?: { delta?: number }): Effect.Effect<void>;
-	finishPhase(): Effect.Effect<void>;
-	log(input: { message: string }): Effect.Effect<void>;
-	updateSummary(input: { summary: Partial<SeedRunSummary.Type> }): Effect.Effect<void>;
+	startPhaseFx(input: { name: string; total: number }): Effect.Effect<void>;
+	advanceFx(input?: { delta?: number }): Effect.Effect<void>;
+	finishPhaseFx(): Effect.Effect<void>;
+	logFx(input: { message: string }): Effect.Effect<void>;
+	updateSummaryFx(input: { summary: Partial<SeedRunSummary.Type> }): Effect.Effect<void>;
 }
 
 export class SeedProgressContextFx extends Context.Service<SeedProgressContextFx, SeedProgress>()(
@@ -16,43 +16,43 @@ export class SeedProgressContextFx extends Context.Service<SeedProgressContextFx
 	//
 }
 
-export const withSeedProgressContextFx = (emit: (event: SeedProgressEvent.Type) => void) => {
+export const withSeedProgressContextFn = (emitFn: (event: SeedProgressEvent.Type) => void) => {
 	const progress: SeedProgress = {
-		startPhase({ name, total }) {
+		startPhaseFx({ name, total }) {
 			return Effect.sync(() => {
-				emit({
+				emitFn({
 					type: "phase-started",
 					name,
 					total,
 				});
 			});
 		},
-		advance({ delta = 1 } = {}) {
+		advanceFx({ delta = 1 } = {}) {
 			return Effect.sync(() => {
-				emit({
+				emitFn({
 					type: "phase-advanced",
 					delta,
 				});
 			});
 		},
-		finishPhase() {
+		finishPhaseFx() {
 			return Effect.sync(() => {
-				emit({
+				emitFn({
 					type: "phase-finished",
 				});
 			});
 		},
-		log({ message }) {
+		logFx({ message }) {
 			return Effect.sync(() => {
-				emit({
+				emitFn({
 					type: "log-added",
 					message,
 				});
 			});
 		},
-		updateSummary({ summary }) {
+		updateSummaryFx({ summary }) {
 			return Effect.sync(() => {
-				emit({
+				emitFn({
 					type: "summary-updated",
 					summary,
 				});

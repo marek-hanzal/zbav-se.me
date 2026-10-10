@@ -1,13 +1,13 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { activityCollectionFx } from "~/user-activity/fx/activityCollectionFx";
 
 describe("activity read model filters by priority", () => {
 	it("filters activity items by priority level", async () => {
-		const database = await testabase("activityReadModelFx-priority");
+		const database = await testabaseFn("activityReadModelFx-priority");
 
 		return Effect.gen(function* () {
 			const user = yield* leaseTestUserFx({});
@@ -75,6 +75,6 @@ describe("activity read model filters by priority", () => {
 			expect(commonOnly.map((item) => item.id)).toEqual([
 				"activity-priority-common",
 			]);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

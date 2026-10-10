@@ -1,8 +1,8 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
-import { withKyselyFx } from "~/database/fx/withKyselyFx";
-import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
-import { withLoggerFx } from "~/log/fx/withLoggerFx";
+import { withKyselyFn } from "~/database/fn/withKyselyFn";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
+import { withLoggerFn } from "~/log/fn/withLoggerFn";
 import { rateLimitFx } from "~/rate-limit/fx/rateLimitFx";
 import { RateLimitQuerySchema } from "~/rate-limit/schema/RateLimitQuerySchema";
 import { RateLimitSchema } from "~/rate-limit/schema/RateLimitSchema";
@@ -31,9 +31,9 @@ export const rateLimitFn = createServerFn()
 			schema: RateLimitSchema,
 			dataFx: rateLimitFx(data),
 		}).pipe(
-			withKyselyFx(database),
-			withDateServiceFx(),
-			withLoggerFx(rootLogger),
+			withKyselyFn(database),
+			withDateServiceFn(),
+			withLoggerFn(rootLogger),
 			Effect.tapError((error) => {
 				return Effect.sync(() => {
 					logger.error(error._tag, {

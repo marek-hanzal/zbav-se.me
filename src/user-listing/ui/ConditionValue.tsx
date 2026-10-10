@@ -18,10 +18,10 @@ export const ConditionValue: FC<ConditionValue.Props> = ({ condition, ...props }
 	return (
 		<LabelValue
 			data-ui={"ConditionValue[LabelValue]"}
-			textLabel={translator.text("Listing condition (label)")}
-			textHint={translator.text("Listing condition (hint)")}
-			textValue={hasCondition ? translator.text(`Condition ${condition} (label)`) : null}
-			textEmpty={translator.text("Condition not selected")}
+			textLabel={translator.textFn("Listing condition (label)")}
+			textHint={translator.textFn("Listing condition (hint)")}
+			textValue={hasCondition ? translator.textFn(`Condition ${condition} (label)`) : null}
+			textEmpty={translator.textFn("Condition not selected")}
 			{...props}
 		/>
 	);

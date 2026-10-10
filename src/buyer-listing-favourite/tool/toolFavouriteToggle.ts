@@ -1,9 +1,9 @@
 import { tool } from "@openai/agents";
 import { z } from "zod";
 import { favouriteToggleFn } from "~/buyer-listing-favourite/fn/favouriteToggleFn";
-import { getRootLogger } from "~/log/fn/getRootLogger";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
 
-const logger = getRootLogger([
+const logger = getRootLoggerFn([
 	"tool",
 	"toolFavouriteToggle",
 ]);

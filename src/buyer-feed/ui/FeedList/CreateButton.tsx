@@ -15,7 +15,7 @@ export namespace CreateButton {
 }
 
 export const CreateButton: FC<CreateButton.Props> = ({ _suspense, className, ...props }) => {
-	const [isOpen, setIsOpen] = useState(false);
+	const [isOpen, setIsOpenFn] = useState(false);
 	const { data: feedCount } = withFeedQuery.useCountQuery({
 		where: {
 			type: "user",
@@ -58,7 +58,7 @@ export const CreateButton: FC<CreateButton.Props> = ({ _suspense, className, ...
 						return;
 					}
 
-					setIsOpen(true);
+					setIsOpenFn(true);
 				}}
 				{...props}
 			/>
@@ -67,7 +67,7 @@ export const CreateButton: FC<CreateButton.Props> = ({ _suspense, className, ...
 				_suspense={_suspense}
 				state={{
 					value: isOpen,
-					set: setIsOpen,
+					setFn: setIsOpenFn,
 				}}
 			/>
 		</>

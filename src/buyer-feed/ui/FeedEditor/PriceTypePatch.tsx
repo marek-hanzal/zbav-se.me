@@ -11,19 +11,19 @@ import { Container } from "~/ui/ui/Container";
 export namespace PriceTypePatch {
 	export interface Props extends Container.Props {
 		feed: FeedSchema.Type;
-		onCancel(): void;
-		onSettled?(): void;
+		onCancelFn(): void;
+		onSettledFn?(): void;
 	}
 }
 
 export const PriceTypePatch: FC<PriceTypePatch.Props> = ({
 	feed,
-	onSettled,
-	onCancel,
+	onSettledFn,
+	onCancelFn,
 	...props
 }) => {
 	const patchMutation = withFeedQuery.usePatchMutation({
-		onSettled,
+		onSettled: onSettledFn,
 	});
 	const selection = useSelection<EntitySchema.Type>({
 		mode: "multi",
@@ -48,8 +48,8 @@ export const PriceTypePatch: FC<PriceTypePatch.Props> = ({
 			<PriceTypeSelect selection={selection} />
 
 			<SaveContainer
-				onCancel={onCancel}
-				onSave={() => {
+				onCancelFn={onCancelFn}
+				onSaveFn={() => {
 					patchMutation.mutate({
 						query: {
 							where: {
@@ -62,7 +62,7 @@ export const PriceTypePatch: FC<PriceTypePatch.Props> = ({
 								where: {
 									...feed.query?.where,
 									priceTypeIn:
-										selection.optional.multiId() as PriceTypeEnumSchema.Type[],
+										selection.optional.multiIdFn() as PriceTypeEnumSchema.Type[],
 								},
 							},
 						},

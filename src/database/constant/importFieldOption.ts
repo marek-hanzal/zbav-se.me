@@ -4,7 +4,7 @@ import type { withDatabaseFx } from "~/database-query/fx/withDatabaseFx";
 
 export const importFieldOption: withDatabaseFx.Import<Database> = {
 	name: "field-option",
-	async run({ kysely }) {
+	async runFn({ kysely }) {
 		return kysely
 			.insertInto("field_option")
 			.values(

@@ -17,16 +17,16 @@ import type { useView } from "~/view/hook/useView";
 export namespace DeliveryPatch {
 	export interface Props extends TitleContainer.Props {
 		draft: DraftSchema.Type;
-		onCancel(): void;
+		onCancelFn(): void;
 		view: useView.Use<"description">;
 	}
 }
 
-export const DeliveryPatch: FC<DeliveryPatch.Props> = ({ draft, onCancel, view, ...props }) => {
+export const DeliveryPatch: FC<DeliveryPatch.Props> = ({ draft, onCancelFn, view, ...props }) => {
 	const translator = useTranslator();
 	const mutation = withDraftQuery.usePatchMutation({
 		onSuccess() {
-			view.set("description");
+			view.setFn("description");
 		},
 		invalidate: [
 			"collection",
@@ -42,12 +42,12 @@ export const DeliveryPatch: FC<DeliveryPatch.Props> = ({ draft, onCancel, view, 
 		],
 	});
 
-	const deliveryIds = selection.optional.multiId() as DeliveryEnumSchema.Type[];
+	const deliveryIds = selection.optional.multiIdFn() as DeliveryEnumSchema.Type[];
 
 	return (
 		<TitleContainer
 			data-ui={"DeliveryPatch"}
-			textTitle={translator.text("Delivery (title)")}
+			textTitle={translator.textFn("Delivery (title)")}
 			left={<EditAction />}
 			{...props}
 		>
@@ -61,8 +61,8 @@ export const DeliveryPatch: FC<DeliveryPatch.Props> = ({ draft, onCancel, view, 
 				<DeliverySelect selection={selection} />
 
 				<SaveContainer
-					onCancel={onCancel}
-					onSave={() => {
+					onCancelFn={onCancelFn}
+					onSaveFn={() => {
 						mutation.mutate({
 							patch: {
 								delivery: deliveryIds,

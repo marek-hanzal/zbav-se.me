@@ -30,7 +30,7 @@ export const withListingEventCleanupCronFx = Effect.fn("withListingEventCleanupC
 						"le.createdAt",
 						"<=",
 						dateContext
-							.now()
+							.nowFn()
 							.minus({
 								months: 3,
 							})

@@ -3,7 +3,7 @@ import { z } from "zod";
 import { CheckIcon } from "~/application-ui/constant/icon.exports";
 import { useAppForm } from "~/application-ui/hook/form.exports";
 import { Logo } from "~/application-ui/ui/logo.exports";
-import { onSubmit } from "~/form/fn/onSubmit";
+import { onSubmitFn } from "~/form/fn/onSubmitFn";
 import { FormField } from "~/form/ui/FormField";
 import { useLocale } from "~/locale/hook/useLocale";
 import { useTranslator } from "~/translation/hook/useTranslator";
@@ -18,12 +18,12 @@ export const Route = createFileRoute("/$locale/sign-up")({
 	component() {
 		const translator = useTranslator();
 		const locale = useLocale();
-		const navigate = useNavigate();
+		const navigateFn = useNavigate();
 		const schema = useRegisterSchema();
 
 		const mutation = withRegisterMutation.useMutation({
-			async onPostMutation() {
-				return navigate({
+			async onPostMutationFn() {
+				return navigateFn({
 					to: "/$locale/app/welcome",
 					params: {
 						locale,
@@ -42,7 +42,7 @@ export const Route = createFileRoute("/$locale/sign-up")({
 				onMount: schema,
 				onSubmit: schema,
 			},
-			onSubmit: onSubmit({
+			onSubmit: onSubmitFn({
 				mutation,
 			}),
 		});
@@ -97,7 +97,7 @@ export const Route = createFileRoute("/$locale/sign-up")({
 												type={"email"}
 												autoComplete={"email"}
 												autoFocus
-												placeholder={translator.text("Enter your email")}
+												placeholder={translator.textFn("Enter your email")}
 												value={field.state.value ?? ""}
 												onBlur={field.handleBlur}
 												onChange={(e) => field.handleChange(e.target.value)}
@@ -124,7 +124,9 @@ export const Route = createFileRoute("/$locale/sign-up")({
 												value={field.state.value ?? ""}
 												onChange={(e) => field.handleChange(e.target.value)}
 												onBlur={field.handleBlur}
-												placeholder={translator.text("Enter your password")}
+												placeholder={translator.textFn(
+													"Enter your password",
+												)}
 												{...props}
 											/>
 										)}
@@ -148,7 +150,7 @@ export const Route = createFileRoute("/$locale/sign-up")({
 												value={field.state.value ?? ""}
 												onChange={(e) => field.handleChange(e.target.value)}
 												onBlur={field.handleBlur}
-												placeholder={translator.text(
+												placeholder={translator.textFn(
 													"Confirm your password",
 												)}
 												{...props}
@@ -269,22 +271,22 @@ const useRegisterSchema = () => {
 		.looseObject({
 			email: z.email({
 				error() {
-					return translator.text("Invalid email address");
+					return translator.textFn("Invalid email address");
 				},
 			}),
 			password: z.string().min(8, {
 				error() {
-					return translator.text("Password must be at least 8 characters");
+					return translator.textFn("Password must be at least 8 characters");
 				},
 			}),
 			confirmPassword: z.string().min(1, {
 				error() {
-					return translator.text("Password confirmation is required");
+					return translator.textFn("Password confirmation is required");
 				},
 			}),
 		})
 		.refine((data) => data.password === data.confirmPassword, {
-			message: translator.text("Passwords do not match"),
+			message: translator.textFn("Passwords do not match"),
 			path: [
 				"confirmPassword",
 			],

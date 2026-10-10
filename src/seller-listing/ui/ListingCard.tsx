@@ -6,8 +6,8 @@ import { Container } from "~/ui/ui/Container";
 
 export namespace ListingCard {
 	export interface Hooks {
-		onGallery(): void;
-		onMessages?(): void;
+		onGalleryFn(): void;
+		onMessagesFn?(): void;
 	}
 
 	export interface Props extends Container.Props, MarkSuspense.Props {
@@ -30,7 +30,7 @@ export const ListingCard: FC<ListingCard.Props> = ({ _suspense, listing, hooks, 
 				<HeroImage
 					src={hero}
 					alt={`Hero image for listing ${listing.id}`}
-					onClick={hooks.onGallery}
+					onClick={hooks.onGalleryFn}
 					data-ui-round="default"
 					className={"h-64"}
 				/>

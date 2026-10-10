@@ -1,5 +1,5 @@
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withMutation } from "~/mutation/fn/withMutation";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withMutationFn } from "~/mutation/fn/withMutationFn";
 import { authClient } from "~/user-auth/service/authClient";
 
 export namespace withMagicLinkSignInMutation {
@@ -9,16 +9,16 @@ export namespace withMagicLinkSignInMutation {
 	}
 }
 
-export const withMagicLinkSignInMutation = withMutation<
+export const withMagicLinkSignInMutation = withMutationFn<
 	withMagicLinkSignInMutation.Props,
 	unknown,
 	Error
 >({
-	logger: getRootLogger([
+	logger: getRootLoggerFn([
 		"mutation",
 		"withMagicLinkSignInMutation",
 	]),
-	keys(variables) {
+	keysFn(variables) {
 		return [
 			"sign-in",
 			"magic-link",

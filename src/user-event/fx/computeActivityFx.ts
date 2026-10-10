@@ -42,7 +42,7 @@ export const computeActivityFx = ({
 			} satisfies computeActivityFx.Result;
 		}
 
-		const nowMs = dateContext.now().toMillis();
+		const nowMs = dateContext.nowFn().toMillis();
 		const ageMs = Math.max(0, nowMs - lastUserAtMs);
 		const ageDays = Math.floor(ageMs / (24 * 60 * 60 * 1000));
 

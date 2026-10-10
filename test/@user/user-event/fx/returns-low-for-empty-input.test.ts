@@ -1,7 +1,7 @@
 import type { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import type { UserEventTableSchema } from "~/database/schema/UserEventTableSchema";
-import { computeLoad } from "~/user-event/fx/computeLoad";
+import { computeLoadFn } from "~/user-event/fn/computeLoadFn";
 
 interface CreateEventProps {
 	id: string;
@@ -11,7 +11,7 @@ interface CreateEventProps {
 	createdAt: DateTime;
 }
 
-function _createEvent({
+function _createEventFn({
 	id,
 	group,
 	event,
@@ -38,7 +38,7 @@ function _createEvent({
 describe("computeLoad", () => {
 	it("returns low for empty input", () => {
 		expect(
-			computeLoad({
+			computeLoadFn({
 				source: [],
 				createScope: "user",
 			}),

@@ -4,7 +4,7 @@ import { ListingCard } from "~/buyer-feed/ui/ListingCard/index";
 import { withListingQuery } from "~/buyer-listing/query/withListingQuery";
 import { SellerInfo } from "~/buyer-listing/ui/SellerInfo/SellerInfo";
 import { GalleryPreview } from "~/gallery/ui/GalleryPreview";
-import { getRootLogger } from "~/log/fn/getRootLogger";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
 import { useTranslator } from "~/translation/hook/useTranslator";
 import { CloseIcon } from "~/ui/constant/CloseIcon";
 import { useRenderLogger } from "~/ui/hook/useRenderLogger";
@@ -40,21 +40,21 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 		defaultPanel: "default",
 		props: {
 			default: {
-				header({ close }) {
+				headerFn({ closeFn }) {
 					return {
 						title: listing.title,
-						right: <CloseButton onClick={close} />,
+						right: <CloseButton onClick={closeFn} />,
 					};
 				},
 			} satisfies BottomSheet.PropsEx,
 			"seller-info": {
-				header() {
+				headerFn() {
 					return {
-						title: translator.text("Seller info (title)"),
+						title: translator.textFn("Seller info (title)"),
 						right: (
 							<CloseButton
 								iconEnabled={CloseIcon}
-								onClick={() => view.set("default")}
+								onClick={() => view.setFn("default")}
 							/>
 						),
 					};
@@ -64,7 +64,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 	});
 
 	useRenderLogger({
-		logger: getRootLogger(),
+		logger: getRootLoggerFn(),
 		name: "ListingSheet",
 		meta: {
 			listingId,
@@ -77,8 +77,8 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 				data-ui={"ListingSheet[BottomSheet]"}
 				isOpen={state.value}
 				onClose={() => {
-					state.set(false);
-					view.set("default");
+					state.setFn(false);
+					view.setFn("default");
 				}}
 				detent={"default"}
 				{...props}
@@ -100,7 +100,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 					<GalleryPreview
 						urls={listing.withImageUrl}
 						onClick={() => {
-							view.set("default");
+							view.setFn("default");
 						}}
 					/>
 				</view.Panel>

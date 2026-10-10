@@ -5,8 +5,8 @@ import { Tx } from "~/translation/ui/Tx";
 import { Container } from "~/ui/ui/Container";
 import { Group } from "~/ui/ui/Group";
 import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
-import { getFunctionCallResultItem } from "~/user-agent/type/getFunctionCallResultItem";
-import { getResponseStreamEvent } from "~/user-agent/type/getResponseStreamEvent";
+import { getFunctionCallResultItemFn } from "~/user-agent/fn/getFunctionCallResultItemFn";
+import { getResponseStreamEventFn } from "~/user-agent/fn/getResponseStreamEventFn";
 
 export namespace ThinkingIndicator {
 	export interface Props extends Group.Props {
@@ -37,7 +37,7 @@ export const ThinkingIndicator: FC<ThinkingIndicator.Props> = ({ events, ...prop
 				data-ui-items={"center"}
 			>
 				<Tx
-					label={translator.text("Agent working (label)")}
+					label={translator.textFn("Agent working (label)")}
 					data-ui-text="sm"
 					data-ui-font="bold"
 					className={[
@@ -63,7 +63,7 @@ function useThinking(events: RunStreamEvent[] | undefined) {
 		const pendingToolCallIds = new Set<string>();
 
 		for (const event of events ?? []) {
-			const result = getFunctionCallResultItem(event);
+			const result = getFunctionCallResultItemFn(event);
 
 			if (result) {
 				pendingToolCallIds.delete(result.callId);
@@ -71,7 +71,7 @@ function useThinking(events: RunStreamEvent[] | undefined) {
 				continue;
 			}
 
-			const responseEvent = getResponseStreamEvent(event);
+			const responseEvent = getResponseStreamEventFn(event);
 
 			if (!responseEvent) {
 				continue;

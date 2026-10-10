@@ -1,13 +1,13 @@
 import type { RunStreamEvent } from "@openai/agents-core";
 import { type FC, useEffect, useMemo, useState } from "react";
-import { list } from "~/random/fn/list";
-import { rangedom } from "~/random/fn/rangedom";
+import { listFn } from "~/random/fn/listFn";
+import { rangedomFn } from "~/random/fn/rangedomFn";
 import { useTranslator } from "~/translation/hook/useTranslator";
 import { Container } from "~/ui/ui/Container";
 import { Group } from "~/ui/ui/Group";
 import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
 import { Typo } from "~/ui/ui/Typo";
-import { getResponseStreamEvent } from "~/user-agent/type/getResponseStreamEvent";
+import { getResponseStreamEventFn } from "~/user-agent/fn/getResponseStreamEventFn";
 
 export namespace Reasoning {
 	export interface Props extends Group.Props {
@@ -23,28 +23,28 @@ export const Reasoning: FC<Reasoning.Props> = ({ events, itemId, inline, classNa
 
 	const text = useMemo(() => {
 		return [
-			translator.text("Agent reasoning 01"),
-			translator.text("Agent reasoning 02"),
-			translator.text("Agent reasoning 03"),
-			translator.text("Agent reasoning 04"),
-			translator.text("Agent reasoning 05"),
-			translator.text("Agent reasoning 06"),
-			translator.text("Agent reasoning 07"),
-			translator.text("Agent reasoning 08"),
+			translator.textFn("Agent reasoning 01"),
+			translator.textFn("Agent reasoning 02"),
+			translator.textFn("Agent reasoning 03"),
+			translator.textFn("Agent reasoning 04"),
+			translator.textFn("Agent reasoning 05"),
+			translator.textFn("Agent reasoning 06"),
+			translator.textFn("Agent reasoning 07"),
+			translator.textFn("Agent reasoning 08"),
 		];
 	}, [
 		translator,
 	]);
 
-	const [reasoningText, setReasoningText] = useState(list(text));
+	const [reasoningText, setReasoningTextFn] = useState(listFn(text));
 
 	useEffect(() => {
-		const run = () => {
-			setReasoningText(list(text));
-			return setTimeout(() => run(), rangedom(2_500, 5_000));
+		const runFn = () => {
+			setReasoningTextFn(listFn(text));
+			return setTimeout(() => runFn(), rangedomFn(2_500, 5_000));
 		};
 
-		const timeout = run();
+		const timeout = runFn();
 
 		return () => {
 			clearTimeout(timeout);
@@ -108,7 +108,7 @@ export const Reasoning: FC<Reasoning.Props> = ({ events, itemId, inline, classNa
 				]}
 			>
 				<Typo
-					label={translator.text("Agent reasoning")}
+					label={translator.textFn("Agent reasoning")}
 					data-ui-text="sm"
 					data-ui-font="bold"
 					className={[
@@ -137,7 +137,7 @@ function useReasoningContent(events: RunStreamEvent[] | undefined = [], itemId: 
 		let content = "";
 
 		for (const event of events) {
-			const responseEvent = getResponseStreamEvent(event);
+			const responseEvent = getResponseStreamEventFn(event);
 
 			if (
 				!responseEvent ||

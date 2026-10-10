@@ -5,15 +5,15 @@ import type { withDatabaseFx } from "~/database-query/fx/withDatabaseFx";
 
 export const importField: withDatabaseFx.Import<Database> = {
 	name: "field",
-	async run({ kysely }) {
+	async runFn({ kysely }) {
 		return kysely
 			.insertInto("field")
 			.values(fieldSeedData as FieldTableSchema.Type[])
 			.onConflict((oc) => {
-				return oc.column("name").doUpdateSet((eb) => ({
-					min: eb.ref("excluded.min"),
-					max: eb.ref("excluded.max"),
-					step: eb.ref("excluded.step"),
+				return oc.column("name").doUpdateSet((ebFn) => ({
+					min: ebFn.ref("excluded.min"),
+					max: ebFn.ref("excluded.max"),
+					step: ebFn.ref("excluded.step"),
 				}));
 			})
 			.execute();

@@ -1,18 +1,18 @@
 import { type Ref, Suspense, useCallback, useEffect, useRef } from "react";
 import { DeadEndIcon } from "~/application-ui/constant/icon.exports";
-import { uiCtaLinkButton } from "~/application-ui/fn/ui.exports";
+import { uiCtaLinkButtonFn } from "~/application-ui/fn/ui.exports";
 import { withFeedQuery } from "~/buyer-feed/query/withFeedQuery";
 import { Item } from "~/buyer-feed/ui/ListingList/Item/index";
 import { withListingQuery } from "~/buyer-listing/query/withListingQuery";
 import { useLocale } from "~/locale/hook/useLocale";
-import { getRootLogger } from "~/log/fn/getRootLogger";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
 import { useScrollTo } from "~/navigation/hook/useScrollTo";
 import { EmptyStatus } from "~/status/ui/EmptyStatus";
 import { useTranslator } from "~/translation/hook/useTranslator";
 import { Tx } from "~/translation/ui/Tx";
 import { ChevronLeftIcon } from "~/ui/constant/ChevronLeftIcon";
 import { ChevronRightIcon } from "~/ui/constant/ChevronRightIcon";
-import { withFallback } from "~/ui/fn/withFallback";
+import { withFallbackFn } from "~/ui/fn/withFallbackFn";
 import { useMergeRefs } from "~/ui/hook/useMergeRefs";
 import { useRenderLogger } from "~/ui/hook/useRenderLogger";
 import type { MarkSuspense } from "~/ui/type/MarkSuspense";
@@ -34,7 +34,7 @@ export namespace ListingList {
 	}
 }
 
-export const ListingList = withFallback(
+export const ListingList = withFallbackFn(
 	({ ref, scrollToId, feedId, sentinelRef, ...props }: ListingList.Props) => {
 		const translator = useTranslator();
 		const locale = useLocale();
@@ -53,21 +53,21 @@ export const ListingList = withFallback(
 			},
 		});
 
-		const scrollTo = useScrollTo(containerRef);
+		const scrollToFn = useScrollTo(containerRef);
 
 		useEffect(() => {
 			if (!scrollToId || !containerRef.current) {
 				return;
 			}
-			scrollTo(`[data-id="${scrollToId}"]`, {
+			scrollToFn(`[data-id="${scrollToId}"]`, {
 				behavior: "instant",
 			});
 		}, [
 			scrollToId,
-			scrollTo,
+			scrollToFn,
 		]);
 
-		const visibility = useElementVisibility({
+		const visibilityFn = useElementVisibility({
 			scrollerRef: containerRef,
 			visible: {},
 			proximity: {
@@ -75,12 +75,12 @@ export const ListingList = withFallback(
 			},
 		});
 
-		const placeholder = useCallback(() => {
+		const placeholderFn = useCallback(() => {
 			return <SpinnerContainer />;
 		}, []);
 
 		useRenderLogger({
-			logger: getRootLogger(),
+			logger: getRootLoggerFn(),
 			name: "ListingList",
 			meta: {
 				...feed.query,
@@ -101,13 +101,13 @@ export const ListingList = withFallback(
 				data-ui-height="full"
 				{...props}
 			>
-				<VisibilityProvider store={visibility}>
+				<VisibilityProvider storeFn={visibilityFn}>
 					{listingCollection.map((listingId) => (
 						<VisibleContainer
 							key={listingId}
 							id={listingId}
 							data-id={listingId}
-							placeholder={placeholder}
+							placeholderFn={placeholderFn}
 							data-ui-height="full"
 							data-ui-width="full"
 						>
@@ -124,8 +124,8 @@ export const ListingList = withFallback(
 					<EmptyStatus
 						ref={sentinelRef}
 						icon={DeadEndIcon}
-						textTitle={translator.text("Feed - end of road (title)")}
-						textMessage={translator.text("Feed - end of road (message)")}
+						textTitle={translator.textFn("Feed - end of road (title)")}
+						textMessage={translator.textFn("Feed - end of road (message)")}
 						action={
 							<>
 								<LinkTo
@@ -145,7 +145,7 @@ export const ListingList = withFallback(
 									params={{
 										locale,
 									}}
-									{...uiCtaLinkButton({})}
+									{...uiCtaLinkButtonFn({})}
 								>
 									<Tx label={"See other feeds (link)"} />
 								</LinkTo>

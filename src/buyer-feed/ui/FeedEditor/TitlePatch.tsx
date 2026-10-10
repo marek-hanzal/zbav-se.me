@@ -12,17 +12,17 @@ import { TextInput } from "~/ui/ui/TextInput";
 export namespace TitlePatch {
 	export interface Props extends Omit<Container.Props, "defaultValue"> {
 		feed: FeedSchema.Type;
-		onSettled?(): void;
-		onCancel(): void;
+		onSettledFn?(): void;
+		onCancelFn(): void;
 	}
 }
 
-export const TitlePatch: FC<TitlePatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
+export const TitlePatch: FC<TitlePatch.Props> = ({ feed, onSettledFn, onCancelFn, ...props }) => {
 	const translator = useTranslator();
 	const patchMutation = withFeedQuery.usePatchMutation({
-		onSettled,
+		onSettled: onSettledFn,
 	});
-	const [title, setTitle] = useState(feed.query?.where?.title ?? "");
+	const [title, setTitleFn] = useState(feed.query?.where?.title ?? "");
 
 	return (
 		<Container
@@ -38,16 +38,16 @@ export const TitlePatch: FC<TitlePatch.Props> = ({ feed, onSettled, onCancel, ..
 				data-ui-height="full"
 			>
 				<Status
-					textTitle={translator.text("Feed title (title)")}
+					textTitle={translator.textFn("Feed title (title)")}
 					action={
 						<FormField>
 							{(props) => (
 								<TextInput
 									value={title}
 									onChange={(e) => {
-										setTitle(e.target.value);
+										setTitleFn(e.target.value);
 									}}
-									placeholder={translator.text("Feed title (placeholder)")}
+									placeholder={translator.textFn("Feed title (placeholder)")}
 									autoFocus
 									{...props}
 								/>
@@ -58,7 +58,7 @@ export const TitlePatch: FC<TitlePatch.Props> = ({ feed, onSettled, onCancel, ..
 					data-ui-inner="4xl"
 				>
 					<Mx
-						label={translator.text("Feed title (hint)")}
+						label={translator.textFn("Feed title (hint)")}
 						data-ui-tone="neutral"
 						data-ui-theme="light"
 					/>
@@ -66,8 +66,8 @@ export const TitlePatch: FC<TitlePatch.Props> = ({ feed, onSettled, onCancel, ..
 			</Container>
 
 			<SaveContainer
-				onCancel={onCancel}
-				onSave={() => {
+				onCancelFn={onCancelFn}
+				onSaveFn={() => {
 					patchMutation.mutate({
 						query: {
 							where: {

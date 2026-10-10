@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { match } from "ts-pattern";
 import type { UnknownSchema } from "~/database/schema/ActivityTableUnknownSchema";
-import { toTimeDiff } from "~/date/fn/toTimeDiff";
+import { toTimeDiffFn } from "~/date/fn/toTimeDiffFn";
 import { ListItem } from "~/list-item/ui/ListItem";
 import { useLocale } from "~/locale/hook/useLocale";
 import { Tx } from "~/translation/ui/Tx";
@@ -84,7 +84,7 @@ export const ActivityUnknownItem: FC<ActivityUnknownItem.Props> = ({ item }) => 
 							data-ui-text="sm"
 						/>
 						<Typo
-							label={toTimeDiff({
+							label={toTimeDiffFn({
 								locale,
 								time: item.timestamp,
 							})}

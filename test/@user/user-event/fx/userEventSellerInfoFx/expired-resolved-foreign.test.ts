@@ -2,15 +2,15 @@ import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import { userEventSellerInfoFx } from "~/buyer-user-event/fx/userEventSellerInfoFx";
-import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { userEventCreateFx } from "~/user-event/fx/userEventCreateFx";
 
 describe("userEventSellerInfoFx", () => {
 	it("Expired: counts foreign transaction.resolved when seller did not act after buyer ping", async () => {
-		const database = await testabase("userEventSellerInfoFx-expired-resolved-foreign");
+		const database = await testabaseFn("userEventSellerInfoFx-expired-resolved-foreign");
 		const base = DateTime.now().minus({
 			days: 20,
 		});
@@ -46,8 +46,8 @@ describe("userEventSellerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				withDateServiceFx({
-					now: () => t1Create,
+				withDateServiceFn({
+					nowFn: () => t1Create,
 				}),
 			);
 
@@ -59,8 +59,8 @@ describe("userEventSellerInfoFx", () => {
 				event: "transaction.resolved",
 				isTerminal: true,
 			}).pipe(
-				withDateServiceFx({
-					now: () => t1Resolved,
+				withDateServiceFn({
+					nowFn: () => t1Resolved,
 				}),
 			);
 
@@ -73,8 +73,8 @@ describe("userEventSellerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				withDateServiceFx({
-					now: () => t2Create,
+				withDateServiceFn({
+					nowFn: () => t2Create,
 				}),
 			);
 
@@ -86,8 +86,8 @@ describe("userEventSellerInfoFx", () => {
 				event: "transaction.message",
 				isTerminal: false,
 			}).pipe(
-				withDateServiceFx({
-					now: () => t2SellerMessage,
+				withDateServiceFn({
+					nowFn: () => t2SellerMessage,
 				}),
 			);
 
@@ -99,8 +99,8 @@ describe("userEventSellerInfoFx", () => {
 				event: "transaction.resolved",
 				isTerminal: true,
 			}).pipe(
-				withDateServiceFx({
-					now: () => t2Resolved,
+				withDateServiceFn({
+					nowFn: () => t2Resolved,
 				}),
 			);
 
@@ -114,6 +114,6 @@ describe("userEventSellerInfoFx", () => {
 			expect(result.expired.total).toBe(2);
 			expect(result.expired.expired).toBe(1);
 			expect(result.expired.percent).toBe(50);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

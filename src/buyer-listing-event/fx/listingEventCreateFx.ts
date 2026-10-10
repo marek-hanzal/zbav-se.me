@@ -6,7 +6,7 @@ import type { ListingEventCreateSchema } from "~/buyer-listing-event/schema/List
 import { dbFx } from "~/database/fx/dbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { DateServiceFx } from "~/date/service/DateServiceFx";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import { getLoggerFx } from "~/log/fx/getLoggerFx";
 
 export namespace listingEventCreateFx {
@@ -49,7 +49,7 @@ export const listingEventCreateFx = Effect.fn("listingEventCreateFx")(function* 
 				});
 			}
 
-			const now = dateService.now();
+			const now = dateService.nowFn();
 
 			yield* listingEventRateLimitFx({
 				listingId,
@@ -60,7 +60,7 @@ export const listingEventCreateFx = Effect.fn("listingEventCreateFx")(function* 
 				return kysely
 					.insertInto("listing_event")
 					.values({
-						id: genId(),
+						id: genIdFn(),
 						listingId,
 						event,
 						createdAt: now.toJSDate(),

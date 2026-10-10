@@ -10,19 +10,19 @@ import { Container } from "~/ui/ui/Container";
 export namespace ConditionPatch {
 	export interface Props extends Container.Props {
 		feed: FeedSchema.Type;
-		onSettled?(): void;
-		onCancel(): void;
+		onSettledFn?(): void;
+		onCancelFn(): void;
 	}
 }
 
 export const ConditionPatch: FC<ConditionPatch.Props> = ({
 	feed,
-	onSettled,
-	onCancel,
+	onSettledFn,
+	onCancelFn,
 	...props
 }) => {
 	const patchMutation = withFeedQuery.usePatchMutation({
-		onSettled,
+		onSettled: onSettledFn,
 	});
 	const selection = useSelection<Rating.RatingItem>({
 		mode: "multi",
@@ -50,8 +50,8 @@ export const ConditionPatch: FC<ConditionPatch.Props> = ({
 			/>
 
 			<SaveContainer
-				onCancel={onCancel}
-				onSave={() => {
+				onCancelFn={onCancelFn}
+				onSaveFn={() => {
 					patchMutation.mutate({
 						query: {
 							where: {
@@ -64,7 +64,7 @@ export const ConditionPatch: FC<ConditionPatch.Props> = ({
 								where: {
 									...feed.query?.where,
 									conditionIn: selection.optional
-										.multiId()
+										.multiIdFn()
 										.map((id) => Number.parseInt(id, 10)),
 								},
 							},

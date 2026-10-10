@@ -89,7 +89,7 @@ export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* 
 			});
 
 			const dateService = yield* DateServiceFx;
-			const now = dateService.now().toJSDate();
+			const now = dateService.nowFn().toJSDate();
 
 			yield* dbFx(async (kysely) => {
 				return kysely

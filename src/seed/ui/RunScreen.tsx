@@ -13,7 +13,7 @@ type PhaseState = {
 	total: number;
 } | null;
 
-const toEtaSeconds = (phase: PhaseState) => {
+const toEtaSecondsFn = (phase: PhaseState) => {
 	if (!phase || phase.done <= 0 || phase.total <= phase.done) {
 		return null;
 	}
@@ -32,7 +32,7 @@ const toEtaSeconds = (phase: PhaseState) => {
 	return Math.max(0, Math.floor(remainingMs / 1000));
 };
 
-const formatEta = (etaSeconds: number | null) => {
+const formatEtaFn = (etaSeconds: number | null) => {
 	if (etaSeconds === null) {
 		return "--:--";
 	}
@@ -56,7 +56,7 @@ export namespace RunScreen {
 	}
 }
 
-const toPhaseValue = (phase: SeedRunSummary.Phase) => {
+const toPhaseValueFn = (phase: SeedRunSummary.Phase) => {
 	return match(phase)
 		.when(
 			(currentPhase) => currentPhase.status === "completed",
@@ -71,7 +71,7 @@ const toPhaseValue = (phase: SeedRunSummary.Phase) => {
 		);
 };
 
-const toProgressName = (phase: PhaseState, screenState: ScreenState) => {
+const toProgressNameFn = (phase: PhaseState, screenState: ScreenState) => {
 	return match(phase?.name)
 		.with(P.string, (phaseName) => phaseName)
 		.with(undefined, () =>
@@ -84,7 +84,7 @@ const toProgressName = (phase: PhaseState, screenState: ScreenState) => {
 		.exhaustive();
 };
 
-const isTerminalScreenState = (screenState: ScreenState) => {
+const isTerminalScreenStateFn = (screenState: ScreenState) => {
 	return match(screenState)
 		.with("completed", () => true)
 		.with("failed", () => true)
@@ -92,12 +92,12 @@ const isTerminalScreenState = (screenState: ScreenState) => {
 		.exhaustive();
 };
 
-const toProgressTotals = (
+const toProgressTotalsFn = (
 	phase: PhaseState,
 	summary: Partial<SeedRunSummary.Type>,
 	screenState: ScreenState,
 ) => {
-	const isTerminal = isTerminalScreenState(screenState);
+	const isTerminal = isTerminalScreenStateFn(screenState);
 	const summaryRequestedCount = summary.requestedCount ?? 0;
 	const summaryCreatedCount = summary.createdCount ?? 0;
 
@@ -108,13 +108,13 @@ const toProgressTotals = (
 	};
 };
 
-const toPhaseLabel = (phase: SeedRunSummary.Phase, eta: string) => {
+const toPhaseLabelFn = (phase: SeedRunSummary.Phase, eta: string) => {
 	return match(phase.status)
 		.with("running", () => `${phase.done}/${phase.total} ETA ${eta}`)
 		.otherwise(() => `${phase.done}/${phase.total}`);
 };
 
-const toPhaseStatusLabel = (status: SeedRunSummary.PhaseStatus) => {
+const toPhaseStatusLabelFn = (status: SeedRunSummary.PhaseStatus) => {
 	return match(status)
 		.with("completed", () => " [done]")
 		.with("running", () => " [running]")
@@ -122,7 +122,7 @@ const toPhaseStatusLabel = (status: SeedRunSummary.PhaseStatus) => {
 		.exhaustive();
 };
 
-const toSmoothedEtaSeconds = (current: number | null, next: number | null) => {
+const toSmoothedEtaSecondsFn = (current: number | null, next: number | null) => {
 	return match({
 		current,
 		next,
@@ -157,7 +157,7 @@ const toSmoothedEtaSeconds = (current: number | null, next: number | null) => {
 		.exhaustive();
 };
 
-const toFooter = (screenState: ScreenState, errorMessage: string | null) => {
+const toFooterFn = (screenState: ScreenState, errorMessage: string | null) => {
 	return match(screenState)
 		.with("completed", () => (
 			<StatusMessage variant={"success"}>
@@ -179,7 +179,7 @@ const toFooter = (screenState: ScreenState, errorMessage: string | null) => {
 
 const MAX_VISIBLE_PHASES = 3;
 
-const toVisiblePhases = (phases: SeedRunSummary.Phase[]) => {
+const toVisiblePhasesFn = (phases: SeedRunSummary.Phase[]) => {
 	if (phases.length <= MAX_VISIBLE_PHASES) {
 		return phases;
 	}
@@ -202,16 +202,16 @@ export const RunScreen: FC<RunScreen.Props> = ({
 	seedLabel,
 	summary,
 }) => {
-	const progressName = toProgressName(phase, screenState);
-	const progressTotals = toProgressTotals(phase, summary, screenState);
+	const progressName = toProgressNameFn(phase, screenState);
+	const progressTotals = toProgressTotalsFn(phase, summary, screenState);
 	const progressTotal = progressTotals.total;
 	const progressDone = progressTotals.done;
 	const progressValue =
 		progressTotal > 0 ? Math.round((progressDone / Math.max(1, progressTotal)) * 100) : 0;
 	const phaseRows = summary.phases ?? [];
-	const visiblePhaseRows = toVisiblePhases(phaseRows);
-	const [displayedEtaSeconds, setDisplayedEtaSeconds] = useState<number | null>(() => {
-		return toEtaSeconds(phase);
+	const visiblePhaseRows = toVisiblePhasesFn(phaseRows);
+	const [displayedEtaSeconds, setDisplayedEtaSecondsFn] = useState<number | null>(() => {
+		return toEtaSecondsFn(phase);
 	});
 	const phaseRef = useRef(phase);
 	const phaseKey = phase ? `${phase.name}:${phase.startedAt}` : null;
@@ -239,19 +239,19 @@ export const RunScreen: FC<RunScreen.Props> = ({
 
 	useEffect(() => {
 		if (phaseKey === null || !phaseRef.current) {
-			setDisplayedEtaSeconds(null);
+			setDisplayedEtaSecondsFn(null);
 			return;
 		}
 
-		const updateEta = () => {
-			const nextEtaSeconds = toEtaSeconds(phaseRef.current);
+		const updateEtaFn = () => {
+			const nextEtaSeconds = toEtaSecondsFn(phaseRef.current);
 
-			setDisplayedEtaSeconds((current) => toSmoothedEtaSeconds(current, nextEtaSeconds));
+			setDisplayedEtaSecondsFn((current) => toSmoothedEtaSecondsFn(current, nextEtaSeconds));
 		};
 
-		updateEta();
+		updateEtaFn();
 
-		const interval = setInterval(updateEta, 1200);
+		const interval = setInterval(updateEtaFn, 1200);
 
 		return () => {
 			clearInterval(interval);
@@ -260,7 +260,7 @@ export const RunScreen: FC<RunScreen.Props> = ({
 		phaseKey,
 	]);
 
-	const eta = formatEta(displayedEtaSeconds);
+	const eta = formatEtaFn(displayedEtaSeconds);
 
 	return (
 		<Box
@@ -294,7 +294,7 @@ export const RunScreen: FC<RunScreen.Props> = ({
 					{phaseRows.length > 0 ? (
 						visiblePhaseRows.map((phaseRow) => {
 							const isRunning = phaseRow.status === "running";
-							const label = toPhaseLabel(phaseRow, eta);
+							const label = toPhaseLabelFn(phaseRow, eta);
 
 							return (
 								<Box
@@ -319,7 +319,7 @@ export const RunScreen: FC<RunScreen.Props> = ({
 										</Box>
 
 										<Text bold={isRunning}>
-											{toPhaseStatusLabel(phaseRow.status)}
+											{toPhaseStatusLabelFn(phaseRow.status)}
 										</Text>
 									</Box>
 
@@ -332,7 +332,7 @@ export const RunScreen: FC<RunScreen.Props> = ({
 									</Box>
 
 									<Box>
-										<ProgressBar value={toPhaseValue(phaseRow)} />
+										<ProgressBar value={toPhaseValueFn(phaseRow)} />
 									</Box>
 								</Box>
 							);
@@ -405,7 +405,7 @@ export const RunScreen: FC<RunScreen.Props> = ({
 				<Text dimColor>User: {summary.userEmail ?? "-"}</Text>
 			</Box>
 
-			<Box>{toFooter(screenState, errorMessage)}</Box>
+			<Box>{toFooterFn(screenState, errorMessage)}</Box>
 		</Box>
 	);
 };

@@ -15,7 +15,7 @@ export namespace TaggedErrorSerializationAdapter {
 	}
 }
 
-const isTaggedError = (value: unknown): value is TaggedErrorSerializationAdapter.TaggedError => {
+const isTaggedErrorFn = (value: unknown): value is TaggedErrorSerializationAdapter.TaggedError => {
 	return (
 		Predicate.isError(value) &&
 		Predicate.hasProperty(value, "_tag") &&
@@ -23,10 +23,10 @@ const isTaggedError = (value: unknown): value is TaggedErrorSerializationAdapter
 	);
 };
 
-export const toTaggedError = (
+export const toTaggedErrorFn = (
 	value: unknown,
 ): TaggedErrorSerializationAdapter.TaggedError | undefined => {
-	return isTaggedError(value) ? value : undefined;
+	return isTaggedErrorFn(value) ? value : undefined;
 };
 
 export const TaggedErrorSerializationAdapter = createSerializationAdapter<
@@ -35,10 +35,10 @@ export const TaggedErrorSerializationAdapter = createSerializationAdapter<
 >({
 	key: "TaggedError",
 	test(value): value is TaggedErrorSerializationAdapter.Input {
-		return !!toTaggedError(value);
+		return !!toTaggedErrorFn(value);
 	},
 	toSerializable(value) {
-		const error = toTaggedError(value);
+		const error = toTaggedErrorFn(value);
 
 		if (!error) {
 			throw new Error("TaggedErrorSerializationAdapter received untagged error");

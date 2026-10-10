@@ -1,6 +1,9 @@
 import { type Ref, type RefCallback, useMemo } from "react";
 
-function assignRef<T>(ref: Ref<T> | undefined | null, value: T | null): ReturnType<RefCallback<T>> {
+function assignRefFn<T>(
+	ref: Ref<T> | undefined | null,
+	value: T | null,
+): ReturnType<RefCallback<T>> {
 	if (typeof ref === "function") {
 		return ref(value);
 	} else if (ref) {
@@ -8,20 +11,20 @@ function assignRef<T>(ref: Ref<T> | undefined | null, value: T | null): ReturnTy
 	}
 }
 
-function mergeRefs<T>(refs: (Ref<T> | undefined)[]): Ref<T> {
+function mergeRefsFn<T>(refs: (Ref<T> | undefined)[]): Ref<T> {
 	return (value: T | null) => {
 		const cleanups: (() => void)[] = [];
 
 		for (const ref of refs) {
-			const cleanup = assignRef(ref, value);
-			const isCleanup = typeof cleanup === "function";
+			const cleanupFn = assignRefFn(ref, value);
+			const isCleanup = typeof cleanupFn === "function";
 
-			cleanups.push(isCleanup ? cleanup : () => assignRef(ref, null));
+			cleanups.push(isCleanup ? cleanupFn : () => assignRefFn(ref, null));
 		}
 
 		return () => {
-			for (const cleanup of cleanups) {
-				cleanup();
+			for (const cleanupFn of cleanups) {
+				cleanupFn();
 			}
 		};
 	};
@@ -29,5 +32,5 @@ function mergeRefs<T>(refs: (Ref<T> | undefined)[]): Ref<T> {
 
 export function useMergeRefs<T>(refs: (Ref<T> | undefined)[]): Ref<T> {
 	// biome-ignore lint/correctness/useExhaustiveDependencies: We're ok here, don't cry.
-	return useMemo(() => mergeRefs(refs), refs);
+	return useMemo(() => mergeRefsFn(refs), refs);
 }

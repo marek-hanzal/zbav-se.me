@@ -1,8 +1,8 @@
 import type { Migration } from "kysely/migration";
 import pgvector from "pgvector";
 import categoriesCsData from "~/database-migration/data/categories.cs.json" with { type: "json" };
-import { embedMinHash } from "~/embedding/fn/embedMinHash";
-import { genId } from "~/identity/fn/genId";
+import { embedMinHashFn } from "~/embedding/fn/embedMinHashFn";
+import { genIdFn } from "~/identity/fn/genIdFn";
 
 export const CategorySeedMigration: Migration = {
 	async up(db) {
@@ -12,23 +12,23 @@ export const CategorySeedMigration: Migration = {
 				categoriesCsData.map(
 					(category, index) =>
 						({
-							id: genId(),
+							id: genIdFn(),
 							group: category.group,
 							groupVec: pgvector.toSql(
-								embedMinHash({
+								embedMinHashFn({
 									value: category.group,
 									dimensions: 32,
 								}),
 							),
 							category: category.category,
 							categoryVec: pgvector.toSql(
-								embedMinHash({
+								embedMinHashFn({
 									value: category.category,
 									dimensions: 32,
 								}),
 							),
 							categoryGroupVec: pgvector.toSql(
-								embedMinHash({
+								embedMinHashFn({
 									value: `${category.group}-${category.category}`,
 									dimensions: 32,
 								}),
@@ -61,7 +61,7 @@ export const CategorySeedMigration: Migration = {
 				}
 
 				return category.spotlight.map((text, weight) => ({
-					id: genId(),
+					id: genIdFn(),
 					categoryId,
 					text,
 					locale: category.locale,

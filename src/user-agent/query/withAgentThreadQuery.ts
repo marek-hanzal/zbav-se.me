@@ -1,5 +1,5 @@
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withEntityQuery } from "~/query/fn/withEntityQuery";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withEntityQueryFn } from "~/query/fn/withEntityQueryFn";
 import { agentThreadCollectionFn } from "~/user-agent/fn/agentThreadCollectionFn";
 import { agentThreadCountFn } from "~/user-agent/fn/agentThreadCountFn";
 import { agentThreadCreateFn } from "~/user-agent/fn/agentThreadCreateFn";
@@ -10,8 +10,8 @@ import type { AgentThreadPatchSchema } from "~/user-agent/schema/AgentThreadPatc
 import type { AgentThreadQuerySchema } from "~/user-agent/schema/AgentThreadQuerySchema";
 import type { AgentThreadSchema } from "~/user-agent/schema/AgentThreadSchema";
 
-export const withAgentThreadQuery = withEntityQuery({
-	logger: getRootLogger([
+export const withAgentThreadQuery = withEntityQueryFn({
+	logger: getRootLoggerFn([
 		"query",
 		"withAgentThreadQuery",
 	]),
@@ -24,13 +24,13 @@ export const withAgentThreadQuery = withEntityQuery({
 		delete: Error;
 		patchCollection: Error;
 	},
-	keys() {
+	keysFn() {
 		return [
 			"agent",
 			"thread",
 		];
 	},
-	toIdKey(id): AgentThreadQuerySchema.Type {
+	toIdKeyFn(id): AgentThreadQuerySchema.Type {
 		return {
 			where: {
 				id,

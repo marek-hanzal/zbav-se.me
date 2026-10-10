@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import type { DateTime } from "luxon";
 import { dbFx } from "~/database/fx/dbFx";
-import { keyOf } from "~/hash/fn/keyOf";
-import { genId } from "~/identity/fn/genId";
+import { keyOfFn } from "~/hash/fn/keyOfFn";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import type { userEventCreateFx } from "~/user-event/fx/userEventCreateFx";
 
 export namespace seedUserEventTimelineFx {
@@ -30,9 +30,9 @@ export const seedUserEventTimelineFx = Effect.fn("seedUserEventTimelineFx")(func
 			.insertInto("user_event")
 			.values(
 				events.map((entry) => ({
-					id: genId(),
+					id: genIdFn(),
 					userId,
-					group: keyOf(entry.group),
+					group: keyOfFn(entry.group),
 					scope: entry.scope,
 					source: entry.source,
 					event: entry.event,

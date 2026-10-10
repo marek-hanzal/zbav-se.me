@@ -2,11 +2,11 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { feedCreateFx } from "~/buyer-feed/fx/feedCreateFx";
 import { favouriteToggleFx } from "~/buyer-listing-favourite/fx/favouriteToggleFx";
-import { runToggleEntityErrorContractFx } from "~/test/@buyer/common/fx/runToggleEntityErrorContractFx";
+import { runToggleEntityErrorContractFn } from "~/test/@buyer/common/fx/runToggleEntityErrorContractFn";
 
 describe("favouriteToggleFx", () => {
 	it("invalid: seller cannot favourite own listing", async () => {
-		return runToggleEntityErrorContractFx({
+		return runToggleEntityErrorContractFn({
 			databaseName: "favouriteToggle-own-listing",
 			userSlug: "fav-own",
 			expectedError: {

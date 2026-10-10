@@ -1,5 +1,5 @@
 import { type FC, type RefObject, Suspense, useRef } from "react";
-import { getRootLogger } from "~/log/fn/getRootLogger";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
 import { useAutoScroll } from "~/navigation/hook/useAutoScroll";
 import { useRenderLogger } from "~/ui/hook/useRenderLogger";
 import type { MarkSuspense } from "~/ui/type/MarkSuspense";
@@ -53,7 +53,7 @@ export const TransactionEntryList: FC<TransactionEntryList.Props> = ({
 	);
 
 	useRenderLogger({
-		logger: getRootLogger(),
+		logger: getRootLoggerFn(),
 		name: "TransactionEntryList",
 	});
 

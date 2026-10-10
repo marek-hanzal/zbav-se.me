@@ -2,17 +2,17 @@ import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
 import { RestrictionEnumSchema } from "~/restriction/schema/RestrictionEnumSchema";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 import { withUserRestrictionActiveSelectFx } from "~/user-restriction/db/withUserRestrictionActiveSelectFx";
 
 const atFx = <A, E, R>(iso: string, eff: Effect.Effect<A, E, R>) =>
 	eff.pipe(
-		withDateServiceFx({
-			now: () => DateTime.fromISO(iso),
+		withDateServiceFn({
+			nowFn: () => DateTime.fromISO(iso),
 		}),
 	);
 
@@ -50,7 +50,7 @@ const resolveActiveRestrictionFx = (userId?: string) =>
 
 describe("withUserRestrictionActiveSelectFx", () => {
 	it("returns none without a user and resolves the newest currently active row for a user", async () => {
-		const database = await testabase("user-restriction-active-select");
+		const database = await testabaseFn("user-restriction-active-select");
 
 		return Effect.gen(function* () {
 			const { seller } = yield* createUsersFx({});
@@ -100,6 +100,6 @@ describe("withUserRestrictionActiveSelectFx", () => {
 			expect(fallback).toBe(RestrictionEnumSchema.enum.none);
 			expect(activeAtNoon).toBe("adult");
 			expect(activeAtFutureBoundary).toBe("sensitive");
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

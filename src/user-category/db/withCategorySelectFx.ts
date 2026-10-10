@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { withContainsEx } from "~/database/fn/withContainsEx";
-import { selectFx } from "~/database-query/fx/selectFx";
+import { withContainsExFn } from "~/database/fn/withContainsExFn";
+import { selectFn } from "~/database-query/fn/selectFn";
 import type { CategorySortSchema } from "~/user-category/schema/CategorySortSchema";
 import type { CategoryWhereSchema } from "~/user-category/schema/CategoryWhereSchema";
 import { withUserRestrictionActiveSelectFx } from "~/user-restriction/db/withUserRestrictionActiveSelectFx";
@@ -26,8 +26,10 @@ export const withCategorySelectFx = Effect.fn("withCategorySelectFx")(function* 
 	let select = kysely
 		.selectFrom("category as cat")
 		.selectAll("cat")
-		.select((eb) => {
-			return eb("cat.restriction", ">", restrictionSql).$castTo<boolean>().as("isRestricted");
+		.select((ebFn) => {
+			return ebFn("cat.restriction", ">", restrictionSql)
+				.$castTo<boolean>()
+				.as("isRestricted");
 		});
 
 	for (const item of sort ?? []) {
@@ -38,7 +40,7 @@ export const withCategorySelectFx = Effect.fn("withCategorySelectFx")(function* 
 			.exhaustive();
 	}
 
-	return selectFx({
+	return selectFn({
 		select,
 		queryFx(select, where: CategoryWhereSchema.Type) {
 			return Effect.gen(function* () {
@@ -59,14 +61,14 @@ export const withCategorySelectFx = Effect.fn("withCategorySelectFx")(function* 
 				if (where.fulltext?.length) {
 					const fulltext = where.fulltext;
 
-					query = query.where((eb) => {
-						return eb.and(
+					query = query.where((ebFn) => {
+						return ebFn.and(
 							fulltext.map((term) =>
-								eb.or([
-									withContainsEx(eb.ref("cat.group"), term),
-									withContainsEx(eb.ref("cat.category"), term),
-									eb.exists(
-										eb
+								ebFn.or([
+									withContainsExFn(ebFn.ref("cat.group"), term),
+									withContainsExFn(ebFn.ref("cat.category"), term),
+									ebFn.exists(
+										ebFn
 											.selectFrom("category_spotlight")
 											.select("category_spotlight.categoryId")
 											.whereRef(
@@ -74,9 +76,9 @@ export const withCategorySelectFx = Effect.fn("withCategorySelectFx")(function* 
 												"=",
 												"cat.id",
 											)
-											.where((eb) => {
-												return withContainsEx(
-													eb.ref("category_spotlight.text"),
+											.where((ebFn) => {
+												return withContainsExFn(
+													ebFn.ref("category_spotlight.text"),
 													term,
 												);
 											}),
@@ -88,14 +90,14 @@ export const withCategorySelectFx = Effect.fn("withCategorySelectFx")(function* 
 				}
 
 				if (where.group) {
-					query = query.where((eb) => {
-						return withContainsEx(eb.ref("cat.group"), where.group);
+					query = query.where((ebFn) => {
+						return withContainsExFn(ebFn.ref("cat.group"), where.group);
 					});
 				}
 
 				if (where.category) {
-					query = query.where((eb) => {
-						return withContainsEx(eb.ref("cat.category"), where.category);
+					query = query.where((ebFn) => {
+						return withContainsExFn(ebFn.ref("cat.category"), where.category);
 					});
 				}
 
@@ -112,8 +114,8 @@ export const withCategorySelectFx = Effect.fn("withCategorySelectFx")(function* 
 				}
 
 				if (where?.withRestriction === true) {
-					query = query.where((eb) => {
-						return eb("cat.restriction", "<=", restrictionSql);
+					query = query.where((ebFn) => {
+						return ebFn("cat.restriction", "<=", restrictionSql);
 					});
 				}
 

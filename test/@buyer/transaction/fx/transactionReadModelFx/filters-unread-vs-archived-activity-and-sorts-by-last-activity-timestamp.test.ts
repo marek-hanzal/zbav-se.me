@@ -2,15 +2,15 @@ import { Effect } from "effect";
 import { sql } from "kysely";
 import { describe, expect, it } from "vitest";
 import { transactionCollectionFx } from "~/buyer-transaction/fx/transactionCollectionFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { transactionEntryCreateFx } from "~/user-transaction-entry/fx/transactionEntryCreateFx";
 
 describe("buyer transaction read model activity and sort", () => {
 	it("filters unread vs archived activity and sorts by last activity timestamp", async () => {
-		const database = await testabase("buyer-transaction-read-model-activity-sort");
+		const database = await testabaseFn("buyer-transaction-read-model-activity-sort");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -36,8 +36,8 @@ describe("buyer transaction read model activity and sort", () => {
 					})
 					.where("userId", "=", buyer.id)
 					.where("type", "=", "seller-message")
-					.where((eb) => {
-						return sql<boolean>`${eb.ref("activity.reference")} @> ARRAY[${archivedScenario.transactionId}]::text[]`;
+					.where((ebFn) => {
+						return sql<boolean>`${ebFn.ref("activity.reference")} @> ARRAY[${archivedScenario.transactionId}]::text[]`;
 					})
 					.executeTakeFirstOrThrow(),
 			);
@@ -101,6 +101,6 @@ describe("buyer transaction read model activity and sort", () => {
 			expect(archivedOnly.map((item) => item.id)).not.toContain(
 				unreadNewerScenario.transactionId,
 			);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

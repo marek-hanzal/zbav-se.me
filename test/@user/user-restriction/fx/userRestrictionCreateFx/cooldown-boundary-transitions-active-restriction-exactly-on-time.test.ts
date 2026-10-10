@@ -1,29 +1,29 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
+import { withUserRestrictionContextFn } from "~/user-restriction/fn/withUserRestrictionContextFn";
 import { userRestrictionCollectionFx } from "~/user-restriction/fx/userRestrictionCollectionFx";
 import { userRestrictionCountFx } from "~/user-restriction/fx/userRestrictionCountFx";
 import { userRestrictionCreateFx } from "~/user-restriction/fx/userRestrictionCreateFx";
-import { withUserRestrictionContextFx } from "~/user-restriction/fx/withUserRestrictionContextFx";
 
-type TestDatabase = Awaited<ReturnType<typeof testabase>>;
+type TestDatabase = Awaited<ReturnType<typeof testabaseFn>>;
 
 const atFx = <A, E, R>(iso: string, eff: Effect.Effect<A, E, R>) =>
 	eff.pipe(
-		withDateServiceFx({
-			now: () => DateTime.fromISO(iso),
+		withDateServiceFn({
+			nowFn: () => DateTime.fromISO(iso),
 		}),
 	);
 
-const withRestrictionRuntimeFx = (database: TestDatabase) => {
+const withRestrictionRuntimeFn = (database: TestDatabase) => {
 	return <A, E, R>(effect: Effect.Effect<A, E, R>) =>
 		effect.pipe(
-			withRuntimeFx(database),
-			withUserRestrictionContextFx({
+			withRuntimeFn(database),
+			withUserRestrictionContextFn({
 				delay: {
 					adult: 0,
 					sensitive: 2,
@@ -34,7 +34,7 @@ const withRestrictionRuntimeFx = (database: TestDatabase) => {
 
 describe("userRestrictionCreateFx cooldown boundary", () => {
 	it("keeps the current restriction active until the exact availableAt boundary and flips exactly on time", async () => {
-		const database = await testabase("user-restriction-cooldown-boundary");
+		const database = await testabaseFn("user-restriction-cooldown-boundary");
 
 		return Effect.gen(function* () {
 			const user = yield* leaseTestUserFx({});
@@ -129,6 +129,6 @@ describe("userRestrictionCreateFx cooldown boundary", () => {
 			]);
 			expect(atBoundaryAvailable[0]?.isAvailable).toBe(true);
 			expect(atBoundaryWaitingCount).toBe(0);
-		}).pipe(withRestrictionRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRestrictionRuntimeFn(database), Effect.runPromise);
 	});
 });

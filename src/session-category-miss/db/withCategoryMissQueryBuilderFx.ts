@@ -32,8 +32,8 @@ export const withCategoryMissQueryBuilderFx = Effect.fn("withCategoryMissQueryBu
 
 		if (where?.fulltext?.length) {
 			const fulltext = where.fulltext;
-			query = query.where((eb) => {
-				return eb.and(fulltext.map((term) => eb("cm.category", "ilike", `%${term}%`)));
+			query = query.where((ebFn) => {
+				return ebFn.and(fulltext.map((term) => ebFn("cm.category", "ilike", `%${term}%`)));
 			});
 		}
 

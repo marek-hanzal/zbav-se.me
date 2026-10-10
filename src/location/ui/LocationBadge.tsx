@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { useLocale } from "~/locale/hook/useLocale";
-import { toLocaleNumber } from "~/number/fn/toLocaleNumber";
+import { toLocaleNumberFn } from "~/number/fn/toLocaleNumberFn";
 import type { LocationSchema } from "~/session-location/schema/LocationSchema";
 import { Badge } from "~/ui/ui/Badge";
 import { Container } from "~/ui/ui/Container";
@@ -48,7 +48,7 @@ export const LocationBadge: FC<LocationBadge.Props> = ({
 				<Container>{location.address}</Container>
 				{distance ? (
 					<Container>
-						{toLocaleNumber({
+						{toLocaleNumberFn({
 							locale,
 							number: distance,
 							maximumFractionDigits: 1,

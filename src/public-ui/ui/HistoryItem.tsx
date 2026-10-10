@@ -3,7 +3,7 @@ import type { GitHubHistorySchema } from "~/public-github/schema/GitHubHistorySc
 import { Container } from "~/ui/ui/Container";
 import { Typo } from "~/ui/ui/Typo";
 
-const clamp = (value: number, min: number, max: number) => {
+const clampFn = (value: number, min: number, max: number) => {
 	return Math.max(min, Math.min(max, value));
 };
 
@@ -14,7 +14,7 @@ const clamp = (value: number, min: number, max: number) => {
  * - palette[0..(n-2)] represent exact levels (0, 1, 2, ...)
  * - palette[n-1] is the overflow slot ("> max level")
  */
-const getSlot = (count: number, palette: readonly string[], threshold = 5) => {
+const getSlotFn = (count: number, palette: readonly string[], threshold = 5) => {
 	if (palette.length <= 1) {
 		return 0;
 	}
@@ -28,7 +28,7 @@ const getSlot = (count: number, palette: readonly string[], threshold = 5) => {
 		return overflowSlot;
 	}
 
-	return clamp(level, 0, maxLevelSlot);
+	return clampFn(level, 0, maxLevelSlot);
 };
 
 export namespace HistoryItem {
@@ -47,7 +47,7 @@ export const HistoryItem: FC<HistoryItem.Props> = ({
 	className,
 	...props
 }) => {
-	const slot = getSlot(item.count, palette, threshold);
+	const slot = getSlotFn(item.count, palette, threshold);
 	const color = palette[slot] ?? palette[0] ?? "bg-transparent";
 
 	return (

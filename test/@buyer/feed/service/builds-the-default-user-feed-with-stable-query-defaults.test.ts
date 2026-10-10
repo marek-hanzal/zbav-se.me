@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { getFeedDefaultCreate } from "~/buyer-feed/service/getFeedDefaultCreate";
+import { getFeedDefaultCreateFn } from "~/buyer-feed/service/getFeedDefaultCreateFn";
 
 describe("getFeedDefaultCreate", () => {
 	it("builds the default user feed with stable query defaults", () => {
-		const feed = getFeedDefaultCreate("My Saved Feed");
+		const feed = getFeedDefaultCreateFn("My Saved Feed");
 
 		expect(feed).toEqual({
 			type: "user",

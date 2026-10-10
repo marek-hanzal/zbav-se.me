@@ -2,9 +2,9 @@ import { useContext } from "react";
 import { VisibilityContext } from "~/visibility/context/VisibilityContext";
 
 export const useVisible = () => {
-	const context = useContext(VisibilityContext);
-	if (!context) {
+	const contextFn = useContext(VisibilityContext);
+	if (!contextFn) {
 		throw new Error("useVisible must be used within a VisibilityProvider");
 	}
-	return context;
+	return contextFn;
 };

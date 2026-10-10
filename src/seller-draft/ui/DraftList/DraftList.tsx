@@ -30,10 +30,10 @@ export const DraftList: FC<DraftList.Props> = ({ _suspense, ...props }: DraftLis
 	const check = useMemo(() => {
 		return [
 			{
-				check() {
+				checkFn() {
 					return !draftCollection.length;
 				},
-				render() {
+				renderFn() {
 					return <Empty />;
 				},
 			},

@@ -6,9 +6,9 @@ import { Container } from "~/ui/ui/Container";
 import { Group } from "~/ui/ui/Group";
 import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
 import { Typo } from "~/ui/ui/Typo";
-import { getFunctionCallResultItem } from "~/user-agent/type/getFunctionCallResultItem";
-import { getResponseStreamEvent } from "~/user-agent/type/getResponseStreamEvent";
-import { getToolOutputText } from "~/user-agent/type/getToolOutputText";
+import { getFunctionCallResultItemFn } from "~/user-agent/fn/getFunctionCallResultItemFn";
+import { getResponseStreamEventFn } from "~/user-agent/fn/getResponseStreamEventFn";
+import { getToolOutputTextFn } from "~/user-agent/fn/getToolOutputTextFn";
 
 export namespace ToolCall {
 	export interface Props extends Group.Props {
@@ -76,7 +76,7 @@ export const ToolCall: FC<ToolCall.Props> = ({ events, itemId, inline, className
 				{state.input !== null ? (
 					<>
 						<Typo
-							label={translator.text("Tool call input (label)")}
+							label={translator.textFn("Tool call input (label)")}
 							data-ui-text="xs"
 							data-ui-opacity="6"
 							data-ui-font="semibold"
@@ -110,7 +110,7 @@ export const ToolCall: FC<ToolCall.Props> = ({ events, itemId, inline, className
 				{state.output !== undefined ? (
 					<>
 						<Typo
-							label={translator.text("Tool call output (label)")}
+							label={translator.textFn("Tool call output (label)")}
 							data-ui-text="xs"
 							data-ui-opacity="6"
 							data-ui-font="semibold"
@@ -138,7 +138,7 @@ function useToolCalls(events: RunStreamEvent[] | undefined, itemId: string) {
 		const all = events ?? [];
 
 		const created = all.find((event) => {
-			const responseEvent = getResponseStreamEvent(event);
+			const responseEvent = getResponseStreamEventFn(event);
 
 			return (
 				responseEvent?.type === "response.output_item.added" &&
@@ -148,7 +148,7 @@ function useToolCalls(events: RunStreamEvent[] | undefined, itemId: string) {
 		});
 
 		const done = all.find((event) => {
-			const responseEvent = getResponseStreamEvent(event);
+			const responseEvent = getResponseStreamEventFn(event);
 
 			return (
 				responseEvent?.type === "response.function_call_arguments.done" &&
@@ -156,8 +156,8 @@ function useToolCalls(events: RunStreamEvent[] | undefined, itemId: string) {
 			);
 		});
 
-		const createdEvent = created ? getResponseStreamEvent(created) : null;
-		const doneEvent = done ? getResponseStreamEvent(done) : null;
+		const createdEvent = created ? getResponseStreamEventFn(created) : null;
+		const doneEvent = done ? getResponseStreamEventFn(done) : null;
 
 		const createdName =
 			createdEvent &&
@@ -178,7 +178,7 @@ function useToolCalls(events: RunStreamEvent[] | undefined, itemId: string) {
 				: null;
 		const result = callId
 			? all
-					.map(getFunctionCallResultItem)
+					.map(getFunctionCallResultItemFn)
 					.find(
 						(event): event is FunctionCallResultItem =>
 							event !== null && event.callId === callId,
@@ -188,7 +188,7 @@ function useToolCalls(events: RunStreamEvent[] | undefined, itemId: string) {
 		return {
 			name: createdName,
 			input: doneArgs,
-			output: getToolOutputText(result),
+			output: getToolOutputTextFn(result),
 			isPending: !result,
 		} as const;
 	}, [

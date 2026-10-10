@@ -1,16 +1,16 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
 import { DateServiceFx } from "~/date/service/DateServiceFx";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import type { RestrictionEnumSchema } from "~/restriction/schema/RestrictionEnumSchema";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { categoryCollectionFx } from "~/user-category/fx/categoryCollectionFx";
 
-type TestDatabase = Awaited<ReturnType<typeof testabase>>;
+type TestDatabase = Awaited<ReturnType<typeof testabaseFn>>;
 type CategoryRestriction = RestrictionEnumSchema.Type;
 
 const restrictionLevels = [
@@ -23,15 +23,15 @@ const restrictionLevels = [
 
 const atFx = <A, E, R>(iso: string, eff: Effect.Effect<A, E, R>) =>
 	eff.pipe(
-		withDateServiceFx({
-			now: () => DateTime.fromISO(iso),
+		withDateServiceFn({
+			nowFn: () => DateTime.fromISO(iso),
 		}),
 	);
 
-const createRestrictedCategories = (database: TestDatabase, slugPrefix: string) =>
+const createRestrictedCategoriesFx = (database: TestDatabase, slugPrefix: string) =>
 	Effect.promise(async () => {
 		const categories = restrictionLevels.map((restriction, index) => ({
-			id: genId(),
+			id: genIdFn(),
 			group: `Restriction fixture ${slugPrefix}`,
 			category: `Restriction fixture ${restriction}`,
 			slug: `${slugPrefix}-${restriction}`,
@@ -46,7 +46,7 @@ const createRestrictedCategories = (database: TestDatabase, slugPrefix: string) 
 		return categories.map((category) => category.id);
 	});
 
-const createUserRestrictions = (
+const createUserRestrictionsFx = (
 	database: TestDatabase,
 	props: {
 		userId: string;
@@ -59,14 +59,14 @@ const createUserRestrictions = (
 ) =>
 	Effect.gen(function* () {
 		const dateContext = yield* DateServiceFx;
-		const now = dateContext.now();
+		const now = dateContext.nowFn();
 
 		yield* Effect.promise(() =>
 			database.kysely
 				.insertInto("user_restriction")
 				.values(
 					props.records.map((record) => ({
-						id: genId(),
+						id: genIdFn(),
 						userId: props.userId,
 						restriction: record.restriction,
 						availableAt: now
@@ -86,7 +86,7 @@ const createUserRestrictions = (
 		);
 	});
 
-const fetchVisibleRestrictions = (userId: string, categoryIdIn: string[]) =>
+const fetchVisibleRestrictionsFx = (userId: string, categoryIdIn: string[]) =>
 	categoryCollectionFx({
 		userId,
 		scope: {},
@@ -108,18 +108,18 @@ const fetchVisibleRestrictions = (userId: string, categoryIdIn: string[]) =>
 
 describe("user category restriction cooldown flow", () => {
 	it("switches visible category levels only when staged restrictions cross their availability boundaries", async () => {
-		const database = await testabase("user-category-restriction-multi-stage-cooldown");
+		const database = await testabaseFn("user-category-restriction-multi-stage-cooldown");
 
 		return Effect.gen(function* () {
 			const user = yield* leaseTestUserFx({});
-			const categoryIdIn = yield* createRestrictedCategories(
+			const categoryIdIn = yield* createRestrictedCategoriesFx(
 				database,
 				"restriction-multi-stage",
 			);
 
 			yield* atFx(
 				"2026-04-29T09:00:00.000Z",
-				createUserRestrictions(database, {
+				createUserRestrictionsFx(database, {
 					userId: user.id,
 					records: [
 						{
@@ -143,15 +143,15 @@ describe("user category restriction cooldown flow", () => {
 
 			const beforeFirstBoundary = yield* atFx(
 				"2026-04-29T09:29:59.999Z",
-				fetchVisibleRestrictions(user.id, categoryIdIn),
+				fetchVisibleRestrictionsFx(user.id, categoryIdIn),
 			);
 			const atRestrictedBoundary = yield* atFx(
 				"2026-04-29T09:30:00.000Z",
-				fetchVisibleRestrictions(user.id, categoryIdIn),
+				fetchVisibleRestrictionsFx(user.id, categoryIdIn),
 			);
 			const atReturnToNoneBoundary = yield* atFx(
 				"2026-04-29T10:30:00.000Z",
-				fetchVisibleRestrictions(user.id, categoryIdIn),
+				fetchVisibleRestrictionsFx(user.id, categoryIdIn),
 			);
 
 			expect(beforeFirstBoundary).toEqual([
@@ -168,6 +168,6 @@ describe("user category restriction cooldown flow", () => {
 			expect(atReturnToNoneBoundary).toEqual([
 				"none",
 			]);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

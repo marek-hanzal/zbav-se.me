@@ -9,9 +9,9 @@ export namespace GalleryUploadButton {
 			Pick<
 				GalleryUploadSheet.Props<TData, TResult>,
 				| "withMutation"
-				| "toMutation"
-				| "onSuccess"
-				| "onCancel"
+				| "toMutationFn"
+				| "onSuccessFn"
+				| "onCancelFn"
 				| "state"
 				| "limit"
 				| "access"
@@ -28,9 +28,9 @@ export namespace GalleryUploadButton {
  */
 export const GalleryUploadButton = <TData extends GalleryUploadSheet.Uploads, TResult>({
 	withMutation,
-	toMutation,
-	onSuccess,
-	onCancel,
+	toMutationFn,
+	onSuccessFn,
+	onCancelFn,
 	state,
 	defaultUploadIds,
 	limit,
@@ -41,7 +41,7 @@ export const GalleryUploadButton = <TData extends GalleryUploadSheet.Uploads, TR
 		<>
 			<Button
 				iconEnabled={PhotoIcon}
-				onClick={() => state.set((prev) => !prev)}
+				onClick={() => state.setFn((prev) => !prev)}
 				data-ui-tone="primary"
 				data-ui-theme="light"
 				data-ui-size="xl"
@@ -53,9 +53,9 @@ export const GalleryUploadButton = <TData extends GalleryUploadSheet.Uploads, TR
 
 			<GalleryUploadSheet
 				withMutation={withMutation}
-				toMutation={toMutation}
-				onSuccess={onSuccess}
-				onCancel={onCancel}
+				toMutationFn={toMutationFn}
+				onSuccessFn={onSuccessFn}
+				onCancelFn={onCancelFn}
 				state={state}
 				defaultUploadIds={defaultUploadIds}
 				limit={limit}

@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { dbFx } from "~/database/fx/dbFx";
 import { DateServiceFx } from "~/date/service/DateServiceFx";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { InvalidRequestErrorFx } from "~/server-error/error/InvalidRequestErrorFx";
 import { UploadConfigFx } from "~/user-upload/context/UploadConfigFx";
@@ -41,8 +41,8 @@ export const uploadCreateFx = Effect.fn("uploadCreateFx")(function* ({
 		});
 	}
 
-	const id = genId();
-	const now = dateService.now();
+	const id = genIdFn();
+	const now = dateService.nowFn();
 
 	yield* dbFx(async (kysely) => {
 		return kysely

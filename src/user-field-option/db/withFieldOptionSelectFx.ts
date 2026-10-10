@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { selectFx } from "~/database-query/fx/selectFx";
+import { selectFn } from "~/database-query/fn/selectFn";
 import type { FieldOptionSortSchema } from "~/user-field-option/schema/FieldOptionSortSchema";
 import type { FieldOptionWhereSchema } from "~/user-field-option/schema/FieldOptionWhereSchema";
 
@@ -26,7 +26,7 @@ export const withFieldOptionSelectFx = Effect.fn("withFieldOptionSelectFx")(func
 			.exhaustive();
 	}
 
-	return selectFx({
+	return selectFn({
 		select: query.select([
 			"fopt.fieldId",
 			"fopt.value",

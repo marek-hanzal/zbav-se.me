@@ -1,15 +1,15 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
 import { rateLimitCheckFx } from "~/rate-limit/fx/rateLimitCheckFx";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 
 describe("rateLimitCheckFx", () => {
 	it("allows requests up to the limit and rejects the next one with rule metadata", async () => {
-		const database = await testabase("rateLimitCheckFx-over-limit");
+		const database = await testabaseFn("rateLimitCheckFx-over-limit");
 		const fixedNow = DateTime.fromISO("2026-05-11T10:05:45.000Z");
 
 		return Effect.gen(function* () {
@@ -30,8 +30,8 @@ describe("rateLimitCheckFx", () => {
 					"user:1",
 				],
 			}).pipe(
-				withDateServiceFx({
-					now: () => fixedNow,
+				withDateServiceFn({
+					nowFn: () => fixedNow,
 				}),
 			);
 			const second = yield* rateLimitCheckFx({
@@ -40,8 +40,8 @@ describe("rateLimitCheckFx", () => {
 					"user:1",
 				],
 			}).pipe(
-				withDateServiceFx({
-					now: () => fixedNow,
+				withDateServiceFn({
+					nowFn: () => fixedNow,
 				}),
 			);
 			const third = yield* Effect.result(
@@ -51,8 +51,8 @@ describe("rateLimitCheckFx", () => {
 						"user:1",
 					],
 				}).pipe(
-					withDateServiceFx({
-						now: () => fixedNow,
+					withDateServiceFn({
+						nowFn: () => fixedNow,
 					}),
 				),
 			);
@@ -60,7 +60,7 @@ describe("rateLimitCheckFx", () => {
 			expect(first.count).toBe(1);
 			expect(second.count).toBe(2);
 
-			const error = expectTaggedErrorFx(third, {
+			const error = expectTaggedErrorFn(third, {
 				tag: "RateLimitErrorFx",
 				message: "Rate limit 'listing:contact' exceeded: 3/2 in 60s window",
 			}) as {
@@ -89,6 +89,6 @@ describe("rateLimitCheckFx", () => {
 
 			expect(rows).toHaveLength(1);
 			expect(rows[0]?.count).toBe(3);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

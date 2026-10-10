@@ -1,5 +1,5 @@
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withQuery } from "~/query/fn/withQuery";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withQueryFn } from "~/query/fn/withQueryFn";
 import { categoryAttrOfFn } from "~/user-category/fn/categoryAttrOfFn";
 
 export namespace withCategoryAttrOfQuery {
@@ -8,15 +8,15 @@ export namespace withCategoryAttrOfQuery {
 	}
 }
 
-export const withCategoryAttrOfQuery = withQuery({
-	logger: getRootLogger([
+export const withCategoryAttrOfQuery = withQueryFn({
+	logger: getRootLoggerFn([
 		"query",
 		"withCategoryAttrOfQuery",
 	]),
 	errors: {} as {
 		query: categoryAttrOfFn.Error;
 	},
-	keys(data: withCategoryAttrOfQuery.Data) {
+	keysFn(data: withCategoryAttrOfQuery.Data) {
 		return [
 			"category-attr-of",
 			data,

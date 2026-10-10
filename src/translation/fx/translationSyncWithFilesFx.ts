@@ -13,7 +13,7 @@ const TranslationSourceSchema = z.record(
 	}),
 );
 
-function* chunks<T>(items: readonly T[], size: number): Generator<readonly T[]> {
+function* chunksFn<T>(items: readonly T[], size: number): Generator<readonly T[]> {
 	if (size <= 0) {
 		throw new Error("Chunk size must be greater than 0");
 	}
@@ -49,7 +49,7 @@ export const translationSyncWithFilesFx = Effect.fn("translationSyncWithFilesFx"
 						TranslationSourceSchema.parse(parse(file.content)),
 					);
 
-					for (const chunk of chunks(content, 250)) {
+					for (const chunk of chunksFn(content, 250)) {
 						await kysely
 							.insertInto("translation")
 							.values(

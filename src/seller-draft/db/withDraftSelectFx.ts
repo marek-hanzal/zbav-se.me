@@ -2,8 +2,8 @@ import { Effect } from "effect";
 import { sql } from "kysely";
 import { match } from "ts-pattern";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { withContainsEx } from "~/database/fn/withContainsEx";
-import { selectFx } from "~/database-query/fx/selectFx";
+import { withContainsExFn } from "~/database/fn/withContainsExFn";
+import { selectFn } from "~/database-query/fn/selectFn";
 import type { DeliveryEnumSchema } from "~/delivery/schema/DeliveryEnumSchema";
 import { RestrictionEnumSchema } from "~/restriction/schema/RestrictionEnumSchema";
 import type { DraftSortSchema } from "~/seller-draft/schema/DraftSortSchema";
@@ -40,7 +40,7 @@ export const withDraftSelectFx = Effect.fn("withDraftSelectFx")(function* ({
 		userId,
 	});
 
-	return selectFx({
+	return selectFn({
 		select: query.select([
 			"d.id",
 			//
@@ -70,11 +70,13 @@ export const withDraftSelectFx = Effect.fn("withDraftSelectFx")(function* ({
 			"d.createdAt",
 			"d.updatedAt",
 			//
-			(eb) => {
-				return eb
+			(ebFn) => {
+				return ebFn
 					.selectFrom("location as loc")
-					.select((eb) => {
-						return sql<LocationSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("json");
+					.select((ebFn) => {
+						return sql<LocationSchema.Type>`to_jsonb(${ebFn.table("loc")}.*)`.as(
+							"json",
+						);
 					})
 					.whereRef("loc.id", "=", "d.locationId")
 					.limit(1)
@@ -83,33 +85,33 @@ export const withDraftSelectFx = Effect.fn("withDraftSelectFx")(function* ({
 					.as("location");
 			},
 			//
-			(eb) => {
+			(ebFn) => {
 				return sql<CategorySchema.Type>`
-                    to_jsonb(${eb.table("cat")}.*)
+                    to_jsonb(${ebFn.table("cat")}.*)
                     || jsonb_build_object(
                         'isRestricted',
-                        ${eb.ref("cat.restriction")} > ${restrictionSql}
+                        ${ebFn.ref("cat.restriction")} > ${restrictionSql}
                     )
                 `.as("category");
 			},
-			(eb) => {
-				return sql<string[]>`to_jsonb(${eb.ref("d.pros")})`.as("pros");
+			(ebFn) => {
+				return sql<string[]>`to_jsonb(${ebFn.ref("d.pros")})`.as("pros");
 			},
-			(eb) => {
-				return sql<string[]>`to_jsonb(${eb.ref("d.cons")})`.as("cons");
+			(ebFn) => {
+				return sql<string[]>`to_jsonb(${ebFn.ref("d.cons")})`.as("cons");
 			},
-			(eb) => {
-				return sql<DeliveryEnumSchema.Type[]>`to_jsonb(${eb.ref("d.delivery")})`.as(
+			(ebFn) => {
+				return sql<DeliveryEnumSchema.Type[]>`to_jsonb(${ebFn.ref("d.delivery")})`.as(
 					"delivery",
 				);
 			},
-			(eb) => {
-				return eb.fn
+			(ebFn) => {
+				return ebFn.fn
 					.coalesce(
 						sql<RestrictionEnumSchema.Type | null>`
                             greatest(
-                                ${eb.ref("cat.restriction")},
-                                ${eb.ref("d.restriction")}
+                                ${ebFn.ref("cat.restriction")},
+                                ${ebFn.ref("d.restriction")}
                             )
 			            `,
 						sql<RestrictionEnumSchema.Type>`${RestrictionEnumSchema.enum.none}::restriction_enum`,
@@ -137,22 +139,22 @@ export const withDraftSelectFx = Effect.fn("withDraftSelectFx")(function* ({
 				if (where.fulltext?.length) {
 					const fulltext = where.fulltext;
 
-					query = query.where((eb) => {
-						return eb.and(
+					query = query.where((ebFn) => {
+						return ebFn.and(
 							fulltext.map((term) => {
-								const categoryIdSelect = eb
+								const categoryIdSelect = ebFn
 									.selectFrom("category as cat")
 									.select("cat.id")
-									.where((eb) =>
-										eb.or([
-											withContainsEx(eb.ref("cat.category"), term),
-											withContainsEx(eb.ref("cat.group"), term),
+									.where((ebFn) =>
+										ebFn.or([
+											withContainsExFn(ebFn.ref("cat.category"), term),
+											withContainsExFn(ebFn.ref("cat.group"), term),
 										]),
 									);
 
-								return eb.or([
-									withContainsEx(eb.ref("d.title"), term),
-									eb("d.categoryId", "in", categoryIdSelect),
+								return ebFn.or([
+									withContainsExFn(ebFn.ref("d.title"), term),
+									ebFn("d.categoryId", "in", categoryIdSelect),
 								]);
 							}),
 						);

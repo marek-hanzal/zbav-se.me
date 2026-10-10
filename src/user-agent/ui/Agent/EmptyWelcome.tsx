@@ -2,7 +2,7 @@ import type { FC } from "react";
 import { useTranslator } from "~/translation/hook/useTranslator";
 import { Container } from "~/ui/ui/Container";
 import { Status } from "~/ui/ui/Status";
-import { AgentStreamItemsQuery } from "~/user-agent/query/AgentStreamItemsQuery";
+import { AgentStreamItemsQueryFn } from "~/user-agent/query/AgentStreamItemsQueryFn";
 import { withAgentStreamItemsQuery } from "~/user-agent/query/withAgentStreamItemsQuery";
 
 export namespace EmptyWelcome {
@@ -15,7 +15,7 @@ export namespace EmptyWelcome {
 export const EmptyWelcome: FC<EmptyWelcome.Props> = ({ threadId, isPending, ...props }) => {
 	const translator = useTranslator();
 	const { data: items } = withAgentStreamItemsQuery.useSuspenseQuery(
-		AgentStreamItemsQuery(threadId),
+		AgentStreamItemsQueryFn(threadId),
 	);
 
 	if (items.length || isPending) {
@@ -34,8 +34,8 @@ export const EmptyWelcome: FC<EmptyWelcome.Props> = ({ threadId, isPending, ...p
 				data-ui-tone={"brand"}
 				data-ui-theme={"light"}
 				icon={"icon-[solar--emoji-funny-square-linear]"}
-				textTitle={translator.text("Agent empty welcome (title)")}
-				textMessage={translator.text("Agent empty welcome (content)")}
+				textTitle={translator.textFn("Agent empty welcome (title)")}
+				textMessage={translator.textFn("Agent empty welcome (content)")}
 			/>
 		</Container>
 	);

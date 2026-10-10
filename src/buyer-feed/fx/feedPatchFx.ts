@@ -40,7 +40,7 @@ export const feedPatchFx = Effect.fn("feedPatchFx")(function* ({
 					.set({
 						...patch,
 						query: patch.query ? (JSON.stringify(patch.query) as any) : patch.query,
-						updatedAt: dateContext.now().toJSDate(),
+						updatedAt: dateContext.nowFn().toJSDate(),
 					})
 					.where("id", "=", feed.id)
 					.executeTakeFirst();

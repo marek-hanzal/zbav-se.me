@@ -1,11 +1,11 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { ignoreToggleFx } from "~/buyer-listing-ignore/fx/ignoreToggleFx";
-import { runToggleEntityErrorContractFx } from "~/test/@buyer/common/fx/runToggleEntityErrorContractFx";
+import { runToggleEntityErrorContractFn } from "~/test/@buyer/common/fx/runToggleEntityErrorContractFn";
 
 describe("ignoreToggleFx", () => {
 	it("invalid: seller cannot ignore own listing", async () => {
-		return runToggleEntityErrorContractFx({
+		return runToggleEntityErrorContractFn({
 			databaseName: "ignoreToggle-own-listing",
 			userSlug: "ignore-own",
 			expectedError: {

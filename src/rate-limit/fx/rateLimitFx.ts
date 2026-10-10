@@ -4,7 +4,7 @@ import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { RateLimitRuleTableSchema } from "~/database/schema/RateLimitRuleTableSchema";
 import { DateServiceFx } from "~/date/service/DateServiceFx";
 import { NotFoundErrorFx } from "~/error/error/NotFoundErrorFx";
-import { hash } from "~/hmac/fn/hash";
+import { hashFn } from "~/hmac/fn/hashFn";
 import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { getWindowFx } from "~/rate-limit/fx/getWindowFx";
 import type { RateLimitQuerySchema } from "~/rate-limit/schema/RateLimitQuerySchema";
@@ -59,12 +59,12 @@ export const rateLimitFx = Effect.fn("rateLimitFx")(function* ({ rule, key }: ra
 				limit: true,
 			}).parse(rateLimitRuleRow);
 
-			const hashedKey = hash({
+			const hashedKey = hashFn({
 				key,
 				secret: hmacConfig.SERVER_HMAC_SECRET,
 			});
 
-			const now = dateService.now();
+			const now = dateService.nowFn();
 
 			const window = yield* getWindowFx({
 				now,

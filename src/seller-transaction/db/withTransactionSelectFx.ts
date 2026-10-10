@@ -3,7 +3,7 @@ import { sql } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { selectFx } from "~/database-query/fx/selectFx";
+import { selectFn } from "~/database-query/fn/selectFn";
 import type { TransactionSortSchema } from "~/seller-transaction/schema/TransactionSortSchema";
 import type { TransactionWhereSchema } from "~/seller-transaction/schema/TransactionWhereSchema";
 import type { LocationSchema } from "~/session-location/schema/LocationSchema";
@@ -31,29 +31,29 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 			.with("updatedAt", () => select.orderBy("lt.updatedAt", item.order))
 			.with("expiresAt", () => select.orderBy("lt.expiresAt", item.order))
 			.with("lastAt", () => {
-				return select.orderBy((eb) => {
-					return eb.fn.coalesce(
-						eb
+				return select.orderBy((ebFn) => {
+					return ebFn.fn.coalesce(
+						ebFn
 							.selectFrom("transaction_entry as te")
 							.select("te.createdAt")
 							.whereRef("te.transactionId", "=", "lt.id")
-							.where((eb) => {
-								return eb.or([
-									eb("te.kind", "!=", "text"),
-									eb("lt.status", "!=", "interest"),
+							.where((ebFn) => {
+								return ebFn.or([
+									ebFn("te.kind", "!=", "text"),
+									ebFn("lt.status", "!=", "interest"),
 								]);
 							})
 							.orderBy("te.createdAt", "desc")
 							.limit(1)
 							.$asScalar(),
-						eb.ref("lt.updatedAt"),
+						ebFn.ref("lt.updatedAt"),
 					);
 				}, item.order);
 			})
 			.with("status", () => {
-				return select.orderBy((eb) => {
-					return eb
-						.case(eb.ref("lt.status"))
+				return select.orderBy((ebFn) => {
+					return ebFn
+						.case(ebFn.ref("lt.status"))
 						.when("interest")
 						.then(10)
 						.when("trade")
@@ -79,7 +79,7 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 			.exhaustive();
 	}
 
-	return selectFx({
+	return selectFn({
 		select: select
 			.selectAll("lt")
 			.select([
@@ -89,11 +89,13 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 				"l.priceType",
 				"l.currency",
 			])
-			.select((eb) => {
-				return eb
+			.select((ebFn) => {
+				return ebFn
 					.selectFrom("location as loc")
-					.select((eb) => {
-						return sql<LocationSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("json");
+					.select((ebFn) => {
+						return sql<LocationSchema.Type>`to_jsonb(${ebFn.table("loc")}.*)`.as(
+							"json",
+						);
 					})
 					.whereRef("loc.id", "=", "l.locationId")
 					.limit(1)
@@ -101,7 +103,7 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 					.$castTo<LocationSchema.Type>()
 					.as("location");
 			})
-			.select((eb) => {
+			.select((ebFn) => {
 				/**
 				 * Pick the latest seller-visible timeline entry for seller transaction previews.
 				 *
@@ -110,33 +112,33 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 				 * keeps the preview aligned with the main transaction-entry visibility gate while
 				 * still allowing non-text status entries to explain the current state.
 				 */
-				const lastActivitySelect = eb
+				const lastActivitySelect = ebFn
 					.selectFrom("transaction_entry as te")
 					.whereRef("te.transactionId", "=", "lt.id")
-					.where((eb) => {
-						return eb.or([
-							eb("te.kind", "!=", "text"),
-							eb("lt.status", "!=", "interest"),
+					.where((ebFn) => {
+						return ebFn.or([
+							ebFn("te.kind", "!=", "text"),
+							ebFn("lt.status", "!=", "interest"),
 						]);
 					})
 					.orderBy("te.createdAt", "desc")
 					.limit(1);
 
 				return [
-					eb.fn
+					ebFn.fn
 						.coalesce(
 							lastActivitySelect.select("te.createdAt").$asScalar(),
-							eb.ref("lt.updatedAt"),
+							ebFn.ref("lt.updatedAt"),
 						)
 						.as("lastAt"),
 					jsonObjectFrom(
 						lastActivitySelect
 							.selectAll("te")
 							.select("l.id as listingId")
-							.select((eb) => {
+							.select((ebFn) => {
 								return sql<TransactionEntryDirectionEnumSchema.Type>`case
-									when ${eb.ref("te.userId")} is null then ${TransactionEntryDirectionEnumSchema.enum.system}
-									when ${eb.ref("te.userId")} = ${eb.ref("l.userId")} then ${TransactionEntryDirectionEnumSchema.enum.out}
+									when ${ebFn.ref("te.userId")} is null then ${TransactionEntryDirectionEnumSchema.enum.system}
+									when ${ebFn.ref("te.userId")} = ${ebFn.ref("l.userId")} then ${TransactionEntryDirectionEnumSchema.enum.out}
 									else ${TransactionEntryDirectionEnumSchema.enum.in}
 								end`.as("direction");
 							}),
@@ -144,22 +146,22 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 						.$notNull()
 						.$castTo<TransactionEntrySchema.Type>()
 						.as("entry"),
-					eb.fn
+					ebFn.fn
 						.coalesce(
-							eb
+							ebFn
 								.selectFrom("activity as i")
 								.select(sql<number>`count(*)::int`.as("unread"))
 								.whereRef("i.userId", "=", "l.userId")
 								.where("i.family", "=", "transaction")
 								.where("i.type", "=", "buyer-message")
 								.where("i.archivedAt", "is", null)
-								.where((eb) => {
-									return sql<boolean>`${eb.ref("i.reference")} @> ARRAY[${eb.ref("lt.id")}]::text[]`;
+								.where((ebFn) => {
+									return sql<boolean>`${ebFn.ref("i.reference")} @> ARRAY[${ebFn.ref("lt.id")}]::text[]`;
 								}),
-							eb.lit(0),
+							ebFn.lit(0),
 						)
 						.as("unread"),
-					eb.ref("lt.status").$notNull().as("status"),
+					ebFn.ref("lt.status").$notNull().as("status"),
 				];
 			}),
 		queryFx(select, where: TransactionWhereSchema.Type) {
@@ -190,33 +192,33 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 					const activity = where.activity;
 
 					if (activity === "unread") {
-						query = query.where((eb) => {
-							return eb.exists(
-								eb
+						query = query.where((ebFn) => {
+							return ebFn.exists(
+								ebFn
 									.selectFrom("activity as i")
 									.select("i.id")
 									.whereRef("i.userId", "=", "l.userId")
 									.where("i.family", "=", "transaction")
 									.where("i.type", "=", "buyer-message")
 									.where("i.archivedAt", "is", null)
-									.where((eb) => {
-										return sql<boolean>`${eb.ref("i.reference")} @> ARRAY[${eb.ref("lt.id")}]::text[]`;
+									.where((ebFn) => {
+										return sql<boolean>`${ebFn.ref("i.reference")} @> ARRAY[${ebFn.ref("lt.id")}]::text[]`;
 									}),
 							);
 						});
 					} else if (activity === "archived") {
-						query = query.where((eb) => {
-							return eb.not(
-								eb.exists(
-									eb
+						query = query.where((ebFn) => {
+							return ebFn.not(
+								ebFn.exists(
+									ebFn
 										.selectFrom("activity as i")
 										.select("i.id")
 										.whereRef("i.userId", "=", "l.userId")
 										.where("i.family", "=", "transaction")
 										.where("i.type", "=", "buyer-message")
 										.where("i.archivedAt", "is", null)
-										.where((eb) => {
-											return sql<boolean>`${eb.ref("i.reference")} @> ARRAY[${eb.ref("lt.id")}]::text[]`;
+										.where((ebFn) => {
+											return sql<boolean>`${ebFn.ref("i.reference")} @> ARRAY[${ebFn.ref("lt.id")}]::text[]`;
 										}),
 								),
 							);

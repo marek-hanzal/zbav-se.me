@@ -1,5 +1,5 @@
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withEntityQuery } from "~/query/fn/withEntityQuery";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withEntityQueryFn } from "~/query/fn/withEntityQueryFn";
 import { draftCollectionFn } from "~/seller-draft/fn/draftCollectionFn";
 import { draftCountFn } from "~/seller-draft/fn/draftCountFn";
 import { draftCreateFn } from "~/seller-draft/fn/draftCreateFn";
@@ -14,8 +14,8 @@ import type { DraftSchema } from "~/seller-draft/schema/DraftSchema";
 import { withListingValidationQuery } from "~/seller-listing/query/withListingValidationQuery";
 import { withResourceLimitQuery } from "~/user-resource-limit/query/withResourceLimitQuery";
 
-export const withDraftQuery = withEntityQuery({
-	logger: getRootLogger([
+export const withDraftQuery = withEntityQueryFn({
+	logger: getRootLoggerFn([
 		"query",
 		"withDraftQuery",
 	]),
@@ -28,13 +28,13 @@ export const withDraftQuery = withEntityQuery({
 		delete: draftDeleteFn.Error;
 		patchCollection: Error;
 	},
-	keys() {
+	keysFn() {
 		return [
 			"seller",
 			"draft",
 		];
 	},
-	toIdKey(id): DraftQuerySchema.Type {
+	toIdKeyFn(id): DraftQuerySchema.Type {
 		return {
 			where: {
 				id,
@@ -77,13 +77,13 @@ export const withDraftQuery = withEntityQuery({
 	invalidate: {
 		patch: [
 			{
-				async invalidate({ queryClient }) {
-					await withListingValidationQuery.invalidate(queryClient);
+				async invalidateFn({ queryClient }) {
+					await withListingValidationQuery.invalidateFn(queryClient);
 				},
 			},
 			{
-				async invalidate({ queryClient }) {
-					await withResourceLimitQuery.invalidator(
+				async invalidateFn({ queryClient }) {
+					await withResourceLimitQuery.invalidatorFn(
 						queryClient,
 						[
 							"fetch",

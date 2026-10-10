@@ -1,6 +1,6 @@
 import type { FC, ReactNode, Ref } from "react";
 import { useId } from "react";
-import { uiInput } from "~/form/fn/uiInput";
+import { uiInputFn } from "~/form/fn/uiInputFn";
 import { FormError } from "~/form/ui/FormError";
 import { Container } from "~/ui/ui/Container";
 import { Typo } from "~/ui/ui/Typo";
@@ -9,7 +9,7 @@ export namespace FormField {
 	export type FieldError = any;
 
 	export namespace Render {
-		export interface Props extends uiInput.Component<{}> {
+		export interface Props extends uiInputFn.Component<{}> {
 			ref?: Ref<any>;
 			disabled: boolean;
 			id: string;
@@ -44,9 +44,9 @@ export const FormField: FC<FormField.Props> = (props) => {
 		required = false,
 		disabled = false,
 		meta,
-		children = ({ className, ...props }) => (
+		children: childrenFn = ({ className, ...props }) => (
 			<input
-				{...uiInput({
+				{...uiInputFn({
 					className,
 				})}
 				{...props}
@@ -102,7 +102,7 @@ export const FormField: FC<FormField.Props> = (props) => {
 				</Container>
 			) : null}
 
-			{children({
+			{childrenFn({
 				disabled,
 				id: id ?? localId,
 				meta,

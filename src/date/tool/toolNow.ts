@@ -1,10 +1,10 @@
 import { tool } from "@openai/agents-core";
 import { DateTime } from "luxon";
 import { z } from "zod";
-import { getRootLogger } from "~/log/fn/getRootLogger";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
 import type { withRunnerMiddleware } from "~/user-agent/middleware/withRunnerMiddleware";
 
-const logger = getRootLogger([
+const logger = getRootLoggerFn([
 	"tool",
 	"toolNow",
 ]);

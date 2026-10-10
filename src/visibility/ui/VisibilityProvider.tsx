@@ -1,13 +1,13 @@
 import type { FC, PropsWithChildren } from "react";
 import { VisibilityContext } from "~/visibility/context/VisibilityContext";
-import type { createVisibilityStore } from "~/visibility/fn/createVisibilityStore";
+import type { createVisibilityStoreFn } from "~/visibility/fn/createVisibilityStoreFn";
 
 export namespace VisibilityProvider {
 	export interface Props extends PropsWithChildren {
-		store: createVisibilityStore.Hook;
+		storeFn: createVisibilityStoreFn.Hook;
 	}
 }
 
-export const VisibilityProvider: FC<VisibilityProvider.Props> = ({ children, store }) => {
-	return <VisibilityContext value={store}>{children}</VisibilityContext>;
+export const VisibilityProvider: FC<VisibilityProvider.Props> = ({ children, storeFn }) => {
+	return <VisibilityContext value={storeFn}>{children}</VisibilityContext>;
 };

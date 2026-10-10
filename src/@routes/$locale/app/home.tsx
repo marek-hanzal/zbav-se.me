@@ -10,7 +10,7 @@ export const Route = createFileRoute("/$locale/app/home")({
 		return (
 			<TitleContainer
 				data-ui={"Home[TitleContainer]"}
-				textTitle={translator.text("zbav-se.me")}
+				textTitle={translator.textFn("zbav-se.me")}
 			>
 				<Suspense fallback={<HomeMenu.Fallback />}>
 					<HomeMenu _suspense={"I know"} />

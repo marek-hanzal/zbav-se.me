@@ -11,11 +11,11 @@ export namespace SetupScreen {
 		errors: Map<string, string>;
 		errorMessage: string | null;
 		focusField: FocusField;
-		onCountChange(value: string): void;
-		onCountSubmit(): void;
-		onSeedChange(seedId: string): void;
-		onUserEmailChange(value: string): void;
-		onUserEmailSubmit(): void;
+		onCountChangeFn(value: string): void;
+		onCountSubmitFn(): void;
+		onSeedChangeFn(seedId: string): void;
+		onUserEmailChangeFn(value: string): void;
+		onUserEmailSubmitFn(): void;
 		selectedSeedId: string;
 		seedOptions: Array<{
 			label: string;
@@ -30,11 +30,11 @@ export const SetupScreen: FC<SetupScreen.Props> = ({
 	errors,
 	errorMessage,
 	focusField,
-	onCountChange,
-	onCountSubmit,
-	onSeedChange,
-	onUserEmailChange,
-	onUserEmailSubmit,
+	onCountChangeFn,
+	onCountSubmitFn,
+	onSeedChangeFn,
+	onUserEmailChangeFn,
+	onUserEmailSubmitFn,
 	selectedSeedId,
 	seedOptions,
 	userEmailInput,
@@ -80,7 +80,7 @@ export const SetupScreen: FC<SetupScreen.Props> = ({
 						<Select
 							defaultValue={selectedSeedId}
 							options={seedOptions}
-							onChange={onSeedChange}
+							onChange={onSeedChangeFn}
 						/>
 					))
 					.otherwise(() => (
@@ -104,9 +104,9 @@ export const SetupScreen: FC<SetupScreen.Props> = ({
 							defaultValue={countInput}
 							placeholder={"How many listings?"}
 							onChange={(value) => {
-								onCountChange(value.replace(/[^0-9]/g, ""));
+								onCountChangeFn(value.replace(/[^0-9]/g, ""));
 							}}
-							onSubmit={onCountSubmit}
+							onSubmit={onCountSubmitFn}
 						/>
 					))
 					.otherwise(() => (
@@ -138,8 +138,8 @@ export const SetupScreen: FC<SetupScreen.Props> = ({
 						<EmailInput
 							defaultValue={userEmailInput}
 							placeholder={"b@x32.cz"}
-							onChange={onUserEmailChange}
-							onSubmit={onUserEmailSubmit}
+							onChange={onUserEmailChangeFn}
+							onSubmit={onUserEmailSubmitFn}
 						/>
 					))
 					.otherwise(() => (

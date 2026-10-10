@@ -3,7 +3,7 @@ import { match } from "ts-pattern";
 import { withTransactionQuery } from "~/buyer-transaction/query/withTransactionQuery";
 import { RejectedMessage } from "~/buyer-transaction/ui/RejectedMessage";
 import { TransactionMenu } from "~/buyer-transaction/ui/TransactionMenu";
-import { getRootLogger } from "~/log/fn/getRootLogger";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
 import { useTranslator } from "~/translation/hook/useTranslator";
 import { useRenderLogger } from "~/ui/hook/useRenderLogger";
 import type { MarkSuspense } from "~/ui/type/MarkSuspense";
@@ -22,7 +22,7 @@ export const TransactionInput: FC<TransactionInput.Props> = ({ _suspense, transa
 	const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId);
 
 	useRenderLogger({
-		logger: getRootLogger(),
+		logger: getRootLoggerFn(),
 		name: "TransactionInput",
 	});
 
@@ -35,7 +35,7 @@ export const TransactionInput: FC<TransactionInput.Props> = ({ _suspense, transa
 					data-ui-gap="default"
 				>
 					<RejectedMessage
-						close={() => {}}
+						closeFn={() => {}}
 						transaction={transaction}
 					/>
 				</Container>
@@ -47,24 +47,24 @@ export const TransactionInput: FC<TransactionInput.Props> = ({ _suspense, transa
 					transaction={transaction}
 					left={
 						<TransactionMenuButton>
-							{(close) => (
+							{(closeFn) => (
 								<TransactionMenu
-									close={close}
+									closeFn={closeFn}
 									transaction={transaction}
 								/>
 							)}
 						</TransactionMenuButton>
 					}
 					text={{
-						pending: translator.text("Transaction - send a message (placeholder)"),
-						open: translator.text("Transaction - send a message (placeholder)"),
-						dispute: translator.text(
+						pending: translator.textFn("Transaction - send a message (placeholder)"),
+						open: translator.textFn("Transaction - send a message (placeholder)"),
+						dispute: translator.textFn(
 							"Transaction - dispute - send a message (placeholder)",
 						),
-						resolved: translator.text(
+						resolved: translator.textFn(
 							"Transaction - resolved -send a message (placeholder)",
 						),
-						closed: translator.text("Chat - transaction closed (message)"),
+						closed: translator.textFn("Chat - transaction closed (message)"),
 					}}
 					data-ui-inner="default"
 				/>

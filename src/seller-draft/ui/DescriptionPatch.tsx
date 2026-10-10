@@ -2,7 +2,7 @@ import { type FC, useState } from "react";
 import { TitleContainer } from "~/application-ui/ui/container.exports";
 import { EditAction } from "~/application-ui/ui/EditAction";
 import { SaveContainer } from "~/container/ui/SaveContainer";
-import { uiInput } from "~/form/fn/uiInput";
+import { uiInputFn } from "~/form/fn/uiInputFn";
 import { FormField } from "~/form/ui/FormField";
 import { withDraftQuery } from "~/seller-draft/query/withDraftQuery";
 import type { DraftSchema } from "~/seller-draft/schema/DraftSchema";
@@ -19,22 +19,22 @@ const DESCRIPTION_MAX_LENGTH = 2048;
 export namespace DescriptionPatch {
 	export interface Props extends TitleContainer.Props {
 		draft: DraftSchema.Type;
-		onCancel(): void;
+		onCancelFn(): void;
 		view: useView.Use<"pros">;
 	}
 }
 
 export const DescriptionPatch: FC<DescriptionPatch.Props> = ({
 	draft,
-	onCancel,
+	onCancelFn,
 	view,
 	...props
 }) => {
 	const translator = useTranslator();
-	const [description, setDescription] = useState(draft.description ?? "");
+	const [description, setDescriptionFn] = useState(draft.description ?? "");
 	const mutation = withDraftQuery.usePatchMutation({
 		onSuccess() {
-			view.set("pros");
+			view.setFn("pros");
 		},
 		invalidate: [
 			"collection",
@@ -44,7 +44,7 @@ export const DescriptionPatch: FC<DescriptionPatch.Props> = ({
 	return (
 		<TitleContainer
 			data-ui={"DescriptionPatch"}
-			textTitle={translator.text("Description (title)")}
+			textTitle={translator.textFn("Description (title)")}
 			left={<EditAction />}
 			{...props}
 		>
@@ -61,12 +61,12 @@ export const DescriptionPatch: FC<DescriptionPatch.Props> = ({
 								<textarea
 									value={description}
 									onChange={(e) => {
-										setDescription(e.target.value);
+										setDescriptionFn(e.target.value);
 									}}
-									placeholder={translator.text("Description (placeholder)")}
+									placeholder={translator.textFn("Description (placeholder)")}
 									maxLength={DESCRIPTION_MAX_LENGTH}
 									rows={10}
-									{...uiInput({
+									{...uiInputFn({
 										className: [
 											"resize-none",
 											"outline-none",
@@ -88,8 +88,8 @@ export const DescriptionPatch: FC<DescriptionPatch.Props> = ({
 				</Status>
 
 				<SaveContainer
-					onCancel={onCancel}
-					onSave={() => {
+					onCancelFn={onCancelFn}
+					onSaveFn={() => {
 						mutation.mutate({
 							patch: {
 								description,

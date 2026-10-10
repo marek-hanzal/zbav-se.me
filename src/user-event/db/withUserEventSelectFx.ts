@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import { sql } from "kysely";
 import { match } from "ts-pattern";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { selectFx } from "~/database-query/fx/selectFx";
+import { selectFn } from "~/database-query/fn/selectFn";
 import type { UserEventSortSchema } from "~/user-event/schema/UserEventSortSchema";
 import type { UserEventWhereSchema } from "~/user-event/schema/UserEventWhereSchema";
 
@@ -27,7 +27,7 @@ export const withUserEventSelectFx = Effect.fn("withUserEventSelectFx")(function
 			.exhaustive();
 	}
 
-	return selectFx({
+	return selectFn({
 		select,
 		queryFx(select, where: UserEventWhereSchema.Type) {
 			return Effect.gen(function* () {

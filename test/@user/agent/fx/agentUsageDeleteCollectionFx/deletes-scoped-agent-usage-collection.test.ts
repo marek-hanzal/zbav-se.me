@@ -1,12 +1,12 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 import { agentUsageDeleteCollectionFx } from "~/user-agent/fx/agentUsageDeleteCollectionFx";
 
-const seedAgentUsage = async (
-	database: Awaited<ReturnType<typeof import("~/test/testabase").testabase>>,
+const seedAgentUsageFn = async (
+	database: Awaited<ReturnType<typeof import("~/test/testabaseFn").testabaseFn>>,
 	rows: Array<{
 		id: string;
 		userId: string;
@@ -33,13 +33,13 @@ const seedAgentUsage = async (
 
 describe("agentUsageDeleteCollectionFx", () => {
 	it("deletes only scoped agent usage items and returns the removed rows", async () => {
-		const database = await testabase("agentUsageDeleteCollectionFx-contract");
+		const database = await testabaseFn("agentUsageDeleteCollectionFx-contract");
 
 		return Effect.gen(function* () {
 			const { seller, stranger } = yield* createUsersFx({});
 
 			yield* Effect.promise(() =>
-				seedAgentUsage(database, [
+				seedAgentUsageFn(database, [
 					{
 						id: "agent-usage-alice-1",
 						userId: seller.id,
@@ -97,6 +97,6 @@ describe("agentUsageDeleteCollectionFx", () => {
 					id: "agent-usage-bob-1",
 				},
 			]);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

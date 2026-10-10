@@ -2,16 +2,16 @@ import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import { withCronFx } from "~/cron/fx/withCronFx";
-import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 const atFx = <A, E, R>(iso: string, eff: Effect.Effect<A, E, R>) =>
 	eff.pipe(
-		withDateServiceFx({
-			now: () =>
+		withDateServiceFn({
+			nowFn: () =>
 				DateTime.fromISO(iso, {
 					setZone: true,
 				}),
@@ -20,7 +20,7 @@ const atFx = <A, E, R>(iso: string, eff: Effect.Effect<A, E, R>) =>
 
 describe("withCronFx hourly", () => {
 	it("expires only live listings whose expiresAt is at or before the current time", async () => {
-		const database = await testabase("withCronFx-hourly-expire-listings");
+		const database = await testabaseFn("withCronFx-hourly-expire-listings");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -123,6 +123,6 @@ describe("withCronFx hourly", () => {
 					}),
 				]),
 			);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

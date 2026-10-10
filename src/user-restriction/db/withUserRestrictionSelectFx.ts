@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { selectFx } from "~/database-query/fx/selectFx";
+import { selectFn } from "~/database-query/fn/selectFn";
 import { DateServiceFx } from "~/date/service/DateServiceFx";
 import type { UserRestrictionSortSchema } from "~/user-restriction/schema/UserRestrictionSortSchema";
 import type { UserRestrictionWhereSchema } from "~/user-restriction/schema/UserRestrictionWhereSchema";
@@ -17,7 +17,7 @@ export const withUserRestrictionSelectFx = Effect.fn("withUserRestrictionSelectF
 }: withUserRestrictionSelectFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
 	const dateService = yield* DateServiceFx;
-	const now = dateService.now().toJSDate();
+	const now = dateService.nowFn().toJSDate();
 
 	let select = kysely.selectFrom("user_restriction as ur");
 
@@ -30,7 +30,7 @@ export const withUserRestrictionSelectFx = Effect.fn("withUserRestrictionSelectF
 			.exhaustive();
 	}
 
-	return selectFx({
+	return selectFn({
 		select: select
 			.select([
 				"ur.id",
@@ -39,17 +39,17 @@ export const withUserRestrictionSelectFx = Effect.fn("withUserRestrictionSelectF
 				"ur.availableAt",
 				"ur.expiresAt",
 			])
-			.select((eb) => {
-				return eb.fn
+			.select((ebFn) => {
+				return ebFn.fn
 					.coalesce(
-						eb.and([
-							eb("ur.availableAt", "<=", now),
-							eb.or([
-								eb("ur.expiresAt", "is", null),
-								eb("ur.expiresAt", ">", now),
+						ebFn.and([
+							ebFn("ur.availableAt", "<=", now),
+							ebFn.or([
+								ebFn("ur.expiresAt", "is", null),
+								ebFn("ur.expiresAt", ">", now),
 							]),
 						]),
-						eb.lit(false),
+						ebFn.lit(false),
 					)
 					.$castTo<boolean>()
 					.as("isAvailable");
@@ -57,7 +57,7 @@ export const withUserRestrictionSelectFx = Effect.fn("withUserRestrictionSelectF
 		queryFx(select, where: UserRestrictionWhereSchema.Type) {
 			return Effect.gen(function* () {
 				const dateService = yield* DateServiceFx;
-				const now = dateService.now().toJSDate();
+				const now = dateService.nowFn().toJSDate();
 
 				let query = select;
 
@@ -82,21 +82,21 @@ export const withUserRestrictionSelectFx = Effect.fn("withUserRestrictionSelectF
 				}
 
 				if (where.isAvailable === true) {
-					query = query.where("ur.availableAt", "<=", now).where((eb) => {
-						return eb.or([
-							eb("ur.expiresAt", "is", null),
-							eb("ur.expiresAt", ">", now),
+					query = query.where("ur.availableAt", "<=", now).where((ebFn) => {
+						return ebFn.or([
+							ebFn("ur.expiresAt", "is", null),
+							ebFn("ur.expiresAt", ">", now),
 						]);
 					});
 				}
 
 				if (where.isAvailable === false) {
-					query = query.where((eb) => {
-						return eb.or([
-							eb("ur.availableAt", ">", now),
-							eb.and([
-								eb("ur.expiresAt", "is not", null),
-								eb("ur.expiresAt", "<=", now),
+					query = query.where((ebFn) => {
+						return ebFn.or([
+							ebFn("ur.availableAt", ">", now),
+							ebFn.and([
+								ebFn("ur.expiresAt", "is not", null),
+								ebFn("ur.expiresAt", "<=", now),
 							]),
 						]);
 					});
@@ -133,10 +133,10 @@ export const withUserRestrictionSelectFx = Effect.fn("withUserRestrictionSelectF
 				}
 
 				if (where.isExpired === false) {
-					query = query.where((eb) => {
-						return eb.or([
-							eb("ur.expiresAt", "is", null),
-							eb("ur.expiresAt", ">", now),
+					query = query.where((ebFn) => {
+						return ebFn.or([
+							ebFn("ur.expiresAt", "is", null),
+							ebFn("ur.expiresAt", ">", now),
 						]);
 					});
 				}

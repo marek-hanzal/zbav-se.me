@@ -1,13 +1,13 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 import { agentThreadCreateSessionFx } from "~/user-agent/fx/agentThreadCreateSessionFx";
 
 describe("agentThreadCreateSessionFx", () => {
 	it("archives all user threads and creates a new active thread", async () => {
-		const database = await testabase("agentThreadCreateSessionFx-flow");
+		const database = await testabaseFn("agentThreadCreateSessionFx-flow");
 
 		return Effect.gen(function* () {
 			const { seller, stranger } = yield* createUsersFx({});
@@ -77,6 +77,6 @@ describe("agentThreadCreateSessionFx", () => {
 			expect(
 				rows.find((row) => row.id === "agent-thread-session-archived")?.archivedAt,
 			).toBeInstanceOf(Date);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

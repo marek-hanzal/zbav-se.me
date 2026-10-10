@@ -2,7 +2,7 @@ import { useMemo, useRef } from "react";
 import { withListingQuery } from "~/seller-listing/query/withListingQuery";
 import { Content } from "~/seller-listing/ui/ListingList/Content";
 import { Empty } from "~/seller-listing/ui/ListingList/Empty";
-import { withFallback } from "~/ui/fn/withFallback";
+import { withFallbackFn } from "~/ui/fn/withFallbackFn";
 import type { MarkSuspense } from "~/ui/type/MarkSuspense";
 import { Container } from "~/ui/ui/Container";
 import { EmptyState } from "~/ui/ui/EmptyState";
@@ -20,7 +20,7 @@ export namespace ListingList {
  * Builds the seller listing scroll container, wires visibility tracking, and loads data via suspense.
  * Use it as the main list body for seller listings when visibility-aware rendering is required.
  */
-export const ListingList = withFallback(({ _suspense, ...props }: ListingList.Props) => {
+export const ListingList = withFallbackFn(({ _suspense, ...props }: ListingList.Props) => {
 	const { data: collection } = withListingQuery.useCollectionQuery({
 		cursor: {
 			page: 0,
@@ -37,10 +37,10 @@ export const ListingList = withFallback(({ _suspense, ...props }: ListingList.Pr
 	const check = useMemo(() => {
 		return [
 			{
-				check() {
+				checkFn() {
 					return !collection.length;
 				},
-				render() {
+				renderFn() {
 					return <Empty />;
 				},
 			},
@@ -50,7 +50,7 @@ export const ListingList = withFallback(({ _suspense, ...props }: ListingList.Pr
 	]);
 
 	const scrollerRef = useRef<HTMLDivElement | null>(null);
-	const visible = useElementVisibility({
+	const visibleFn = useElementVisibility({
 		scrollerRef,
 		visible: {},
 		proximity: {
@@ -70,7 +70,7 @@ export const ListingList = withFallback(({ _suspense, ...props }: ListingList.Pr
 			{...props}
 		>
 			<EmptyState check={check}>
-				<VisibilityProvider store={visible}>
+				<VisibilityProvider storeFn={visibleFn}>
 					<Content
 						_suspense={_suspense}
 						collection={collection}

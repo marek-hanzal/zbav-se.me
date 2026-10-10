@@ -10,7 +10,7 @@ export namespace ChangePasswordButton {
 }
 
 export const ChangePasswordButton: FC<ChangePasswordButton.Props> = ({ ...props }) => {
-	const [isOpen, setIsOpen] = useState(false);
+	const [isOpen, setIsOpenFn] = useState(false);
 
 	return (
 		<>
@@ -26,7 +26,7 @@ export const ChangePasswordButton: FC<ChangePasswordButton.Props> = ({ ...props 
 				data-ui-size="default"
 				data-ui-width="full"
 				onClick={() => {
-					setIsOpen(true);
+					setIsOpenFn(true);
 				}}
 				{...props}
 			>
@@ -36,7 +36,7 @@ export const ChangePasswordButton: FC<ChangePasswordButton.Props> = ({ ...props 
 			<ChangePasswordSheet
 				state={{
 					value: isOpen,
-					set: setIsOpen,
+					setFn: setIsOpenFn,
 				}}
 			/>
 		</>

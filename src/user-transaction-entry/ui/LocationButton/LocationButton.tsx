@@ -13,31 +13,31 @@ import { Content } from "~/user-transaction-entry/ui/LocationButton/Content";
 
 export namespace LocationButton {
 	export interface Props extends Button.Props {
-		close: TransactionMenuButton.Close;
+		closeFn: TransactionMenuButton.Close;
 		transactionId: string;
-		onPostMutation?: () => Promise<void>;
+		onPostMutationFn?: () => Promise<void>;
 	}
 }
 
 export const LocationButton: FC<LocationButton.Props> = ({
-	close,
+	closeFn,
 	transactionId,
-	onPostMutation,
+	onPostMutationFn,
 	...props
 }) => {
 	const translator = useTranslator();
-	const [isOpen, setIsOpen] = useState(false);
-	const [locationId, setLocationId] = useState<string | undefined | null>(null);
-	const [location, setLocation] = useState<LocationSchema.Type | undefined>(undefined);
+	const [isOpen, setIsOpenFn] = useState(false);
+	const [locationId, setLocationIdFn] = useState<string | undefined | null>(null);
+	const [location, setLocationFn] = useState<LocationSchema.Type | undefined>(undefined);
 	const mutation = withTransactionEntryQuery.useCreateMutation({
 		invalidate: [
 			"collection",
 			"count",
 		],
-		async onPostMutation() {
-			await onPostMutation?.();
-			setIsOpen(false);
-			close();
+		async onPostMutationFn() {
+			await onPostMutationFn?.();
+			setIsOpenFn(false);
+			closeFn();
 		},
 	});
 
@@ -47,7 +47,7 @@ export const LocationButton: FC<LocationButton.Props> = ({
 				data-ui="LocationButton[Button]"
 				iconEnabled={LocationIcon}
 				onClick={() => {
-					setIsOpen(true);
+					setIsOpenFn(true);
 				}}
 				{...props}
 			>
@@ -57,29 +57,29 @@ export const LocationButton: FC<LocationButton.Props> = ({
 			<BottomSheet
 				isOpen={isOpen}
 				onClose={() => {
-					setIsOpen(false);
+					setIsOpenFn(false);
 				}}
 				detent={"default"}
 				withHeader
-				header={({ close }) => ({
-					title: translator.text("Share location (title)"),
-					right: <CloseButton onClick={close} />,
+				headerFn={({ closeFn }) => ({
+					title: translator.textFn("Share location (title)"),
+					right: <CloseButton onClick={closeFn} />,
 				})}
 			>
 				<Content
 					locationIdState={{
 						value: locationId,
-						set: setLocationId,
+						setFn: setLocationIdFn,
 					}}
 					locationState={{
 						value: location,
-						set: setLocation,
+						setFn: setLocationFn,
 					}}
 					loading={mutation.isPending}
-					onCancel={() => {
-						setIsOpen(false);
+					onCancelFn={() => {
+						setIsOpenFn(false);
 					}}
-					onSave={() => {
+					onSaveFn={() => {
 						if (!locationId || !location) {
 							return;
 						}

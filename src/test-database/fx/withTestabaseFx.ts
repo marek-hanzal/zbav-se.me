@@ -2,19 +2,19 @@ import { getLogger } from "@logtape/logtape";
 import { Effect } from "effect";
 import { PostgresDialect, sql } from "kysely";
 import { Pool } from "pg";
-import { withDatabaseName } from "~/database-query/fn/withDatabaseName";
+import { withDatabaseNameFn } from "~/database-query/fn/withDatabaseNameFn";
+import { withDialectFn } from "~/database-query/fn/withDialectFn";
 import { withDatabaseFx } from "~/database-query/fx/withDatabaseFx";
-import { withDialectFx } from "~/database-query/fx/withDialectFx";
 import type { DialectContextFx } from "~/database-query/service/DialectContextFx";
 import { MigrationContextFx } from "~/database-query/service/MigrationContextFx";
-import { ensureDocker } from "~/docker/fn/ensureDocker";
-import { rmImage } from "~/docker/fn/rmImage";
-import { runImage } from "~/docker/fn/runImage";
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { shOptional } from "~/shell/fn/shOptional";
-import { waitForConnect } from "~/test-database/fn/waitForConnect";
+import { ensureDockerFn } from "~/docker/fn/ensureDockerFn";
+import { rmImageFn } from "~/docker/fn/rmImageFn";
+import { runImageFn } from "~/docker/fn/runImageFn";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { shOptionalFn } from "~/shell/fn/shOptionalFn";
+import { waitForConnectFn } from "~/test-database/fn/waitForConnectFn";
 
-export namespace startPostgresContainer {
+export namespace startPostgresContainerFn {
 	export interface Props {
 		image: string;
 		name: string;
@@ -23,12 +23,12 @@ export namespace startPostgresContainer {
 	}
 }
 
-async function startPostgresContainer({ image, name, port, db }: startPostgresContainer.Props) {
-	rmImage({
+async function startPostgresContainerFn({ image, name, port, db }: startPostgresContainerFn.Props) {
+	rmImageFn({
 		image: name,
 	});
 
-	runImage({
+	runImageFn({
 		image,
 		name,
 		props: {
@@ -46,14 +46,14 @@ async function startPostgresContainer({ image, name, port, db }: startPostgresCo
 	});
 
 	try {
-		await waitForConnect(
-			withDatabaseName({
+		await waitForConnectFn(
+			withDatabaseNameFn({
 				dsn: `postgresql://postgres:postgres@127.0.0.1:${port}`,
 				name: db,
 			}),
 		);
 	} catch (error) {
-		const logs = shOptional([
+		const logs = shOptionalFn([
 			"docker",
 			"logs",
 			name,
@@ -77,7 +77,7 @@ export namespace withTestabaseFx {
 		port: number;
 		template: string;
 		databaseFx: Effect.Effect<withDatabaseFx.Instance<any>, never, DialectContextFx>;
-		onMigrate?: (database: withDatabaseFx.Instance<any>) => Promise<void>;
+		onMigrateFn?: (database: withDatabaseFx.Instance<any>) => Promise<void>;
 	}
 }
 
@@ -87,13 +87,13 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 	port,
 	template,
 	databaseFx,
-	onMigrate,
+	onMigrateFn,
 }: withTestabaseFx.Props) {
-	ensureDocker();
+	ensureDockerFn();
 	const root = "bootstrap";
 
 	yield* Effect.promise(async () => {
-		return startPostgresContainer({
+		return startPostgresContainerFn({
 			image,
 			name,
 			port,
@@ -105,14 +105,14 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 
 	yield* Effect.gen(function* () {
 		const { kysely } = yield* withDatabaseFx({
-			logger: getRootLogger([
+			logger: getRootLoggerFn([
 				"db",
 			]),
 		}).pipe(
-			withDialectFx(
+			withDialectFn(
 				new PostgresDialect({
 					pool: new Pool({
-						connectionString: withDatabaseName({
+						connectionString: withDatabaseNameFn({
 							dsn: dsn,
 							name: root,
 						}),
@@ -132,10 +132,10 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 
 	yield* Effect.gen(function* () {
 		const database = yield* databaseFx.pipe(
-			withDialectFx(
+			withDialectFn(
 				new PostgresDialect({
 					pool: new Pool({
-						connectionString: withDatabaseName({
+						connectionString: withDatabaseNameFn({
 							dsn: dsn,
 							name: template,
 						}),
@@ -144,11 +144,11 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 				}),
 			),
 		);
-		const { kysely, migrate } = database;
+		const { kysely, migrateFn } = database;
 
 		yield* Effect.promise(async () => {
-			await migrate();
-			await onMigrate?.(database);
+			await migrateFn();
+			await onMigrateFn?.(database);
 			await kysely.destroy();
 		});
 	});
@@ -157,10 +157,10 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 		const { kysely } = yield* withDatabaseFx({
 			logger: getLogger("test"),
 		}).pipe(
-			withDialectFx(
+			withDialectFn(
 				new PostgresDialect({
 					pool: new Pool({
-						connectionString: withDatabaseName({
+						connectionString: withDatabaseNameFn({
 							dsn: dsn,
 							name: "postgres",
 						}),
@@ -188,7 +188,7 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 	process.env.SERVER_DATABASE_URL = dsn;
 
 	return async () => {
-		rmImage({
+		rmImageFn({
 			image: name,
 		});
 	};

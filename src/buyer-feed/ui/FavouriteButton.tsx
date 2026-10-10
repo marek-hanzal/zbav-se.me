@@ -4,7 +4,7 @@ import { withFavouriteToggleMutation } from "~/buyer-listing-favourite/mutation/
 import { Tx } from "~/translation/ui/Tx";
 import { FavouriteIcon } from "~/ui/constant/FavouriteIcon";
 import { FavouriteOffIcon } from "~/ui/constant/FavouriteOffIcon";
-import { withFallback } from "~/ui/fn/withFallback";
+import { withFallbackFn } from "~/ui/fn/withFallbackFn";
 import type { MarkSuspense } from "~/ui/type/MarkSuspense";
 import { Button } from "~/ui/ui/Button";
 
@@ -16,7 +16,7 @@ export namespace FavouriteButton {
 	}
 }
 
-export const FavouriteButton = withFallback(
+export const FavouriteButton = withFallbackFn(
 	({ _suspense, feedId, listingId, meta, ...props }: FavouriteButton.Props) => {
 		const { data: listing } = withListingQuery.useFetchQuery(listingId);
 		const favouriteToggle = withFavouriteToggleMutation.useMutation({

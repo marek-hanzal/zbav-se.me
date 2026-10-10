@@ -8,15 +8,15 @@ import type { TransactionMenuButton } from "~/user-transaction/ui/TransactionMen
 
 export namespace CloseButton {
 	export interface Props extends Button.Props {
-		close: TransactionMenuButton.Close;
+		closeFn: TransactionMenuButton.Close;
 		transaction: TransactionSchema.Type;
 	}
 }
 
-export const CloseButton: FC<CloseButton.Props> = ({ close, transaction, ...props }) => {
+export const CloseButton: FC<CloseButton.Props> = ({ closeFn, transaction, ...props }) => {
 	const mutation = withTransactionCloseMutation.useMutation({
-		async onPostMutation() {
-			close();
+		async onPostMutationFn() {
+			closeFn();
 		},
 	});
 

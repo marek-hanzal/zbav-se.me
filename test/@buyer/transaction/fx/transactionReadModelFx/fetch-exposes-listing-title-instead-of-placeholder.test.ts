@@ -2,14 +2,14 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionCreateFx } from "~/buyer-transaction/fx/transactionCreateFx";
 import { transactionFetchFx } from "~/buyer-transaction/fx/transactionFetchFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
 describe("buyer transaction read model title", () => {
 	it("returns the listing title instead of a placeholder string", async () => {
-		const database = await testabase("buyer-transaction-read-model-title");
+		const database = await testabaseFn("buyer-transaction-read-model-title");
 
 		return Effect.gen(function* () {
 			const { seller, buyer } = yield* createUsersFx({});
@@ -31,6 +31,6 @@ describe("buyer transaction read model title", () => {
 			});
 
 			expect(fetched.title).toBe("Buyer transaction title fixture");
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

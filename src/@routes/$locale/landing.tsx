@@ -9,8 +9,8 @@ import { useTranslator } from "~/translation/hook/useTranslator";
 import { Tx } from "~/translation/ui/Tx";
 import { ChevronRightIcon } from "~/ui/constant/ChevronRightIcon";
 import { GitHubIcon } from "~/ui/constant/GitHubIcon";
-import { uiButton } from "~/ui/fn/uiButton";
-import { uiLinkTo } from "~/ui/fn/uiLinkTo";
+import { uiButtonFn } from "~/ui/fn/uiButtonFn";
+import { uiLinkToFn } from "~/ui/fn/uiLinkToFn";
 import { Container } from "~/ui/ui/Container";
 import { Icon } from "~/ui/ui/Icon";
 import { LinkTo } from "~/ui/ui/LinkTo";
@@ -48,7 +48,7 @@ export const Route = createFileRoute("/$locale/landing")({
 					</Container>
 
 					<Status
-						textTitle={translator.text("Landing - Hero (title)")}
+						textTitle={translator.textFn("Landing - Hero (title)")}
 						messageProps={{
 							className: "text-center",
 						}}
@@ -63,7 +63,7 @@ export const Route = createFileRoute("/$locale/landing")({
 						>
 							<LinkTo
 								data-action={"goto sign-in"}
-								{...uiButton({})}
+								{...uiButtonFn({})}
 								//
 								data-ui-tone={"secondary"}
 								data-ui-theme={"light"}
@@ -87,7 +87,7 @@ export const Route = createFileRoute("/$locale/landing")({
 
 							<LinkTo
 								data-action={"goto sign-up"}
-								{...uiButton({})}
+								{...uiButtonFn({})}
 								//
 								data-ui-tone={"primary"}
 								data-ui-theme={"light"}
@@ -136,8 +136,8 @@ export const Route = createFileRoute("/$locale/landing")({
 								fetchPriority={"low"}
 							/>
 						}
-						textTitle={translator.text("About me (title)")}
-						textMessage={translator.text("About me (message)")}
+						textTitle={translator.textFn("About me (title)")}
+						textMessage={translator.textFn("About me (message)")}
 						messageProps={{
 							"data-ui-color": "text",
 						}}
@@ -145,7 +145,7 @@ export const Route = createFileRoute("/$locale/landing")({
 							<a
 								href={"https://github.com/marek-hanzal/zbav-se.me"}
 								target={"blank"}
-								{...uiLinkTo({})}
+								{...uiLinkToFn({})}
 							>
 								<Icon
 									icon={GitHubIcon}

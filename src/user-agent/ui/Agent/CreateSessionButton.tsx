@@ -9,27 +9,27 @@ import { withAgentLiveQuery } from "~/user-agent/query/withAgentLiveQuery";
 
 export namespace CreateSessionButton {
 	export interface Props extends Button.Props {
-		onSuccess?(): Promise<void>;
+		onSuccessFn?(): Promise<void>;
 	}
 }
 
-export const CreateSessionButton: FC<CreateSessionButton.Props> = ({ onSuccess, ...props }) => {
+export const CreateSessionButton: FC<CreateSessionButton.Props> = ({ onSuccessFn, ...props }) => {
 	const locale = useLocale();
-	const liveQuery = withAgentLiveQuery.useSet();
-	const navigate = useNavigate();
+	const liveQueryFn = withAgentLiveQuery.useSet();
+	const navigateFn = useNavigate();
 	const mutation = withAgentThreadCreateSessionMutation.useMutation({
-		async onPostMutation({ result: thread }) {
-			liveQuery(() => [], {
+		async onPostMutationFn({ result: thread }) {
+			liveQueryFn(() => [], {
 				threadId: thread.id,
 			});
-			await navigate({
+			await navigateFn({
 				to: "/$locale/app/agent/$threadId",
 				params: {
 					locale,
 					threadId: thread.id,
 				},
 			});
-			await onSuccess?.();
+			await onSuccessFn?.();
 		},
 	});
 

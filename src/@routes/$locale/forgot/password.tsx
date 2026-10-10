@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate, useRouter } from "@tanstack/react-router"
 import { z } from "zod";
 import { useAppForm } from "~/application-ui/hook/form.exports";
 import { Logo } from "~/application-ui/ui/logo.exports";
-import { onSubmit } from "~/form/fn/onSubmit";
+import { onSubmitFn } from "~/form/fn/onSubmitFn";
 import { FormField } from "~/form/ui/FormField";
 import { useLocale } from "~/locale/hook/useLocale";
 import { useTranslator } from "~/translation/hook/useTranslator";
@@ -17,14 +17,14 @@ import { withPasswordResetRequestMutation } from "~/user-auth/mutation/withPassw
 export const Route = createFileRoute("/$locale/forgot/password")({
 	component() {
 		const locale = useLocale();
-		const navigate = useNavigate();
+		const navigateFn = useNavigate();
 		const router = useRouter();
 		const translator = useTranslator();
 		const schema = useFormSchema();
 
 		const mutation = withPasswordResetRequestMutation.useMutation({
-			async onPostMutation() {
-				await navigate({
+			async onPostMutationFn() {
+				await navigateFn({
 					to: "/$locale/forgot/sent",
 					params: {
 						locale,
@@ -41,8 +41,8 @@ export const Route = createFileRoute("/$locale/forgot/password")({
 				onMount: schema,
 				onSubmit: schema,
 			},
-			onSubmit: onSubmit({
-				map: async ({ values }) => {
+			onSubmit: onSubmitFn({
+				mapFn: async ({ values }) => {
 					const link = router.buildLocation({
 						to: "/$locale/reset-password/$token",
 						params: {
@@ -86,7 +86,7 @@ export const Route = createFileRoute("/$locale/forgot/password")({
 								<Logo />
 							</LinkTo>
 						}
-						textTitle={translator.text("Reset your password")}
+						textTitle={translator.textFn("Reset your password")}
 						data-ui-inner="default"
 					>
 						<form
@@ -111,7 +111,7 @@ export const Route = createFileRoute("/$locale/forgot/password")({
 												type={"email"}
 												autoComplete={"email"}
 												autoFocus
-												placeholder={translator.text("Enter your email")}
+												placeholder={translator.textFn("Enter your email")}
 												value={field.state.value ?? ""}
 												onBlur={field.handleBlur}
 												onChange={(e) => field.handleChange(e.target.value)}
@@ -188,7 +188,7 @@ const useFormSchema = () => {
 		.looseObject({
 			email: z.email({
 				error() {
-					return translator.text("Invalid email address");
+					return translator.textFn("Invalid email address");
 				},
 			}),
 		})

@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { CheckIcon } from "~/application-ui/constant/icon.exports";
-import { toTimeDiff } from "~/date/fn/toTimeDiff";
-import { useMaybeUpload } from "~/gallery/hook/useMaybeUpload";
+import { toTimeDiffFn } from "~/date/fn/toTimeDiffFn";
+import { getMaybeUploadFn } from "~/gallery/fn/getMaybeUploadFn";
 import { ListItem } from "~/list-item/ui/ListItem";
 import { useLocale } from "~/locale/hook/useLocale";
 import type { DraftSchema } from "~/seller-draft/schema/DraftSchema";
@@ -25,7 +25,7 @@ export const Item: FC<Item.Props> = ({ _suspense, draft, ...props }) => {
 	});
 
 	const locale = useLocale();
-	const hero = useMaybeUpload(draft.withImageUrl);
+	const hero = getMaybeUploadFn(draft.withImageUrl);
 
 	return (
 		<LinkTo
@@ -58,7 +58,7 @@ export const Item: FC<Item.Props> = ({ _suspense, draft, ...props }) => {
 				}
 				bottom={
 					<Typo
-						label={toTimeDiff({
+						label={toTimeDiffFn({
 							locale,
 							time: draft.updatedAt,
 						})}

@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { computeBuyerScore } from "~/seller-user-event/fx/userEventBuyerInfoFx";
+import { computeBuyerScoreFn } from "~/seller-user-event/fx/userEventBuyerInfoFx";
 
 describe("userEventBuyerInfoFx score derivation", () => {
 	it("scores stronger buyer inputs above mixed-quality inputs", () => {
-		const mixed = computeBuyerScore({
+		const mixed = computeBuyerScoreFn({
 			reaction: {
 				total: 6,
 				reactions: 4,
@@ -38,7 +38,7 @@ describe("userEventBuyerInfoFx score derivation", () => {
 			},
 		});
 
-		const improved = computeBuyerScore({
+		const improved = computeBuyerScoreFn({
 			reaction: {
 				total: 5,
 				reactions: 5,

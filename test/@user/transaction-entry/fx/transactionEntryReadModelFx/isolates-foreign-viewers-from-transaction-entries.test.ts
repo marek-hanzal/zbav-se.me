@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { transactionEntryCollectionFx } from "~/user-transaction-entry/fx/transactionEntryCollectionFx";
@@ -12,7 +12,7 @@ import { transactionEntryFetchFx } from "~/user-transaction-entry/fx/transaction
 
 describe("transactionEntry read model", () => {
 	it("isolates foreign viewers from transaction entries", async () => {
-		const database = await testabase("transactionEntryReadModelFx-foreign");
+		const database = await testabaseFn("transactionEntryReadModelFx-foreign");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -58,11 +58,11 @@ describe("transactionEntry read model", () => {
 				},
 			});
 
-			expectTaggedErrorFx(outsiderFetch, {
+			expectTaggedErrorFn(outsiderFetch, {
 				tag: "NotFoundErrorFx",
 			});
 			expect(outsiderCollection).toHaveLength(0);
 			expect(outsiderCount).toBe(0);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

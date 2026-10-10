@@ -1,10 +1,10 @@
 import { tool } from "@openai/agents";
 import { stringify } from "csv-stringify/sync";
 import { z } from "zod";
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { getKnowledgeIndex } from "~/user-knowledge/service/getKnowledgeIndex";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { getKnowledgeIndexFn } from "~/user-knowledge/service/getKnowledgeIndexFn";
 
-const logger = getRootLogger([
+const logger = getRootLoggerFn([
 	"knowledge",
 	"tool",
 	"toolKnowledgeBrowse",
@@ -36,7 +36,7 @@ Related topics are array of 'topicId'; fetch only when needed to get really deep
 		const _data = await InputSchema.parseAsync(input);
 
 		return stringify(
-			(await getKnowledgeIndex()).map(({ data }) => {
+			(await getKnowledgeIndexFn()).map(({ data }) => {
 				return {
 					topicId: data.key,
 					title: data.title,

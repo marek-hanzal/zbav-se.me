@@ -58,7 +58,7 @@ export const AttrRecommended: FC<AttrRecommended.Props> = ({ draftId, categoryId
 								}}
 								action={<ChevronAction />}
 								onClick={() => {
-									view.set(`attr.${field.name}`);
+									view.setFn(`attr.${field.name}`);
 								}}
 							/>
 						</Group>

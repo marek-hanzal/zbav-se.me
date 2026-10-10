@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
 import type { UserEventTableSchema } from "~/database/schema/UserEventTableSchema";
 
-const createSellerTerminalRatioEvent = (
+const createSellerTerminalRatioEventFn = (
 	id: string,
 	createdAt: DateTime,
 	event: UserEventTableSchema.Type["event"],
@@ -21,12 +21,12 @@ const createSellerTerminalRatioEvent = (
 	createdAt: createdAt.toJSDate(),
 });
 
-export const createSellerTerminalRatioSource = () => {
+export const createSellerTerminalRatioSourceFn = () => {
 	const base = DateTime.fromISO("2026-01-01T10:00:00.000Z");
 
 	return [
-		createSellerTerminalRatioEvent("1", base, "transaction.create", "foreign", "tx-1"),
-		createSellerTerminalRatioEvent(
+		createSellerTerminalRatioEventFn("1", base, "transaction.create", "foreign", "tx-1"),
+		createSellerTerminalRatioEventFn(
 			"2",
 			base.plus({
 				hours: 1,
@@ -35,7 +35,7 @@ export const createSellerTerminalRatioSource = () => {
 			"user",
 			"tx-1",
 		),
-		createSellerTerminalRatioEvent(
+		createSellerTerminalRatioEventFn(
 			"3",
 			base.plus({
 				days: 1,
@@ -44,7 +44,7 @@ export const createSellerTerminalRatioSource = () => {
 			"user",
 			"tx-1",
 		),
-		createSellerTerminalRatioEvent(
+		createSellerTerminalRatioEventFn(
 			"4",
 			base.plus({
 				days: 10,
@@ -53,7 +53,7 @@ export const createSellerTerminalRatioSource = () => {
 			"foreign",
 			"tx-2",
 		),
-		createSellerTerminalRatioEvent(
+		createSellerTerminalRatioEventFn(
 			"5",
 			base.plus({
 				days: 11,
@@ -62,7 +62,7 @@ export const createSellerTerminalRatioSource = () => {
 			"user",
 			"tx-2",
 		),
-		createSellerTerminalRatioEvent(
+		createSellerTerminalRatioEventFn(
 			"6",
 			base.plus({
 				days: 20,
@@ -71,7 +71,7 @@ export const createSellerTerminalRatioSource = () => {
 			"foreign",
 			"tx-3",
 		),
-		createSellerTerminalRatioEvent(
+		createSellerTerminalRatioEventFn(
 			"7",
 			base.plus({
 				days: 20,
@@ -81,7 +81,7 @@ export const createSellerTerminalRatioSource = () => {
 			"user",
 			"tx-3",
 		),
-		createSellerTerminalRatioEvent(
+		createSellerTerminalRatioEventFn(
 			"8",
 			base.plus({
 				days: 22,
@@ -90,7 +90,7 @@ export const createSellerTerminalRatioSource = () => {
 			"user",
 			"tx-3",
 		),
-		createSellerTerminalRatioEvent(
+		createSellerTerminalRatioEventFn(
 			"9",
 			base.plus({
 				days: 30,
@@ -99,7 +99,7 @@ export const createSellerTerminalRatioSource = () => {
 			"foreign",
 			"tx-4",
 		),
-		createSellerTerminalRatioEvent(
+		createSellerTerminalRatioEventFn(
 			"10",
 			base.plus({
 				days: 33,
@@ -108,7 +108,7 @@ export const createSellerTerminalRatioSource = () => {
 			"foreign",
 			"tx-4",
 		),
-		createSellerTerminalRatioEvent(
+		createSellerTerminalRatioEventFn(
 			"11",
 			base.plus({
 				days: 40,
@@ -117,7 +117,7 @@ export const createSellerTerminalRatioSource = () => {
 			"foreign",
 			"tx-5",
 		),
-		createSellerTerminalRatioEvent(
+		createSellerTerminalRatioEventFn(
 			"12",
 			base.plus({
 				days: 42,
@@ -126,7 +126,7 @@ export const createSellerTerminalRatioSource = () => {
 			"user",
 			"tx-5",
 		),
-		createSellerTerminalRatioEvent(
+		createSellerTerminalRatioEventFn(
 			"13",
 			base.plus({
 				days: 50,
@@ -135,7 +135,7 @@ export const createSellerTerminalRatioSource = () => {
 			"foreign",
 			"tx-6",
 		),
-		createSellerTerminalRatioEvent(
+		createSellerTerminalRatioEventFn(
 			"14",
 			base.plus({
 				days: 50,
@@ -145,7 +145,7 @@ export const createSellerTerminalRatioSource = () => {
 			"user",
 			"tx-6",
 		),
-		createSellerTerminalRatioEvent(
+		createSellerTerminalRatioEventFn(
 			"15",
 			base.plus({
 				days: 51,

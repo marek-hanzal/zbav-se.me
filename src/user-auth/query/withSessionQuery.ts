@@ -1,13 +1,13 @@
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withQuery } from "~/query/fn/withQuery";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withQueryFn } from "~/query/fn/withQueryFn";
 import { getSessionFn } from "~/user-auth/fn/getSessionFn";
 
-export const withSessionQuery = withQuery({
-	logger: getRootLogger([
+export const withSessionQuery = withQueryFn({
+	logger: getRootLoggerFn([
 		"query",
 		"withSessionQuery",
 	]),
-	keys() {
+	keysFn() {
 		return [
 			"session",
 			"server",

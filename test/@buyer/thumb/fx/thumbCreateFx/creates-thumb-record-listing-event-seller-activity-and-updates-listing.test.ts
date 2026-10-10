@@ -1,14 +1,14 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { thumbCreateFx } from "~/buyer-thumb/fx/thumbCreateFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("thumbCreateFx", () => {
 	it("creates thumb record, listing event, seller activity and returns listing with thumb", async () => {
-		const database = await testabase("thumbCreate-side-effects");
+		const database = await testabaseFn("thumbCreate-side-effects");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -77,6 +77,6 @@ describe("thumbCreateFx", () => {
 				listingId: listing.id,
 				thumb: "like",
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

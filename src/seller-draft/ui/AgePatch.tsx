@@ -16,16 +16,16 @@ import type { useView } from "~/view/hook/useView";
 export namespace AgePatch {
 	export interface Props extends TitleContainer.Props {
 		draft: DraftSchema.Type;
-		onCancel(): void;
+		onCancelFn(): void;
 		view: useView.Use<"restriction" | "default">;
 	}
 }
 
-export const AgePatch: FC<AgePatch.Props> = ({ draft, onCancel, view, ...props }) => {
+export const AgePatch: FC<AgePatch.Props> = ({ draft, onCancelFn, view, ...props }) => {
 	const translator = useTranslator();
 	const mutation = withDraftQuery.usePatchMutation({
 		onSuccess() {
-			view.set(draft.categoryId ? "restriction" : "default");
+			view.setFn(draft.categoryId ? "restriction" : "default");
 		},
 		invalidate: [
 			"collection",
@@ -45,13 +45,13 @@ export const AgePatch: FC<AgePatch.Props> = ({ draft, onCancel, view, ...props }
 		],
 	});
 
-	const itemId = selection.optional.singleId();
+	const itemId = selection.optional.singleIdFn();
 	const age = itemId ? Number.parseInt(itemId, 10) : null;
 
 	return (
 		<TitleContainer
 			data-ui={"AgePatch"}
-			textTitle={translator.text("Age (title)")}
+			textTitle={translator.textFn("Age (title)")}
 			left={<EditAction />}
 			{...props}
 		>
@@ -65,8 +65,8 @@ export const AgePatch: FC<AgePatch.Props> = ({ draft, onCancel, view, ...props }
 				<AgeSelection selection={selection} />
 
 				<SaveContainer
-					onCancel={onCancel}
-					onSave={() => {
+					onCancelFn={onCancelFn}
+					onSaveFn={() => {
 						mutation.mutate({
 							patch: {
 								age,

@@ -2,10 +2,10 @@ import type { ComponentProps, FC } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { HeroImage } from "~/application-ui/ui/img.exports";
-import type { uiButton } from "~/ui/fn/uiButton";
-import { uiContainer } from "~/ui/fn/uiContainer";
-import { uiLinkTo } from "~/ui/fn/uiLinkTo";
-import { uiMarkdown } from "~/ui/fn/uiMarkdown";
+import type { uiButtonFn } from "~/ui/fn/uiButtonFn";
+import { uiContainerFn } from "~/ui/fn/uiContainerFn";
+import { uiLinkToFn } from "~/ui/fn/uiLinkToFn";
+import { uiMarkdownFn } from "~/ui/fn/uiMarkdownFn";
 import { Container } from "~/ui/ui/Container";
 import { Group } from "~/ui/ui/Group";
 import { Typo } from "~/ui/ui/Typo";
@@ -14,13 +14,13 @@ export namespace Markdown {
 	export interface Components {
 		h1?: Typo.PropsEx;
 		h2?: Typo.PropsEx;
-		a?: uiButton.Component<{}>;
+		a?: uiButtonFn.Component<{}>;
 		p?: Container.Props;
 		strong?: Typo.PropsEx;
 	}
 
 	export interface Props
-		extends uiMarkdown.Component<Omit<ComponentProps<typeof ReactMarkdown>, "components">> {
+		extends uiMarkdownFn.Component<Omit<ComponentProps<typeof ReactMarkdown>, "components">> {
 		components?: Components;
 	}
 }
@@ -31,7 +31,7 @@ export const Markdown: FC<Markdown.Props> = ({ className, components, ...props }
 	 */
 	return (
 		<div
-			{...uiMarkdown({
+			{...uiMarkdownFn({
 				className,
 			})}
 		>
@@ -67,7 +67,7 @@ export const Markdown: FC<Markdown.Props> = ({ className, components, ...props }
 								{...props}
 								target="_blank"
 								rel="noopener noreferrer"
-								{...uiLinkTo({
+								{...uiLinkToFn({
 									"data-ui-wrap": true,
 									...components?.a,
 								})}
@@ -97,7 +97,7 @@ export const Markdown: FC<Markdown.Props> = ({ className, components, ...props }
 					blockquote({ children }) {
 						return (
 							<blockquote
-								{...uiContainer({
+								{...uiContainerFn({
 									className: [],
 								})}
 							>
@@ -119,7 +119,7 @@ export const Markdown: FC<Markdown.Props> = ({ className, components, ...props }
 					hr() {
 						return (
 							<div
-								{...uiContainer({
+								{...uiContainerFn({
 									"data-ui-background": "default",
 									className: [
 										"border-t",

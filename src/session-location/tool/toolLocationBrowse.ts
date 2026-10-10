@@ -1,11 +1,11 @@
 import { tool } from "@openai/agents";
 import { stringify } from "csv-stringify/sync";
-import { ofGoogleMap } from "~/coordinate/fn/ofGoogleMap";
-import { getRootLogger } from "~/log/fn/getRootLogger";
+import { ofGoogleMapFn } from "~/coordinate/fn/ofGoogleMapFn";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
 import { locationAutocompleteFn } from "~/session-location/fn/locationAutocompleteFn";
 import { LocationAutocompleteSchema } from "~/session-location/schema/LocationAutocompleteSchema";
 
-const logger = getRootLogger([
+const logger = getRootLoggerFn([
 	"tool",
 	"toolLocationBrowse",
 ]);
@@ -49,7 +49,7 @@ or a location id. Return compact candidates; do not guess an id when multiple ca
 				address: item.address,
 				lat: item.lat,
 				lon: item.lon,
-				google: ofGoogleMap({
+				google: ofGoogleMapFn({
 					latLon: item,
 				}),
 			})),

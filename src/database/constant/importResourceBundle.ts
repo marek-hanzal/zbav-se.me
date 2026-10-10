@@ -2,18 +2,18 @@ import type { ResourceBundleTableSchema } from "~/database/schema/ResourceBundle
 import type { Database } from "~/database/type/Database";
 import { bundles } from "~/database-migration/constant/bundles";
 import type { withDatabaseFx } from "~/database-query/fx/withDatabaseFx";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import { ResourceBundleEnumSchema } from "~/user-resource-bundle/schema/ResourceBundleEnumSchema";
 
 export const importResourceBundle: withDatabaseFx.Import<Database> = {
 	name: "resource-bundle",
-	async run({ kysely }) {
+	async runFn({ kysely }) {
 		return kysely
 			.insertInto("resource_bundle")
 			.values(
 				ResourceBundleEnumSchema.options.map(
 					(name): ResourceBundleTableSchema.Type => ({
-						id: genId(),
+						id: genIdFn(),
 						name,
 						type: bundles[name].type,
 						access: bundles[name].access,

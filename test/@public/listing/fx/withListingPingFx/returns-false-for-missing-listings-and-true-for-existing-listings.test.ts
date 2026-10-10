@@ -1,14 +1,14 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { withListingPingFx } from "~/public-listing/fx/withListingPingFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
 describe("withListingPingFx", () => {
 	it("returns false for missing listings and true for existing listings", async () => {
-		const database = await testabase("withListingPingFx-exists");
+		const database = await testabaseFn("withListingPingFx-exists");
 
 		return Effect.gen(function* () {
 			const { seller } = yield* createUsersFx({});
@@ -25,6 +25,6 @@ describe("withListingPingFx", () => {
 
 			expect(existing).toBe(true);
 			expect(missing).toBe(false);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

@@ -9,7 +9,7 @@ import { withTransactionEntryQuery } from "~/user-transaction-entry/query/withTr
 
 export namespace TransactionChat {
 	export interface Hooks {
-		onPostMutation?(): Promise<void>;
+		onPostMutationFn?(): Promise<void>;
 	}
 
 	export interface Text {
@@ -45,12 +45,12 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 			"collection",
 			"count",
 		],
-		async onPostMutation() {
-			await hooks?.onPostMutation?.();
+		async onPostMutationFn() {
+			await hooks?.onPostMutationFn?.();
 		},
 	});
 
-	const submit = useCallback(
+	const submitFn = useCallback(
 		async (message: string) => {
 			await messageMutation.mutateAsync({
 				transactionId: transaction.id,
@@ -78,7 +78,7 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 				.with("interest", () => {
 					return (
 						<ChatInput
-							onSubmit={submit}
+							onSubmitFn={submitFn}
 							placeholder={text.pending}
 							loading={messageMutation.isPending}
 							disableInput={messageMutation.isPending}
@@ -90,7 +90,7 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 				.with("trade", () => {
 					return (
 						<ChatInput
-							onSubmit={submit}
+							onSubmitFn={submitFn}
 							placeholder={text.open}
 							loading={messageMutation.isPending}
 							disableInput={messageMutation.isPending}
@@ -122,7 +122,7 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 				.with("dispute", () => {
 					return (
 						<ChatInput
-							onSubmit={submit}
+							onSubmitFn={submitFn}
 							placeholder={text.dispute}
 							loading={messageMutation.isPending}
 							disableInput={messageMutation.isPending}

@@ -2,7 +2,7 @@ import { withListingSellerInfoQuery } from "~/buyer-listing/query/withListingSel
 import { RatingIcon } from "~/score/ui/RatingIcon";
 import { useTranslator } from "~/translation/hook/useTranslator";
 import { ShowIcon } from "~/ui/constant/ShowIcon";
-import { withFallback } from "~/ui/fn/withFallback";
+import { withFallbackFn } from "~/ui/fn/withFallbackFn";
 import type { MarkSuspense } from "~/ui/type/MarkSuspense";
 import { Icon } from "~/ui/ui/Icon";
 import { LabelValue } from "~/ui/ui/LabelValue";
@@ -15,7 +15,7 @@ export namespace SellerInfoPreview {
 	}
 }
 
-export const SellerInfoPreview = withFallback(
+export const SellerInfoPreview = withFallbackFn(
 	({ _suspense, listingId, view }: SellerInfoPreview.Props) => {
 		const translator = useTranslator();
 		const { data: sellerInfo } = withListingSellerInfoQuery.useSuspenseQuery({
@@ -26,13 +26,13 @@ export const SellerInfoPreview = withFallback(
 			<LabelValue
 				data-ui={"SellerInfoPreview[LabelValue]"}
 				data-action={"open seller info"}
-				textLabel={translator.text("Listing seller hint (label)")}
+				textLabel={translator.textFn("Listing seller hint (label)")}
 				textValue={
 					sellerInfo.events ? <RatingIcon rating={sellerInfo.events.score.rank} /> : null
 				}
-				textEmpty={translator.text("Listing seller info not available (empty)")}
+				textEmpty={translator.textFn("Listing seller info not available (empty)")}
 				action={<Icon icon={ShowIcon} />}
-				onClick={() => view.set("seller-info")}
+				onClick={() => view.setFn("seller-info")}
 			/>
 		);
 	},
@@ -42,7 +42,7 @@ export const SellerInfoPreview = withFallback(
 		return (
 			<LabelValue
 				data-ui={"SellerInfoPreview[LabelValue.pending]"}
-				textLabel={translator.text("Listing seller hint (label)")}
+				textLabel={translator.textFn("Listing seller hint (label)")}
 				textValue={null}
 				action={<Icon icon={ShowIcon} />}
 				{...props}

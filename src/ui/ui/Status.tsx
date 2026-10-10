@@ -1,13 +1,13 @@
 import type { ComponentProps, FC, ReactNode } from "react";
 import { Mx } from "~/translation/ui/Mx";
 import { Tx } from "~/translation/ui/Tx";
-import { uiStatus } from "~/ui/fn/uiStatus";
+import { uiStatusFn } from "~/ui/fn/uiStatusFn";
 import { Container } from "~/ui/ui/Container";
 import { Icon } from "~/ui/ui/Icon";
 import type { Typo } from "~/ui/ui/Typo";
 
 export namespace Status {
-	export interface Props extends uiStatus.Component<ComponentProps<"div">> {
+	export interface Props extends uiStatusFn.Component<ComponentProps<"div">> {
 		/**
 		 * Translation key for the title text.
 		 */
@@ -43,7 +43,7 @@ export const Status: FC<Status.Props> = ({
 }) => {
 	return (
 		<div
-			{...uiStatus({
+			{...uiStatusFn({
 				className,
 			})}
 			{...props}

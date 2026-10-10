@@ -24,7 +24,7 @@ const UploadPending: FC<{
 			<Status
 				data-ui={"PhotoUpload-[Status.spinner]"}
 				icon={SpinnerIcon}
-				textTitle={translator.text("Uploading photo (title)")}
+				textTitle={translator.textFn("Uploading photo (title)")}
 				action={
 					<Progress
 						value={progress * 100}
@@ -45,8 +45,8 @@ export namespace PhotoUpload {
 		camera?: boolean;
 		value: useController.Value;
 		access: AccessEnumSchema.Type;
-		onChange: useController.OnChangeFn;
-		onUpload?: useController.OnUploadFn;
+		onChangeFn: useController.OnChangeFn;
+		onUploadFn?: useController.OnUploadFn;
 		mutationId?: string;
 	}
 }
@@ -61,16 +61,16 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 	camera = false,
 	value,
 	access,
-	onChange,
-	onUpload,
+	onChangeFn,
+	onUploadFn,
 	mutationId,
 	"data-ui-disabled": dataUiDisabled,
 	...props
 }) => {
 	const controller = useController({
-		onChange,
+		onChangeFn,
 		access,
-		onUpload,
+		onUploadFn,
 		mutationId,
 	});
 	const isDisabled = controller.isPending || dataUiDisabled || undefined;
@@ -89,8 +89,8 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 			data-ui-disabled={isDisabled}
 			data-ui-width="full"
 			data-ui-height="full"
-			onClick={controller.pick}
-			onKeyDown={controller.onKeyDown}
+			onClick={controller.pickFn}
+			onKeyDown={controller.onKeyDownFn}
 			{...props}
 		>
 			<input
@@ -101,7 +101,7 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 				accept="image/*"
 				capture={camera ? "environment" : undefined}
 				className="sr-only"
-				onChange={controller.onUpload}
+				onChange={controller.onUploadFn}
 			/>
 
 			{controller.isPending ? <UploadPending progress={controller.progress} /> : null}

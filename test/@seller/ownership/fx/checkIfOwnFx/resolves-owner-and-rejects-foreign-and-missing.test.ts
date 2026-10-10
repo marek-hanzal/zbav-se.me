@@ -3,15 +3,15 @@ import { describe, expect, it } from "vitest";
 import { draftCheckIfOwnFx } from "~/seller-draft/fx/draftCheckIfOwnFx";
 import { draftCreateFx } from "~/seller-draft/fx/draftCreateFx";
 import { listingCheckIfOwnFx } from "~/seller-listing/fx/listingCheckIfOwnFx";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
 describe("seller ownership helpers", () => {
 	it("return the owner id and reject foreign or missing draft/listing access", async () => {
-		const database = await testabase("seller-ownership-helpers");
+		const database = await testabaseFn("seller-ownership-helpers");
 
 		return Effect.gen(function* () {
 			const users = yield* createUsersFx({});
@@ -58,23 +58,23 @@ describe("seller ownership helpers", () => {
 			);
 
 			expect(ownDraftUserId).toBe(users.seller.id);
-			expectTaggedErrorFx(foreignDraft, {
+			expectTaggedErrorFn(foreignDraft, {
 				tag: "NotFoundErrorFx",
 				message: "Draft not found",
 			});
-			expectTaggedErrorFx(missingDraft, {
+			expectTaggedErrorFn(missingDraft, {
 				tag: "NotFoundErrorFx",
 				message: "Draft not found",
 			});
 			expect(ownListingUserId).toBe(users.seller.id);
-			expectTaggedErrorFx(foreignListing, {
+			expectTaggedErrorFn(foreignListing, {
 				tag: "NotFoundErrorFx",
 				message: "Listing not found",
 			});
-			expectTaggedErrorFx(missingListing, {
+			expectTaggedErrorFn(missingListing, {
 				tag: "NotFoundErrorFx",
 				message: "Listing not found",
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

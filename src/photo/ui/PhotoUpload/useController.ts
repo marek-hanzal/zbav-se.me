@@ -17,9 +17,9 @@ export namespace useController {
 	export type OnUploadFn = (upload: UploadSchema.Type | undefined) => void;
 
 	export interface Props {
-		onChange: OnChangeFn;
+		onChangeFn: OnChangeFn;
 		access: AccessEnumSchema.Type;
-		onUpload?: OnUploadFn;
+		onUploadFn?: OnUploadFn;
 		mutationId?: string;
 	}
 
@@ -27,27 +27,27 @@ export namespace useController {
 		inputRef: RefObject<HTMLInputElement | null>;
 		progress: number;
 		isPending: boolean;
-		pick(): void;
-		onKeyDown(e: KeyboardEvent): void;
-		onUpload(e: ChangeEvent<HTMLInputElement>): Promise<void>;
+		pickFn(): void;
+		onKeyDownFn(e: KeyboardEvent): void;
+		onUploadFn(e: ChangeEvent<HTMLInputElement>): Promise<void>;
 	}
 }
 
 export function useController({
-	onChange,
+	onChangeFn,
 	access,
-	onUpload,
+	onUploadFn,
 	mutationId,
 }: useController.Props): useController.Result {
 	const inputRef = useRef<HTMLInputElement>(null);
-	const [progress, setProgress] = useState(0);
-	const setUpload = withUploadQuery.useUpdate();
+	const [progress, setProgressFn] = useState(0);
+	const setUploadFn = withUploadQuery.useUpdate();
 
-	const pick = useCallback(() => {
+	const pickFn = useCallback(() => {
 		inputRef.current?.click();
 	}, []);
 
-	const onKeyDown = useCallback((e: KeyboardEvent) => {
+	const onKeyDownFn = useCallback((e: KeyboardEvent) => {
 		if (e.key === "Enter" || e.key === " ") {
 			e.preventDefault();
 			inputRef.current?.click();
@@ -58,13 +58,13 @@ export function useController({
 		meta: {
 			mutationId,
 		},
-		async onPreMutation() {
-			setProgress(0);
+		async onPreMutationFn() {
+			setProgressFn(0);
 		},
-		async onPostMutation({ result }) {
-			setUpload(result);
-			onChange(result.id);
-			onUpload?.(result);
+		async onPostMutationFn({ result }) {
+			setUploadFn(result);
+			onChangeFn(result.id);
+			onUploadFn?.(result);
 		},
 	});
 
@@ -72,9 +72,9 @@ export function useController({
 		inputRef,
 		progress,
 		isPending: uploadMutation.isPending,
-		pick,
-		onKeyDown,
-		onUpload: useCallback(
+		pickFn,
+		onKeyDownFn,
+		onUploadFn: useCallback(
 			async (e: ChangeEvent<HTMLInputElement>) => {
 				const file = e.target.files?.[0];
 				if (!file) {
@@ -85,7 +85,7 @@ export function useController({
 					access,
 					blob: file,
 					name: file.name,
-					onProgress: setProgress,
+					onProgressFn: setProgressFn,
 				});
 
 				e.target.value = "";

@@ -1,5 +1,5 @@
 import type { ComponentProps, FC } from "react";
-import { uiBadge } from "~/ui/fn/uiBadge";
+import { uiBadgeFn } from "~/ui/fn/uiBadgeFn";
 
 /**
  * Simple badge icon; just rounded background with children.
@@ -7,7 +7,7 @@ import { uiBadge } from "~/ui/fn/uiBadge";
  * @group ui
  */
 export namespace Badge {
-	export interface Props extends uiBadge.Component<ComponentProps<"div">> {
+	export interface Props extends uiBadgeFn.Component<ComponentProps<"div">> {
 		//
 	}
 }
@@ -15,7 +15,7 @@ export namespace Badge {
 export const Badge: FC<Badge.Props> = ({ className, ...props }) => {
 	return (
 		<div
-			{...uiBadge({
+			{...uiBadgeFn({
 				className,
 			})}
 			{...props}

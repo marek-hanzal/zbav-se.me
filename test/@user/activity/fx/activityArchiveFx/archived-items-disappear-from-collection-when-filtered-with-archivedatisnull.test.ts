@@ -3,8 +3,8 @@ import { describe, expect, it } from "vitest";
 import type { ActivityPriorityEnumSchema } from "~/activity/schema/ActivityPriorityEnumSchema";
 import type { ActivityTypeEnumSchema } from "~/activity/schema/ActivityTypeEnumSchema";
 import type { ActivityTableSchema } from "~/database/schema/ActivityTable";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { activityArchiveFx } from "~/user-activity/fx/activityArchiveFx";
 import { activityCollectionFx } from "~/user-activity/fx/activityCollectionFx";
@@ -13,8 +13,8 @@ import { activityCollectionFx } from "~/user-activity/fx/activityCollectionFx";
  * Inserts activity rows directly into the DB — bypasses activityCreateFx so tests
  * are not coupled to the full transaction/listing lifecycle.
  */
-const seedActivity = async (
-	database: Awaited<ReturnType<typeof import("~/test/testabase").testabase>>,
+const seedActivityFn = async (
+	database: Awaited<ReturnType<typeof import("~/test/testabaseFn").testabaseFn>>,
 	rows: Array<
 		Pick<ActivityTableSchema.Type, "family" | "payload"> & {
 			id: string;
@@ -39,13 +39,13 @@ const seedActivity = async (
 
 describe("activityArchiveFx", () => {
 	it("archived items disappear from collection when filtered with archivedAtIsNull", async () => {
-		const database = await testabase("activityArchive-collection-filter");
+		const database = await testabaseFn("activityArchive-collection-filter");
 
 		return Effect.gen(function* () {
 			const user = yield* leaseTestUserFx({});
 
 			yield* Effect.promise(() =>
-				seedActivity(database, [
+				seedActivityFn(database, [
 					{
 						id: "coll-active",
 						userId: user.id,
@@ -106,6 +106,6 @@ describe("activityArchiveFx", () => {
 			const allIds = all.map((i) => i.id);
 			expect(allIds).toContain("coll-active");
 			expect(allIds).toContain("coll-to-archive");
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

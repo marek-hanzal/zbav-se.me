@@ -1,6 +1,6 @@
 import { sql } from "kysely";
 import type { Migration } from "kysely/migration";
-import { toEnumGuard } from "~/enum/fn/toEnumGuard";
+import { toEnumGuardFn } from "~/enum/fn/toEnumGuardFn";
 import type { FieldKindEnumSchema } from "~/user-field/schema/FieldKindEnumSchema";
 import type { FieldTypeEnumSchema } from "~/user-field/schema/FieldTypeEnumSchema";
 
@@ -9,7 +9,7 @@ export const FieldMigration: Migration = {
 		await db.schema
 			.createType("field_type_enum")
 			.asEnum(
-				toEnumGuard<FieldTypeEnumSchema.Type>()([
+				toEnumGuardFn<FieldTypeEnumSchema.Type>()([
 					"number",
 					"decimal",
 					"year",
@@ -24,7 +24,7 @@ export const FieldMigration: Migration = {
 		await db.schema
 			.createType("field_kind_enum")
 			.asEnum(
-				toEnumGuard<FieldKindEnumSchema.Type>()([
+				toEnumGuardFn<FieldKindEnumSchema.Type>()([
 					"recommended",
 					"optional",
 				]),

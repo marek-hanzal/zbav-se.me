@@ -1,14 +1,14 @@
 import type { FC } from "react";
-import { uiWarningStatus } from "~/application-ui/fn/ui.exports";
+import { uiWarningStatusFn } from "~/application-ui/fn/ui.exports";
 import { Mx } from "~/translation/ui/Mx";
 import { WarningIcon } from "~/ui/constant/WarningIcon";
-import type { uiContainer } from "~/ui/fn/uiContainer";
+import type { uiContainerFn } from "~/ui/fn/uiContainerFn";
 import { Container } from "~/ui/ui/Container";
 import type { Status as StatusUi } from "~/ui/ui/Status";
 import { Status } from "~/ui/ui/Status";
 
 export namespace Default {
-	export interface Props extends uiContainer.Props {
+	export interface Props extends uiContainerFn.Props {
 		textHint: string;
 		warningStatusProps?: StatusUi.Props;
 	}
@@ -25,7 +25,7 @@ export const Default: FC<Default.Props> = ({ textHint, warningStatusProps, ...pr
 		>
 			<Status
 				icon={WarningIcon}
-				{...uiWarningStatus({})}
+				{...uiWarningStatusFn({})}
 				{...warningStatusProps}
 			>
 				<Container data-ui-text="default">

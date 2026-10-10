@@ -3,28 +3,28 @@ import { withListingQuery } from "~/buyer-listing/query/withListingQuery";
 import { Empty } from "~/buyer-listing-favourite/ui/FavouriteList/Empty";
 import { Item } from "~/buyer-listing-favourite/ui/FavouriteList/Item";
 import { ListItemPending } from "~/list-item/ui/ListItemPending";
-import { withFallback } from "~/ui/fn/withFallback";
+import { withFallbackFn } from "~/ui/fn/withFallbackFn";
 import type { MarkSuspense } from "~/ui/type/MarkSuspense";
 import { Container } from "~/ui/ui/Container";
 import { EmptyState } from "~/ui/ui/EmptyState";
 import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
-import type { createVisibilityStore } from "~/visibility/fn/createVisibilityStore";
+import type { createVisibilityStoreFn } from "~/visibility/fn/createVisibilityStoreFn";
 import { useElementVisibility } from "~/visibility/hook/useElementVisibility";
 import { VisibilityProvider } from "~/visibility/ui/VisibilityProvider";
 import { VisibleContainer } from "~/visibility/ui/VisibleContainer";
 
 export namespace FavouriteList {
 	export interface Props extends Container.Props, MarkSuspense.Props {
-		visibility?: createVisibilityStore.Hook;
+		visibilityFn?: createVisibilityStoreFn.Hook;
 	}
 }
 
-export const FavouriteList = withFallback(
-	({ _suspense, visibility, ...props }: FavouriteList.Props) => {
+export const FavouriteList = withFallbackFn(
+	({ _suspense, visibilityFn, ...props }: FavouriteList.Props) => {
 		const scrollerRef = useRef<HTMLDivElement>(null);
 
-		const visibilityStore =
-			visibility ??
+		const visibilityStoreFn =
+			visibilityFn ??
 			useElementVisibility({
 				scrollerRef,
 				visible: {},
@@ -49,10 +49,10 @@ export const FavouriteList = withFallback(
 		const check = useMemo(() => {
 			return [
 				{
-					check() {
+					checkFn() {
 						return !listingCollection.length;
 					},
-					render() {
+					renderFn() {
 						return <Empty />;
 					},
 				},
@@ -61,7 +61,7 @@ export const FavouriteList = withFallback(
 			listingCollection,
 		]);
 
-		const placeholder = useCallback(() => <ListItemPending />, []);
+		const placeholderFn = useCallback(() => <ListItemPending />, []);
 
 		return (
 			<Container
@@ -75,13 +75,13 @@ export const FavouriteList = withFallback(
 				{...props}
 			>
 				<EmptyState check={check}>
-					<VisibilityProvider store={visibilityStore}>
+					<VisibilityProvider storeFn={visibilityStoreFn}>
 						{listingCollection.map((listing) => {
 							return (
 								<VisibleContainer
 									key={listing.id}
 									id={listing.id}
-									placeholder={placeholder}
+									placeholderFn={placeholderFn}
 								>
 									<Item listing={listing} />
 								</VisibleContainer>

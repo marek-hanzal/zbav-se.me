@@ -14,7 +14,7 @@ export namespace MessageContent {
 }
 
 export const MessageContent: FC<MessageContent.Props> = ({ content, ...props }) => {
-	const parts = getMessageContentParts(content);
+	const parts = getMessageContentPartsFn(content);
 
 	if (!parts.length) {
 		return null;
@@ -26,7 +26,7 @@ export const MessageContent: FC<MessageContent.Props> = ({ content, ...props }) 
 		<>
 			{parts.map((part) => (
 				<MessageContentPart
-					key={getPartKey(part, countByFingerprint)}
+					key={getPartKeyFn(part, countByFingerprint)}
 					part={part}
 					{...props}
 				/>
@@ -37,7 +37,7 @@ export const MessageContent: FC<MessageContent.Props> = ({ content, ...props }) 
 
 // =================================================================================================
 
-function getPartKey(part: MessageContent.Part, countByFingerprint: Map<string, number>) {
+function getPartKeyFn(part: MessageContent.Part, countByFingerprint: Map<string, number>) {
 	const fingerprint = JSON.stringify(part);
 	const count = countByFingerprint.get(fingerprint) ?? 0;
 
@@ -46,7 +46,7 @@ function getPartKey(part: MessageContent.Part, countByFingerprint: Map<string, n
 	return `${fingerprint}-${count}`;
 }
 
-function getMessageContentParts(content: MessageContent.Content): MessageContent.Part[] {
+function getMessageContentPartsFn(content: MessageContent.Content): MessageContent.Part[] {
 	if (typeof content === "string") {
 		return [
 			{

@@ -8,12 +8,12 @@ import type { TransactionMenuButton } from "~/user-transaction/ui/TransactionMen
 
 export namespace RejectedMessage {
 	export interface Props extends Container.Props {
-		close: TransactionMenuButton.Close;
+		closeFn: TransactionMenuButton.Close;
 		transaction: TransactionSchema.Type;
 	}
 }
 
-export const RejectedMessage: FC<RejectedMessage.Props> = ({ close, transaction, ...props }) => {
+export const RejectedMessage: FC<RejectedMessage.Props> = ({ closeFn, transaction, ...props }) => {
 	return (
 		<Group
 			data-ui={"RejectedMessage"}
@@ -23,7 +23,7 @@ export const RejectedMessage: FC<RejectedMessage.Props> = ({ close, transaction,
 			{...props}
 		>
 			<AckButton
-				close={close}
+				closeFn={closeFn}
 				transaction={transaction}
 				{...MessageButtonUi}
 			/>

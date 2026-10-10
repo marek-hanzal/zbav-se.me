@@ -10,7 +10,7 @@ import { HomeMenuButton } from "~/user-home/ui/HomeMenu/HomeMenuButton";
 
 export const Route = createFileRoute("/$locale/app/agent/continue")({
 	async loader({ context: { queryClient }, params: { locale } }) {
-		const [thread] = await withAgentThreadQuery.ensureCollectionQuery(queryClient, {
+		const [thread] = await withAgentThreadQuery.ensureCollectionQueryFn(queryClient, {
 			where: {
 				archivedAt: "active",
 			},
@@ -50,14 +50,14 @@ export const Route = createFileRoute("/$locale/app/agent/continue")({
 
 		return (
 			<TitleContainer
-				textTitle={translator.text("Agent (title)")}
+				textTitle={translator.textFn("Agent (title)")}
 				left={
 					<BackHomeButton
 						to="/$locale/app/agent/welcome"
 						params={{
 							locale,
 						}}
-						title={translator.text("Back to agent welcome page (aria)")}
+						title={translator.textFn("Back to agent welcome page (aria)")}
 					/>
 				}
 				right={<HomeMenuButton />}

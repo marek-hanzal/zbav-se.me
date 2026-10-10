@@ -2,13 +2,13 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { locationAutocompleteFx } from "~/session-location/fx/locationAutocompleteFx";
 import { locationFetchFx } from "~/session-location/fx/locationFetchFx";
-import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { expectErrorFn } from "~/test/common/fx/expectErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 
 describe("locationFetchFx", () => {
 	it("fetches a location persisted by live autocomplete and rejects unknown ids", async () => {
-		const database = await testabase("locationFetchFx-live-contract");
+		const database = await testabaseFn("locationFetchFx-live-contract");
 
 		return Effect.gen(function* () {
 			const [location] = yield* locationAutocompleteFx({
@@ -40,7 +40,7 @@ describe("locationFetchFx", () => {
 				}),
 			);
 
-			expectErrorFx(missing);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+			expectErrorFn(missing);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

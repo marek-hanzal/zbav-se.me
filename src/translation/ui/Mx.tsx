@@ -13,5 +13,5 @@ export namespace Mx {
 
 export const Mx: FC<Mx.Props> = ({ label, fallback, ...props }) => {
 	const translator = useTranslator();
-	return label ? <Markdown {...props}>{translator.text(label, fallback)}</Markdown> : null;
+	return label ? <Markdown {...props}>{translator.textFn(label, fallback)}</Markdown> : null;
 };

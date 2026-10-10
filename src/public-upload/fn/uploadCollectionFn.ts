@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
-import { withKyselyFx } from "~/database/fx/withKyselyFx";
-import { withLoggerFx } from "~/log/fx/withLoggerFx";
+import { withKyselyFn } from "~/database/fn/withKyselyFn";
+import { withLoggerFn } from "~/log/fn/withLoggerFn";
 import { uploadCollectionFx } from "~/public-upload/fx/uploadCollectionFx";
 import { UploadQuerySchema } from "~/public-upload/schema/UploadQuerySchema";
 import { UploadSchema } from "~/public-upload/schema/UploadSchema";
@@ -33,8 +33,8 @@ export const uploadCollectionFn = createServerFn()
 				scope: {},
 			}),
 		}).pipe(
-			withKyselyFx(database),
-			withLoggerFx(rootLogger),
+			withKyselyFn(database),
+			withLoggerFn(rootLogger),
 			Effect.tapError((error) => {
 				return Effect.sync(() => {
 					logger.error(error._tag, {

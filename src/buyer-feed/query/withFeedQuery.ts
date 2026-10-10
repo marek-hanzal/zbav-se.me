@@ -9,12 +9,12 @@ import type { FeedCreateSchema } from "~/buyer-feed/schema/FeedCreateSchema";
 import type { FeedPatchSchema } from "~/buyer-feed/schema/FeedPatchSchema";
 import type { FeedQuerySchema } from "~/buyer-feed/schema/FeedQuerySchema";
 import type { FeedSchema } from "~/buyer-feed/schema/FeedSchema";
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withEntityQuery } from "~/query/fn/withEntityQuery";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withEntityQueryFn } from "~/query/fn/withEntityQueryFn";
 import { withResourceLimitCheckQuery } from "~/user-resource-limit/query/withResourceLimitCheckQuery";
 
-export const withFeedQuery = withEntityQuery({
-	logger: getRootLogger([
+export const withFeedQuery = withEntityQueryFn({
+	logger: getRootLoggerFn([
 		"query",
 		"withFeedQuery",
 	]),
@@ -27,12 +27,12 @@ export const withFeedQuery = withEntityQuery({
 		delete: feedDeleteFn.Error;
 		patchCollection: Error;
 	},
-	keys() {
+	keysFn() {
 		return [
 			"feed",
 		];
 	},
-	toIdKey(id): FeedQuerySchema.Type {
+	toIdKeyFn(id): FeedQuerySchema.Type {
 		return {
 			where: {
 				id,
@@ -75,15 +75,15 @@ export const withFeedQuery = withEntityQuery({
 	invalidate: {
 		create: [
 			{
-				async invalidate({ queryClient }) {
-					await withResourceLimitCheckQuery.invalidate(queryClient);
+				async invalidateFn({ queryClient }) {
+					await withResourceLimitCheckQuery.invalidateFn(queryClient);
 				},
 			},
 		],
 		delete: [
 			{
-				async invalidate({ queryClient }) {
-					await withResourceLimitCheckQuery.invalidate(queryClient);
+				async invalidateFn({ queryClient }) {
+					await withResourceLimitCheckQuery.invalidateFn(queryClient);
 				},
 			},
 		],

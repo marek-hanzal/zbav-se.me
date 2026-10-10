@@ -16,7 +16,7 @@ import type { useView } from "~/view/hook/useView";
 export namespace GalleryPatch {
 	export interface Props extends MarkSuspense.Props, Container.Props {
 		draft: DraftSchema.Type;
-		onCancel(): void;
+		onCancelFn(): void;
 		view: useView.Use<"title">;
 	}
 }
@@ -24,12 +24,12 @@ export namespace GalleryPatch {
 export const GalleryPatch: FC<GalleryPatch.Props> = ({
 	_suspense,
 	draft,
-	onCancel,
+	onCancelFn,
 	view,
 	...props
 }) => {
 	const translator = useTranslator();
-	const [uploadIds, setUploadIds] = useState<string[]>(draft.withUploadIds);
+	const [uploadIds, setUploadIdsFn] = useState<string[]>(draft.withUploadIds);
 	const { data: resourceLimit } = withResourceLimitCheckQuery.useSuspenseQuery({
 		resource: "seller:limit:listing.gallery.count",
 		count: uploadIds.length,
@@ -37,7 +37,7 @@ export const GalleryPatch: FC<GalleryPatch.Props> = ({
 	const galleryLimit = Math.max(uploadIds.length, Math.floor(resourceLimit.limit), 1);
 	const mutation = withDraftQuery.usePatchMutation({
 		onSuccess() {
-			view.set("title");
+			view.setFn("title");
 		},
 		invalidate: [
 			"collection",
@@ -47,7 +47,7 @@ export const GalleryPatch: FC<GalleryPatch.Props> = ({
 	return (
 		<TitleContainer
 			data-ui={"GalleryPatch"}
-			textTitle={translator.text("Listing gallery (title)")}
+			textTitle={translator.textFn("Listing gallery (title)")}
 			left={<EditAction />}
 			data-ui-layout="vertical-header-content"
 			data-ui-height="full"
@@ -64,17 +64,17 @@ export const GalleryPatch: FC<GalleryPatch.Props> = ({
 					access="private"
 					state={{
 						value: uploadIds,
-						set: setUploadIds,
+						setFn: setUploadIdsFn,
 					}}
 					limit={galleryLimit}
 				/>
 
 				<SaveContainer
-					onCancel={() => {
-						setUploadIds(draft.withUploadIds);
-						onCancel();
+					onCancelFn={() => {
+						setUploadIdsFn(draft.withUploadIds);
+						onCancelFn();
 					}}
-					onSave={() => {
+					onSaveFn={() => {
 						mutation.mutate({
 							patch: {
 								uploadIds,

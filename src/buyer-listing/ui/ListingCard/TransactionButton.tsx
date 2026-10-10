@@ -5,7 +5,7 @@ import { withTransactionQuery } from "~/buyer-transaction/query/withTransactionQ
 import { useLocale } from "~/locale/hook/useLocale";
 import { Tx } from "~/translation/ui/Tx";
 import { ChevronRightIcon } from "~/ui/constant/ChevronRightIcon";
-import { uiButton } from "~/ui/fn/uiButton";
+import { uiButtonFn } from "~/ui/fn/uiButtonFn";
 import { Button } from "~/ui/ui/Button";
 import { LinkTo } from "~/ui/ui/LinkTo";
 
@@ -32,7 +32,7 @@ export const TransactionButton: FC<TransactionButton.Props> = ({ listing, ...pro
 				iconProps={{
 					"data-ui-text": "xl",
 				}}
-				{...uiButton({
+				{...uiButtonFn({
 					name: "TransactionButton",
 					"data-ui-justify": "space-between",
 					"data-ui-tone": "neutral",

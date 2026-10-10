@@ -3,20 +3,20 @@ import { DateTime } from "luxon";
 import { transactionDisputeFx } from "~/buyer-transaction/fx/transactionDisputeFx";
 import { withCronFx } from "~/cron/fx/withCronFx";
 import type { ScheduleSchema } from "~/cron/schema/ScheduleSchema";
-import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
-import type { testabase } from "~/test/testabase";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
+import type { testabaseFn } from "~/test/testabaseFn";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { createResolvedScenarioFx } from "~/test/transaction/fx/createResolvedScenarioFx";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 import { TransactionEntrySensitiveKindEnumSchema } from "~/transaction-contract/schema/TransactionEntrySensitiveKindEnumSchema";
 
-type TestDatabase = Awaited<ReturnType<typeof testabase>>;
+type TestDatabase = Awaited<ReturnType<typeof testabaseFn>>;
 
 const atFx = <A, E, R>(iso: string, eff: Effect.Effect<A, E, R>) =>
 	eff.pipe(
-		withDateServiceFx({
-			now: () =>
+		withDateServiceFn({
+			nowFn: () =>
 				DateTime.fromISO(iso, {
 					setZone: true,
 				}),

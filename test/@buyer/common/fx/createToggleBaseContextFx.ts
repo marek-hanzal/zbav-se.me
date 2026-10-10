@@ -1,9 +1,9 @@
 import { Effect } from "effect";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
-import type { testabase } from "~/test/testabase";
+import type { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
-type TestDatabase = Awaited<ReturnType<typeof testabase>>;
+type TestDatabase = Awaited<ReturnType<typeof testabaseFn>>;
 type TestListing = Effect.Success<ReturnType<typeof createListingFx>>;
 type TestUsers = Effect.Success<ReturnType<typeof createUsersFx>>;
 

@@ -17,15 +17,20 @@ const FormSchema = z
 export namespace PriceMinPatch {
 	export interface Props extends Container.Props {
 		feed: FeedSchema.Type;
-		onSettled?(): void;
-		onCancel(): void;
+		onSettledFn?(): void;
+		onCancelFn(): void;
 	}
 }
 
-export const PriceMinPatch: FC<PriceMinPatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
+export const PriceMinPatch: FC<PriceMinPatch.Props> = ({
+	feed,
+	onSettledFn,
+	onCancelFn,
+	...props
+}) => {
 	const translator = useTranslator();
 	const mutation = withFeedQuery.usePatchMutation({
-		onSettled,
+		onSettled: onSettledFn,
 	});
 	const form = useAppForm({
 		defaultValues: {
@@ -73,11 +78,11 @@ export const PriceMinPatch: FC<PriceMinPatch.Props> = ({ feed, onSettled, onCanc
 						value={
 							typeof price.state.value === "number" ? price.state.value : undefined
 						}
-						onChange={(value) => {
+						onChangeFn={(value) => {
 							price.handleChange(value ?? null);
 							price.handleBlur();
 						}}
-						placeholder={translator.text("Minimum price (placeholder)")}
+						placeholder={translator.textFn("Minimum price (placeholder)")}
 						allowDecimals
 					/>
 				)}
@@ -91,8 +96,8 @@ export const PriceMinPatch: FC<PriceMinPatch.Props> = ({ feed, onSettled, onCanc
 			>
 				{({ isValid, isSubmitting }) => (
 					<SaveContainer
-						onCancel={onCancel}
-						onSave={() => {
+						onCancelFn={onCancelFn}
+						onSaveFn={() => {
 							form.handleSubmit();
 						}}
 						loading={isSubmitting}

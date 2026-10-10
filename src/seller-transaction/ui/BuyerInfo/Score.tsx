@@ -15,8 +15,8 @@ export const Score: FC<Score.Props> = ({ rank }) => {
 	const translator = useTranslator();
 	return (
 		<LabelValue
-			textLabel={translator.text("User score (label)")}
-			textHint={translator.text("User score (hint)")}
+			textLabel={translator.textFn("User score (label)")}
+			textHint={translator.textFn("User score (hint)")}
 			textValue={
 				<Container
 					data-ui-flow="horizontal"
@@ -27,7 +27,7 @@ export const Score: FC<Score.Props> = ({ rank }) => {
 					<RatingIcon rating={rank} />
 
 					<Tx
-						label={translator.text(`Buyer score ${rank}`)}
+						label={translator.textFn(`Buyer score ${rank}`)}
 						data-ui-wrap="wrap"
 					/>
 				</Container>

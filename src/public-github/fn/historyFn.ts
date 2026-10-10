@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { DateTime } from "luxon";
 import { z } from "zod";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import type { GitHubHistorySchema } from "~/public-github/schema/GitHubHistorySchema";
 import { withDatabaseMiddleware } from "~/request-middleware/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/request-middleware/middleware/withLogMiddleware";
@@ -153,7 +153,7 @@ export const historyFn = createServerFn()
 						.insertInto("github")
 						.values(
 							missing.map((x) => ({
-								id: genId(),
+								id: genIdFn(),
 								sha: x.sha,
 								date: new Date(x.date),
 								message: x.message,
@@ -181,7 +181,7 @@ export const historyFn = createServerFn()
 				.where("date", ">=", startUtc.toJSDate())
 				.execute();
 
-			const toUtcDateTime = (value: unknown) => {
+			const toUtcDateTimeFn = (value: unknown) => {
 				if (value instanceof Date) {
 					return DateTime.fromJSDate(value).toUTC();
 				}
@@ -224,19 +224,19 @@ export const historyFn = createServerFn()
 			};
 
 			const countsByDay = new Map<string, number>();
-			const toYmd = (dt: DateTime) => dt.toUTC().toFormat("yyyy-MM-dd");
+			const toYmdFn = (dt: DateTime) => dt.toUTC().toFormat("yyyy-MM-dd");
 			for (const row of commits) {
-				const dt = toUtcDateTime(row.date);
+				const dt = toUtcDateTimeFn(row.date);
 				if (!dt?.isValid) {
 					continue;
 				}
-				const key = toYmd(dt);
+				const key = toYmdFn(dt);
 				countsByDay.set(key, (countsByDay.get(key) ?? 0) + 1);
 			}
 
 			const days: GitHubHistorySchema.Type[] = [];
 			for (let i = 0; i < historyDays; i++) {
-				const key = toYmd(
+				const key = toYmdFn(
 					startUtc.plus({
 						days: i,
 					}),

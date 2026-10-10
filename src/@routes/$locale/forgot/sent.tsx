@@ -37,8 +37,8 @@ export const Route = createFileRoute("/$locale/forgot/sent")({
 								<Logo />
 							</LinkTo>
 						}
-						textTitle={translator.text("Reset your password")}
-						textMessage={translator.text("Check your email for the reset link.")}
+						textTitle={translator.textFn("Reset your password")}
+						textMessage={translator.textFn("Check your email for the reset link.")}
 						data-ui-inner="default"
 					>
 						<Container

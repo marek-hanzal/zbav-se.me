@@ -9,10 +9,10 @@ export const Route = createFileRoute("/$locale/privacy")({
 		return (
 			<Container>
 				<Status
-					textTitle={translator.text(
+					textTitle={translator.textFn(
 						"Privacy policy not available in this language (title)",
 					)}
-					textMessage={translator.text(
+					textMessage={translator.textFn(
 						"Privacy policy not available in this language (description)",
 					)}
 				/>

@@ -4,7 +4,7 @@ import { Empty } from "~/buyer-feed/ui/Content/Empty";
 import { FilterEmpty } from "~/buyer-feed/ui/Content/FilterEmpty";
 import { ListingList } from "~/buyer-feed/ui/ListingList/index";
 import { withListingQuery } from "~/buyer-listing/query/withListingQuery";
-import { withFallback } from "~/ui/fn/withFallback";
+import { withFallbackFn } from "~/ui/fn/withFallbackFn";
 import type { MarkSuspense } from "~/ui/type/MarkSuspense";
 import { EmptyState } from "~/ui/ui/EmptyState";
 import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
@@ -17,7 +17,7 @@ export namespace Content {
 	}
 }
 
-export const Content = withFallback(
+export const Content = withFallbackFn(
 	({ _suspense, feedId, scrollToId, sentinelRef }: Content.Props) => {
 		const { data: feed } = withFeedQuery.useFetchQuery(feedId);
 		const { data: anyListingCount } = withListingQuery.useCountQuery({});
@@ -36,18 +36,18 @@ export const Content = withFallback(
 		const check = useMemo(() => {
 			return [
 				{
-					check() {
+					checkFn() {
 						return !anyListingCount;
 					},
-					render() {
+					renderFn() {
 						return <Empty />;
 					},
 				},
 				{
-					check() {
+					checkFn() {
 						return !currentListingCollection.length;
 					},
-					render() {
+					renderFn() {
 						return <FilterEmpty />;
 					},
 				},

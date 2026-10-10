@@ -5,7 +5,7 @@ import { Item } from "~/restriction/ui/RestrictionSelect/Item";
 import type { useSelection } from "~/selection/hook/useSelection";
 import { Container } from "~/ui/ui/Container";
 
-const getSelectableRestrictions = (
+const getSelectableRestrictionsFn = (
 	minLevel: RestrictionEnumSchema.Type,
 	maxLevel: RestrictionEnumSchema.Type,
 ) => {
@@ -42,7 +42,7 @@ export const RestrictionSelect: FC<RestrictionSelect.Props> = ({
 	selection,
 	...props
 }) => {
-	const restrictions = getSelectableRestrictions(minLevel, maxLevel);
+	const restrictions = getSelectableRestrictionsFn(minLevel, maxLevel);
 
 	return (
 		<Container

@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import { sql } from "kysely";
 import { dbFx } from "~/database/fx/dbFx";
 import { DateServiceFx } from "~/date/service/DateServiceFx";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import { getLoggerFx } from "~/log/fx/getLoggerFx";
 
 export namespace categoryMissCreateFx {
@@ -29,13 +29,13 @@ export const categoryMissCreateFx = Effect.fn("categoryMissCreateFx")(function* 
 		return yield* Effect.void;
 	}
 
-	const now = dateService.now();
+	const now = dateService.nowFn();
 
 	yield* dbFx(async (kysely) => {
 		return kysely
 			.insertInto("category_miss")
 			.values({
-				id: genId(),
+				id: genIdFn(),
 				category,
 				count: 1,
 				updatedAt: now.toJSDate(),

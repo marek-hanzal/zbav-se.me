@@ -2,11 +2,11 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { feedCreateFx } from "~/buyer-feed/fx/feedCreateFx";
 import { favouriteToggleFx } from "~/buyer-listing-favourite/fx/favouriteToggleFx";
-import { runToggleEntityErrorContractFx } from "~/test/@buyer/common/fx/runToggleEntityErrorContractFx";
+import { runToggleEntityErrorContractFn } from "~/test/@buyer/common/fx/runToggleEntityErrorContractFn";
 
 describe("favouriteToggleFx", () => {
 	it("invalid: cannot favourite with another user's feed", async () => {
-		return runToggleEntityErrorContractFx({
+		return runToggleEntityErrorContractFn({
 			databaseName: "favouriteToggle-wrong-feed",
 			userSlug: "fav-wrong-feed",
 			expectedError: {

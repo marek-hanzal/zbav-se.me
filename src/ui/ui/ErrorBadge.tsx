@@ -48,7 +48,7 @@ export const ErrorBadge: FC<ErrorBadge.Props> = ({ error, placeholder, ...props 
 			<TypoIcon icon={"icon-[solar--adhesive-plaster-linear]"}>
 				<Tx
 					label={error?.message}
-					fallback={translator.text("Something went wrong (error)")}
+					fallback={translator.textFn("Something went wrong (error)")}
 				/>
 			</TypoIcon>
 		</Badge>

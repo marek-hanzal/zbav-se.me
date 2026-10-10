@@ -1,14 +1,14 @@
 import { sql } from "kysely";
 import type { Migration } from "kysely/migration";
 import type { CategoryDiscoveryEnumSchema } from "~/category/schema/CategoryDiscoveryEnumSchema";
-import { toEnumGuard } from "~/enum/fn/toEnumGuard";
+import { toEnumGuardFn } from "~/enum/fn/toEnumGuardFn";
 
 export const CategoryMigration: Migration = {
 	async up(db) {
 		await db.schema
 			.createType("category_discovery_enum")
 			.asEnum(
-				toEnumGuard<CategoryDiscoveryEnumSchema.Type>()([
+				toEnumGuardFn<CategoryDiscoveryEnumSchema.Type>()([
 					"implicit",
 					"explicit",
 				] as const),

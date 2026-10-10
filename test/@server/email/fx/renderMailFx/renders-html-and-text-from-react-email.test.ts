@@ -3,14 +3,14 @@ import { createElement } from "react";
 import { describe, expect, it } from "vitest";
 import { renderMailFx } from "~/email/fx/renderMailFx";
 import { EmailVerificationEmail } from "~/email/ui/EmailVerificationEmail";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { TranslationContext } from "~/translation/context/TranslationContext";
 import { withTranslatorFx } from "~/translator/fx/withTranslatorFx";
 
 describe("renderMailFx", () => {
 	it("renders html and text from a React email template", async () => {
-		const database = await testabase("renderMailFx-email-template");
+		const database = await testabaseFn("renderMailFx-email-template");
 
 		const result = await Effect.gen(function* () {
 			const translator = yield* withTranslatorFx({
@@ -21,14 +21,14 @@ describe("renderMailFx", () => {
 				content: createElement(
 					TranslationContext,
 					{
-						value: translator.list(),
+						value: translator.listFn(),
 					},
 					createElement(EmailVerificationEmail, {
 						verifyUrl: "https://zbav-se.me/verify-email/token-123",
 					}),
 				),
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 
 		expect(result.html).toContain("https://zbav-se.me/verify-email/token-123");
 		expect(result.html).toContain("Ověř si svůj email");

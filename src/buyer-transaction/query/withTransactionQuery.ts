@@ -8,8 +8,8 @@ import type { TransactionCountQuerySchema } from "~/buyer-transaction/schema/Tra
 import type { TransactionCreateSchema } from "~/buyer-transaction/schema/TransactionCreateSchema";
 import type { TransactionQuerySchema } from "~/buyer-transaction/schema/TransactionQuerySchema";
 import type { TransactionSchema } from "~/buyer-transaction/schema/TransactionSchema";
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withEntityQuery } from "~/query/fn/withEntityQuery";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withEntityQueryFn } from "~/query/fn/withEntityQueryFn";
 
 export namespace withTransactionQuery {
 	export interface CreateVariables extends TransactionCreateSchema.Type {
@@ -17,8 +17,8 @@ export namespace withTransactionQuery {
 	}
 }
 
-export const withTransactionQuery = withEntityQuery({
-	logger: getRootLogger([
+export const withTransactionQuery = withEntityQueryFn({
+	logger: getRootLoggerFn([
 		"query",
 		"withTransactionQuery",
 	]),
@@ -31,13 +31,13 @@ export const withTransactionQuery = withEntityQuery({
 		delete: Error;
 		patchCollection: Error;
 	},
-	keys() {
+	keysFn() {
 		return [
 			"buyer",
 			"transaction",
 		];
 	},
-	toIdKey(id): TransactionQuerySchema.Type {
+	toIdKeyFn(id): TransactionQuerySchema.Type {
 		return {
 			where: {
 				id,
@@ -76,9 +76,9 @@ export const withTransactionQuery = withEntityQuery({
 	invalidate: {
 		create: [
 			{
-				async invalidate({ queryClient, result, variables }) {
+				async invalidateFn({ queryClient, result, variables }) {
 					await Promise.all([
-						withListingQuery.invalidator(
+						withListingQuery.invalidatorFn(
 							queryClient,
 							[
 								"fetch",
@@ -91,7 +91,7 @@ export const withTransactionQuery = withEntityQuery({
 								},
 							},
 						),
-						withListingQuery.invalidator(
+						withListingQuery.invalidatorFn(
 							queryClient,
 							[
 								"fetch",
@@ -105,7 +105,7 @@ export const withTransactionQuery = withEntityQuery({
 								},
 							},
 						),
-						withTransactionQuery.invalidator(queryClient, [
+						withTransactionQuery.invalidatorFn(queryClient, [
 							"collection",
 							"count",
 						]),

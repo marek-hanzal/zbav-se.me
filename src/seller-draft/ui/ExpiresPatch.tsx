@@ -24,16 +24,16 @@ const FormSchema = z
 export namespace ExpiresPatch {
 	export interface Props extends TitleContainer.Props {
 		draft: DraftSchema.Type;
-		onCancel(): void;
+		onCancelFn(): void;
 		view: useView.Use<"default">;
 	}
 }
 
-export const ExpiresPatch: FC<ExpiresPatch.Props> = ({ draft, onCancel, view, ...props }) => {
+export const ExpiresPatch: FC<ExpiresPatch.Props> = ({ draft, onCancelFn, view, ...props }) => {
 	const translator = useTranslator();
 	const mutation = withDraftQuery.usePatchMutation({
 		onSuccess() {
-			view.set("default");
+			view.setFn("default");
 		},
 		invalidate: [
 			"collection",
@@ -70,7 +70,7 @@ export const ExpiresPatch: FC<ExpiresPatch.Props> = ({ draft, onCancel, view, ..
 	return (
 		<TitleContainer
 			data-ui={"ExpireAtPatch"}
-			textTitle={translator.text("Expire (title)")}
+			textTitle={translator.textFn("Expire (title)")}
 			left={<EditAction />}
 			{...props}
 		>
@@ -86,7 +86,7 @@ export const ExpiresPatch: FC<ExpiresPatch.Props> = ({ draft, onCancel, view, ..
 						<Container>
 							<ExpireAtSelect
 								value={field.state.value ?? undefined}
-								onChange={(value) => {
+								onChangeFn={(value) => {
 									field.handleChange(value);
 									field.handleBlur();
 								}}
@@ -112,8 +112,8 @@ export const ExpiresPatch: FC<ExpiresPatch.Props> = ({ draft, onCancel, view, ..
 				>
 					{({ isValid, isSubmitting }) => (
 						<SaveContainer
-							onCancel={onCancel}
-							onSave={() => {
+							onCancelFn={onCancelFn}
+							onSaveFn={() => {
 								form.handleSubmit();
 							}}
 							loading={isSubmitting}

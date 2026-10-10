@@ -19,41 +19,41 @@ const PROS_CONS_ITEM_MAX_LENGTH = 72;
 export namespace ProsPatch {
 	export interface Props extends TitleContainer.Props {
 		draft: DraftSchema.Type;
-		onCancel(): void;
+		onCancelFn(): void;
 		view: useView.Use<"cons">;
 	}
 }
 
-export const ProsPatch: FC<ProsPatch.Props> = ({ draft, onCancel, view, ...props }) => {
+export const ProsPatch: FC<ProsPatch.Props> = ({ draft, onCancelFn, view, ...props }) => {
 	const translator = useTranslator();
 	const initialPros = draft.pros;
 	const paddedPros = [
 		...initialPros,
 		...Array(PROS_CONS_MAX_ITEMS - initialPros.length).fill(""),
 	].slice(0, PROS_CONS_MAX_ITEMS);
-	const [items, setItems] = useState<string[]>(paddedPros);
+	const [items, setItemsFn] = useState<string[]>(paddedPros);
 
 	const mutation = withDraftQuery.usePatchMutation({
 		onSuccess() {
-			view.set("cons");
+			view.setFn("cons");
 		},
 		invalidate: [
 			"collection",
 		],
 	});
 
-	const updateItem = (index: number, value: string) => {
+	const updateItemFn = (index: number, value: string) => {
 		const updated = [
 			...items,
 		];
 		updated[index] = value.slice(0, PROS_CONS_ITEM_MAX_LENGTH);
-		setItems(updated);
+		setItemsFn(updated);
 	};
 
 	return (
 		<TitleContainer
 			data-ui={"ProsPatch"}
-			textTitle={translator.text("Listing - Pros (title)")}
+			textTitle={translator.textFn("Listing - Pros (title)")}
 			left={<EditAction />}
 			{...props}
 		>
@@ -77,10 +77,10 @@ export const ProsPatch: FC<ProsPatch.Props> = ({ draft, onCancel, view, ...props
 									type="text"
 									value={items[index] ?? ""}
 									onChange={(e) => {
-										updateItem(index, e.target.value);
+										updateItemFn(index, e.target.value);
 									}}
 									maxLength={PROS_CONS_ITEM_MAX_LENGTH}
-									placeholder={translator.text(`Pros ${index} (placeholder)`)}
+									placeholder={translator.textFn(`Pros ${index} (placeholder)`)}
 									{...props}
 								/>
 							)}
@@ -97,8 +97,8 @@ export const ProsPatch: FC<ProsPatch.Props> = ({ draft, onCancel, view, ...props
 				/>
 
 				<SaveContainer
-					onCancel={onCancel}
-					onSave={() => {
+					onCancelFn={onCancelFn}
+					onSaveFn={() => {
 						const pros = items.filter((item) => item.trim().length > 0);
 						const parsed = ProsConsSchema.safeParse(pros);
 

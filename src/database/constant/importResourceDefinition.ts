@@ -5,7 +5,7 @@ import { ResourceDefinitionEnumSchema } from "~/resource-definition/schema/Resou
 
 export const importResourceDefinition: withDatabaseFx.Import<Database> = {
 	name: "resource-definition",
-	async run({ kysely }) {
+	async runFn({ kysely }) {
 		return kysely
 			.insertInto("resource_definition")
 			.values(

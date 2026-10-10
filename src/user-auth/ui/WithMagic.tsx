@@ -3,7 +3,7 @@ import type { FC } from "react";
 import { z } from "zod";
 import { useAppForm } from "~/application-ui/hook/form.exports";
 import { Logo } from "~/application-ui/ui/logo.exports";
-import { onSubmit } from "~/form/fn/onSubmit";
+import { onSubmitFn } from "~/form/fn/onSubmitFn";
 import { FormField } from "~/form/ui/FormField";
 import { useLocale } from "~/locale/hook/useLocale";
 import { useTranslator } from "~/translation/hook/useTranslator";
@@ -22,7 +22,7 @@ const useFormSchema = () => {
 		.looseObject({
 			email: z.email({
 				error() {
-					return translator.text("Invalid email address");
+					return translator.textFn("Invalid email address");
 				},
 			}),
 		})
@@ -39,14 +39,14 @@ export namespace WithMagic {
 
 export const WithMagic: FC<WithMagic.Props> = ({ target, ...props }) => {
 	const locale = useLocale();
-	const navigate = useNavigate();
+	const navigateFn = useNavigate();
 	const router = useRouter();
 	const translator = useTranslator();
 	const schema = useFormSchema();
 
 	const signInMutation = withMagicLinkSignInMutation.useMutation({
-		async onPostMutation() {
-			return navigate({
+		async onPostMutationFn() {
+			return navigateFn({
 				to: "/$locale/status/magic-link",
 				params: {
 					locale,
@@ -62,8 +62,8 @@ export const WithMagic: FC<WithMagic.Props> = ({ target, ...props }) => {
 		validators: {
 			onSubmit: schema,
 		},
-		onSubmit: onSubmit({
-			map: async ({ values }) => {
+		onSubmit: onSubmitFn({
+			mapFn: async ({ values }) => {
 				if (target) {
 					return {
 						email: values.email,
@@ -131,7 +131,7 @@ export const WithMagic: FC<WithMagic.Props> = ({ target, ...props }) => {
 										type={"email"}
 										autoComplete={"email webauthn"}
 										autoFocus
-										placeholder={translator.text("Enter your email")}
+										placeholder={translator.textFn("Enter your email")}
 										value={field.state.value ?? ""}
 										onBlur={field.handleBlur}
 										onChange={(e) => field.handleChange(e.target.value)}

@@ -33,7 +33,7 @@ export const agentThreadPatchFx = Effect.fn("agentThreadPatchFx")(function* ({
 				...query,
 				scope,
 			});
-			const updatedAt = dateService.now().toJSDate();
+			const updatedAt = dateService.nowFn().toJSDate();
 
 			return yield* dbFx(async (kysely) => {
 				return kysely

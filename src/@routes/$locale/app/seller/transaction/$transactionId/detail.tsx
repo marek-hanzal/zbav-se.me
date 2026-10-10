@@ -15,7 +15,7 @@ export const Route = createFileRoute("/$locale/app/seller/transaction/$transacti
 
 		return (
 			<TitleContainer
-				textTitle={translator.text("Messages (title)")}
+				textTitle={translator.textFn("Messages (title)")}
 				left={
 					<BackHomeButton
 						to="/$locale/app/seller/transaction/list"
@@ -39,7 +39,7 @@ export const Route = createFileRoute("/$locale/app/seller/transaction/$transacti
 
 		return (
 			<TitleContainer
-				textTitle={translator.text("Messages (title)")}
+				textTitle={translator.textFn("Messages (title)")}
 				left={
 					<BackHomeButton
 						to="/$locale/app/seller/transaction/$listingId/list"

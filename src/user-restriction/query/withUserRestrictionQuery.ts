@@ -1,5 +1,5 @@
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withEntityQuery } from "~/query/fn/withEntityQuery";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withEntityQueryFn } from "~/query/fn/withEntityQueryFn";
 import type { CountSchema } from "~/query/schema/CountSchema";
 import { userRestrictionCollectionFn } from "~/user-restriction/fn/userRestrictionCollectionFn";
 import { userRestrictionCreateFn } from "~/user-restriction/fn/userRestrictionCreateFn";
@@ -8,8 +8,8 @@ import type { UserRestrictionCreateFnSchema } from "~/user-restriction/schema/Us
 import type { UserRestrictionQuerySchema } from "~/user-restriction/schema/UserRestrictionQuerySchema";
 import type { UserRestrictionSchema } from "~/user-restriction/schema/UserRestrictionSchema";
 
-export const withUserRestrictionQuery = withEntityQuery({
-	logger: getRootLogger([
+export const withUserRestrictionQuery = withEntityQueryFn({
+	logger: getRootLoggerFn([
 		"query",
 		"withUserRestrictionQuery",
 	]),
@@ -22,13 +22,13 @@ export const withUserRestrictionQuery = withEntityQuery({
 		delete: Error;
 		patchCollection: Error;
 	},
-	keys() {
+	keysFn() {
 		return [
 			"user",
 			"restriction",
 		];
 	},
-	toIdKey(id): UserRestrictionQuerySchema.Type {
+	toIdKeyFn(id): UserRestrictionQuerySchema.Type {
 		return {
 			where: {
 				id,

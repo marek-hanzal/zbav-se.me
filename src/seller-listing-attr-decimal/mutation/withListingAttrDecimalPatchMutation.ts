@@ -1,15 +1,15 @@
 import { withListingAttrOfQuery } from "~/listing-attr/query/withListingAttrOfQuery";
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withMutation } from "~/mutation/fn/withMutation";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withMutationFn } from "~/mutation/fn/withMutationFn";
 import { listingAttrDecimalPatchFn } from "~/seller-listing-attr-decimal/fn/listingAttrDecimalPatchFn";
 import type { ListingAttrDecimalPatchSchema } from "~/seller-listing-attr-decimal/schema/ListingAttrDecimalPatchSchema";
 
-export const withListingAttrDecimalPatchMutation = withMutation({
-	logger: getRootLogger([
+export const withListingAttrDecimalPatchMutation = withMutationFn({
+	logger: getRootLoggerFn([
 		"mutation",
 		"withListingAttrDecimalPatchMutation",
 	]),
-	keys(variables: ListingAttrDecimalPatchSchema.Type) {
+	keysFn(variables: ListingAttrDecimalPatchSchema.Type) {
 		return [
 			"listing-attr",
 			"decimal",

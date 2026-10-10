@@ -1,11 +1,11 @@
 import { Effect } from "effect";
-import { keyOf } from "~/hash/fn/keyOf";
-import { genId } from "~/identity/fn/genId";
+import { keyOfFn } from "~/hash/fn/keyOfFn";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { rateLimitCheckFx } from "~/rate-limit/fx/rateLimitCheckFx";
 import { s3ConfigFx } from "~/s3/context/s3ConfigFx";
 import { s3ClientFx } from "~/s3/fx/s3ClientFx";
-import { linkTo } from "~/url/fn/linkTo";
+import { linkToFn } from "~/url/fn/linkToFn";
 import { UploadConfigFx } from "~/user-upload/context/UploadConfigFx";
 
 export namespace s3PreSignFx {
@@ -41,7 +41,7 @@ export const s3PreSignFx = Effect.fn("s3PreSignFx")(function* ({
 
 	const s3 = yield* s3ClientFx();
 
-	const key = `${keyOf(userId)}/${path}/${genId()}.${extension}`;
+	const key = `${keyOfFn(userId)}/${path}/${genIdFn()}.${extension}`;
 
 	const url = yield* Effect.promise(async () => {
 		return s3.presignedPutObject(bucket, key, 60 * 30);
@@ -49,7 +49,7 @@ export const s3PreSignFx = Effect.fn("s3PreSignFx")(function* ({
 
 	return {
 		url,
-		cdn: linkTo({
+		cdn: linkToFn({
 			base: cdn,
 			href: `/${key}`,
 		}),

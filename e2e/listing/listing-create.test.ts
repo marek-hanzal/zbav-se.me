@@ -1,20 +1,20 @@
 import path from "node:path";
 import type { Locator, Page } from "@playwright/test";
 import { Effect } from "effect";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { leaseTestUserFx, TEST_USER_PASSWORD } from "~/test/user/fx/leaseTestUserFx";
-import { expect, test } from "../test";
-import { createUser } from "../utils/createUser";
+import { expect, testFn } from "../testFn";
+import { createUserFn } from "../utils/createUserFn";
 
 const fixturePath = path.resolve(import.meta.dirname, "../fixtures/listing-create-image.jpg");
 const FREE_PLAN_GALLERY_LIMIT = 5;
 
-async function clickSave(page: Page) {
+async function clickSaveFn(page: Page) {
 	await expect(page.locator('[data-action="save"]')).toBeEnabled();
 	await page.locator('[data-action="save"]').click();
 }
 
-async function expectImageLoaded(locator: Locator) {
+async function expectImageLoadedFn(locator: Locator) {
 	await expect(locator).toBeVisible();
 	await expect
 		.poll(async () => {
@@ -25,12 +25,12 @@ async function expectImageLoaded(locator: Locator) {
 		.toBe(true);
 }
 
-test.setTimeout(120_000);
+testFn.setTimeout(120_000);
 
-test("new seller draft gallery uses the free plan photo limit", async ({ page, database }) => {
+testFn("new seller draft gallery uses the free plan photo limit", async ({ page, database }) => {
 	void database;
 
-	const user = createUser();
+	const user = createUserFn();
 
 	await page.goto("/cs/landing");
 	await page.click('[data-action="goto sign-up"]');
@@ -58,10 +58,10 @@ test("new seller draft gallery uses the free plan photo limit", async ({ page, d
 	);
 });
 
-test("seller creates listing from draft flow", async ({ page, database }) => {
+testFn("seller creates listing from draft flow", async ({ page, database }) => {
 	const user = await leaseTestUserFx({
 		key: "a",
-	}).pipe(withRuntimeFx(database), Effect.runPromise);
+	}).pipe(withRuntimeFn(database), Effect.runPromise);
 
 	await page.goto("/cs/landing");
 	await page.click('[data-action="goto sign-in"]');
@@ -79,16 +79,16 @@ test("seller creates listing from draft flow", async ({ page, database }) => {
 	await page.locator('[data-action="set draft gallery"]').click();
 	await expect(page.locator('[data-ui="GalleryPatch"]')).toBeVisible();
 	await page.locator('[data-action="upload photo"]').first().setInputFiles(fixturePath);
-	await expectImageLoaded(page.locator('[data-ui="PhotoUpload[Container]"] img').first());
-	await clickSave(page);
+	await expectImageLoadedFn(page.locator('[data-ui="PhotoUpload[Container]"] img').first());
+	await clickSaveFn(page);
 
 	await expect(page.locator('[data-ui="TitlePatch"]')).toBeVisible();
 	await page.locator("#title").fill(`E2E listing ${user.email}`);
-	await clickSave(page);
+	await clickSaveFn(page);
 
 	await expect(page.locator('[data-ui="CategoryPatch"]')).toBeVisible();
 	await page.locator('[data-action="select category"]').first().click();
-	await clickSave(page);
+	await clickSaveFn(page);
 
 	await expect(page.locator('[data-ui="LocationPatch"]')).toBeVisible();
 	await page.locator('[data-action="search location"]').fill("Praha");
@@ -97,22 +97,22 @@ test("seller creates listing from draft flow", async ({ page, database }) => {
 			name: "Praha, Cesko",
 		})
 		.click();
-	await clickSave(page);
+	await clickSaveFn(page);
 
 	await expect(page.locator('[data-ui="PriceTypePatch"]')).toBeVisible();
 	await page.locator('[data-action="select price type fixed"]').click();
-	await clickSave(page);
+	await clickSaveFn(page);
 
 	await expect(page.locator('[data-ui="PricePatch"]')).toBeVisible();
 	await page.locator('[data-action="dial clear"]').click();
 	await page.locator('[data-action="dial digit 1"]').click();
 	await page.locator('[data-action="dial digit 2"]').click();
 	await page.locator('[data-action="dial digit 3"]').click();
-	await clickSave(page);
+	await clickSaveFn(page);
 
 	await expect(page.locator('[data-ui="ExpireAtPatch"]')).toBeVisible();
 	await page.locator('[data-action="select expiration 7-days"]').click();
-	await clickSave(page);
+	await clickSaveFn(page);
 
 	await expect(page.locator('[data-ui="DraftEditor[TitleContainer]"]')).toBeVisible();
 	await expect(page.locator('[data-action="publish draft"]')).toBeEnabled();

@@ -1,10 +1,10 @@
-import { uiMenuButton } from "~/application-ui/fn/ui.exports";
+import { uiMenuButtonFn } from "~/application-ui/fn/ui.exports";
 import { TypoIcon } from "~/application-ui/ui/typo.exports";
 import { useLocale } from "~/locale/hook/useLocale";
 import { Tx } from "~/translation/ui/Tx";
 import { ChevronRightIcon } from "~/ui/constant/ChevronRightIcon";
 import { MessageIcon } from "~/ui/constant/MessageIcon";
-import { withFallback } from "~/ui/fn/withFallback";
+import { withFallbackFn } from "~/ui/fn/withFallbackFn";
 import type { MarkSuspense } from "~/ui/type/MarkSuspense";
 import { Container } from "~/ui/ui/Container";
 import { Group } from "~/ui/ui/Group";
@@ -17,7 +17,7 @@ export namespace MessageLink {
 	}
 }
 
-export const MessageLink = withFallback(
+export const MessageLink = withFallbackFn(
 	({ _suspense, iconProps, ...props }: MessageLink.Props) => {
 		const locale = useLocale();
 
@@ -51,14 +51,14 @@ export const MessageLink = withFallback(
 						params={{
 							locale,
 						}}
-						activeProps={uiMenuButton({
+						activeProps={uiMenuButtonFn({
 							"data-ui-flow": "horizontal",
 							"data-ui-justify": "center",
 							"data-ui-items": "center",
 							"data-ui-tone": "primary",
 							"data-ui-theme": "light",
 						})}
-						{...uiMenuButton({
+						{...uiMenuButtonFn({
 							"data-ui-flow": "horizontal",
 							"data-ui-justify": "center",
 							"data-ui-items": "center",
@@ -78,14 +78,14 @@ export const MessageLink = withFallback(
 						params={{
 							locale,
 						}}
-						activeProps={uiMenuButton({
+						activeProps={uiMenuButtonFn({
 							"data-ui-flow": "horizontal",
 							"data-ui-justify": "center",
 							"data-ui-items": "center",
 							"data-ui-tone": "primary",
 							"data-ui-theme": "light",
 						})}
-						{...uiMenuButton({
+						{...uiMenuButtonFn({
 							"data-ui-flow": "horizontal",
 							"data-ui-justify": "center",
 							"data-ui-items": "center",
@@ -132,14 +132,14 @@ export const MessageLink = withFallback(
 						params={{
 							locale,
 						}}
-						activeProps={uiMenuButton({
+						activeProps={uiMenuButtonFn({
 							"data-ui-flow": "horizontal",
 							"data-ui-justify": "center",
 							"data-ui-items": "center",
 							"data-ui-tone": "primary",
 							"data-ui-theme": "light",
 						})}
-						{...uiMenuButton({
+						{...uiMenuButtonFn({
 							"data-ui-flow": "horizontal",
 							"data-ui-justify": "center",
 							"data-ui-items": "center",
@@ -159,14 +159,14 @@ export const MessageLink = withFallback(
 						params={{
 							locale,
 						}}
-						activeProps={uiMenuButton({
+						activeProps={uiMenuButtonFn({
 							"data-ui-flow": "horizontal",
 							"data-ui-justify": "center",
 							"data-ui-items": "center",
 							"data-ui-tone": "primary",
 							"data-ui-theme": "light",
 						})}
-						{...uiMenuButton({
+						{...uiMenuButtonFn({
 							"data-ui-flow": "horizontal",
 							"data-ui-justify": "center",
 							"data-ui-items": "center",

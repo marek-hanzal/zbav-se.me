@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { getFeedDefaultCreate } from "~/buyer-feed/service/getFeedDefaultCreate";
+import { getFeedDefaultCreateFn } from "~/buyer-feed/service/getFeedDefaultCreateFn";
 
 describe("getFeedDefaultCreate", () => {
 	it("allows overriding the feed type", () => {
-		const feed = getFeedDefaultCreate("Search Feed", "search");
+		const feed = getFeedDefaultCreateFn("Search Feed", "search");
 
 		expect(feed.type).toBe("search");
 		expect(feed.name).toBe("Search Feed");

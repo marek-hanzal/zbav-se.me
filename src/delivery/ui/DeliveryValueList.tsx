@@ -29,10 +29,10 @@ export const DeliveryValueList: FC<DeliveryValueList.Props> = ({ deliveryIn, ...
 	return (
 		<ValueList
 			data-ui={"DeliveryValueList"}
-			textLabel={translator.text("Feed delivery (label)")}
-			textEmpty={translator.text("Feed delivery not selected")}
+			textLabel={translator.textFn("Feed delivery (label)")}
+			textEmpty={translator.textFn("Feed delivery not selected")}
 			items={items}
-			renderFn={(item) => translator.text(`Listing delivery - ${item.delivery}`)}
+			renderFn={(item) => translator.textFn(`Listing delivery - ${item.delivery}`)}
 			{...props}
 		/>
 	);

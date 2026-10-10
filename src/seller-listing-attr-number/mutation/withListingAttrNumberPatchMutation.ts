@@ -1,15 +1,15 @@
 import { withListingAttrOfQuery } from "~/listing-attr/query/withListingAttrOfQuery";
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withMutation } from "~/mutation/fn/withMutation";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withMutationFn } from "~/mutation/fn/withMutationFn";
 import { listingAttrNumberPatchFn } from "~/seller-listing-attr-number/fn/listingAttrNumberPatchFn";
 import type { ListingAttrNumberPatchSchema } from "~/seller-listing-attr-number/schema/ListingAttrNumberPatchSchema";
 
-export const withListingAttrNumberPatchMutation = withMutation({
-	logger: getRootLogger([
+export const withListingAttrNumberPatchMutation = withMutationFn({
+	logger: getRootLoggerFn([
 		"mutation",
 		"withListingAttrNumberPatchMutation",
 	]),
-	keys(variables: ListingAttrNumberPatchSchema.Type) {
+	keysFn(variables: ListingAttrNumberPatchSchema.Type) {
 		return [
 			"listing-attr",
 			"number",

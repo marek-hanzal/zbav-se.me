@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { computeBuyerScore } from "~/seller-user-event/fx/userEventBuyerInfoFx";
+import { computeBuyerScoreFn } from "~/seller-user-event/fx/userEventBuyerInfoFx";
 
 describe("userEventBuyerInfoFx activity/load", () => {
 	it("adds activity and load bonuses to the buyer score", () => {
-		const weak = computeBuyerScore({
+		const weak = computeBuyerScoreFn({
 			reaction: {
 				total: 0,
 				reactions: 0,
@@ -37,7 +37,7 @@ describe("userEventBuyerInfoFx activity/load", () => {
 				bucket: "high",
 			},
 		});
-		const strong = computeBuyerScore({
+		const strong = computeBuyerScoreFn({
 			reaction: {
 				total: 0,
 				reactions: 0,

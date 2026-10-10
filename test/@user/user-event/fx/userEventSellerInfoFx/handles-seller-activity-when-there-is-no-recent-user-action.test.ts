@@ -2,10 +2,10 @@ import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import { userEventSellerInfoFx } from "~/buyer-user-event/fx/userEventSellerInfoFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { createTransactionTimeline } from "~/test/user-event/fx/createTransactionTimeline";
+import { createTransactionTimelineFn } from "~/test/user-event/fx/createTransactionTimelineFn";
 import { seedUserEventTimelineFx } from "~/test/user-event/fx/seedUserEventTimelineFx";
 
 interface SeedSellerEventsProps {
@@ -15,14 +15,14 @@ interface SeedSellerEventsProps {
 	withUserAction?: boolean;
 }
 
-const _createLoadEvents = ({
+const _createLoadEventsFn = ({
 	activeTransactions,
 	userId,
 }: Pick<SeedSellerEventsProps, "activeTransactions" | "userId">) =>
 	Array.from({
 		length: activeTransactions,
 	}).flatMap((_, index) =>
-		createTransactionTimeline({
+		createTransactionTimelineFn({
 			group: `tx-${userId}-${index}`,
 			steps: [
 				{
@@ -41,7 +41,7 @@ describe("userEventSellerInfoFx", {
 	timeout: 4_000,
 }, () => {
 	it("handles seller activity when there is no recent user action", async () => {
-		const database = await testabase("userEventSellerInfoFx-activity-none");
+		const database = await testabaseFn("userEventSellerInfoFx-activity-none");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -52,7 +52,7 @@ describe("userEventSellerInfoFx", {
 					...Array.from({
 						length: 2,
 					}).flatMap((_, index) =>
-						createTransactionTimeline({
+						createTransactionTimelineFn({
 							group: `tx-${seller.id}-no-activity-${index}`,
 							steps: [
 								{
@@ -75,6 +75,6 @@ describe("userEventSellerInfoFx", {
 
 			expect(noActivity?.load.bucket).toBe("medium");
 			expect(noActivity?.activity.bucket).toBe("low");
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

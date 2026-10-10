@@ -15,7 +15,7 @@ export const Route = createFileRoute("/$locale/app/buyer/feed/list")({
 		return (
 			<TitleContainer
 				data-ui={"FeedList[TitleContainer]"}
-				textTitle={translator.text("Feed select (title)")}
+				textTitle={translator.textFn("Feed select (title)")}
 				left={
 					<BackHomeButton
 						to="/$locale/app/home"

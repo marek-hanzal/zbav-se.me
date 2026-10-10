@@ -1,15 +1,15 @@
 import { withListingAttrOfQuery } from "~/listing-attr/query/withListingAttrOfQuery";
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withMutation } from "~/mutation/fn/withMutation";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withMutationFn } from "~/mutation/fn/withMutationFn";
 import { listingAttrEnumMultiPatchFn } from "~/seller-listing-attr-enum-multi/fn/listingAttrEnumMultiPatchFn";
 import type { ListingAttrEnumMultiPatchSchema } from "~/seller-listing-attr-enum-multi/schema/ListingAttrEnumMultiPatchSchema";
 
-export const withListingAttrEnumMultiPatchMutation = withMutation({
-	logger: getRootLogger([
+export const withListingAttrEnumMultiPatchMutation = withMutationFn({
+	logger: getRootLoggerFn([
 		"mutation",
 		"withListingAttrEnumMultiPatchMutation",
 	]),
-	keys(variables: ListingAttrEnumMultiPatchSchema.Type) {
+	keysFn(variables: ListingAttrEnumMultiPatchSchema.Type) {
 		return [
 			"listing-attr",
 			"enum-multi",

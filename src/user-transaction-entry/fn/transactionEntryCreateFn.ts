@@ -1,12 +1,12 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
-import { withKyselyFx } from "~/database/fx/withKyselyFx";
-import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
-import { withLoggerFx } from "~/log/fx/withLoggerFx";
+import { withKyselyFn } from "~/database/fn/withKyselyFn";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
+import { withLoggerFn } from "~/log/fn/withLoggerFn";
 import { withDatabaseMiddleware } from "~/request-middleware/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/request-middleware/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/request-middleware/middleware/withUserMiddleware";
-import { withTransactionContextFx } from "~/user-transaction/context/withTransactionContextFx";
+import { withTransactionContextFn } from "~/user-transaction/fn/withTransactionContextFn";
 import { transactionEntryCreateFx } from "~/user-transaction-entry/fx/transactionEntryCreateFx";
 import { TransactionEntrySchema } from "~/user-transaction-entry/schema/TransactionEntry";
 import { TransactionEntryCreateSchema } from "~/user-transaction-entry/schema/TransactionEntryCreate";
@@ -39,10 +39,10 @@ export const transactionEntryCreateFn = createServerFn({
 				userId: user.id,
 			}),
 		}).pipe(
-			withKyselyFx(database),
-			withDateServiceFx(),
-			withTransactionContextFx(),
-			withLoggerFx(rootLogger),
+			withKyselyFn(database),
+			withDateServiceFn(),
+			withTransactionContextFn(),
+			withLoggerFn(rootLogger),
 			Effect.tapError((error) => {
 				return Effect.sync(() => {
 					logger.error(error._tag, {

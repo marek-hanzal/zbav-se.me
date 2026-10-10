@@ -1,9 +1,9 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
-import { uiCtaLinkButton } from "~/application-ui/fn/ui.exports";
+import { uiCtaLinkButtonFn } from "~/application-ui/fn/ui.exports";
 import { FlowContainer } from "~/application-ui/ui/container.exports";
 import { Logo } from "~/application-ui/ui/logo.exports";
 import { useLocale } from "~/locale/hook/useLocale";
-import { translator as coolTranslator } from "~/translation/fn/translator";
+import { translatorFn as coolTranslatorFn } from "~/translation/fn/translatorFn";
 import { useTranslator } from "~/translation/hook/useTranslator";
 import { withTranslationsQuery } from "~/translation/query/withTranslationsQuery";
 import { Tx } from "~/translation/ui/Tx";
@@ -14,7 +14,7 @@ import { Status } from "~/ui/ui/Status";
 
 export const Route = createFileRoute("/$locale/z/$id/unavailable")({
 	async loader({ context: { queryClient }, params: { locale } }) {
-		const translations = await withTranslationsQuery.ensure(queryClient, {
+		const translations = await withTranslationsQuery.ensureFn(queryClient, {
 			locale,
 		});
 
@@ -27,18 +27,18 @@ export const Route = createFileRoute("/$locale/z/$id/unavailable")({
 			return {};
 		}
 
-		const translator = coolTranslator({
+		const translator = coolTranslatorFn({
 			translations: loaderData.translations,
 		});
 
 		return {
 			meta: [
 				{
-					title: `${translator.text("Listing unavailable (title)")} | ${translator.text("zbav-se.me")}`,
+					title: `${translator.textFn("Listing unavailable (title)")} | ${translator.textFn("zbav-se.me")}`,
 				},
 				{
 					name: "description",
-					content: translator.text("Listing unavailable (description)"),
+					content: translator.textFn("Listing unavailable (description)"),
 				},
 			],
 		};
@@ -83,8 +83,8 @@ export const Route = createFileRoute("/$locale/z/$id/unavailable")({
 						iconProps={{
 							"data-ui-text": "4xl",
 						}}
-						textTitle={translator.text("Listing unavailable (title)")}
-						textMessage={translator.text("Listing unavailable (message)")}
+						textTitle={translator.textFn("Listing unavailable (title)")}
+						textMessage={translator.textFn("Listing unavailable (message)")}
 						messageProps={{
 							className: "text-center",
 						}}
@@ -109,7 +109,7 @@ export const Route = createFileRoute("/$locale/z/$id/unavailable")({
 										import.meta.env.VITE_ORIGIN,
 									).toString(),
 								}}
-								{...uiCtaLinkButton({})}
+								{...uiCtaLinkButtonFn({})}
 							>
 								<Tx label="Go to sign-in (label)" />
 							</LinkTo>

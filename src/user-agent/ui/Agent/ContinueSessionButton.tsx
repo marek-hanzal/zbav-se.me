@@ -2,13 +2,13 @@ import type { FC } from "react";
 import { useLocale } from "~/locale/hook/useLocale";
 import { Tx } from "~/translation/ui/Tx";
 import { ArrowRightIcon } from "~/ui/constant/ArrowRightIcon";
-import { uiButton } from "~/ui/fn/uiButton";
-import type { uiLinkTo } from "~/ui/fn/uiLinkTo";
+import { uiButtonFn } from "~/ui/fn/uiButtonFn";
+import type { uiLinkToFn } from "~/ui/fn/uiLinkToFn";
 import { LinkTo } from "~/ui/ui/LinkTo";
 
 export namespace ContinueSessionButton {
 	export interface Props
-		extends uiLinkTo.Component<Pick<LinkTo.Props, "iconProps" | "ref" | "id" | "onKeyDown">> {
+		extends uiLinkToFn.Component<Pick<LinkTo.Props, "iconProps" | "ref" | "id" | "onKeyDown">> {
 		//
 	}
 }
@@ -27,7 +27,7 @@ export const ContinueSessionButton: FC<ContinueSessionButton.Props> = ({ ...prop
 			params={{
 				locale,
 			}}
-			{...uiButton({
+			{...uiButtonFn({
 				"data-ui-items": "center",
 				"data-ui-justify": "center",
 				"data-ui-tone": "neutral",

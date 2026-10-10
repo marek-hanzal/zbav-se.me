@@ -3,7 +3,7 @@ import { withListingSellerInfoQuery } from "~/buyer-listing/query/withListingSel
 import { Header } from "~/buyer-listing/ui/SellerInfo/Header";
 import { Score } from "~/buyer-listing/ui/SellerInfo/Score";
 import { useTranslator } from "~/translation/hook/useTranslator";
-import { withFallback } from "~/ui/fn/withFallback";
+import { withFallbackFn } from "~/ui/fn/withFallbackFn";
 import type { MarkSuspense } from "~/ui/type/MarkSuspense";
 import { Container } from "~/ui/ui/Container";
 import { Group } from "~/ui/ui/Group";
@@ -22,7 +22,7 @@ export namespace SellerInfo {
  *
  * @see src/listing/ui/SellerInfoButton.tsx
  */
-export const SellerInfo = withFallback(({ _suspense, listingId, ...props }: SellerInfo.Props) => {
+export const SellerInfo = withFallbackFn(({ _suspense, listingId, ...props }: SellerInfo.Props) => {
 	const translator = useTranslator();
 	const { data: sellerInfo } = withListingSellerInfoQuery.useSuspenseQuery({
 		id: listingId,
@@ -44,8 +44,8 @@ export const SellerInfo = withFallback(({ _suspense, listingId, ...props }: Sell
 			) : (
 				<Status
 					icon={SearchIcon}
-					textTitle={translator.text("Listing seller info not available (title)")}
-					textMessage={translator.text("Listing seller info not available (message)")}
+					textTitle={translator.textFn("Listing seller info not available (title)")}
+					textMessage={translator.textFn("Listing seller info not available (message)")}
 					data-ui-tone="brand"
 					data-ui-theme="light"
 					data-ui-inner="2xl"

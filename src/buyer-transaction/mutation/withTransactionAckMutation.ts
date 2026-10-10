@@ -1,7 +1,7 @@
 import { transactionAckFn } from "~/buyer-transaction/fn/transactionAckFn";
 import { withTransactionQuery } from "~/buyer-transaction/query/withTransactionQuery";
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withMutation } from "~/mutation/fn/withMutation";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withMutationFn } from "~/mutation/fn/withMutationFn";
 import { withActivityQuery } from "~/user-activity/query/withActivityQuery";
 
 export namespace withTransactionAckMutation {
@@ -11,16 +11,16 @@ export namespace withTransactionAckMutation {
 	}
 }
 
-export const withTransactionAckMutation = withMutation<
+export const withTransactionAckMutation = withMutationFn<
 	withTransactionAckMutation.Variables,
 	unknown,
 	transactionAckFn.Error
 >({
-	logger: getRootLogger([
+	logger: getRootLoggerFn([
 		"mutation",
 		"withTransactionAckMutation",
 	]),
-	keys(variables) {
+	keysFn(variables) {
 		return [
 			"buyer",
 			"transaction",
@@ -35,14 +35,14 @@ export const withTransactionAckMutation = withMutation<
 	},
 	invalidate: [
 		{
-			async invalidate(queryClient) {
+			async invalidateFn(queryClient) {
 				await Promise.all([
-					withTransactionQuery.invalidator(queryClient, [
+					withTransactionQuery.invalidatorFn(queryClient, [
 						"fetch",
 						"collection",
 						"count",
 					]),
-					withActivityQuery.invalidator(queryClient, [
+					withActivityQuery.invalidatorFn(queryClient, [
 						"collection",
 						"count",
 					]),

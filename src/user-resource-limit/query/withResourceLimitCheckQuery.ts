@@ -1,17 +1,17 @@
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withQuery } from "~/query/fn/withQuery";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withQueryFn } from "~/query/fn/withQueryFn";
 import { resourceLimitCheckFn } from "~/user-resource-limit/fn/resourceLimitCheckFn";
 import type { ResourceLimitCheckSchema } from "~/user-resource-limit/schema/ResourceLimitCheckSchema";
 
-export const withResourceLimitCheckQuery = withQuery({
-	logger: getRootLogger([
+export const withResourceLimitCheckQuery = withQueryFn({
+	logger: getRootLoggerFn([
 		"query",
 		"withResourceLimitCheckQuery",
 	]),
 	errors: {} as {
 		query: resourceLimitCheckFn.Error;
 	},
-	keys() {
+	keysFn() {
 		return [
 			"resource",
 			"limit",

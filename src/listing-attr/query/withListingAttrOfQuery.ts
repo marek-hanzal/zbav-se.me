@@ -1,6 +1,6 @@
 import { listingAttrOfFn } from "~/listing-attr/fn/listingAttrOfFn";
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withQuery } from "~/query/fn/withQuery";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withQueryFn } from "~/query/fn/withQueryFn";
 
 export namespace withListingAttrOfQuery {
 	export interface Data {
@@ -10,15 +10,15 @@ export namespace withListingAttrOfQuery {
 	}
 }
 
-export const withListingAttrOfQuery = withQuery({
-	logger: getRootLogger([
+export const withListingAttrOfQuery = withQueryFn({
+	logger: getRootLoggerFn([
 		"query",
 		"withListingAttrOfQuery",
 	]),
 	errors: {} as {
 		query: listingAttrOfFn.Error;
 	},
-	keys(data: withListingAttrOfQuery.Data) {
+	keysFn(data: withListingAttrOfQuery.Data) {
 		return [
 			"listing-attr-of",
 			data,

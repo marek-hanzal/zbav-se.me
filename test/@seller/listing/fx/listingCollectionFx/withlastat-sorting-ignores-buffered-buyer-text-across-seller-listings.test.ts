@@ -1,15 +1,15 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { listingCollectionFx } from "~/seller-listing/fx/listingCollectionFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { transactionEntryCreateFx } from "~/user-transaction-entry/fx/transactionEntryCreateFx";
 
 describe("listingCollectionFx (seller dashboard transactions)", () => {
 	it("withLastAt sorting ignores buffered buyer text across seller listings", async () => {
-		const database = await testabase("listing-lastAt-interest-buffer");
+		const database = await testabaseFn("listing-lastAt-interest-buffer");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -60,6 +60,6 @@ describe("listingCollectionFx (seller dashboard transactions)", () => {
 			expect(olderItem?.withLastAt?.getTime()).toBeLessThan(
 				hiddenTextEntry.createdAt.getTime(),
 			);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

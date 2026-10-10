@@ -20,7 +20,7 @@ export const Route = createFileRoute("/$locale/app/buyer/transaction/list")({
 		return (
 			<TitleContainer
 				data-ui="TransactionList[TitleContainer]"
-				textTitle={translator.text("Messages (title)")}
+				textTitle={translator.textFn("Messages (title)")}
 				left={
 					<BackHomeButton
 						to="/$locale/app/home"
@@ -50,10 +50,10 @@ export const Route = createFileRoute("/$locale/app/buyer/transaction/list")({
 		const check = useMemo(() => {
 			return [
 				{
-					check() {
+					checkFn() {
 						return !hasTransaction.length;
 					},
-					render() {
+					renderFn() {
 						return <Empty />;
 					},
 				},
@@ -65,7 +65,7 @@ export const Route = createFileRoute("/$locale/app/buyer/transaction/list")({
 		return (
 			<TitleContainer
 				data-ui="TransactionList[TitleContainer]"
-				textTitle={translator.text("Messages (title)")}
+				textTitle={translator.textFn("Messages (title)")}
 				left={
 					<BackHomeButton
 						to="/$locale/app/home"
@@ -85,7 +85,7 @@ export const Route = createFileRoute("/$locale/app/buyer/transaction/list")({
 						data-ui-inner="default"
 					>
 						<ListGroup
-							label={translator.text(
+							label={translator.textFn(
 								"Transactions - seller-to-buyer - buyer (title)",
 							)}
 							where={{
@@ -99,7 +99,7 @@ export const Route = createFileRoute("/$locale/app/buyer/transaction/list")({
 						/>
 
 						<ListGroup
-							label={translator.text(
+							label={translator.textFn(
 								"Transactions - buyer-to-seller - buyer (title)",
 							)}
 							where={{
@@ -115,7 +115,7 @@ export const Route = createFileRoute("/$locale/app/buyer/transaction/list")({
 						/>
 
 						<ListGroup
-							label={translator.text("Transactions - archived - buyer (title)")}
+							label={translator.textFn("Transactions - archived - buyer (title)")}
 							where={{
 								flow: "archived",
 								activity: "archived",

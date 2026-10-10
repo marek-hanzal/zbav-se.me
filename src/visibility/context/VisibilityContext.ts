@@ -1,4 +1,4 @@
 import { createContext } from "react";
-import type { createVisibilityStore } from "~/visibility/fn/createVisibilityStore";
+import type { createVisibilityStoreFn } from "~/visibility/fn/createVisibilityStoreFn";
 
-export const VisibilityContext = createContext<createVisibilityStore.Hook | null>(null);
+export const VisibilityContext = createContext<createVisibilityStoreFn.Hook | null>(null);

@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
-import { withKyselyFx } from "~/database/fx/withKyselyFx";
-import { withLoggerFx } from "~/log/fx/withLoggerFx";
+import { withKyselyFn } from "~/database/fn/withKyselyFn";
+import { withLoggerFn } from "~/log/fn/withLoggerFn";
 import { withDatabaseMiddleware } from "~/request-middleware/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/request-middleware/middleware/withLogMiddleware";
 import { fieldOptionCountFx } from "~/user-field-option/fx/fieldOptionCountFx";
@@ -29,5 +29,5 @@ export const fieldOptionCountFn = createServerFn()
 			scope: {
 				// options scoped to field
 			},
-		}).pipe(withKyselyFx(database), withLoggerFx(rootLogger), Effect.runPromise);
+		}).pipe(withKyselyFn(database), withLoggerFn(rootLogger), Effect.runPromise);
 	});

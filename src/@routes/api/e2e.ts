@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { DialectStore } from "~/database/service/DialectStore";
-import { withDatabaseName } from "~/database-query/fn/withDatabaseName";
+import { withDatabaseNameFn } from "~/database-query/fn/withDatabaseNameFn";
 import { ServerDatabaseSchema } from "~/server-env/schema/ServerDatabaseSchema";
 import { ServerE2eSchema } from "~/server-env/schema/ServerE2eSchema";
 
@@ -43,13 +43,13 @@ export const Route = createFileRoute("/api/e2e")({
 				}
 
 				const databaseConfig = ServerDatabaseSchema.parse(process.env);
-				const dsn = withDatabaseName({
+				const dsn = withDatabaseNameFn({
 					dsn: databaseConfig.SERVER_DATABASE_URL,
 					name: db,
 				});
 
 				return Response.json({
-					closed: await DialectStore.close(dsn),
+					closed: await DialectStore.closeFn(dsn),
 				});
 			},
 		},

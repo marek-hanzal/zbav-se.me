@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import type { ListingSchema } from "~/buyer-listing/schema/ListingSchema";
-import { toTimeDiff } from "~/date/fn/toTimeDiff";
+import { toTimeDiffFn } from "~/date/fn/toTimeDiffFn";
 import { ListItem } from "~/list-item/ui/ListItem";
 import { useLocale } from "~/locale/hook/useLocale";
 import { Typo } from "~/ui/ui/Typo";
@@ -41,7 +41,7 @@ export const Item: FC<Item.Props> = ({ listing }) => {
 			}
 			bottom={
 				<Typo
-					label={toTimeDiff({
+					label={toTimeDiffFn({
 						locale,
 						time: listing.updatedAt,
 					})}

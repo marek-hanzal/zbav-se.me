@@ -3,7 +3,7 @@ import { match } from "ts-pattern";
 import type { FavouriteSortSchema } from "~/buyer-listing-favourite/schema/FavouriteSortSchema";
 import type { FavouriteWhereSchema } from "~/buyer-listing-favourite/schema/FavouriteWhereSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { selectFx } from "~/database-query/fx/selectFx";
+import { selectFn } from "~/database-query/fn/selectFn";
 
 export namespace withFavouriteSelectFx {
 	export interface Props {
@@ -24,7 +24,7 @@ export const withFavouriteSelectFx = Effect.fn("withFavouriteSelectFx")(function
 			.exhaustive();
 	}
 
-	return selectFx({
+	return selectFn({
 		select: query.selectAll("f"),
 		queryFx(select, where: FavouriteWhereSchema.Type) {
 			return Effect.gen(function* () {

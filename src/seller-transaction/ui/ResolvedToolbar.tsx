@@ -7,15 +7,15 @@ import type { TransactionMenuButton } from "~/user-transaction/ui/TransactionMen
 
 export namespace ResolvedToolbar {
 	export interface Props {
-		close: TransactionMenuButton.Close;
+		closeFn: TransactionMenuButton.Close;
 		transaction: TransactionSchema.Type;
 	}
 }
 
-export const ResolvedToolbar: FC<ResolvedToolbar.Props> = ({ close, transaction }) => (
+export const ResolvedToolbar: FC<ResolvedToolbar.Props> = ({ closeFn, transaction }) => (
 	<Group>
 		<DisputeButton
-			close={close}
+			closeFn={closeFn}
 			transaction={transaction}
 			{...TransactionButtonUi}
 		/>

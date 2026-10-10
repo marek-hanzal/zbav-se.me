@@ -16,7 +16,7 @@ export const withListingBucketsFx = Effect.fn("withListingBucketsFx")(function* 
 	day,
 }: withListingBucketsFx.Props) {
 	const dateContext = yield* DateServiceFx;
-	const currentNow = now ?? dateContext.now();
+	const currentNow = now ?? dateContext.nowFn();
 	const limit = 50_000;
 	const daySql = sql<string>`to_char(date_trunc('day', timezone('UTC', ${sql.ref("l.visibleAt")})), 'YYYY-MM-DD')`;
 	const { select, queryFx } = yield* withListingSelectFx({

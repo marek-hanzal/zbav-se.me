@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { testUploadUrl } from "~/test/common/fn/testUploadUrl";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { testUploadUrlFn } from "~/test/common/fn/testUploadUrlFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 import { galleryInsertFx } from "~/user-gallery/fx/galleryInsertFx";
 import { galleryItemCollectionFx } from "~/user-gallery-item/fx/galleryItemCollectionFx";
@@ -13,7 +13,7 @@ import { uploadCreateFx } from "~/user-upload/fx/uploadCreateFx";
 
 describe("galleryItemCollectionFx", () => {
 	it("filters by gallery, owner scope and ids while keeping count consistent", async () => {
-		const database = await testabase("galleryItemCollectionFx-contract");
+		const database = await testabaseFn("galleryItemCollectionFx-contract");
 
 		return Effect.gen(function* () {
 			const { seller, buyer, stranger } = yield* createUsersFx({});
@@ -21,17 +21,17 @@ describe("galleryItemCollectionFx", () => {
 			const sellerFirstUpload = yield* uploadCreateFx({
 				access: "private",
 				userId: seller.id,
-				url: testUploadUrl("gallery-item-collection-1.jpg"),
+				url: testUploadUrlFn("gallery-item-collection-1.jpg"),
 			});
 			const sellerSecondUpload = yield* uploadCreateFx({
 				access: "private",
 				userId: seller.id,
-				url: testUploadUrl("gallery-item-collection-2.jpg"),
+				url: testUploadUrlFn("gallery-item-collection-2.jpg"),
 			});
 			const buyerUpload = yield* uploadCreateFx({
 				access: "private",
 				userId: buyer.id,
-				url: testUploadUrl("gallery-item-collection-3.jpg"),
+				url: testUploadUrlFn("gallery-item-collection-3.jpg"),
 			});
 
 			const sellerGallery = yield* galleryInsertFx({
@@ -137,6 +137,6 @@ describe("galleryItemCollectionFx", () => {
 			expect(strangerItems).toEqual([]);
 			expect(buyerOwnItems).toHaveLength(1);
 			expect(buyerOwnItems[0]?.upload.id).toBe(buyerUpload.id);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

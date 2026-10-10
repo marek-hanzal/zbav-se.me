@@ -10,14 +10,14 @@ import { Container } from "~/ui/ui/Container";
 export namespace AgePatch {
 	export interface Props extends Container.Props {
 		feed: FeedSchema.Type;
-		onSettled?(): void;
-		onCancel(): void;
+		onSettledFn?(): void;
+		onCancelFn(): void;
 	}
 }
 
-export const AgePatch: FC<AgePatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
+export const AgePatch: FC<AgePatch.Props> = ({ feed, onSettledFn, onCancelFn, ...props }) => {
 	const patchMutation = withFeedQuery.usePatchMutation({
-		onSettled,
+		onSettled: onSettledFn,
 	});
 	const selection = useSelection<Rating.RatingItem>({
 		mode: "multi",
@@ -45,8 +45,8 @@ export const AgePatch: FC<AgePatch.Props> = ({ feed, onSettled, onCancel, ...pro
 			/>
 
 			<SaveContainer
-				onCancel={onCancel}
-				onSave={() => {
+				onCancelFn={onCancelFn}
+				onSaveFn={() => {
 					patchMutation.mutate({
 						query: {
 							where: {
@@ -59,7 +59,7 @@ export const AgePatch: FC<AgePatch.Props> = ({ feed, onSettled, onCancel, ...pro
 								where: {
 									...feed.query?.where,
 									ageIn: selection.optional
-										.multiId()
+										.multiIdFn()
 										.map((id) => Number.parseInt(id, 10)),
 								},
 							},

@@ -1,8 +1,8 @@
 import { Effect } from "effect";
-import { auth } from "~/authentication/fn/auth";
+import { authFn } from "~/authentication/fn/authFn";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { dbFx } from "~/database/fx/dbFx";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import { RuntimeErrorFx } from "~/server-error/error/RuntimeErrorFx";
 import { withTranslatorFx } from "~/translator/fx/withTranslatorFx";
 
@@ -27,8 +27,8 @@ export const ensureSeedUserFx = Effect.fn("ensureSeedUserFx")(function* ({
 		return current;
 	}
 
-	const { api } = auth({
-		dialect: () => dialect,
+	const { api } = authFn({
+		dialectFn: () => dialect,
 		translator: yield* withTranslatorFx({
 			locale: "cs",
 		}),
@@ -39,7 +39,7 @@ export const ensureSeedUserFx = Effect.fn("ensureSeedUserFx")(function* ({
 			await api.signUpEmail({
 				body: {
 					email,
-					name: `seed-${genId().slice(0, 8)}`,
+					name: `seed-${genIdFn().slice(0, 8)}`,
 					password: SEED_USER_PASSWORD,
 				},
 			});

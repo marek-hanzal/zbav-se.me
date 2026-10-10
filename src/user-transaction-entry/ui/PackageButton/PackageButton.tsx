@@ -10,28 +10,28 @@ import { PackageControl } from "~/user-transaction-entry/ui/PackageButton/Packag
 
 export namespace PackageButton {
 	export interface Props extends Button.Props {
-		close?: TransactionMenuButton.Close;
+		closeFn?: TransactionMenuButton.Close;
 		transactionId: string;
-		onPostMutation?(): Promise<void>;
+		onPostMutationFn?(): Promise<void>;
 	}
 }
 
 export const PackageButton: FC<PackageButton.Props> = ({
-	close,
+	closeFn,
 	transactionId,
-	onPostMutation,
+	onPostMutationFn,
 	...props
 }) => {
-	const [isOpen, setIsOpen] = useState(false);
+	const [isOpen, setIsOpenFn] = useState(false);
 	const mutation = withTransactionEntryQuery.useCreateMutation({
 		invalidate: [
 			"collection",
 			"count",
 		],
-		async onPostMutation() {
-			await onPostMutation?.();
-			setIsOpen(false);
-			close?.();
+		async onPostMutationFn() {
+			await onPostMutationFn?.();
+			setIsOpenFn(false);
+			closeFn?.();
 		},
 	});
 
@@ -41,7 +41,7 @@ export const PackageButton: FC<PackageButton.Props> = ({
 				data-ui="PackageButton[Button]"
 				iconEnabled={SendPackageIcon}
 				onClick={() => {
-					setIsOpen(true);
+					setIsOpenFn(true);
 				}}
 				{...props}
 			>
@@ -51,20 +51,20 @@ export const PackageButton: FC<PackageButton.Props> = ({
 			<BottomSheet
 				isOpen={isOpen}
 				onClose={() => {
-					setIsOpen(false);
+					setIsOpenFn(false);
 				}}
 				detent={"full"}
 				withHeader
-				header={() => ({
+				headerFn={() => ({
 					title: "Share package (title)",
 				})}
 			>
 				<PackageControl
 					data-ui="PackageButton[PackageControl]"
-					onCancel={() => {
-						setIsOpen(false);
+					onCancelFn={() => {
+						setIsOpenFn(false);
 					}}
-					onSave={async (payload) => {
+					onSaveFn={async (payload) => {
 						return mutation.mutateAsync({
 							transactionId,
 							kind: "package",

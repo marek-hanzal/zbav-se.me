@@ -2,7 +2,7 @@ import type { FC } from "react";
 import { z } from "zod";
 import { useAppForm } from "~/application-ui/hook/form.exports";
 import { CloseButton } from "~/application-ui/ui/button.exports";
-import { onSubmit } from "~/form/fn/onSubmit";
+import { onSubmitFn } from "~/form/fn/onSubmitFn";
 import { FormField } from "~/form/ui/FormField";
 import { useTranslator } from "~/translation/hook/useTranslator";
 import { Tx } from "~/translation/ui/Tx";
@@ -20,17 +20,17 @@ const useFormSchema = () => {
 			current: z.string().min(1),
 			password: z.string().min(8, {
 				error() {
-					return translator.text("Password must be at least 8 characters");
+					return translator.textFn("Password must be at least 8 characters");
 				},
 			}),
 			confirmPassword: z.string().min(1, {
 				error() {
-					return translator.text("Password confirmation is required");
+					return translator.textFn("Password confirmation is required");
 				},
 			}),
 		})
 		.refine((data) => data.password === data.confirmPassword, {
-			message: translator.text("Passwords do not match"),
+			message: translator.textFn("Passwords do not match"),
 			path: [
 				"confirmPassword",
 			],
@@ -52,7 +52,7 @@ export const ChangePasswordSheet: FC<ChangePasswordSheet.Props> = ({ state, ...p
 
 	const mutation = withPasswordChangeMutation.useMutation({
 		onSuccess() {
-			state.set(false);
+			state.setFn(false);
 		},
 	});
 
@@ -65,7 +65,7 @@ export const ChangePasswordSheet: FC<ChangePasswordSheet.Props> = ({ state, ...p
 		validators: {
 			onSubmit: schema,
 		},
-		onSubmit: onSubmit({
+		onSubmit: onSubmitFn({
 			mutation,
 		}),
 	});
@@ -74,11 +74,11 @@ export const ChangePasswordSheet: FC<ChangePasswordSheet.Props> = ({ state, ...p
 		<BottomSheet
 			isOpen={state.value}
 			onClose={() => {
-				state.set(false);
+				state.setFn(false);
 			}}
-			header={({ close }) => ({
-				title: translator.text("Change password (title)"),
-				right: <CloseButton onClick={close} />,
+			headerFn={({ closeFn }) => ({
+				title: translator.textFn("Change password (title)"),
+				right: <CloseButton onClick={closeFn} />,
 			})}
 			{...props}
 		>
@@ -107,7 +107,7 @@ export const ChangePasswordSheet: FC<ChangePasswordSheet.Props> = ({ state, ...p
 									<field.TextInput
 										type={"password"}
 										autoFocus
-										placeholder={translator.text(
+										placeholder={translator.textFn(
 											"Enter you current password (placeholder)",
 										)}
 										value={field.state.value ?? ""}
@@ -135,7 +135,7 @@ export const ChangePasswordSheet: FC<ChangePasswordSheet.Props> = ({ state, ...p
 										value={field.state.value ?? ""}
 										onChange={(e) => field.handleChange(e.target.value)}
 										onBlur={field.handleBlur}
-										placeholder={translator.text("Enter your password")}
+										placeholder={translator.textFn("Enter your password")}
 										{...props}
 									/>
 								)}
@@ -158,7 +158,7 @@ export const ChangePasswordSheet: FC<ChangePasswordSheet.Props> = ({ state, ...p
 										value={field.state.value ?? ""}
 										onChange={(e) => field.handleChange(e.target.value)}
 										onBlur={field.handleBlur}
-										placeholder={translator.text("Confirm your password")}
+										placeholder={translator.textFn("Confirm your password")}
 										{...props}
 									/>
 								)}

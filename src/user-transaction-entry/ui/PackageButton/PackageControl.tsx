@@ -9,12 +9,12 @@ import { PackageSchema } from "~/user-transaction-entry/schema/TransactionEntryC
 
 export namespace PackageControl {
 	export interface Props extends Container.Props {
-		onCancel(): void;
-		onSave(props: PackageSchema.Type["payload"]): Promise<any>;
+		onCancelFn(): void;
+		onSaveFn(props: PackageSchema.Type["payload"]): Promise<any>;
 	}
 }
 
-export const PackageControl: FC<PackageControl.Props> = ({ onCancel, onSave, ...props }) => {
+export const PackageControl: FC<PackageControl.Props> = ({ onCancelFn, onSaveFn, ...props }) => {
 	const translator = useTranslator();
 	const form = useAppForm({
 		defaultValues: {
@@ -26,7 +26,7 @@ export const PackageControl: FC<PackageControl.Props> = ({ onCancel, onSave, ...
 			onSubmit: PackageSchema.shape.payload,
 		},
 		async onSubmit({ value }) {
-			return onSave(value);
+			return onSaveFn(value);
 		},
 	});
 
@@ -71,7 +71,7 @@ export const PackageControl: FC<PackageControl.Props> = ({ onCancel, onSave, ...
 											onBlur={field.handleBlur}
 											onChange={(e) => field.handleChange(e.target.value)}
 											type={"url"}
-											placeholder={translator.text(
+											placeholder={translator.textFn(
 												"Package - Link (placeholder)",
 											)}
 											{...props}
@@ -91,7 +91,7 @@ export const PackageControl: FC<PackageControl.Props> = ({ onCancel, onSave, ...
 								>
 									{(props) => (
 										<field.TextInput
-											placeholder={translator.text(
+											placeholder={translator.textFn(
 												"Package - Tracking number (placeholder)",
 											)}
 											value={field.state.value ?? ""}
@@ -117,8 +117,8 @@ export const PackageControl: FC<PackageControl.Props> = ({ onCancel, onSave, ...
 				>
 					{({ isValid, isSubmitting }) => (
 						<SaveContainer
-							onCancel={onCancel}
-							onSave={() => {
+							onCancelFn={onCancelFn}
+							onSaveFn={() => {
 								form.handleSubmit();
 							}}
 							loading={isSubmitting}

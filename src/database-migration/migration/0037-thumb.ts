@@ -1,6 +1,6 @@
 import { sql } from "kysely";
 import type { Migration } from "kysely/migration";
-import { toEnumGuard } from "~/enum/fn/toEnumGuard";
+import { toEnumGuardFn } from "~/enum/fn/toEnumGuardFn";
 import type { ThumbEnumSchema } from "~/listing/schema/ThumbEnumSchema";
 
 export const ThumbMigration: Migration = {
@@ -8,7 +8,7 @@ export const ThumbMigration: Migration = {
 		await db.schema
 			.createType("thumb_enum")
 			.asEnum(
-				toEnumGuard<ThumbEnumSchema.Type>()([
+				toEnumGuardFn<ThumbEnumSchema.Type>()([
 					"like",
 					"dislike",
 				] as const),

@@ -12,17 +12,22 @@ import { TextInput } from "~/ui/ui/TextInput";
 export namespace FulltextPatch {
 	export interface Props extends Omit<Container.Props, "defaultValue"> {
 		feed: FeedSchema.Type;
-		onSettled?(): void;
-		onCancel(): void;
+		onSettledFn?(): void;
+		onCancelFn(): void;
 	}
 }
 
-export const FulltextPatch: FC<FulltextPatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
+export const FulltextPatch: FC<FulltextPatch.Props> = ({
+	feed,
+	onSettledFn,
+	onCancelFn,
+	...props
+}) => {
 	const translator = useTranslator();
 	const patchMutation = withFeedQuery.usePatchMutation({
-		onSettled,
+		onSettled: onSettledFn,
 	});
-	const [fulltext, setFulltext] = useState(feed.query?.where?.fulltext?.[0] ?? "");
+	const [fulltext, setFulltextFn] = useState(feed.query?.where?.fulltext?.[0] ?? "");
 
 	return (
 		<Container
@@ -38,16 +43,16 @@ export const FulltextPatch: FC<FulltextPatch.Props> = ({ feed, onSettled, onCanc
 				data-ui-height="full"
 			>
 				<Status
-					textTitle={translator.text("Feed fulltext (title)")}
+					textTitle={translator.textFn("Feed fulltext (title)")}
 					action={
 						<FormField>
 							{(props) => (
 								<TextInput
 									value={fulltext}
 									onChange={(e) => {
-										setFulltext(e.target.value);
+										setFulltextFn(e.target.value);
 									}}
-									placeholder={translator.text("Feed fulltext (placeholder)")}
+									placeholder={translator.textFn("Feed fulltext (placeholder)")}
 									autoFocus
 									{...props}
 								/>
@@ -58,7 +63,7 @@ export const FulltextPatch: FC<FulltextPatch.Props> = ({ feed, onSettled, onCanc
 					data-ui-inner="4xl"
 				>
 					<Mx
-						label={translator.text("Feed fulltext (hint)")}
+						label={translator.textFn("Feed fulltext (hint)")}
 						data-ui-tone="neutral"
 						data-ui-theme="light"
 					/>
@@ -66,8 +71,8 @@ export const FulltextPatch: FC<FulltextPatch.Props> = ({ feed, onSettled, onCanc
 			</Container>
 
 			<SaveContainer
-				onCancel={onCancel}
-				onSave={() => {
+				onCancelFn={onCancelFn}
+				onSaveFn={() => {
 					patchMutation.mutate({
 						query: {
 							where: {

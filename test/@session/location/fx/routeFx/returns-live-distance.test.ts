@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { routeFx } from "~/session-location/fx/routeFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 
 const source = {
 	lat: 50.075539,
@@ -16,7 +16,7 @@ const target = {
 
 describe("routeFx", () => {
 	it("returns matrix distance from the live routing provider", async () => {
-		const database = await testabase("routeFx-live-distance");
+		const database = await testabaseFn("routeFx-live-distance");
 
 		return Effect.gen(function* () {
 			const distance = yield* routeFx({
@@ -27,6 +27,6 @@ describe("routeFx", () => {
 
 			expect(distance).toBeGreaterThan(100_000);
 			expect(distance).toBeLessThan(300_000);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

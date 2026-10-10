@@ -1,10 +1,10 @@
 import { tool } from "@openai/agents";
 import { z } from "zod";
-import { getRootLogger } from "~/log/fn/getRootLogger";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
 import { transactionEntryCreateFn } from "~/user-transaction-entry/fn/transactionEntryCreateFn";
 import { TransactionEntryCreateSchema } from "~/user-transaction-entry/schema/TransactionEntryCreate";
 
-const logger = getRootLogger([
+const logger = getRootLoggerFn([
 	"tool",
 	"toolTransactionEntryCreate",
 ]);

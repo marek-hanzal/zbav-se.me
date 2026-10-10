@@ -9,17 +9,22 @@ import { Container } from "~/ui/ui/Container";
 export namespace LocationPatch {
 	export interface Props extends Container.Props {
 		feed: FeedSchema.Type;
-		onSettled?(): void;
-		onCancel(): void;
+		onSettledFn?(): void;
+		onCancelFn(): void;
 	}
 }
 
-export const LocationPatch: FC<LocationPatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
+export const LocationPatch: FC<LocationPatch.Props> = ({
+	feed,
+	onSettledFn,
+	onCancelFn,
+	...props
+}) => {
 	const translator = useTranslator();
 	const patchMutation = withFeedQuery.usePatchMutation({
-		onSettled,
+		onSettled: onSettledFn,
 	});
-	const [locationId, setLocationId] = useState<string | undefined | null>(
+	const [locationId, setLocationIdFn] = useState<string | undefined | null>(
 		feed.query?.meta?.locationId,
 	);
 
@@ -33,14 +38,14 @@ export const LocationPatch: FC<LocationPatch.Props> = ({ feed, onSettled, onCanc
 		>
 			<LocationSelect
 				value={locationId}
-				onChange={setLocationId}
-				textHint={translator.text("Feed location security (hint)")}
+				onChangeFn={setLocationIdFn}
+				textHint={translator.textFn("Feed location security (hint)")}
 				allowClear
 			/>
 
 			<SaveContainer
-				onCancel={onCancel}
-				onSave={() => {
+				onCancelFn={onCancelFn}
+				onSaveFn={() => {
 					patchMutation.mutate({
 						query: {
 							where: {

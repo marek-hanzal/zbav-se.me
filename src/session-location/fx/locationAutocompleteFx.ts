@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import { dbFx } from "~/database/fx/dbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import type { LocationTableSchema } from "~/database/schema/LocationTableSchema";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { TextTooShortErrorFx } from "~/session-location/error/TextTooShortErrorFx";
 import { withLocationListFx } from "~/session-location/fx/withLocationListFx";
@@ -65,7 +65,7 @@ export const locationAutocompleteFx = Effect.fn("locationAutocompleteFx")(functi
 			}).pipe(Effect.withLogSpan("withLocationRequestFx"));
 
 			const locations = features.map(({ properties }) => ({
-				id: genId(),
+				id: genIdFn(),
 				//
 				query: text,
 				lang,

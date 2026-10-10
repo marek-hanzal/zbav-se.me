@@ -12,10 +12,10 @@ export namespace AgentRuntimeContext {
 	}
 
 	export interface Value {
-		getThreadState(threadId: string): ThreadState;
-		submit(threadId: string, input: AgentInputItem[]): void;
-		clearQueue(threadId: string): void;
-		cancel(threadId: string): void;
+		getThreadStateFn(threadId: string): ThreadState;
+		submitFn(threadId: string, input: AgentInputItem[]): void;
+		clearQueueFn(threadId: string): void;
+		cancelFn(threadId: string): void;
 	}
 }
 

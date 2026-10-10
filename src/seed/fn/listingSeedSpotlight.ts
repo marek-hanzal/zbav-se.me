@@ -10,23 +10,23 @@ type SpotlightParts = {
 
 const WORD_PATTERN = /\p{L}[\p{L}\p{N}]*/gu;
 
-const normalizeText = (value: string) =>
+const normalizeTextFn = (value: string) =>
 	value
 		.normalize("NFD")
 		.replace(/\p{Diacritic}/gu, "")
 		.toLowerCase()
 		.trim();
 
-const tokenize = (value: string) => {
-	const normalized = normalizeText(value);
+const tokenizeFn = (value: string) => {
+	const normalized = normalizeTextFn(value);
 
 	return Array.from(normalized.matchAll(WORD_PATTERN), (match) => match[0]).filter(
 		(token) => token.length >= 2,
 	);
 };
 
-const addPhrase = (map: Map<string, number>, text: string, ranking: number) => {
-	const normalized = normalizeText(text).replace(/\s+/g, " ").trim();
+const addPhraseFn = (map: Map<string, number>, text: string, ranking: number) => {
+	const normalized = normalizeTextFn(text).replace(/\s+/g, " ").trim();
 
 	if (normalized.length < 2) {
 		return;
@@ -36,7 +36,7 @@ const addPhrase = (map: Map<string, number>, text: string, ranking: number) => {
 	map.set(normalized, Math.max(current, ranking));
 };
 
-const addTokenPhrases = (
+const addTokenPhrasesFn = (
 	map: Map<string, number>,
 	value: string | null | undefined,
 	rankingBySize: Record<number, number>,
@@ -45,7 +45,7 @@ const addTokenPhrases = (
 		return;
 	}
 
-	const tokens = tokenize(value);
+	const tokens = tokenizeFn(value);
 
 	for (const [sizeText, ranking] of Object.entries(rankingBySize)) {
 		const size = Number(sizeText);
@@ -56,12 +56,12 @@ const addTokenPhrases = (
 
 		for (let start = 0; start <= tokens.length - size; start += 1) {
 			const phrase = tokens.slice(start, start + size).join(" ");
-			addPhrase(map, phrase, ranking);
+			addPhraseFn(map, phrase, ranking);
 		}
 	}
 };
 
-const toRows = (
+const toRowsFn = (
 	listingId: string,
 	map: Map<string, number>,
 ): ListingSpotlightTableSchema.Type[] => {
@@ -72,7 +72,7 @@ const toRows = (
 	}));
 };
 
-export const buildListingSeedSpotlightRows = ({
+export const buildListingSeedSpotlightRowsFn = ({
 	listingId,
 	title,
 	description,
@@ -81,13 +81,13 @@ export const buildListingSeedSpotlightRows = ({
 }: SpotlightParts): ListingSpotlightTableSchema.Type[] => {
 	const phrases = new Map<string, number>();
 
-	addPhrase(phrases, title, 1000);
-	addTokenPhrases(phrases, title, {
+	addPhraseFn(phrases, title, 1000);
+	addTokenPhrasesFn(phrases, title, {
 		1: 900,
 		2: 850,
 		3: 800,
 	});
-	addTokenPhrases(phrases, description, {
+	addTokenPhrasesFn(phrases, description, {
 		2: 500,
 		3: 450,
 	});
@@ -96,12 +96,12 @@ export const buildListingSeedSpotlightRows = ({
 		...pros,
 		...cons,
 	]) {
-		addPhrase(phrases, value, 300);
-		addTokenPhrases(phrases, value, {
+		addPhraseFn(phrases, value, 300);
+		addTokenPhrasesFn(phrases, value, {
 			1: 250,
 			2: 225,
 		});
 	}
 
-	return toRows(listingId, phrases);
+	return toRowsFn(listingId, phrases);
 };

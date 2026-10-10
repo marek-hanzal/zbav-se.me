@@ -1,12 +1,12 @@
 import type { APIRequestContext } from "@playwright/test";
 import { requestPasswordReset, signUpEmail } from "better-auth/api";
-import { expect, test } from "../test";
-import { createUser } from "../utils/createUser";
+import { expect, testFn } from "../testFn";
+import { createUserFn } from "../utils/createUserFn";
 
 const signUpEmailPath = signUpEmail().path;
 const requestPasswordResetPath = requestPasswordReset.path;
 
-async function postAuth(
+async function postAuthFn(
 	request: {
 		post: APIRequestContext["post"];
 	},
@@ -32,7 +32,7 @@ async function postAuth(
 	};
 }
 
-test("auth sign up rate limit", async ({ database, withRequest }) => {
+testFn("auth sign up rate limit", async ({ database, withRequestFn }) => {
 	await database.kysely
 		.updateTable("rate_limit_rule")
 		.set({
@@ -42,9 +42,9 @@ test("auth sign up rate limit", async ({ database, withRequest }) => {
 		.executeTakeFirstOrThrow();
 
 	for (let index = 0; index < 2; index++) {
-		const user = createUser();
-		const response = await withRequest(async (request) => {
-			return postAuth(request, `/api/auth${signUpEmailPath}`, {
+		const user = createUserFn();
+		const response = await withRequestFn(async (request) => {
+			return postAuthFn(request, `/api/auth${signUpEmailPath}`, {
 				email: user.email,
 				name: user.email,
 				password: user.password,
@@ -54,9 +54,9 @@ test("auth sign up rate limit", async ({ database, withRequest }) => {
 		expect(response.status).not.toBe(429);
 	}
 
-	const blockedUser = createUser();
-	const blockedResponse = await withRequest(async (request) => {
-		return postAuth(request, `/api/auth${signUpEmailPath}`, {
+	const blockedUser = createUserFn();
+	const blockedResponse = await withRequestFn(async (request) => {
+		return postAuthFn(request, `/api/auth${signUpEmailPath}`, {
 			email: blockedUser.email,
 			name: blockedUser.email,
 			password: blockedUser.password,
@@ -66,14 +66,14 @@ test("auth sign up rate limit", async ({ database, withRequest }) => {
 	expect(blockedResponse.status).toBe(429);
 });
 
-test("auth password reset request rate limit", async ({ appOrigin, database, withRequest }) => {
+testFn("auth password reset request rate limit", async ({ appOrigin, database, withRequestFn }) => {
 	void database;
-	await withRequest(async (request) => {
-		const user = createUser();
+	await withRequestFn(async (request) => {
+		const user = createUserFn();
 		const redirectTo = new URL("/cs/reset-password/-placeholder-", appOrigin).toString();
 
 		for (let index = 0; index < 3; index++) {
-			const response = await postAuth(request, `/api/auth${requestPasswordResetPath}`, {
+			const response = await postAuthFn(request, `/api/auth${requestPasswordResetPath}`, {
 				email: user.email,
 				redirectTo,
 			});
@@ -81,7 +81,7 @@ test("auth password reset request rate limit", async ({ appOrigin, database, wit
 			expect(response.status).not.toBe(429);
 		}
 
-		const blockedResponse = await postAuth(request, `/api/auth${requestPasswordResetPath}`, {
+		const blockedResponse = await postAuthFn(request, `/api/auth${requestPasswordResetPath}`, {
 			email: user.email,
 			redirectTo,
 		});

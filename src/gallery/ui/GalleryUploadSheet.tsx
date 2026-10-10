@@ -2,7 +2,7 @@ import { useId, useState } from "react";
 import type { AccessEnumSchema } from "~/access/schema/AccessEnumSchema";
 import { SaveContainer } from "~/container/ui/SaveContainer";
 import { GalleryUpload } from "~/gallery/ui/GalleryUpload/index";
-import type { withMutation } from "~/mutation/fn/withMutation";
+import type { withMutationFn } from "~/mutation/fn/withMutationFn";
 import type { StateType } from "~/ui/type/StateType";
 import { BottomSheet } from "~/ui/ui/BottomSheet";
 import { Container } from "~/ui/ui/Container";
@@ -15,8 +15,8 @@ export namespace GalleryUploadSheet {
 
 	export interface Props<TData extends Uploads, TResult>
 		extends Omit<BottomSheet.Props, "isOpen" | "onClose"> {
-		withMutation: withMutation.Api<TData, TResult, any>;
-		toMutation(uploadIds: string[]): TData;
+		withMutation: withMutationFn.Api<TData, TResult, any>;
+		toMutationFn(uploadIds: string[]): TData;
 		allowClear?: boolean;
 		defaultUploadIds: string[];
 		limit?: number;
@@ -24,8 +24,8 @@ export namespace GalleryUploadSheet {
 		//
 		state: StateType.State<boolean>;
 		//
-		onSuccess(result: TResult): void;
-		onCancel(): void;
+		onSuccessFn(result: TResult): void;
+		onCancelFn(): void;
 	}
 }
 
@@ -35,9 +35,9 @@ export namespace GalleryUploadSheet {
  */
 export const GalleryUploadSheet = <TData extends GalleryUploadSheet.Uploads, const TResult>({
 	withMutation,
-	toMutation,
-	onSuccess,
-	onCancel,
+	toMutationFn,
+	onSuccessFn,
+	onCancelFn,
 	state,
 	allowClear,
 	defaultUploadIds,
@@ -45,14 +45,14 @@ export const GalleryUploadSheet = <TData extends GalleryUploadSheet.Uploads, con
 	access,
 	...props
 }: GalleryUploadSheet.Props<TData, TResult>) => {
-	const [uploadIds, setUploadIds] = useState<string[]>(defaultUploadIds);
+	const [uploadIds, setUploadIdsFn] = useState<string[]>(defaultUploadIds);
 	const mutationId = useId();
 	const isUploading = withUploadMutation.useIsMutating({
 		mutationId,
 	});
 	const mutation = withMutation.useMutation({
-		async onPostMutation({ result }) {
-			onSuccess(result);
+		async onPostMutationFn({ result }) {
+			onSuccessFn(result);
 		},
 	});
 
@@ -60,7 +60,7 @@ export const GalleryUploadSheet = <TData extends GalleryUploadSheet.Uploads, con
 		<BottomSheet
 			detent={"full"}
 			isOpen={state.value}
-			onClose={() => state.set(false)}
+			onClose={() => state.setFn(false)}
 			{...props}
 		>
 			<Container
@@ -75,19 +75,19 @@ export const GalleryUploadSheet = <TData extends GalleryUploadSheet.Uploads, con
 					access={access}
 					state={{
 						value: uploadIds,
-						set: setUploadIds,
+						setFn: setUploadIdsFn,
 					}}
 					limit={limit}
 					mutationId={mutationId}
 				/>
 
 				<SaveContainer
-					onCancel={() => {
-						setUploadIds(defaultUploadIds);
-						onCancel();
+					onCancelFn={() => {
+						setUploadIdsFn(defaultUploadIds);
+						onCancelFn();
 					}}
-					onSave={() => {
-						mutation.mutateAsync(toMutation(uploadIds));
+					onSaveFn={() => {
+						mutation.mutateAsync(toMutationFn(uploadIds));
 					}}
 					loading={mutation.isPending}
 					disabled={isUploading || (!allowClear && uploadIds.length === 0)}

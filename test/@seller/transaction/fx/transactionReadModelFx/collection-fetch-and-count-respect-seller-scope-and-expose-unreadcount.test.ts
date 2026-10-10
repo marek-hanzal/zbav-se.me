@@ -3,16 +3,16 @@ import { describe, expect, it } from "vitest";
 import { transactionCollectionFx } from "~/seller-transaction/fx/transactionCollectionFx";
 import { transactionCountFx } from "~/seller-transaction/fx/transactionCountFx";
 import { transactionFetchFx } from "~/seller-transaction/fx/transactionFetchFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { getDefaultListingCreateFx } from "~/test/listing/fx/getDefaultListingCreateFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 import { transactionEntryCreateFx } from "~/user-transaction-entry/fx/transactionEntryCreateFx";
 
 describe("seller transaction read model", () => {
 	it("collection, fetch and count respect seller scope and expose unreadCount", async () => {
-		const database = await testabase("sellerTransactionReadModelFx");
+		const database = await testabaseFn("sellerTransactionReadModelFx");
 
 		return Effect.gen(function* () {
 			const { seller, buyer, stranger } = yield* createUsersFx({});
@@ -78,6 +78,6 @@ describe("seller transaction read model", () => {
 			});
 
 			expect(count).toBe(1);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

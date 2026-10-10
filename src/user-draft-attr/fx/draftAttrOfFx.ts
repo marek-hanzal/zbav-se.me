@@ -35,9 +35,9 @@ export const draftAttrOfFx = Effect.fn("draftAttrOfFx")(function* ({
 				sql<number | null>`f.max::float8`.as("max"),
 				sql<number | null>`f.step::float8`.as("step"),
 				"cf.kind",
-				(eb) => {
+				(ebFn) => {
 					return jsonArrayFrom(
-						eb
+						ebFn
 							.selectFrom("field_option as fo")
 							.select([
 								"fo.fieldId",
@@ -48,15 +48,15 @@ export const draftAttrOfFx = Effect.fn("draftAttrOfFx")(function* ({
 							.orderBy("fo.sort", "asc"),
 					).as("options");
 				},
-				(eb) => {
-					return eb
+				(ebFn) => {
+					return ebFn
 						.case()
 						.when("f.type", "=", "enum-single")
 						.then(
-							eb
+							ebFn
 								.selectFrom("draft_attr_enum_single as aes")
 								.select([
-									(eb) => sql`to_jsonb(${eb.ref("aes.value")})`.as("value"),
+									(ebFn) => sql`to_jsonb(${ebFn.ref("aes.value")})`.as("value"),
 								])
 								.where("aes.draftId", "=", draftId)
 								.whereRef("aes.fieldId", "=", "cf.fieldId")
@@ -64,12 +64,12 @@ export const draftAttrOfFx = Effect.fn("draftAttrOfFx")(function* ({
 						)
 						.when("f.type", "=", "enum-multi")
 						.then(
-							eb
+							ebFn
 								.selectFrom("draft_attr_enum_multi as aem")
-								.select((eb) => {
-									return eb.fn
+								.select((ebFn) => {
+									return ebFn.fn
 										.coalesce(
-											sql`jsonb_agg(to_jsonb(${eb.ref("aem.value")}) order by ${eb.ref("aem.value")})`,
+											sql`jsonb_agg(to_jsonb(${ebFn.ref("aem.value")}) order by ${ebFn.ref("aem.value")})`,
 											sql`'[]'::jsonb`,
 										)
 										.as("value");
@@ -80,10 +80,10 @@ export const draftAttrOfFx = Effect.fn("draftAttrOfFx")(function* ({
 						)
 						.when("f.type", "=", "number")
 						.then(
-							eb
+							ebFn
 								.selectFrom("draft_attr_number as an")
 								.select([
-									(eb) => sql`to_jsonb(${eb.ref("an.value")})`.as("value"),
+									(ebFn) => sql`to_jsonb(${ebFn.ref("an.value")})`.as("value"),
 								])
 								.where("an.draftId", "=", draftId)
 								.whereRef("an.fieldId", "=", "cf.fieldId")
@@ -91,10 +91,10 @@ export const draftAttrOfFx = Effect.fn("draftAttrOfFx")(function* ({
 						)
 						.when("f.type", "=", "year")
 						.then(
-							eb
+							ebFn
 								.selectFrom("draft_attr_number as an")
 								.select([
-									(eb) => sql`to_jsonb(${eb.ref("an.value")})`.as("value"),
+									(ebFn) => sql`to_jsonb(${ebFn.ref("an.value")})`.as("value"),
 								])
 								.where("an.draftId", "=", draftId)
 								.whereRef("an.fieldId", "=", "cf.fieldId")
@@ -102,10 +102,10 @@ export const draftAttrOfFx = Effect.fn("draftAttrOfFx")(function* ({
 						)
 						.when("f.type", "=", "decimal")
 						.then(
-							eb
+							ebFn
 								.selectFrom("draft_attr_decimal as ad")
 								.select([
-									(eb) => sql`to_jsonb(${eb.ref("ad.value")})`.as("value"),
+									(ebFn) => sql`to_jsonb(${ebFn.ref("ad.value")})`.as("value"),
 								])
 								.where("ad.draftId", "=", draftId)
 								.whereRef("ad.fieldId", "=", "cf.fieldId")
@@ -113,10 +113,10 @@ export const draftAttrOfFx = Effect.fn("draftAttrOfFx")(function* ({
 						)
 						.when("f.type", "=", "range")
 						.then(
-							eb
+							ebFn
 								.selectFrom("draft_attr_decimal as ad")
 								.select([
-									(eb) => sql`to_jsonb(${eb.ref("ad.value")})`.as("value"),
+									(ebFn) => sql`to_jsonb(${ebFn.ref("ad.value")})`.as("value"),
 								])
 								.where("ad.draftId", "=", draftId)
 								.whereRef("ad.fieldId", "=", "cf.fieldId")
@@ -124,10 +124,10 @@ export const draftAttrOfFx = Effect.fn("draftAttrOfFx")(function* ({
 						)
 						.when("f.type", "=", "text")
 						.then(
-							eb
+							ebFn
 								.selectFrom("draft_attr_text as at")
 								.select([
-									(eb) => sql`to_jsonb(${eb.ref("at.value")})`.as("value"),
+									(ebFn) => sql`to_jsonb(${ebFn.ref("at.value")})`.as("value"),
 								])
 								.where("at.draftId", "=", draftId)
 								.whereRef("at.fieldId", "=", "cf.fieldId")

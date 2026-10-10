@@ -4,15 +4,15 @@ import { transactionCollectionFx } from "~/buyer-transaction/fx/transactionColle
 import { transactionSuccessFx } from "~/buyer-transaction/fx/transactionSuccessFx";
 import { transactionAcceptFx } from "~/seller-transaction/fx/transactionAcceptFx";
 import { transactionResolveFx } from "~/seller-transaction/fx/transactionResolveFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { getDefaultListingCreateFx } from "~/test/listing/fx/getDefaultListingCreateFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("buyer transaction read model collection filters", () => {
 	it("filters collection rows by status, flow and listing inside buyer scope", async () => {
-		const database = await testabase("buyerTransactionReadModelFx-filters-collection");
+		const database = await testabaseFn("buyerTransactionReadModelFx-filters-collection");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -94,6 +94,6 @@ describe("buyer transaction read model collection filters", () => {
 			expect(openOnly[0]?.id).toBe(openScenario.transactionId);
 			expect(terminalOnly).toHaveLength(1);
 			expect(terminalOnly[0]?.id).toBe(resolvedScenario.transactionId);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

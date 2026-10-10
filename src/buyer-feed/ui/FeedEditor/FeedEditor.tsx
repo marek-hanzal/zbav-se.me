@@ -17,8 +17,8 @@ import { SortPatch } from "~/buyer-feed/ui/FeedEditor/SortPatch";
 import { StatusPatch } from "~/buyer-feed/ui/FeedEditor/StatusPatch";
 import { TitlePatch } from "~/buyer-feed/ui/FeedEditor/TitlePatch";
 import { WarrantyPatch } from "~/buyer-feed/ui/FeedEditor/WarrantyPatch";
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withFallback } from "~/ui/fn/withFallback";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withFallbackFn } from "~/ui/fn/withFallbackFn";
 import { useRenderLogger } from "~/ui/hook/useRenderLogger";
 import type { MarkSuspense } from "~/ui/type/MarkSuspense";
 import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
@@ -31,7 +31,7 @@ export namespace FeedEditor {
 	}
 }
 
-export const FeedEditor = withFallback(
+export const FeedEditor = withFallbackFn(
 	({ _suspense, feedId, hidden, children }: FeedEditor.Props) => {
 		const { data: feed } = withFeedQuery.useFetchQuery(feedId);
 		const view = useView({
@@ -58,12 +58,12 @@ export const FeedEditor = withFallback(
 		});
 
 		useRenderLogger({
-			logger: getRootLogger(),
+			logger: getRootLoggerFn(),
 			name: "FeedEditor",
 		});
 
-		const onDefaultView = useCallback(() => {
-			view.set("default");
+		const onDefaultViewFn = useCallback(() => {
+			view.setFn("default");
 		}, [
 			view,
 		]);
@@ -87,120 +87,120 @@ export const FeedEditor = withFallback(
 				<view.Panel name="gallery">
 					<GalleryPatch
 						feed={feed}
-						onSettled={onDefaultView}
-						onCancel={onDefaultView}
+						onSettledFn={onDefaultViewFn}
+						onCancelFn={onDefaultViewFn}
 					/>
 				</view.Panel>
 
 				<view.Panel name="category">
 					<CategoryPatch
 						feed={feed}
-						onSettled={onDefaultView}
-						onCancel={onDefaultView}
+						onSettledFn={onDefaultViewFn}
+						onCancelFn={onDefaultViewFn}
 					/>
 				</view.Panel>
 
 				<view.Panel name="location">
 					<LocationPatch
 						feed={feed}
-						onSettled={onDefaultView}
-						onCancel={onDefaultView}
+						onSettledFn={onDefaultViewFn}
+						onCancelFn={onDefaultViewFn}
 					/>
 				</view.Panel>
 
 				<view.Panel name="range">
 					<RangePatch
 						feed={feed}
-						onSettled={onDefaultView}
-						onCancel={onDefaultView}
+						onSettledFn={onDefaultViewFn}
+						onCancelFn={onDefaultViewFn}
 					/>
 				</view.Panel>
 
 				<view.Panel name="condition">
 					<ConditionPatch
 						feed={feed}
-						onSettled={onDefaultView}
-						onCancel={onDefaultView}
+						onSettledFn={onDefaultViewFn}
+						onCancelFn={onDefaultViewFn}
 					/>
 				</view.Panel>
 
 				<view.Panel name="age">
 					<AgePatch
 						feed={feed}
-						onSettled={onDefaultView}
-						onCancel={onDefaultView}
+						onSettledFn={onDefaultViewFn}
+						onCancelFn={onDefaultViewFn}
 					/>
 				</view.Panel>
 
 				<view.Panel name="delivery">
 					<DeliveryPatch
 						feed={feed}
-						onSettled={onDefaultView}
-						onCancel={onDefaultView}
+						onSettledFn={onDefaultViewFn}
+						onCancelFn={onDefaultViewFn}
 					/>
 				</view.Panel>
 
 				<view.Panel name="status">
 					<StatusPatch
 						feed={feed}
-						onSettled={onDefaultView}
-						onCancel={onDefaultView}
+						onSettledFn={onDefaultViewFn}
+						onCancelFn={onDefaultViewFn}
 					/>
 				</view.Panel>
 
 				<view.Panel name="warranty">
 					<WarrantyPatch
 						feed={feed}
-						onSettled={onDefaultView}
-						onCancel={onDefaultView}
+						onSettledFn={onDefaultViewFn}
+						onCancelFn={onDefaultViewFn}
 					/>
 				</view.Panel>
 
 				<view.Panel name="priceType">
 					<PriceTypePatch
 						feed={feed}
-						onSettled={onDefaultView}
-						onCancel={onDefaultView}
+						onSettledFn={onDefaultViewFn}
+						onCancelFn={onDefaultViewFn}
 					/>
 				</view.Panel>
 
 				<view.Panel name="priceMin">
 					<PriceMinPatch
 						feed={feed}
-						onSettled={onDefaultView}
-						onCancel={onDefaultView}
+						onSettledFn={onDefaultViewFn}
+						onCancelFn={onDefaultViewFn}
 					/>
 				</view.Panel>
 
 				<view.Panel name="priceMax">
 					<PriceMaxPatch
 						feed={feed}
-						onSettled={onDefaultView}
-						onCancel={onDefaultView}
+						onSettledFn={onDefaultViewFn}
+						onCancelFn={onDefaultViewFn}
 					/>
 				</view.Panel>
 
 				<view.Panel name="sort">
 					<SortPatch
 						feed={feed}
-						onSettled={onDefaultView}
-						onCancel={onDefaultView}
+						onSettledFn={onDefaultViewFn}
+						onCancelFn={onDefaultViewFn}
 					/>
 				</view.Panel>
 
 				<view.Panel name="title">
 					<TitlePatch
 						feed={feed}
-						onSettled={onDefaultView}
-						onCancel={onDefaultView}
+						onSettledFn={onDefaultViewFn}
+						onCancelFn={onDefaultViewFn}
 					/>
 				</view.Panel>
 
 				<view.Panel name="fulltext">
 					<FulltextPatch
 						feed={feed}
-						onSettled={onDefaultView}
-						onCancel={onDefaultView}
+						onSettledFn={onDefaultViewFn}
+						onCancelFn={onDefaultViewFn}
 					/>
 				</view.Panel>
 

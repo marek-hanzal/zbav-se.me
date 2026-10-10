@@ -2,7 +2,7 @@ import type { FC } from "react";
 import { HeroImage } from "~/application-ui/ui/img.exports";
 import type { ListingPriceSchema } from "~/listing/schema/ListingPriceSchema";
 import { ListingPrice } from "~/listing/ui/ListingPrice";
-import { getRootLogger } from "~/log/fn/getRootLogger";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
 import type { ListingSchema } from "~/public-listing/schema/ListingSchema";
 import { useTranslator } from "~/translation/hook/useTranslator";
 import { useRenderLogger } from "~/ui/hook/useRenderLogger";
@@ -24,7 +24,7 @@ export const HeroSection: FC<HeroSection.Props> = ({ listing, view }) => {
 	const [hero] = listing.withImageUrl;
 
 	useRenderLogger({
-		logger: getRootLogger(),
+		logger: getRootLoggerFn(),
 		name: "HeroSection",
 		meta: {
 			listingId: listing.id,
@@ -42,7 +42,7 @@ export const HeroSection: FC<HeroSection.Props> = ({ listing, view }) => {
 				src={hero}
 				alt={`Hero image for listing ${listing.id}`}
 				data-action={"open listing gallery"}
-				onClick={() => view.set("gallery")}
+				onClick={() => view.setFn("gallery")}
 				data-ui-round="default"
 				className={"h-64"}
 			/>
@@ -50,12 +50,12 @@ export const HeroSection: FC<HeroSection.Props> = ({ listing, view }) => {
 			<Container>
 				<Group>
 					<LabelValue
-						textLabel={translator.text("Listing price (label)")}
+						textLabel={translator.textFn("Listing price (label)")}
 						textValue={<ListingPrice price={listing as ListingPriceSchema.Type} />}
 					/>
 
 					<LabelValue
-						textLabel={translator.text("Listing location (label)")}
+						textLabel={translator.textFn("Listing location (label)")}
 						textValue={listing.location.address}
 						textValueProps={{
 							"data-ui-truncate": false,

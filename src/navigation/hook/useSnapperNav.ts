@@ -9,7 +9,7 @@ import {
 	useRef,
 	useState,
 } from "react";
-import { clamp } from "~/number/fn/clamp";
+import { clampFn } from "~/number/fn/clampFn";
 
 export namespace useSnapperNav {
 	export interface Props {
@@ -19,7 +19,7 @@ export namespace useSnapperNav {
 		defaultIndex?: number;
 		threshold?: number;
 		debounce?: number;
-		onSnap?: (index: number) => void;
+		onSnapFn?: (index: number) => void;
 	}
 
 	export type SnapTarget = number | string;
@@ -32,11 +32,11 @@ export namespace useSnapperNav {
 	}
 
 	export interface Api {
-		start: () => void;
-		end: () => void;
-		next: () => void;
-		prev: () => void;
-		snapTo: (target: SnapTarget, behavior?: ScrollBehavior) => void;
+		startFn: () => void;
+		endFn: () => void;
+		nextFn: () => void;
+		prevFn: () => void;
+		snapToFn: (target: SnapTarget, behavior?: ScrollBehavior) => void;
 	}
 
 	export interface Result {
@@ -52,21 +52,21 @@ export function useSnapperNav({
 	defaultIndex = 0,
 	threshold = 0.5,
 	debounce = 150,
-	onSnap,
+	onSnapFn,
 }: useSnapperNav.Props): useSnapperNav.Result {
 	const totalCount = Math.max(1, Math.floor(count));
 	const isVertical = orientation === "vertical";
-	const clampedThreshold = clamp(threshold, 0, 1);
+	const clampedThreshold = clampFn(threshold, 0, 1);
 
-	const [current, setCurrent] = useState(() => clamp(defaultIndex, 0, totalCount - 1));
+	const [current, setCurrentFn] = useState(() => clampFn(defaultIndex, 0, totalCount - 1));
 	const currentRef = useRef(current);
 	currentRef.current = current;
 
-	const emitSnap = useEffectEvent((index: number) => {
-		onSnap?.(index);
+	const emitSnapFn = useEffectEvent((index: number) => {
+		onSnapFn?.(index);
 	});
 
-	const emitSnapDebounced = useDebouncedCallback((index: number) => emitSnap(index), {
+	const emitSnapDebouncedFn = useDebouncedCallback((index: number) => emitSnapFn(index), {
 		key: "useSnapperNav",
 		wait: debounce,
 		leading: false,
@@ -75,7 +75,7 @@ export function useSnapperNav({
 
 	// --- helpers ---------------------------------------------------------------
 
-	const getChildSize = useCallback(
+	const getChildSizeFn = useCallback(
 		(element: HTMLElement) =>
 			Math.max(1, isVertical ? element.clientHeight : element.clientWidth),
 		[
@@ -83,7 +83,7 @@ export function useSnapperNav({
 		],
 	);
 
-	const getChildOffset = useCallback(
+	const getChildOffsetFn = useCallback(
 		(element: HTMLElement) => (isVertical ? element.offsetTop : element.offsetLeft),
 		[
 			isVertical,
@@ -96,7 +96,7 @@ export function useSnapperNav({
 	 *   - else size(first), if first exists
 	 *   - else container client size
 	 */
-	const readMetrics = useCallback(() => {
+	const readMetricsFn = useCallback(() => {
 		const host = containerRef.current;
 		if (!host)
 			return {
@@ -115,8 +115,8 @@ export function useSnapperNav({
 		const first = children.item(0);
 		const second = children.item(1);
 
-		const firstSize = first ? getChildSize(first) : clientSize;
-		const stride = first && second ? getChildOffset(second) - getChildOffset(first) : 0;
+		const firstSize = first ? getChildSizeFn(first) : clientSize;
+		const stride = first && second ? getChildOffsetFn(second) - getChildOffsetFn(first) : 0;
 
 		pageSize = Math.max(1, stride > 0 ? stride : firstSize);
 
@@ -128,21 +128,21 @@ export function useSnapperNav({
 	}, [
 		containerRef,
 		isVertical,
-		getChildOffset,
-		getChildSize,
+		getChildOffsetFn,
+		getChildSizeFn,
 	]);
 
-	const positionToIndex = useCallback(
+	const positionToIndexFn = useCallback(
 		(position: number, pageSize: number, total: number) => {
 			const raw = (position + pageSize * clampedThreshold) / pageSize;
-			return clamp(Math.floor(raw), 0, Math.max(0, total - 1));
+			return clampFn(Math.floor(raw), 0, Math.max(0, total - 1));
 		},
 		[
 			clampedThreshold,
 		],
 	);
 
-	const toDirectChild = useCallback(
+	const toDirectChildFn = useCallback(
 		(node: Element | null): HTMLElement | null => {
 			const host = containerRef.current;
 			if (!host || !node) return null;
@@ -158,28 +158,28 @@ export function useSnapperNav({
 
 	// --- navigation API --------------------------------------------------------
 
-	const snapTo = useCallback(
+	const snapToFn = useCallback(
 		(target: useSnapperNav.SnapTarget, behavior: ScrollBehavior = "smooth") => {
 			const host = containerRef.current;
 			if (!host) return;
 
 			let pageIndex: number;
 			if (typeof target === "number") {
-				pageIndex = clamp(Math.floor(target), 0, totalCount - 1);
+				pageIndex = clampFn(Math.floor(target), 0, totalCount - 1);
 			} else {
 				const found = host.querySelector(target);
-				const directChild = toDirectChild(found);
+				const directChild = toDirectChildFn(found);
 				if (!directChild) return;
 
-				const { pageSize } = readMetrics();
+				const { pageSize } = readMetricsFn();
 				const raw =
 					(isVertical ? directChild.offsetTop : directChild.offsetLeft) / pageSize;
-				pageIndex = clamp(Math.round(raw), 0, totalCount - 1);
+				pageIndex = clampFn(Math.round(raw), 0, totalCount - 1);
 			}
 
-			const { pageSize, totalSize, position } = readMetrics();
+			const { pageSize, totalSize, position } = readMetricsFn();
 			const maxScroll = Math.max(0, totalSize - pageSize);
-			const targetPixels = clamp(pageIndex * pageSize, 0, maxScroll);
+			const targetPixels = clampFn(pageIndex * pageSize, 0, maxScroll);
 
 			const EPSILON = 2;
 			if (Math.abs(position - targetPixels) <= EPSILON) return;
@@ -199,34 +199,34 @@ export function useSnapperNav({
 			containerRef,
 			isVertical,
 			totalCount,
-			readMetrics,
-			toDirectChild,
+			readMetricsFn,
+			toDirectChildFn,
 		],
 	);
 
-	const start = useCallback(
-		() => snapTo(0),
+	const startFn = useCallback(
+		() => snapToFn(0),
 		[
-			snapTo,
+			snapToFn,
 		],
 	);
-	const end = useCallback(
-		() => snapTo(totalCount - 1),
+	const endFn = useCallback(
+		() => snapToFn(totalCount - 1),
 		[
-			snapTo,
+			snapToFn,
 			totalCount,
 		],
 	);
-	const next = useCallback(
-		() => snapTo(currentRef.current + 1),
+	const nextFn = useCallback(
+		() => snapToFn(currentRef.current + 1),
 		[
-			snapTo,
+			snapToFn,
 		],
 	);
-	const prev = useCallback(
-		() => snapTo(currentRef.current - 1),
+	const prevFn = useCallback(
+		() => snapToFn(currentRef.current - 1),
 		[
-			snapTo,
+			snapToFn,
 		],
 	);
 
@@ -238,10 +238,10 @@ export function useSnapperNav({
 			return;
 		}
 
-		const initialIndex = clamp(defaultIndex, 0, totalCount - 1);
-		const { pageSize, totalSize } = readMetrics();
+		const initialIndex = clampFn(defaultIndex, 0, totalCount - 1);
+		const { pageSize, totalSize } = readMetricsFn();
 		const maxScroll = Math.max(0, totalSize - pageSize);
-		const targetPixels = clamp(initialIndex * pageSize, 0, maxScroll);
+		const targetPixels = clampFn(initialIndex * pageSize, 0, maxScroll);
 
 		if (isVertical)
 			host.scrollTo({
@@ -255,21 +255,21 @@ export function useSnapperNav({
 			});
 
 		currentRef.current = initialIndex;
-		setCurrent(initialIndex);
+		setCurrentFn(initialIndex);
 
-		const { position } = readMetrics();
-		const derivedIndex = positionToIndex(position, pageSize, totalCount);
+		const { position } = readMetricsFn();
+		const derivedIndex = positionToIndexFn(position, pageSize, totalCount);
 		if (derivedIndex !== initialIndex) {
 			currentRef.current = derivedIndex;
-			setCurrent(derivedIndex);
+			setCurrentFn(derivedIndex);
 		}
 	}, [
 		containerRef,
 		defaultIndex,
 		totalCount,
 		isVertical,
-		readMetrics,
-		positionToIndex,
+		readMetricsFn,
+		positionToIndexFn,
 	]);
 
 	useLayoutEffect(() => {
@@ -278,38 +278,38 @@ export function useSnapperNav({
 			return;
 		}
 
-		function handleScroll() {
-			const { pageSize, position } = readMetrics();
-			const newIndex = positionToIndex(position, pageSize, totalCount);
+		function handleScrollFn() {
+			const { pageSize, position } = readMetricsFn();
+			const newIndex = positionToIndexFn(position, pageSize, totalCount);
 			if (newIndex !== currentRef.current) {
 				currentRef.current = newIndex;
-				setCurrent(newIndex);
-				emitSnapDebounced(newIndex);
+				setCurrentFn(newIndex);
+				emitSnapDebouncedFn(newIndex);
 			}
 		}
 
-		host.addEventListener("scroll", handleScroll, {
+		host.addEventListener("scroll", handleScrollFn, {
 			passive: true,
 		});
-		return () => host.removeEventListener("scroll", handleScroll);
+		return () => host.removeEventListener("scroll", handleScrollFn);
 	}, [
 		containerRef,
 		totalCount,
-		readMetrics,
-		positionToIndex,
-		emitSnapDebounced,
+		readMetricsFn,
+		positionToIndexFn,
+		emitSnapDebouncedFn,
 	]);
 
 	useEffect(() => {
-		const clampedIndex = clamp(currentRef.current, 0, totalCount - 1);
+		const clampedIndex = clampFn(currentRef.current, 0, totalCount - 1);
 		if (clampedIndex !== currentRef.current) {
 			currentRef.current = clampedIndex;
-			setCurrent(clampedIndex);
-			emitSnapDebounced(clampedIndex);
+			setCurrentFn(clampedIndex);
+			emitSnapDebouncedFn(clampedIndex);
 		}
 	}, [
 		totalCount,
-		emitSnapDebounced,
+		emitSnapDebouncedFn,
 	]);
 
 	// --- result ---------------------------------------------------------------
@@ -329,18 +329,18 @@ export function useSnapperNav({
 
 	const api = useMemo<useSnapperNav.Api>(
 		() => ({
-			start,
-			end,
-			next,
-			prev,
-			snapTo,
+			startFn,
+			endFn,
+			nextFn,
+			prevFn,
+			snapToFn,
 		}),
 		[
-			start,
-			end,
-			next,
-			prev,
-			snapTo,
+			startFn,
+			endFn,
+			nextFn,
+			prevFn,
+			snapToFn,
 		],
 	);
 

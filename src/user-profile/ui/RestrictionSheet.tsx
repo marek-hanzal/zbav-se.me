@@ -9,14 +9,14 @@ import { Container } from "~/ui/ui/Container";
 
 export namespace RestrictionSheet {
 	export interface Props extends BottomSheet.Props {
-		onRestriction(restriction: RestrictionEnumSchema.Type): Promise<any>;
+		onRestrictionFn(restriction: RestrictionEnumSchema.Type): Promise<any>;
 		restriction: RestrictionEnumSchema.Type | undefined;
 		isPending: boolean;
 	}
 }
 
 export const RestrictionSheet: FC<RestrictionSheet.Props> = ({
-	onRestriction,
+	onRestrictionFn,
 	restriction,
 	isPending,
 	...props
@@ -38,8 +38,8 @@ export const RestrictionSheet: FC<RestrictionSheet.Props> = ({
 
 	return (
 		<BottomSheet
-			header={() => ({
-				title: translator.text("Restriction settings (title)"),
+			headerFn={() => ({
+				title: translator.textFn("Restriction settings (title)"),
 			})}
 			{...props}
 		>
@@ -52,11 +52,11 @@ export const RestrictionSheet: FC<RestrictionSheet.Props> = ({
 				<RestrictionSelect selection={selection} />
 
 				<SaveContainer
-					onCancel={() => {
+					onCancelFn={() => {
 						props.onClose();
 						setTimeout(() => {
 							restriction &&
-								selection.set(
+								selection.setFn(
 									[
 										restriction,
 									].map((item) => ({
@@ -65,9 +65,11 @@ export const RestrictionSheet: FC<RestrictionSheet.Props> = ({
 								);
 						}, 0);
 					}}
-					onSave={() => {
+					onSaveFn={() => {
 						props.onClose();
-						onRestriction(selection.optional.singleId() as RestrictionEnumSchema.Type);
+						onRestrictionFn(
+							selection.optional.singleIdFn() as RestrictionEnumSchema.Type,
+						);
 					}}
 					loading={isPending}
 					disabled={false}

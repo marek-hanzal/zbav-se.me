@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { expectErrorFn } from "~/test/common/fx/expectErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 import { UploadConfigFx } from "~/user-upload/context/UploadConfigFx";
 import { uploadCreateFx } from "~/user-upload/fx/uploadCreateFx";
@@ -10,7 +10,7 @@ import { uploadFetchFx } from "~/user-upload/fx/uploadFetchFx";
 
 describe("uploadFetchFx", () => {
 	it("fetches scoped upload and rejects missing or foreign upload", async () => {
-		const database = await testabase("uploadFetchFx-contract");
+		const database = await testabaseFn("uploadFetchFx-contract");
 
 		return Effect.gen(function* () {
 			const users = yield* createUsersFx({});
@@ -51,7 +51,7 @@ describe("uploadFetchFx", () => {
 					},
 				}),
 			);
-			expectErrorFx(foreign);
+			expectErrorFn(foreign);
 
 			const missing = yield* Effect.result(
 				uploadFetchFx({
@@ -63,7 +63,7 @@ describe("uploadFetchFx", () => {
 					},
 				}),
 			);
-			expectErrorFx(missing);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+			expectErrorFn(missing);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

@@ -1,12 +1,12 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
-import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
-import { genId } from "~/identity/fn/genId";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import type { ResourceDefinitionEnumSchema } from "~/resource-definition/schema/ResourceDefinitionEnumSchema";
-import type { testabase } from "~/test/testabase";
+import type { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
-type TestDatabase = Awaited<ReturnType<typeof testabase>>;
+type TestDatabase = Awaited<ReturnType<typeof testabaseFn>>;
 
 interface ResourceBundleLimitSeed {
 	userId: string;
@@ -17,9 +17,9 @@ interface ResourceBundleLimitSeed {
 	limit: number;
 }
 
-const date = (iso: string) => new Date(iso);
+const dateFn = (iso: string) => new Date(iso);
 
-const limitSeed = (
+const limitSeedFn = (
 	userId: string,
 	resourceDefinitionId: ResourceDefinitionEnumSchema.Type,
 	availableAt: string,
@@ -37,8 +37,8 @@ const limitSeed = (
 
 export const atResourceLimitReadModelFx = <A, E, R>(iso: string, eff: Effect.Effect<A, E, R>) =>
 	eff.pipe(
-		withDateServiceFx({
-			now: () => DateTime.fromISO(iso),
+		withDateServiceFn({
+			nowFn: () => DateTime.fromISO(iso),
 		}),
 	);
 
@@ -57,7 +57,7 @@ export const seedResourceLimitReadModelFx = (database: TestDatabase) =>
 		});
 
 		const seeds = [
-			limitSeed(
+			limitSeedFn(
 				seller.id,
 				"seller:limit:listing.count",
 				"2026-05-10T08:00:00.000Z",
@@ -65,7 +65,7 @@ export const seedResourceLimitReadModelFx = (database: TestDatabase) =>
 				null,
 				2,
 			),
-			limitSeed(
+			limitSeedFn(
 				seller.id,
 				"seller:limit:listing.count",
 				"2026-05-12T08:00:00.000Z",
@@ -73,7 +73,7 @@ export const seedResourceLimitReadModelFx = (database: TestDatabase) =>
 				null,
 				7,
 			),
-			limitSeed(
+			limitSeedFn(
 				seller.id,
 				"seller:limit:listing.count",
 				"2026-05-13T08:00:00.000Z",
@@ -81,7 +81,7 @@ export const seedResourceLimitReadModelFx = (database: TestDatabase) =>
 				null,
 				99,
 			),
-			limitSeed(
+			limitSeedFn(
 				seller.id,
 				"buyer:limit:feed.count",
 				"2026-05-10T09:00:00.000Z",
@@ -89,7 +89,7 @@ export const seedResourceLimitReadModelFx = (database: TestDatabase) =>
 				null,
 				4,
 			),
-			limitSeed(
+			limitSeedFn(
 				seller.id,
 				"seller:limit:listing.gallery.count",
 				"2026-05-10T10:00:00.000Z",
@@ -97,7 +97,7 @@ export const seedResourceLimitReadModelFx = (database: TestDatabase) =>
 				null,
 				10,
 			),
-			limitSeed(
+			limitSeedFn(
 				seller.id,
 				"seller:limit:listing.gallery.count",
 				"2026-05-12T11:30:00.000Z",
@@ -105,7 +105,7 @@ export const seedResourceLimitReadModelFx = (database: TestDatabase) =>
 				null,
 				25,
 			),
-			limitSeed(
+			limitSeedFn(
 				buyer.id,
 				"buyer:limit:feed.count",
 				"2026-05-10T12:00:00.000Z",
@@ -113,7 +113,7 @@ export const seedResourceLimitReadModelFx = (database: TestDatabase) =>
 				null,
 				1,
 			),
-			limitSeed(
+			limitSeedFn(
 				buyer.id,
 				"seller:limit:listing.gallery.count",
 				"2026-05-10T12:00:00.000Z",
@@ -125,7 +125,7 @@ export const seedResourceLimitReadModelFx = (database: TestDatabase) =>
 
 		yield* Effect.promise(async () => {
 			for (const seed of seeds) {
-				const resourceBundleId = genId();
+				const resourceBundleId = genIdFn();
 
 				await database.kysely
 					.insertInto("resource_bundle")
@@ -141,12 +141,12 @@ export const seedResourceLimitReadModelFx = (database: TestDatabase) =>
 				const userResourceBundle = await database.kysely
 					.insertInto("user_resource_bundle")
 					.values({
-						id: genId(),
+						id: genIdFn(),
 						userId: seed.userId,
 						resourceBundleId,
-						createdAt: date(seed.createdAt),
-						availableAt: date(seed.availableAt),
-						expiresAt: seed.expiresAt ? date(seed.expiresAt) : null,
+						createdAt: dateFn(seed.createdAt),
+						availableAt: dateFn(seed.availableAt),
+						expiresAt: seed.expiresAt ? dateFn(seed.expiresAt) : null,
 					})
 					.returning([
 						"id",
@@ -156,13 +156,13 @@ export const seedResourceLimitReadModelFx = (database: TestDatabase) =>
 				await database.kysely
 					.insertInto("user_resource_bundle_limit")
 					.values({
-						id: genId(),
+						id: genIdFn(),
 						userResourceBundleId: userResourceBundle.id,
 						resourceDefinitionId: seed.resourceDefinitionId,
 						limit: seed.limit,
-						createdAt: date(seed.createdAt),
-						availableAt: date(seed.availableAt),
-						expiresAt: seed.expiresAt ? date(seed.expiresAt) : null,
+						createdAt: dateFn(seed.createdAt),
+						availableAt: dateFn(seed.availableAt),
+						expiresAt: seed.expiresAt ? dateFn(seed.expiresAt) : null,
 					})
 					.execute();
 			}

@@ -3,16 +3,16 @@ import { describe, expect, it } from "vitest";
 import { transactionAcceptFx } from "~/seller-transaction/fx/transactionAcceptFx";
 import { transactionCollectionFx } from "~/seller-transaction/fx/transactionCollectionFx";
 import { transactionCountFx } from "~/seller-transaction/fx/transactionCountFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { getDefaultListingCreateFx } from "~/test/listing/fx/getDefaultListingCreateFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 import { activityArchiveFx } from "~/user-activity/fx/activityArchiveFx";
 
 describe("seller transactionCollectionFx", () => {
 	it("filters by activity state and statusIn within seller scope", async () => {
-		const database = await testabase("seller-transactionCollection-active-statusIn");
+		const database = await testabaseFn("seller-transactionCollection-active-statusIn");
 
 		return Effect.gen(function* () {
 			const { seller, buyer } = yield* createUsersFx({});
@@ -93,6 +93,6 @@ describe("seller transactionCollectionFx", () => {
 			);
 			expect(statusCount).toBe(3);
 			expect(typeof activeOnly[0]?.unread).toBe("number");
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

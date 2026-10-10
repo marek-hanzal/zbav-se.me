@@ -1,13 +1,13 @@
 import { Effect } from "effect";
 import { describe, it } from "vitest";
 import { rateLimitFx } from "~/rate-limit/fx/rateLimitFx";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 
 describe("rateLimitFx", () => {
 	it("fails with not found when the rule does not exist", async () => {
-		const database = await testabase("rateLimitFx-missing-rule");
+		const database = await testabaseFn("rateLimitFx-missing-rule");
 
 		return Effect.gen(function* () {
 			const result = yield* Effect.result(
@@ -19,10 +19,10 @@ describe("rateLimitFx", () => {
 				}),
 			);
 
-			expectTaggedErrorFx(result, {
+			expectTaggedErrorFn(result, {
 				tag: "NotFoundErrorFx",
 				messageIncludes: "missing:snapshot-rule",
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

@@ -27,7 +27,7 @@ export const AttrPatch: FC<AttrPatch.Props> = ({ draftId, attrs, attr, view, ...
 	return (
 		<TitleContainer
 			data-ui={`AttrPatch-${attr.name}`}
-			textTitle={translator.text(`Field patch - ${attr.name} (title)`)}
+			textTitle={translator.textFn(`Field patch - ${attr.name} (title)`)}
 			left={<EditAction />}
 			data-ui-layout={"vertical-header-content"}
 			{...props}

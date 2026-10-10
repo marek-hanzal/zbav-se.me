@@ -3,14 +3,14 @@ import { describe, expect, it } from "vitest";
 import { transactionCountFx } from "~/buyer-transaction/fx/transactionCountFx";
 import { transactionAcceptFx } from "~/seller-transaction/fx/transactionAcceptFx";
 import { transactionResolveFx } from "~/seller-transaction/fx/transactionResolveFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("transactionLifecycleEdgeCases (buyer)", () => {
 	it("count: verify transaction count accuracy", async () => {
-		const database = await testabase("buyerCloseFx-count");
+		const database = await testabaseFn("buyerCloseFx-count");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -85,6 +85,6 @@ describe("transactionLifecycleEdgeCases (buyer)", () => {
 			});
 
 			expect(countAfter).toBe(2);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

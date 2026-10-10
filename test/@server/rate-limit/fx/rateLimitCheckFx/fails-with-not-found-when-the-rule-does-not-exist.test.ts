@@ -1,13 +1,13 @@
 import { Effect } from "effect";
 import { describe, it } from "vitest";
 import { rateLimitCheckFx } from "~/rate-limit/fx/rateLimitCheckFx";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 
 describe("rateLimitCheckFx", () => {
 	it("fails with not found when the rule does not exist", async () => {
-		const database = await testabase("rateLimitCheckFx-missing-rule");
+		const database = await testabaseFn("rateLimitCheckFx-missing-rule");
 
 		return Effect.gen(function* () {
 			const result = yield* Effect.result(
@@ -19,10 +19,10 @@ describe("rateLimitCheckFx", () => {
 				}),
 			);
 
-			expectTaggedErrorFx(result, {
+			expectTaggedErrorFn(result, {
 				tag: "NotFoundErrorFx",
 				messageIncludes: "missing:rule",
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

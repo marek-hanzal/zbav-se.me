@@ -9,8 +9,8 @@ export const Route = createFileRoute("/$locale/tos")({
 		return (
 			<Container>
 				<Status
-					textTitle={translator.text("ToS not available in this language (title)")}
-					textMessage={translator.text(
+					textTitle={translator.textFn("ToS not available in this language (title)")}
+					textMessage={translator.textFn(
 						"ToS not available in this language (description)",
 					)}
 				/>

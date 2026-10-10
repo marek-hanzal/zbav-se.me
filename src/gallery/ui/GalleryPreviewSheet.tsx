@@ -22,9 +22,9 @@ export const GalleryPreviewSheet: FC<GalleryPreviewSheet.Props> = ({ urls, ...pr
 		<BottomSheet
 			data-ui={"GalleryPreviewSheet"}
 			detent={"default"}
-			header={({ close }) => ({
-				title: translator.text("Gallery (title)"),
-				right: <CloseButton onClick={close} />,
+			headerFn={({ closeFn }) => ({
+				title: translator.textFn("Gallery (title)"),
+				right: <CloseButton onClick={closeFn} />,
 			})}
 			contentProps={{
 				disableScroll: true,

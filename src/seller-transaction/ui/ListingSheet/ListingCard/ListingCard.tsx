@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { AttrSection } from "~/listing-attr/ui/AttrSection";
-import { getRootLogger } from "~/log/fn/getRootLogger";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
 import { withListingQuery } from "~/seller-listing/query/withListingQuery";
 import { HeroSection } from "~/seller-transaction/ui/ListingSheet/ListingCard/HeroSection";
 import { InfoSection } from "~/seller-transaction/ui/ListingSheet/ListingCard/InfoSection";
@@ -26,7 +26,7 @@ export const ListingCard: FC<ListingCard.Props> = ({
 	const { data: listing } = withListingQuery.useFetchQuery(listingId);
 
 	useRenderLogger({
-		logger: getRootLogger(),
+		logger: getRootLoggerFn(),
 		name: "ListingCard",
 		meta: {
 			listingId,

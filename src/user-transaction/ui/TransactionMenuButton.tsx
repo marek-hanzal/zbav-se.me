@@ -7,14 +7,17 @@ export namespace TransactionMenuButton {
 	export type Close = () => void;
 
 	export interface Props extends Omit<Button.Props, "children"> {
-		children(close: Close): ReactNode;
+		children(closeFn: Close): ReactNode;
 	}
 }
 
-export const TransactionMenuButton: FC<TransactionMenuButton.Props> = ({ children, ...props }) => {
-	const [isOpen, setIsOpen] = useState(false);
-	const close = () => {
-		setIsOpen(false);
+export const TransactionMenuButton: FC<TransactionMenuButton.Props> = ({
+	children: childrenFn,
+	...props
+}) => {
+	const [isOpen, setIsOpenFn] = useState(false);
+	const closeFn = () => {
+		setIsOpenFn(false);
 	};
 
 	return (
@@ -26,7 +29,7 @@ export const TransactionMenuButton: FC<TransactionMenuButton.Props> = ({ childre
 					"data-ui-text": "xl",
 				}}
 				onClick={() => {
-					setIsOpen(true);
+					setIsOpenFn(true);
 				}}
 				data-ui-tone="neutral"
 				data-ui-theme="light"
@@ -43,10 +46,10 @@ export const TransactionMenuButton: FC<TransactionMenuButton.Props> = ({ childre
 			<BottomSheet
 				data-ui={"TransactionMenuButton[BottomSheet]"}
 				isOpen={isOpen}
-				onClose={close}
+				onClose={closeFn}
 				detent={"content"}
 			>
-				{children(close)}
+				{childrenFn(closeFn)}
 			</BottomSheet>
 		</>
 	);

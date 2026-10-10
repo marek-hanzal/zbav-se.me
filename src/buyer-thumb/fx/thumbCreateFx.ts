@@ -6,7 +6,7 @@ import type { ThumbCreateSchema } from "~/buyer-thumb/schema/ThumbCreateSchema";
 import { dbFx } from "~/database/fx/dbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { DateServiceFx } from "~/date/service/DateServiceFx";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { activityCreateFx } from "~/user-activity/fx/activityCreateFx";
 
@@ -36,7 +36,7 @@ export const thumbCreateFx = Effect.fn("thumbCreateFx")(function* ({
 		Effect.gen(function* () {
 			const dateContext = yield* DateServiceFx;
 
-			const id = genId();
+			const id = genIdFn();
 
 			yield* listingCheckIfOwnFx({
 				userId,
@@ -61,7 +61,7 @@ export const thumbCreateFx = Effect.fn("thumbCreateFx")(function* ({
 						userId,
 						listingId,
 						type,
-						createdAt: dateContext.now().toJSDate(),
+						createdAt: dateContext.nowFn().toJSDate(),
 					})
 					.onConflict((eb) => eb.doNothing())
 					.returningAll()

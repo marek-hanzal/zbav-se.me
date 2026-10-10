@@ -5,8 +5,8 @@ export namespace EmptyState {
 		/**
 		 * When "true", use this check as the content
 		 */
-		check(): boolean | Promise<boolean>;
-		render(): ReactNode;
+		checkFn(): boolean | Promise<boolean>;
+		renderFn(): ReactNode;
 	}
 
 	export interface Props extends PropsWithChildren {
@@ -18,14 +18,14 @@ export namespace EmptyState {
 
 export const EmptyState: FC<EmptyState.Props> = ({ check, children }) => {
 	for (const item of check) {
-		const result = item.check();
+		const result = item.checkFn();
 
 		if (result instanceof Promise) {
 			return undefined;
 		}
 
 		if (result) {
-			return item.render();
+			return item.renderFn();
 		}
 	}
 

@@ -1,15 +1,15 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
 import { rateLimitEventFx } from "~/rate-limit/fx/rateLimitEventFx";
 import { rateLimitFx } from "~/rate-limit/fx/rateLimitFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 
 describe("rateLimitFx", () => {
 	it("returns current window snapshot without incrementing count", async () => {
-		const database = await testabase("rateLimitFx-current-window-snapshot");
+		const database = await testabaseFn("rateLimitFx-current-window-snapshot");
 		const fixedNow = DateTime.fromISO("2026-05-11T10:05:45.000Z");
 
 		return Effect.gen(function* () {
@@ -30,8 +30,8 @@ describe("rateLimitFx", () => {
 					"user:1",
 				],
 			}).pipe(
-				withDateServiceFx({
-					now: () => fixedNow,
+				withDateServiceFn({
+					nowFn: () => fixedNow,
 				}),
 			);
 
@@ -41,8 +41,8 @@ describe("rateLimitFx", () => {
 					"user:1",
 				],
 			}).pipe(
-				withDateServiceFx({
-					now: () => fixedNow,
+				withDateServiceFn({
+					nowFn: () => fixedNow,
 				}),
 			);
 
@@ -52,8 +52,8 @@ describe("rateLimitFx", () => {
 					"user:1",
 				],
 			}).pipe(
-				withDateServiceFx({
-					now: () => fixedNow,
+				withDateServiceFn({
+					nowFn: () => fixedNow,
 				}),
 			);
 
@@ -71,6 +71,6 @@ describe("rateLimitFx", () => {
 			});
 			expect(after.key).not.toBe("user:1");
 			expect(after.window.toISOString()).toBe("2026-05-11T10:05:00.000Z");
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

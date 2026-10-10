@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { dbFx } from "~/database/fx/dbFx";
 import { DateServiceFx } from "~/date/service/DateServiceFx";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import type { GalleryCreateSchema } from "~/user-gallery/schema/GalleryCreateSchema";
 
@@ -14,7 +14,7 @@ export namespace galleryInsertFx {
 
 export const galleryInsertFx = Effect.fn("galleryInsertFx")(function* ({
 	userId,
-	id = genId(),
+	id = genIdFn(),
 	...props
 }: galleryInsertFx.Props) {
 	const logger = yield* getLoggerFx("galleryInsertFx");
@@ -32,7 +32,7 @@ export const galleryInsertFx = Effect.fn("galleryInsertFx")(function* ({
 				...props,
 				id,
 				userId,
-				createdAt: dateService.now().toJSDate(),
+				createdAt: dateService.nowFn().toJSDate(),
 			})
 			.execute();
 	});

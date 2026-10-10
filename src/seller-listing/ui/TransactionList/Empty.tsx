@@ -20,8 +20,8 @@ export const Empty: FC<Empty.Props> = (props) => {
 	return (
 		<EmptyStatus
 			icon={MessageIcon}
-			textTitle={translator.text("No transactions as seller (title)")}
-			textMessage={translator.text("No transactions as seller (message)")}
+			textTitle={translator.textFn("No transactions as seller (title)")}
+			textMessage={translator.textFn("No transactions as seller (message)")}
 			action={
 				<LinkTo
 					data-action={"go to my listings"}

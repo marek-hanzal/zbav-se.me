@@ -3,7 +3,7 @@ import { TitleContainer } from "~/application-ui/ui/container.exports";
 import { withListingQuery } from "~/buyer-listing/query/withListingQuery";
 import { ListingCard } from "~/buyer-listing/ui/ListingCard/index";
 import { useLocale } from "~/locale/hook/useLocale";
-import { getRootLogger } from "~/log/fn/getRootLogger";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
 import { BackHomeButton } from "~/nav/ui/BackHomeButton.exports";
 import { useTranslator } from "~/translation/hook/useTranslator";
 import { useRenderLogger } from "~/ui/hook/useRenderLogger";
@@ -18,7 +18,7 @@ export const Route = createFileRoute("/$locale/app/buyer/listing/$id/view")({
 		return (
 			<TitleContainer
 				data-ui={"ListingViewPending[TitleContainer]"}
-				textTitle={translator.text("Listing title (title)")}
+				textTitle={translator.textFn("Listing title (title)")}
 				left={
 					<BackHomeButton
 						to="/$locale/app/home"
@@ -42,7 +42,7 @@ export const Route = createFileRoute("/$locale/app/buyer/listing/$id/view")({
 		const { data: listing } = withListingQuery.useFetchQuery(listingId);
 
 		useRenderLogger({
-			logger: getRootLogger(),
+			logger: getRootLoggerFn(),
 			name: "ListingView",
 			meta: {
 				listingId,

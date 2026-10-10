@@ -1,9 +1,9 @@
 import { tool } from "@openai/agents";
 import { z } from "zod";
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { getKnowledgeIndex } from "~/user-knowledge/service/getKnowledgeIndex";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { getKnowledgeIndexFn } from "~/user-knowledge/service/getKnowledgeIndexFn";
 
-const logger = getRootLogger([
+const logger = getRootLoggerFn([
 	"knowledge",
 	"tool",
 	"toolKnowledgeDetail",
@@ -34,7 +34,7 @@ Get the knowledge using 'topicId'
 
 		const { topicId } = await InputSchema.parseAsync(input);
 
-		const topic = (await getKnowledgeIndex()).find(({ data: { key } }) => {
+		const topic = (await getKnowledgeIndexFn()).find(({ data: { key } }) => {
 			return key === topicId;
 		});
 

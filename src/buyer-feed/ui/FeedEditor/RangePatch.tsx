@@ -10,20 +10,20 @@ import { Container } from "~/ui/ui/Container";
 export namespace RangePatch {
 	export interface Props extends Container.Props {
 		feed: FeedSchema.Type;
-		onSettled?(): void;
-		onCancel(): void;
+		onSettledFn?(): void;
+		onCancelFn(): void;
 	}
 }
 
-export const RangePatch: FC<RangePatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
+export const RangePatch: FC<RangePatch.Props> = ({ feed, onSettledFn, onCancelFn, ...props }) => {
 	const translator = useTranslator();
 	const patchMutation = withFeedQuery.usePatchMutation({
-		onSettled,
+		onSettled: onSettledFn,
 	});
 	const currentRange = feed.query?.where?.range;
-	const [rangeValue, setRangeValue] = useState<number | undefined>(currentRange);
+	const [rangeValue, setRangeValueFn] = useState<number | undefined>(currentRange);
 
-	const handleSave = () => {
+	const handleSaveFn = () => {
 		patchMutation.mutate({
 			query: {
 				where: {
@@ -67,15 +67,15 @@ export const RangePatch: FC<RangePatch.Props> = ({ feed, onSettled, onCancel, ..
 
 				<Dial
 					value={rangeValue}
-					onChange={setRangeValue}
-					placeholder={translator.text("Feed range (placeholder)")}
+					onChangeFn={setRangeValueFn}
+					placeholder={translator.textFn("Feed range (placeholder)")}
 					allowDecimals={false}
 				/>
 			</Container>
 
 			<SaveContainer
-				onCancel={onCancel}
-				onSave={handleSave}
+				onCancelFn={onCancelFn}
+				onSaveFn={handleSaveFn}
 				loading={patchMutation.isPending}
 				disabled={patchMutation.isPending}
 			/>

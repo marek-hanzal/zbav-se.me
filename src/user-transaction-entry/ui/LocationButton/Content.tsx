@@ -11,8 +11,8 @@ export namespace Content {
 		locationIdState: StateType.State<string | undefined | null>;
 		locationState: StateType.State<LocationSchema.Type | undefined>;
 		loading: boolean;
-		onSave(): void;
-		onCancel(): void;
+		onSaveFn(): void;
+		onCancelFn(): void;
 	}
 }
 
@@ -20,8 +20,8 @@ export const Content: FC<Content.Props> = ({
 	locationIdState,
 	locationState,
 	loading,
-	onSave,
-	onCancel,
+	onSaveFn,
+	onCancelFn,
 	...props
 }) => {
 	const translator = useTranslator();
@@ -36,14 +36,14 @@ export const Content: FC<Content.Props> = ({
 		>
 			<LocationSelect
 				value={locationIdState.value}
-				onLocation={locationState.set}
-				onChange={locationIdState.set}
-				textHint={translator.text("Message location security (hint)")}
+				onLocationFn={locationState.setFn}
+				onChangeFn={locationIdState.setFn}
+				textHint={translator.textFn("Message location security (hint)")}
 			/>
 
 			<SaveContainer
-				onCancel={onCancel}
-				onSave={onSave}
+				onCancelFn={onCancelFn}
+				onSaveFn={onSaveFn}
 				loading={loading}
 				disabled={!locationIdState.value || !locationState.value}
 			/>

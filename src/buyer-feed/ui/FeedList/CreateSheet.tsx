@@ -3,7 +3,7 @@ import { useAppForm } from "~/application-ui/hook/form.exports";
 import { CloseButton } from "~/application-ui/ui/button.exports";
 import { withFeedQuery } from "~/buyer-feed/query/withFeedQuery";
 import { FeedCreateSchema } from "~/buyer-feed/schema/FeedCreateSchema";
-import { getFeedDefaultCreate } from "~/buyer-feed/service/getFeedDefaultCreate";
+import { getFeedDefaultCreateFn } from "~/buyer-feed/service/getFeedDefaultCreateFn";
 import { SaveContainer } from "~/container/ui/SaveContainer";
 import { FormField } from "~/form/ui/FormField";
 import { useTranslator } from "~/translation/hook/useTranslator";
@@ -39,7 +39,7 @@ export const CreateSheet: FC<CreateSheet.Props> = ({ _suspense, state, ...props 
 	});
 	const feedCreateMutation = withFeedQuery.useCreateMutation({
 		onSettled() {
-			state.set(false);
+			state.setFn(false);
 		},
 		invalidate: [
 			"collection",
@@ -59,21 +59,21 @@ export const CreateSheet: FC<CreateSheet.Props> = ({ _suspense, state, ...props 
 				return;
 			}
 
-			return feedCreateMutation.mutateAsync(getFeedDefaultCreate(name));
+			return feedCreateMutation.mutateAsync(getFeedDefaultCreateFn(name));
 		},
 	});
 
 	return (
 		<BottomSheet
 			isOpen={state.value}
-			onClose={() => state.set(false)}
+			onClose={() => state.setFn(false)}
 			detent={"default"}
-			header={({ close }) => ({
+			headerFn={({ closeFn }) => ({
 				title: "Create new feed (title)",
 				right: (
 					<CloseButton
 						data-action={"close create feed"}
-						onClick={close}
+						onClick={closeFn}
 					/>
 				),
 			})}
@@ -97,7 +97,7 @@ export const CreateSheet: FC<CreateSheet.Props> = ({ _suspense, state, ...props 
 						data-ui-height="full"
 					>
 						<Status
-							textTitle={translator.text("Feed name (title)")}
+							textTitle={translator.textFn("Feed name (title)")}
 							action={
 								<form.AppField name={"name"}>
 									{(field) => (
@@ -114,7 +114,7 @@ export const CreateSheet: FC<CreateSheet.Props> = ({ _suspense, state, ...props 
 													onChange={(e) =>
 														field.handleChange(e.target.value)
 													}
-													placeholder={translator.text(
+													placeholder={translator.textFn(
 														"Feed name (placeholder)",
 													)}
 													autoFocus
@@ -129,7 +129,7 @@ export const CreateSheet: FC<CreateSheet.Props> = ({ _suspense, state, ...props 
 							data-ui-inner="4xl"
 						>
 							<Mx
-								label={translator.text("Feed name (required)")}
+								label={translator.textFn("Feed name (required)")}
 								data-ui-tone="neutral"
 								data-ui-theme="light"
 							/>
@@ -144,10 +144,10 @@ export const CreateSheet: FC<CreateSheet.Props> = ({ _suspense, state, ...props 
 					>
 						{({ isValid, isSubmitting }) => (
 							<SaveContainer
-								onCancel={() => {
-									state.set(false);
+								onCancelFn={() => {
+									state.setFn(false);
 								}}
-								onSave={() => {
+								onSaveFn={() => {
 									form.handleSubmit();
 								}}
 								loading={isSubmitting}

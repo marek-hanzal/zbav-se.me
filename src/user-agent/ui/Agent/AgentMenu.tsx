@@ -10,13 +10,13 @@ import type { TransactionMenuButton } from "~/user-transaction/ui/TransactionMen
 
 export namespace AgentMenu {
 	export interface Props extends Container.Props {
-		close: TransactionMenuButton.Close;
+		closeFn: TransactionMenuButton.Close;
 		galleryState: StateType.State<boolean>;
 		isPending: boolean;
 	}
 }
 
-export const AgentMenu: FC<AgentMenu.Props> = ({ close, galleryState, isPending, ...props }) => {
+export const AgentMenu: FC<AgentMenu.Props> = ({ closeFn, galleryState, isPending, ...props }) => {
 	return (
 		<Container
 			data-ui={"AgentMenu"}
@@ -36,8 +36,8 @@ export const AgentMenu: FC<AgentMenu.Props> = ({ close, galleryState, isPending,
 							return;
 						}
 
-						galleryState.set(true);
-						close();
+						galleryState.setFn(true);
+						closeFn();
 					}}
 					{...MessageButtonUi}
 				>

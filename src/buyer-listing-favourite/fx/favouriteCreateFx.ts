@@ -4,7 +4,7 @@ import { favouriteFetchFx } from "~/buyer-listing-favourite/fx/favouriteFetchFx"
 import type { FavouriteCreateSchema } from "~/buyer-listing-favourite/schema/FavouriteCreateSchema";
 import { dbFx } from "~/database/fx/dbFx";
 import { DateServiceFx } from "~/date/service/DateServiceFx";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import { getLoggerFx } from "~/log/fx/getLoggerFx";
 
 export namespace favouriteCreateFx {
@@ -27,7 +27,7 @@ export const favouriteCreateFx = Effect.fn("favouriteCreateFx")(function* ({
 
 	const dateContext = yield* DateServiceFx;
 
-	const id = genId();
+	const id = genIdFn();
 
 	yield* feedFetchFx({
 		where: {
@@ -46,7 +46,7 @@ export const favouriteCreateFx = Effect.fn("favouriteCreateFx")(function* ({
 				id,
 				userId,
 				feedId,
-				createdAt: dateContext.now().toJSDate(),
+				createdAt: dateContext.nowFn().toJSDate(),
 			})
 			.onConflict((eb) => eb.doNothing())
 			.returningAll()

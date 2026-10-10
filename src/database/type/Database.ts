@@ -1,4 +1,4 @@
-import type { auth } from "~/authentication/fn/auth";
+import type { authFn } from "~/authentication/fn/authFn";
 import type { ActivityTableSchema } from "~/database/schema/ActivityTable";
 import type { AgentStreamTableSchema } from "~/database/schema/AgentStreamTableSchema";
 import type { AgentThreadTableSchema } from "~/database/schema/AgentThreadTableSchema";
@@ -105,5 +105,5 @@ export interface Database {
 	user_resource_bundle_limit: UserResourceBundleLimitTableSchema.Type;
 	user_resource_bundle: UserResourceBundleTableSchema.Type;
 	user_restriction: UserRestrictionTableSchema.Type;
-	user: auth.User;
+	user: authFn.User;
 }

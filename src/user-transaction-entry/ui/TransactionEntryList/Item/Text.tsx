@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { toTimeDiff } from "~/date/fn/toTimeDiff";
+import { toTimeDiffFn } from "~/date/fn/toTimeDiffFn";
 import { useLocale } from "~/locale/hook/useLocale";
 import type { Container } from "~/ui/ui/Container";
 import { Markdown } from "~/ui/ui/Markdown";
@@ -27,7 +27,7 @@ export const Text: FC<Text.Props> = ({ side, transactionEntry, ...props }) => {
 			<Markdown>{transactionEntry.payload.text}</Markdown>
 
 			<Typo
-				label={toTimeDiff({
+				label={toTimeDiffFn({
 					locale,
 					time: transactionEntry.createdAt,
 					type: "relative",

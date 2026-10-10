@@ -19,8 +19,8 @@ export const CategoryValue: FC<CategoryValue.Props> = ({ category, ...props }) =
 	return (
 		<LabelValue
 			data-ui={"CategoryValue"}
-			textLabel={translator.text("Listing category (label)")}
-			textEmpty={translator.text("Listing category not selected")}
+			textLabel={translator.textFn("Listing category (label)")}
+			textEmpty={translator.textFn("Listing category not selected")}
 			textValue={
 				category ? (
 					<CategoryInline

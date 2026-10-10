@@ -16,8 +16,8 @@ export const MessageImageContent: FC<MessageImageContent.Props> = ({
 	image,
 	...props
 }) => {
-	const [isPreviewOpen, setIsPreviewOpen] = useState(false);
-	const src = getImageSrc(image);
+	const [isPreviewOpen, setIsPreviewOpenFn] = useState(false);
+	const src = getImageSrcFn(image);
 	if (!src) {
 		return null;
 	}
@@ -48,7 +48,7 @@ export const MessageImageContent: FC<MessageImageContent.Props> = ({
 					data-ui={"MessageContent-[HeroImage]"}
 					data-ui-round="default"
 					className="cursor-pointer bg-black/5"
-					onClick={() => setIsPreviewOpen(true)}
+					onClick={() => setIsPreviewOpenFn(true)}
 				/>
 			</Container>
 
@@ -57,7 +57,7 @@ export const MessageImageContent: FC<MessageImageContent.Props> = ({
 					src,
 				]}
 				isOpen={isPreviewOpen}
-				onClose={() => setIsPreviewOpen(false)}
+				onClose={() => setIsPreviewOpenFn(false)}
 			/>
 		</Group>
 	);
@@ -65,7 +65,7 @@ export const MessageImageContent: FC<MessageImageContent.Props> = ({
 
 // =================================================================================================
 
-function getImageSrc(image: unknown) {
+function getImageSrcFn(image: unknown) {
 	if (typeof image === "string") {
 		return image;
 	}

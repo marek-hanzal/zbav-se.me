@@ -4,9 +4,9 @@ import { z } from "zod";
 import { listingCollectionFn } from "~/buyer-listing/fn/listingCollectionFn";
 import { ListingQuerySchema } from "~/buyer-listing/schema/ListingQuerySchema";
 import { ListingWhereSchema } from "~/buyer-listing/schema/ListingWhereSchema";
-import { getRootLogger } from "~/log/fn/getRootLogger";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
 
-const logger = getRootLogger([
+const logger = getRootLoggerFn([
 	"tool",
 	"toolListingBrowse",
 ]);

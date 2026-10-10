@@ -24,8 +24,8 @@ export const Placeholder: FC<Placeholder.Props> = ({ disabled }) => {
 			<Status
 				data-ui={"PhotoUpload-[Status.placeholder]"}
 				icon={PhotoIcon}
-				textTitle={translator.text("Photo upload placeholder (title)")}
-				textMessage={translator.text("Photo upload placeholder (message)")}
+				textTitle={translator.textFn("Photo upload placeholder (title)")}
+				textMessage={translator.textFn("Photo upload placeholder (message)")}
 				data-ui-tone={disabled ? "neutral" : "primary"}
 				data-ui-theme="light"
 				data-ui-inner="4xl"

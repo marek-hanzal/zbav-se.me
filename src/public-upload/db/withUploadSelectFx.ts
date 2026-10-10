@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { selectFx } from "~/database-query/fx/selectFx";
+import { selectFn } from "~/database-query/fn/selectFn";
 import type { UploadSortSchema } from "~/public-upload/schema/UploadSortSchema";
 import type { UploadWhereSchema } from "~/public-upload/schema/UploadWhereSchema";
 
@@ -24,7 +24,7 @@ export const withUploadSelectFx = Effect.fn("withUploadSelectFx")(function* ({
 			.exhaustive();
 	}
 
-	return selectFx({
+	return selectFn({
 		select: select.select([
 			"u.id",
 			"u.url",

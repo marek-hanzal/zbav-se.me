@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import { sql } from "kysely";
 import { match } from "ts-pattern";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { selectFx } from "~/database-query/fx/selectFx";
+import { selectFn } from "~/database-query/fn/selectFn";
 import { DateServiceFx } from "~/date/service/DateServiceFx";
 import type { ResourceLimitSortSchema } from "~/user-resource-limit/schema/ResourceLimitSortSchema";
 import type { ResourceLimitWhereSchema } from "~/user-resource-limit/schema/ResourceLimitWhereSchema";
@@ -23,7 +23,7 @@ export const withResourceLimitSelectFx = Effect.fn("withResourceLimitSelectFx")(
 }: withResourceLimitSelectFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
 	const dateService = yield* DateServiceFx;
-	const now = dateService.now().toJSDate();
+	const now = dateService.nowFn().toJSDate();
 
 	let query = kysely
 		.selectFrom("user_resource_bundle_limit as resourceLimit")
@@ -41,10 +41,10 @@ export const withResourceLimitSelectFx = Effect.fn("withResourceLimitSelectFx")(
 			sql<number>`${sql.ref("resourceLimit.limit")}::float8`.as("limit"),
 		])
 		.where("resourceLimit.availableAt", "<=", now)
-		.where((eb) => {
-			return eb.or([
-				eb("resourceLimit.expiresAt", "is", null),
-				eb("resourceLimit.expiresAt", ">", now),
+		.where((ebFn) => {
+			return ebFn.or([
+				ebFn("resourceLimit.expiresAt", "is", null),
+				ebFn("resourceLimit.expiresAt", ">", now),
 			]);
 		});
 
@@ -60,7 +60,7 @@ export const withResourceLimitSelectFx = Effect.fn("withResourceLimitSelectFx")(
 			.exhaustive();
 	}
 
-	return selectFx({
+	return selectFn({
 		select: query,
 		queryFx(select, where: ResourceLimitWhereSchema.Type) {
 			return Effect.gen(function* () {

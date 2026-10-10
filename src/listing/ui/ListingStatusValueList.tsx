@@ -25,13 +25,13 @@ export const ListingStatusValueList: FC<ListingStatusValueList.Props> = ({
 	return (
 		<ValueList
 			data-ui={"ListingStatusValueList"}
-			textLabel={translator.text("Listing status (label)")}
-			textEmpty={translator.text("Listing status not selected")}
+			textLabel={translator.textFn("Listing status (label)")}
+			textEmpty={translator.textFn("Listing status not selected")}
 			items={statusIn.map((status) => ({
 				id: status,
 				status,
 			}))}
-			renderFn={(item) => translator.text(`Listing status - ${item.status}`)}
+			renderFn={(item) => translator.textFn(`Listing status - ${item.status}`)}
 			wrapperProps={{
 				...(statusIn.length > 0
 					? {

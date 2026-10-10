@@ -9,10 +9,10 @@ import type { Status } from "~/ui/ui/Status";
 export namespace LocationSelect {
 	export interface Props extends Omit<Container.Props, "onChange"> {
 		value: string | undefined | null;
-		onChange(value: string | null): void;
+		onChangeFn(value: string | null): void;
 		allowClear?: boolean;
-		onLocation?(value: LocationSchema.Type): void;
-		onSearchChange?(value: Fulltext.Value): void;
+		onLocationFn?(value: LocationSchema.Type): void;
+		onSearchChangeFn?(value: Fulltext.Value): void;
 		textHint: string;
 		warningStatusProps?: Status.Props;
 	}
@@ -26,19 +26,19 @@ export namespace LocationSelect {
  */
 export const LocationSelect: FC<LocationSelect.Props> = ({
 	value,
-	onChange,
+	onChangeFn,
 	allowClear,
-	onLocation,
-	onSearchChange,
+	onLocationFn,
+	onSearchChangeFn,
 	textHint,
 	warningStatusProps,
 	...props
 }) => {
 	const translator = useTranslator();
-	const [search, setSearch] = useState<Fulltext.Value>();
-	const handleSearchChange = (value: Fulltext.Value) => {
-		setSearch(value);
-		onSearchChange?.(value);
+	const [search, setSearchFn] = useState<Fulltext.Value>();
+	const handleSearchChangeFn = (value: Fulltext.Value) => {
+		setSearchFn(value);
+		onSearchChangeFn?.(value);
 	};
 
 	return (
@@ -53,9 +53,9 @@ export const LocationSelect: FC<LocationSelect.Props> = ({
 				data-action={"search location"}
 				state={{
 					value: search,
-					set: handleSearchChange,
+					setFn: handleSearchChangeFn,
 				}}
-				textPlaceholder={translator.text("Location search (placeholder)")}
+				textPlaceholder={translator.textFn("Location search (placeholder)")}
 				autoFocus
 			/>
 
@@ -64,9 +64,9 @@ export const LocationSelect: FC<LocationSelect.Props> = ({
 					textHint={textHint}
 					search={search}
 					value={value}
-					onChange={onChange}
+					onChangeFn={onChangeFn}
 					allowClear={allowClear}
-					onLocation={onLocation}
+					onLocationFn={onLocationFn}
 					warningStatusProps={warningStatusProps}
 				/>
 			</Suspense>

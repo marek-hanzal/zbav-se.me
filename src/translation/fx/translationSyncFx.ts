@@ -15,14 +15,14 @@ export const translationSyncFx = Effect.fn("translationSyncFx")(function* () {
 
 		return Promise.all(
 			keys.map(async (key) => {
-				const loader = translationSourceMap[key];
+				const loaderFn = translationSourceMap[key];
 
-				if (!loader) {
+				if (!loaderFn) {
 					throw new Error(`Translation asset "${key}" is missing.`);
 				}
 
 				return {
-					content: await loader(),
+					content: await loaderFn(),
 					locale: basename(key, extname(key)),
 				};
 			}),

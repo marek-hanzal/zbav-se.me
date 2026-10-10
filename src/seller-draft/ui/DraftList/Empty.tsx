@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { DraftIcon } from "~/application-ui/constant/icon.exports";
-import { uiCtaLinkButton } from "~/application-ui/fn/ui.exports";
+import { uiCtaLinkButtonFn } from "~/application-ui/fn/ui.exports";
 import { useLocale } from "~/locale/hook/useLocale";
 import { EmptyStatus } from "~/status/ui/EmptyStatus";
 import { useTranslator } from "~/translation/hook/useTranslator";
@@ -21,8 +21,8 @@ export const Empty: FC<Empty.Props> = (props) => {
 	return (
 		<EmptyStatus
 			icon={DraftIcon}
-			textTitle={translator.text("No drafts (title)")}
-			textMessage={translator.text("No drafts (message)")}
+			textTitle={translator.textFn("No drafts (title)")}
+			textMessage={translator.textFn("No drafts (message)")}
 			action={
 				<LinkTo
 					icon={ChevronRightIcon}
@@ -31,7 +31,7 @@ export const Empty: FC<Empty.Props> = (props) => {
 					params={{
 						locale,
 					}}
-					{...uiCtaLinkButton({})}
+					{...uiCtaLinkButtonFn({})}
 				>
 					<Tx label={"Create new draft (link)"} />
 				</LinkTo>

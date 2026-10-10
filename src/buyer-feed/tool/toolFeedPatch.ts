@@ -1,9 +1,9 @@
 import { tool } from "@openai/agents";
 import { z } from "zod";
 import { feedPatchFn } from "~/buyer-feed/fn/feedPatchFn";
-import { getRootLogger } from "~/log/fn/getRootLogger";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
 
-const logger = getRootLogger([
+const logger = getRootLoggerFn([
 	"tool",
 	"toolFeedPatch",
 ]);

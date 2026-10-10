@@ -1,8 +1,8 @@
 import type { FC } from "react";
-import { uiSelectButton } from "~/application-ui/fn/ui.exports";
+import { uiSelectButtonFn } from "~/application-ui/fn/ui.exports";
 import { SaveContainer } from "~/container/ui/SaveContainer";
 import { useSelection } from "~/selection/hook/useSelection";
-import { useNextAttr } from "~/seller-draft/ui/Editor/useNextAttr";
+import { getNextAttrFn } from "~/seller-draft/fn/getNextAttrFn";
 import { withDraftAttrEnumSinglePatchMutation } from "~/seller-draft-attr-enum-single/mutation/withDraftAttrEnumSinglePatchMutation";
 import { useTranslator } from "~/translation/hook/useTranslator";
 import { Tx } from "~/translation/ui/Tx";
@@ -34,10 +34,10 @@ export const AttrEnumSingle: FC<AttrEnumSingle.Props> = ({
 	...props
 }) => {
 	const translator = useTranslator();
-	const next = useNextAttr(attr, attrs);
+	const next = getNextAttrFn(attr, attrs);
 	const mutation = withDraftAttrEnumSinglePatchMutation.useMutation({
 		onSuccess() {
-			view.set(next ? `attr.${next.name}` : "default");
+			view.setFn(next ? `attr.${next.name}` : "default");
 		},
 	});
 	const selection = useSelection({
@@ -71,13 +71,13 @@ export const AttrEnumSingle: FC<AttrEnumSingle.Props> = ({
 					data-ui-gap={"default"}
 				>
 					{attr.options.map((option) => {
-						const selected = selection.isSelected(option.value);
+						const selected = selection.isSelectedFn(option.value);
 
 						return (
 							<Button
 								key={option.value}
 								onClick={() => {
-									selection.toggle({
+									selection.toggleFn({
 										id: option.value,
 									});
 								}}
@@ -85,7 +85,7 @@ export const AttrEnumSingle: FC<AttrEnumSingle.Props> = ({
 									"data-ui-text": "2xl",
 									"data-ui-color": selected ? "lead" : "icon",
 								}}
-								{...uiSelectButton({
+								{...uiSelectButtonFn({
 									isSelected: selected,
 									"data-ui-flow": "horizontal",
 									"data-ui-justify": "start",
@@ -99,7 +99,7 @@ export const AttrEnumSingle: FC<AttrEnumSingle.Props> = ({
 									],
 								})}
 							>
-								{translator.text(`${attr.name} - ${option.value}`, option.value)}
+								{translator.textFn(`${attr.name} - ${option.value}`, option.value)}
 							</Button>
 						);
 					})}
@@ -107,14 +107,14 @@ export const AttrEnumSingle: FC<AttrEnumSingle.Props> = ({
 			</Container>
 
 			<SaveContainer
-				onCancel={() => {
-					view.set("default");
+				onCancelFn={() => {
+					view.setFn("default");
 				}}
-				onSave={() => {
+				onSaveFn={() => {
 					mutation.mutate({
 						fieldId: attr.name,
 						draftId,
-						value: selection.optional.singleId() ?? null,
+						value: selection.optional.singleIdFn() ?? null,
 					});
 				}}
 				loading={mutation.isPending}

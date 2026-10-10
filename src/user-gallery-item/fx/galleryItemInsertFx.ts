@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { dbFx } from "~/database/fx/dbFx";
 import { DateServiceFx } from "~/date/service/DateServiceFx";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { galleryFetchFx } from "~/user-gallery/fx/galleryFetchFx";
 import type { GalleryItemCreateSchema } from "~/user-gallery-item/schema/GalleryItemCreateSchema";
@@ -33,8 +33,8 @@ export const galleryItemInsertFx = Effect.fn("galleryItemInsertFx")(function* ({
 
 	const dateService = yield* DateServiceFx;
 
-	const now = dateService.now();
-	const id = genId();
+	const now = dateService.nowFn();
+	const id = genIdFn();
 
 	/**
 	 * Just ensures the gallery exists with the correct user

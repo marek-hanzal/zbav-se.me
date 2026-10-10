@@ -5,14 +5,14 @@ import { feedDeleteFx } from "~/buyer-feed/fx/feedDeleteFx";
 import { feedFetchFx } from "~/buyer-feed/fx/feedFetchFx";
 import { feedPatchFx } from "~/buyer-feed/fx/feedPatchFx";
 import { feedResolveFx } from "~/buyer-feed/fx/feedResolveFx";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("feedLifecycleFx", () => {
 	it("resolves for owner, rejects foreign access, and deletes feed cleanly", async () => {
-		const database = await testabase("feedLifecycle-access");
+		const database = await testabaseFn("feedLifecycle-access");
 
 		return Effect.gen(function* () {
 			const owner = yield* leaseTestUserFx({});
@@ -39,7 +39,7 @@ describe("feedLifecycleFx", () => {
 				}),
 			);
 
-			expectTaggedErrorFx(foreignResolution, {
+			expectTaggedErrorFn(foreignResolution, {
 				tag: "AccessDeniedErrorFx",
 				message: "You are not allowed to access this feed",
 			});
@@ -70,10 +70,10 @@ describe("feedLifecycleFx", () => {
 				}),
 			);
 
-			expectTaggedErrorFx(foreignPatch, {
+			expectTaggedErrorFn(foreignPatch, {
 				tag: "NotFoundErrorFx",
 			});
-			expectTaggedErrorFx(foreignDelete, {
+			expectTaggedErrorFn(foreignDelete, {
 				tag: "NotFoundErrorFx",
 			});
 
@@ -99,9 +99,9 @@ describe("feedLifecycleFx", () => {
 				}),
 			);
 
-			expectTaggedErrorFx(missing, {
+			expectTaggedErrorFn(missing, {
 				tag: "NotFoundErrorFx",
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

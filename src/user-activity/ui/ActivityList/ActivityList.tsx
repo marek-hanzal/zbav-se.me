@@ -1,6 +1,6 @@
 import { Suspense, useMemo } from "react";
 import type { ActivityPriorityEnumSchema } from "~/activity/schema/ActivityPriorityEnumSchema";
-import { withFallback } from "~/ui/fn/withFallback";
+import { withFallbackFn } from "~/ui/fn/withFallbackFn";
 import type { MarkSuspense } from "~/ui/type/MarkSuspense";
 import { Container } from "~/ui/ui/Container";
 import { EmptyState } from "~/ui/ui/EmptyState";
@@ -16,7 +16,7 @@ export namespace ActivityList {
 	}
 }
 
-export const ActivityList = withFallback(
+export const ActivityList = withFallbackFn(
 	({ _suspense, priority, refetchInterval = 5_000, ...props }: ActivityList.Props) => {
 		const { data: activityCollection } = withActivityQuery.useIdsQuery(
 			{
@@ -43,10 +43,10 @@ export const ActivityList = withFallback(
 		const check = useMemo(() => {
 			return [
 				{
-					check() {
+					checkFn() {
 						return !activityCollection.length;
 					},
-					render() {
+					renderFn() {
 						return <Empty />;
 					},
 				},

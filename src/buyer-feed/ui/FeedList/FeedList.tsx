@@ -3,7 +3,7 @@ import { withFeedQuery } from "~/buyer-feed/query/withFeedQuery";
 import { CreateButton } from "~/buyer-feed/ui/FeedList/CreateButton";
 import { Empty } from "~/buyer-feed/ui/FeedList/Empty";
 import { Item } from "~/buyer-feed/ui/FeedList/Item";
-import { withFallback } from "~/ui/fn/withFallback";
+import { withFallbackFn } from "~/ui/fn/withFallbackFn";
 import type { MarkSuspense } from "~/ui/type/MarkSuspense";
 import { Container } from "~/ui/ui/Container";
 import { EmptyState } from "~/ui/ui/EmptyState";
@@ -15,7 +15,7 @@ export namespace FeedList {
 	}
 }
 
-export const FeedList = withFallback(({ _suspense, ...props }: FeedList.Props) => {
+export const FeedList = withFallbackFn(({ _suspense, ...props }: FeedList.Props) => {
 	/**
 	 * This is intentional to trigger parent suspense
 	 */
@@ -34,10 +34,10 @@ export const FeedList = withFallback(({ _suspense, ...props }: FeedList.Props) =
 	const check = useMemo(() => {
 		return [
 			{
-				check() {
+				checkFn() {
 					return !feedCollection.length;
 				},
-				render() {
+				renderFn() {
 					return <Empty _suspense={_suspense} />;
 				},
 			},

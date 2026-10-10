@@ -16,7 +16,7 @@ export namespace withDatabaseFx {
 		/**
 		 * Run the importer, output is ignored, "any" just for convenience to return any promise.
 		 */
-		run(instance: Instance<TDatabase>): Promise<any>;
+		runFn(instance: Instance<TDatabase>): Promise<any>;
 	}
 
 	export interface Props<in out TDatabase> {
@@ -24,8 +24,8 @@ export namespace withDatabaseFx {
 		/**
 		 * Called before the migration is executed.
 		 */
-		onPreMigration?(instance: Instance<TDatabase>): Promise<void>;
-		onPostMigration?(instance: Instance<TDatabase>): Promise<void>;
+		onPreMigrationFn?(instance: Instance<TDatabase>): Promise<void>;
+		onPostMigrationFn?(instance: Instance<TDatabase>): Promise<void>;
 		/**
 		 * Those are run after _every_ migration to sync data; importers should
 		 * be independent, so every run should yield same result.
@@ -39,14 +39,14 @@ export namespace withDatabaseFx {
 	export interface Instance<in out DB> {
 		dialect: Dialect;
 		kysely: Kysely<DB>;
-		migrate(): Promise<MigrationResult[] | undefined>;
+		migrateFn(): Promise<MigrationResult[] | undefined>;
 	}
 }
 
 export const withDatabaseFx = Effect.fn("withDatabaseFx")(function* <const TDatabase>({
 	logger,
-	onPreMigration,
-	onPostMigration,
+	onPreMigrationFn,
+	onPostMigrationFn,
 	imports = [],
 }: withDatabaseFx.Props<TDatabase>) {
 	const dialect = yield* DialectContextFx;
@@ -54,7 +54,7 @@ export const withDatabaseFx = Effect.fn("withDatabaseFx")(function* <const TData
 
 	let kyselyInstance: Kysely<TDatabase> | null = null;
 
-	const kysely = () => {
+	const kyselyFn = () => {
 		if (kyselyInstance) {
 			return kyselyInstance;
 		}
@@ -95,15 +95,15 @@ export const withDatabaseFx = Effect.fn("withDatabaseFx")(function* <const TData
 	const instance = {
 		dialect,
 		get kysely() {
-			return kysely();
+			return kyselyFn();
 		},
-		async migrate() {
+		async migrateFn() {
 			const $logger = logger.getChild("migration");
 
-			await onPreMigration?.(instance);
+			await onPreMigrationFn?.(instance);
 
 			const migrator = new Migrator({
-				db: kysely(),
+				db: kyselyFn(),
 				provider: {
 					getMigrations: async () => migrations,
 				},
@@ -132,17 +132,17 @@ export const withDatabaseFx = Effect.fn("withDatabaseFx")(function* <const TData
 				}
 			});
 
-			for await (const { name, run } of imports) {
+			for await (const { name, runFn } of imports) {
 				$logger.trace(`Running import [${name}]`, {
 					name,
 				});
-				await run(instance);
+				await runFn(instance);
 				$logger.trace(`Import [${name}] done`, {
 					name,
 				});
 			}
 
-			await onPostMigration?.(instance);
+			await onPostMigrationFn?.(instance);
 
 			return results;
 		},

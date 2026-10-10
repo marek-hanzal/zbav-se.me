@@ -1,14 +1,14 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { feedCreateFx } from "~/buyer-feed/fx/feedCreateFx";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("feedCreateFx", () => {
 	it("rejects duplicate feed names only within the same type and user", async () => {
-		const database = await testabase("feedCreateFx-duplicate-name-type-user");
+		const database = await testabaseFn("feedCreateFx-duplicate-name-type-user");
 
 		return Effect.gen(function* () {
 			const owner = yield* leaseTestUserFx({});
@@ -50,10 +50,10 @@ describe("feedCreateFx", () => {
 			expect(first.type).toBe("search");
 			expect(sameNameOtherType.type).toBe("user");
 			expect(sameNameOtherUser.userId).toBe(stranger.id);
-			expectTaggedErrorFx(duplicate, {
+			expectTaggedErrorFn(duplicate, {
 				tag: "ConflictErrorFx",
 				message: "Feed already exists",
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

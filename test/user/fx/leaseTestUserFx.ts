@@ -1,9 +1,9 @@
 import { Effect } from "effect";
-import { getFeedDefaultCreate } from "~/buyer-feed/service/getFeedDefaultCreate";
+import { getFeedDefaultCreateFn } from "~/buyer-feed/service/getFeedDefaultCreateFn";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { dbFx } from "~/database/fx/dbFx";
 import type { Database } from "~/database/type/Database";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 
 const TEST_USER_KEYS = [
 	"a",
@@ -39,11 +39,11 @@ type UserRow = Database["user"];
 const leaseIndexByKysely = new WeakMap<object, number>();
 export const TEST_USER_PASSWORD = "12345678";
 
-export function toLeasedTestUserEmail(key: LeaseKey) {
+export function toLeasedTestUserEmailFn(key: LeaseKey) {
 	return `test-${key}@zbav-se.me`;
 }
 
-function getNextLeaseKey(kysely: object) {
+function getNextLeaseKeyFn(kysely: object) {
 	const current = leaseIndexByKysely.get(kysely) ?? 0;
 	const nextKey = TEST_USER_KEYS[current];
 
@@ -70,8 +70,8 @@ export const leaseTestUserFx = Effect.fn("leaseTestUserFx")(function* ({
 	key,
 }: leaseTestUserFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
-	const resolvedKey = key ?? getNextLeaseKey(kysely);
-	const seededEmail = toLeasedTestUserEmail(resolvedKey);
+	const resolvedKey = key ?? getNextLeaseKeyFn(kysely);
+	const seededEmail = toLeasedTestUserEmailFn(resolvedKey);
 
 	const user = yield* dbFx(async (kysely) =>
 		kysely
@@ -92,13 +92,13 @@ export const leaseTestUserFx = Effect.fn("leaseTestUserFx")(function* ({
 
 	if (!userFeed) {
 		const now = new Date();
-		const feed = getFeedDefaultCreate(`Leased feed ${resolvedKey.toUpperCase()}`);
+		const feed = getFeedDefaultCreateFn(`Leased feed ${resolvedKey.toUpperCase()}`);
 
 		yield* dbFx(async (kysely) =>
 			kysely
 				.insertInto("feed")
 				.values({
-					id: genId(),
+					id: genIdFn(),
 					userId: user.id,
 					type: feed.type,
 					name: feed.name,

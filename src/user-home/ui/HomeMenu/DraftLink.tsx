@@ -1,13 +1,13 @@
 import { useMatchRoute } from "@tanstack/react-router";
 import { DraftIcon } from "~/application-ui/constant/icon.exports";
-import { uiMenuButton } from "~/application-ui/fn/ui.exports";
+import { uiMenuButtonFn } from "~/application-ui/fn/ui.exports";
 import { TypoIcon } from "~/application-ui/ui/typo.exports";
 import { useLocale } from "~/locale/hook/useLocale";
 import { withDraftQuery } from "~/seller-draft/query/withDraftQuery";
 import { Tx } from "~/translation/ui/Tx";
 import { ChevronRightIcon } from "~/ui/constant/ChevronRightIcon";
-import type { uiLinkTo } from "~/ui/fn/uiLinkTo";
-import { withFallback } from "~/ui/fn/withFallback";
+import type { uiLinkToFn } from "~/ui/fn/uiLinkToFn";
+import { withFallbackFn } from "~/ui/fn/withFallbackFn";
 import type { MarkSuspense } from "~/ui/type/MarkSuspense";
 import { LinkTo } from "~/ui/ui/LinkTo";
 
@@ -19,16 +19,16 @@ import { LinkTo } from "~/ui/ui/LinkTo";
  */
 export namespace DraftLink {
 	export interface Props
-		extends uiLinkTo.Component<Pick<LinkTo.Props, "iconProps">>,
+		extends uiLinkToFn.Component<Pick<LinkTo.Props, "iconProps">>,
 			MarkSuspense.Props {
 		//
 	}
 }
 
-export const DraftLink = withFallback(
+export const DraftLink = withFallbackFn(
 	({ _suspense, ...props }: DraftLink.Props) => {
 		const locale = useLocale();
-		const matchRoute = useMatchRoute();
+		const matchRouteFn = useMatchRoute();
 		const { data } = withDraftQuery.useCollectionQuery({
 			cursor: {
 				page: 0,
@@ -46,7 +46,7 @@ export const DraftLink = withFallback(
 			<LinkTo
 				data-action={data.length > 0 ? "continue listing" : "create listing"}
 				preload={false}
-				{...uiMenuButton({})}
+				{...uiMenuButtonFn({})}
 				icon={
 					data.length > 0
 						? "icon-[solar--bill-check-linear]"
@@ -56,10 +56,10 @@ export const DraftLink = withFallback(
 				params={{
 					locale,
 				}}
-				{...(matchRoute({
+				{...(matchRouteFn({
 					to: "/$locale/app/seller/draft/$id/edit",
 				})
-					? uiMenuButton({
+					? uiMenuButtonFn({
 							"data-ui-tone": "primary",
 							"data-ui-theme": "light",
 						})
@@ -89,13 +89,13 @@ export const DraftLink = withFallback(
 			<LinkTo
 				data-action={"create listing"}
 				preload={false}
-				{...uiMenuButton({})}
+				{...uiMenuButtonFn({})}
 				icon={DraftIcon}
 				to="/$locale/app/seller/draft/resolve"
 				params={{
 					locale,
 				}}
-				activeProps={uiMenuButton({
+				activeProps={uiMenuButtonFn({
 					"data-ui-tone": "primary",
 					"data-ui-theme": "light",
 				})}

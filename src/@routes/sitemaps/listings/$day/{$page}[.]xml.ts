@@ -1,14 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Effect } from "effect";
 import { z } from "zod";
-import { withKyselyFx } from "~/database/fx/withKyselyFx";
-import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
+import { withKyselyFn } from "~/database/fn/withKyselyFn";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
 import { locales } from "~/locales";
 import { withListingBucketsFx } from "~/public-listing/fx/withListingBucketsFx";
 import { withListingShardsFx } from "~/public-listing/fx/withListingShardsFx";
 import { withDatabaseMiddleware } from "~/request-middleware/middleware/withDatabaseMiddleware";
 import { withOriginMiddleware } from "~/request-middleware/middleware/withOriginMiddleware";
-import { pathOf } from "~/route/fn/pathOf";
+import { pathOfFn } from "~/route/fn/pathOfFn";
 import { toStreamResponse } from "~/sitemap/fn/index";
 
 const ParamsSchema = z.looseObject({
@@ -27,7 +27,7 @@ export const Route = createFileRoute("/sitemaps/listings/$day/{$page}.xml")({
 				const { day, page } = ParamsSchema.parse(params);
 				const [bucket] = await withListingBucketsFx({
 					day,
-				}).pipe(withKyselyFx(database), withDateServiceFx(), Effect.runPromise);
+				}).pipe(withKyselyFn(database), withDateServiceFn(), Effect.runPromise);
 
 				if (!bucket) {
 					return new Response("Not found", {
@@ -48,13 +48,13 @@ export const Route = createFileRoute("/sitemaps/listings/$day/{$page}.xml")({
 						const items = await withListingShardsFx({
 							day,
 							page,
-						}).pipe(withKyselyFx(database), withDateServiceFx(), Effect.runPromise);
+						}).pipe(withKyselyFn(database), withDateServiceFn(), Effect.runPromise);
 
 						for (const item of items) {
 							for (const locale of locales) {
 								yield {
 									loc: new URL(
-										pathOf("/$locale/z/$id/view")
+										pathOfFn("/$locale/z/$id/view")
 											.replace("$locale", locale)
 											.replace("$id", item.id),
 										origin,

@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import type { ResourceDefinitionEnumSchema } from "~/resource-definition/schema/ResourceDefinitionEnumSchema";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { resourceLimitFetchFx } from "~/user-resource-limit/fx/resourceLimitFetchFx";
 import {
 	atResourceLimitReadModelFx,
@@ -11,12 +11,12 @@ import {
 
 describe("resourceLimit read model fx", () => {
 	it("fetch resolves effective resource bundle limits and user scope", async () => {
-		const database = await testabase("resource-limit-fetch");
+		const database = await testabaseFn("resource-limit-fetch");
 
 		return Effect.gen(function* () {
 			const { seller, buyer } = yield* seedResourceLimitReadModelFx(database);
 
-			const fetchLimit = (
+			const fetchLimitFx = (
 				userId: string,
 				resourceDefinitionId: ResourceDefinitionEnumSchema.Type,
 			) =>
@@ -32,7 +32,10 @@ describe("resourceLimit read model fx", () => {
 					}),
 				);
 
-			const listingTieBreakLimit = yield* fetchLimit(seller.id, "seller:limit:listing.count");
+			const listingTieBreakLimit = yield* fetchLimitFx(
+				seller.id,
+				"seller:limit:listing.count",
+			);
 			const futureListingLimit = yield* atResourceLimitReadModelFx(
 				"2026-05-13T10:00:00.000Z",
 				resourceLimitFetchFx({
@@ -55,7 +58,7 @@ describe("resourceLimit read model fx", () => {
 					},
 				}),
 			);
-			const buyerScopedLimit = yield* fetchLimit(buyer.id, "buyer:limit:feed.count");
+			const buyerScopedLimit = yield* fetchLimitFx(buyer.id, "buyer:limit:feed.count");
 
 			expect(listingTieBreakLimit).toMatchObject({
 				limit: 7,
@@ -63,6 +66,6 @@ describe("resourceLimit read model fx", () => {
 			expect(futureListingLimit.limit).toBe(99);
 			expect(laterGalleryLimit.limit).toBe(25);
 			expect(buyerScopedLimit.limit).toBe(1);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

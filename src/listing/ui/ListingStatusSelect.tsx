@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { uiSelectButton } from "~/application-ui/fn/ui.exports";
+import { uiSelectButtonFn } from "~/application-ui/fn/ui.exports";
 import type { EntitySchema } from "~/entity/schema/EntitySchema";
 import { ListingStatusSelectEnumSchema } from "~/listing/schema/ListingStatusSelectEnumSchema";
 import type { useSelection } from "~/selection/hook/useSelection";
@@ -27,15 +27,15 @@ export const ListingStatusSelect: FC<ListingStatusSelect.Props> = ({ selection, 
 				const item = {
 					id: status,
 				};
-				const isSelected = selection.isSelected(status);
+				const isSelected = selection.isSelectedFn(status);
 
 				return (
 					<Button
 						key={status}
 						onClick={() => {
-							selection.toggle(item);
+							selection.toggleFn(item);
 						}}
-						{...uiSelectButton({
+						{...uiSelectButtonFn({
 							isSelected,
 							"data-ui-flow": "horizontal",
 							"data-ui-justify": "start",

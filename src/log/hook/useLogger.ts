@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { getRootLogger } from "~/log/fn/getRootLogger";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
 
 export namespace useLogger {
 	export interface Props {
@@ -18,6 +18,6 @@ export namespace useLogger {
 export const useLogger = ({ name }: useLogger.Props) => {
 	// biome-ignore lint/correctness/useExhaustiveDependencies: Name is intentionally not reactive
 	return useMemo(() => {
-		return getRootLogger(name);
+		return getRootLoggerFn(name);
 	}, []);
 };

@@ -1,15 +1,15 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionResolveFx } from "~/seller-transaction/fx/transactionResolveFx";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("transactionResolveFx", () => {
 	it("invalid: cannot resolve an interest transaction", async () => {
-		const database = await testabase("sellerResolveFx-invalid-interest");
+		const database = await testabaseFn("sellerResolveFx-invalid-interest");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -35,7 +35,7 @@ describe("transactionResolveFx", () => {
 			const beforeEntries = yield* Effect.promise(() =>
 				database.kysely
 					.selectFrom("transaction_entry")
-					.select((eb) => eb.fn.countAll<number>().as("count"))
+					.select((ebFn) => ebFn.fn.countAll<number>().as("count"))
 					.where("transactionId", "=", transaction.id)
 					.executeTakeFirstOrThrow(),
 			);
@@ -47,7 +47,7 @@ describe("transactionResolveFx", () => {
 				}),
 			);
 
-			expectTaggedErrorFx(result, {
+			expectTaggedErrorFn(result, {
 				tag: "InvalidRequestErrorFx",
 				message:
 					"Invalid transaction status transition from interest to resolved for seller",
@@ -63,13 +63,13 @@ describe("transactionResolveFx", () => {
 			const afterEntries = yield* Effect.promise(() =>
 				database.kysely
 					.selectFrom("transaction_entry")
-					.select((eb) => eb.fn.countAll<number>().as("count"))
+					.select((ebFn) => ebFn.fn.countAll<number>().as("count"))
 					.where("transactionId", "=", transaction.id)
 					.executeTakeFirstOrThrow(),
 			);
 
 			expect(afterTransaction.status).toBe("interest");
 			expect(afterEntries.count).toBe(beforeEntries.count);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

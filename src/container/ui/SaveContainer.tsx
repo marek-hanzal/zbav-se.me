@@ -1,5 +1,5 @@
 import type { FC, ReactNode } from "react";
-import { uiCancelButton, uiSaveButton } from "~/application-ui/fn/ui.exports";
+import { uiCancelButtonFn, uiSaveButtonFn } from "~/application-ui/fn/ui.exports";
 import { Tx } from "~/translation/ui/Tx";
 import { ArrowLeftIcon } from "~/ui/constant/ArrowLeftIcon";
 import { SaveIcon } from "~/ui/constant/SaveIcon";
@@ -8,8 +8,8 @@ import { Container } from "~/ui/ui/Container";
 
 export namespace SaveContainer {
 	export interface Props extends Container.Props {
-		onCancel(): void;
-		onSave(): void;
+		onCancelFn(): void;
+		onSaveFn(): void;
 		loading: boolean;
 		disabled: boolean;
 		/**
@@ -29,8 +29,8 @@ export namespace SaveContainer {
  * @see src/draft/ui/DraftEditor/DraftEditor.tsx
  */
 export const SaveContainer: FC<SaveContainer.Props> = ({
-	onCancel,
-	onSave,
+	onCancelFn,
+	onSaveFn,
 	loading,
 	disabled,
 	textCancel,
@@ -50,13 +50,13 @@ export const SaveContainer: FC<SaveContainer.Props> = ({
 		>
 			<Button
 				data-action={"cancel"}
-				onClick={onCancel}
+				onClick={onCancelFn}
 				disabled={loading}
 				iconEnabled={ArrowLeftIcon}
 				iconProps={{
 					"data-ui-text": "xl",
 				}}
-				{...uiCancelButton({})}
+				{...uiCancelButtonFn({})}
 				{...cancelProps}
 			>
 				{textCancel ?? <Tx label="Back (label)" />}
@@ -64,14 +64,14 @@ export const SaveContainer: FC<SaveContainer.Props> = ({
 
 			<Button
 				data-action={"save"}
-				onClick={onSave}
+				onClick={onSaveFn}
 				disabled={loading || disabled}
 				loading={loading}
 				iconEnabled={SaveIcon}
 				iconProps={{
 					"data-ui-text": "xl",
 				}}
-				{...uiSaveButton({})}
+				{...uiSaveButtonFn({})}
 				{...saveProps}
 			>
 				{textSave ?? <Tx label="Save (button)" />}

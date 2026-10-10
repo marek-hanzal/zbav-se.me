@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { TitleContainer } from "~/application-ui/ui/container.exports";
 import { useLocale } from "~/locale/hook/useLocale";
 import { BackHomeButton } from "~/nav/ui/BackHomeButton.exports";
-import { handleArrowNav } from "~/navigation/fn/handleArrowNav";
+import { handleArrowNavFn } from "~/navigation/fn/handleArrowNavFn";
 import { DraftEditor } from "~/seller-draft/ui/DraftEditor";
 import { useTranslator } from "~/translation/hook/useTranslator";
 import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
@@ -28,7 +28,7 @@ export const Route = createFileRoute("/$locale/app/seller/draft/$id/edit")({
 		return (
 			<TitleContainer
 				data-ui={"DraftEditor[TitleContainer]"}
-				textTitle={translator.text("Listing editor (title)")}
+				textTitle={translator.textFn("Listing editor (title)")}
 				left={
 					<BackHomeButton
 						id={"back-link"}
@@ -38,7 +38,7 @@ export const Route = createFileRoute("/$locale/app/seller/draft/$id/edit")({
 						}}
 						//
 						data-arrow-right={"home-link"}
-						onKeyDown={handleArrowNav}
+						onKeyDown={handleArrowNavFn}
 					/>
 				}
 				right={
@@ -46,7 +46,7 @@ export const Route = createFileRoute("/$locale/app/seller/draft/$id/edit")({
 						id={"home-link"}
 						//
 						data-arrow-left={"back-link"}
-						onKeyDown={handleArrowNav}
+						onKeyDown={handleArrowNavFn}
 					/>
 				}
 			>

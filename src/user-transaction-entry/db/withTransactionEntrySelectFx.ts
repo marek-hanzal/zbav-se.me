@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { selectFx } from "~/database-query/fx/selectFx";
+import { selectFn } from "~/database-query/fn/selectFn";
 import type { TransactionEntrySchema } from "~/user-transaction-entry/schema/TransactionEntry";
 import { TransactionEntryDirectionEnumSchema } from "~/user-transaction-entry/schema/TransactionEntryDirectionEnumSchema";
 import type { TransactionEntrySortSchema } from "~/user-transaction-entry/schema/TransactionEntrySortSchema";
@@ -25,8 +25,8 @@ export const withTransactionEntrySelectFx = Effect.fn("withTransactionEntrySelec
 		.innerJoin("transaction as t", "t.id", "te.transactionId")
 		.selectAll("te")
 		.select("t.listingId")
-		.select((eb) => {
-			return eb
+		.select((ebFn) => {
+			return ebFn
 				.case()
 				.when("te.userId", "is", null)
 				.then(TransactionEntryDirectionEnumSchema.enum.system)
@@ -46,13 +46,13 @@ export const withTransactionEntrySelectFx = Effect.fn("withTransactionEntrySelec
 			.exhaustive();
 	}
 
-	return selectFx({
+	return selectFn({
 		select,
 		queryFx(select, where: TransactionEntryWhereSchema.Type) {
 			return Effect.gen(function* () {
-				let query = select.where((eb) => {
-					return eb.exists((eb) => {
-						return eb
+				let query = select.where((ebFn) => {
+					return ebFn.exists((ebFn) => {
+						return ebFn
 							.selectFrom("transaction_user as tu")
 							.select("tu.userId")
 							.whereRef("tu.transactionId", "=", "te.transactionId")
@@ -81,13 +81,13 @@ export const withTransactionEntrySelectFx = Effect.fn("withTransactionEntrySelec
 				 * - counterparty text is visible except when the viewer is the seller and the
 				 *   transaction is still in `interest`.
 				 */
-				query = query.where((eb) => {
-					return eb.or([
-						eb("te.userId", "=", userId),
-						eb("te.kind", "!=", "text"),
-						eb.not(
-							eb.exists(
-								eb
+				query = query.where((ebFn) => {
+					return ebFn.or([
+						ebFn("te.userId", "=", userId),
+						ebFn("te.kind", "!=", "text"),
+						ebFn.not(
+							ebFn.exists(
+								ebFn
 									.selectFrom("transaction as lt")
 									.innerJoin(
 										"transaction_user as tu",

@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { translator } from "~/translation/fn/translator";
+import { translatorFn } from "~/translation/fn/translatorFn";
 import { translationsFx } from "~/translation/fx/translationsFx";
 import type { LocaleSchema } from "~/translation/schema/LocaleSchema";
 
@@ -12,7 +12,7 @@ export namespace withTranslatorFx {
 export const withTranslatorFx = Effect.fn("withTranslatorFx")(function* ({
 	locale,
 }: withTranslatorFx.Props) {
-	return translator({
+	return translatorFn({
 		translations: yield* translationsFx({
 			locale,
 		}),

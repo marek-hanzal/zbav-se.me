@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "~/database-query/fx/withCollectionFx";
-import { hasExplicitCategory } from "~/listing/fn/hasExplicitCategory";
+import { hasExplicitCategoryFn } from "~/listing/fn/hasExplicitCategoryFn";
 import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { withListingSelectFx } from "~/public-listing/db/withListingSelectFx";
 import type { ListingQuerySchema } from "~/public-listing/schema/ListingQuerySchema";
@@ -37,7 +37,7 @@ export const listingCollectionFx = Effect.fn("listingCollectionFx")(function* ({
 		selectFx: withListingSelectFx({
 			sort,
 			meta,
-			hasExplicitCategory: hasExplicitCategory([
+			hasExplicitCategory: hasExplicitCategoryFn([
 				where,
 				scope,
 			]),

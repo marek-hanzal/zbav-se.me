@@ -1,12 +1,12 @@
 import { Effect } from "effect";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { leaseTestUserFx, TEST_USER_PASSWORD } from "~/test/user/fx/leaseTestUserFx";
-import { expect, test } from "../test";
+import { expect, testFn } from "../testFn";
 
-test("auth sign in", async ({ page, database }) => {
+testFn("auth sign in", async ({ page, database }) => {
 	const user = await leaseTestUserFx({
 		key: "a",
-	}).pipe(withRuntimeFx(database), Effect.runPromise);
+	}).pipe(withRuntimeFn(database), Effect.runPromise);
 
 	await page.goto("/cs/app/home");
 

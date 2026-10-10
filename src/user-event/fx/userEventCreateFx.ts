@@ -2,8 +2,8 @@ import { Effect } from "effect";
 import { dbFx } from "~/database/fx/dbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { DateServiceFx } from "~/date/service/DateServiceFx";
-import { keyOf } from "~/hash/fn/keyOf";
-import { genId } from "~/identity/fn/genId";
+import { keyOfFn } from "~/hash/fn/keyOfFn";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import type { UserEventCreateSchema } from "~/user-event/schema/UserEventCreateSchema";
 
@@ -34,10 +34,10 @@ export const userEventCreateFx = Effect.fn("userEventCreateFx")(function* ({
 					.insertInto("user_event")
 					.values({
 						...data,
-						id: genId(),
-						group: keyOf(group),
+						id: genIdFn(),
+						group: keyOfFn(group),
 						userId,
-						createdAt: dateService.now().toJSDate(),
+						createdAt: dateService.nowFn().toJSDate(),
 					})
 					.returningAll()
 					.executeTakeFirstOrThrow();

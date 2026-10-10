@@ -2,9 +2,9 @@ import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import type { ActivityTableSchema } from "~/database/schema/ActivityTable";
-import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { activityArchiveFx } from "~/user-activity/fx/activityArchiveFx";
 import { activityCollectionFx } from "~/user-activity/fx/activityCollectionFx";
@@ -26,13 +26,13 @@ type SeedActivity = Pick<
 
 const atFx = <A, E, R>(iso: string, eff: Effect.Effect<A, E, R>) =>
 	eff.pipe(
-		withDateServiceFx({
-			now: () => DateTime.fromISO(iso),
+		withDateServiceFn({
+			nowFn: () => DateTime.fromISO(iso),
 		}),
 	);
 
-const seedActivity = async (
-	database: Awaited<ReturnType<typeof testabase>>,
+const seedActivityFn = async (
+	database: Awaited<ReturnType<typeof testabaseFn>>,
 	rows: SeedActivity[],
 ) => {
 	await database.kysely.insertInto("activity").values(rows).execute();
@@ -40,13 +40,13 @@ const seedActivity = async (
 
 describe("activityArchiveFx", () => {
 	it("reveals the older active message after the first archive and restores the newest archived representative after the second", async () => {
-		const database = await testabase("activityArchiveFx-repeated-dedup-lifecycle");
+		const database = await testabaseFn("activityArchiveFx-repeated-dedup-lifecycle");
 
 		return Effect.gen(function* () {
 			const user = yield* leaseTestUserFx({});
 
 			yield* Effect.promise(() =>
-				seedActivity(database, [
+				seedActivityFn(database, [
 					{
 						id: "msg-a",
 						userId: user.id,
@@ -291,6 +291,6 @@ describe("activityArchiveFx", () => {
 			expect(archivedById.get("msg-a")).not.toBeNull();
 			expect(archivedById.get("msg-b")).not.toBeNull();
 			expect(archivedById.get("reaction-c")).toBeNull();
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

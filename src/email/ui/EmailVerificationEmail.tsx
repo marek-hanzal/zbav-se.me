@@ -16,19 +16,19 @@ export const EmailVerificationEmail: FC<EmailVerificationEmail.Props> = ({ verif
 
 	return (
 		<MailLayout
-			footer={translator.text("Email verification email footer")}
-			lead={translator.text("Email verification email message")}
-			preview={translator.text("Email verification email subject")}
-			title={translator.text("Email verification email title")}
+			footer={translator.textFn("Email verification email footer")}
+			lead={translator.textFn("Email verification email message")}
+			preview={translator.textFn("Email verification email subject")}
+			title={translator.textFn("Email verification email title")}
 		>
 			<Section className={"mt-8"}>
 				<MailButton href={verifyUrl}>
-					{translator.text("Email verification email action")}
+					{translator.textFn("Email verification email action")}
 				</MailButton>
 			</Section>
 
 			<MailCopy
-				hint={translator.text(
+				hint={translator.textFn(
 					"If the button does not work, copy this link into your browser:",
 				)}
 				value={verifyUrl}

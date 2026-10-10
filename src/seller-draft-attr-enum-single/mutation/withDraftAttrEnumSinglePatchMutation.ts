@@ -1,15 +1,15 @@
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withMutation } from "~/mutation/fn/withMutation";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withMutationFn } from "~/mutation/fn/withMutationFn";
 import { draftAttrEnumSinglePatchFn } from "~/seller-draft-attr-enum-single/fn/draftAttrEnumSinglePatchFn";
 import type { DraftAttrEnumSinglePatchSchema } from "~/seller-draft-attr-enum-single/schema/DraftAttrEnumSinglePatchSchema";
 import { withDraftAttrOfQuery } from "~/user-draft-attr/query/withDraftAttrOfQuery";
 
-export const withDraftAttrEnumSinglePatchMutation = withMutation({
-	logger: getRootLogger([
+export const withDraftAttrEnumSinglePatchMutation = withMutationFn({
+	logger: getRootLoggerFn([
 		"mutation",
 		"withDraftAttrEnumSinglePatchMutation",
 	]),
-	keys(variables: DraftAttrEnumSinglePatchSchema.Type) {
+	keysFn(variables: DraftAttrEnumSinglePatchSchema.Type) {
 		return [
 			"draft-attr",
 			"enum-single",

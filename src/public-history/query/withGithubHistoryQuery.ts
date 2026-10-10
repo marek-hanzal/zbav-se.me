@@ -1,18 +1,18 @@
-import { getRootLogger } from "~/log/fn/getRootLogger";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
 import { historyFn } from "~/public-github/fn/historyFn";
 import type { GitHubHistorySchema } from "~/public-github/schema/GitHubHistorySchema";
-import { withQuery } from "~/query/fn/withQuery";
+import { withQueryFn } from "~/query/fn/withQueryFn";
 
 type GithubHistoryQuery = {
 	weeks: number;
 };
 
-export const withGithubHistoryQuery = withQuery({
-	logger: getRootLogger([
+export const withGithubHistoryQuery = withQueryFn({
+	logger: getRootLoggerFn([
 		"query",
 		"withGithubHistoryQuery",
 	]),
-	keys(data: GithubHistoryQuery) {
+	keysFn(data: GithubHistoryQuery) {
 		return [
 			"github",
 			"history",

@@ -16,16 +16,16 @@ import type { useView } from "~/view/hook/useView";
 export namespace ConditionPatch {
 	export interface Props extends TitleContainer.Props {
 		draft: DraftSchema.Type;
-		onCancel(): void;
+		onCancelFn(): void;
 		view: useView.Use<"age">;
 	}
 }
 
-export const ConditionPatch: FC<ConditionPatch.Props> = ({ draft, onCancel, view, ...props }) => {
+export const ConditionPatch: FC<ConditionPatch.Props> = ({ draft, onCancelFn, view, ...props }) => {
 	const translator = useTranslator();
 	const mutation = withDraftQuery.usePatchMutation({
 		onSuccess() {
-			view.set("age");
+			view.setFn("age");
 		},
 		invalidate: [
 			"collection",
@@ -45,13 +45,13 @@ export const ConditionPatch: FC<ConditionPatch.Props> = ({ draft, onCancel, view
 		],
 	});
 
-	const itemId = selection.optional.singleId();
+	const itemId = selection.optional.singleIdFn();
 	const condition = itemId ? Number.parseInt(itemId, 10) : null;
 
 	return (
 		<TitleContainer
 			data-ui={"ConditionPatch"}
-			textTitle={translator.text("Condition (title)")}
+			textTitle={translator.textFn("Condition (title)")}
 			left={<EditAction />}
 			{...props}
 		>
@@ -65,8 +65,8 @@ export const ConditionPatch: FC<ConditionPatch.Props> = ({ draft, onCancel, view
 				<ConditionSelect selection={selection} />
 
 				<SaveContainer
-					onCancel={onCancel}
-					onSave={() => {
+					onCancelFn={onCancelFn}
+					onSaveFn={() => {
 						mutation.mutate({
 							patch: {
 								condition,

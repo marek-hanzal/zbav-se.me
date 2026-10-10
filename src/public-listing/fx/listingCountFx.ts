@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { withCountFx } from "~/database-query/fx/withCountFx";
-import { hasExplicitCategory } from "~/listing/fn/hasExplicitCategory";
+import { hasExplicitCategoryFn } from "~/listing/fn/hasExplicitCategoryFn";
 import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { withListingSelectFx } from "~/public-listing/db/withListingSelectFx";
 import type { ListingCountQuerySchema } from "~/public-listing/schema/ListingCountQuerySchema";
@@ -27,7 +27,7 @@ export const listingCountFx = Effect.fn("listingCountFx")(function* ({
 	return yield* withCountFx({
 		selectFx: withListingSelectFx({
 			meta,
-			hasExplicitCategory: hasExplicitCategory([
+			hasExplicitCategory: hasExplicitCategoryFn([
 				where,
 				scope,
 			]),

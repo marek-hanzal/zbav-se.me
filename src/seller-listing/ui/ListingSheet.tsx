@@ -29,8 +29,8 @@ export const ListingSheet: FC<ListingSheet.Props> = ({ _suspense, listing, state
 				data-ui={"ListingSheet"}
 				isOpen={state.value}
 				onClose={() => {
-					state.set(false);
-					view.set("default");
+					state.setFn(false);
+					view.setFn("default");
 				}}
 				detent={"default"}
 				{...props}
@@ -42,8 +42,8 @@ export const ListingSheet: FC<ListingSheet.Props> = ({ _suspense, listing, state
 						listing={listing}
 						data-ui-inner="default"
 						hooks={{
-							onGallery() {
-								view.set("gallery");
+							onGalleryFn() {
+								view.setFn("gallery");
 							},
 						}}
 					/>

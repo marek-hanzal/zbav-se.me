@@ -1,6 +1,6 @@
 import { sql } from "kysely";
 import type { Migration } from "kysely/migration";
-import { toEnumGuard } from "~/enum/fn/toEnumGuard";
+import { toEnumGuardFn } from "~/enum/fn/toEnumGuardFn";
 import type { UserEventScopeEnumSchema } from "~/user-event-contract/schema/UserEventScopeEnumSchema";
 
 export const UserEventMigration: Migration = {
@@ -8,7 +8,7 @@ export const UserEventMigration: Migration = {
 		await db.schema
 			.createType("user_event_scope_enum")
 			.asEnum(
-				toEnumGuard<UserEventScopeEnumSchema.Type>()([
+				toEnumGuardFn<UserEventScopeEnumSchema.Type>()([
 					"user",
 					"foreign",
 				] as const),

@@ -1,1 +1,1 @@
-export { toStreamResponse } from "~/sitemap/fn/toStreamResponse";
+export { toStreamResponseFn as toStreamResponse } from "~/sitemap/fn/toStreamResponseFn";

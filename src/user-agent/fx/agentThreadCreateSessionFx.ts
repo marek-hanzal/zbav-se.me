@@ -23,7 +23,7 @@ export const agentThreadCreateSessionFx = Effect.fn("agentThreadCreateSessionFx"
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const dateContext = yield* DateServiceFx;
-			const archivedAt = dateContext.now().toJSDate();
+			const archivedAt = dateContext.nowFn().toJSDate();
 
 			const { select, queryFx } = yield* withAgentThreadSelectFx({});
 

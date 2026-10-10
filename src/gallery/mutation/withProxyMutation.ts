@@ -1,6 +1,6 @@
 import type { GalleryUploadSheet } from "~/gallery/ui/GalleryUploadSheet";
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withMutation } from "~/mutation/fn/withMutation";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withMutationFn } from "~/mutation/fn/withMutationFn";
 import { uploadCollectionFn } from "~/user-upload/fn/uploadCollectionFn";
 import type { UploadSchema } from "~/user-upload/schema/UploadSchema";
 
@@ -8,16 +8,16 @@ import type { UploadSchema } from "~/user-upload/schema/UploadSchema";
  * Useful when you don't need to do extra stuff with uploads using
  * gallery; this mutation just forwards given uploads to the output (result).
  */
-export const withProxyMutation = withMutation<
+export const withProxyMutation = withMutationFn<
 	GalleryUploadSheet.Uploads,
 	UploadSchema.Type[],
 	Error
 >({
-	logger: getRootLogger([
+	logger: getRootLoggerFn([
 		"mutation",
 		"withProxyMutation",
 	]),
-	keys(variables) {
+	keysFn(variables) {
 		return [
 			"gallery",
 			"proxy",

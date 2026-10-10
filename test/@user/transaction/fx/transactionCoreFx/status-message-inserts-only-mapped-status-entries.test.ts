@@ -1,14 +1,14 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { transactionStatusMessageFx } from "~/user-transaction/fx/transactionStatusMessageFx";
 
 describe("transaction core", () => {
 	it("inserts only mapped status messages and skips unsupported combinations", async () => {
-		const database = await testabase("transactionCore-status-message");
+		const database = await testabaseFn("transactionCore-status-message");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -31,7 +31,7 @@ describe("transaction core", () => {
 			const before = yield* Effect.promise(() =>
 				database.kysely
 					.selectFrom("transaction_entry")
-					.select((eb) => eb.fn.countAll<number>().as("count"))
+					.select((ebFn) => ebFn.fn.countAll<number>().as("count"))
 					.where("transactionId", "=", transaction.id)
 					.executeTakeFirstOrThrow(),
 			);
@@ -64,6 +64,6 @@ describe("transaction core", () => {
 			expect(after).toBe(Number(before.count) + 1);
 			expect(kinds).toContain("status-trade");
 			expect(kinds).not.toContain("status-resolved");
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

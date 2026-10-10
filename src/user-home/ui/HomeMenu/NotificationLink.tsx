@@ -1,12 +1,12 @@
-import { uiMenuButton } from "~/application-ui/fn/ui.exports";
+import { uiMenuButtonFn } from "~/application-ui/fn/ui.exports";
 import { TypoIcon } from "~/application-ui/ui/typo.exports";
 import { useLocale } from "~/locale/hook/useLocale";
-import { toLocaleNumber } from "~/number/fn/toLocaleNumber";
+import { toLocaleNumberFn } from "~/number/fn/toLocaleNumberFn";
 import { Tx } from "~/translation/ui/Tx";
 import { ChevronRightIcon } from "~/ui/constant/ChevronRightIcon";
 import { LoaderIcon } from "~/ui/constant/LoaderIcon";
 import { NotificationIcon } from "~/ui/constant/NotificationIcon";
-import { withFallback } from "~/ui/fn/withFallback";
+import { withFallbackFn } from "~/ui/fn/withFallbackFn";
 import type { MarkSuspense } from "~/ui/type/MarkSuspense";
 import { Badge } from "~/ui/ui/Badge";
 import { Container } from "~/ui/ui/Container";
@@ -18,12 +18,12 @@ import { withActivityQuery } from "~/user-activity/query/withActivityQuery";
 export namespace NotificationLink {
 	export interface Props extends MarkSuspense.Props {
 		iconProps?: IconType.PropsEx;
-		onLinkClick?: () => void;
+		onLinkClickFn?: () => void;
 	}
 }
 
-export const NotificationLink = withFallback(
-	({ _suspense, iconProps, onLinkClick }: NotificationLink.Props) => {
+export const NotificationLink = withFallbackFn(
+	({ _suspense, iconProps, onLinkClickFn }: NotificationLink.Props) => {
 		const locale = useLocale();
 		const { data: hightList } = withActivityQuery.useCollectionQuery(
 			{
@@ -53,16 +53,16 @@ export const NotificationLink = withFallback(
 				to={"/$locale/app/activity/$priority"}
 				icon={NotificationIcon}
 				iconProps={iconProps}
-				onClick={onLinkClick}
+				onClick={onLinkClickFn}
 				params={{
 					locale,
 					priority: "high",
 				}}
-				activeProps={uiMenuButton({
+				activeProps={uiMenuButtonFn({
 					"data-ui-tone": "primary",
 					"data-ui-theme": "light",
 				})}
-				{...uiMenuButton({
+				{...uiMenuButtonFn({
 					"data-ui-tone": hightList.length > 0 ? "secondary" : "neutral",
 					"data-ui-theme": "light",
 				})}
@@ -91,7 +91,7 @@ export const NotificationLink = withFallback(
 							>
 								{hightList.length > 9
 									? "9+"
-									: toLocaleNumber({
+									: toLocaleNumberFn({
 											number: hightList.length,
 											locale,
 										})}
@@ -107,7 +107,7 @@ export const NotificationLink = withFallback(
 			</LinkTo>
 		);
 	},
-	({ iconProps, onLinkClick }: Omit<NotificationLink.Props, "_suspense">) => {
+	({ iconProps, onLinkClickFn }: Omit<NotificationLink.Props, "_suspense">) => {
 		const locale = useLocale();
 
 		return (
@@ -116,16 +116,16 @@ export const NotificationLink = withFallback(
 				to={"/$locale/app/activity/$priority"}
 				icon={NotificationIcon}
 				iconProps={iconProps}
-				onClick={onLinkClick}
+				onClick={onLinkClickFn}
 				params={{
 					locale,
 					priority: "high",
 				}}
-				activeProps={uiMenuButton({
+				activeProps={uiMenuButtonFn({
 					"data-ui-tone": "primary",
 					"data-ui-theme": "light",
 				})}
-				{...uiMenuButton({
+				{...uiMenuButtonFn({
 					"data-ui-tone": "neutral",
 					"data-ui-theme": "light",
 				})}

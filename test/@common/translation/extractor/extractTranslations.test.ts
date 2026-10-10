@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import type { TranslationSource } from "~/translation/type/TranslationSource";
-import { extractTranslations } from "~/translation-tooling/fn/extractTranslations";
+import { extractTranslationsFn } from "~/translation-tooling/fn/extractTranslationsFn";
 
 const sources: TranslationSource.Sources = {
 	jsx: [
@@ -28,7 +28,7 @@ const sources: TranslationSource.Sources = {
 
 describe("Babel translation extraction", () => {
 	test("extracts JSX attributes, expressions, templates, and branches", () => {
-		const result = extract(`
+		const result = extractFn(`
 			const view = <>
 				<Tx label="Direct" />
 				<Tx label={'Expression'}></Tx>
@@ -69,7 +69,7 @@ describe("Babel translation extraction", () => {
 
 	test("extracts component prop defaults from typed and wrapped functions", () => {
 		expect(
-			texts(`
+			textsFn(`
 			const Tx: FC<Props> = ({ label = "Default" }) => null;
 			const Mx = memo(function ({ label: title = "Renamed" }) { return null; });
 			const Other = ({ label = "Ignored" }) => null;
@@ -82,7 +82,7 @@ describe("Babel translation extraction", () => {
 
 	test("extracts function and object arguments through conditional and binary expressions", () => {
 		expect(
-			texts(`
+			textsFn(`
 			translate("Function");
 			translator.text(\`Object\`);
 			translate((flag ? "One" : "Two"));
@@ -103,7 +103,7 @@ describe("Babel translation extraction", () => {
 	});
 
 	test("preserves descendant source matching for existing wrapper keys", () => {
-		expect(new Set(texts('wrapper(translator.text("Inner"), "Wrapper");'))).toEqual(
+		expect(new Set(textsFn('wrapper(translator.text("Inner"), "Wrapper");'))).toEqual(
 			new Set([
 				"Inner",
 				"Wrapper",
@@ -113,7 +113,7 @@ describe("Babel translation extraction", () => {
 
 	test("ignores interpolated templates, unrelated calls, type literals, and comments", () => {
 		expect(
-			texts(`
+			textsFn(`
 			translate(\`Dynamic \${value}\`);
 			const view = <Tx label={\`Dynamic \${value}\`} />;
 			other.text("Wrong object");
@@ -128,7 +128,7 @@ describe("Babel translation extraction", () => {
 
 	test("preserves existing escaped keys and literal JSX entities", () => {
 		expect(
-			texts(String.raw`
+			textsFn(String.raw`
 			translate('apostrophe\'s and "double"');
 			translate('new\nline\ttab\\slash');
 			translate('\u010D \x41 \0');
@@ -146,29 +146,31 @@ describe("Babel translation extraction", () => {
 	});
 
 	test("preserves static template raw escapes and line breaks", () => {
-		expect(texts("translate(`Raw\\nline\nč`);")).toEqual([
+		expect(textsFn("translate(`Raw\\nline\nč`);")).toEqual([
 			"Raw\\nline\nč",
 		]);
 	});
 
 	test("parses TypeScript angle assertions without enabling JSX for .ts files", () => {
-		expect(extract('const value = <string>input; translate("Typed");', "fixture.ts")).toEqual([
-			{
-				text: "Typed",
-				sourceKey: "function:translate",
-			},
-		]);
+		expect(extractFn('const value = <string>input; translate("Typed");', "fixture.ts")).toEqual(
+			[
+				{
+					text: "Typed",
+					sourceKey: "function:translate",
+				},
+			],
+		);
 	});
 
 	test("rejects invalid syntax instead of silently producing an incomplete catalog", () => {
-		expect(() => extract('<Tx label="Broken"')).toThrow();
+		expect(() => extractFn('<Tx label="Broken"')).toThrow();
 	});
 });
 
-const extract = (code: string, filename = "fixture.tsx") =>
-	extractTranslations({
+const extractFn = (code: string, filename = "fixture.tsx") =>
+	extractTranslationsFn({
 		code,
 		filename,
 		sources,
 	});
-const texts = (code: string) => extract(code).map(({ text }) => text);
+const textsFn = (code: string) => extractFn(code).map(({ text }) => text);

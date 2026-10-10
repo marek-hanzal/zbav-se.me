@@ -4,7 +4,7 @@ import { dbFx } from "~/database/fx/dbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import type { ActivityTableSchema } from "~/database/schema/ActivityTable";
 import { DateServiceFx } from "~/date/service/DateServiceFx";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { TransactionEntrySensitiveKindEnumSchema } from "~/transaction-contract/schema/TransactionEntrySensitiveKindEnumSchema";
 import { Transitions } from "~/user-transaction/fx/transactionTransitionFx";
@@ -19,7 +19,7 @@ export const withExpiresAtCronFx = Effect.fn("withExpiresAtCronFx")(function* ()
 	yield* withTransactionFx(
 		Effect.gen(function* () {
 			const dateContext = yield* DateServiceFx;
-			const now = dateContext.now().toJSDate();
+			const now = dateContext.nowFn().toJSDate();
 			const { kysely } = yield* KyselyContextFx;
 
 			const sourceQuery = kysely
@@ -49,7 +49,7 @@ export const withExpiresAtCronFx = Effect.fn("withExpiresAtCronFx")(function* ()
 			const envelopes = transactions.map((transaction) => ({
 				transaction,
 				transactionEntry: {
-					id: genId(),
+					id: genIdFn(),
 					transactionId: transaction.id,
 					kind: "status-expired",
 					userId: null,
@@ -85,7 +85,7 @@ export const withExpiresAtCronFx = Effect.fn("withExpiresAtCronFx")(function* ()
 			const activities = envelopes.flatMap(({ transaction, transactionEntry }) => {
 				return [
 					{
-						id: genId(),
+						id: genIdFn(),
 						userId: transaction.sellerId,
 						reference: [
 							transaction.listingId,
@@ -104,7 +104,7 @@ export const withExpiresAtCronFx = Effect.fn("withExpiresAtCronFx")(function* ()
 						archivedAt: null,
 					} satisfies ActivityTableSchema.Type,
 					{
-						id: genId(),
+						id: genIdFn(),
 						userId: transaction.buyerId,
 						reference: [
 							transaction.listingId,

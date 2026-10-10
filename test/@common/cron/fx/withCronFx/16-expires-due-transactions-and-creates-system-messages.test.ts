@@ -1,12 +1,12 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { runTransactionExpirationCronScenarioFx } from "./runTransactionExpirationCronScenarioFx";
 
 describe("withCronFx transaction expiration", () => {
 	it("expires due interest/trade/resolved/dispute transactions and creates system messages for schedule 16", async () => {
-		const database = await testabase("withCronFx-transaction-expiration-16");
+		const database = await testabaseFn("withCronFx-transaction-expiration-16");
 
 		return Effect.gen(function* () {
 			const result = yield* runTransactionExpirationCronScenarioFx({
@@ -56,6 +56,6 @@ describe("withCronFx transaction expiration", () => {
 					);
 				}),
 			).toBe(true);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

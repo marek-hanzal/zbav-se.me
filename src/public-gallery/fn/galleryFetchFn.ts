@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
-import { withKyselyFx } from "~/database/fx/withKyselyFx";
-import { withLoggerFx } from "~/log/fx/withLoggerFx";
+import { withKyselyFn } from "~/database/fn/withKyselyFn";
+import { withLoggerFn } from "~/log/fn/withLoggerFn";
 import { galleryFetchFx } from "~/public-gallery/fx/galleryFetchFx";
 import { GalleryQuerySchema } from "~/public-gallery/schema/GalleryQuerySchema";
 import { GallerySchema } from "~/public-gallery/schema/GallerySchema";
@@ -33,8 +33,8 @@ export const galleryFetchFn = createServerFn()
 				scope: {},
 			}),
 		}).pipe(
-			withKyselyFx(database),
-			withLoggerFx(rootLogger),
+			withKyselyFn(database),
+			withLoggerFn(rootLogger),
 			Effect.tapError((error) => {
 				return Effect.sync(() => {
 					logger.error(error._tag, {

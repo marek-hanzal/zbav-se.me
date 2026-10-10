@@ -1,8 +1,8 @@
 import { type FC, useCallback, useId, useMemo } from "react";
 import type { useSnapperNav } from "~/navigation/hook/useSnapperNav";
 import { DotIcon } from "~/ui/constant/DotIcon";
-import type { ui } from "~/ui/fn/ui";
-import type { uiIcon } from "~/ui/fn/uiIcon";
+import type { uiFn } from "~/ui/fn/uiFn";
+import type { uiIconFn } from "~/ui/fn/uiIconFn";
 import { useDoubleTap } from "~/ui/hook/useDoubleTap";
 import { Container } from "~/ui/ui/Container";
 import { Icon } from "~/ui/ui/Icon";
@@ -10,7 +10,7 @@ import { Icon } from "~/ui/ui/Icon";
 const activeIconUi = {
 	"data-ui-text": "lg",
 	"data-ui-color": "lead",
-} satisfies ui.Data<uiIcon.Ui, keyof uiIcon.Ui>;
+} satisfies uiFn.Data<uiIconFn.Ui, keyof uiIconFn.Ui>;
 
 export namespace SnapperNav {
 	export namespace IconProps {
@@ -31,7 +31,7 @@ export namespace SnapperNav {
 		 *
 		 * Keep in mind this affects only pages, not the limiter (edges).
 		 */
-		iconProps?: IconProps.IconPropsFn;
+		iconPropsFn?: IconProps.IconPropsFn;
 	}
 
 	export interface Count {
@@ -42,7 +42,7 @@ export namespace SnapperNav {
 	export interface Props extends Container.Props {
 		snapperNav: useSnapperNav.Result;
 		pages?: Page[] | Count;
-		iconProps?: IconProps.IconPropsFn;
+		iconPropsFn?: IconProps.IconPropsFn;
 		limit?: number;
 	}
 }
@@ -51,7 +51,7 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 	snapperNav,
 	pages,
 	//
-	iconProps,
+	iconPropsFn,
 	limit = 5,
 	//
 	...props
@@ -80,11 +80,11 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 			);
 
 	const firstDoubleTap = useDoubleTap({
-		onDoubleTap: snapperNav.api.start,
+		onDoubleTapFn: snapperNav.api.startFn,
 	});
 
 	const lastDoubleTap = useDoubleTap({
-		onDoubleTap: snapperNav.api.end,
+		onDoubleTapFn: snapperNav.api.endFn,
 	});
 
 	// Control ids (stable, unique) for start/end buttons.
@@ -117,7 +117,7 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 		snapperNav.state.current,
 	]);
 
-	const renderLimiter = useCallback(() => {
+	const renderLimiterFn = useCallback(() => {
 		// const leftIcon: Icon.Type =
 		// 	orientation === "vertical"
 		// 		? "icon-[rivet-icons--chevron-up]"
@@ -134,12 +134,12 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 				<Icon
 					data-ui="SnapperNav[Icon.first]"
 					key={firstId}
-					onDoubleClick={snapperNav.api.start}
-					onClick={snapperNav.api.prev}
-					onTouchStart={firstDoubleTap.onTouchStart}
+					onDoubleClick={snapperNav.api.startFn}
+					onClick={snapperNav.api.prevFn}
+					onTouchStart={firstDoubleTap.onTouchStartFn}
 					icon={leftIcon}
 					data-ui-text="md"
-					{...iconProps?.({
+					{...iconPropsFn?.({
 						limit: true,
 						active: false,
 						index: undefined,
@@ -159,7 +159,7 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 						<Icon
 							data-ui="SnapperNav-item"
 							key={page.id}
-							onClick={() => snapperNav.api.snapTo(i)}
+							onClick={() => snapperNav.api.snapToFn(i)}
 							icon={page.icon}
 							{...(isActive
 								? activeIconUi
@@ -167,12 +167,12 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 										"data-ui-text": "md",
 										"data-ui-color": "icon",
 									})}
-							{...iconProps?.({
+							{...iconPropsFn?.({
 								limit: false,
 								active: isActive,
 								index: i,
 							})}
-							{...page.iconProps?.({
+							{...page.iconPropsFn?.({
 								limit: false,
 								active: isActive,
 								index: i,
@@ -183,12 +183,12 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 				<Icon
 					data-ui="SnapperNav[Icon.last]"
 					key={lastId}
-					onClick={snapperNav.api.next}
-					onDoubleClick={snapperNav.api.end}
-					onTouchStart={lastDoubleTap.onTouchStart}
+					onClick={snapperNav.api.nextFn}
+					onDoubleClick={snapperNav.api.endFn}
+					onTouchStart={lastDoubleTap.onTouchStartFn}
 					icon={rightIcon}
 					data-ui-text="md"
-					{...iconProps?.({
+					{...iconPropsFn?.({
 						limit: true,
 						active: false,
 						index: undefined,
@@ -199,7 +199,7 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 	}, [
 		firstId,
 		lastId,
-		iconProps,
+		iconPropsFn,
 		$pages,
 		snapperNav,
 		flow,
@@ -207,7 +207,7 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 		lastDoubleTap,
 	]);
 
-	const renderPages = useCallback(
+	const renderPagesFn = useCallback(
 		() => (
 			<>
 				{$pages.map((page, i) => {
@@ -217,7 +217,7 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 						<Icon
 							data-ui="SnapperNav[Icon.item]"
 							key={page.id}
-							onClick={() => snapperNav.api.snapTo(i)}
+							onClick={() => snapperNav.api.snapToFn(i)}
 							icon={page.icon}
 							{...(isActive
 								? activeIconUi
@@ -227,7 +227,7 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 							//
 							data-active={isActive}
 							//
-							{...iconProps?.({
+							{...iconPropsFn?.({
 								limit: false,
 								active: isActive,
 								index: i,
@@ -239,7 +239,7 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 		),
 		[
 			$pages,
-			iconProps,
+			iconPropsFn,
 			snapperNav,
 		],
 	);
@@ -265,7 +265,7 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 			className={"transition-all tone-neutral-light-bg"}
 			{...props}
 		>
-			{limit && $pages.length > limit ? renderLimiter() : renderPages()}
+			{limit && $pages.length > limit ? renderLimiterFn() : renderPagesFn()}
 		</Container>
 	) : null;
 };

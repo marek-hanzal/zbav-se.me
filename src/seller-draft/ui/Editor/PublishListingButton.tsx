@@ -1,6 +1,6 @@
 import { useNavigate } from "@tanstack/react-router";
 import type { FC } from "react";
-import { uiSaveButton } from "~/application-ui/fn/ui.exports";
+import { uiSaveButtonFn } from "~/application-ui/fn/ui.exports";
 import { useLocale } from "~/locale/hook/useLocale";
 import type { DraftSchema } from "~/seller-draft/schema/DraftSchema";
 import { withListingQuery } from "~/seller-listing/query/withListingQuery";
@@ -35,11 +35,11 @@ export const PublishListingButton: FC<PublishListingButton.Props> = ({
 		count: listingCount,
 	});
 
-	const navigate = useNavigate();
+	const navigateFn = useNavigate();
 	const locale = useLocale();
 	const mutation = withListingQuery.useCreateMutation({
-		async onPostMutation() {
-			await navigate({
+		async onPostMutationFn() {
+			await navigateFn({
 				to: "/$locale/app/seller/listing/my",
 				params: {
 					locale,
@@ -69,7 +69,7 @@ export const PublishListingButton: FC<PublishListingButton.Props> = ({
 					draftId: draft.id,
 				});
 			}}
-			{...uiSaveButton({
+			{...uiSaveButtonFn({
 				"data-ui-tone": "neutral",
 				"data-ui-justify": "start",
 				className,

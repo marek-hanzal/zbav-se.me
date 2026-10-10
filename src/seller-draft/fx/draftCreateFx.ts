@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import { dbFx } from "~/database/fx/dbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { DateServiceFx } from "~/date/service/DateServiceFx";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { draftFetchFx } from "~/seller-draft/fx/draftFetchFx";
 import type { DraftCreateSchema } from "~/seller-draft/schema/DraftCreateSchema";
@@ -45,8 +45,8 @@ export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 				userId,
 			});
 
-			const id = genId();
-			const now = dateService.now();
+			const id = genIdFn();
+			const now = dateService.nowFn();
 
 			const gallery = yield* galleryInsertFx({
 				access: "public",

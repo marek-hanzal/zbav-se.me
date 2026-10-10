@@ -1,14 +1,14 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionDisputeFx } from "~/seller-transaction/fx/transactionDisputeFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createResolvedScenarioFx } from "~/test/transaction/fx/createResolvedScenarioFx";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
 describe("transactionDisputeFx (seller)", () => {
 	it("changes status, creates seller dispute status message and buyer activity side effect", async () => {
-		const database = await testabase("sellerTransactionDisputeFx-contract");
+		const database = await testabaseFn("sellerTransactionDisputeFx-contract");
 
 		return Effect.gen(function* () {
 			const users = yield* createUsersFx({});
@@ -62,6 +62,6 @@ describe("transactionDisputeFx (seller)", () => {
 			expect(activity.family).toBe("transaction");
 			expect(activity.type).toBe("seller-message");
 			expect(activity.priority).toBe("high");
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

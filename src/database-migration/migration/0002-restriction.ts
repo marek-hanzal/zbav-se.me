@@ -1,5 +1,5 @@
 import type { Migration } from "kysely/migration";
-import { toEnumGuard } from "~/enum/fn/toEnumGuard";
+import { toEnumGuardFn } from "~/enum/fn/toEnumGuardFn";
 import type { RestrictionEnumSchema } from "~/restriction/schema/RestrictionEnumSchema";
 
 export const RestrictionMigration: Migration = {
@@ -7,7 +7,7 @@ export const RestrictionMigration: Migration = {
 		await db.schema
 			.createType("restriction_enum")
 			.asEnum(
-				toEnumGuard<RestrictionEnumSchema.Type>()([
+				toEnumGuardFn<RestrictionEnumSchema.Type>()([
 					"none",
 					"adult-relaxed",
 					"adult",

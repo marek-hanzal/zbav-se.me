@@ -1,9 +1,9 @@
 import { Effect } from "effect";
 import type { SelectExpression } from "kysely";
 import type { Database } from "~/database/type/Database";
-import type { testabase } from "~/test/testabase";
+import type { testabaseFn } from "~/test/testabaseFn";
 
-type TestDatabase = Awaited<ReturnType<typeof testabase>>;
+type TestDatabase = Awaited<ReturnType<typeof testabaseFn>>;
 
 export namespace fetchTransactionFx {
 	export interface Props<Selection extends SelectExpression<Database, "transaction">> {

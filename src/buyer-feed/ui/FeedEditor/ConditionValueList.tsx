@@ -24,13 +24,13 @@ export const ConditionValueList: FC<ConditionValueList.Props> = ({ conditionIn, 
 	return (
 		<ValueList
 			data-ui={"ConditionValueList"}
-			textLabel={translator.text("Listing condition (label)")}
-			textEmpty={translator.text("Listing condition not selected")}
+			textLabel={translator.textFn("Listing condition (label)")}
+			textEmpty={translator.textFn("Listing condition not selected")}
 			items={conditionIn.map((item) => ({
 				id: String(item),
 				condition: String(item),
 			}))}
-			renderFn={(item) => translator.text(`Condition ${item.condition} (label)`)}
+			renderFn={(item) => translator.textFn(`Condition ${item.condition} (label)`)}
 			wrapperProps={{
 				...(conditionIn.length > 0
 					? {

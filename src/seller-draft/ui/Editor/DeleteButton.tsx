@@ -1,6 +1,6 @@
 import { useNavigate } from "@tanstack/react-router";
 import type { FC } from "react";
-import { uiSaveButton } from "~/application-ui/fn/ui.exports";
+import { uiSaveButtonFn } from "~/application-ui/fn/ui.exports";
 import { useLocale } from "~/locale/hook/useLocale";
 import { withDraftQuery } from "~/seller-draft/query/withDraftQuery";
 import type { DraftSchema } from "~/seller-draft/schema/DraftSchema";
@@ -23,11 +23,11 @@ export const DeleteButton: FC<DeleteButton.Props> = ({
 	...props
 }) => {
 	const translator = useTranslator();
-	const navigate = useNavigate();
+	const navigateFn = useNavigate();
 	const locale = useLocale();
 	const mutation = withDraftQuery.useDeleteMutation({
-		async onPostMutation() {
-			await navigate({
+		async onPostMutationFn() {
+			await navigateFn({
 				to: "/$locale/app/home",
 				params: {
 					locale,
@@ -66,9 +66,9 @@ export const DeleteButton: FC<DeleteButton.Props> = ({
 						},
 					});
 				},
-				children: translator.text("Delete draft - confirm (button)"),
+				children: translator.textFn("Delete draft - confirm (button)"),
 			}}
-			{...uiSaveButton({
+			{...uiSaveButtonFn({
 				"data-ui-tone": "neutral",
 				className,
 			})}

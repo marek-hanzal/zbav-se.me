@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { SearchIcon } from "~/application-ui/constant/icon.exports";
-import { uiCtaLinkButton } from "~/application-ui/fn/ui.exports";
+import { uiCtaLinkButtonFn } from "~/application-ui/fn/ui.exports";
 import { useLocale } from "~/locale/hook/useLocale";
 import { EmptyStatus } from "~/status/ui/EmptyStatus";
 import { useTranslator } from "~/translation/hook/useTranslator";
@@ -15,8 +15,8 @@ export const Empty: FC = () => {
 	return (
 		<EmptyStatus
 			icon={SearchIcon}
-			textTitle={translator.text("No my listings (title)")}
-			textMessage={translator.text("No my listings (message)")}
+			textTitle={translator.textFn("No my listings (title)")}
+			textMessage={translator.textFn("No my listings (message)")}
 			action={
 				<LinkTo
 					icon={ChevronRightIcon}
@@ -25,7 +25,7 @@ export const Empty: FC = () => {
 					params={{
 						locale,
 					}}
-					{...uiCtaLinkButton({})}
+					{...uiCtaLinkButtonFn({})}
 				>
 					<Tx label={"Create listing (label)"} />
 				</LinkTo>

@@ -1,11 +1,11 @@
 import { createMiddleware } from "@tanstack/react-start";
 import type { Dialect } from "kysely";
-import { auth } from "~/authentication/fn/auth";
+import { authFn } from "~/authentication/fn/authFn";
 import { withDialectMiddleware } from "~/request-middleware/middleware/withDialectMiddleware";
 import { withLogMiddleware } from "~/request-middleware/middleware/withLogMiddleware";
 import { withTranslationMiddleware } from "~/request-middleware/middleware/withTranslationMiddleware";
 
-const $cache = new WeakMap<Dialect, Map<string, auth>>();
+const $cache = new WeakMap<Dialect, Map<string, authFn>>();
 
 export const withAuthMiddleware = createMiddleware()
 	.middleware([
@@ -13,12 +13,12 @@ export const withAuthMiddleware = createMiddleware()
 		withDialectMiddleware,
 		withTranslationMiddleware,
 	])
-	.server(async ({ next, context: { dialect, dsn, rootLogger, locale, translator } }) => {
+	.server(async ({ next: nextFn, context: { dialect, dsn, rootLogger, locale, translator } }) => {
 		const logger = rootLogger.getChild([
 			"middleware",
 			"withAuthMiddleware",
 		]);
-		let instance = $read(dialect, locale);
+		let instance = $readFn(dialect, locale);
 
 		if (!instance) {
 			logger.trace("Creating auth instance", {
@@ -26,26 +26,26 @@ export const withAuthMiddleware = createMiddleware()
 				locale,
 			});
 
-			instance = auth({
-				dialect: () => dialect,
+			instance = authFn({
+				dialectFn: () => dialect,
 				translator,
 			});
-			$write(dialect, locale, instance);
+			$writeFn(dialect, locale, instance);
 		}
 
-		return next({
+		return nextFn({
 			context: {
 				auth: instance,
 			},
 		});
 	});
 
-function $read(dialect: Dialect, locale: string) {
+function $readFn(dialect: Dialect, locale: string) {
 	return $cache.get(dialect)?.get(locale);
 }
 
-function $write(dialect: Dialect, locale: string, instance: auth) {
-	const instances = $cache.get(dialect) ?? new Map<string, auth>();
+function $writeFn(dialect: Dialect, locale: string, instance: authFn) {
+	const instances = $cache.get(dialect) ?? new Map<string, authFn>();
 
 	instances.set(locale, instance);
 	$cache.set(dialect, instances);

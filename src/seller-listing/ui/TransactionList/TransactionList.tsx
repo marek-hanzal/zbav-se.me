@@ -1,8 +1,8 @@
 import { type FC, useMemo } from "react";
 import { Empty } from "~/seller-listing/ui/TransactionList/Empty";
 import { ListGroup } from "~/seller-listing/ui/TransactionList/ListGroup";
+import { toStatusLabelFn } from "~/seller-transaction/fn/toStatusLabelFn";
 import { withTransactionQuery } from "~/seller-transaction/query/withTransactionQuery";
-import { toStatusLabel } from "~/seller-transaction/ui/toStatusLabel";
 import { TransactionStatusEnumSchema } from "~/transaction-contract/schema/TransactionStatusEnumSchema";
 import { useTranslator } from "~/translation/hook/useTranslator";
 import type { MarkSuspense } from "~/ui/type/MarkSuspense";
@@ -48,14 +48,14 @@ export const TransactionList: FC<TransactionList.Props> = ({
 	const groups = useMemo(() => {
 		return [
 			{
-				label: translator.text("Transaction - buyer-to-seller - seller (title)"),
+				label: translator.textFn("Transaction - buyer-to-seller - seller (title)"),
 				where: {
 					statusIn: [],
 					activity: "unread",
 				},
 			},
 			{
-				label: toStatusLabel(TransactionStatusEnumSchema.enum.interest, translator),
+				label: toStatusLabelFn(TransactionStatusEnumSchema.enum.interest, translator),
 				where: {
 					statusIn: [
 						TransactionStatusEnumSchema.enum.interest,
@@ -68,7 +68,7 @@ export const TransactionList: FC<TransactionList.Props> = ({
 				},
 			},
 			{
-				label: toStatusLabel(TransactionStatusEnumSchema.enum.trade, translator),
+				label: toStatusLabelFn(TransactionStatusEnumSchema.enum.trade, translator),
 				where: {
 					statusIn: [
 						TransactionStatusEnumSchema.enum.trade,
@@ -80,7 +80,7 @@ export const TransactionList: FC<TransactionList.Props> = ({
 				},
 			},
 			{
-				label: toStatusLabel(TransactionStatusEnumSchema.enum.dispute, translator),
+				label: toStatusLabelFn(TransactionStatusEnumSchema.enum.dispute, translator),
 				where: {
 					statusIn: [
 						TransactionStatusEnumSchema.enum.dispute,
@@ -92,7 +92,7 @@ export const TransactionList: FC<TransactionList.Props> = ({
 				},
 			},
 			{
-				label: toStatusLabel(TransactionStatusEnumSchema.enum.resolved, translator),
+				label: toStatusLabelFn(TransactionStatusEnumSchema.enum.resolved, translator),
 				where: {
 					statusIn: [
 						TransactionStatusEnumSchema.enum.resolved,
@@ -104,7 +104,7 @@ export const TransactionList: FC<TransactionList.Props> = ({
 				},
 			},
 			{
-				label: translator.text("Messages closed listings section (title)"),
+				label: translator.textFn("Messages closed listings section (title)"),
 				where: {
 					statusIn: [
 						TransactionStatusEnumSchema.enum.success,
@@ -140,10 +140,10 @@ export const TransactionList: FC<TransactionList.Props> = ({
 			<EmptyState
 				check={[
 					{
-						check() {
+						checkFn() {
 							return !hasTransaction.length;
 						},
-						render() {
+						renderFn() {
 							return <Empty />;
 						},
 					},

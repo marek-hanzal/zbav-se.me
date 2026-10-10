@@ -18,10 +18,10 @@ export const AgeValue: FC<AgeValue.Props> = ({ age, ...props }) => {
 	return (
 		<LabelValue
 			data-ui={"AgeValue"}
-			textLabel={translator.text("Listing age (label)")}
-			textValue={hasAge ? translator.text(`Age ${age} (label)`) : null}
-			textEmpty={translator.text("Age not selected")}
-			textHint={translator.text("Listing age (hint)")}
+			textLabel={translator.textFn("Listing age (label)")}
+			textValue={hasAge ? translator.textFn(`Age ${age} (label)`) : null}
+			textEmpty={translator.textFn("Age not selected")}
+			textHint={translator.textFn("Listing age (hint)")}
 			wrapperProps={{
 				"data-ui-tone": hasAge ? "neutral" : "secondary",
 			}}

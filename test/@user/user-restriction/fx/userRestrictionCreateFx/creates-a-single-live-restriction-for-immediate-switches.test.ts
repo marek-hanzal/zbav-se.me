@@ -1,15 +1,15 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import type { RestrictionEnumSchema } from "~/restriction/schema/RestrictionEnumSchema";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
+import { withUserRestrictionContextFn } from "~/user-restriction/fn/withUserRestrictionContextFn";
 import { userRestrictionCollectionFx } from "~/user-restriction/fx/userRestrictionCollectionFx";
 import { userRestrictionCreateFx } from "~/user-restriction/fx/userRestrictionCreateFx";
-import { withUserRestrictionContextFx } from "~/user-restriction/fx/withUserRestrictionContextFx";
 import type { UserRestrictionSchema } from "~/user-restriction/schema/UserRestrictionSchema";
 
-type TestDatabase = Awaited<ReturnType<typeof testabase>>;
+type TestDatabase = Awaited<ReturnType<typeof testabaseFn>>;
 type Restriction = RestrictionEnumSchema.Type;
 type UserRestriction = UserRestrictionSchema.Type;
 type StoredRestriction = {
@@ -26,23 +26,23 @@ const testDelay = {
 	restricted: 2,
 } satisfies Partial<Record<Restriction, number>>;
 
-const withRestrictionRuntimeFx = (database: TestDatabase) => {
+const withRestrictionRuntimeFn = (database: TestDatabase) => {
 	return <A, E, R>(effect: Effect.Effect<A, E, R>) =>
 		effect.pipe(
-			withRuntimeFx(database),
-			withUserRestrictionContextFx({
+			withRuntimeFn(database),
+			withUserRestrictionContextFn({
 				delay: testDelay,
 			}),
 		);
 };
 
-const createRestriction = (userId: string, restriction: Restriction) =>
+const createRestrictionFx = (userId: string, restriction: Restriction) =>
 	userRestrictionCreateFx({
 		userId,
 		restriction,
 	});
 
-const fetchLiveRestrictions = (userId: string) =>
+const fetchLiveRestrictionsFx = (userId: string) =>
 	userRestrictionCollectionFx({
 		scope: {
 			userId,
@@ -62,7 +62,7 @@ const fetchLiveRestrictions = (userId: string) =>
 		],
 	});
 
-const fetchAvailableRestrictions = (userId: string) =>
+const fetchAvailableRestrictionsFx = (userId: string) =>
 	userRestrictionCollectionFx({
 		scope: {
 			userId,
@@ -79,7 +79,7 @@ const fetchAvailableRestrictions = (userId: string) =>
 		],
 	});
 
-const fetchWaitingRestrictions = (userId: string) =>
+const fetchWaitingRestrictionsFx = (userId: string) =>
 	userRestrictionCollectionFx({
 		scope: {
 			userId,
@@ -96,7 +96,7 @@ const fetchWaitingRestrictions = (userId: string) =>
 		],
 	});
 
-const _fetchStoredRestrictions = (database: TestDatabase, userId: string) =>
+const _fetchStoredRestrictionsFx = (database: TestDatabase, userId: string) =>
 	Effect.promise(
 		() =>
 			database.kysely
@@ -113,30 +113,30 @@ const _fetchStoredRestrictions = (database: TestDatabase, userId: string) =>
 				.execute() as Promise<StoredRestriction[]>,
 	);
 
-const expectRestrictions = (restrictions: UserRestriction[], expected: Restriction[]) => {
+const expectRestrictionsFn = (restrictions: UserRestriction[], expected: Restriction[]) => {
 	expect(restrictions.map((restriction) => restriction.restriction)).toEqual(expected);
 };
 
 describe("userRestrictionCreateFx", () => {
 	it("creates a single live restriction for immediate switches", async () => {
-		const database = await testabase("user-restriction-create-immediate");
+		const database = await testabaseFn("user-restriction-create-immediate");
 
 		return Effect.gen(function* () {
 			const user = yield* leaseTestUserFx({});
 
-			yield* createRestriction(user.id, "adult");
+			yield* createRestrictionFx(user.id, "adult");
 
-			const liveRestrictions = yield* fetchLiveRestrictions(user.id);
-			const availableRestrictions = yield* fetchAvailableRestrictions(user.id);
-			const waitingRestrictions = yield* fetchWaitingRestrictions(user.id);
+			const liveRestrictions = yield* fetchLiveRestrictionsFx(user.id);
+			const availableRestrictions = yield* fetchAvailableRestrictionsFx(user.id);
+			const waitingRestrictions = yield* fetchWaitingRestrictionsFx(user.id);
 
-			expectRestrictions(liveRestrictions, [
+			expectRestrictionsFn(liveRestrictions, [
 				"adult",
 			]);
-			expectRestrictions(availableRestrictions, [
+			expectRestrictionsFn(availableRestrictions, [
 				"adult",
 			]);
 			expect(waitingRestrictions).toHaveLength(0);
-		}).pipe(withRestrictionRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRestrictionRuntimeFn(database), Effect.runPromise);
 	});
 });

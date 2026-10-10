@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { activityCountFx } from "~/user-activity/fx/activityCountFx";
 import { activityFetchFx } from "~/user-activity/fx/activityFetchFx";
@@ -10,7 +10,7 @@ import { activityPatchFx } from "~/user-activity/fx/activityPatchFx";
 
 describe("activityPatchFx", () => {
 	it("patches a single item and exposes the updated state via fetch/count", async () => {
-		const database = await testabase("activityPatch-single");
+		const database = await testabaseFn("activityPatch-single");
 		const archivedAt = new Date("2026-04-01T10:00:00.000Z");
 
 		return Effect.gen(function* () {
@@ -93,10 +93,10 @@ describe("activityPatchFx", () => {
 				}),
 			);
 
-			expectTaggedErrorFx(foreignFetch, {
+			expectTaggedErrorFn(foreignFetch, {
 				tag: "NotFoundErrorFx",
 			});
-			expectTaggedErrorFx(foreignPatch, {
+			expectTaggedErrorFn(foreignPatch, {
 				tag: "NotFoundErrorFx",
 			});
 
@@ -128,6 +128,6 @@ describe("activityPatchFx", () => {
 			});
 
 			expect(activeCount).toBe(0);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

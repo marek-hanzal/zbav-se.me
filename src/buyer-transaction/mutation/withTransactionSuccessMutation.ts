@@ -2,20 +2,20 @@ import { transactionSuccessFn } from "~/buyer-transaction/fn/transactionSuccessF
 import { withTransactionQuery } from "~/buyer-transaction/query/withTransactionQuery";
 import type { TransactionSchema } from "~/buyer-transaction/schema/TransactionSchema";
 import type { EntitySchema } from "~/entity/schema/EntitySchema";
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withMutation } from "~/mutation/fn/withMutation";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withMutationFn } from "~/mutation/fn/withMutationFn";
 import { withActivityQuery } from "~/user-activity/query/withActivityQuery";
 
-export const withTransactionSuccessMutation = withMutation<
+export const withTransactionSuccessMutation = withMutationFn<
 	EntitySchema.Type,
 	TransactionSchema.Type,
 	transactionSuccessFn.Error
 >({
-	logger: getRootLogger([
+	logger: getRootLoggerFn([
 		"mutation",
 		"withTransactionSuccessMutation",
 	]),
-	keys() {
+	keysFn() {
 		return [
 			"buyer",
 			"transaction",
@@ -29,14 +29,14 @@ export const withTransactionSuccessMutation = withMutation<
 	},
 	invalidate: [
 		{
-			async invalidate(queryClient) {
+			async invalidateFn(queryClient) {
 				await Promise.all([
-					withTransactionQuery.invalidator(queryClient, [
+					withTransactionQuery.invalidatorFn(queryClient, [
 						"fetch",
 						"collection",
 						"count",
 					]),
-					withActivityQuery.invalidator(queryClient, [
+					withActivityQuery.invalidatorFn(queryClient, [
 						"collection",
 						"count",
 					]),

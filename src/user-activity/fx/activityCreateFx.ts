@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import { dbFx } from "~/database/fx/dbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { DateServiceFx } from "~/date/service/DateServiceFx";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { activityFetchFx } from "~/user-activity/fx/activityFetchFx";
 import type { ActivityCreateSchema } from "~/user-activity/schema/ActivityCreate";
@@ -32,7 +32,7 @@ export const activityCreateFx = Effect.fn("activityCreateFx")(function* ({
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const dateService = yield* DateServiceFx;
-			const id = genId();
+			const id = genIdFn();
 
 			yield* dbFx(async (kysely) => {
 				return kysely
@@ -45,7 +45,7 @@ export const activityCreateFx = Effect.fn("activityCreateFx")(function* ({
 						type,
 						payload,
 						priority,
-						timestamp: dateService.now().toJSDate(),
+						timestamp: dateService.nowFn().toJSDate(),
 						archivedAt: null,
 					})
 					.returningAll()

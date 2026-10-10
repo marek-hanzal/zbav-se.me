@@ -7,7 +7,7 @@ import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { dbFx } from "~/database/fx/dbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { DateServiceFx } from "~/date/service/DateServiceFx";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { activityCreateFx } from "~/user-activity/fx/activityCreateFx";
 import { userInteractionEventFx } from "~/user-event/fx/userInteractionEventFx";
@@ -48,9 +48,9 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 				scope: {},
 			});
 
-			const now = dateService.now();
+			const now = dateService.nowFn();
 
-			const id = genId();
+			const id = genIdFn();
 
 			yield* dbFx(async () =>
 				kysely

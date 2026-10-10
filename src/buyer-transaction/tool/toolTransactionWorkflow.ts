@@ -5,9 +5,9 @@ import { transactionCloseFn } from "~/buyer-transaction/fn/transactionCloseFn";
 import { transactionDisputeFn } from "~/buyer-transaction/fn/transactionDisputeFn";
 import { transactionRejectFn } from "~/buyer-transaction/fn/transactionRejectFn";
 import { transactionSuccessFn } from "~/buyer-transaction/fn/transactionSuccessFn";
-import { getRootLogger } from "~/log/fn/getRootLogger";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
 
-const logger = getRootLogger([
+const logger = getRootLoggerFn([
 	"tool",
 	"toolTransactionWorkflow",
 ]);

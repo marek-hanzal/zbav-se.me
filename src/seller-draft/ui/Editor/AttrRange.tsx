@@ -4,9 +4,9 @@ import { z } from "zod";
 import { useAppForm } from "~/application-ui/hook/form.exports";
 import { SaveContainer } from "~/container/ui/SaveContainer";
 import { useLocale } from "~/locale/hook/useLocale";
-import { clamp } from "~/number/fn/clamp";
-import { toLocaleNumber } from "~/number/fn/toLocaleNumber";
-import { useNextAttr } from "~/seller-draft/ui/Editor/useNextAttr";
+import { clampFn } from "~/number/fn/clampFn";
+import { toLocaleNumberFn } from "~/number/fn/toLocaleNumberFn";
+import { getNextAttrFn } from "~/seller-draft/fn/getNextAttrFn";
 import { withDraftAttrDecimalPatchMutation } from "~/seller-draft-attr-decimal/mutation/withDraftAttrDecimalPatchMutation";
 import { Tx } from "~/translation/ui/Tx";
 import { ArrowRightIcon } from "~/ui/constant/ArrowRightIcon";
@@ -15,7 +15,7 @@ import { Typo } from "~/ui/ui/Typo";
 import type { DraftAttrOfSchema } from "~/user-draft-attr/schema/DraftAttrOfSchema";
 import type { useView } from "~/view/hook/useView";
 
-const toNumericBound = (value: number | null | undefined, fallback: number) => {
+const toNumericBoundFn = (value: number | null | undefined, fallback: number) => {
 	return match(value)
 		.with(P.number, (value) => (Number.isNaN(value) ? fallback : value))
 		.otherwise(() => fallback);
@@ -37,16 +37,16 @@ export namespace AttrRange {
 
 export const AttrRange: FC<AttrRange.Props> = ({ draftId, attrs, attr, view, ...props }) => {
 	const locale = useLocale();
-	const next = useNextAttr(attr, attrs);
+	const next = getNextAttrFn(attr, attrs);
 	const mutation = withDraftAttrDecimalPatchMutation.useMutation({
 		onSuccess() {
-			view.set(next ? `attr.${next.name}` : "default");
+			view.setFn(next ? `attr.${next.name}` : "default");
 		},
 	});
 	const { min, max, step, schema } = useMemo(() => {
-		const min = toNumericBound(attr.min, 0);
-		const max = Math.max(min, toNumericBound(attr.max, min + 100));
-		const step = Math.max(0.01, toNumericBound(attr.step, 1));
+		const min = toNumericBoundFn(attr.min, 0);
+		const max = Math.max(min, toNumericBoundFn(attr.max, min + 100));
+		const step = Math.max(0.01, toNumericBoundFn(attr.step, 1));
 
 		return {
 			min,
@@ -65,7 +65,7 @@ export const AttrRange: FC<AttrRange.Props> = ({ draftId, attrs, attr, view, ...
 	]);
 	const form = useAppForm({
 		defaultValues: {
-			value: typeof attr.value === "number" ? clamp(attr.value, min, max) : min,
+			value: typeof attr.value === "number" ? clampFn(attr.value, min, max) : min,
 		},
 		validators: {
 			onMount: schema,
@@ -106,7 +106,7 @@ export const AttrRange: FC<AttrRange.Props> = ({ draftId, attrs, attr, view, ...
 						>
 							<Typo
 								data-ui={"AttrRange-Typo-value"}
-								label={toLocaleNumber({
+								label={toLocaleNumberFn({
 									locale,
 									number: value,
 								})}
@@ -171,7 +171,7 @@ export const AttrRange: FC<AttrRange.Props> = ({ draftId, attrs, attr, view, ...
 								>
 									<Typo
 										data-ui={"AttrRange-Typo-min"}
-										label={toLocaleNumber({
+										label={toLocaleNumberFn({
 											locale,
 											number: min,
 										})}
@@ -179,7 +179,7 @@ export const AttrRange: FC<AttrRange.Props> = ({ draftId, attrs, attr, view, ...
 									/>
 									<Typo
 										data-ui={"AttrRange-Typo-max"}
-										label={toLocaleNumber({
+										label={toLocaleNumberFn({
 											locale,
 											number: max,
 										})}
@@ -200,10 +200,10 @@ export const AttrRange: FC<AttrRange.Props> = ({ draftId, attrs, attr, view, ...
 			>
 				{({ isValid, isSubmitting }) => (
 					<SaveContainer
-						onCancel={() => {
-							view.set("default");
+						onCancelFn={() => {
+							view.setFn("default");
 						}}
-						onSave={() => {
+						onSaveFn={() => {
 							form.handleSubmit();
 						}}
 						loading={isSubmitting}

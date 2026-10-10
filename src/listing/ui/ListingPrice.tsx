@@ -47,7 +47,7 @@ export const ListingPrice: FC<ListingPrice.Props> = ({ price, ...props }) => {
 								/>
 
 								<Typo
-									label={`(${translator.text(`Listing price - ${priceType}`)})`}
+									label={`(${translator.textFn(`Listing price - ${priceType}`)})`}
 									data-ui-text="sm"
 									data-ui-opacity="6"
 								/>

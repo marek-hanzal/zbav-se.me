@@ -17,14 +17,14 @@ describe("withResourceLimitQuery invalidator", () => {
 			},
 		};
 
-		queryClient.setQueryData(withResourceLimitQuery.keys("fetch", target), {
+		queryClient.setQueryData(withResourceLimitQuery.keysFn("fetch", target), {
 			limit: 2,
 		});
-		queryClient.setQueryData(withResourceLimitQuery.keys("fetch", other), {
+		queryClient.setQueryData(withResourceLimitQuery.keysFn("fetch", other), {
 			limit: 5,
 		});
 
-		await withResourceLimitQuery.invalidator(
+		await withResourceLimitQuery.invalidatorFn(
 			queryClient,
 			[
 				"fetch",
@@ -35,10 +35,11 @@ describe("withResourceLimitQuery invalidator", () => {
 		);
 
 		expect(
-			queryClient.getQueryState(withResourceLimitQuery.keys("fetch", target))?.isInvalidated,
+			queryClient.getQueryState(withResourceLimitQuery.keysFn("fetch", target))
+				?.isInvalidated,
 		).toBe(true);
 		expect(
-			queryClient.getQueryState(withResourceLimitQuery.keys("fetch", other))?.isInvalidated,
+			queryClient.getQueryState(withResourceLimitQuery.keysFn("fetch", other))?.isInvalidated,
 		).toBe(false);
 	});
 });

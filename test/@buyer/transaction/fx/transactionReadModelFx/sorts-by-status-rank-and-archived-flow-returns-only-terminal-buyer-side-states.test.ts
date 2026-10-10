@@ -5,8 +5,8 @@ import { transactionCollectionFx } from "~/buyer-transaction/fx/transactionColle
 import { transactionDisputeFx } from "~/buyer-transaction/fx/transactionDisputeFx";
 import { transactionRejectFx } from "~/buyer-transaction/fx/transactionRejectFx";
 import { transactionSuccessFx } from "~/buyer-transaction/fx/transactionSuccessFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { createResolvedScenarioFx } from "~/test/transaction/fx/createResolvedScenarioFx";
@@ -14,7 +14,7 @@ import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("buyer transaction read model activity and sort", () => {
 	it("sorts by status rank and archived flow returns only terminal buyer-side states", async () => {
-		const database = await testabase("buyer-transaction-read-model-status-sort");
+		const database = await testabaseFn("buyer-transaction-read-model-status-sort");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -100,6 +100,6 @@ describe("buyer transaction read model activity and sort", () => {
 				successScenario.transactionId,
 				closedScenario.transactionId,
 			]);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

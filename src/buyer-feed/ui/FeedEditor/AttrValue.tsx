@@ -2,7 +2,7 @@ import type { FC } from "react";
 import { match, P } from "ts-pattern";
 import type { AttrWhereSchema } from "~/buyer-listing/schema/AttrWhereSchema";
 import { useLocale } from "~/locale/hook/useLocale";
-import { toLocaleNumber } from "~/number/fn/toLocaleNumber";
+import { toLocaleNumberFn } from "~/number/fn/toLocaleNumberFn";
 import { useTranslator } from "~/translation/hook/useTranslator";
 import { Tx } from "~/translation/ui/Tx";
 import { ArrowRightIcon } from "~/ui/constant/ArrowRightIcon";
@@ -57,18 +57,18 @@ export const AttrValue: FC<AttrValue.Props> = ({ field, attr, view }) => {
 				return (
 					<Group>
 						<ValueList
-							textLabel={translator.text(`Field - ${field.name}`)}
-							textEmpty={translator.text("No value here (label)")}
+							textLabel={translator.textFn(`Field - ${field.name}`)}
+							textEmpty={translator.textFn("No value here (label)")}
 							items={
 								attr?.value?.map((id) => ({
 									id,
 								})) ?? []
 							}
 							renderFn={({ id }) => {
-								return translator.text(`${field.name} - ${id}`, id);
+								return translator.textFn(`${field.name} - ${id}`, id);
 							}}
 							onClick={() => {
-								view.set(`attr.${field.name}`);
+								view.setFn(`attr.${field.name}`);
 							}}
 						/>
 					</Group>
@@ -124,14 +124,14 @@ export const AttrValue: FC<AttrValue.Props> = ({ field, attr, view }) => {
 							<Typo
 								label={
 									attr?.min
-										? toLocaleNumber({
+										? toLocaleNumberFn({
 												locale,
 												number: attr.min,
 											})
-										: translator.text("No from value here (label)")
+										: translator.textFn("No from value here (label)")
 								}
 								onClick={() => {
-									view.set(`attr.${field.name}.min`);
+									view.setFn(`attr.${field.name}.min`);
 								}}
 								data-ui-display={"block"}
 							/>
@@ -145,14 +145,14 @@ export const AttrValue: FC<AttrValue.Props> = ({ field, attr, view }) => {
 							<Typo
 								label={
 									attr?.max
-										? toLocaleNumber({
+										? toLocaleNumberFn({
 												locale,
 												number: attr.max,
 											})
-										: translator.text("No to value here (label)")
+										: translator.textFn("No to value here (label)")
 								}
 								onClick={() => {
-									view.set(`attr.${field.name}.max`);
+									view.setFn(`attr.${field.name}.max`);
 								}}
 								data-ui-display={"block"}
 							/>
@@ -197,9 +197,9 @@ export const AttrValue: FC<AttrValue.Props> = ({ field, attr, view }) => {
 							data-ui-inner={"default"}
 						>
 							<Typo
-								label={attr?.min ?? translator.text("No from value here (label)")}
+								label={attr?.min ?? translator.textFn("No from value here (label)")}
 								onClick={() => {
-									view.set(`attr.${field.name}.min`);
+									view.setFn(`attr.${field.name}.min`);
 								}}
 								data-ui-display={"block"}
 							/>
@@ -211,9 +211,9 @@ export const AttrValue: FC<AttrValue.Props> = ({ field, attr, view }) => {
 							/>
 
 							<Typo
-								label={attr?.max ?? translator.text("No to value here (label)")}
+								label={attr?.max ?? translator.textFn("No to value here (label)")}
 								onClick={() => {
-									view.set(`attr.${field.name}.max`);
+									view.setFn(`attr.${field.name}.max`);
 								}}
 								data-ui-display={"block"}
 							/>
@@ -260,14 +260,14 @@ export const AttrValue: FC<AttrValue.Props> = ({ field, attr, view }) => {
 							<Typo
 								label={
 									attr?.min
-										? toLocaleNumber({
+										? toLocaleNumberFn({
 												locale,
 												number: attr.min,
 											})
-										: translator.text("No from value here (label)")
+										: translator.textFn("No from value here (label)")
 								}
 								onClick={() => {
-									view.set(`attr.${field.name}.min`);
+									view.setFn(`attr.${field.name}.min`);
 								}}
 								data-ui-display={"block"}
 							/>
@@ -281,14 +281,14 @@ export const AttrValue: FC<AttrValue.Props> = ({ field, attr, view }) => {
 							<Typo
 								label={
 									attr?.max
-										? toLocaleNumber({
+										? toLocaleNumberFn({
 												locale,
 												number: attr.max,
 											})
-										: translator.text("No to value here (label)")
+										: translator.textFn("No to value here (label)")
 								}
 								onClick={() => {
-									view.set(`attr.${field.name}.max`);
+									view.setFn(`attr.${field.name}.max`);
 								}}
 								data-ui-display={"block"}
 							/>

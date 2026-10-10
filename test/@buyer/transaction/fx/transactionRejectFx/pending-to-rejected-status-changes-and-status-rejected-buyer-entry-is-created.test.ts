@@ -1,14 +1,14 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionRejectFx } from "~/buyer-transaction/fx/transactionRejectFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("transactionRejectFx (buyer)", () => {
 	it("interest → rejected: status changes and status-rejected-buyer entry is created", async () => {
-		const database = await testabase("buyerRejectFx-interest");
+		const database = await testabaseFn("buyerRejectFx-interest");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -54,6 +54,6 @@ describe("transactionRejectFx (buyer)", () => {
 			expect(kinds).toContain("status-interest");
 			expect(kinds).toContain("status-rejected-buyer");
 			expect(kinds).not.toContain("status-rejected-seller");
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

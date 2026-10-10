@@ -27,7 +27,7 @@ export const CategorySelect: FC<CategorySelect.Props> = ({
 	...props
 }) => {
 	const focusRef = useRef<HTMLInputElement>(null);
-	const [fulltext, setFulltext] = useState<Fulltext.Value>();
+	const [fulltext, setFulltextFn] = useState<Fulltext.Value>();
 
 	useEffect(() => {
 		focusRef.current?.focus();
@@ -46,7 +46,7 @@ export const CategorySelect: FC<CategorySelect.Props> = ({
 				autoFocus
 				state={{
 					value: fulltext,
-					set: setFulltext,
+					setFn: setFulltextFn,
 				}}
 			/>
 

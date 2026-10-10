@@ -1,17 +1,17 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
 import { transactionGetBuyerInfoFx } from "~/seller-transaction/fx/transactionGetBuyerInfoFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { userEventCreateFx } from "~/user-event/fx/userEventCreateFx";
 
 describe("transactionGetBuyerInfoFx", () => {
 	it("returns buyer events only for the buyer behind the requested transaction", async () => {
-		const database = await testabase("transactionGetBuyerInfoFx-event-isolation");
+		const database = await testabaseFn("transactionGetBuyerInfoFx-event-isolation");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -52,8 +52,8 @@ describe("transactionGetBuyerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				withDateServiceFx({
-					now: () =>
+				withDateServiceFn({
+					nowFn: () =>
 						DateTime.now().minus({
 							days: 10,
 						}),
@@ -67,8 +67,8 @@ describe("transactionGetBuyerInfoFx", () => {
 				event: "transaction.message",
 				isTerminal: false,
 			}).pipe(
-				withDateServiceFx({
-					now: () =>
+				withDateServiceFn({
+					nowFn: () =>
 						DateTime.now().minus({
 							days: 9,
 						}),
@@ -82,8 +82,8 @@ describe("transactionGetBuyerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				withDateServiceFx({
-					now: () =>
+				withDateServiceFn({
+					nowFn: () =>
 						DateTime.now().minus({
 							days: 7,
 						}),
@@ -97,8 +97,8 @@ describe("transactionGetBuyerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				withDateServiceFx({
-					now: () =>
+				withDateServiceFn({
+					nowFn: () =>
 						DateTime.now().minus({
 							days: 6,
 						}),
@@ -113,8 +113,8 @@ describe("transactionGetBuyerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				withDateServiceFx({
-					now: () =>
+				withDateServiceFn({
+					nowFn: () =>
 						DateTime.now().minus({
 							days: 8,
 						}),
@@ -135,6 +135,6 @@ describe("transactionGetBuyerInfoFx", () => {
 			expect(buyerAInfo.events?.reaction.total ?? 0).toBeGreaterThan(
 				buyerBInfo.events?.reaction.total ?? 0,
 			);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

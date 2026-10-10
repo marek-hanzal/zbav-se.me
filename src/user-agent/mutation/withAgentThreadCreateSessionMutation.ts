@@ -1,5 +1,5 @@
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withMutation } from "~/mutation/fn/withMutation";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withMutationFn } from "~/mutation/fn/withMutationFn";
 import { agentThreadCreateSessionFn } from "~/user-agent/fn/agentThreadCreateSessionFn";
 import { withAgentLiveQuery } from "~/user-agent/query/withAgentLiveQuery";
 import { withAgentStreamItemsQuery } from "~/user-agent/query/withAgentStreamItemsQuery";
@@ -7,16 +7,16 @@ import { withAgentThreadQuery } from "~/user-agent/query/withAgentThreadQuery";
 import type { AgentThreadCreateSchema } from "~/user-agent/schema/AgentThreadCreateSchema";
 import type { AgentThreadSchema } from "~/user-agent/schema/AgentThreadSchema";
 
-export const withAgentThreadCreateSessionMutation = withMutation<
+export const withAgentThreadCreateSessionMutation = withMutationFn<
 	AgentThreadCreateSchema.Type,
 	AgentThreadSchema.Type,
 	agentThreadCreateSessionFn.Error
 >({
-	logger: getRootLogger([
+	logger: getRootLoggerFn([
 		"mutation",
 		"withAgentThreadCreateSessionMutation",
 	]),
-	keys(variables) {
+	keysFn(variables) {
 		return [
 			"agent",
 			"thread",
@@ -31,11 +31,11 @@ export const withAgentThreadCreateSessionMutation = withMutation<
 	},
 	invalidate: [
 		{
-			async invalidate(queryClient) {
+			async invalidateFn(queryClient) {
 				await Promise.all([
-					withAgentLiveQuery.invalidate(queryClient),
-					withAgentStreamItemsQuery.invalidate(queryClient),
-					withAgentThreadQuery.invalidator(queryClient, [
+					withAgentLiveQuery.invalidateFn(queryClient),
+					withAgentStreamItemsQuery.invalidateFn(queryClient),
+					withAgentThreadQuery.invalidatorFn(queryClient, [
 						"collection",
 					]),
 				]);

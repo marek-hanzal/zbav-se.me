@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { type SelectQueryBuilder, sql } from "kysely";
-import type { selectFx } from "~/database-query/fx/selectFx";
+import type { selectFn } from "~/database-query/fn/selectFn";
 import type { WhereSchema } from "~/query/schema/WhereSchema";
 
 export namespace withCountFx {
@@ -14,7 +14,7 @@ export namespace withCountFx {
 		TQueryError,
 		TQueryContext,
 	> {
-		selectFx: selectFx<
+		selectFx: selectFn<
 			TDB,
 			TTable,
 			TOutput,

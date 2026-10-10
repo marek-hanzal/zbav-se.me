@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { selectFx } from "~/database-query/fx/selectFx";
+import { selectFn } from "~/database-query/fn/selectFn";
 import type { GalleryItemSortSchema } from "~/public-gallery-item/schema/GalleryItemSortSchema";
 import { withUploadSelectFx } from "~/public-upload/db/withUploadSelectFx";
 import type { UploadSchema } from "~/public-upload/schema/UploadSchema";
@@ -29,16 +29,16 @@ export const withGalleryItemSelectFx = Effect.fn("withGalleryItemSelectFx")(func
 
 	const { select: uploadSql } = yield* withUploadSelectFx({});
 
-	return selectFx({
+	return selectFn({
 		select: select.select([
 			"gal_item.id",
 			"gal_item.galleryId",
 			"gal_item.uploadId",
 			"gal_item.sort",
 			"gal_item.createdAt",
-			(eb) => {
+			(ebFn) => {
 				return jsonObjectFrom(
-					uploadSql.whereRef("u.id", "=", eb.ref("gal_item.uploadId")).limit(1),
+					uploadSql.whereRef("u.id", "=", ebFn.ref("gal_item.uploadId")).limit(1),
 				)
 					.$notNull()
 					.$castTo<UploadSchema.Type>()

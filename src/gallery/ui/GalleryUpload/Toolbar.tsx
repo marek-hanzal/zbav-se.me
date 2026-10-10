@@ -8,9 +8,9 @@ import { Container } from "~/ui/ui/Container";
 
 export namespace Toolbar {
 	export interface Hooks {
-		onDelete(): void;
-		onMoveLeft(): void;
-		onMoveRight(): void;
+		onDeleteFn(): void;
+		onMoveLeftFn(): void;
+		onMoveRightFn(): void;
 	}
 
 	export interface Props extends Container.Props {
@@ -49,7 +49,7 @@ export const Toolbar: FC<Toolbar.Props> = ({
 		>
 			<Button
 				data-ui={"GalleryUpload-[ButtonMoveLeft]"}
-				aria-label={translator.text("Move photo left (button)")}
+				aria-label={translator.textFn("Move photo left (button)")}
 				iconEnabled={ArrowLeftIcon}
 				disabled={!canMoveLeft}
 				iconProps={{
@@ -66,13 +66,13 @@ export const Toolbar: FC<Toolbar.Props> = ({
 				data-ui-shadow={undefined}
 				onClick={(event) => {
 					event.stopPropagation();
-					hooks.onMoveLeft();
+					hooks.onMoveLeftFn();
 				}}
 			/>
 
 			<Button
 				data-ui={"GalleryUpload-[ButtonDelete]"}
-				aria-label={translator.text("Delete photo (button)")}
+				aria-label={translator.textFn("Delete photo (button)")}
 				iconEnabled={TrashIcon}
 				disabled={!canDelete}
 				iconProps={{
@@ -89,13 +89,13 @@ export const Toolbar: FC<Toolbar.Props> = ({
 				data-ui-shadow={undefined}
 				onClick={(event) => {
 					event.stopPropagation();
-					hooks.onDelete();
+					hooks.onDeleteFn();
 				}}
 			/>
 
 			<Button
 				data-ui={"GalleryUpload-[ButtonMoveRight]"}
-				aria-label={translator.text("Move photo right (button)")}
+				aria-label={translator.textFn("Move photo right (button)")}
 				iconEnabled={ArrowRightIcon}
 				disabled={!canMoveRight}
 				iconProps={{
@@ -112,7 +112,7 @@ export const Toolbar: FC<Toolbar.Props> = ({
 				data-ui-shadow={undefined}
 				onClick={(event) => {
 					event.stopPropagation();
-					hooks.onMoveRight();
+					hooks.onMoveRightFn();
 				}}
 			/>
 		</Container>

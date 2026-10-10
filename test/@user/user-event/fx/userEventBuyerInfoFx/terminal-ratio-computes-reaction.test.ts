@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { computeBuyerReaction } from "~/seller-user-event/fx/userEventBuyerInfoFx";
-import { createBuyerTerminalRatioSource } from "./terminalRatioFixture";
+import { computeBuyerReactionFn } from "~/seller-user-event/fx/userEventBuyerInfoFx";
+import { createBuyerTerminalRatioSourceFn } from "./terminalRatioFixture";
 
 describe("userEventBuyerInfoFx terminal ratio", () => {
 	it("computes buyer reaction ratio from grouped events", () => {
-		expect(computeBuyerReaction(createBuyerTerminalRatioSource())).toMatchObject({
+		expect(computeBuyerReactionFn(createBuyerTerminalRatioSourceFn())).toMatchObject({
 			total: 6,
 			reactions: 4,
 			terminal: 1,

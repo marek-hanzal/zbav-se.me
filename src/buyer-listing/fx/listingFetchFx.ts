@@ -3,7 +3,7 @@ import { withListingSelectFx } from "~/buyer-listing/db/withListingSelectFx";
 import type { ListingQuerySchema } from "~/buyer-listing/schema/ListingQuerySchema";
 import type { ListingWhereSchema } from "~/buyer-listing/schema/ListingWhereSchema";
 import { withFetchFx } from "~/http/fx/withFetchFx";
-import { hasExplicitCategory } from "~/listing/fn/hasExplicitCategory";
+import { hasExplicitCategoryFn } from "~/listing/fn/hasExplicitCategoryFn";
 import { getLoggerFx } from "~/log/fx/getLoggerFx";
 
 export namespace listingFetchFx {
@@ -35,7 +35,7 @@ export const listingFetchFx = Effect.fn("listingFetchFx")(function* ({
 			userId,
 			sort,
 			meta,
-			hasExplicitCategory: hasExplicitCategory([
+			hasExplicitCategory: hasExplicitCategoryFn([
 				where,
 				scope,
 			]),

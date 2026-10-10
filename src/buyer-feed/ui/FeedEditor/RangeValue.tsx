@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { useLocale } from "~/locale/hook/useLocale";
-import { toLocaleNumber } from "~/number/fn/toLocaleNumber";
+import { toLocaleNumberFn } from "~/number/fn/toLocaleNumberFn";
 import { useTranslator } from "~/translation/hook/useTranslator";
 import { LabelValue } from "~/ui/ui/LabelValue";
 
@@ -21,17 +21,17 @@ export const RangeValue: FC<RangeValue.Props> = ({ range, ...props }) => {
 	return (
 		<LabelValue
 			data-ui={"RangeValue"}
-			textLabel={translator.text("Feed range (label)")}
+			textLabel={translator.textFn("Feed range (label)")}
 			textValue={
 				range !== undefined
-					? `${toLocaleNumber({
+					? `${toLocaleNumberFn({
 							locale,
 							number: range,
 							maximumFractionDigits: 1,
 						})} km`
 					: null
 			}
-			textEmpty={translator.text("Feed range not set")}
+			textEmpty={translator.textFn("Feed range not set")}
 			wrapperProps={{
 				...(range !== undefined
 					? {

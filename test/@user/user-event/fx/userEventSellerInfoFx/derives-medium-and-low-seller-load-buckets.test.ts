@@ -2,10 +2,10 @@ import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import { userEventSellerInfoFx } from "~/buyer-user-event/fx/userEventSellerInfoFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { createTransactionTimeline } from "~/test/user-event/fx/createTransactionTimeline";
+import { createTransactionTimelineFn } from "~/test/user-event/fx/createTransactionTimelineFn";
 import { seedUserEventTimelineFx } from "~/test/user-event/fx/seedUserEventTimelineFx";
 
 interface SeedSellerEventsProps {
@@ -15,14 +15,14 @@ interface SeedSellerEventsProps {
 	withUserAction?: boolean;
 }
 
-const createLoadEvents = ({
+const createLoadEventsFn = ({
 	activeTransactions,
 	userId,
 }: Pick<SeedSellerEventsProps, "activeTransactions" | "userId">) =>
 	Array.from({
 		length: activeTransactions,
 	}).flatMap((_, index) =>
-		createTransactionTimeline({
+		createTransactionTimelineFn({
 			group: `tx-${userId}-${index}`,
 			steps: [
 				{
@@ -41,7 +41,7 @@ describe("userEventSellerInfoFx", {
 	timeout: 4_000,
 }, () => {
 	it("derives medium and low seller load buckets", async () => {
-		const database = await testabase("userEventSellerInfoFx-load-medium-low");
+		const database = await testabaseFn("userEventSellerInfoFx-load-medium-low");
 
 		return Effect.gen(function* () {
 			const mediumSeller = yield* leaseTestUserFx({});
@@ -49,7 +49,7 @@ describe("userEventSellerInfoFx", {
 
 			yield* seedUserEventTimelineFx({
 				userId: mediumSeller.id,
-				events: createLoadEvents({
+				events: createLoadEventsFn({
 					userId: mediumSeller.id,
 					activeTransactions: 3,
 				}),
@@ -57,11 +57,11 @@ describe("userEventSellerInfoFx", {
 			yield* seedUserEventTimelineFx({
 				userId: lowSeller.id,
 				events: [
-					...createLoadEvents({
+					...createLoadEventsFn({
 						userId: lowSeller.id,
 						activeTransactions: 1,
 					}),
-					...createTransactionTimeline({
+					...createTransactionTimelineFn({
 						group: `tx-${lowSeller.id}-0`,
 						steps: [
 							{
@@ -86,6 +86,6 @@ describe("userEventSellerInfoFx", {
 
 			expect(medium?.load.bucket).toBe("medium");
 			expect(low?.load.bucket).toBe("low");
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

@@ -87,7 +87,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 				<Group>
 					<GalleryValue
 						data-action={"edit feed gallery"}
-						label={translator.text("Feed photo gallery (label)")}
+						label={translator.textFn("Feed photo gallery (label)")}
 						urls={
 							feed.upload
 								? [
@@ -95,7 +95,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 									]
 								: []
 						}
-						onClick={() => view.set("gallery")}
+						onClick={() => view.setFn("gallery")}
 					/>
 
 					<NameValue
@@ -110,7 +110,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 						wrapperProps={{
 							"data-ui-tone": feed.name ? "neutral" : "secondary",
 						}}
-						onClick={() => view.set("name")}
+						onClick={() => view.setFn("name")}
 					/>
 				</Group>
 			)}
@@ -132,8 +132,8 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 				<Group>
 					<LabelValue
 						data-action={"edit feed fulltext"}
-						textLabel={translator.text("Feed fulltext (label)")}
-						textEmpty={translator.text("Feed fulltext not filled")}
+						textLabel={translator.textFn("Feed fulltext (label)")}
+						textEmpty={translator.textFn("Feed fulltext not filled")}
 						textValue={feed.query?.where?.fulltext?.join(", ") || null}
 						action={
 							<Icon
@@ -146,7 +146,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 								? "neutral"
 								: "secondary",
 						}}
-						onClick={() => view.set("fulltext")}
+						onClick={() => view.setFn("fulltext")}
 					/>
 				</Group>
 
@@ -161,8 +161,8 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 									]
 								: []
 						}
-						textLabel={translator.text("Feed category (label)")}
-						textEmpty={translator.text("Feed category not selected")}
+						textLabel={translator.textFn("Feed category (label)")}
+						textEmpty={translator.textFn("Feed category not selected")}
 						action={
 							<Icon
 								icon={ChevronRightIcon}
@@ -172,7 +172,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 						wrapperProps={{
 							"data-ui-tone": feed.query?.where?.categoryId ? "neutral" : "secondary",
 						}}
-						onClick={() => view.set("category")}
+						onClick={() => view.setFn("category")}
 					/>
 				</Group>
 
@@ -180,8 +180,8 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 					<LocationValue
 						data-action={"edit feed location"}
 						location={location}
-						textLabel={translator.text("Feed location (label)")}
-						textEmpty={translator.text("Feed location not selected")}
+						textLabel={translator.textFn("Feed location (label)")}
+						textEmpty={translator.textFn("Feed location not selected")}
 						action={
 							<Icon
 								icon={ChevronRightIcon}
@@ -191,7 +191,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 						wrapperProps={{
 							"data-ui-tone": locationId ? "neutral" : "secondary",
 						}}
-						onClick={() => view.set("location")}
+						onClick={() => view.setFn("location")}
 					/>
 
 					<RangeValue
@@ -208,7 +208,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 							"data-ui-tone":
 								!locationId || feed.query?.where?.range ? "neutral" : "secondary",
 						}}
-						onClick={() => view.set("range")}
+						onClick={() => view.setFn("range")}
 					/>
 				</Group>
 
@@ -225,7 +225,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 						wrapperProps={{
 							"data-ui-tone": statusIn.length > 0 ? "neutral" : "secondary",
 						}}
-						onClick={() => view.set("status")}
+						onClick={() => view.setFn("status")}
 					/>
 				</Group>
 
@@ -245,7 +245,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 									? "neutral"
 									: "secondary",
 						}}
-						onClick={() => view.set("delivery")}
+						onClick={() => view.setFn("delivery")}
 					/>
 				</Group>
 
@@ -253,8 +253,8 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 					<TitleValue
 						data-action={"edit feed title"}
 						title={feed.query?.where?.title ?? null}
-						textLabel={translator.text("Feed title (label)")}
-						textEmpty={translator.text("Feed title not filled")}
+						textLabel={translator.textFn("Feed title (label)")}
+						textEmpty={translator.textFn("Feed title not filled")}
 						action={
 							<Icon
 								icon={ChevronRightIcon}
@@ -264,7 +264,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 						wrapperProps={{
 							"data-ui-tone": feed.query?.where?.title ? "neutral" : "secondary",
 						}}
-						onClick={() => view.set("title")}
+						onClick={() => view.setFn("title")}
 					/>
 				</Group>
 			</Container>
@@ -293,7 +293,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 								data-ui-text="xl"
 							/>
 						}
-						onClick={() => view.set("priceType")}
+						onClick={() => view.setFn("priceType")}
 					/>
 
 					<PriceMinValue
@@ -304,7 +304,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 								data-ui-text="xl"
 							/>
 						}
-						onClick={() => view.set("priceMin")}
+						onClick={() => view.setFn("priceMin")}
 					/>
 
 					<PriceMaxValue
@@ -315,7 +315,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 								data-ui-text="xl"
 							/>
 						}
-						onClick={() => view.set("priceMax")}
+						onClick={() => view.setFn("priceMax")}
 					/>
 				</Group>
 
@@ -329,7 +329,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 								data-ui-text="xl"
 							/>
 						}
-						onClick={() => view.set("warranty")}
+						onClick={() => view.setFn("warranty")}
 					/>
 				</Group>
 
@@ -349,7 +349,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 									? "neutral"
 									: "secondary",
 						}}
-						onClick={() => view.set("condition")}
+						onClick={() => view.setFn("condition")}
 					/>
 
 					<AgeValueList
@@ -367,7 +367,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 									? "neutral"
 									: "secondary",
 						}}
-						onClick={() => view.set("age")}
+						onClick={() => view.setFn("age")}
 					/>
 				</Group>
 			</Container>
@@ -406,7 +406,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 							"data-ui-tone":
 								(feed.query?.sort ?? []).length > 0 ? "neutral" : "secondary",
 						}}
-						onClick={() => view.set("sort")}
+						onClick={() => view.setFn("sort")}
 					/>
 				</Group>
 			</Container>

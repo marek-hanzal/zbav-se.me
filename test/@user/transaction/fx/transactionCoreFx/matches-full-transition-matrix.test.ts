@@ -1,23 +1,23 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import {
-	buildExpectedTransitions,
+	buildExpectedTransitionsFn,
 	requestOptions,
 	sideOptions,
 	statusStateOptions,
-	transitionKey,
+	transitionKeyFn,
 } from "~/test/transaction/fx/transactionTransitionMatrixFx";
 import { transactionTransitionFx } from "~/user-transaction/fx/transactionTransitionFx";
 
 describe("transaction core", () => {
 	it("matches the full transaction transition matrix", async () => {
-		const database = await testabase("transactionCore-transition-matrix");
+		const database = await testabaseFn("transactionCore-transition-matrix");
 
 		return Effect.gen(function* () {
-			const expectedTransitions = buildExpectedTransitions();
-			const expectedTransitionKeys = new Set(expectedTransitions.map(transitionKey));
+			const expectedTransitions = buildExpectedTransitionsFn();
+			const expectedTransitionKeys = new Set(expectedTransitions.map(transitionKeyFn));
 			const unexpectedDenied: string[] = [];
 			const unexpectedAllowed: string[] = [];
 
@@ -25,7 +25,7 @@ describe("transaction core", () => {
 				const result = yield* Effect.result(transactionTransitionFx(transition));
 
 				if (result._tag === "Failure") {
-					unexpectedDenied.push(transitionKey(transition));
+					unexpectedDenied.push(transitionKeyFn(transition));
 				}
 			}
 
@@ -37,7 +37,7 @@ describe("transaction core", () => {
 							request,
 							side,
 						};
-						const key = transitionKey(transition);
+						const key = transitionKeyFn(transition);
 
 						if (expectedTransitionKeys.has(key)) {
 							continue;
@@ -54,6 +54,6 @@ describe("transaction core", () => {
 
 			expect(unexpectedDenied).toEqual([]);
 			expect(unexpectedAllowed).toEqual([]);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

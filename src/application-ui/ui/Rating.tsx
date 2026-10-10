@@ -1,6 +1,6 @@
 import { type FC, useMemo } from "react";
 import { RatingToIcon } from "~/application-ui/constant/RatingToIcon";
-import { uiSelectButton } from "~/application-ui/fn/ui.exports";
+import { uiSelectButtonFn } from "~/application-ui/fn/ui.exports";
 import type { EntitySchema } from "~/entity/schema/EntitySchema";
 import type { useSelection } from "~/selection/hook/useSelection";
 import { Tx } from "~/translation/ui/Tx";
@@ -8,7 +8,7 @@ import { TrashIcon } from "~/ui/constant/TrashIcon";
 import { Button } from "~/ui/ui/Button";
 import { Container } from "~/ui/ui/Container";
 
-function withRatingItems(limit = 6): Rating.RatingItem[] {
+function withRatingItemsFn(limit = 6): Rating.RatingItem[] {
 	return Array.from(
 		{
 			length: limit,
@@ -42,7 +42,7 @@ export const Rating: FC<Rating.Props> = ({
 }) => {
 	const limit = 6;
 
-	const ratingItems = useMemo<Rating.RatingItem[]>(() => withRatingItems(limit), []);
+	const ratingItems = useMemo<Rating.RatingItem[]>(() => withRatingItemsFn(limit), []);
 
 	return (
 		<Container
@@ -56,7 +56,7 @@ export const Rating: FC<Rating.Props> = ({
 			{ratingItems.map((item) => {
 				const value = Number.parseInt(item.id, 10) as RatingToIcon.Value;
 				const icon = RatingToIcon[value];
-				const selected = selection.isSelected(item.id);
+				const selected = selection.isSelectedFn(item.id);
 
 				if (!icon) {
 					return null;
@@ -66,14 +66,14 @@ export const Rating: FC<Rating.Props> = ({
 					<Button
 						key={value}
 						onClick={() => {
-							selection.toggle(item);
+							selection.toggleFn(item);
 						}}
 						iconEnabled={icon}
 						iconProps={{
 							"data-ui-text": "2xl",
 							"data-ui-color": selected ? "lead" : "icon",
 						}}
-						{...uiSelectButton({
+						{...uiSelectButtonFn({
 							isSelected: selected,
 							"data-ui-flow": "horizontal",
 							"data-ui-justify": "start",
@@ -113,7 +113,7 @@ export const Rating: FC<Rating.Props> = ({
 						"data-ui-text": "xl",
 					}}
 					onClick={() => {
-						selection.clear();
+						selection.clearFn();
 					}}
 					data-ui-tone="warning"
 					data-ui-theme="light"

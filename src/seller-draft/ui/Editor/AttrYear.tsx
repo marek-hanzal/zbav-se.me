@@ -3,7 +3,7 @@ import type { FC } from "react";
 import { YearSelect } from "~/application-ui/ui/YearSelect";
 import { SaveContainer } from "~/container/ui/SaveContainer";
 import { useSelection } from "~/selection/hook/useSelection";
-import { useNextAttr } from "~/seller-draft/ui/Editor/useNextAttr";
+import { getNextAttrFn } from "~/seller-draft/fn/getNextAttrFn";
 import { withDraftAttrNumberPatchMutation } from "~/seller-draft-attr-number/mutation/withDraftAttrNumberPatchMutation";
 import { Tx } from "~/translation/ui/Tx";
 import { ArrowRightIcon } from "~/ui/constant/ArrowRightIcon";
@@ -26,10 +26,10 @@ export namespace AttrYear {
 }
 
 export const AttrYear: FC<AttrYear.Props> = ({ draftId, attrs, attr, view, ...props }) => {
-	const next = useNextAttr(attr, attrs);
+	const next = getNextAttrFn(attr, attrs);
 	const mutation = withDraftAttrNumberPatchMutation.useMutation({
 		onSuccess() {
-			view.set(next ? `attr.${next.name}` : "default");
+			view.setFn(next ? `attr.${next.name}` : "default");
 		},
 	});
 
@@ -48,7 +48,7 @@ export const AttrYear: FC<AttrYear.Props> = ({ draftId, attrs, attr, view, ...pr
 						},
 					],
 	});
-	const selectedYear = selection.optional.singleId();
+	const selectedYear = selection.optional.singleIdFn();
 
 	return (
 		<Container
@@ -67,10 +67,10 @@ export const AttrYear: FC<AttrYear.Props> = ({ draftId, attrs, attr, view, ...pr
 			/>
 
 			<SaveContainer
-				onCancel={() => {
-					view.set("default");
+				onCancelFn={() => {
+					view.setFn("default");
 				}}
-				onSave={() => {
+				onSaveFn={() => {
 					mutation.mutate({
 						fieldId: attr.name,
 						draftId,

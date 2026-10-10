@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import { TitleContainer } from "~/application-ui/ui/container.exports";
 import { useLocale } from "~/locale/hook/useLocale";
 import { BackHomeButton } from "~/nav/ui/BackHomeButton.exports";
-import { handleArrowNav } from "~/navigation/fn/handleArrowNav";
+import { handleArrowNavFn } from "~/navigation/fn/handleArrowNavFn";
 import { useTranslator } from "~/translation/hook/useTranslator";
 import { AiIcon } from "~/ui/constant/AiIcon";
 import { Container } from "~/ui/ui/Container";
@@ -34,7 +34,7 @@ export const Route = createFileRoute("/$locale/app/agent/welcome")({
 		return (
 			<TitleContainer
 				data-ui={"AgentWelcome[TitleContainer]"}
-				textTitle={translator.text("Agent (title)")}
+				textTitle={translator.textFn("Agent (title)")}
 				left={
 					<BackHomeButton
 						id={"back-link"}
@@ -45,7 +45,7 @@ export const Route = createFileRoute("/$locale/app/agent/welcome")({
 						//
 						data-arrow-right={"home-link"}
 						data-arrow-down={"continue-session-button"}
-						onKeyDown={handleArrowNav}
+						onKeyDown={handleArrowNavFn}
 					/>
 				}
 				right={
@@ -54,7 +54,7 @@ export const Route = createFileRoute("/$locale/app/agent/welcome")({
 						//
 						data-arrow-left={"back-link"}
 						data-arrow-down={"continue-session-button"}
-						onKeyDown={handleArrowNav}
+						onKeyDown={handleArrowNavFn}
 					/>
 				}
 			>
@@ -72,8 +72,8 @@ export const Route = createFileRoute("/$locale/app/agent/welcome")({
 				>
 					<Status
 						icon={AiIcon}
-						textTitle={translator.text("Agent welcome (title)")}
-						textMessage={translator.text("Agent welcome (message)")}
+						textTitle={translator.textFn("Agent welcome (title)")}
+						textMessage={translator.textFn("Agent welcome (message)")}
 						action={
 							<Container
 								data-ui="AgentWelcome-[Action]"
@@ -96,7 +96,7 @@ export const Route = createFileRoute("/$locale/app/agent/welcome")({
 										data-arrow-left={"back-link"}
 										data-arrow-right={"home-link"}
 										data-arrow-down={"create-session-button"}
-										onKeyDown={handleArrowNav}
+										onKeyDown={handleArrowNavFn}
 									/>
 								) : null}
 								<CreateSessionButton
@@ -109,7 +109,7 @@ export const Route = createFileRoute("/$locale/app/agent/welcome")({
 									data-arrow-left={"back-link"}
 									data-arrow-right={"home-link"}
 									data-arrow-up={"continue-session-button"}
-									onKeyDown={handleArrowNav}
+									onKeyDown={handleArrowNavFn}
 								/>
 							</Container>
 						}

@@ -2,15 +2,15 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionCreateFx } from "~/buyer-transaction/fx/transactionCreateFx";
 import { transactionDisputeFx } from "~/buyer-transaction/fx/transactionDisputeFx";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("transactionDisputeFx (buyer)", () => {
 	it("invalid: cannot dispute from interest state", async () => {
-		const database = await testabase("buyerDisputeFx-invalid-from-interest");
+		const database = await testabaseFn("buyerDisputeFx-invalid-from-interest");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -35,7 +35,7 @@ describe("transactionDisputeFx (buyer)", () => {
 			const beforeEntries = yield* Effect.promise(() =>
 				database.kysely
 					.selectFrom("transaction_entry")
-					.select((eb) => eb.fn.countAll<number>().as("count"))
+					.select((ebFn) => ebFn.fn.countAll<number>().as("count"))
 					.where("transactionId", "=", tx.id)
 					.executeTakeFirstOrThrow(),
 			);
@@ -47,7 +47,7 @@ describe("transactionDisputeFx (buyer)", () => {
 				}),
 			);
 
-			expectTaggedErrorFx(result, {
+			expectTaggedErrorFn(result, {
 				tag: "InvalidRequestErrorFx",
 				message: "Invalid transaction status transition from interest to dispute for buyer",
 			});
@@ -62,13 +62,13 @@ describe("transactionDisputeFx (buyer)", () => {
 			const afterEntries = yield* Effect.promise(() =>
 				database.kysely
 					.selectFrom("transaction_entry")
-					.select((eb) => eb.fn.countAll<number>().as("count"))
+					.select((ebFn) => ebFn.fn.countAll<number>().as("count"))
 					.where("transactionId", "=", tx.id)
 					.executeTakeFirstOrThrow(),
 			);
 
 			expect(afterTransaction.status).toBe(tx.status);
 			expect(afterEntries.count).toBe(beforeEntries.count);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

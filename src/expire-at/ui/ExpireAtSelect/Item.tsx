@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { uiSelectButton } from "~/application-ui/fn/ui.exports";
+import { uiSelectButtonFn } from "~/application-ui/fn/ui.exports";
 import type { ListingExpireEnumSchema } from "~/listing/schema/ListingExpireEnumSchema";
 import { Tx } from "~/translation/ui/Tx";
 import { Button } from "~/ui/ui/Button";
@@ -11,18 +11,18 @@ export namespace Item {
 	export interface Props {
 		expire: ListingExpireEnumSchema.Type;
 		isSelected: boolean;
-		onChange(value: ListingExpireEnumSchema.Type): void;
+		onChangeFn(value: ListingExpireEnumSchema.Type): void;
 	}
 }
 
-export const Item: FC<Item.Props> = ({ expire, isSelected, onChange }) => {
+export const Item: FC<Item.Props> = ({ expire, isSelected, onChangeFn }) => {
 	return (
 		<Button
 			data-action={`select expiration ${expire}`}
 			onClick={() => {
-				onChange(expire);
+				onChangeFn(expire);
 			}}
-			{...uiSelectButton({
+			{...uiSelectButtonFn({
 				name: `ExpireAtSelect-[Button.${expire}]`,
 				isSelected,
 				"data-ui-flow": "horizontal",

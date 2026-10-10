@@ -1,8 +1,8 @@
 import { randomUUID } from "node:crypto";
 import { Effect } from "effect";
 import { dbFx } from "~/database/fx/dbFx";
-import { genId } from "~/identity/fn/genId";
-import { rangedom } from "~/random/fn/rangedom";
+import { genIdFn } from "~/identity/fn/genIdFn";
+import { rangedomFn } from "~/random/fn/rangedomFn";
 import { s3ConfigFx } from "~/s3/context/s3ConfigFx";
 import { s3ClientFx } from "~/s3/fx/s3ClientFx";
 import { SeedProgressContextFx } from "~/seed/context/SeedProgressContextFx";
@@ -16,7 +16,7 @@ const PHOTOBANK_FETCH_CONCURRENCY = 3;
 const UPLOAD_INSERT_CHUNK = 1000;
 
 const fetchPhotoBufferFx = Effect.fn("fetchPhotoBufferFx")(function* () {
-	const target = `https://picsum.photos/seed/${genId()}/1024/768.jpg`;
+	const target = `https://picsum.photos/seed/${genIdFn()}/1024/768.jpg`;
 
 	const response = yield* Effect.tryPromise({
 		try: async () => fetch(target),
@@ -113,10 +113,10 @@ export const ensureSeedUploadPoolFx = Effect.fn("ensureSeedUploadPoolFx")(functi
 					url: `${cdn.replace(/\/$/, "")}/${key}`,
 				});
 
-				yield* progress.log({
+				yield* progress.logFx({
 					message: `Uploaded [${upload.url}]`,
 				});
-				yield* progress.advance({
+				yield* progress.advanceFx({
 					delta: 1,
 				});
 
@@ -147,14 +147,14 @@ export const ensureSeedUploadPoolFx = Effect.fn("ensureSeedUploadPoolFx")(functi
 		}> = [];
 
 		for (let index = 0; index < chunk; index += 1) {
-			const source = pool[rangedom(0, pool.length - 1)];
+			const source = pool[rangedomFn(0, pool.length - 1)];
 
 			if (!source) {
 				break;
 			}
 
 			rows.push({
-				id: genId(),
+				id: genIdFn(),
 				userId,
 				url: source.url,
 				access: "private",
@@ -179,12 +179,12 @@ export const ensureSeedUploadPoolFx = Effect.fn("ensureSeedUploadPoolFx")(functi
 
 		created += rows.length;
 		remaining -= rows.length;
-		yield* progress.advance({
+		yield* progress.advanceFx({
 			delta: rows.length,
 		});
 	}
 
-	yield* progress.log({
+	yield* progress.logFx({
 		message: `Upload pool ready (${pool.length} records, created ${created})`,
 	});
 

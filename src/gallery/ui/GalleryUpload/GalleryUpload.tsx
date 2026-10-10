@@ -84,8 +84,8 @@ export const GalleryUpload: FC<GalleryUpload.Props> = ({
 								value={uploadId}
 								access={access}
 								mutationId={mutationId}
-								onChange={(nextUploadId) => {
-									state.set((prev) => {
+								onChangeFn={(nextUploadId) => {
+									state.setFn((prev) => {
 										const next: (string | undefined)[] = [
 											...prev,
 										];
@@ -103,17 +103,17 @@ export const GalleryUpload: FC<GalleryUpload.Props> = ({
 									canMoveLeft={!!previousUploadId}
 									canMoveRight={!!nextUploadId}
 									hooks={{
-										onDelete() {
-											state.set((prev) => {
+										onDeleteFn() {
+											state.setFn((prev) => {
 												return prev.filter((_, index) => index !== slot);
 											});
 										},
-										onMoveLeft() {
+										onMoveLeftFn() {
 											if (!previousUploadId) {
 												return;
 											}
 
-											state.set((prev) => {
+											state.setFn((prev) => {
 												const next = [
 													...prev,
 												];
@@ -123,12 +123,12 @@ export const GalleryUpload: FC<GalleryUpload.Props> = ({
 												return next.filter((f): f is string => !!f);
 											});
 										},
-										onMoveRight() {
+										onMoveRightFn() {
 											if (!nextUploadId) {
 												return;
 											}
 
-											state.set((prev) => {
+											state.setFn((prev) => {
 												const next = [
 													...prev,
 												];

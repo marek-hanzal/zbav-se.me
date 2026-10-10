@@ -36,6 +36,10 @@
 
 ## Code and components
 
+- Project-owned named callables use `Fn` for plain functions, helpers, factories, Promise-returning operations, and callback props. This also applies to local callable bindings and parameters; anonymous inline callbacks need no name.
+- Use `Fx` when calling the function directly returns an `Effect`. A factory returning another function or a Promise uses `Fn`, even when the returned function produces an Effect or the Promise resolves to one. Stored Effect values, schemas, classes, and service tags are not callable operations.
+- Actual React components and React hooks keep their component and `use*` names. Preserve mandatory external, framework, DOM, and JSX protocol names, including keys mirrored by local structural types and props forwarded through spreads. Enum and map data keys retain their data meaning.
+- Name operation files after their primary exported callable, including its `Fn` or `Fx` suffix. Use `fn/` for plain operation modules and `fx/` for Effect operation modules; keep specialized kinds such as `db/`, `query/`, `mutation/`, `hook/`, and `ui/` when they describe the module's role.
 - Exactly one reusable React component per file. TanStack route files may declare their own component, pending, and error render callbacks together.
 - Prefer namespace props: `export namespace ComponentName { export interface Props ... }` with `export const ComponentName: FC<ComponentName.Props>`.
 - Extend base UI props when applicable (`Container.Props`, `Button.Props`, ...), keep wrappers pass-through (`...props`), and merge `ui` defaults with `...ui` last. Prefer grouped `hooks` props for multiple callbacks.

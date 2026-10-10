@@ -32,9 +32,9 @@ export const categoryAttrOfFx = Effect.fn("categoryAttrOfFx")(function* ({
 				sql<number | null>`f.max::float8`.as("max"),
 				sql<number | null>`f.step::float8`.as("step"),
 				"cf.kind",
-				(eb) => {
+				(ebFn) => {
 					return jsonArrayFrom(
-						eb
+						ebFn
 							.selectFrom("field_option as fo")
 							.select([
 								"fo.fieldId",

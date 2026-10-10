@@ -1,12 +1,12 @@
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withEntityQuery } from "~/query/fn/withEntityQuery";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withEntityQueryFn } from "~/query/fn/withEntityQueryFn";
 import type { CountSchema } from "~/query/schema/CountSchema";
 import { locationFetchFn } from "~/session-location/fn/locationFetchFn";
 import type { LocationQuerySchema } from "~/session-location/schema/LocationQuerySchema";
 import type { LocationSchema } from "~/session-location/schema/LocationSchema";
 
-export const withLocationQuery = withEntityQuery({
-	logger: getRootLogger([
+export const withLocationQuery = withEntityQueryFn({
+	logger: getRootLoggerFn([
 		"query",
 		"withLocationQuery",
 	]),
@@ -19,12 +19,12 @@ export const withLocationQuery = withEntityQuery({
 		patchCollection: Error;
 		fetch: locationFetchFn.Error;
 	},
-	keys() {
+	keysFn() {
 		return [
 			"location",
 		];
 	},
-	toIdKey(id): LocationQuerySchema.Type {
+	toIdKeyFn(id): LocationQuerySchema.Type {
 		return {
 			where: {
 				id,

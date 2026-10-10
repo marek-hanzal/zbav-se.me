@@ -1,10 +1,10 @@
 import { type FC, type RefObject, useCallback, useEffect, useRef } from "react";
-import { uiFade } from "~/ui/fn/uiFade";
+import { uiFadeFn } from "~/ui/fn/uiFadeFn";
 
-const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
+const clamp01Fn = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
 
 export namespace Fade {
-	export interface Props extends uiFade.Component {
+	export interface Props extends uiFadeFn.Component {
 		scrollableRef: RefObject<HTMLElement | null>;
 		height?: number;
 		fade?: number;
@@ -22,17 +22,17 @@ export const Fade: FC<Fade.Props> = ({
 	const bottomFadeRef = useRef<HTMLDivElement>(null);
 
 	const rafIdRef = useRef<number | 0>(0);
-	const schedule = useCallback((fn: () => void) => {
+	const scheduleFn = useCallback((fnFn: () => void) => {
 		if (rafIdRef.current) {
 			return;
 		}
 		rafIdRef.current = requestAnimationFrame(() => {
 			rafIdRef.current = 0;
-			fn();
+			fnFn();
 		});
 	}, []);
 
-	const update = useCallback(() => {
+	const updateFn = useCallback(() => {
 		const scrollable = scrollableRef.current;
 		const top = topFadeRef.current;
 		const bottom = bottomFadeRef.current;
@@ -49,8 +49,8 @@ export const Fade: FC<Fade.Props> = ({
 			return;
 		}
 
-		const topOpacity = clamp01(scrollTop / fade);
-		const bottomOpacity = clamp01((maxScrollable - scrollTop) / fade);
+		const topOpacity = clamp01Fn(scrollTop / fade);
+		const bottomOpacity = clamp01Fn((maxScrollable - scrollTop) / fade);
 
 		top.style.opacity = topOpacity.toFixed(3);
 		bottom.style.opacity = bottomOpacity.toFixed(3);
@@ -65,26 +65,26 @@ export const Fade: FC<Fade.Props> = ({
 			return;
 		}
 
-		const onScroll = () => schedule(update);
-		scrollable.addEventListener("scroll", onScroll, {
+		const onScrollFn = () => scheduleFn(updateFn);
+		scrollable.addEventListener("scroll", onScrollFn, {
 			passive: true,
 		});
 
-		const resizeObserver = new ResizeObserver(() => schedule(update));
+		const resizeObserver = new ResizeObserver(() => scheduleFn(updateFn));
 		resizeObserver.observe(scrollable);
 
-		const mutationObserver = new MutationObserver(() => schedule(update));
+		const mutationObserver = new MutationObserver(() => scheduleFn(updateFn));
 		mutationObserver.observe(scrollable, {
 			childList: true,
 			subtree: true,
 			attributes: false,
 		});
 
-		update();
-		const initId = requestAnimationFrame(update);
+		updateFn();
+		const initId = requestAnimationFrame(updateFn);
 
 		return () => {
-			scrollable.removeEventListener("scroll", onScroll);
+			scrollable.removeEventListener("scroll", onScrollFn);
 			resizeObserver.disconnect();
 			mutationObserver.disconnect();
 			cancelAnimationFrame(initId);
@@ -93,8 +93,8 @@ export const Fade: FC<Fade.Props> = ({
 		};
 	}, [
 		scrollableRef,
-		schedule,
-		update,
+		scheduleFn,
+		updateFn,
 	]);
 
 	return (
@@ -102,7 +102,7 @@ export const Fade: FC<Fade.Props> = ({
 			<div
 				ref={topFadeRef}
 				aria-hidden
-				{...uiFade({
+				{...uiFadeFn({
 					className,
 				})}
 				data-ui="Fade-top"
@@ -114,7 +114,7 @@ export const Fade: FC<Fade.Props> = ({
 			<div
 				ref={bottomFadeRef}
 				aria-hidden
-				{...uiFade({
+				{...uiFadeFn({
 					className,
 				})}
 				data-ui="Fade-bottom"

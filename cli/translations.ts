@@ -1,8 +1,8 @@
 import { locales } from "~/locales";
 import { TranslationSources } from "~/translation/constant/TranslationSources";
-import { tx } from "~/translation-tooling/fn/tx";
+import { txFn } from "~/translation-tooling/fn/txFn";
 
-tx({
+txFn({
 	packages: [
 		`${import.meta.dirname}/..`,
 	],

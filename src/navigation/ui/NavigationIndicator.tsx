@@ -1,16 +1,16 @@
 import { useRouterState } from "@tanstack/react-router";
 import { type ComponentProps, type FC, useEffect, useState } from "react";
-import { uiNavigationIndicator } from "~/navigation/fn/uiNavigationIndicator";
+import { uiNavigationIndicatorFn } from "~/navigation/fn/uiNavigationIndicatorFn";
 
 export namespace NavigationIndicator {
-	export interface Props extends uiNavigationIndicator.Component<ComponentProps<"div">> {
+	export interface Props extends uiNavigationIndicatorFn.Component<ComponentProps<"div">> {
 		//
 	}
 }
 
 export const NavigationIndicator: FC<NavigationIndicator.Props> = ({ className, ...props }) => {
 	const { status } = useRouterState();
-	const [visible, setVisible] = useState(false);
+	const [visible, setVisibleFn] = useState(false);
 
 	useEffect(() => {
 		/**
@@ -20,10 +20,10 @@ export const NavigationIndicator: FC<NavigationIndicator.Props> = ({ className, 
 
 		if (status === "pending") {
 			timeout = setTimeout(() => {
-				setVisible(true);
+				setVisibleFn(true);
 			}, 50);
 		} else {
-			setVisible(false);
+			setVisibleFn(false);
 			clearTimeout(timeout);
 		}
 
@@ -36,7 +36,7 @@ export const NavigationIndicator: FC<NavigationIndicator.Props> = ({ className, 
 
 	return (
 		<div
-			{...uiNavigationIndicator({
+			{...uiNavigationIndicatorFn({
 				"data-ui-visible": visible,
 				className,
 			})}

@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import { dbFx } from "~/database/fx/dbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { DateServiceFx } from "~/date/service/DateServiceFx";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { InvalidRequestErrorFx } from "~/server-error/error/InvalidRequestErrorFx";
 import { userBundleFeatureCopyFx } from "~/user-resource-bundle/fx/userBundleFeatureCopyFx";
@@ -31,7 +31,7 @@ export const userResourceBundleCreateFx = Effect.fn("userResourceBundleCreateFx"
 	});
 
 	const dateService = yield* DateServiceFx;
-	const now = dateService.now().toJSDate();
+	const now = dateService.nowFn().toJSDate();
 	const activeAt = availableAt ?? now;
 
 	return yield* withTransactionFx(
@@ -56,7 +56,7 @@ export const userResourceBundleCreateFx = Effect.fn("userResourceBundleCreateFx"
 				return kysely
 					.insertInto("user_resource_bundle")
 					.values({
-						id: genId(),
+						id: genIdFn(),
 						userId,
 						resourceBundleId: bundle.id,
 						createdAt: now,

@@ -37,8 +37,8 @@ export const Route = createFileRoute("/$locale/status/magic-link")({
 								<Logo />
 							</LinkTo>
 						}
-						textTitle={translator.text("Magic link sent")}
-						textMessage={translator.text("Check your email for the sign-in link.")}
+						textTitle={translator.textFn("Magic link sent")}
+						textMessage={translator.textFn("Check your email for the sign-in link.")}
 						data-ui-inner="default"
 					>
 						<Container

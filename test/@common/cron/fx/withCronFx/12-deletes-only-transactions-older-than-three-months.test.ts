@@ -1,14 +1,14 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 import { runCronAtFx } from "./runCronAtFx";
 
 describe("withCronFx transaction cleanup", () => {
 	it("deletes only transactions whose statusUpdatedAt is at or before the three-month cutoff for schedule 12", async () => {
-		const database = await testabase("withCronFx-transaction-cleanup-12");
+		const database = await testabaseFn("withCronFx-transaction-cleanup-12");
 
 		return Effect.gen(function* () {
 			const { seller, buyer, stranger } = yield* createUsersFx({});
@@ -77,6 +77,6 @@ describe("withCronFx transaction cleanup", () => {
 			expect(remainingTransactions.map(({ id }) => id)).toEqual([
 				freshScenario.transactionId,
 			]);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

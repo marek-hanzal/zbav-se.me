@@ -1,5 +1,5 @@
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withEntityQuery } from "~/query/fn/withEntityQuery";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withEntityQueryFn } from "~/query/fn/withEntityQueryFn";
 import { withDraftQuery } from "~/seller-draft/query/withDraftQuery";
 import { listingCollectionFn } from "~/seller-listing/fn/listingCollectionFn";
 import { listingCountFn } from "~/seller-listing/fn/listingCountFn";
@@ -12,8 +12,8 @@ import type { ListingQuerySchema } from "~/seller-listing/schema/ListingQuerySch
 import type { ListingSchema } from "~/seller-listing/schema/ListingSchema";
 import { withResourceLimitQuery } from "~/user-resource-limit/query/withResourceLimitQuery";
 
-export const withListingQuery = withEntityQuery({
-	logger: getRootLogger([
+export const withListingQuery = withEntityQueryFn({
+	logger: getRootLoggerFn([
 		"query",
 		"withListingQuery",
 	]),
@@ -26,13 +26,13 @@ export const withListingQuery = withEntityQuery({
 		delete: listingDeleteFn.Error;
 		patchCollection: Error;
 	},
-	keys() {
+	keysFn() {
 		return [
 			"seller",
 			"listing",
 		];
 	},
-	toIdKey(id): ListingQuerySchema.Type {
+	toIdKeyFn(id): ListingQuerySchema.Type {
 		return {
 			where: {
 				id,
@@ -73,8 +73,8 @@ export const withListingQuery = withEntityQuery({
 	invalidate: {
 		create: [
 			{
-				async invalidate({ queryClient }) {
-					await withDraftQuery.invalidator(queryClient, [
+				async invalidateFn({ queryClient }) {
+					await withDraftQuery.invalidatorFn(queryClient, [
 						"fetch",
 						"count",
 						"collection",
@@ -82,8 +82,8 @@ export const withListingQuery = withEntityQuery({
 				},
 			},
 			{
-				async invalidate({ queryClient }) {
-					await withResourceLimitQuery.invalidator(
+				async invalidateFn({ queryClient }) {
+					await withResourceLimitQuery.invalidatorFn(
 						queryClient,
 						[
 							"fetch",
@@ -103,8 +103,8 @@ export const withListingQuery = withEntityQuery({
 		],
 		delete: [
 			{
-				async invalidate({ queryClient }) {
-					await withResourceLimitQuery.invalidator(
+				async invalidateFn({ queryClient }) {
+					await withResourceLimitQuery.invalidatorFn(
 						queryClient,
 						[
 							"fetch",

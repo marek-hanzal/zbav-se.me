@@ -3,7 +3,7 @@ import { sql } from "kysely";
 import { jsonArrayFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { selectFx } from "~/database-query/fx/selectFx";
+import { selectFn } from "~/database-query/fn/selectFn";
 import type { FieldSortSchema } from "~/user-field/schema/FieldSortSchema";
 import type { FieldWhereSchema } from "~/user-field/schema/FieldWhereSchema";
 
@@ -27,16 +27,16 @@ export const withFieldSelectFx = Effect.fn("withFieldSelectFx")(function* ({
 			.exhaustive();
 	}
 
-	return selectFx({
+	return selectFn({
 		select: query.select([
 			"fld.name",
 			"fld.type",
 			sql<number | null>`fld.min::float8`.as("min"),
 			sql<number | null>`fld.max::float8`.as("max"),
 			sql<number | null>`fld.step::float8`.as("step"),
-			(eb) => {
+			(ebFn) => {
 				return jsonArrayFrom(
-					eb
+					ebFn
 						.selectFrom("field_option as fo")
 						.select([
 							"fo.fieldId",

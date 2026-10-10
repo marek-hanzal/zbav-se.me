@@ -1,6 +1,6 @@
 import type { ComponentProps, FC, ReactNode } from "react";
-import { isString } from "~/string/fn/isString";
-import { uiIcon } from "~/ui/fn/uiIcon";
+import { isStringFn } from "~/string/fn/isStringFn";
+import { uiIconFn } from "~/ui/fn/uiIconFn";
 
 /**
  * Simple styled icon (span); uses Tailwind CSS classes.
@@ -13,7 +13,7 @@ export namespace Icon {
 	/**
 	 * Props for `Icon` component.
 	 */
-	export interface Props extends uiIcon.Component<ComponentProps<"span">> {
+	export interface Props extends uiIconFn.Component<ComponentProps<"span">> {
 		icon: Icon.Type;
 	}
 
@@ -30,9 +30,9 @@ export const Icon: FC<Icon.Props> = ({
 	//
 	...props
 }) => {
-	return isString(icon) ? (
+	return isStringFn(icon) ? (
 		<span
-			{...uiIcon({
+			{...uiIconFn({
 				className: [
 					icon,
 					className,

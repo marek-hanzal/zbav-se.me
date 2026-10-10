@@ -3,7 +3,7 @@ import { z } from "zod";
 import { useAppForm } from "~/application-ui/hook/form.exports";
 import { SaveContainer } from "~/container/ui/SaveContainer";
 import { FormField } from "~/form/ui/FormField";
-import { useNextAttr } from "~/seller-draft/ui/Editor/useNextAttr";
+import { getNextAttrFn } from "~/seller-draft/fn/getNextAttrFn";
 import { withDraftAttrTextPatchMutation } from "~/seller-draft-attr-text/mutation/withDraftAttrTextPatchMutation";
 import { useTranslator } from "~/translation/hook/useTranslator";
 import { Tx } from "~/translation/ui/Tx";
@@ -35,10 +35,10 @@ export namespace AttrText {
 
 export const AttrText: FC<AttrText.Props> = ({ draftId, attrs, attr, view, ...props }) => {
 	const translator = useTranslator();
-	const next = useNextAttr(attr, attrs);
+	const next = getNextAttrFn(attr, attrs);
 	const mutation = withDraftAttrTextPatchMutation.useMutation({
 		onSuccess() {
-			view.set(next ? `attr.${next.name}` : "default");
+			view.setFn(next ? `attr.${next.name}` : "default");
 		},
 	});
 	const form = useAppForm({
@@ -97,7 +97,7 @@ export const AttrText: FC<AttrText.Props> = ({ draftId, attrs, attr, view, ...pr
 													field.handleChange(e.target.value);
 												}}
 												onBlur={field.handleBlur}
-												placeholder={translator.text(
+												placeholder={translator.textFn(
 													`${attr.name} - placeholder`,
 													attr.name,
 												)}
@@ -121,10 +121,10 @@ export const AttrText: FC<AttrText.Props> = ({ draftId, attrs, attr, view, ...pr
 			>
 				{({ isValid, isSubmitting }) => (
 					<SaveContainer
-						onCancel={() => {
-							view.set("default");
+						onCancelFn={() => {
+							view.setFn("default");
 						}}
-						onSave={() => {
+						onSaveFn={() => {
 							form.handleSubmit();
 						}}
 						loading={isSubmitting}

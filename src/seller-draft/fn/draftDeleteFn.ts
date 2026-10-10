@@ -1,8 +1,8 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
-import { withKyselyFx } from "~/database/fx/withKyselyFx";
-import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
-import { withLoggerFx } from "~/log/fx/withLoggerFx";
+import { withKyselyFn } from "~/database/fn/withKyselyFn";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
+import { withLoggerFn } from "~/log/fn/withLoggerFn";
 import { withDatabaseMiddleware } from "~/request-middleware/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/request-middleware/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/request-middleware/middleware/withUserMiddleware";
@@ -41,9 +41,9 @@ export const draftDeleteFn = createServerFn({
 				},
 			}),
 		}).pipe(
-			withKyselyFx(database),
-			withLoggerFx(rootLogger),
-			withDateServiceFx(),
+			withKyselyFn(database),
+			withLoggerFn(rootLogger),
+			withDateServiceFn(),
 			Effect.tapError((error) => {
 				return Effect.sync(() => {
 					logger.error(error._tag, {

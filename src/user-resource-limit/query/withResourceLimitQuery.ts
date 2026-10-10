@@ -1,5 +1,5 @@
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withEntityQuery } from "~/query/fn/withEntityQuery";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withEntityQueryFn } from "~/query/fn/withEntityQueryFn";
 import { resourceLimitCollectionFn } from "~/user-resource-limit/fn/resourceLimitCollectionFn";
 import { resourceLimitCountFn } from "~/user-resource-limit/fn/resourceLimitCountFn";
 import { resourceLimitFetchFn } from "~/user-resource-limit/fn/resourceLimitFetchFn";
@@ -7,8 +7,8 @@ import type { ResourceLimitCountQuerySchema } from "~/user-resource-limit/schema
 import type { ResourceLimitQuerySchema } from "~/user-resource-limit/schema/ResourceLimitQuerySchema";
 import type { ResourceLimitSchema } from "~/user-resource-limit/schema/ResourceLimitSchema";
 
-export const withResourceLimitQuery = withEntityQuery({
-	logger: getRootLogger([
+export const withResourceLimitQuery = withEntityQueryFn({
+	logger: getRootLoggerFn([
 		"query",
 		"withResourceLimitQuery",
 	]),
@@ -21,13 +21,13 @@ export const withResourceLimitQuery = withEntityQuery({
 		delete: Error;
 		patchCollection: Error;
 	},
-	keys() {
+	keysFn() {
 		return [
 			"resource",
 			"limit",
 		];
 	},
-	toIdKey(id): ResourceLimitQuerySchema.Type {
+	toIdKeyFn(id): ResourceLimitQuerySchema.Type {
 		return {
 			where: {
 				id,

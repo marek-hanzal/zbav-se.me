@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { uiSelectButton } from "~/application-ui/fn/ui.exports";
+import { uiSelectButtonFn } from "~/application-ui/fn/ui.exports";
 import { withFeedQuery } from "~/buyer-feed/query/withFeedQuery";
 import type { FeedSchema } from "~/buyer-feed/schema/FeedSchema";
 import type { AttrWhereSchema } from "~/buyer-listing/schema/AttrWhereSchema";
@@ -36,7 +36,7 @@ export const AttrEnumSingle: FC<AttrEnumSingle.Props> = ({ feed, field, attr, vi
 	const translator = useTranslator();
 	const mutation = withFeedQuery.usePatchMutation({
 		onSuccess() {
-			view.set("default");
+			view.setFn("default");
 		},
 	});
 	const selection = useSelection({
@@ -67,13 +67,13 @@ export const AttrEnumSingle: FC<AttrEnumSingle.Props> = ({ feed, field, attr, vi
 					data-ui-gap={"default"}
 				>
 					{field.options.map((option) => {
-						const selected = selection.isSelected(option.value);
+						const selected = selection.isSelectedFn(option.value);
 
 						return (
 							<Button
 								key={option.value}
 								onClick={() => {
-									selection.toggle({
+									selection.toggleFn({
 										id: option.value,
 									});
 								}}
@@ -81,7 +81,7 @@ export const AttrEnumSingle: FC<AttrEnumSingle.Props> = ({ feed, field, attr, vi
 									"data-ui-text": "2xl",
 									"data-ui-color": selected ? "lead" : "icon",
 								}}
-								{...uiSelectButton({
+								{...uiSelectButtonFn({
 									isSelected: selected,
 									"data-ui-flow": "horizontal",
 									"data-ui-justify": "start",
@@ -95,7 +95,7 @@ export const AttrEnumSingle: FC<AttrEnumSingle.Props> = ({ feed, field, attr, vi
 									],
 								})}
 							>
-								{translator.text(`${field.name} - ${option.value}`, option.value)}
+								{translator.textFn(`${field.name} - ${option.value}`, option.value)}
 							</Button>
 						);
 					})}
@@ -103,10 +103,10 @@ export const AttrEnumSingle: FC<AttrEnumSingle.Props> = ({ feed, field, attr, vi
 			</Container>
 
 			<SaveContainer
-				onCancel={() => {
-					view.set("default");
+				onCancelFn={() => {
+					view.setFn("default");
 				}}
-				onSave={() => {
+				onSaveFn={() => {
 					mutation.mutate({
 						query: {
 							where: {
@@ -123,7 +123,7 @@ export const AttrEnumSingle: FC<AttrEnumSingle.Props> = ({ feed, field, attr, vi
 										[field.name]: {
 											name: field.name,
 											type: "enum-single",
-											value: selection.optional.multiId() ?? undefined,
+											value: selection.optional.multiIdFn() ?? undefined,
 										},
 									},
 								},

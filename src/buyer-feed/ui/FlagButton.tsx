@@ -5,7 +5,7 @@ import type { ListingMetaSchema } from "~/buyer-listing/schema/ListingMetaSchema
 import { withFlagToggleMutation } from "~/buyer-listing-flag/mutation/withFlagToggleMutation";
 import { Mx } from "~/translation/ui/Mx";
 import { Tx } from "~/translation/ui/Tx";
-import { withFallback } from "~/ui/fn/withFallback";
+import { withFallbackFn } from "~/ui/fn/withFallbackFn";
 import type { MarkSuspense } from "~/ui/type/MarkSuspense";
 import { ConfirmButton } from "~/ui/ui/ConfirmButton";
 import { Container } from "~/ui/ui/Container";
@@ -17,14 +17,14 @@ export namespace FlagButton {
 	}
 }
 
-export const FlagButton = withFallback(
+export const FlagButton = withFallbackFn(
 	({
 		_suspense,
 		listingId,
 		meta,
 		buttonProps,
 		confirmProps,
-		onReset,
+		onReset: onResetFn,
 		disabled = false,
 		...props
 	}: FlagButton.Props) => {
@@ -34,7 +34,7 @@ export const FlagButton = withFallback(
 				mutationId: listingId,
 			},
 		});
-		const [isConfirm, setIsConfirm] = useState(false);
+		const [isConfirm, setIsConfirmFn] = useState(false);
 
 		const isDisabled = listing.isFavourite || listing.isIgnored || disabled;
 
@@ -51,7 +51,7 @@ export const FlagButton = withFallback(
 					disabled={isDisabled}
 					buttonProps={{
 						onClick(event) {
-							setIsConfirm(true);
+							setIsConfirmFn(true);
 							buttonProps?.onClick?.(event);
 						},
 						...buttonProps,
@@ -67,13 +67,13 @@ export const FlagButton = withFallback(
 								listingId: listing.id,
 								meta,
 							});
-							setIsConfirm(false);
+							setIsConfirmFn(false);
 							confirmProps?.onClick?.(e);
 						},
 					}}
 					onReset={() => {
-						setIsConfirm(false);
-						onReset?.();
+						setIsConfirmFn(false);
+						onResetFn?.();
 					}}
 					data-ui-tone={listing.hasFlag ? "primary" : "neutral"}
 					data-ui-theme="light"

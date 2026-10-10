@@ -3,16 +3,16 @@ import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import { withCronFx } from "~/cron/fx/withCronFx";
 import type { ScheduleSchema } from "~/cron/schema/ScheduleSchema";
-import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
 const atFx = <A, E, R>(iso: string, eff: Effect.Effect<A, E, R>) =>
 	eff.pipe(
-		withDateServiceFx({
-			now: () =>
+		withDateServiceFn({
+			nowFn: () =>
 				DateTime.fromISO(iso, {
 					setZone: true,
 				}),
@@ -35,7 +35,7 @@ const _ScheduleCases = [
 
 describe("withCronFx transaction expiration", () => {
 	it("is idempotent when the same schedule runs twice", async () => {
-		const database = await testabase("withCronFx-transaction-expiration-idempotent");
+		const database = await testabaseFn("withCronFx-transaction-expiration-idempotent");
 
 		return Effect.gen(function* () {
 			const { seller, buyer } = yield* createUsersFx({});
@@ -98,6 +98,6 @@ describe("withCronFx transaction expiration", () => {
 
 			expect(transactionEntries).toHaveLength(1);
 			expect(dueActivities).toHaveLength(2);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

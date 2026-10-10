@@ -2,15 +2,15 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { listingCollectionFx } from "~/seller-listing/fx/listingCollectionFx";
 import { listingFetchFx } from "~/seller-listing/fx/listingFetchFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { transactionEntryCreateFx } from "~/user-transaction-entry/fx/transactionEntryCreateFx";
 
 describe("listingCollectionFx (seller dashboard transactions)", () => {
 	it("listing with an interest transaction appears in the collection", async () => {
-		const database = await testabase("listing-with-interest");
+		const database = await testabaseFn("listing-with-interest");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -64,6 +64,6 @@ describe("listingCollectionFx (seller dashboard transactions)", () => {
 				new Date(fetched.withTransactionEntry?.createdAt ?? 0).getTime(),
 			);
 			expect(fetched.withLastAt?.getTime()).toBeLessThan(hiddenTextEntry.createdAt.getTime());
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

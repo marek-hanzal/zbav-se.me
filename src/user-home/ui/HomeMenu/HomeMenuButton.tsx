@@ -2,11 +2,11 @@ import type { FC } from "react";
 import { HomeIcon } from "~/application-ui/constant/icon.exports";
 import { useLocale } from "~/locale/hook/useLocale";
 import { useTranslator } from "~/translation/hook/useTranslator";
-import type { uiLinkTo } from "~/ui/fn/uiLinkTo";
+import type { uiLinkToFn } from "~/ui/fn/uiLinkToFn";
 import { LinkTo } from "~/ui/ui/LinkTo";
 
 export namespace HomeMenuButton {
-	export interface Props extends uiLinkTo.Component<Pick<LinkTo.Props, "id" | "onKeyDown">> {
+	export interface Props extends uiLinkToFn.Component<Pick<LinkTo.Props, "id" | "onKeyDown">> {
 		//
 	}
 }
@@ -19,7 +19,7 @@ export const HomeMenuButton: FC<HomeMenuButton.Props> = ({ className, ...props }
 		<LinkTo
 			data-ui={"HomeMenuButton"}
 			data-action={"go home"}
-			title={translator.text("Go home (aria)")}
+			title={translator.textFn("Go home (aria)")}
 			icon={HomeIcon}
 			to={"/$locale/app/home"}
 			params={{

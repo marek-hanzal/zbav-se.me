@@ -1,10 +1,10 @@
 import type { FC } from "react";
 import { SendPackageIcon } from "~/application-ui/constant/icon.exports";
-import { toTimeDiff } from "~/date/fn/toTimeDiff";
+import { toTimeDiffFn } from "~/date/fn/toTimeDiffFn";
 import { useLocale } from "~/locale/hook/useLocale";
 import { useTranslator } from "~/translation/hook/useTranslator";
 import { ExternalIcon } from "~/ui/constant/ExternalIcon";
-import { uiTypo } from "~/ui/fn/uiTypo";
+import { uiTypoFn } from "~/ui/fn/uiTypoFn";
 import type { Container } from "~/ui/ui/Container";
 import { Icon } from "~/ui/ui/Icon";
 import { LabelValue } from "~/ui/ui/LabelValue";
@@ -39,7 +39,7 @@ export const Package: FC<Package.Props> = ({ transactionEntry, ...props }) => {
 						href={transactionEntry.payload.link}
 						target="_blank"
 						rel="noopener noreferrer"
-						{...uiTypo({
+						{...uiTypoFn({
 							"data-ui-wrap": "wrap",
 							className: [
 								"block underline",
@@ -59,9 +59,9 @@ export const Package: FC<Package.Props> = ({ transactionEntry, ...props }) => {
 			/>
 
 			<LabelValue
-				textLabel={translator.text("Tracking number (label)")}
+				textLabel={translator.textFn("Tracking number (label)")}
 				textValue={transactionEntry.payload.number}
-				textEmpty={translator.text("Tracking number not filled")}
+				textEmpty={translator.textFn("Tracking number not filled")}
 				action={
 					<Icon
 						icon={SendPackageIcon}
@@ -72,7 +72,7 @@ export const Package: FC<Package.Props> = ({ transactionEntry, ...props }) => {
 			/>
 
 			<Typo
-				label={toTimeDiff({
+				label={toTimeDiffFn({
 					locale,
 					time: transactionEntry.createdAt,
 					type: "relative",

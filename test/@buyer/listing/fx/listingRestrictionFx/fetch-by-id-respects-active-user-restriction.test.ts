@@ -1,19 +1,19 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { listingFetchFx } from "~/buyer-listing/fx/listingFetchFx";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { createRestrictionProbeListings, createUserRestriction } from "./restrictionFixtures";
+import { createRestrictionProbeListingsFx, createUserRestrictionFx } from "./restrictionFixtures";
 
 describe("buyer listing restriction fetch scope", () => {
 	it("rejects direct fetch by id when category or listing restriction exceeds the buyer", async () => {
-		const database = await testabase("buyer-listing-restriction-fetch-by-id");
+		const database = await testabaseFn("buyer-listing-restriction-fetch-by-id");
 
 		return Effect.gen(function* () {
 			const users = yield* createUsersFx({});
-			const fixtures = yield* createRestrictionProbeListings(database, {
+			const fixtures = yield* createRestrictionProbeListingsFx(database, {
 				sellerId: users.seller.id,
 				title: "Buyer fetch restriction marker",
 				slugPrefix: "buyer-fetch-restriction",
@@ -38,14 +38,14 @@ describe("buyer listing restriction fetch scope", () => {
 				}),
 			);
 
-			expectTaggedErrorFx(defaultRestrictedCategoryFetch, {
+			expectTaggedErrorFn(defaultRestrictedCategoryFetch, {
 				tag: "NotFoundErrorFx",
 			});
-			expectTaggedErrorFx(defaultRestrictedListingFetch, {
+			expectTaggedErrorFn(defaultRestrictedListingFetch, {
 				tag: "NotFoundErrorFx",
 			});
 
-			yield* createUserRestriction(database, {
+			yield* createUserRestrictionFx(database, {
 				userId: users.buyer.id,
 				restriction: "adult",
 				availableAtOffsetMinutes: -10,
@@ -86,12 +86,12 @@ describe("buyer listing restriction fetch scope", () => {
 
 			expect(allowedAdultCategory.id).toBe(fixtures.adultCategoryListing.id);
 			expect(allowedAdultListing.id).toBe(fixtures.adultListingRestriction.id);
-			expectTaggedErrorFx(adultRestrictedCategoryFetch, {
+			expectTaggedErrorFn(adultRestrictedCategoryFetch, {
 				tag: "NotFoundErrorFx",
 			});
-			expectTaggedErrorFx(adultRestrictedListingFetch, {
+			expectTaggedErrorFn(adultRestrictedListingFetch, {
 				tag: "NotFoundErrorFx",
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

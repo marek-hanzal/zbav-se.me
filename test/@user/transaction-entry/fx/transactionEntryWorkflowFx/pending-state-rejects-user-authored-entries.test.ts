@@ -2,11 +2,11 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionAcceptFx } from "~/seller-transaction/fx/transactionAcceptFx";
 import { fetchActivityItemsFx } from "~/test/activity/fx/fetchActivityItemsFx";
-import { testUploadUrl } from "~/test/common/fn/testUploadUrl";
-import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { testUploadUrlFn } from "~/test/common/fn/testUploadUrlFn";
+import { expectErrorFn } from "~/test/common/fx/expectErrorFn";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { transactionEntryCollectionFx } from "~/user-transaction-entry/fx/transactionEntryCollectionFx";
@@ -17,7 +17,7 @@ import { uploadCreateFx } from "~/user-upload/fx/uploadCreateFx";
 
 describe("transactionEntry workflow", () => {
 	it("allows buyer text in interest without seller visibility or activity", async () => {
-		const database = await testabase("transactionEntry-pending-rejects-authored");
+		const database = await testabaseFn("transactionEntry-pending-rejects-authored");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -40,7 +40,7 @@ describe("transactionEntry workflow", () => {
 			const upload = yield* uploadCreateFx({
 				access: "private",
 				userId: buyer.id,
-				url: testUploadUrl("transaction-entry-pending-gallery.jpg"),
+				url: testUploadUrlFn("transaction-entry-pending-gallery.jpg"),
 			});
 
 			const textEntry = yield* transactionEntryCreateFx({
@@ -97,7 +97,7 @@ describe("transactionEntry workflow", () => {
 			expect(sellerTextCountInInterest).toBe(0);
 			expect(sellerTimelineInInterest.map((item) => item.kind)).toContain("status-interest");
 			expect(sellerTimelineInInterest.map((item) => item.id)).not.toContain(textEntry.id);
-			expectErrorFx(sellerFetchInInterest);
+			expectErrorFn(sellerFetchInInterest);
 			expect(sellerTextActivity).toBeUndefined();
 
 			const sellerTextResult = yield* Effect.result(
@@ -145,16 +145,16 @@ describe("transactionEntry workflow", () => {
 				}),
 			);
 
-			expectTaggedErrorFx(sellerTextResult, {
+			expectTaggedErrorFn(sellerTextResult, {
 				tag: "InvalidRequestErrorFx",
 			});
-			expectTaggedErrorFx(galleryResult, {
+			expectTaggedErrorFn(galleryResult, {
 				tag: "InvalidRequestErrorFx",
 			});
-			expectTaggedErrorFx(locationResult, {
+			expectTaggedErrorFn(locationResult, {
 				tag: "InvalidRequestErrorFx",
 			});
-			expectTaggedErrorFx(personalResult, {
+			expectTaggedErrorFn(personalResult, {
 				tag: "InvalidRequestErrorFx",
 			});
 
@@ -207,6 +207,6 @@ describe("transactionEntry workflow", () => {
 			]);
 			expect(sellerTextCountInTrade).toBe(1);
 			expect(sellerFetchInTrade.id).toBe(textEntry.id);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

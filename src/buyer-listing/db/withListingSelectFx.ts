@@ -5,9 +5,9 @@ import type { ListingMetaSchema } from "~/buyer-listing/schema/ListingMetaSchema
 import type { ListingSortSchema } from "~/buyer-listing/schema/ListingSortSchema";
 import type { ListingWhereSchema } from "~/buyer-listing/schema/ListingWhereSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { withNormalizedContainsEx } from "~/database/fn/withNormalizedContainsEx";
-import { withNormalizedLikeEx } from "~/database/fn/withNormalizedLikeEx";
-import { selectFx } from "~/database-query/fx/selectFx";
+import { withNormalizedContainsExFn } from "~/database/fn/withNormalizedContainsExFn";
+import { withNormalizedLikeExFn } from "~/database/fn/withNormalizedLikeExFn";
+import { selectFn } from "~/database-query/fn/selectFn";
 import { DateServiceFx } from "~/date/service/DateServiceFx";
 import type { DeliveryEnumSchema } from "~/delivery/schema/DeliveryEnumSchema";
 import { ListingStatusEnumSchema } from "~/listing/schema/ListingStatusEnumSchema";
@@ -36,7 +36,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 	const dateService = yield* DateServiceFx;
 	const { kysely } = yield* KyselyContextFx;
 	const logger = yield* getLoggerFx("withListingSelectFx", "buyer");
-	const now = dateService.now().toJSDate();
+	const now = dateService.nowFn().toJSDate();
 
 	const fallbackSql = sql<RestrictionEnumSchema.Type>`${RestrictionEnumSchema.enum.none}::restriction_enum`;
 	const restrictionSql = yield* withUserRestrictionActiveSelectFx({
@@ -50,13 +50,13 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 			"on-hold",
 			"banned",
 		])
-		.where((eb) => {
-			return eb(
-				eb.fn.coalesce(
+		.where((ebFn) => {
+			return ebFn(
+				ebFn.fn.coalesce(
 					sql<RestrictionEnumSchema.Type | null>`
 						greatest(
-							${eb.ref("cat.restriction")},
-							${eb.ref("l.restriction")}
+							${ebFn.ref("cat.restriction")},
+							${ebFn.ref("l.restriction")}
 						)
 					`,
 					fallbackSql,
@@ -88,16 +88,16 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				const isDesc = item.order === "desc";
 				const sortOrder = isDesc ? "asc" : item.order;
 
-				return select.orderBy((eb) => {
-					const origin = eb
+				return select.orderBy((ebFn) => {
+					const origin = ebFn
 						.selectFrom("location as originLoc")
-						.select((eb) => {
+						.select((ebFn) => {
 							if (!isDesc) {
 								return sql`
 									ST_SetSRID(
 										ST_MakePoint(
-											${eb.ref("originLoc.lon")},
-											${eb.ref("originLoc.lat")}
+											${ebFn.ref("originLoc.lon")},
+											${ebFn.ref("originLoc.lat")}
 										),
 										4326
 									)
@@ -108,10 +108,10 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 								ST_SetSRID(
 									ST_MakePoint(
 										case
-											when ${eb.ref("originLoc.lon")} >= 0 then ${eb.ref("originLoc.lon")} - 180
-											else ${eb.ref("originLoc.lon")} + 180
+											when ${ebFn.ref("originLoc.lon")} >= 0 then ${ebFn.ref("originLoc.lon")} - 180
+											else ${ebFn.ref("originLoc.lon")} + 180
 										end,
-										-${eb.ref("originLoc.lat")}
+										-${ebFn.ref("originLoc.lat")}
 									),
 									4326
 								)
@@ -120,13 +120,13 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 						.where("originLoc.id", "=", locationId)
 						.limit(1);
 
-					return sql`${eb.ref("l.withLocation")} <-> (${origin})`;
+					return sql`${ebFn.ref("l.withLocation")} <-> (${origin})`;
 				}, sortOrder);
 			})
 			.exhaustive();
 	}
 
-	return selectFx({
+	return selectFn({
 		select: select
 			.select([
 				"l.id",
@@ -156,11 +156,11 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				"l.createdAt",
 				"l.updatedAt",
 
-				(eb) => {
-					return eb
+				(ebFn) => {
+					return ebFn
 						.selectFrom("location as loc")
-						.select((eb) => {
-							return sql<LocationSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as(
+						.select((ebFn) => {
+							return sql<LocationSchema.Type>`to_jsonb(${ebFn.table("loc")}.*)`.as(
 								"json",
 							);
 						})
@@ -171,22 +171,22 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 						.as("location");
 				},
 
-				(eb) => {
+				(ebFn) => {
 					return sql<CategorySchema.Type>`
-						to_jsonb(${eb.table("cat")}.*)
+						to_jsonb(${ebFn.table("cat")}.*)
 						|| jsonb_build_object(
 							'isRestricted',
-							${eb.ref("cat.restriction")} > ${restrictionSql}
+							${ebFn.ref("cat.restriction")} > ${restrictionSql}
 						)
 					`.as("category");
 				},
 
-				(eb) => {
+				(ebFn) => {
 					if (!locationId) {
-						return eb.lit(null).as("distance");
+						return ebFn.lit(null).as("distance");
 					}
 
-					const originGeoSelect = eb
+					const originGeoSelect = ebFn
 						.selectFrom("location as originLoc")
 						.select("originLoc.geo")
 						.where("originLoc.id", "=", locationId)
@@ -194,7 +194,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 
 					return sql`
                             ST_Distance(
-                                ${eb.ref("l.withLocation")},
+                                ${ebFn.ref("l.withLocation")},
                                 ${originGeoSelect}
                             ) / 1000
                         `
@@ -202,35 +202,35 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 						.as("distance");
 				},
 
-				(eb) => {
-					return sql<string[]>`to_jsonb(${eb.ref("l.pros")})`.as("pros");
+				(ebFn) => {
+					return sql<string[]>`to_jsonb(${ebFn.ref("l.pros")})`.as("pros");
 				},
 
-				(eb) => {
-					return sql<string[]>`to_jsonb(${eb.ref("l.cons")})`.as("cons");
+				(ebFn) => {
+					return sql<string[]>`to_jsonb(${ebFn.ref("l.cons")})`.as("cons");
 				},
 
-				(eb) => {
-					return sql<DeliveryEnumSchema.Type[]>`to_jsonb(${eb.ref("l.delivery")})`.as(
+				(ebFn) => {
+					return sql<DeliveryEnumSchema.Type[]>`to_jsonb(${ebFn.ref("l.delivery")})`.as(
 						"delivery",
 					);
 				},
 			])
-			.select((eb) => {
+			.select((ebFn) => {
 				return sql<RestrictionEnumSchema.Type>`
 							greatest(
-								${eb.ref("cat.restriction")},
-								${eb.ref("l.restriction")}
+								${ebFn.ref("cat.restriction")},
+								${ebFn.ref("l.restriction")}
 							)
 						`.as("withRestriction");
 			})
-			.select((eb) => {
-				return eb("l.userId", "=", userId).$castTo<boolean>().as("my");
+			.select((ebFn) => {
+				return ebFn("l.userId", "=", userId).$castTo<boolean>().as("my");
 			})
-			.select((eb) => [
-				eb
+			.select((ebFn) => [
+				ebFn
 					.exists(
-						eb
+						ebFn
 							.selectFrom("listing_favourite as f")
 							.select(sql`1`.as("true"))
 							.whereRef("f.listingId", "=", "l.id")
@@ -239,9 +239,9 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 					.$castTo<boolean>()
 					.as("isFavourite"),
 
-				eb
+				ebFn
 					.exists(
-						eb
+						ebFn
 							.selectFrom("listing_ignore as i")
 							.select(sql`1`.as("true"))
 							.whereRef("i.listingId", "=", "l.id")
@@ -250,9 +250,9 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 					.$castTo<boolean>()
 					.as("isIgnored"),
 
-				eb
+				ebFn
 					.exists(
-						eb
+						ebFn
 							.selectFrom("listing_flag as f")
 							.select(sql`1`.as("true"))
 							.whereRef("f.listingId", "=", "l.id")
@@ -261,15 +261,15 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 					.$castTo<boolean>()
 					.as("hasFlag"),
 
-				eb
+				ebFn
 					.and([
-						eb("l.status", "=", ListingStatusEnumSchema.enum.live),
-						eb("l.expiresAt", ">", now),
+						ebFn("l.status", "=", ListingStatusEnumSchema.enum.live),
+						ebFn("l.expiresAt", ">", now),
 					])
 					.$castTo<boolean>()
 					.as("isActive"),
 
-				eb
+				ebFn
 					.selectFrom("transaction as lt")
 					.select("lt.id")
 					.whereRef("lt.listingId", "=", "l.id")
@@ -286,7 +286,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 					.limit(1)
 					.as("transactionId"),
 
-				eb
+				ebFn
 					.selectFrom("thumb as fb")
 					.select("fb.type")
 					.whereRef("fb.listingId", "=", "l.id")
@@ -313,17 +313,17 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				if (where.fulltext?.length) {
 					const fulltext = where.fulltext;
 
-					query = query.where((eb) => {
-						return eb.and(
+					query = query.where((ebFn) => {
+						return ebFn.and(
 							fulltext.map((term) =>
-								eb.exists(
-									eb
+								ebFn.exists(
+									ebFn
 										.selectFrom("listing_spotlight as ls")
 										.select("ls.listingId")
 										.whereRef("ls.listingId", "=", "l.id")
-										.where((eb) => {
-											return withNormalizedContainsEx(
-												eb.ref("ls.text"),
+										.where((ebFn) => {
+											return withNormalizedContainsExFn(
+												ebFn.ref("ls.text"),
 												term,
 											);
 										}),
@@ -362,8 +362,8 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				}
 
 				if (where.deliveryIn && where.deliveryIn.length > 0) {
-					query = query.where((eb) => {
-						return sql`${eb.ref("l.delivery")} && ${sql.val(where.deliveryIn)}::delivery_enum[]`;
+					query = query.where((ebFn) => {
+						return sql`${ebFn.ref("l.delivery")} && ${sql.val(where.deliveryIn)}::delivery_enum[]`;
 					});
 				}
 
@@ -384,25 +384,25 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				}
 
 				if (where.title) {
-					query = query.where((eb) => {
-						return withNormalizedLikeEx(eb.ref("l.withTitle"), where.title, "both");
+					query = query.where((ebFn) => {
+						return withNormalizedLikeExFn(ebFn.ref("l.withTitle"), where.title, "both");
 					});
 				}
 
 				if (locationId && where.range !== undefined) {
 					const range = where.range * 1_000;
 
-					query = query.where((eb) => {
-						const origin = eb
+					query = query.where((ebFn) => {
+						const origin = ebFn
 							.selectFrom("location as originLoc")
 							.select("originLoc.geo")
 							.where("originLoc.id", "=", locationId)
 							.limit(1);
 
 						return sql`ST_DWithin(
-							${eb.ref("l.withLocation")},
+							${ebFn.ref("l.withLocation")},
 							${origin},
-							${eb.val(range)}
+							${ebFn.val(range)}
 						)`;
 					});
 				}
@@ -416,22 +416,24 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				}
 
 				if (where.withIgnored === false) {
-					query = query.where(({ not, exists, selectFrom }) => {
-						return not(
-							exists(
-								selectFrom("listing_ignore as i")
-									.select("i.listingId")
-									.whereRef("i.listingId", "=", "l.id")
-									.where("i.userId", "=", userId),
-							),
-						);
-					});
+					query = query.where(
+						({ not: notFn, exists: existsFn, selectFrom: selectFromFn }) => {
+							return notFn(
+								existsFn(
+									selectFromFn("listing_ignore as i")
+										.select("i.listingId")
+										.whereRef("i.listingId", "=", "l.id")
+										.where("i.userId", "=", userId),
+								),
+							);
+						},
+					);
 				}
 
 				if (where.isFavourite === true) {
-					query = query.where(({ exists, selectFrom }) => {
-						return exists(
-							selectFrom("listing_favourite as f")
+					query = query.where(({ exists: existsFn, selectFrom: selectFromFn }) => {
+						return existsFn(
+							selectFromFn("listing_favourite as f")
 								.select("f.listingId")
 								.whereRef("f.listingId", "=", "l.id")
 								.where("f.userId", "=", userId),
@@ -452,26 +454,28 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 									type: "range",
 								},
 								({ name, min, max, value }) => {
-									return query.where(({ exists, selectFrom }) => {
-										let select = selectFrom("listing_attr_decimal as lad")
-											.select("lad.listingId")
-											.whereRef("lad.listingId", "=", "l.id")
-											.where("lad.fieldId", "=", name);
+									return query.where(
+										({ exists: existsFn, selectFrom: selectFromFn }) => {
+											let select = selectFromFn("listing_attr_decimal as lad")
+												.select("lad.listingId")
+												.whereRef("lad.listingId", "=", "l.id")
+												.where("lad.fieldId", "=", name);
 
-										if (min != null) {
-											select = select.where("lad.value", ">=", min);
-										}
+											if (min != null) {
+												select = select.where("lad.value", ">=", min);
+											}
 
-										if (max != null) {
-											select = select.where("lad.value", "<=", max);
-										}
+											if (max != null) {
+												select = select.where("lad.value", "<=", max);
+											}
 
-										if (value != null) {
-											select = select.where("lad.value", "=", value);
-										}
+											if (value != null) {
+												select = select.where("lad.value", "=", value);
+											}
 
-										return exists(select);
-									});
+											return existsFn(select);
+										},
+									);
 								},
 							)
 							.with(
@@ -482,26 +486,28 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 									type: "year",
 								},
 								({ name, min, max, value }) => {
-									return query.where(({ exists, selectFrom }) => {
-										let select = selectFrom("listing_attr_number as lan")
-											.select("lan.listingId")
-											.whereRef("lan.listingId", "=", "l.id")
-											.where("lan.fieldId", "=", name);
+									return query.where(
+										({ exists: existsFn, selectFrom: selectFromFn }) => {
+											let select = selectFromFn("listing_attr_number as lan")
+												.select("lan.listingId")
+												.whereRef("lan.listingId", "=", "l.id")
+												.where("lan.fieldId", "=", name);
 
-										if (min != null) {
-											select = select.where("lan.value", ">=", min);
-										}
+											if (min != null) {
+												select = select.where("lan.value", ">=", min);
+											}
 
-										if (max != null) {
-											select = select.where("lan.value", "<=", max);
-										}
+											if (max != null) {
+												select = select.where("lan.value", "<=", max);
+											}
 
-										if (value != null) {
-											select = select.where("lan.value", "=", value);
-										}
+											if (value != null) {
+												select = select.where("lan.value", "=", value);
+											}
 
-										return exists(select);
-									});
+											return existsFn(select);
+										},
+									);
 								},
 							)
 							.with(
@@ -525,15 +531,17 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 										return query;
 									}
 
-									return query.where(({ exists, selectFrom }) => {
-										return exists(
-											selectFrom("listing_attr_enum_single as laes")
-												.select("laes.listingId")
-												.whereRef("laes.listingId", "=", "l.id")
-												.where("laes.fieldId", "=", name)
-												.where("laes.value", "=", value),
-										);
-									});
+									return query.where(
+										({ exists: existsFn, selectFrom: selectFromFn }) => {
+											return existsFn(
+												selectFromFn("listing_attr_enum_single as laes")
+													.select("laes.listingId")
+													.whereRef("laes.listingId", "=", "l.id")
+													.where("laes.fieldId", "=", name)
+													.where("laes.value", "=", value),
+											);
+										},
+									);
 								},
 							)
 							.with(
@@ -545,15 +553,17 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 										return query;
 									}
 
-									return query.where(({ exists, selectFrom }) => {
-										return exists(
-											selectFrom("listing_attr_enum_multi as laem")
-												.select("laem.listingId")
-												.whereRef("laem.listingId", "=", "l.id")
-												.where("laem.fieldId", "=", name)
-												.where("laem.value", "in", value),
-										);
-									});
+									return query.where(
+										({ exists: existsFn, selectFrom: selectFromFn }) => {
+											return existsFn(
+												selectFromFn("listing_attr_enum_multi as laem")
+													.select("laem.listingId")
+													.whereRef("laem.listingId", "=", "l.id")
+													.where("laem.fieldId", "=", name)
+													.where("laem.value", "in", value),
+											);
+										},
+									);
 								},
 							)
 							.exhaustive();

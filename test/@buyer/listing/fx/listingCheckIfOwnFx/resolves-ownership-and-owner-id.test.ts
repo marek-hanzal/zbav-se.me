@@ -1,15 +1,15 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { listingCheckIfOwnFx } from "~/buyer-listing/fx/listingCheckIfOwnFx";
-import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { expectErrorFn } from "~/test/common/fx/expectErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
 describe("listingCheckIfOwnFx", () => {
 	it("rejects missing and own listing, and returns owner id for foreign listing", async () => {
-		const database = await testabase("listingCheckIfOwnFx-contract");
+		const database = await testabaseFn("listingCheckIfOwnFx-contract");
 
 		return Effect.gen(function* () {
 			const users = yield* createUsersFx({});
@@ -23,7 +23,7 @@ describe("listingCheckIfOwnFx", () => {
 					message: "Own listing is not allowed",
 				}),
 			);
-			expectErrorFx(missing);
+			expectErrorFn(missing);
 
 			const own = yield* Effect.result(
 				listingCheckIfOwnFx({
@@ -32,7 +32,7 @@ describe("listingCheckIfOwnFx", () => {
 					message: "Own listing is not allowed",
 				}),
 			);
-			expectErrorFx(own);
+			expectErrorFn(own);
 
 			const ownerId = yield* listingCheckIfOwnFx({
 				userId: users.buyer.id,
@@ -41,6 +41,6 @@ describe("listingCheckIfOwnFx", () => {
 			});
 
 			expect(ownerId).toBe(users.seller.id);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

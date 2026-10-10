@@ -25,16 +25,16 @@ const FormSchema = z
 export namespace TitlePatch {
 	export interface Props extends TitleContainer.Props {
 		draft: DraftSchema.Type;
-		onCancel(): void;
+		onCancelFn(): void;
 		view: useView.Use<"category">;
 	}
 }
 
-export const TitlePatch: FC<TitlePatch.Props> = ({ draft, onCancel, view, ...props }) => {
+export const TitlePatch: FC<TitlePatch.Props> = ({ draft, onCancelFn, view, ...props }) => {
 	const translator = useTranslator();
 	const mutation = withDraftQuery.usePatchMutation({
 		onSuccess() {
-			view.set("category");
+			view.setFn("category");
 		},
 		invalidate: [
 			"collection",
@@ -67,7 +67,7 @@ export const TitlePatch: FC<TitlePatch.Props> = ({ draft, onCancel, view, ...pro
 	return (
 		<TitleContainer
 			data-ui={"TitlePatch"}
-			textTitle={translator.text("Listing title (title)")}
+			textTitle={translator.textFn("Listing title (title)")}
 			left={<EditAction />}
 			{...props}
 		>
@@ -102,7 +102,7 @@ export const TitlePatch: FC<TitlePatch.Props> = ({ draft, onCancel, view, ...pro
 													field.handleChange(e.target.value);
 												}}
 												onBlur={field.handleBlur}
-												placeholder={translator.text(
+												placeholder={translator.textFn(
 													"Listing title (placeholder)",
 												)}
 												autoFocus
@@ -130,8 +130,8 @@ export const TitlePatch: FC<TitlePatch.Props> = ({ draft, onCancel, view, ...pro
 				>
 					{({ isValid, isSubmitting }) => (
 						<SaveContainer
-							onCancel={onCancel}
-							onSave={() => {
+							onCancelFn={onCancelFn}
+							onSaveFn={() => {
 								form.handleSubmit();
 							}}
 							loading={isSubmitting}

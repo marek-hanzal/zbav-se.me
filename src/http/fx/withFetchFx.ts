@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import type { selectFx } from "~/database-query/fx/selectFx";
+import type { selectFn } from "~/database-query/fn/selectFn";
 import { NotFoundErrorFx } from "~/error/error/NotFoundErrorFx";
 import type { WhereSchema } from "~/query/schema/WhereSchema";
 
@@ -15,7 +15,7 @@ export namespace withFetchFx {
 		TQueryContext,
 	> {
 		resource: string;
-		selectFx: selectFx<
+		selectFx: selectFn<
 			TDB,
 			TTable,
 			TOutput,

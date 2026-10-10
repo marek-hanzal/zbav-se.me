@@ -1,24 +1,24 @@
 import { Effect } from "effect";
 import { PostgresDialect } from "kysely";
 import Pool from "pg-pool";
+import { withKyselyFn } from "~/database/fn/withKyselyFn";
 import { databaseFx } from "~/database/fx/databaseFx";
-import { withKyselyFx } from "~/database/fx/withKyselyFx";
-import { withDialectFx } from "~/database-query/fx/withDialectFx";
-import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withLoggerFx } from "~/log/fx/withLoggerFx";
-import { withS3ConfigFx } from "~/s3/context/withS3ConfigFx";
-import { withS3ConfigEnv } from "~/s3/schema/withS3ConfigEnv";
+import { withDialectFn } from "~/database-query/fn/withDialectFn";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withLoggerFn } from "~/log/fn/withLoggerFn";
+import { withS3ConfigEnvFn } from "~/s3/fn/withS3ConfigEnvFn";
+import { withS3ConfigFn } from "~/s3/fn/withS3ConfigFn";
 import { ServerDatabaseSchema } from "~/server-env/schema/ServerDatabaseSchema";
-import { withLocationConfigFx } from "~/session-location/context/withLocationConfigFx";
-import { withLocationConfigEnv } from "~/session-location/schema/withLocationConfigEnv";
-import { withTransactionContextFx } from "~/user-transaction/context/withTransactionContextFx";
-import { withUploadConfigFx } from "~/user-upload/context/withUploadConfigFx";
-import { withUploadConfigEnv } from "~/user-upload/schema/withUploadConfigEnv";
+import { withLocationConfigEnvFn } from "~/session-location/fn/withLocationConfigEnvFn";
+import { withLocationConfigFn } from "~/session-location/fn/withLocationConfigFn";
+import { withTransactionContextFn } from "~/user-transaction/fn/withTransactionContextFn";
+import { withUploadConfigEnvFn } from "~/user-upload/fn/withUploadConfigEnvFn";
+import { withUploadConfigFn } from "~/user-upload/fn/withUploadConfigFn";
 
 export const withSeedRuntimeFx = <A, E, R>(effect: Effect.Effect<A, E, R>) => {
 	const databaseConfig = ServerDatabaseSchema.parse(process.env);
-	const logger = getRootLogger("seed");
+	const logger = getRootLoggerFn("seed");
 
 	return Effect.gen(function* () {
 		const pool = yield* Effect.acquireRelease(
@@ -38,7 +38,7 @@ export const withSeedRuntimeFx = <A, E, R>(effect: Effect.Effect<A, E, R>) => {
 		);
 
 		const kysely = yield* databaseFx.pipe(
-			withDialectFx(
+			withDialectFn(
 				new PostgresDialect({
 					pool,
 				}),
@@ -46,14 +46,14 @@ export const withSeedRuntimeFx = <A, E, R>(effect: Effect.Effect<A, E, R>) => {
 		);
 
 		return yield* effect.pipe(
-			withLoggerFx(logger),
-			withKyselyFx(kysely),
-			withDateServiceFx(),
-			withTransactionContextFx(),
-			withS3ConfigFx(withS3ConfigEnv()),
-			withUploadConfigFx(withUploadConfigEnv()),
-			withLocationConfigFx(
-				withLocationConfigEnv({
+			withLoggerFn(logger),
+			withKyselyFn(kysely),
+			withDateServiceFn(),
+			withTransactionContextFn(),
+			withS3ConfigFn(withS3ConfigEnvFn()),
+			withUploadConfigFn(withUploadConfigEnvFn()),
+			withLocationConfigFn(
+				withLocationConfigEnvFn({
 					api: "https://api.geoapify.com",
 					autocomplete: "/v1/geocode/autocomplete",
 					route: "/v1/routematrix",

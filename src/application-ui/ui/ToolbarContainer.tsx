@@ -1,9 +1,9 @@
 import type { FC } from "react";
-import type { uiToolbarContainer } from "~/application-ui/fn/uiToolbarContainer";
+import type { uiToolbarContainerFn } from "~/application-ui/fn/uiToolbarContainerFn";
 import { Container } from "~/ui/ui/Container";
 
 export namespace ToolbarContainer {
-	export interface Props extends uiToolbarContainer.Component<Container.Props> {
+	export interface Props extends uiToolbarContainerFn.Component<Container.Props> {
 		horizontal?: boolean;
 		flip?: boolean;
 	}

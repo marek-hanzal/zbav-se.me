@@ -1,5 +1,5 @@
 import { type FC, Suspense } from "react";
-import { getRootLogger } from "~/log/fn/getRootLogger";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
 import { useRenderLogger } from "~/ui/hook/useRenderLogger";
 import { Container } from "~/ui/ui/Container";
 import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
@@ -32,7 +32,7 @@ export const Panel = <TPanel extends string, TProps extends object | unknown = u
 	control,
 	...props
 }: Panel.Props<TPanel, TProps>) => {
-	const isVisible = control.isVisible(name);
+	const isVisible = control.isVisibleFn(name);
 
 	if (!isVisible && !keep) {
 		return null;
@@ -56,7 +56,7 @@ export const Content: FC<
 	}
 > = ({ isVisible, name, children, ...props }) => {
 	useRenderLogger({
-		logger: getRootLogger(),
+		logger: getRootLoggerFn(),
 		name: "Panel",
 		meta: {
 			name,

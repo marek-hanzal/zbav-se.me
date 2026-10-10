@@ -1,9 +1,9 @@
 import { Effect } from "effect";
-import { genId } from "~/identity/fn/genId";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { genIdFn } from "~/identity/fn/genIdFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { withTranslatorFx } from "~/translator/fx/withTranslatorFx";
-import { expect, test } from "../test";
+import { expect, testFn } from "../testFn";
 
 const mailpitBaseUrl = process.env.MAILPIT_BASE_URL;
 
@@ -29,7 +29,7 @@ type MailpitMessage = {
 	Text: string;
 };
 
-function parseMagicLink(text: string) {
+function parseMagicLinkFn(text: string) {
 	const match = text.match(/https?:\/\/\S+\/api\/auth\/magic-link\/verify\?\S+/);
 
 	if (!match) {
@@ -39,7 +39,7 @@ function parseMagicLink(text: string) {
 	return match[0].replace(/[.)\]]+$/, "");
 }
 
-async function waitForMailpitMessage({ recipient, subject }: MessageMatch) {
+async function waitForMailpitMessageFn({ recipient, subject }: MessageMatch) {
 	if (!mailpitBaseUrl) {
 		throw new Error("MAILPIT_BASE_URL is required for the auth mail delivery e2e test");
 	}
@@ -50,8 +50,8 @@ async function waitForMailpitMessage({ recipient, subject }: MessageMatch) {
 		const listResponse = await fetch(new URL("/api/v1/messages", mailpitBaseUrl));
 
 		if (!listResponse.ok) {
-			await new Promise((resolve) => {
-				setTimeout(resolve, 500);
+			await new Promise((resolveFn) => {
+				setTimeout(resolveFn, 500);
 			});
 			continue;
 		}
@@ -79,22 +79,22 @@ async function waitForMailpitMessage({ recipient, subject }: MessageMatch) {
 			}
 		}
 
-		await new Promise((resolve) => {
-			setTimeout(resolve, 500);
+		await new Promise((resolveFn) => {
+			setTimeout(resolveFn, 500);
 		});
 	}
 
 	throw new Error(`Mailpit did not capture email for recipient "${recipient}"`);
 }
 
-test("auth sign up sends verification email", async ({ page, database }) => {
-	const email = `${genId()}@x32.cz`;
-	const password = `pw-${genId()}`;
+testFn("auth sign up sends verification email", async ({ page, database }) => {
+	const email = `${genIdFn()}@x32.cz`;
+	const password = `pw-${genIdFn()}`;
 	const translator = await withTranslatorFx({
 		locale: "cs",
-	}).pipe(withRuntimeFx(database), Effect.runPromise);
+	}).pipe(withRuntimeFn(database), Effect.runPromise);
 
-	const subject = translator.text("Email verification email subject");
+	const subject = translator.textFn("Email verification email subject");
 
 	await page.goto("/cs/landing");
 	await page.click('[data-action="goto sign-up"]');
@@ -105,7 +105,7 @@ test("auth sign up sends verification email", async ({ page, database }) => {
 	await page.locator('[data-action="sign up"]').click();
 	await page.waitForURL("/cs/app/welcome");
 
-	const mail = await waitForMailpitMessage({
+	const mail = await waitForMailpitMessageFn({
 		recipient: email,
 	});
 
@@ -114,14 +114,14 @@ test("auth sign up sends verification email", async ({ page, database }) => {
 	expect(mail.Text).toContain("/api/auth/verify-email?token=");
 });
 
-test("auth magic link sends email and signs in", async ({ page, database }) => {
+testFn("auth magic link sends email and signs in", async ({ page, database }) => {
 	const user = await leaseTestUserFx({
 		key: "a",
-	}).pipe(withRuntimeFx(database), Effect.runPromise);
+	}).pipe(withRuntimeFn(database), Effect.runPromise);
 	const translator = await withTranslatorFx({
 		locale: "cs",
-	}).pipe(withRuntimeFx(database), Effect.runPromise);
-	const subject = translator.text("Magic link email subject");
+	}).pipe(withRuntimeFn(database), Effect.runPromise);
+	const subject = translator.textFn("Magic link email subject");
 
 	await page.goto("/cs/app/home");
 	await page.waitForURL(/\/cs\/sign-in(?:\?.*)?$/);
@@ -132,7 +132,7 @@ test("auth magic link sends email and signs in", async ({ page, database }) => {
 	await page.locator('[data-action="sign in with magic link"]').click();
 	await page.waitForURL("/cs/status/magic-link");
 
-	const mail = await waitForMailpitMessage({
+	const mail = await waitForMailpitMessageFn({
 		recipient: user.email,
 		subject,
 	});
@@ -140,16 +140,16 @@ test("auth magic link sends email and signs in", async ({ page, database }) => {
 	expect(mail.Subject).toBe(subject);
 	expect(mail.Text).toContain("/api/auth/magic-link/verify?token=");
 
-	await page.goto(parseMagicLink(mail.Text));
+	await page.goto(parseMagicLinkFn(mail.Text));
 	await page.waitForURL("/cs/app/home");
 
 	await expect(page.locator('[data-ui="HomeMenu[Container]"]')).toBeVisible();
 });
 
-test("auth magic link rate limit returns a client-safe error", async ({ page, db, database }) => {
+testFn("auth magic link rate limit returns a client-safe error", async ({ page, db, database }) => {
 	void database;
 
-	const email = `${genId()}@x32.cz`;
+	const email = `${genIdFn()}@x32.cz`;
 	const body = {
 		email,
 		callbackURL: new URL("/cs/app/home", process.env.VITE_ORIGIN).toString(),

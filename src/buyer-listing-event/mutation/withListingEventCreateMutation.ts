@@ -1,19 +1,19 @@
 import { listingEventCreateFn } from "~/buyer-listing-event/fn/listingEventCreateFn";
 import type { ListingEventCreateSchema } from "~/buyer-listing-event/schema/ListingEventCreateSchema";
 import type { ListingEventSchema } from "~/buyer-listing-event/schema/ListingEventSchema";
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withMutation } from "~/mutation/fn/withMutation";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withMutationFn } from "~/mutation/fn/withMutationFn";
 
-export const withListingEventCreateMutation = withMutation<
+export const withListingEventCreateMutation = withMutationFn<
 	ListingEventCreateSchema.Type,
 	ListingEventSchema.Type,
 	listingEventCreateFn.Error
 >({
-	logger: getRootLogger([
+	logger: getRootLoggerFn([
 		"mutation",
 		"withListingEventCreateMutation",
 	]),
-	keys(variables) {
+	keysFn(variables) {
 		return [
 			"listing-event",
 			"create",

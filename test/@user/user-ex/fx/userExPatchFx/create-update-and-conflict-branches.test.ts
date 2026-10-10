@@ -3,31 +3,31 @@ import { PostgresDialect, sql } from "kysely";
 import { Pool } from "pg";
 import { describe, expect, it } from "vitest";
 import type { Database } from "~/database/type/Database";
-import { withDatabaseName } from "~/database-query/fn/withDatabaseName";
+import { withDatabaseNameFn } from "~/database-query/fn/withDatabaseNameFn";
+import { withDialectFn } from "~/database-query/fn/withDialectFn";
 import { withDatabaseFx } from "~/database-query/fx/withDatabaseFx";
-import { withDialectFx } from "~/database-query/fx/withDialectFx";
 import { MigrationContextFx } from "~/database-query/service/MigrationContextFx";
-import { getRootLogger } from "~/log/fn/getRootLogger";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
 import { ServerDatabaseSchema } from "~/server-env/schema/ServerDatabaseSchema";
-import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { expectErrorFn } from "~/test/common/fx/expectErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 import { userExPatchFx } from "~/user-ex/fx/userExPatchFx";
 
 describe("userExPatchFx", () => {
 	it("creates when missing, updates when existing, and hits conflict branch on concurrent create", async () => {
-		const database = await testabase("userExPatchFx-create-update-conflict");
+		const database = await testabaseFn("userExPatchFx-create-update-conflict");
 		const databaseConfig = ServerDatabaseSchema.parse(process.env);
 		const secondDatabase = await withDatabaseFx<Database>({
-			logger: getRootLogger([
+			logger: getRootLoggerFn([
 				"db",
 			]),
 		}).pipe(
-			withDialectFx(
+			withDialectFn(
 				new PostgresDialect({
 					pool: new Pool({
-						connectionString: withDatabaseName({
+						connectionString: withDatabaseNameFn({
 							dsn: databaseConfig.SERVER_DATABASE_URL,
 							name: "userExPatchFx-create-update-conflict",
 						}),
@@ -40,8 +40,8 @@ describe("userExPatchFx", () => {
 			Effect.runPromise,
 		);
 
-		const runtime = withRuntimeFx(database);
-		const secondRuntime = withRuntimeFx(secondDatabase);
+		const runtimeFx = withRuntimeFn(database);
+		const secondRuntimeFx = withRuntimeFn(secondDatabase);
 
 		try {
 			return await Effect.gen(function* () {
@@ -97,13 +97,13 @@ describe("userExPatchFx", () => {
 							patch: {
 								locationId: null,
 							},
-						}).pipe(runtime, Effect.result, Effect.runPromise),
+						}).pipe(runtimeFx, Effect.result, Effect.runPromise),
 						userExPatchFx({
 							userId: users.buyer.id,
 							patch: {
 								locationId: null,
 							},
-						}).pipe(secondRuntime, Effect.result, Effect.runPromise),
+						}).pipe(secondRuntimeFx, Effect.result, Effect.runPromise),
 					]),
 				);
 
@@ -118,7 +118,7 @@ describe("userExPatchFx", () => {
 					throw new Error("Expected at least one conflict branch result");
 				}
 
-				expectErrorFx(conflict);
+				expectErrorFn(conflict);
 
 				const buyerUserEx = yield* Effect.promise(() =>
 					database.kysely
@@ -129,7 +129,7 @@ describe("userExPatchFx", () => {
 				);
 
 				expect(buyerUserEx).toHaveLength(1);
-			}).pipe(runtime, Effect.runPromise);
+			}).pipe(runtimeFx, Effect.runPromise);
 		} finally {
 			await secondDatabase.kysely.destroy();
 		}

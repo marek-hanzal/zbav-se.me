@@ -36,7 +36,7 @@ export const SaveAsFeedButton: FC<SaveAsFeedButton.Props> = ({
 	...props
 }) => {
 	const translator = useTranslator();
-	const navigate = useNavigate();
+	const navigateFn = useNavigate();
 	const locale = useLocale();
 	const { data: feed } = withFeedQuery.useFetchQuery(feedId);
 	const { data: feedCount } = withFeedQuery.useCountQuery({
@@ -48,12 +48,12 @@ export const SaveAsFeedButton: FC<SaveAsFeedButton.Props> = ({
 		resource: "buyer:limit:feed.count",
 		count: feedCount,
 	});
-	const [isOpen, setIsOpen] = useState(false);
-	const [name, setName] = useState("");
+	const [isOpen, setIsOpenFn] = useState(false);
+	const [name, setNameFn] = useState("");
 	const createMutation = withFeedQuery.useCreateMutation({
-		async onPostMutation() {
-			setIsOpen(false);
-			await navigate({
+		async onPostMutationFn() {
+			setIsOpenFn(false);
+			await navigateFn({
 				to: "/$locale/app/buyer/feed/list",
 				params: {
 					locale,
@@ -94,7 +94,7 @@ export const SaveAsFeedButton: FC<SaveAsFeedButton.Props> = ({
 						return;
 					}
 
-					setIsOpen(true);
+					setIsOpenFn(true);
 				}}
 				disabled={!resourceLimit.isAvailable}
 				iconEnabled={SaveIcon}
@@ -120,8 +120,8 @@ export const SaveAsFeedButton: FC<SaveAsFeedButton.Props> = ({
 			<BottomSheet
 				data-ui={"SaveAsFeedButton[BottomSheet]"}
 				isOpen={isOpen}
-				onClose={() => setIsOpen(false)}
-				header={() => ({
+				onClose={() => setIsOpenFn(false)}
+				headerFn={() => ({
 					title: "Create new feed (title)",
 				})}
 			>
@@ -143,7 +143,7 @@ export const SaveAsFeedButton: FC<SaveAsFeedButton.Props> = ({
 							data-ui-height="full"
 						>
 							<Status
-								textTitle={translator.text("Feed name (title)")}
+								textTitle={translator.textFn("Feed name (title)")}
 								action={
 									<form.AppField name={"name"}>
 										{(field) => (
@@ -157,9 +157,9 @@ export const SaveAsFeedButton: FC<SaveAsFeedButton.Props> = ({
 													<TextInput
 														value={name}
 														onChange={(e) => {
-															setName(e.target.value);
+															setNameFn(e.target.value);
 														}}
-														placeholder={translator.text(
+														placeholder={translator.textFn(
 															"Feed name (placeholder)",
 														)}
 														autoFocus
@@ -174,7 +174,7 @@ export const SaveAsFeedButton: FC<SaveAsFeedButton.Props> = ({
 								data-ui-inner="4xl"
 							>
 								<Mx
-									label={translator.text("Feed name (required)")}
+									label={translator.textFn("Feed name (required)")}
 									data-ui-tone="neutral"
 									data-ui-theme="light"
 								/>
@@ -189,8 +189,8 @@ export const SaveAsFeedButton: FC<SaveAsFeedButton.Props> = ({
 						>
 							{({ isValid, isSubmitting }) => (
 								<SaveContainer
-									onCancel={() => setIsOpen(false)}
-									onSave={() => {
+									onCancelFn={() => setIsOpenFn(false)}
+									onSaveFn={() => {
 										form.handleSubmit();
 									}}
 									loading={isSubmitting}

@@ -1,14 +1,14 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { activityCountFx } from "~/user-activity/fx/activityCountFx";
 import { activityPatchCollectionFx } from "~/user-activity/fx/activityPatchCollectionFx";
 
 describe("activityPatchCollectionFx", () => {
 	it("patches only scoped matching items and leaves foreign rows untouched", async () => {
-		const database = await testabase("activityPatch-collection");
+		const database = await testabaseFn("activityPatch-collection");
 		const archivedAt = new Date("2026-04-01T11:00:00.000Z");
 
 		return Effect.gen(function* () {
@@ -132,6 +132,6 @@ describe("activityPatchCollectionFx", () => {
 			});
 
 			expect(strangerActive).toBe(1);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

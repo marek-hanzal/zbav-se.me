@@ -1,16 +1,16 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
-import { withKyselyFx } from "~/database/fx/withKyselyFx";
-import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
-import { withLoggerFx } from "~/log/fx/withLoggerFx";
+import { withKyselyFn } from "~/database/fn/withKyselyFn";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
+import { withLoggerFn } from "~/log/fn/withLoggerFn";
 import { withDatabaseMiddleware } from "~/request-middleware/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/request-middleware/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/request-middleware/middleware/withUserMiddleware";
-import { withUploadConfigFx } from "~/user-upload/context/withUploadConfigFx";
+import { withUploadConfigEnvFn } from "~/user-upload/fn/withUploadConfigEnvFn";
+import { withUploadConfigFn } from "~/user-upload/fn/withUploadConfigFn";
 import { uploadCreateFx } from "~/user-upload/fx/uploadCreateFx";
 import { UploadCreateSchema } from "~/user-upload/schema/UploadCreateSchema";
 import { UploadSchema } from "~/user-upload/schema/UploadSchema";
-import { withUploadConfigEnv } from "~/user-upload/schema/withUploadConfigEnv";
 import { zodGuardFx } from "~/validation/fx/zodGuardFx";
 
 export namespace uploadCreateFn {
@@ -40,10 +40,10 @@ export const uploadCreateFn = createServerFn({
 				userId: user.id,
 			}),
 		}).pipe(
-			withKyselyFx(database),
-			withDateServiceFx(),
-			withUploadConfigFx(withUploadConfigEnv()),
-			withLoggerFx(rootLogger),
+			withKyselyFn(database),
+			withDateServiceFn(),
+			withUploadConfigFn(withUploadConfigEnvFn()),
+			withLoggerFn(rootLogger),
 			Effect.tapError((error) => {
 				return Effect.sync(() => {
 					logger.error(error._tag, {

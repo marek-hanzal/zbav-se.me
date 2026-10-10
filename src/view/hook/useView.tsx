@@ -26,8 +26,8 @@ export namespace useView {
 	export interface Use<TPanel extends string, TProps extends object | unknown = unknown> {
 		View: FC<Omit<View.Props<TPanel>, "control">>;
 		Panel: FC<Omit<Panel.Props<TPanel>, "control">>;
-		isVisible(name: TPanel): boolean;
-		set(name: TPanel): void;
+		isVisibleFn(name: TPanel): boolean;
+		setFn(name: TPanel): void;
 		props: TProps | undefined;
 	}
 }
@@ -45,7 +45,7 @@ export const useView = <TPanel extends string, TProps extends object | unknown =
 		name: "useView",
 	});
 
-	const [panel, setPanel] = useState(defaultPanel);
+	const [panel, setPanelFn] = useState(defaultPanel);
 
 	const panelRef = useRef(defaultPanel);
 	/**
@@ -72,11 +72,11 @@ export const useView = <TPanel extends string, TProps extends object | unknown =
 					/>
 				);
 			},
-			isVisible(name) {
+			isVisibleFn(name) {
 				return panelRef.current === name;
 			},
-			set(name) {
-				setPanel(name);
+			setFn(name) {
+				setPanelFn(name);
 			},
 			get props() {
 				return props?.[panelRef.current];

@@ -17,10 +17,10 @@ export namespace VerifyEmailButton {
 export const VerifyEmailButton: FC<VerifyEmailButton.Props> = ({ email, ...props }) => {
 	const locale = useLocale();
 	const router = useRouter();
-	const [isSent, setIsSent] = useState(false);
+	const [isSent, setIsSentFn] = useState(false);
 	const mutation = withEmailVerificationRequestMutation.useMutation({
 		onSuccess() {
-			setIsSent(true);
+			setIsSentFn(true);
 		},
 	});
 
@@ -45,7 +45,7 @@ export const VerifyEmailButton: FC<VerifyEmailButton.Props> = ({ email, ...props
 				iconEnabled={EmailIcon}
 				data-action={"send verification email"}
 				onClick={() => {
-					setIsSent(false);
+					setIsSentFn(false);
 					mutation.mutate({
 						email,
 						callbackURL,

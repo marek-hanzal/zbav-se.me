@@ -22,16 +22,16 @@ const FormSchema = z
 export namespace PricePatch {
 	export interface Props extends TitleContainer.Props {
 		draft: DraftSchema.Type;
-		onCancel(): void;
+		onCancelFn(): void;
 		view: useView.Use<"expires">;
 	}
 }
 
-export const PricePatch: FC<PricePatch.Props> = ({ draft, onCancel, view, ...props }) => {
+export const PricePatch: FC<PricePatch.Props> = ({ draft, onCancelFn, view, ...props }) => {
 	const translator = useTranslator();
 	const mutation = withDraftQuery.usePatchMutation({
 		onSuccess() {
-			view.set("expires");
+			view.setFn("expires");
 		},
 		invalidate: [
 			"collection",
@@ -65,7 +65,7 @@ export const PricePatch: FC<PricePatch.Props> = ({ draft, onCancel, view, ...pro
 	return (
 		<TitleContainer
 			data-ui={"PricePatch"}
-			textTitle={translator.text("Price (title)")}
+			textTitle={translator.textFn("Price (title)")}
 			left={<EditAction />}
 			{...props}
 		>
@@ -84,11 +84,11 @@ export const PricePatch: FC<PricePatch.Props> = ({ draft, onCancel, view, ...pro
 									? props.state.value
 									: undefined
 							}
-							onChange={(value) => {
+							onChangeFn={(value) => {
 								props.handleChange(value ?? 0);
 								props.handleBlur();
 							}}
-							placeholder={translator.text("Price (placeholder)")}
+							placeholder={translator.textFn("Price (placeholder)")}
 							allowDecimals
 							data-ui-inner="default"
 						/>
@@ -103,8 +103,8 @@ export const PricePatch: FC<PricePatch.Props> = ({ draft, onCancel, view, ...pro
 				>
 					{({ isValid, isSubmitting }) => (
 						<SaveContainer
-							onCancel={onCancel}
-							onSave={() => {
+							onCancelFn={onCancelFn}
+							onSaveFn={() => {
 								form.handleSubmit();
 							}}
 							loading={isSubmitting}

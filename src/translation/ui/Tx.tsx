@@ -15,7 +15,7 @@ export const Tx: FC<Tx.Props> = ({ label, fallback, ...props }) => {
 	const translator = useTranslator();
 	return label ? (
 		<Typo
-			label={translator.text(label, fallback)}
+			label={translator.textFn(label, fallback)}
 			{...props}
 		/>
 	) : null;

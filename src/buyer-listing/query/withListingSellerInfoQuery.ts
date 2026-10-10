@@ -1,18 +1,18 @@
 import { listingGetSellerInfoFn } from "~/buyer-listing/fn/listingGetSellerInfoFn";
 import type { SellerInfoSchema } from "~/buyer-listing/schema/SellerInfoSchema";
 import type { EntitySchema } from "~/entity/schema/EntitySchema";
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withQuery } from "~/query/fn/withQuery";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withQueryFn } from "~/query/fn/withQueryFn";
 
-export const withListingSellerInfoQuery = withQuery({
-	logger: getRootLogger([
+export const withListingSellerInfoQuery = withQueryFn({
+	logger: getRootLoggerFn([
 		"query",
 		"withListingSellerInfoQuery",
 	]),
 	errors: {} as {
 		query: listingGetSellerInfoFn.Error;
 	},
-	keys(variables: EntitySchema.Type) {
+	keysFn(variables: EntitySchema.Type) {
 		return [
 			"listing",
 			"seller-info",

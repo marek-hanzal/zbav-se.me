@@ -1,6 +1,6 @@
 import { sql } from "kysely";
 import type { Migration } from "kysely/migration";
-import { toEnumGuard } from "~/enum/fn/toEnumGuard";
+import { toEnumGuardFn } from "~/enum/fn/toEnumGuardFn";
 import type { TransactionSideEnumSchema } from "~/transaction-contract/schema/TransactionSideEnumSchema";
 import type { TransactionStatusEnumSchema } from "~/transaction-contract/schema/TransactionStatusEnumSchema";
 
@@ -9,7 +9,7 @@ export const TransactionMigration: Migration = {
 		await db.schema
 			.createType("transaction_status_enum")
 			.asEnum(
-				toEnumGuard<TransactionStatusEnumSchema.Type>()([
+				toEnumGuardFn<TransactionStatusEnumSchema.Type>()([
 					"interest",
 					"trade",
 					"resolved",
@@ -26,7 +26,7 @@ export const TransactionMigration: Migration = {
 		await db.schema
 			.createType("transaction_side_enum")
 			.asEnum(
-				toEnumGuard<TransactionSideEnumSchema.Type>()([
+				toEnumGuardFn<TransactionSideEnumSchema.Type>()([
 					"seller",
 					"buyer",
 					"transaction",

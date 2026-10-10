@@ -2,8 +2,8 @@ import { Effect } from "effect";
 import { sql } from "kysely";
 import { match } from "ts-pattern";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { withContainsEx } from "~/database/fn/withContainsEx";
-import { selectFx } from "~/database-query/fx/selectFx";
+import { withContainsExFn } from "~/database/fn/withContainsExFn";
+import { selectFn } from "~/database-query/fn/selectFn";
 import type { LocationSortSchema } from "~/session-location/schema/LocationSortSchema";
 import type { LocationWhereSchema } from "~/session-location/schema/LocationWhereSchema";
 
@@ -47,7 +47,7 @@ export const withLocationSelectFx = Effect.fn("withLocationSelectFx")(function* 
 			.exhaustive();
 	}
 
-	return selectFx({
+	return selectFn({
 		select,
 		queryFx(select, where: LocationWhereSchema.Type) {
 			return Effect.gen(function* () {
@@ -67,16 +67,16 @@ export const withLocationSelectFx = Effect.fn("withLocationSelectFx")(function* 
 
 				if (where.fulltext?.length) {
 					const term = where.fulltext;
-					query = query.where((eb) => {
-						return eb.and(
+					query = query.where((ebFn) => {
+						return ebFn.and(
 							term.map((value) =>
-								eb.or([
-									withContainsEx(eb.ref("loc.query"), value),
-									withContainsEx(eb.ref("loc.address"), value),
-									withContainsEx(eb.ref("loc.country"), value),
-									withContainsEx(eb.ref("loc.municipality"), value),
-									withContainsEx(eb.ref("loc.state"), value),
-									withContainsEx(eb.ref("loc.county"), value),
+								ebFn.or([
+									withContainsExFn(ebFn.ref("loc.query"), value),
+									withContainsExFn(ebFn.ref("loc.address"), value),
+									withContainsExFn(ebFn.ref("loc.country"), value),
+									withContainsExFn(ebFn.ref("loc.municipality"), value),
+									withContainsExFn(ebFn.ref("loc.state"), value),
+									withContainsExFn(ebFn.ref("loc.county"), value),
 								]),
 							),
 						);
@@ -85,10 +85,10 @@ export const withLocationSelectFx = Effect.fn("withLocationSelectFx")(function* 
 
 				if (where.query) {
 					const value = where.query;
-					query = query.where((eb) => {
-						return eb.or([
-							eb("loc.id", "=", value),
-							eb("loc.query", "ilike", value),
+					query = query.where((ebFn) => {
+						return ebFn.or([
+							ebFn("loc.id", "=", value),
+							ebFn("loc.query", "ilike", value),
 						]);
 					});
 				}

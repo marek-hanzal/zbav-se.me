@@ -24,13 +24,13 @@ export const AgeValueList: FC<AgeValueList.Props> = ({ ageIn, ...props }) => {
 	return (
 		<ValueList
 			data-ui={"AgeValueList"}
-			textLabel={translator.text("Feed age (label)")}
-			textEmpty={translator.text("Feed age not selected")}
+			textLabel={translator.textFn("Feed age (label)")}
+			textEmpty={translator.textFn("Feed age not selected")}
 			items={ageIn.map((item) => ({
 				id: String(item),
 				age: String(item),
 			}))}
-			renderFn={(item) => translator.text(`Age ${item.age} (label)`)}
+			renderFn={(item) => translator.textFn(`Age ${item.age} (label)`)}
 			wrapperProps={{
 				...(ageIn.length > 0
 					? {

@@ -1,12 +1,12 @@
 import { CopyIconAction } from "~/clipboard/ui/CopyIconAction";
-import { ofGoogleMap } from "~/coordinate/fn/ofGoogleMap";
-import { ofLatLonText } from "~/coordinate/fn/ofLatLonText";
-import { toTimeDiff } from "~/date/fn/toTimeDiff";
+import { ofGoogleMapFn } from "~/coordinate/fn/ofGoogleMapFn";
+import { ofLatLonTextFn } from "~/coordinate/fn/ofLatLonTextFn";
+import { toTimeDiffFn } from "~/date/fn/toTimeDiffFn";
 import { useLocale } from "~/locale/hook/useLocale";
 import { withLocationQuery } from "~/session-location/query/withLocationQuery";
 import { useTranslator } from "~/translation/hook/useTranslator";
-import { uiLinkTo } from "~/ui/fn/uiLinkTo";
-import { withFallback } from "~/ui/fn/withFallback";
+import { uiLinkToFn } from "~/ui/fn/uiLinkToFn";
+import { withFallbackFn } from "~/ui/fn/withFallbackFn";
 import type { MarkSuspense } from "~/ui/type/MarkSuspense";
 import type { Container } from "~/ui/ui/Container";
 import { LabelValue } from "~/ui/ui/LabelValue";
@@ -21,7 +21,7 @@ export namespace Location {
 	}
 }
 
-export const Location = withFallback(
+export const Location = withFallbackFn(
 	({ _suspense, transactionEntry, ...props }: Location.Props) => {
 		const translator = useTranslator();
 		const locale = useLocale();
@@ -37,7 +37,7 @@ export const Location = withFallback(
 				{...props}
 			>
 				<LabelValue
-					textLabel={translator.text("Personal - location")}
+					textLabel={translator.textFn("Personal - location")}
 					textValue={location.address}
 					textLabelProps={{
 						"data-ui-text": "default",
@@ -52,16 +52,16 @@ export const Location = withFallback(
 					action={<CopyIconAction text={location.address} />}
 				/>
 				<LabelValue
-					textLabel={translator.text("Personal - map")}
+					textLabel={translator.textFn("Personal - map")}
 					textValue={
 						<a
-							href={ofGoogleMap({
+							href={ofGoogleMapFn({
 								latLon: location,
 							})}
 							target={"_blank"}
-							{...uiLinkTo({})}
+							{...uiLinkToFn({})}
 						>
-							{ofLatLonText({
+							{ofLatLonTextFn({
 								mode: "text",
 								latLon: location,
 							})}
@@ -74,7 +74,7 @@ export const Location = withFallback(
 					data-ui-background={undefined}
 					action={
 						<CopyIconAction
-							text={ofLatLonText({
+							text={ofLatLonTextFn({
 								mode: "map",
 								latLon: location,
 							})}
@@ -83,7 +83,7 @@ export const Location = withFallback(
 				/>
 
 				<Typo
-					label={toTimeDiff({
+					label={toTimeDiffFn({
 						locale,
 						time: transactionEntry.createdAt,
 						type: "relative",

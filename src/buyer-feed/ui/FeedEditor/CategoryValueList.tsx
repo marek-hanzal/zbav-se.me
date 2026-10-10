@@ -1,6 +1,6 @@
 import { CategoryInline } from "~/category/ui/CategoryInline";
 import { useTranslator } from "~/translation/hook/useTranslator";
-import { withFallback } from "~/ui/fn/withFallback";
+import { withFallbackFn } from "~/ui/fn/withFallbackFn";
 import type { MarkSuspense } from "~/ui/type/MarkSuspense";
 import { ValueList } from "~/ui/ui/ValueList";
 import { withCategoryQuery } from "~/user-category/query/withCategoryQuery";
@@ -18,7 +18,7 @@ export namespace CategoryValueList {
  * Renders a read-only list of category values in a consistent label/value style.
  * Use it in detail or preview views when you need to show multiple category entries clearly.
  */
-export const CategoryValueList = withFallback(
+export const CategoryValueList = withFallbackFn(
 	({ _suspense, categoryIdIn, ...props }: CategoryValueList.Props) => {
 		if (!categoryIdIn || categoryIdIn.length === 0) {
 			return (
@@ -54,8 +54,8 @@ export const CategoryValueList = withFallback(
 		const translator = useTranslator();
 		return (
 			<ValueList
-				textLabel={translator.text("Loading... (label)")}
-				textEmpty={translator.text("No categories found (label)")}
+				textLabel={translator.textFn("Loading... (label)")}
+				textEmpty={translator.textFn("No categories found (label)")}
 				renderFn={() => null}
 				items={[]}
 				loading={true}

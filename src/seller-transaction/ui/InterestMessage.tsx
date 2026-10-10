@@ -10,12 +10,12 @@ import type { TransactionMenuButton } from "~/user-transaction/ui/TransactionMen
 
 export namespace InterestMessage {
 	export interface Props extends Container.Props {
-		close: TransactionMenuButton.Close;
+		closeFn: TransactionMenuButton.Close;
 		transaction: TransactionSchema.Type;
 	}
 }
 
-export const InterestMessage: FC<InterestMessage.Props> = ({ close, transaction, ...props }) => {
+export const InterestMessage: FC<InterestMessage.Props> = ({ closeFn, transaction, ...props }) => {
 	return (
 		<>
 			<Group
@@ -39,13 +39,13 @@ export const InterestMessage: FC<InterestMessage.Props> = ({ close, transaction,
 				{...props}
 			>
 				<AcceptButton
-					close={close}
+					closeFn={closeFn}
 					transaction={transaction}
 					{...MessageButtonUi}
 				/>
 
 				<RejectButton
-					close={close}
+					closeFn={closeFn}
 					transaction={transaction}
 					{...MessageButtonUi}
 				/>

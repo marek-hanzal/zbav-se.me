@@ -1,21 +1,21 @@
 import type { AgentInputItem } from "@openai/agents-core";
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withQuery } from "~/query/fn/withQuery";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withQueryFn } from "~/query/fn/withQueryFn";
 import { agentStreamItemsFn } from "~/user-agent/fn/agentStreamItemsFn";
 import type { AgentStreamQuerySchema } from "~/user-agent/schema/AgentStreamQuerySchema";
 
 /**
  * This query provides direct access to AgentInput messages, no more processing is necessary here.
  */
-export const withAgentStreamItemsQuery = withQuery({
-	logger: getRootLogger([
+export const withAgentStreamItemsQuery = withQueryFn({
+	logger: getRootLoggerFn([
 		"query",
 		"withAgentStreamItemsQuery",
 	]),
 	errors: {} as {
 		query: agentStreamItemsFn.Error;
 	},
-	keys: (data) => [
+	keysFn: (data) => [
 		"agent",
 		"stream",
 		"items",

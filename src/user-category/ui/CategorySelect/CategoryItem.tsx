@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { uiSelectButton } from "~/application-ui/fn/ui.exports";
+import { uiSelectButtonFn } from "~/application-ui/fn/ui.exports";
 import type { EntitySchema } from "~/entity/schema/EntitySchema";
 import type { useSelection } from "~/selection/hook/useSelection";
 import { Tx } from "~/translation/ui/Tx";
@@ -20,16 +20,16 @@ export namespace CategoryItem {
  * Use it inside category selection lists where option rows load translated labels or metadata on demand.
  */
 export const CategoryItem: FC<CategoryItem.Props> = ({ category, selection }) => {
-	const isSelected = selection.isSelected(category.id);
+	const isSelected = selection.isSelectedFn(category.id);
 
 	return (
 		<Button
 			data-id={category.id}
 			data-action={"select category"}
 			onClick={() => {
-				selection.toggle(category);
+				selection.toggleFn(category);
 			}}
-			{...uiSelectButton({
+			{...uiSelectButtonFn({
 				isSelected,
 				className: undefined,
 			})}

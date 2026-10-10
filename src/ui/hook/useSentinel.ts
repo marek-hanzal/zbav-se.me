@@ -6,8 +6,8 @@ export namespace useSentinel {
 		containerRef: RefObject<HTMLElement | null>;
 		sentinelRef: RefObject<TElement | null>;
 		threshold?: number;
-		onEnter?(): void;
-		onLeave?(): void;
+		onEnterFn?(): void;
+		onLeaveFn?(): void;
 	}
 
 	export interface Result {
@@ -25,10 +25,10 @@ export function useSentinel<TElement extends HTMLElement>({
 	containerRef,
 	sentinelRef,
 	threshold = 1,
-	onEnter,
-	onLeave,
+	onEnterFn,
+	onLeaveFn,
 }: useSentinel.Props<TElement>): useSentinel.Result {
-	const [inView, setInView] = useState(false);
+	const [inView, setInViewFn] = useState(false);
 
 	const ioRef = useRef<IntersectionObserver | null>(null);
 	const lastRef = useRef<boolean | null>(null);
@@ -39,14 +39,14 @@ export function useSentinel<TElement extends HTMLElement>({
 	});
 	const latestRef = useRef({
 		threshold,
-		onEnter,
-		onLeave,
+		onEnterFn,
+		onLeaveFn,
 	});
 	latestRef.current.threshold = threshold;
-	latestRef.current.onEnter = onEnter;
-	latestRef.current.onLeave = onLeave;
+	latestRef.current.onEnterFn = onEnterFn;
+	latestRef.current.onLeaveFn = onLeaveFn;
 
-	const disconnect = useCallback(() => {
+	const disconnectFn = useCallback(() => {
 		if (!ioRef.current) {
 			return;
 		}
@@ -55,21 +55,21 @@ export function useSentinel<TElement extends HTMLElement>({
 		lastRef.current = null;
 	}, []);
 
-	const reset = useCallback(() => {
+	const resetFn = useCallback(() => {
 		observedRef.current = {
 			root: null,
 			sentinel: null,
 			threshold: latestRef.current.threshold,
 		};
-		disconnect();
-		setInView(false);
+		disconnectFn();
+		setInViewFn(false);
 	}, [
-		disconnect,
+		disconnectFn,
 	]);
 
-	const connect = useCallback(
+	const connectFn = useCallback(
 		(root: HTMLElement, sentinel: HTMLElement) => {
-			disconnect();
+			disconnectFn();
 
 			const io = new IntersectionObserver(
 				([entry]) => {
@@ -85,14 +85,14 @@ export function useSentinel<TElement extends HTMLElement>({
 					}
 
 					lastRef.current = next;
-					setInView(next);
+					setInViewFn(next);
 
 					if (next) {
-						latestRef.current.onEnter?.();
+						latestRef.current.onEnterFn?.();
 						return;
 					}
 
-					latestRef.current.onLeave?.();
+					latestRef.current.onLeaveFn?.();
 				},
 				{
 					root,
@@ -104,11 +104,11 @@ export function useSentinel<TElement extends HTMLElement>({
 			ioRef.current = io;
 		},
 		[
-			disconnect,
+			disconnectFn,
 		],
 	);
 
-	const sync = useCallback(() => {
+	const syncFn = useCallback(() => {
 		const root = containerRef.current;
 		const sentinel = sentinelRef.current;
 		const {
@@ -118,7 +118,7 @@ export function useSentinel<TElement extends HTMLElement>({
 		} = observedRef.current;
 
 		if (!root || !sentinel) {
-			reset();
+			resetFn();
 			return;
 		}
 
@@ -135,16 +135,16 @@ export function useSentinel<TElement extends HTMLElement>({
 			sentinel,
 			threshold: latestRef.current.threshold,
 		};
-		connect(root, sentinel);
+		connectFn(root, sentinel);
 	}, [
-		connect,
+		connectFn,
 		containerRef,
-		reset,
+		resetFn,
 		sentinelRef,
 	]);
 
 	useEffect(() => {
-		sync();
+		syncFn();
 
 		const root = containerRef.current;
 		if (!root) {
@@ -152,7 +152,7 @@ export function useSentinel<TElement extends HTMLElement>({
 		}
 
 		const mo = new MutationObserver(() => {
-			sync();
+			syncFn();
 		});
 
 		mo.observe(root, {
@@ -162,12 +162,12 @@ export function useSentinel<TElement extends HTMLElement>({
 
 		return () => {
 			mo.disconnect();
-			disconnect();
+			disconnectFn();
 		};
 	}, [
 		containerRef,
-		disconnect,
-		sync,
+		disconnectFn,
+		syncFn,
 	]);
 
 	return {

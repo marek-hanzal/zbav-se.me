@@ -3,7 +3,7 @@ import { sql } from "kysely";
 import { match } from "ts-pattern";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import type { ActivityTableSchema } from "~/database/schema/ActivityTable";
-import { selectFx } from "~/database-query/fx/selectFx";
+import { selectFn } from "~/database-query/fn/selectFn";
 import type { ActivitySortSchema } from "~/user-activity/schema/ActivitySortSchema";
 import type { ActivityWhereSchema } from "~/user-activity/schema/ActivityWhereSchema";
 
@@ -25,41 +25,41 @@ export const withActivitySelectFx = Effect.fn("withActivitySelectFx")(function* 
 	let select = kysely
 		.selectFrom("activity as i")
 		.selectAll("i")
-		.where((eb) => {
-			return eb.or([
-				eb("i.type", "not in", deduplicatedMessageTypes),
-				eb.not(
-					eb.exists(
-						eb
+		.where((ebFn) => {
+			return ebFn.or([
+				ebFn("i.type", "not in", deduplicatedMessageTypes),
+				ebFn.not(
+					ebFn.exists(
+						ebFn
 							.selectFrom("activity as newer")
 							.select("newer.id")
 							.whereRef("newer.userId", "=", "i.userId")
 							.whereRef("newer.family", "=", "i.family")
 							.whereRef("newer.type", "=", "i.type")
-							.where((eb) => {
-								return sql<boolean>`${eb.ref("newer.payload")} ->> 'transactionId' = ${eb.ref("i.payload")} ->> 'transactionId'`;
+							.where((ebFn) => {
+								return sql<boolean>`${ebFn.ref("newer.payload")} ->> 'transactionId' = ${ebFn.ref("i.payload")} ->> 'transactionId'`;
 							})
-							.where((eb) => {
-								const newerIsMoreRecent = eb.or([
-									eb("newer.timestamp", ">", eb.ref("i.timestamp")),
-									eb.and([
-										eb("newer.timestamp", "=", eb.ref("i.timestamp")),
-										eb("newer.id", ">", eb.ref("i.id")),
+							.where((ebFn) => {
+								const newerIsMoreRecent = ebFn.or([
+									ebFn("newer.timestamp", ">", ebFn.ref("i.timestamp")),
+									ebFn.and([
+										ebFn("newer.timestamp", "=", ebFn.ref("i.timestamp")),
+										ebFn("newer.id", ">", ebFn.ref("i.id")),
 									]),
 								]);
 
-								return eb.or([
-									eb.and([
-										eb("i.archivedAt", "is", null),
-										eb("newer.archivedAt", "is", null),
+								return ebFn.or([
+									ebFn.and([
+										ebFn("i.archivedAt", "is", null),
+										ebFn("newer.archivedAt", "is", null),
 										newerIsMoreRecent,
 									]),
-									eb.and([
-										eb("i.archivedAt", "is not", null),
-										eb.or([
-											eb("newer.archivedAt", "is", null),
-											eb.and([
-												eb("newer.archivedAt", "is not", null),
+									ebFn.and([
+										ebFn("i.archivedAt", "is not", null),
+										ebFn.or([
+											ebFn("newer.archivedAt", "is", null),
+											ebFn.and([
+												ebFn("newer.archivedAt", "is not", null),
 												newerIsMoreRecent,
 											]),
 										]),
@@ -80,7 +80,7 @@ export const withActivitySelectFx = Effect.fn("withActivitySelectFx")(function* 
 			.exhaustive();
 	}
 
-	return selectFx({
+	return selectFn({
 		select,
 		queryFx(select, where: ActivityWhereSchema.Type) {
 			return Effect.gen(function* () {
@@ -103,22 +103,22 @@ export const withActivitySelectFx = Effect.fn("withActivitySelectFx")(function* 
 				}
 
 				if (where.reference) {
-					query = query.where((eb) => {
-						return sql`${eb.ref("i.reference")} @> ARRAY[${where.reference}]::text[]`;
+					query = query.where((ebFn) => {
+						return sql`${ebFn.ref("i.reference")} @> ARRAY[${where.reference}]::text[]`;
 					});
 				}
 
 				if (where.referenceIn && where.referenceIn.length > 0) {
 					const referenceIn = where.referenceIn;
-					query = query.where((eb) => {
-						return sql`${eb.ref("i.reference")} && ARRAY[${sql.join(referenceIn)}]::text[]`;
+					query = query.where((ebFn) => {
+						return sql`${ebFn.ref("i.reference")} && ARRAY[${sql.join(referenceIn)}]::text[]`;
 					});
 				}
 
 				if (where.referenceAllIn && where.referenceAllIn.length > 0) {
 					const referenceAllIn = where.referenceAllIn;
-					query = query.where((eb) => {
-						return sql`${eb.ref("i.reference")} @> ARRAY[${sql.join(referenceAllIn)}]::text[]`;
+					query = query.where((ebFn) => {
+						return sql`${ebFn.ref("i.reference")} @> ARRAY[${sql.join(referenceAllIn)}]::text[]`;
 					});
 				}
 

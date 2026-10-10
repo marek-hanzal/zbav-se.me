@@ -19,7 +19,7 @@ export const NameValue: FC<NameValue.Props> = ({ name, ...props }) => {
 	return (
 		<LabelValue
 			data-ui={"NameValue[LabelValue]"}
-			textLabel={translator.text("Feed name (label)")}
+			textLabel={translator.textFn("Feed name (label)")}
 			textValue={name}
 			wrapperProps={{
 				...(name

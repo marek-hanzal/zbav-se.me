@@ -13,15 +13,15 @@ export namespace dbFx {
 	}[keyof M];
 }
 
-const dbFxImpl = Effect.fn("tryDbFx")(function* <TResult>(
-	run: (kysely: Kysely<Database>) => Promise<TResult>,
+const dbFxImplFx = Effect.fn("tryDbFx")(function* <TResult>(
+	runFn: (kysely: Kysely<Database>) => Promise<TResult>,
 	handler?: dbFx.Handlers,
 ) {
 	const { kysely } = yield* KyselyContextFx;
 
 	return yield* Effect.tryPromise({
 		try() {
-			return run(kysely);
+			return runFn(kysely);
 		},
 		catch: (error: unknown) => {
 			if (error instanceof DatabaseError) {
@@ -53,14 +53,14 @@ const dbFxImpl = Effect.fn("tryDbFx")(function* <TResult>(
 });
 
 export function dbFx<TResult>(
-	run: (kysely: Kysely<Database>) => Promise<TResult>,
+	runFn: (kysely: Kysely<Database>) => Promise<TResult>,
 ): Effect.Effect<TResult, RuntimeErrorFx, KyselyContextFx>;
 
 export function dbFx<TResult, const M extends dbFx.Handlers>(
-	run: (kysely: Kysely<Database>) => Promise<TResult>,
+	runFn: (kysely: Kysely<Database>) => Promise<TResult>,
 	handler: M & dbFx.Handlers,
 ): Effect.Effect<TResult, RuntimeErrorFx | dbFx.ErrorChannel<M>, KyselyContextFx>;
 
-export function dbFx(run: any, handler?: any) {
-	return dbFxImpl(run, handler);
+export function dbFx(runFn: any, handler?: any) {
+	return dbFxImplFx(runFn, handler);
 }

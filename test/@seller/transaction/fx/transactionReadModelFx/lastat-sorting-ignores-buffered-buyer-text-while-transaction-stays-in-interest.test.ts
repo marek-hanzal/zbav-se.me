@@ -1,16 +1,16 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionCollectionFx } from "~/seller-transaction/fx/transactionCollectionFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { getDefaultListingCreateFx } from "~/test/listing/fx/getDefaultListingCreateFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 import { transactionEntryCreateFx } from "~/user-transaction-entry/fx/transactionEntryCreateFx";
 
 describe("seller transaction read model", () => {
 	it("lastAt sorting ignores buffered buyer text while transaction stays in interest", async () => {
-		const database = await testabase("sellerTransactionReadModelFx-lastAt-interest");
+		const database = await testabaseFn("sellerTransactionReadModelFx-lastAt-interest");
 
 		return Effect.gen(function* () {
 			const { seller, buyer } = yield* createUsersFx({});
@@ -57,6 +57,6 @@ describe("seller transaction read model", () => {
 			expect(newerIndex).toBeLessThan(olderIndex);
 			expect(olderItem?.entry.kind).toBe("status-interest");
 			expect(olderItem?.lastAt.getTime()).toBeLessThan(hiddenTextEntry.createdAt.getTime());
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

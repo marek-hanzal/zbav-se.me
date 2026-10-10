@@ -1,16 +1,16 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 import { transactionUserCreateFx } from "~/user-transaction-user/fx/transactionUserCreateFx";
 
 describe("transactionUserCreateFx", () => {
 	it("inserts transaction participants with expected sides", async () => {
-		const database = await testabase("transactionUserCreateFx-insert-contract");
+		const database = await testabaseFn("transactionUserCreateFx-insert-contract");
 
 		return Effect.gen(function* () {
 			const users = yield* createUsersFx({});
@@ -42,8 +42,8 @@ describe("transactionUserCreateFx", () => {
 					},
 				],
 			}).pipe(
-				withDateServiceFx({
-					now: () => fixedNow,
+				withDateServiceFn({
+					nowFn: () => fixedNow,
 				}),
 			);
 
@@ -83,6 +83,6 @@ describe("transactionUserCreateFx", () => {
 					(item) => item.createdAt.toISOString() === fixedNow.toUTC().toISO(),
 				),
 			).toBe(true);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

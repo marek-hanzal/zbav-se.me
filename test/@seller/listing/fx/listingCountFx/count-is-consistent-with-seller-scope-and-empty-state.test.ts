@@ -2,14 +2,14 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { listingCollectionFx } from "~/seller-listing/fx/listingCollectionFx";
 import { listingCountFx } from "~/seller-listing/fx/listingCountFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
 describe("seller listingCountFx", () => {
 	it("matches seller-scoped collection and supports empty filters", async () => {
-		const database = await testabase("seller-listingCountFx-contract");
+		const database = await testabaseFn("seller-listingCountFx-contract");
 
 		return Effect.gen(function* () {
 			const users = yield* createUsersFx({});
@@ -54,6 +54,6 @@ describe("seller listingCountFx", () => {
 			});
 
 			expect(empty).toBe(0);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

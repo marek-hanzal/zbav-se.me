@@ -8,12 +8,12 @@ import type { ListingAttrEnumSingleTableSchema } from "~/database/schema/Listing
 import type { ListingAttrNumberTableSchema } from "~/database/schema/ListingAttrNumberTableSchema";
 import type { ListingAttrTextTableSchema } from "~/database/schema/ListingAttrTextTableSchema";
 import { DeliveryEnumSchema } from "~/delivery/schema/DeliveryEnumSchema";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import { ListingExpireEnumSchema } from "~/listing/schema/ListingExpireEnumSchema";
 import { PriceTypeEnumSchema } from "~/price-type/schema/PriceTypeEnumSchema";
-import { list } from "~/random/fn/list";
-import { rangedom } from "~/random/fn/rangedom";
-import { sample } from "~/random/fn/sample";
+import { listFn } from "~/random/fn/listFn";
+import { rangedomFn } from "~/random/fn/rangedomFn";
+import { sampleFn } from "~/random/fn/sampleFn";
 import type { CategoryAttrOfSchema } from "~/user-category/schema/CategoryAttrOfSchema";
 import { WarrantyEnumSchema } from "~/warranty/schema/WarrantyEnumSchema";
 
@@ -101,48 +101,48 @@ type SeedProgressReporter = (input: {
 	category: CategoryTableSchema.Type;
 }) => Effect.Effect<void, never, never>;
 
-const toPriceType = (record: SeedBranchRecord, random = Math.random) => {
+const toPriceTypeFn = (record: SeedBranchRecord, randomFn = Math.random) => {
 	if (record.priceMax <= 0) {
 		return PriceTypeEnumSchema.enum.free;
 	}
 
-	return random() < 0.82 ? PriceTypeEnumSchema.enum.fixed : PriceTypeEnumSchema.enum.haggle;
+	return randomFn() < 0.82 ? PriceTypeEnumSchema.enum.fixed : PriceTypeEnumSchema.enum.haggle;
 };
 
-const toPrice = (record: SeedBranchRecord, random = Math.random) => {
-	const shouldUseSpike = record.priceSpikes.length > 0 && random() < 0.18;
+const toPriceFn = (record: SeedBranchRecord, randomFn = Math.random) => {
+	const shouldUseSpike = record.priceSpikes.length > 0 && randomFn() < 0.18;
 
 	if (shouldUseSpike) {
-		return list(record.priceSpikes);
+		return listFn(record.priceSpikes);
 	}
 
 	if (record.priceMax <= record.priceMin) {
 		return record.priceMin;
 	}
 
-	return rangedom(record.priceMin, record.priceMax);
+	return rangedomFn(record.priceMin, record.priceMax);
 };
 
-const withProsCons = (record: SeedBranchRecord) => {
+const withProsConsFn = (record: SeedBranchRecord) => {
 	return {
-		pros: sample(record.pros, rangedom(0, Math.min(5, record.pros.length))),
-		cons: sample(record.cons, rangedom(0, Math.min(5, record.cons.length))),
+		pros: sampleFn(record.pros, rangedomFn(0, Math.min(5, record.pros.length))),
+		cons: sampleFn(record.cons, rangedomFn(0, Math.min(5, record.cons.length))),
 	};
 };
 
-const withDeliverySelection = (record: SeedBranchRecord) => {
+const withDeliverySelectionFn = (record: SeedBranchRecord) => {
 	if (record.delivery.length === 0) {
-		return list([
+		return listFn([
 			[
 				DeliveryEnumSchema.enum.personal,
 			],
 		]);
 	}
 
-	return sample(record.delivery, rangedom(1, record.delivery.length));
+	return sampleFn(record.delivery, rangedomFn(1, record.delivery.length));
 };
 
-const withEmptyAttrs = (_listingId: string): SeedListingAttrs => ({
+const withEmptyAttrsFn = (_listingId: string): SeedListingAttrs => ({
 	decimal: [],
 	number: [],
 	enumMulti: [],
@@ -150,7 +150,7 @@ const withEmptyAttrs = (_listingId: string): SeedListingAttrs => ({
 	text: [],
 });
 
-export const withCategoryAttrCacheFx = (loadCategoryAttrs: SeedCategoryAttrLoader) => {
+export const withCategoryAttrCacheFn = (loadCategoryAttrsFx: SeedCategoryAttrLoader) => {
 	const cache = new Map<string, CategoryAttrOfSchema.Type[]>();
 
 	return (categoryId: string) =>
@@ -161,21 +161,21 @@ export const withCategoryAttrCacheFx = (loadCategoryAttrs: SeedCategoryAttrLoade
 				return cached;
 			}
 
-			const attrs = yield* loadCategoryAttrs(categoryId);
+			const attrs = yield* loadCategoryAttrsFx(categoryId);
 			cache.set(categoryId, attrs);
 
 			return attrs;
 		});
 };
 
-const toListingAttrs = ({
+const toListingAttrsFn = ({
 	fields,
 	listingId,
 }: {
 	fields: CategoryAttrOfSchema.Type[];
 	listingId: string;
 }): SeedListingAttrs => {
-	const attrs = withEmptyAttrs(listingId);
+	const attrs = withEmptyAttrsFn(listingId);
 
 	for (const field of fields) {
 		match(field)
@@ -187,7 +187,7 @@ const toListingAttrs = ({
 					attrs.decimal.push({
 						listingId,
 						fieldId: field.name,
-						value: rangedom(min ?? 0, max ?? 1024) / 100,
+						value: rangedomFn(min ?? 0, max ?? 1024) / 100,
 					});
 				},
 			)
@@ -199,7 +199,7 @@ const toListingAttrs = ({
 					attrs.number.push({
 						listingId,
 						fieldId: field.name,
-						value: rangedom(min ?? 0, max ?? 1024),
+						value: rangedomFn(min ?? 0, max ?? 1024),
 					});
 				},
 			)
@@ -211,7 +211,7 @@ const toListingAttrs = ({
 					attrs.decimal.push({
 						listingId,
 						fieldId: field.name,
-						value: rangedom(min ?? 0, max ?? 1024),
+						value: rangedomFn(min ?? 0, max ?? 1024),
 					});
 				},
 			)
@@ -223,7 +223,7 @@ const toListingAttrs = ({
 					attrs.number.push({
 						listingId,
 						fieldId: field.name,
-						value: rangedom(min ?? 1940, max ?? 2099),
+						value: rangedomFn(min ?? 1940, max ?? 2099),
 					});
 				},
 			)
@@ -235,7 +235,7 @@ const toListingAttrs = ({
 					attrs.text.push({
 						listingId,
 						fieldId: field.name,
-						value: genId(),
+						value: genIdFn(),
 					});
 				},
 			)
@@ -248,7 +248,7 @@ const toListingAttrs = ({
 						return;
 					}
 
-					const values = sample(options, Math.min(max ?? 3, options.length)).map(
+					const values = sampleFn(options, Math.min(max ?? 3, options.length)).map(
 						({ value }) => ({
 							listingId,
 							fieldId: field.name,
@@ -264,7 +264,7 @@ const toListingAttrs = ({
 					type: "enum-single",
 				},
 				({ options }) => {
-					const option = list(options);
+					const option = listFn(options);
 
 					if (!option) {
 						return;
@@ -290,9 +290,9 @@ export namespace buildSeedListingPlansFx {
 		supportedCategories: CategoryTableSchema.Type[];
 		locations: SeedResolvedLocation[];
 		uploadPool: SeedResolvedUpload[];
-		toSeedBranch(slug: string): SeedBranchRecord[];
-		loadCategoryAttrs: SeedCategoryAttrLoader;
-		onPlanned?: SeedProgressReporter;
+		toSeedBranchFn(slug: string): SeedBranchRecord[];
+		loadCategoryAttrsFx: SeedCategoryAttrLoader;
+		onPlannedFx?: SeedProgressReporter;
 	}
 }
 
@@ -302,31 +302,31 @@ export const buildSeedListingPlansFx = Effect.fn("buildSeedListingPlansFx")(func
 	supportedCategories,
 	locations,
 	uploadPool,
-	toSeedBranch,
-	loadCategoryAttrs,
-	onPlanned,
+	toSeedBranchFn,
+	loadCategoryAttrsFx,
+	onPlannedFx,
 }: buildSeedListingPlansFx.Props) {
-	const getCategoryAttrs = withCategoryAttrCacheFx(loadCategoryAttrs);
+	const getCategoryAttrsFx = withCategoryAttrCacheFn(loadCategoryAttrsFx);
 	const plans: SeedListingPlan[] = [];
 
 	for (let index = 0; index < count; index += 1) {
-		const category = list(supportedCategories);
-		const branch = toSeedBranch(category.slug);
-		const record = list(branch);
-		const fields = yield* getCategoryAttrs(category.id);
-		const priceType = toPriceType(record);
-		const price = priceType === PriceTypeEnumSchema.enum.free ? 0 : toPrice(record);
-		const location = list(locations);
-		const uploadCount = rangedom(1, Math.min(4, uploadPool.length));
-		const sourceUploads = sample(uploadPool, uploadCount);
-		const prosCons = withProsCons(record);
-		const listingId = genId();
+		const category = listFn(supportedCategories);
+		const branch = toSeedBranchFn(category.slug);
+		const record = listFn(branch);
+		const fields = yield* getCategoryAttrsFx(category.id);
+		const priceType = toPriceTypeFn(record);
+		const price = priceType === PriceTypeEnumSchema.enum.free ? 0 : toPriceFn(record);
+		const location = listFn(locations);
+		const uploadCount = rangedomFn(1, Math.min(4, uploadPool.length));
+		const sourceUploads = sampleFn(uploadPool, uploadCount);
+		const prosCons = withProsConsFn(record);
+		const listingId = genIdFn();
 
 		const plan: SeedListingPlan = {
 			title: record.title,
 			description: record.description,
 			listingId,
-			galleryId: genId(),
+			galleryId: genIdFn(),
 			categoryId: category.id,
 			locationId: location.id,
 			locationLabel: location.label,
@@ -334,19 +334,19 @@ export const buildSeedListingPlansFx = Effect.fn("buildSeedListingPlansFx")(func
 			priceType,
 			price,
 			currency: CurrencyEnumSchema.enum.CZK,
-			expires: list(LISTING_EXPIRATIONS),
-			condition: list([
+			expires: listFn(LISTING_EXPIRATIONS),
+			condition: listFn([
 				...LISTING_CONDITIONS,
 			]),
-			age: list([
+			age: listFn([
 				...LISTING_AGES,
 			]),
-			delivery: withDeliverySelection(record),
-			warranty: list(LISTING_WARRANTIES),
+			delivery: withDeliverySelectionFn(record),
+			warranty: listFn(LISTING_WARRANTIES),
 			pros: prosCons.pros,
 			cons: prosCons.cons,
 			sourceUploads,
-			attrs: toListingAttrs({
+			attrs: toListingAttrsFn({
 				fields,
 				listingId,
 			}),
@@ -354,8 +354,8 @@ export const buildSeedListingPlansFx = Effect.fn("buildSeedListingPlansFx")(func
 
 		plans.push(plan);
 
-		if (onPlanned) {
-			yield* onPlanned({
+		if (onPlannedFx) {
+			yield* onPlannedFx({
 				count: offset + index + 1,
 				plan,
 				category,

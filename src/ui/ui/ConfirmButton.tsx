@@ -1,5 +1,5 @@
 import React, { type FC, useEffect, useRef, useState } from "react";
-import { uiButton } from "~/ui/fn/uiButton";
+import { uiButtonFn } from "~/ui/fn/uiButtonFn";
 import { Button } from "~/ui/ui/Button";
 
 export namespace ConfirmButton {
@@ -30,20 +30,20 @@ export const ConfirmButton: FC<ConfirmButton.Props> = ({
 	buttonProps,
 	confirmProps,
 	confirmTimeout = 3000,
-	onReset,
+	onReset: onResetFn,
 	...props
 }) => {
-	const [isConfirm, setIsConfirm] = useState(false);
+	const [isConfirm, setIsConfirmFn] = useState(false);
 	const timeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
-	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+	const handleClickFn = (event: React.MouseEvent<HTMLButtonElement>) => {
 		if (!isConfirm) {
 			buttonProps?.onClick?.(event);
-			setIsConfirm(true);
+			setIsConfirmFn(true);
 			timeoutRef.current = setTimeout(() => {
-				setIsConfirm(false);
+				setIsConfirmFn(false);
 				timeoutRef.current = undefined;
-				onReset?.();
+				onResetFn?.();
 			}, confirmTimeout);
 			return;
 		}
@@ -51,7 +51,7 @@ export const ConfirmButton: FC<ConfirmButton.Props> = ({
 		clearTimeout(timeoutRef.current);
 		timeoutRef.current = undefined;
 
-		setIsConfirm(false);
+		setIsConfirmFn(false);
 
 		confirmProps?.onClick?.(event);
 	};
@@ -68,12 +68,12 @@ export const ConfirmButton: FC<ConfirmButton.Props> = ({
 
 	return (
 		<Button
-			{...uiButton({
+			{...uiButtonFn({
 				className: [],
 			})}
 			{...props}
 			{...conditionalProps}
-			onClick={handleClick}
+			onClick={handleClickFn}
 		/>
 	);
 };

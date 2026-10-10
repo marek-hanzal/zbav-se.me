@@ -4,7 +4,7 @@ import { useLocale } from "~/locale/hook/useLocale";
 import { useTranslator } from "~/translation/hook/useTranslator";
 import { Tx } from "~/translation/ui/Tx";
 import { ChevronRightIcon } from "~/ui/constant/ChevronRightIcon";
-import { uiButton } from "~/ui/fn/uiButton";
+import { uiButtonFn } from "~/ui/fn/uiButtonFn";
 import { Container } from "~/ui/ui/Container";
 import { LinkTo } from "~/ui/ui/LinkTo";
 import { Status } from "~/ui/ui/Status";
@@ -34,8 +34,8 @@ export const EmptyListing: FC<EmptyListing.Props> = (props) => {
 				iconProps={{
 					"data-ui-text": "4xl",
 				}}
-				textTitle={translator.text("First listing (title)")}
-				textMessage={translator.text("First listing (message)")}
+				textTitle={translator.textFn("First listing (title)")}
+				textMessage={translator.textFn("First listing (message)")}
 				messageProps={{
 					className: "text-center",
 				}}
@@ -49,7 +49,7 @@ export const EmptyListing: FC<EmptyListing.Props> = (props) => {
 							params={{
 								locale,
 							}}
-							{...uiButton({
+							{...uiButtonFn({
 								"data-ui-tone": "brand",
 								"data-ui-theme": "light",
 								"data-ui-text": "lg",
@@ -68,7 +68,7 @@ export const EmptyListing: FC<EmptyListing.Props> = (props) => {
 							params={{
 								locale,
 							}}
-							{...uiButton({
+							{...uiButtonFn({
 								"data-ui-tone": "link",
 								"data-ui-theme": "light",
 								"data-ui-text": "sm",

@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { selectFx } from "~/database-query/fx/selectFx";
+import { selectFn } from "~/database-query/fn/selectFn";
 import type { ResourceDefinitionSortSchema } from "~/resource-definition/schema/ResourceDefinitionSortSchema";
 import type { ResourceDefinitionWhereSchema } from "~/resource-definition/schema/ResourceDefinitionWhereSchema";
 
@@ -26,7 +26,7 @@ export const withResourceDefinitionSelectFx = Effect.fn("withResourceDefinitionS
 				.exhaustive();
 		}
 
-		return selectFx({
+		return selectFn({
 			select: query,
 			queryFx(select, where: ResourceDefinitionWhereSchema.Type) {
 				return Effect.gen(function* () {

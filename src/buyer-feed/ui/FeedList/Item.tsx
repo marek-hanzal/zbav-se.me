@@ -21,7 +21,7 @@ export namespace Item {
 
 export const Item: FC<Item.Props> = ({ feed, ...props }) => {
 	const locale = useLocale();
-	const [isEditor, setIsEditor] = useState(false);
+	const [isEditor, setIsEditorFn] = useState(false);
 
 	return (
 		<Container
@@ -89,7 +89,7 @@ export const Item: FC<Item.Props> = ({ feed, ...props }) => {
 				iconProps={{
 					"data-ui-text": "lg",
 				}}
-				onClick={() => setIsEditor((prev) => !prev)}
+				onClick={() => setIsEditorFn((prev) => !prev)}
 				data-ui-tone="secondary"
 				data-ui-theme="light"
 				data-ui-background="default"
@@ -110,14 +110,14 @@ export const Item: FC<Item.Props> = ({ feed, ...props }) => {
 				feedId={feed.id}
 				state={{
 					value: isEditor,
-					set: setIsEditor,
+					setFn: setIsEditorFn,
 				}}
 			>
 				<Group>
 					<DeleteButton
 						feedId={feed.id}
-						onDelete={async () => {
-							setIsEditor(false);
+						onDeleteFn={async () => {
+							setIsEditorFn(false);
 						}}
 					/>
 				</Group>

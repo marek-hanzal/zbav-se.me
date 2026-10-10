@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { TitleContainer } from "~/application-ui/ui/container.exports";
 import { withFeedQuery } from "~/buyer-feed/query/withFeedQuery";
-import { getFeedDefaultCreate } from "~/buyer-feed/service/getFeedDefaultCreate";
+import { getFeedDefaultCreateFn } from "~/buyer-feed/service/getFeedDefaultCreateFn";
 import { SearchEditor } from "~/buyer-search/ui/SearchEditor";
 import { useLocale } from "~/locale/hook/useLocale";
 import { BackHomeButton } from "~/nav/ui/BackHomeButton.exports";
-import { translator } from "~/translation/fn/translator";
+import { translatorFn } from "~/translation/fn/translatorFn";
 import { useTranslator } from "~/translation/hook/useTranslator";
 import { withTranslationsQuery } from "~/translation/query/withTranslationsQuery";
 import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
@@ -13,15 +13,15 @@ import { HomeMenuButton } from "~/user-home/ui/HomeMenu/HomeMenuButton";
 
 export const Route = createFileRoute("/$locale/app/buyer/search")({
 	async loader({ context: { queryClient }, params: { locale } }) {
-		const t = translator({
-			translations: await withTranslationsQuery.ensure(queryClient, {
+		const t = translatorFn({
+			translations: await withTranslationsQuery.ensureFn(queryClient, {
 				locale,
 			}),
 		});
 
 		return (
 			(await withFeedQuery
-				.ensureEntityQuery(queryClient, {
+				.ensureEntityQueryFn(queryClient, {
 					where: {
 						type: "search",
 					},
@@ -35,7 +35,7 @@ export const Route = createFileRoute("/$locale/app/buyer/search")({
 				.catch(() => undefined)) ??
 			(await withFeedQuery.createFn(
 				queryClient,
-				getFeedDefaultCreate(t.text("Search (title)"), "search"),
+				getFeedDefaultCreateFn(t.textFn("Search (title)"), "search"),
 			))
 		);
 	},
@@ -46,7 +46,7 @@ export const Route = createFileRoute("/$locale/app/buyer/search")({
 		return (
 			<TitleContainer
 				data-ui={"Search[TitleContainer.pending]"}
-				textTitle={translator.text("Search (title)")}
+				textTitle={translator.textFn("Search (title)")}
 				left={
 					<BackHomeButton
 						to="/$locale/app/home"
@@ -82,7 +82,7 @@ export const Route = createFileRoute("/$locale/app/buyer/search")({
 		return (
 			<TitleContainer
 				data-ui={"Search[TitleContainer]"}
-				textTitle={translator.text("Search (title)")}
+				textTitle={translator.textFn("Search (title)")}
 				left={
 					<BackHomeButton
 						to="/$locale/app/home"

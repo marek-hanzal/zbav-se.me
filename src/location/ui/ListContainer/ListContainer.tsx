@@ -1,10 +1,10 @@
-import { uiSelectButton } from "~/application-ui/fn/ui.exports";
+import { uiSelectButtonFn } from "~/application-ui/fn/ui.exports";
 import { useLocale } from "~/locale/hook/useLocale";
 import { Default } from "~/location/ui/ListContainer/Default";
 import { Empty } from "~/location/ui/ListContainer/Empty";
 import { withLocationAutocompleteQuery } from "~/session-location/query/withLocationAutocompleteQuery";
 import type { LocationSchema } from "~/session-location/schema/LocationSchema";
-import { withFallback } from "~/ui/fn/withFallback";
+import { withFallbackFn } from "~/ui/fn/withFallbackFn";
 import { Button } from "~/ui/ui/Button";
 import { Container } from "~/ui/ui/Container";
 import type { Fulltext } from "~/ui/ui/Fulltext";
@@ -16,9 +16,9 @@ export namespace ListContainer {
 			Pick<Default.Props, "textHint" | "warningStatusProps"> {
 		search: Fulltext.Value;
 		value: string | undefined | null;
-		onChange(value: string | null): void;
+		onChangeFn(value: string | null): void;
 		allowClear?: boolean;
-		onLocation?(value: LocationSchema.Type): void;
+		onLocationFn?(value: LocationSchema.Type): void;
 	}
 }
 
@@ -28,14 +28,14 @@ export namespace ListContainer {
  *
  * @see src/draft/ui/DraftEditor/DraftEditor.tsx
  */
-export const ListContainer = withFallback(
+export const ListContainer = withFallbackFn(
 	({
 		textHint,
 		search,
 		value,
-		onChange,
+		onChangeFn,
 		allowClear,
-		onLocation,
+		onLocationFn,
 		warningStatusProps,
 		...props
 	}: ListContainer.Props) => {
@@ -78,15 +78,15 @@ export const ListContainer = withFallback(
 								data-action={"select location"}
 								onClick={() => {
 									if (allowClear && value === item.id) {
-										onChange(null);
+										onChangeFn(null);
 										return;
 									}
 
-									onChange(item.id);
-									onLocation?.(item);
+									onChangeFn(item.id);
+									onLocationFn?.(item);
 								}}
 								truncate
-								{...uiSelectButton({
+								{...uiSelectButtonFn({
 									isSelected: value === item.id,
 									className: [
 										"text-left",

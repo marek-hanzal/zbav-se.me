@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { dbFx } from "~/database/fx/dbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import { getLoggerFx } from "~/log/fx/getLoggerFx";
 
 export namespace userBundleLimitCopyFx {
@@ -48,7 +48,7 @@ export const userBundleLimitCopyFx = Effect.fn("userBundleLimitCopyFx")(function
 						await kysely
 							.insertInto("user_resource_bundle_limit")
 							.values({
-								id: genId(),
+								id: genIdFn(),
 								userResourceBundleId: assignmentId,
 								resourceDefinitionId: limit.resourceDefinitionId,
 								limit: limit.limit,

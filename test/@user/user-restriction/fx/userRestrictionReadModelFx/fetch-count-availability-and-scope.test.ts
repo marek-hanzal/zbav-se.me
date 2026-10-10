@@ -1,23 +1,23 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 import { userRestrictionCountFx } from "~/user-restriction/fx/userRestrictionCountFx";
 import { userRestrictionFetchFx } from "~/user-restriction/fx/userRestrictionFetchFx";
 
 const atFx = <A, E, R>(iso: string, eff: Effect.Effect<A, E, R>) =>
 	eff.pipe(
-		withDateServiceFx({
-			now: () => DateTime.fromISO(iso),
+		withDateServiceFn({
+			nowFn: () => DateTime.fromISO(iso),
 		}),
 	);
 
 describe("userRestriction read model fx", () => {
 	it("fetches and counts only scoped rows while distinguishing available, waiting, and expired restrictions", async () => {
-		const database = await testabase("user-restriction-read-model-fetch-count");
+		const database = await testabaseFn("user-restriction-read-model-fetch-count");
 
 		return Effect.gen(function* () {
 			const { seller, buyer } = yield* createUsersFx({});
@@ -116,6 +116,6 @@ describe("userRestriction read model fx", () => {
 			expect(waitingCount).toBe(1);
 			expect(expiredCount).toBe(1);
 			expect(buyerLiveCount).toBe(1);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

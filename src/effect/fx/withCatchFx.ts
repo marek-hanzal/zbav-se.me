@@ -32,16 +32,16 @@ type WithCatchFx = {
 	): Effect.Effect<A | HandlerOut<E, H>, never, R>;
 };
 
-const impl = <A, E extends TaggedError, R, H extends HandlerMap<E>>(
+const implFx = <A, E extends TaggedError, R, H extends HandlerMap<E>>(
 	self: Effect.Effect<A, E, R>,
 	handlers: ExactKeys<H, TagOf<E>>,
 ): Effect.Effect<A | HandlerOut<E, H>, never, R> =>
 	self.pipe(
 		Effect.catch((e) => {
 			const tag = e._tag as TagOf<E>;
-			const fn = handlers[tag] as (x: E) => HandlerOut<E, H>;
-			return Effect.succeed(fn(e));
+			const fnFn = handlers[tag] as (x: E) => HandlerOut<E, H>;
+			return Effect.succeed(fnFn(e));
 		}),
 	);
 
-export const withCatchFx: WithCatchFx = dual(2, impl);
+export const withCatchFx: WithCatchFx = dual(2, implFx);

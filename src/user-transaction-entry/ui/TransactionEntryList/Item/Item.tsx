@@ -1,5 +1,5 @@
 import { match } from "ts-pattern";
-import { withFallback } from "~/ui/fn/withFallback";
+import { withFallbackFn } from "~/ui/fn/withFallbackFn";
 import type { MarkSuspense } from "~/ui/type/MarkSuspense";
 import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
 import type { UserSideEnumSchema } from "~/user-event-contract/schema/UserSideEnumSchema";
@@ -18,7 +18,7 @@ export namespace Item {
 	}
 }
 
-export const Item = withFallback(({ _suspense, side, transactionEntryId }: Item.Props) => {
+export const Item = withFallbackFn(({ _suspense, side, transactionEntryId }: Item.Props) => {
 	const { data: transactionEntry } = withTransactionEntryQuery.useFetchQuery(transactionEntryId);
 
 	return match(transactionEntry)

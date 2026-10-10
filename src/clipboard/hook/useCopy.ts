@@ -1,7 +1,7 @@
 import { getLogger } from "@logtape/logtape";
 import { type MutateOptions, useMutation } from "@tanstack/react-query";
-import { copy } from "~/clipboard/fn/copy";
-import { sleep } from "~/timing/fn/sleep";
+import { copyFn } from "~/clipboard/fn/copyFn";
+import { sleepFn } from "~/timing/fn/sleepFn";
 
 const logger = getLogger([
 	"lib",
@@ -20,7 +20,7 @@ export namespace useCopy {
 	}
 }
 
-export const useCopy = ({ onError, delay = 500, ...opts }: useCopy.Props = {}) => {
+export const useCopy = ({ onError: onErrorFn, delay = 500, ...opts }: useCopy.Props = {}) => {
 	return useMutation<void, Error, useCopy.Variables>({
 		mutationKey: [
 			"navigator",
@@ -33,14 +33,14 @@ export const useCopy = ({ onError, delay = 500, ...opts }: useCopy.Props = {}) =
 			/**
 			 * Synthetic slowdown to make a "copy effect".
 			 */
-			await sleep(delay);
-			return copy(text);
+			await sleepFn(delay);
+			return copyFn(text);
 		},
 		onError(error, variables, onMutationResult, context) {
 			logger.error("Kaboom", {
 				message: error.message,
 			});
-			return onError?.(error, variables, onMutationResult, context);
+			return onErrorFn?.(error, variables, onMutationResult, context);
 		},
 		...opts,
 	});

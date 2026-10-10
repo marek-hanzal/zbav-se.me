@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { CopyIconAction } from "~/clipboard/ui/CopyIconAction";
-import { toTimeDiff } from "~/date/fn/toTimeDiff";
+import { toTimeDiffFn } from "~/date/fn/toTimeDiffFn";
 import { useLocale } from "~/locale/hook/useLocale";
 import { useTranslator } from "~/translation/hook/useTranslator";
 import type { Container as ContainerType } from "~/ui/ui/Container";
@@ -34,7 +34,7 @@ export const Personal: FC<Personal.Props> = ({ transactionEntry, ...props }) => 
 			>
 				{name && (
 					<LabelValue
-						textLabel={translator.text("Personal - name")}
+						textLabel={translator.textFn("Personal - name")}
 						textValue={name}
 						textLabelProps={{
 							"data-ui-text": "default",
@@ -47,7 +47,7 @@ export const Personal: FC<Personal.Props> = ({ transactionEntry, ...props }) => 
 
 				{phone && (
 					<LabelValue
-						textLabel={translator.text("Personal - phone")}
+						textLabel={translator.textFn("Personal - phone")}
 						textValue={phone}
 						textLabelProps={{
 							"data-ui-text": "default",
@@ -60,7 +60,7 @@ export const Personal: FC<Personal.Props> = ({ transactionEntry, ...props }) => 
 
 				{email && (
 					<LabelValue
-						textLabel={translator.text("Personal - email")}
+						textLabel={translator.textFn("Personal - email")}
 						textValue={email}
 						textLabelProps={{
 							"data-ui-text": "default",
@@ -73,7 +73,7 @@ export const Personal: FC<Personal.Props> = ({ transactionEntry, ...props }) => 
 			</Container>
 
 			<Typo
-				label={toTimeDiff({
+				label={toTimeDiffFn({
 					locale,
 					time: transactionEntry.createdAt,
 					type: "relative",

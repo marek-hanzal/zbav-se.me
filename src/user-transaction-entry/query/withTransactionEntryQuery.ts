@@ -1,5 +1,5 @@
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withEntityQuery } from "~/query/fn/withEntityQuery";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withEntityQueryFn } from "~/query/fn/withEntityQueryFn";
 import { transactionEntryCollectionFn } from "~/user-transaction-entry/fn/transactionEntryCollectionFn";
 import { transactionEntryCountFn } from "~/user-transaction-entry/fn/transactionEntryCountFn";
 import { transactionEntryCreateFn } from "~/user-transaction-entry/fn/transactionEntryCreateFn";
@@ -9,8 +9,8 @@ import type { TransactionEntryCountQuerySchema } from "~/user-transaction-entry/
 import type { TransactionEntryCreateSchema } from "~/user-transaction-entry/schema/TransactionEntryCreate";
 import type { TransactionEntryQuerySchema } from "~/user-transaction-entry/schema/TransactionEntryQuerySchema";
 
-export const withTransactionEntryQuery = withEntityQuery({
-	logger: getRootLogger([
+export const withTransactionEntryQuery = withEntityQueryFn({
+	logger: getRootLoggerFn([
 		"query",
 		"withTransactionEntryQuery",
 	]),
@@ -23,12 +23,12 @@ export const withTransactionEntryQuery = withEntityQuery({
 		delete: Error;
 		patchCollection: Error;
 	},
-	keys() {
+	keysFn() {
 		return [
 			"transaction-entry",
 		];
 	},
-	toIdKey(id): TransactionEntryQuerySchema.Type {
+	toIdKeyFn(id): TransactionEntryQuerySchema.Type {
 		return {
 			where: {
 				id,

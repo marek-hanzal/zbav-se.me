@@ -1,8 +1,8 @@
 import { useDebouncedCallback } from "@tanstack/react-pacer";
 import { type ComponentProps, type FC, useRef, useState } from "react";
-import { uiInput } from "~/form/fn/uiInput";
+import { uiInputFn } from "~/form/fn/uiInputFn";
 import { useTranslator } from "~/translation/hook/useTranslator";
-import { uiFulltext } from "~/ui/fn/uiFulltext";
+import { uiFulltextFn } from "~/ui/fn/uiFulltextFn";
 import { useMergeRefs } from "~/ui/hook/useMergeRefs";
 import type { StateType } from "~/ui/type/StateType";
 import { Icon } from "~/ui/ui/Icon";
@@ -12,7 +12,7 @@ export namespace Fulltext {
 	export type State = StateType.State<Value>;
 	export type OnFulltext = (text: Value) => void;
 
-	export interface Props extends uiFulltext.Component<ComponentProps<"input">> {
+	export interface Props extends uiFulltextFn.Component<ComponentProps<"input">> {
 		state: State;
 		textPlaceholder?: string;
 		/**
@@ -28,7 +28,7 @@ export namespace Fulltext {
 
 export const Fulltext: FC<Fulltext.Props> = ({
 	ref,
-	state: { value = "", set },
+	state: { value = "", setFn },
 	textPlaceholder,
 	withSubmit = false,
 	limit = 3,
@@ -41,24 +41,24 @@ export const Fulltext: FC<Fulltext.Props> = ({
 		ref,
 		inputRef,
 	]);
-	const [search, setSearch] = useState(value || "");
-	const debounced = useDebouncedCallback(set, {
+	const [search, setSearchFn] = useState(value || "");
+	const debouncedFn = useDebouncedCallback(setFn, {
 		wait: 500,
 	});
 
 	const isDisabled = withSubmit && search.length < limit;
 
-	const handleSubmit = () => {
+	const handleSubmitFn = () => {
 		if (isDisabled) {
 			return;
 		}
 		inputRef.current?.blur();
-		set(search);
+		setFn(search);
 	};
 
 	return (
 		<div
-			{...uiFulltext({
+			{...uiFulltextFn({
 				className,
 			})}
 		>
@@ -78,22 +78,22 @@ export const Fulltext: FC<Fulltext.Props> = ({
 				ref={mergeRef}
 				value={search}
 				type={"text"}
-				placeholder={textPlaceholder ?? translator.text("Fulltext (placeholder)")}
+				placeholder={textPlaceholder ?? translator.textFn("Fulltext (placeholder)")}
 				onChange={(event) => {
-					setSearch(event.target.value);
+					setSearchFn(event.target.value);
 					if (event.target.value === "") {
-						set("");
+						setFn("");
 					}
 					if (!withSubmit) {
-						debounced(event.target.value);
+						debouncedFn(event.target.value);
 					}
 				}}
 				onKeyDown={(event) => {
 					if (withSubmit && event.key === "Enter") {
-						handleSubmit();
+						handleSubmitFn();
 					}
 				}}
-				{...uiInput({
+				{...uiInputFn({
 					className: [
 						"px-8",
 						className,
@@ -109,7 +109,7 @@ export const Fulltext: FC<Fulltext.Props> = ({
 				>
 					<Icon
 						icon={"icon-[lucide--send]"}
-						onClick={handleSubmit}
+						onClick={handleSubmitFn}
 						className={
 							isDisabled
 								? [
@@ -135,8 +135,8 @@ export const Fulltext: FC<Fulltext.Props> = ({
 						<Icon
 							icon={"icon-[gridicons--cross]"}
 							onClick={() => {
-								setSearch("");
-								set(undefined);
+								setSearchFn("");
+								setFn(undefined);
 								inputRef.current?.focus();
 							}}
 							data-ui-tone="secondary"

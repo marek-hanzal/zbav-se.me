@@ -2,19 +2,19 @@ import { withListingQuery } from "~/buyer-listing/query/withListingQuery";
 import type { ListingSchema } from "~/buyer-listing/schema/ListingSchema";
 import { flagToggleFn } from "~/buyer-listing-flag/fn/flagToggleFn";
 import type { FlagToggleSchema } from "~/buyer-listing-flag/schema/FlagToggleSchema";
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withMutation } from "~/mutation/fn/withMutation";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withMutationFn } from "~/mutation/fn/withMutationFn";
 
-export const withFlagToggleMutation = withMutation<
+export const withFlagToggleMutation = withMutationFn<
 	FlagToggleSchema.Type,
 	ListingSchema.Type,
 	flagToggleFn.Error
 >({
-	logger: getRootLogger([
+	logger: getRootLoggerFn([
 		"mutation",
 		"withFlagToggleMutation",
 	]),
-	keys(variables) {
+	keysFn(variables) {
 		return [
 			"listing_flag",
 			"toggle",
@@ -28,7 +28,7 @@ export const withFlagToggleMutation = withMutation<
 	},
 	invalidate: [
 		{
-			async invalidate(queryClient, result) {
+			async invalidateFn(queryClient, result) {
 				result && withListingQuery.updateFn(queryClient, result);
 			},
 		},

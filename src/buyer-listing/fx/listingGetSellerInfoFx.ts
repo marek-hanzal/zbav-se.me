@@ -24,10 +24,10 @@ export const listingGetSellerInfoFx = Effect.fn("listingGetSellerInfoFx")(functi
 		return kysely
 			.selectFrom("listing as l")
 			.innerJoin("user as u", "u.id", "l.userId")
-			.select((eb) => [
+			.select((ebFn) => [
 				"u.id",
 				"u.createdAt",
-				eb
+				ebFn
 					.selectFrom("listing as l2")
 					.select(sql<number>`count(*)::int`.as("listings"))
 					.whereRef("l2.userId", "=", "u.id")

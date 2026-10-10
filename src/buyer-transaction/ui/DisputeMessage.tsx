@@ -11,12 +11,12 @@ import { PersonalButton } from "~/user-transaction-entry/ui/PersonalButton/index
 
 export namespace DisputeMessage {
 	export interface Props extends Container.Props {
-		close: TransactionMenuButton.Close;
+		closeFn: TransactionMenuButton.Close;
 		transaction: TransactionSchema.Type;
 	}
 }
 
-export const DisputeMessage: FC<DisputeMessage.Props> = ({ close, transaction, ...props }) => {
+export const DisputeMessage: FC<DisputeMessage.Props> = ({ closeFn, transaction, ...props }) => {
 	return (
 		<>
 			<Group
@@ -26,19 +26,19 @@ export const DisputeMessage: FC<DisputeMessage.Props> = ({ close, transaction, .
 				{...props}
 			>
 				<GalleryButton
-					close={close}
+					closeFn={closeFn}
 					transactionId={transaction.id}
 					{...MessageButtonUi}
 				/>
 
 				<LocationButton
-					close={close}
+					closeFn={closeFn}
 					transactionId={transaction.id}
 					{...MessageButtonUi}
 				/>
 
 				<PersonalButton
-					close={close}
+					closeFn={closeFn}
 					transactionId={transaction.id}
 					{...MessageButtonUi}
 				/>

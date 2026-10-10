@@ -1,15 +1,15 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { fieldOptionCollectionFx } from "~/user-field-option/fx/fieldOptionCollectionFx";
 import { fieldOptionCountFx } from "~/user-field-option/fx/fieldOptionCountFx";
 import { fieldOptionFetchFx } from "~/user-field-option/fx/fieldOptionFetchFx";
 
 describe("field option read model", () => {
 	it("filters, sorts, fetches, and counts field options consistently", async () => {
-		const database = await testabase("field-option-read-model-contract");
+		const database = await testabaseFn("field-option-read-model-contract");
 
 		return Effect.gen(function* () {
 			const ramOptions = yield* fieldOptionCollectionFx({
@@ -102,9 +102,9 @@ describe("field option read model", () => {
 				"1 TB",
 				"2 TB or more",
 			]);
-			expectTaggedErrorFx(missingOption, {
+			expectTaggedErrorFn(missingOption, {
 				tag: "NotFoundErrorFx",
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

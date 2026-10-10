@@ -11,14 +11,19 @@ import { Container } from "~/ui/ui/Container";
 export namespace DeliveryPatch {
 	export interface Props extends Container.Props {
 		feed: FeedSchema.Type;
-		onCancel(): void;
-		onSettled?(): void;
+		onCancelFn(): void;
+		onSettledFn?(): void;
 	}
 }
 
-export const DeliveryPatch: FC<DeliveryPatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
+export const DeliveryPatch: FC<DeliveryPatch.Props> = ({
+	feed,
+	onSettledFn,
+	onCancelFn,
+	...props
+}) => {
 	const patchMutation = withFeedQuery.usePatchMutation({
-		onSettled,
+		onSettled: onSettledFn,
 	});
 	const selection = useSelection<EntitySchema.Type>({
 		mode: "multi",
@@ -43,8 +48,8 @@ export const DeliveryPatch: FC<DeliveryPatch.Props> = ({ feed, onSettled, onCanc
 			<DeliverySelect selection={selection} />
 
 			<SaveContainer
-				onCancel={onCancel}
-				onSave={() => {
+				onCancelFn={onCancelFn}
+				onSaveFn={() => {
 					patchMutation.mutate({
 						query: {
 							where: {
@@ -57,7 +62,7 @@ export const DeliveryPatch: FC<DeliveryPatch.Props> = ({ feed, onSettled, onCanc
 								where: {
 									...feed.query?.where,
 									deliveryIn:
-										selection.optional.multiId() as DeliveryEnumSchema.Type[],
+										selection.optional.multiIdFn() as DeliveryEnumSchema.Type[],
 								},
 							},
 						},

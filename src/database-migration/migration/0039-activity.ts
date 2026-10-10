@@ -2,14 +2,14 @@ import { sql } from "kysely";
 import type { Migration } from "kysely/migration";
 import type { ActivityPriorityEnumSchema } from "~/activity/schema/ActivityPriorityEnumSchema";
 import type { ActivityTypeEnumSchema } from "~/activity/schema/ActivityTypeEnumSchema";
-import { toEnumGuard } from "~/enum/fn/toEnumGuard";
+import { toEnumGuardFn } from "~/enum/fn/toEnumGuardFn";
 
 export const ActivityMigration: Migration = {
 	async up(db) {
 		await db.schema
 			.createType("activity_priority_enum")
 			.asEnum(
-				toEnumGuard<ActivityPriorityEnumSchema.Type>()([
+				toEnumGuardFn<ActivityPriorityEnumSchema.Type>()([
 					"common",
 					"high",
 				] as const),
@@ -18,7 +18,7 @@ export const ActivityMigration: Migration = {
 		await db.schema
 			.createType("activity_type_enum")
 			.asEnum(
-				toEnumGuard<ActivityTypeEnumSchema.Type>()([
+				toEnumGuardFn<ActivityTypeEnumSchema.Type>()([
 					"buyer-message",
 					"seller-message",
 					"transaction",

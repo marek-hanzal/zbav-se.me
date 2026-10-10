@@ -24,7 +24,7 @@ export const Reasoning: FC<Reasoning.Props> = ({ item, ...props }) => {
 			{...props}
 		>
 			<Tx
-				label={translator.text("Agent reasoning history (label)")}
+				label={translator.textFn("Agent reasoning history (label)")}
 				data-ui-text="sm"
 				data-ui-font="bold"
 				className={[

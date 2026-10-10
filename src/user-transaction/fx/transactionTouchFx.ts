@@ -21,7 +21,7 @@ export const transactionTouchFx = Effect.fn("transactionTouchFx")(function* ({
 
 	const dateService = yield* DateServiceFx;
 	const config = yield* TransactionContextFx;
-	const now = dateService.now();
+	const now = dateService.nowFn();
 
 	yield* dbFx(async (kysely) => {
 		return kysely

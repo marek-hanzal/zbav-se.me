@@ -27,7 +27,7 @@ export const Delivery: FC<Delivery.Props> = ({ delivery, ...props }) => {
 			data-ui-items={"center"}
 		>
 			<Typo
-				label={translator.text(`Listing delivery - ${item}`)}
+				label={translator.textFn(`Listing delivery - ${item}`)}
 				{...props}
 			/>
 

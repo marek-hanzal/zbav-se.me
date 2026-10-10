@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import type { UserEventTableSchema } from "~/database/schema/UserEventTableSchema";
-import { computeLoad } from "~/user-event/fx/computeLoad";
+import { computeLoadFn } from "~/user-event/fn/computeLoadFn";
 
 interface CreateEventProps {
 	id: string;
@@ -11,7 +11,7 @@ interface CreateEventProps {
 	createdAt: DateTime;
 }
 
-function createEvent({
+function createEventFn({
 	id,
 	group,
 	event,
@@ -39,14 +39,14 @@ describe("computeLoad", () => {
 	it("uses bucket thresholds for low, medium and high", () => {
 		const base = DateTime.fromISO("2026-04-02T10:00:00.000Z");
 		const source = [
-			createEvent({
+			createEventFn({
 				id: "1",
 				group: "tx-1",
 				event: "transaction.create",
 				scope: "user",
 				createdAt: base,
 			}),
-			createEvent({
+			createEventFn({
 				id: "2",
 				group: "tx-2",
 				event: "transaction.create",
@@ -55,7 +55,7 @@ describe("computeLoad", () => {
 					hours: 1,
 				}),
 			}),
-			createEvent({
+			createEventFn({
 				id: "3",
 				group: "tx-3",
 				event: "transaction.create",
@@ -64,7 +64,7 @@ describe("computeLoad", () => {
 					hours: 2,
 				}),
 			}),
-			createEvent({
+			createEventFn({
 				id: "4",
 				group: "tx-4",
 				event: "transaction.create",
@@ -76,7 +76,7 @@ describe("computeLoad", () => {
 		];
 
 		expect(
-			computeLoad({
+			computeLoadFn({
 				source: source.slice(0, 1),
 				createScope: "user",
 				thresholds: {
@@ -89,7 +89,7 @@ describe("computeLoad", () => {
 		});
 
 		expect(
-			computeLoad({
+			computeLoadFn({
 				source: source.slice(0, 3),
 				createScope: "user",
 				thresholds: {
@@ -102,7 +102,7 @@ describe("computeLoad", () => {
 		});
 
 		expect(
-			computeLoad({
+			computeLoadFn({
 				source,
 				createScope: "user",
 				thresholds: {

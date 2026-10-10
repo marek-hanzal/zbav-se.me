@@ -2,10 +2,10 @@ import { tool } from "@openai/agents";
 import { match } from "ts-pattern";
 import { z } from "zod";
 import { transactionAckFn as buyerTransactionAckFn } from "~/buyer-transaction/fn/transactionAckFn";
-import { getRootLogger } from "~/log/fn/getRootLogger";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
 import { transactionAckFn as sellerTransactionAckFn } from "~/seller-transaction/fn/transactionAckFn";
 
-const logger = getRootLogger([
+const logger = getRootLoggerFn([
 	"tool",
 	"toolTransactionAcknowledge",
 ]);

@@ -1,6 +1,6 @@
 import type { FC, ReactNode } from "react";
 import { Image } from "~/list-item/ui/Image";
-import { isString } from "~/string/fn/isString";
+import { isStringFn } from "~/string/fn/isStringFn";
 import { ChevronRightIcon } from "~/ui/constant/ChevronRightIcon";
 import { Container } from "~/ui/ui/Container";
 import { Group } from "~/ui/ui/Group";
@@ -30,7 +30,7 @@ export const ListItem: FC<ListItem.Props> = ({
 	const image: ReactNode =
 		hero == null ? (
 			<Image />
-		) : isString(hero) ? (
+		) : isStringFn(hero) ? (
 			<Image src={hero} />
 		) : (
 			<Container

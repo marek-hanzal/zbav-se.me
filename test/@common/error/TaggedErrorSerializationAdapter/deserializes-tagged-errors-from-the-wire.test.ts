@@ -2,7 +2,7 @@ import { describe, expect, test } from "vitest";
 import { TaggedError } from "~/error/error/TaggedError";
 import {
 	TaggedErrorSerializationAdapter,
-	toTaggedError,
+	toTaggedErrorFn,
 } from "~/error/serialization/TaggedErrorSerializationAdapter";
 import { RateLimitErrorFx } from "~/server-error/error/RateLimitErrorFx";
 
@@ -22,7 +22,7 @@ describe("TaggedErrorSerializationAdapter", () => {
 			message: "Too many magic link requests. Please try again later.",
 			tag: "RateLimitErrorFx",
 		});
-		const taggedError = toTaggedError(error);
+		const taggedError = toTaggedErrorFn(error);
 
 		expect(error).toBeInstanceOf(TaggedError);
 		expect(taggedError?.message).toBe("Too many magic link requests. Please try again later.");

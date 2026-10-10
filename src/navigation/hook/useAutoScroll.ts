@@ -12,7 +12,7 @@ export namespace useAutoScroll {
 	}
 
 	export interface Result {
-		scrollToEnd(behavior: ScrollBehavior): void;
+		scrollToEndFn(behavior: ScrollBehavior): void;
 	}
 }
 
@@ -26,7 +26,7 @@ export function useAutoScroll({
 }: useAutoScroll.Props): useAutoScroll.Result {
 	const frameRef = useRef<number>(0);
 
-	const scrollToEnd = useThrottledCallback(
+	const scrollToEndFn = useThrottledCallback(
 		(behavior: ScrollBehavior) => {
 			if (frameRef.current) {
 				cancelAnimationFrame(frameRef.current);
@@ -64,17 +64,17 @@ export function useAutoScroll({
 
 		let frame = 0;
 
-		const onReady = () => {
+		const onReadyFn = () => {
 			if (!containerRef.current || !contentRef.current) {
-				frame = requestAnimationFrame(onReady);
+				frame = requestAnimationFrame(onReadyFn);
 
 				return;
 			}
 
-			scrollToEnd(initialBehavior);
+			scrollToEndFn(initialBehavior);
 		};
 
-		onReady();
+		onReadyFn();
 
 		return () => {
 			cancelAnimationFrame(frame);
@@ -83,7 +83,7 @@ export function useAutoScroll({
 		enabled,
 		containerRef,
 		contentRef,
-		scrollToEnd,
+		scrollToEndFn,
 		initialBehavior,
 	]);
 
@@ -93,22 +93,22 @@ export function useAutoScroll({
 		}
 
 		let frame = 0;
-		let disconnect = () => {
+		let disconnectFn = () => {
 			//
 		};
 
-		const onReady = () => {
+		const onReadyFn = () => {
 			if (!containerRef.current || !contentRef.current) {
-				frame = requestAnimationFrame(onReady);
+				frame = requestAnimationFrame(onReadyFn);
 
 				return;
 			}
 
 			const ro = new ResizeObserver(() => {
-				scrollToEnd(resizeBehavior);
+				scrollToEndFn(resizeBehavior);
 			});
 			const mo = new MutationObserver(() => {
-				scrollToEnd(resizeBehavior);
+				scrollToEndFn(resizeBehavior);
 			});
 
 			ro.observe(contentRef.current);
@@ -116,27 +116,27 @@ export function useAutoScroll({
 				childList: true,
 			});
 
-			disconnect = () => {
+			disconnectFn = () => {
 				ro.disconnect();
 				mo.disconnect();
 			};
 		};
 
-		onReady();
+		onReadyFn();
 
 		return () => {
 			cancelAnimationFrame(frame);
-			disconnect();
+			disconnectFn();
 		};
 	}, [
 		enabled,
 		containerRef,
 		contentRef,
-		scrollToEnd,
+		scrollToEndFn,
 		resizeBehavior,
 	]);
 
 	return {
-		scrollToEnd,
+		scrollToEndFn,
 	};
 }

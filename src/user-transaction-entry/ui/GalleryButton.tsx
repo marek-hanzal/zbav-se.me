@@ -11,14 +11,14 @@ import { withUploadMutation } from "~/user-upload/mutation/withUploadMutation";
 
 export namespace GalleryButton {
 	export interface Props extends Button.Props {
-		close: TransactionMenuButton.Close;
+		closeFn: TransactionMenuButton.Close;
 		transactionId: string;
 	}
 }
 
-export const GalleryButton: FC<GalleryButton.Props> = ({ close, transactionId, ...props }) => {
-	const [isOpen, setIsOpen] = useState(false);
-	const [uploadIds, setUploadIds] = useState<string[]>([]);
+export const GalleryButton: FC<GalleryButton.Props> = ({ closeFn, transactionId, ...props }) => {
+	const [isOpen, setIsOpenFn] = useState(false);
+	const [uploadIds, setUploadIdsFn] = useState<string[]>([]);
 	const mutationId = useId();
 	const isUploading = withUploadMutation.useIsMutating({
 		mutationId,
@@ -28,9 +28,9 @@ export const GalleryButton: FC<GalleryButton.Props> = ({ close, transactionId, .
 			"collection",
 			"count",
 		],
-		async onPostMutation() {
-			setIsOpen(false);
-			close();
+		async onPostMutationFn() {
+			setIsOpenFn(false);
+			closeFn();
 		},
 	});
 
@@ -39,7 +39,7 @@ export const GalleryButton: FC<GalleryButton.Props> = ({ close, transactionId, .
 			<Button
 				iconEnabled={PhotoIcon}
 				onClick={() => {
-					setIsOpen(true);
+					setIsOpenFn(true);
 				}}
 				data-ui-tone="primary"
 				data-ui-theme="light"
@@ -53,7 +53,7 @@ export const GalleryButton: FC<GalleryButton.Props> = ({ close, transactionId, .
 			<BottomSheet
 				isOpen={isOpen}
 				onClose={() => {
-					setIsOpen(false);
+					setIsOpenFn(false);
 				}}
 				detent={"default"}
 			>
@@ -61,7 +61,7 @@ export const GalleryButton: FC<GalleryButton.Props> = ({ close, transactionId, .
 					access="protected"
 					state={{
 						value: uploadIds,
-						set: setUploadIds,
+						setFn: setUploadIdsFn,
 					}}
 					limit={10}
 					mutationId={mutationId}
@@ -69,11 +69,11 @@ export const GalleryButton: FC<GalleryButton.Props> = ({ close, transactionId, .
 				/>
 
 				<SaveContainer
-					onCancel={() => {
-						setUploadIds([]);
-						setIsOpen(false);
+					onCancelFn={() => {
+						setUploadIdsFn([]);
+						setIsOpenFn(false);
 					}}
-					onSave={() => {
+					onSaveFn={() => {
 						mutation.mutate({
 							transactionId,
 							kind: "gallery",

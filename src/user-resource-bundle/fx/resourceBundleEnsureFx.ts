@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import { dbFx } from "~/database/fx/dbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { DateServiceFx } from "~/date/service/DateServiceFx";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import { getLoggerFx } from "~/log/fx/getLoggerFx";
 
 export namespace resourceBundleEnsureFx {
@@ -23,7 +23,7 @@ export const resourceBundleEnsureFx = Effect.fn("resourceBundleEnsureFx")(functi
 	});
 
 	const dateService = yield* DateServiceFx;
-	const now = dateService.now().toJSDate();
+	const now = dateService.nowFn().toJSDate();
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
@@ -47,7 +47,7 @@ export const resourceBundleEnsureFx = Effect.fn("resourceBundleEnsureFx")(functi
 				return kysely
 					.insertInto("user_resource_bundle")
 					.values({
-						id: genId(),
+						id: genIdFn(),
 						userId,
 						resourceBundleId: userId,
 						createdAt: now,

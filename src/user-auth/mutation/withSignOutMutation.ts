@@ -1,13 +1,13 @@
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withMutation } from "~/mutation/fn/withMutation";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withMutationFn } from "~/mutation/fn/withMutationFn";
 import { authClient } from "~/user-auth/service/authClient";
 
-export const withSignOutMutation = withMutation({
-	logger: getRootLogger([
+export const withSignOutMutation = withMutationFn({
+	logger: getRootLoggerFn([
 		"mutation",
 		"withSignOutMutation",
 	]),
-	keys(variables) {
+	keysFn(variables) {
 		return [
 			"signOut",
 			variables,

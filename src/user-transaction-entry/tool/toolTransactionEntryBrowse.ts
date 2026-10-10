@@ -2,11 +2,11 @@ import { tool } from "@openai/agents";
 import { stringify } from "csv-stringify/sync";
 import { match } from "ts-pattern";
 import { z } from "zod";
-import { getRootLogger } from "~/log/fn/getRootLogger";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
 import { transactionEntryCollectionFn } from "~/user-transaction-entry/fn/transactionEntryCollectionFn";
 import { transactionEntryGalleryFetchFn } from "~/user-transaction-entry/fn/transactionEntryGalleryFetchFn";
 
-const logger = getRootLogger([
+const logger = getRootLoggerFn([
 	"tool",
 	"toolTransactionEntryBrowse",
 ]);

@@ -30,8 +30,8 @@ export const ProsValueList: FC<ProsValueList.Props> = ({ pros, ...props }) => {
 	return (
 		<ValueList
 			data-ui={"ProsValueList"}
-			textLabel={translator.text("Listing - Pros (label)")}
-			textEmpty={translator.text("Listing - Pros not filled")}
+			textLabel={translator.textFn("Listing - Pros (label)")}
+			textEmpty={translator.textFn("Listing - Pros not filled")}
 			items={prosItems}
 			renderFn={(item) => <Tx label={item.pro} />}
 			{...props}

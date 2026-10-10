@@ -2,13 +2,13 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Effect } from "effect";
 import { withCronFx } from "~/cron/fx/withCronFx";
 import { ScheduleSchema } from "~/cron/schema/ScheduleSchema";
-import { withKyselyFx } from "~/database/fx/withKyselyFx";
-import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
-import { withLoggerFx } from "~/log/fx/withLoggerFx";
+import { withKyselyFn } from "~/database/fn/withKyselyFn";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
+import { withLoggerFn } from "~/log/fn/withLoggerFn";
 import type { NoticeSchema } from "~/notice/schema/NoticeSchema";
 import { withDatabaseMiddleware } from "~/request-middleware/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/request-middleware/middleware/withLogMiddleware";
-import { withTokenMiddleware } from "~/request-middleware/middleware/withTokenMiddleware";
+import { withTokenMiddlewareFn } from "~/request-middleware/middleware/withTokenMiddlewareFn";
 import { ServerCronSchema } from "~/server-env/schema/ServerCronSchema";
 
 export const Route = createFileRoute("/api/cron/$cron")({
@@ -16,8 +16,8 @@ export const Route = createFileRoute("/api/cron/$cron")({
 		middleware: [
 			withLogMiddleware,
 			withDatabaseMiddleware,
-			withTokenMiddleware({
-				async token() {
+			withTokenMiddlewareFn({
+				async tokenFn() {
 					return ServerCronSchema.parse(process.env).SERVER_CRON_TOKEN;
 				},
 			}),
@@ -29,9 +29,9 @@ export const Route = createFileRoute("/api/cron/$cron")({
 				await withCronFx({
 					schedule,
 				}).pipe(
-					withKyselyFx(database),
-					withDateServiceFx(),
-					withLoggerFx(rootLogger),
+					withKyselyFn(database),
+					withDateServiceFn(),
+					withLoggerFn(rootLogger),
 					Effect.runPromise,
 				);
 

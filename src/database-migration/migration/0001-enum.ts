@@ -1,7 +1,7 @@
 import type { Migration } from "kysely/migration";
 import type { AccessEnumSchema } from "~/access/schema/AccessEnumSchema";
 import type { DeliveryEnumSchema } from "~/delivery/schema/DeliveryEnumSchema";
-import { toEnumGuard } from "~/enum/fn/toEnumGuard";
+import { toEnumGuardFn } from "~/enum/fn/toEnumGuardFn";
 import type { PriceTypeEnumSchema } from "~/price-type/schema/PriceTypeEnumSchema";
 import type { ResourceBundleTypeEnumSchema } from "~/user-resource-bundle/schema/ResourceBundleTypeEnumSchema";
 import type { WarrantyEnumSchema } from "~/warranty/schema/WarrantyEnumSchema";
@@ -11,7 +11,7 @@ export const EnumMigration: Migration = {
 		await db.schema
 			.createType("access_enum")
 			.asEnum(
-				toEnumGuard<AccessEnumSchema.Type>()([
+				toEnumGuardFn<AccessEnumSchema.Type>()([
 					"public",
 					"protected",
 					"private",
@@ -22,7 +22,7 @@ export const EnumMigration: Migration = {
 		await db.schema
 			.createType("price_type_enum")
 			.asEnum(
-				toEnumGuard<PriceTypeEnumSchema.Type>()([
+				toEnumGuardFn<PriceTypeEnumSchema.Type>()([
 					"fixed",
 					"haggle",
 					"ask",
@@ -35,7 +35,7 @@ export const EnumMigration: Migration = {
 		await db.schema
 			.createType("delivery_enum")
 			.asEnum(
-				toEnumGuard<DeliveryEnumSchema.Type>()([
+				toEnumGuardFn<DeliveryEnumSchema.Type>()([
 					"personal",
 					"post",
 					"package",
@@ -47,7 +47,7 @@ export const EnumMigration: Migration = {
 		await db.schema
 			.createType("warranty_enum")
 			.asEnum(
-				toEnumGuard<WarrantyEnumSchema.Type>()([
+				toEnumGuardFn<WarrantyEnumSchema.Type>()([
 					"warranty",
 					"no-warranty",
 					"custom",
@@ -58,7 +58,7 @@ export const EnumMigration: Migration = {
 		await db.schema
 			.createType("resource_bundle_type_enum")
 			.asEnum(
-				toEnumGuard<ResourceBundleTypeEnumSchema.Type>()([
+				toEnumGuardFn<ResourceBundleTypeEnumSchema.Type>()([
 					"package",
 					"extra",
 					"user",

@@ -64,7 +64,7 @@ export const AttrOptional: FC<AttrOptional.Props> = ({ draftId, categoryId, view
 								}}
 								action={<ChevronAction />}
 								onClick={() => {
-									view.set(`attr.${field.name}`);
+									view.setFn(`attr.${field.name}`);
 								}}
 							/>
 						</Group>

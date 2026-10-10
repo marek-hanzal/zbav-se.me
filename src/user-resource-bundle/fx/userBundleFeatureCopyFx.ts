@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { dbFx } from "~/database/fx/dbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import { getLoggerFx } from "~/log/fx/getLoggerFx";
 
 export namespace userBundleFeatureCopyFx {
@@ -48,7 +48,7 @@ export const userBundleFeatureCopyFx = Effect.fn("userBundleFeatureCopyFx")(func
 						await kysely
 							.insertInto("user_resource_bundle_feature")
 							.values({
-								id: genId(),
+								id: genIdFn(),
 								userResourceBundleId: assignmentId,
 								resourceDefinitionId: feature.resourceDefinitionId,
 								createdAt,

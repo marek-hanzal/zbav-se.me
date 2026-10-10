@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { uiSelectButton } from "~/application-ui/fn/ui.exports";
+import { uiSelectButtonFn } from "~/application-ui/fn/ui.exports";
 import type { EntitySchema } from "~/entity/schema/EntitySchema";
 import type { useSelection } from "~/selection/hook/useSelection";
 import { Tx } from "~/translation/ui/Tx";
@@ -33,15 +33,15 @@ export const WarrantySelect: FC<WarrantySelect.Props> = ({ selection, ...props }
 				const item = {
 					id: warranty,
 				};
-				const isSelected = selection.isSelected(warranty);
+				const isSelected = selection.isSelectedFn(warranty);
 
 				return (
 					<Button
 						key={warranty}
 						onClick={() => {
-							selection.toggle(item);
+							selection.toggleFn(item);
 						}}
-						{...uiSelectButton({
+						{...uiSelectButtonFn({
 							isSelected,
 							"data-ui-flow": "horizontal",
 							"data-ui-justify": "start",

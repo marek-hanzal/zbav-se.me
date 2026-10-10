@@ -6,7 +6,7 @@ import axios from "axios";
 import { createParser } from "eventsource-parser";
 import { type FC, type PropsWithChildren, useCallback, useRef, useState } from "react";
 import { useLogger } from "~/log/hook/useLogger";
-import { AgentStreamItemsQuery } from "~/user-agent/query/AgentStreamItemsQuery";
+import { AgentStreamItemsQueryFn } from "~/user-agent/query/AgentStreamItemsQueryFn";
 import { withAgentLiveQuery } from "~/user-agent/query/withAgentLiveQuery";
 import { withAgentStreamItemsQuery } from "~/user-agent/query/withAgentStreamItemsQuery";
 import { withAgentUsageQuery } from "~/user-agent/query/withAgentUsageQuery";
@@ -22,7 +22,7 @@ export namespace AgentRuntimeProvider {
 	) => AgentRuntimeContext.ThreadState;
 }
 
-const emptyThreadState = (): AgentRuntimeContext.ThreadState => ({
+const emptyThreadStateFn = (): AgentRuntimeContext.ThreadState => ({
 	isRunning: false,
 	queue: [],
 });
@@ -32,8 +32,8 @@ const maxQueueSize = 5;
 export const AgentRuntimeProvider: FC<AgentRuntimeProvider.Props> = ({ children }) => {
 	const router = useRouter();
 	const queryClient = useQueryClient();
-	const liveQuery = withAgentLiveQuery.useSet();
-	const setHistoryItems = withAgentStreamItemsQuery.useSet();
+	const liveQueryFn = withAgentLiveQuery.useSet();
+	const setHistoryItemsFn = withAgentStreamItemsQuery.useSet();
 	const logger = useLogger({
 		name: [
 			"runtime",
@@ -42,47 +42,47 @@ export const AgentRuntimeProvider: FC<AgentRuntimeProvider.Props> = ({ children 
 	});
 	const abortControllersRef = useRef(new Map<string, AbortController>());
 	const threadStatesRef = useRef(new Map<string, AgentRuntimeContext.ThreadState>());
-	const [, setStateVersion] = useState(0);
+	const [, setStateVersionFn] = useState(0);
 
-	const bumpStateVersion = useCallback(() => {
-		setStateVersion((version) => version + 1);
+	const bumpStateVersionFn = useCallback(() => {
+		setStateVersionFn((version) => version + 1);
 	}, []);
 
-	const getThreadState = useCallback((threadId: string) => {
-		return threadStatesRef.current.get(threadId) ?? emptyThreadState();
+	const getThreadStateFn = useCallback((threadId: string) => {
+		return threadStatesRef.current.get(threadId) ?? emptyThreadStateFn();
 	}, []);
 
-	const setThreadState = useCallback(
-		(threadId: string, updater: AgentRuntimeProvider.ThreadStateUpdater) => {
-			const next = updater(getThreadState(threadId));
+	const setThreadStateFn = useCallback(
+		(threadId: string, updaterFn: AgentRuntimeProvider.ThreadStateUpdater) => {
+			const next = updaterFn(getThreadStateFn(threadId));
 			threadStatesRef.current.set(threadId, next);
-			bumpStateVersion();
+			bumpStateVersionFn();
 		},
 		[
-			bumpStateVersion,
-			getThreadState,
+			bumpStateVersionFn,
+			getThreadStateFn,
 		],
 	);
 
-	const appendHistoryItems = useCallback(
+	const appendHistoryItemsFn = useCallback(
 		(threadId: string, input: AgentInputItem[]) => {
-			setHistoryItems((current) => {
+			setHistoryItemsFn((current) => {
 				const ids = new Set((current ?? []).map((item) => item.id).filter(Boolean));
 
 				return [
 					...(current ?? []),
 					...input.filter((item) => !item.id || !ids.has(item.id)),
 				] satisfies AgentInputItem[];
-			}, AgentStreamItemsQuery(threadId));
+			}, AgentStreamItemsQueryFn(threadId));
 		},
 		[
-			setHistoryItems,
+			setHistoryItemsFn,
 		],
 	);
 
-	const executeRun = useCallback(
+	const executeRunFn = useCallback(
 		async (threadId: string, input: AgentInputItem[]) => {
-			appendHistoryItems(threadId, input);
+			appendHistoryItemsFn(threadId, input);
 
 			const abortController = new AbortController();
 			abortControllersRef.current.set(threadId, abortController);
@@ -95,79 +95,79 @@ export const AgentRuntimeProvider: FC<AgentRuntimeProvider.Props> = ({ children 
 			});
 
 			try {
-				await submitAgentRun({
+				await submitAgentRunFn({
 					input,
 					link: link.href,
-					liveQuery,
+					liveQueryFn,
 					signal: abortController.signal,
 					threadId,
 				});
 			} finally {
 				abortControllersRef.current.delete(threadId);
-				await withAgentStreamItemsQuery.invalidate(
+				await withAgentStreamItemsQuery.invalidateFn(
 					queryClient,
-					AgentStreamItemsQuery(threadId),
+					AgentStreamItemsQueryFn(threadId),
 				);
-				liveQuery(() => [], {
+				liveQueryFn(() => [], {
 					threadId,
 				});
-				await withAgentUsageQuery.invalidate(queryClient);
+				await withAgentUsageQuery.invalidateFn(queryClient);
 			}
 		},
 		[
-			appendHistoryItems,
-			liveQuery,
+			appendHistoryItemsFn,
+			liveQueryFn,
 			queryClient,
 			router,
 		],
 	);
 
-	const runNext = useCallback(
+	const runNextFn = useCallback(
 		(threadId: string) => {
-			const state = getThreadState(threadId);
+			const state = getThreadStateFn(threadId);
 			const [next, ...queue] = state.queue;
 
 			if (state.isRunning || !next) {
 				return;
 			}
 
-			setThreadState(threadId, () => ({
+			setThreadStateFn(threadId, () => ({
 				isRunning: true,
 				queue,
 			}));
 
-			void executeRun(threadId, next.input)
+			void executeRunFn(threadId, next.input)
 				.catch((error) => {
 					logger.error("Agent queue item failed", {
-						error: getErrorMessage(error),
+						error: getErrorMessageFn(error),
 						threadId,
 					});
 				})
 				.finally(() => {
-					setThreadState(threadId, (current) => ({
+					setThreadStateFn(threadId, (current) => ({
 						...current,
 						isRunning: false,
 					}));
-					runNext(threadId);
+					runNextFn(threadId);
 				});
 		},
 		[
-			executeRun,
-			getThreadState,
+			executeRunFn,
+			getThreadStateFn,
 			logger,
-			setThreadState,
+			setThreadStateFn,
 		],
 	);
 
-	const submit = useCallback(
+	const submitFn = useCallback(
 		(threadId: string, input: AgentInputItem[]) => {
-			const state = getThreadState(threadId);
+			const state = getThreadStateFn(threadId);
 
 			if (state.queue.length >= maxQueueSize) {
 				return;
 			}
 
-			setThreadState(threadId, (current) => ({
+			setThreadStateFn(threadId, (current) => ({
 				...current,
 				queue: [
 					...current.queue,
@@ -176,43 +176,43 @@ export const AgentRuntimeProvider: FC<AgentRuntimeProvider.Props> = ({ children 
 					},
 				],
 			}));
-			runNext(threadId);
+			runNextFn(threadId);
 		},
 		[
-			getThreadState,
-			runNext,
-			setThreadState,
+			getThreadStateFn,
+			runNextFn,
+			setThreadStateFn,
 		],
 	);
 
-	const clearQueue = useCallback(
+	const clearQueueFn = useCallback(
 		(threadId: string) => {
-			setThreadState(threadId, (current) => ({
+			setThreadStateFn(threadId, (current) => ({
 				...current,
 				queue: [],
 			}));
 		},
 		[
-			setThreadState,
+			setThreadStateFn,
 		],
 	);
 
-	const cancel = useCallback(
+	const cancelFn = useCallback(
 		(threadId: string) => {
 			abortControllersRef.current.get(threadId)?.abort();
 			abortControllersRef.current.delete(threadId);
-			setThreadState(threadId, () => emptyThreadState());
+			setThreadStateFn(threadId, () => emptyThreadStateFn());
 		},
 		[
-			setThreadState,
+			setThreadStateFn,
 		],
 	);
 
 	const value: AgentRuntimeContext.Value = {
-		getThreadState,
-		submit,
-		clearQueue,
-		cancel,
+		getThreadStateFn,
+		submitFn,
+		clearQueueFn,
+		cancelFn,
 	};
 
 	return <AgentRuntimeContext.Provider value={value}>{children}</AgentRuntimeContext.Provider>;
@@ -220,24 +220,24 @@ export const AgentRuntimeProvider: FC<AgentRuntimeProvider.Props> = ({ children 
 
 // =================================================================================================
 
-namespace submitAgentRun {
+namespace submitAgentRunFn {
 	export interface Props {
 		input: AgentInputItem[];
 		link: string;
-		liveQuery: ReturnType<typeof withAgentLiveQuery.useSet>;
+		liveQueryFn: ReturnType<typeof withAgentLiveQuery.useSet>;
 		signal: AbortSignal;
 		threadId: string;
 	}
 }
 
-async function submitAgentRun({
+async function submitAgentRunFn({
 	input,
 	link,
-	liveQuery,
+	liveQueryFn,
 	signal,
 	threadId,
-}: submitAgentRun.Props): Promise<void> {
-	liveQuery(() => [], {
+}: submitAgentRunFn.Props): Promise<void> {
+	liveQueryFn(() => [], {
 		threadId,
 	});
 
@@ -249,7 +249,7 @@ async function submitAgentRun({
 				return;
 			}
 
-			liveQuery(
+			liveQueryFn(
 				(prev) => [
 					...(prev ?? []),
 					JSON.parse(message.data) as RunStreamEvent,
@@ -305,7 +305,7 @@ async function submitAgentRun({
 	}
 }
 
-function getErrorMessage(error: unknown): string {
+function getErrorMessageFn(error: unknown): string {
 	if (error instanceof Error) {
 		return error.message;
 	}

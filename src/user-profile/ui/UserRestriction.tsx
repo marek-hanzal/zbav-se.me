@@ -8,7 +8,7 @@ import { CurrentRestriction } from "~/user-restriction/ui/CurrentRestriction";
 
 export const UserRestriction: FC = () => {
 	const queryClient = useQueryClient();
-	const [isRestriction, setIsRestriction] = useState(false);
+	const [isRestriction, setIsRestrictionFn] = useState(false);
 	const restrictionMutation = withUserRestrictionQuery.useCreateMutation({
 		invalidate: [
 			"collection",
@@ -49,7 +49,7 @@ export const UserRestriction: FC = () => {
 				}}
 				_suspense={"I know"}
 				onClick={() => {
-					setIsRestriction((open) => !open);
+					setIsRestrictionFn((open) => !open);
 				}}
 				action={
 					<Icon
@@ -62,10 +62,10 @@ export const UserRestriction: FC = () => {
 			<RestrictionSheet
 				isOpen={isRestriction}
 				onClose={() => {
-					setIsRestriction(false);
+					setIsRestrictionFn(false);
 				}}
 				restriction={restriction?.restriction}
-				onRestriction={async (restriction) => {
+				onRestrictionFn={async (restriction) => {
 					return restrictionMutation.mutateAsync({
 						restriction,
 					});

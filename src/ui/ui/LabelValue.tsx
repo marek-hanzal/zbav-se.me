@@ -1,5 +1,5 @@
 import type { FC, ReactNode } from "react";
-import { isString } from "~/string/fn/isString";
+import { isStringFn } from "~/string/fn/isStringFn";
 import { Tx } from "~/translation/ui/Tx";
 import { Container } from "~/ui/ui/Container";
 
@@ -89,7 +89,7 @@ export const LabelValue: FC<LabelValue.Props> = ({
 				/>
 			) : null}
 
-			{isString(textValue) ? (
+			{isStringFn(textValue) ? (
 				<Tx
 					label={textValue}
 					data-ui-tone="neutral"

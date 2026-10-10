@@ -3,13 +3,13 @@ import { describe, expect, it } from "vitest";
 import { feedCollectionFx } from "~/buyer-feed/fx/feedCollectionFx";
 import { feedCountFx } from "~/buyer-feed/fx/feedCountFx";
 import { feedCreateFx } from "~/buyer-feed/fx/feedCreateFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
 describe("feedCollectionFx", () => {
 	it("filters by type and idIn, paginates with cursor and keeps count scoped", async () => {
-		const database = await testabase("feedCollectionFx-contract");
+		const database = await testabaseFn("feedCollectionFx-contract");
 
 		return Effect.gen(function* () {
 			const { seller: owner, stranger } = yield* createUsersFx({});
@@ -103,6 +103,6 @@ describe("feedCollectionFx", () => {
 			expect(secondPage).toHaveLength(1);
 			expect(firstPage[0]?.id).not.toBe(secondPage[0]?.id);
 			expect(count).toBe(1);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

@@ -1,16 +1,16 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
 import { z } from "zod";
-import { withKyselyFx } from "~/database/fx/withKyselyFx";
-import { withLoggerFx } from "~/log/fx/withLoggerFx";
+import { withKyselyFn } from "~/database/fn/withKyselyFn";
+import { withLoggerFn } from "~/log/fn/withLoggerFn";
 import { withDatabaseMiddleware } from "~/request-middleware/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/request-middleware/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/request-middleware/middleware/withUserMiddleware";
-import { withLocationConfigFx } from "~/session-location/context/withLocationConfigFx";
+import { withLocationConfigEnvFn } from "~/session-location/fn/withLocationConfigEnvFn";
+import { withLocationConfigFn } from "~/session-location/fn/withLocationConfigFn";
 import { locationAutocompleteFx } from "~/session-location/fx/locationAutocompleteFx";
 import { LocationAutocompleteSchema } from "~/session-location/schema/LocationAutocompleteSchema";
 import { LocationSchema } from "~/session-location/schema/LocationSchema";
-import { withLocationConfigEnv } from "~/session-location/schema/withLocationConfigEnv";
 import { zodGuardFx } from "~/validation/fx/zodGuardFx";
 
 export namespace locationAutocompleteFn {
@@ -35,15 +35,15 @@ export const locationAutocompleteFn = createServerFn()
 			schema: z.array(LocationSchema),
 			dataFx: locationAutocompleteFx(data),
 		}).pipe(
-			withKyselyFx(database),
-			withLocationConfigFx(
-				withLocationConfigEnv({
+			withKyselyFn(database),
+			withLocationConfigFn(
+				withLocationConfigEnvFn({
 					api: "https://api.geoapify.com",
 					autocomplete: "/v1/geocode/autocomplete",
 					route: "/v1/routematrix",
 				}),
 			),
-			withLoggerFx(rootLogger),
+			withLoggerFn(rootLogger),
 			Effect.tapError((error) => {
 				return Effect.sync(() => {
 					logger.error(error._tag, {

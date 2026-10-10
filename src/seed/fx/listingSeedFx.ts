@@ -37,7 +37,7 @@ type CategoryAttrMeta = {
 
 const seedDataset = ListingCategorySeedData as SeedDataset;
 
-const withShuffle = <T>(items: readonly T[]) => {
+const withShuffleFn = <T>(items: readonly T[]) => {
 	const next = items.slice();
 
 	for (let index = next.length - 1; index > 0; index -= 1) {
@@ -56,7 +56,7 @@ const withShuffle = <T>(items: readonly T[]) => {
 	return next;
 };
 
-const toSeedBranch = (slug: string) => {
+const toSeedBranchFn = (slug: string) => {
 	return seedDataset[slug] ?? seedDataset.default ?? [];
 };
 
@@ -64,7 +64,7 @@ const withListingTotalFx = Effect.fn("withListingTotalFx")(function* () {
 	const row = yield* dbFx(async (kysely) => {
 		return kysely
 			.selectFrom("listing")
-			.select((eb) => eb.fn.countAll<string>().as("count"))
+			.select((ebFn) => ebFn.fn.countAll<string>().as("count"))
 			.executeTakeFirstOrThrow();
 	});
 
@@ -108,7 +108,7 @@ const withSeedLocationsFx = Effect.fn("withSeedLocationsFx")(function* ({
 		id: string;
 		label: string;
 	}> = [];
-	const queryPool = withShuffle(LOCATION_QUERY_POOL);
+	const queryPool = withShuffleFn(LOCATION_QUERY_POOL);
 	const targetCount = Math.max(12, Math.min(queryPool.length, count));
 	const seenIds = new Set<string>();
 
@@ -190,13 +190,13 @@ export const listingSeedFx = Effect.fn("listingSeedFx")(function* ({
 		},
 	];
 
-	yield* progress.updateSummary({
+	yield* progress.updateSummaryFx({
 		summary: {
 			phases: phasePlan,
 		},
 	});
 
-	yield* progress.startPhase({
+	yield* progress.startPhaseFx({
 		name: "Resolving user",
 		total: 1,
 	});
@@ -205,57 +205,57 @@ export const listingSeedFx = Effect.fn("listingSeedFx")(function* ({
 		email: userEmail,
 	});
 
-	yield* progress.updateSummary({
+	yield* progress.updateSummaryFx({
 		summary: {
 			userEmail,
 			userId: user.id,
 		},
 	});
-	yield* progress.log({
+	yield* progress.logFx({
 		message: `Using seed user ${userEmail}`,
 	});
-	yield* progress.advance();
-	yield* progress.finishPhase();
+	yield* progress.advanceFx();
+	yield* progress.finishPhaseFx();
 
-	yield* progress.startPhase({
+	yield* progress.startPhaseFx({
 		name: "Preparing categories/assets/lookups",
 		total: 4,
 	});
 
 	const beforeTotal = yield* withListingTotalFx();
-	yield* progress.updateSummary({
+	yield* progress.updateSummaryFx({
 		summary: {
 			beforeTotal,
 		},
 	});
-	yield* progress.log({
+	yield* progress.logFx({
 		message: `Current listing total is ${beforeTotal}`,
 	});
-	yield* progress.advance();
+	yield* progress.advanceFx();
 
 	const supportedCategories = yield* withSupportedCategoriesFx();
-	yield* progress.log({
+	yield* progress.logFx({
 		message: `Prepared ${supportedCategories.length} publishable categories`,
 	});
-	yield* progress.advance();
+	yield* progress.advanceFx();
 
 	const locations = yield* withSeedLocationsFx({
 		count,
 	});
-	yield* progress.log({
+	yield* progress.logFx({
 		message: `Prepared ${locations.length} reusable locations`,
 	});
-	yield* progress.advance();
+	yield* progress.advanceFx();
 
 	const uploadPool = yield* ensureSeedUploadPoolFx({
 		userId: user.id,
 		targetCount: Math.min(64, Math.max(1, count)),
 	});
-	yield* progress.log({
+	yield* progress.logFx({
 		message: `Prepared ${uploadPool.length} reusable uploads`,
 	});
-	yield* progress.advance();
-	yield* progress.finishPhase();
+	yield* progress.advanceFx();
+	yield* progress.finishPhaseFx();
 
 	if (supportedCategories.length === 0) {
 		return yield* new RuntimeErrorFx({
@@ -269,7 +269,7 @@ export const listingSeedFx = Effect.fn("listingSeedFx")(function* ({
 		});
 	}
 
-	yield* progress.startPhase({
+	yield* progress.startPhaseFx({
 		name: "Creating drafts",
 		total: count,
 	});
@@ -323,8 +323,8 @@ export const listingSeedFx = Effect.fn("listingSeedFx")(function* ({
 			supportedCategories,
 			locations,
 			uploadPool: resolvedUploadPool,
-			toSeedBranch(slug) {
-				const branch = toSeedBranch(slug);
+			toSeedBranchFn(slug) {
+				const branch = toSeedBranchFn(slug);
 
 				if (branch.length === 0) {
 					throw new Error(
@@ -334,12 +334,12 @@ export const listingSeedFx = Effect.fn("listingSeedFx")(function* ({
 
 				return branch;
 			},
-			loadCategoryAttrs(categoryId) {
+			loadCategoryAttrsFx(categoryId) {
 				return categoryAttrOfFx({
 					categoryId,
 				});
 			},
-			onPlanned: ({ count: plannedCount, plan, category }) => {
+			onPlannedFx: ({ count: plannedCount, plan, category }) => {
 				return Effect.gen(function* () {
 					const delta =
 						plannedCount % CREATE_PROGRESS_INTERVAL || CREATE_PROGRESS_INTERVAL;
@@ -350,14 +350,14 @@ export const listingSeedFx = Effect.fn("listingSeedFx")(function* ({
 						return;
 					}
 
-					yield* progress.advance({
+					yield* progress.advanceFx({
 						delta:
 							plannedCount === count
 								? count % CREATE_PROGRESS_INTERVAL || CREATE_PROGRESS_INTERVAL
 								: delta,
 					});
 
-					yield* progress.log({
+					yield* progress.logFx({
 						message: `Draft ${plannedCount}/${count}: ${plan.title} (${category.slug}, ${plan.locationLabel})`,
 					});
 				});
@@ -371,15 +371,15 @@ export const listingSeedFx = Effect.fn("listingSeedFx")(function* ({
 		});
 
 		batchFilePaths.push(batchFile.filePath);
-		yield* progress.log({
+		yield* progress.logFx({
 			message: `Stored draft batch ${batchIndex + 1}/${batchCount} (${plans.length} listings)`,
 		});
 		yield* Effect.yieldNow;
 	}
 
-	yield* progress.finishPhase();
+	yield* progress.finishPhaseFx();
 
-	yield* progress.startPhase({
+	yield* progress.startPhaseFx({
 		name: "Publishing listings",
 		total: count,
 	});
@@ -392,23 +392,23 @@ export const listingSeedFx = Effect.fn("listingSeedFx")(function* ({
 		});
 		const batchPublishedBase = publishedCount;
 
-		yield* progress.log({
+		yield* progress.logFx({
 			message: `Publishing batch ${batchIndex + 1}/${batchFilePaths.length} (${batch.length} listings)`,
 		});
 		yield* listingSeedPublishFx({
 			userId: user.id,
 			plans: batch,
-			onProgress: ({ message, delta, createdCount }) => {
+			onProgressFx: ({ message, delta, createdCount }) => {
 				return Effect.gen(function* () {
 					if (createdCount != null) {
 						const nextCreatedCount = batchPublishedBase + createdCount;
 
-						yield* progress.updateSummary({
+						yield* progress.updateSummaryFx({
 							summary: {
 								createdCount: nextCreatedCount,
 							},
 						});
-						yield* progress.advance({
+						yield* progress.advanceFx({
 							delta: nextCreatedCount - publishedCount,
 						});
 						publishedCount = nextCreatedCount;
@@ -417,7 +417,7 @@ export const listingSeedFx = Effect.fn("listingSeedFx")(function* ({
 					}
 
 					if (createdCount == null && delta > 0) {
-						yield* progress.log({
+						yield* progress.logFx({
 							message,
 						});
 					}
@@ -431,24 +431,24 @@ export const listingSeedFx = Effect.fn("listingSeedFx")(function* ({
 		yield* Effect.yieldNow;
 	}
 
-	yield* progress.finishPhase();
+	yield* progress.finishPhaseFx();
 
-	yield* progress.startPhase({
+	yield* progress.startPhaseFx({
 		name: "Collecting summary",
 		total: 1,
 	});
 
 	const afterTotal = yield* withListingTotalFx();
-	yield* progress.updateSummary({
+	yield* progress.updateSummaryFx({
 		summary: {
 			afterTotal,
 		},
 	});
-	yield* progress.log({
+	yield* progress.logFx({
 		message: `New listing total is ${afterTotal}`,
 	});
-	yield* progress.advance();
-	yield* progress.finishPhase();
+	yield* progress.advanceFx();
+	yield* progress.finishPhaseFx();
 
 	return {
 		seedId: "listings",

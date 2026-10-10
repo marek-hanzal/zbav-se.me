@@ -1,13 +1,13 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { translationSyncFx } from "~/translation/fx/translationSyncFx";
 import { translationsFx } from "~/translation/fx/translationsFx";
 
 describe("translationsFx", () => {
 	it("returns only rows for the requested locale after sync", async () => {
-		const database = await testabase("translationsFx-locale-scope");
+		const database = await testabaseFn("translationsFx-locale-scope");
 
 		return Effect.gen(function* () {
 			yield* translationSyncFx();
@@ -26,6 +26,6 @@ describe("translationsFx", () => {
 			expect(aboutMeTitle?.value).toBe("Marek Hanzal");
 			expect(dynamicRows.length).toBeGreaterThan(0);
 			expect(enRows).toEqual([]);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

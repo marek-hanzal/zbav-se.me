@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { withKyselyFn } from "~/database/fn/withKyselyFn";
 import { dbFx } from "~/database/fx/dbFx";
-import { withKyselyFx } from "~/database/fx/withKyselyFx";
 
 export const withTransactionFx = Effect.fn("withTransactionFx")(function* <
 	const A,
@@ -11,13 +11,13 @@ export const withTransactionFx = Effect.fn("withTransactionFx")(function* <
 	const kysely = yield* KyselyContextFx;
 
 	if (kysely.kysely.isTransaction) {
-		return yield* effect.pipe(withKyselyFx(kysely));
+		return yield* effect.pipe(withKyselyFn(kysely));
 	}
 
 	const trx = yield* dbFx(async (kysely) => kysely.startTransaction().execute());
 
 	return yield* effect.pipe(
-		withKyselyFx({
+		withKyselyFn({
 			...kysely,
 			kysely: trx,
 		}),

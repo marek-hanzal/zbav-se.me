@@ -3,7 +3,7 @@ import type { ListingMetaSchema } from "~/buyer-listing/schema/ListingMetaSchema
 import { withThumbCreateMutation } from "~/buyer-thumb/mutation/withThumbCreateMutation";
 import { Tx } from "~/translation/ui/Tx";
 import { LikeIcon } from "~/ui/constant/LikeIcon";
-import { withFallback } from "~/ui/fn/withFallback";
+import { withFallbackFn } from "~/ui/fn/withFallbackFn";
 import type { MarkSuspense } from "~/ui/type/MarkSuspense";
 import { Button } from "~/ui/ui/Button";
 
@@ -14,7 +14,7 @@ export namespace ThumbLikeButton {
 	}
 }
 
-export const ThumbLikeButton = withFallback(
+export const ThumbLikeButton = withFallbackFn(
 	({ _suspense, listingId, meta, ...props }: ThumbLikeButton.Props) => {
 		const { data: listing } = withListingQuery.useFetchQuery(listingId);
 		const thumbCreateMutation = withThumbCreateMutation.useMutation({

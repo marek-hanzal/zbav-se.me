@@ -3,13 +3,13 @@ import { describe, expect, it } from "vitest";
 import { categoryCollectionFx } from "~/public-category/fx/categoryCollectionFx";
 import { categoryCountFx } from "~/public-category/fx/categoryCountFx";
 import { categoryFetchFx as publicCategoryFetchFx } from "~/public-category/fx/categoryFetchFx";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 
-type TestDatabase = Awaited<ReturnType<typeof testabase>>;
+type TestDatabase = Awaited<ReturnType<typeof testabaseFn>>;
 
-const categoryBySlug = (database: TestDatabase, slug: string) =>
+const categoryBySlugFx = (database: TestDatabase, slug: string) =>
 	Effect.promise(() =>
 		database.kysely
 			.selectFrom("category")
@@ -23,22 +23,22 @@ const categoryBySlug = (database: TestDatabase, slug: string) =>
 
 describe("public category privacy", () => {
 	it("only exposes unrestricted categories", async () => {
-		const database = await testabase("public-category-restriction-scope");
+		const database = await testabaseFn("public-category-restriction-scope");
 
 		return Effect.gen(function* () {
-			const noneCategory = yield* categoryBySlug(
+			const noneCategory = yield* categoryBySlugFx(
 				database,
 				"pocitace-a-kancelar--uloziste-ssd-hdd",
 			);
-			const adultRelaxedCategory = yield* categoryBySlug(
+			const adultRelaxedCategory = yield* categoryBySlugFx(
 				database,
 				"vape-elektronicke-cigarety--mody",
 			);
-			const adultCategory = yield* categoryBySlug(
+			const adultCategory = yield* categoryBySlugFx(
 				database,
 				"tv-audio-a-foto--drony-s-kamerou",
 			);
-			const sensitiveCategory = yield* categoryBySlug(
+			const sensitiveCategory = yield* categoryBySlugFx(
 				database,
 				"airsoft--airsoftove-pistole",
 			);
@@ -75,9 +75,9 @@ describe("public category privacy", () => {
 			]);
 			expect(collection.every((item) => item.restriction === "none")).toBe(true);
 			expect(count).toBe(1);
-			expectTaggedErrorFx(adultRelaxedFetch, {
+			expectTaggedErrorFn(adultRelaxedFetch, {
 				tag: "NotFoundErrorFx",
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

@@ -16,8 +16,8 @@ export const Empty: FC<Empty.Props> = (props) => {
 		<EmptyStatus
 			data-ui="ActivityList[Empty]"
 			icon={NotificationIcon}
-			textTitle={translator.text("Activity empty (title)")}
-			textMessage={translator.text("Activity empty (message)")}
+			textTitle={translator.textFn("Activity empty (title)")}
+			textMessage={translator.textFn("Activity empty (message)")}
 			{...props}
 		/>
 	);

@@ -1,5 +1,5 @@
 import { useLocale } from "~/locale/hook/useLocale";
-import { toLocaleNumber } from "~/number/fn/toLocaleNumber";
+import { toLocaleNumberFn } from "~/number/fn/toLocaleNumberFn";
 import { useTranslator } from "~/translation/hook/useTranslator";
 import { LabelValue } from "~/ui/ui/LabelValue";
 
@@ -16,16 +16,16 @@ export const PriceMinValue: React.FC<PriceMinValue.Props> = ({ value, ...props }
 
 	return (
 		<LabelValue
-			textLabel={translator.text("Minimum price (label)")}
+			textLabel={translator.textFn("Minimum price (label)")}
 			textValue={
 				hasValue
-					? toLocaleNumber({
+					? toLocaleNumberFn({
 							locale,
 							number: value,
 						})
 					: null
 			}
-			textEmpty={translator.text("Minimum price not set")}
+			textEmpty={translator.textFn("Minimum price not set")}
 			wrapperProps={{
 				"data-ui-tone": hasValue ? "neutral" : "secondary",
 			}}

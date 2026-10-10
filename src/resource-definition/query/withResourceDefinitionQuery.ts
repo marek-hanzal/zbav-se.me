@@ -1,13 +1,13 @@
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withEntityQuery } from "~/query/fn/withEntityQuery";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withEntityQueryFn } from "~/query/fn/withEntityQueryFn";
 import type { CountSchema } from "~/query/schema/CountSchema";
 import { resourceDefinitionCollectionFn } from "~/resource-definition/fn/resourceDefinitionCollectionFn";
 import { resourceDefinitionFetchFn } from "~/resource-definition/fn/resourceDefinitionFetchFn";
 import type { ResourceDefinitionQuerySchema } from "~/resource-definition/schema/ResourceDefinitionQuerySchema";
 import type { ResourceDefinitionSchema } from "~/resource-definition/schema/ResourceDefinitionSchema";
 
-export const withResourceDefinitionQuery = withEntityQuery({
-	logger: getRootLogger([
+export const withResourceDefinitionQuery = withEntityQueryFn({
+	logger: getRootLoggerFn([
 		"query",
 		"withResourceDefinitionQuery",
 	]),
@@ -20,13 +20,13 @@ export const withResourceDefinitionQuery = withEntityQuery({
 		delete: Error;
 		patchCollection: Error;
 	},
-	keys() {
+	keysFn() {
 		return [
 			"common",
 			"resource-definition",
 		];
 	},
-	toIdKey(id): ResourceDefinitionQuerySchema.Type {
+	toIdKeyFn(id): ResourceDefinitionQuerySchema.Type {
 		return {
 			where: {
 				name: id as ResourceDefinitionSchema.Type["name"],

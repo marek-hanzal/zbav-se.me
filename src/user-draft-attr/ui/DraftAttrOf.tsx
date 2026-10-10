@@ -1,7 +1,7 @@
 import type { FC, ReactNode } from "react";
 import { match } from "ts-pattern";
 import { useLocale } from "~/locale/hook/useLocale";
-import { toLocaleNumber } from "~/number/fn/toLocaleNumber";
+import { toLocaleNumberFn } from "~/number/fn/toLocaleNumberFn";
 import { useTranslator } from "~/translation/hook/useTranslator";
 import type { Container } from "~/ui/ui/Container";
 import { LabelValue } from "~/ui/ui/LabelValue";
@@ -31,13 +31,13 @@ export const DraftAttrOf: FC<DraftAttrOf.Props> = ({ attrOf, ...props }) => {
 			(attr) => {
 				return (
 					<LabelValue
-						textLabel={translator.text(`Field - ${attr.name}`)}
+						textLabel={translator.textFn(`Field - ${attr.name}`)}
 						textValue={
 							attr.value
-								? translator.text(`${attr.name} - ${attr.value}`, attr.value)
+								? translator.textFn(`${attr.name} - ${attr.value}`, attr.value)
 								: null
 						}
-						textEmpty={translator.text("No value here (label)")}
+						textEmpty={translator.textFn("No value here (label)")}
 						{...props}
 					/>
 				);
@@ -50,13 +50,13 @@ export const DraftAttrOf: FC<DraftAttrOf.Props> = ({ attrOf, ...props }) => {
 			(attr) => {
 				return (
 					<LabelValue
-						textLabel={translator.text(`Field - ${attr.name}`)}
+						textLabel={translator.textFn(`Field - ${attr.name}`)}
 						textValue={
 							attr.value
-								? translator.text(`${attr.name} - ${attr.value}`, attr.value)
+								? translator.textFn(`${attr.name} - ${attr.value}`, attr.value)
 								: null
 						}
-						textEmpty={translator.text("No value here (label)")}
+						textEmpty={translator.textFn("No value here (label)")}
 						{...props}
 					/>
 				);
@@ -75,16 +75,16 @@ export const DraftAttrOf: FC<DraftAttrOf.Props> = ({ attrOf, ...props }) => {
 			(attr) => {
 				return (
 					<LabelValue
-						textLabel={translator.text(`Field - ${attr.name}`)}
+						textLabel={translator.textFn(`Field - ${attr.name}`)}
 						textValue={
 							attr.value
-								? toLocaleNumber({
+								? toLocaleNumberFn({
 										locale,
 										number: attr.value,
 									})
 								: null
 						}
-						textEmpty={translator.text("No value here (label)")}
+						textEmpty={translator.textFn("No value here (label)")}
 						{...props}
 					/>
 				);
@@ -97,9 +97,9 @@ export const DraftAttrOf: FC<DraftAttrOf.Props> = ({ attrOf, ...props }) => {
 			(attr) => {
 				return (
 					<LabelValue
-						textLabel={translator.text(`Field - ${attr.name}`)}
+						textLabel={translator.textFn(`Field - ${attr.name}`)}
 						textValue={attr.value ? String(attr.value) : null}
-						textEmpty={translator.text("No value here (label)")}
+						textEmpty={translator.textFn("No value here (label)")}
 						{...props}
 					/>
 				);
@@ -112,13 +112,13 @@ export const DraftAttrOf: FC<DraftAttrOf.Props> = ({ attrOf, ...props }) => {
 			(attr) => {
 				return (
 					<ValueList
-						textLabel={translator.text(`Field - ${attr.name}`)}
-						textEmpty={translator.text("No value here (label)")}
+						textLabel={translator.textFn(`Field - ${attr.name}`)}
+						textEmpty={translator.textFn("No value here (label)")}
 						items={attr.value.map((item) => ({
 							id: item,
 						}))}
 						renderFn={({ id }) => {
-							return translator.text(`${attr.name} - ${id}`, id);
+							return translator.textFn(`${attr.name} - ${id}`, id);
 						}}
 						{...props}
 					/>

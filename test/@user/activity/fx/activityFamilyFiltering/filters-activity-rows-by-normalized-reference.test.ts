@@ -1,13 +1,13 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withKyselyFx } from "~/database/fx/withKyselyFx";
-import { testabase } from "~/test/testabase";
+import { withKyselyFn } from "~/database/fn/withKyselyFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { withActivitySelectFx } from "~/user-activity/db/withActivitySelectFx";
 
 describe("activity family", () => {
 	it("filters activity rows by normalized reference", async () => {
-		const database = await testabase("activityFamilyFiltering-reference");
+		const database = await testabaseFn("activityFamilyFiltering-reference");
 
 		return Effect.gen(function* () {
 			const user = yield* leaseTestUserFx({});
@@ -64,6 +64,6 @@ describe("activity family", () => {
 			expect(rows[0]?.reference).toEqual([
 				"listing-b",
 			]);
-		}).pipe(withKyselyFx(database), Effect.runPromise);
+		}).pipe(withKyselyFn(database), Effect.runPromise);
 	});
 });

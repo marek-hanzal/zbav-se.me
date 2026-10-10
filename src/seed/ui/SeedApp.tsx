@@ -4,7 +4,7 @@ import { Box, useApp, useInput, useWindowSize } from "ink";
 import { type FC, useEffect, useEffectEvent, useMemo, useRef, useState } from "react";
 import { match } from "ts-pattern";
 import { seedRegistry } from "~/seed/constant/seedRegistry";
-import { runSeedEffect } from "~/seed/fn/runSeedFn";
+import { runSeedEffectFx } from "~/seed/fn/runSeedFn";
 import { SeedRunConfigSchema } from "~/seed/schema/SeedRunConfig";
 import type { SeedProgressEvent } from "~/seed/type/SeedProgressEvent";
 import type { SeedRunSummary } from "~/seed/type/SeedRunSummary";
@@ -31,7 +31,7 @@ const focusOrder: FocusField[] = [
 	"submit",
 ];
 
-const readErrorMessage = (error: unknown) => {
+const readErrorMessageFn = (error: unknown) => {
 	if (error instanceof Error && error.message) {
 		return error.message;
 	}
@@ -46,7 +46,7 @@ const readErrorMessage = (error: unknown) => {
 	return "Unknown seed failure";
 };
 
-const withPhaseStatusUpdate = (
+const withPhaseStatusUpdateFn = (
 	phases: SeedRunSummary.Phase[],
 	phaseName: string,
 	status: SeedRunSummary.PhaseStatus,
@@ -65,7 +65,7 @@ const withPhaseStatusUpdate = (
 	});
 };
 
-const isExitScreenState = (screenState: ScreenState) => {
+const isExitScreenStateFn = (screenState: ScreenState) => {
 	return match(screenState)
 		.with("completed", () => true)
 		.with("failed", () => true)
@@ -79,21 +79,21 @@ export namespace SeedApp {
 }
 
 export const SeedApp: FC<SeedApp.Props> = () => {
-	const { exit } = useApp();
+	const { exit: exitFn } = useApp();
 	const { rows, columns } = useWindowSize();
 	const runFiberRef = useRef<Fiber.Fiber<SeedRunSummary.Type, unknown> | null>(null);
 	const isExitingRef = useRef(false);
 
-	const [countInput, setCountInput] = useState(String(seedRegistry[0]?.defaultCount ?? 25));
-	const [errorMessage, setErrorMessage] = useState<string | null>(null);
-	const [focusField, setFocusField] = useState<FocusField>("seed");
-	const [logLines, setLogLines] = useState<string[]>([]);
-	const [phase, setPhase] = useState<PhaseState>(null);
-	const [runConfig, setRunConfig] = useState<SeedRunConfigSchema.Type | null>(null);
-	const [screenState, setScreenState] = useState<ScreenState>("setup");
-	const [selectedSeedIndex, setSelectedSeedIndex] = useState(0);
-	const [summary, setSummary] = useState<SummaryState>({});
-	const [userEmailInput, setUserEmailInput] = useState(
+	const [countInput, setCountInputFn] = useState(String(seedRegistry[0]?.defaultCount ?? 25));
+	const [errorMessage, setErrorMessageFn] = useState<string | null>(null);
+	const [focusField, setFocusFieldFn] = useState<FocusField>("seed");
+	const [logLines, setLogLinesFn] = useState<string[]>([]);
+	const [phase, setPhaseFn] = useState<PhaseState>(null);
+	const [runConfig, setRunConfigFn] = useState<SeedRunConfigSchema.Type | null>(null);
+	const [screenState, setScreenStateFn] = useState<ScreenState>("setup");
+	const [selectedSeedIndex, setSelectedSeedIndexFn] = useState(0);
+	const [summary, setSummaryFn] = useState<SummaryState>({});
+	const [userEmailInput, setUserEmailInputFn] = useState(
 		seedRegistry[0]?.defaultUserEmail ?? "b@x32.cz",
 	);
 
@@ -130,27 +130,27 @@ export const SeedApp: FC<SeedApp.Props> = () => {
 		validation,
 	]);
 
-	const moveFocus = useEffectEvent((delta: number) => {
+	const moveFocusFn = useEffectEvent((delta: number) => {
 		const currentIndex = focusOrder.indexOf(focusField);
 		const nextIndex = (currentIndex + delta + focusOrder.length) % focusOrder.length;
-		setFocusField(focusOrder[nextIndex] ?? "seed");
+		setFocusFieldFn(focusOrder[nextIndex] ?? "seed");
 	});
 
-	const resetToSetup = useEffectEvent(() => {
+	const resetToSetupFn = useEffectEvent(() => {
 		runFiberRef.current = null;
 		isExitingRef.current = false;
-		setCountInput(String(selectedSeed.defaultCount));
-		setUserEmailInput(selectedSeed.defaultUserEmail);
-		setErrorMessage(null);
-		setFocusField("seed");
-		setLogLines([]);
-		setPhase(null);
-		setRunConfig(null);
-		setScreenState("setup");
-		setSummary({});
+		setCountInputFn(String(selectedSeed.defaultCount));
+		setUserEmailInputFn(selectedSeed.defaultUserEmail);
+		setErrorMessageFn(null);
+		setFocusFieldFn("seed");
+		setLogLinesFn([]);
+		setPhaseFn(null);
+		setRunConfigFn(null);
+		setScreenStateFn("setup");
+		setSummaryFn({});
 	});
 
-	const interruptRun = useEffectEvent(async () => {
+	const interruptRunFn = useEffectEvent(async () => {
 		const runFiber = runFiberRef.current;
 
 		if (!runFiber) {
@@ -161,14 +161,14 @@ export const SeedApp: FC<SeedApp.Props> = () => {
 		Effect.runFork(Fiber.interrupt(runFiber));
 	});
 
-	const closeApp = useEffectEvent((forceExit: boolean) => {
+	const closeAppFn = useEffectEvent((forceExit: boolean) => {
 		if (isExitingRef.current) {
 			return;
 		}
 
 		isExitingRef.current = true;
-		void interruptRun();
-		exit();
+		void interruptRunFn();
+		exitFn();
 
 		if (forceExit) {
 			setTimeout(() => {
@@ -177,16 +177,16 @@ export const SeedApp: FC<SeedApp.Props> = () => {
 		}
 	});
 
-	const submitSetup = useEffectEvent(() => {
+	const submitSetupFn = useEffectEvent(() => {
 		if (!validation.success) {
-			setErrorMessage("Fix the highlighted setup fields before running the seed.");
+			setErrorMessageFn("Fix the highlighted setup fields before running the seed.");
 			return;
 		}
 
-		setErrorMessage(null);
-		setLogLines([]);
-		setPhase(null);
-		setSummary({
+		setErrorMessageFn(null);
+		setLogLinesFn([]);
+		setPhaseFn(null);
+		setSummaryFn({
 			seedId: validation.data.seedId,
 			seedLabel: selectedSeed.label,
 			userEmail: validation.data.userEmail,
@@ -197,14 +197,14 @@ export const SeedApp: FC<SeedApp.Props> = () => {
 			phases: [],
 			currentPhase: null,
 		});
-		setRunConfig(validation.data);
-		setScreenState("running");
+		setRunConfigFn(validation.data);
+		setScreenStateFn("running");
 	});
 
-	const onProgressEvent = useEffectEvent((event: SeedProgressEvent.Type) => {
+	const onProgressEventFn = useEffectEvent((event: SeedProgressEvent.Type) => {
 		switch (event.type) {
 			case "log-added": {
-				setLogLines((current) => {
+				setLogLinesFn((current) => {
 					const next = [
 						...current,
 						event.message,
@@ -220,10 +220,10 @@ export const SeedApp: FC<SeedApp.Props> = () => {
 					done: 0,
 					startedAt: Date.now(),
 				} as const;
-				setPhase(nextPhase);
-				setSummary((current) => ({
+				setPhaseFn(nextPhase);
+				setSummaryFn((current) => ({
 					...current,
-					phases: withPhaseStatusUpdate(
+					phases: withPhaseStatusUpdateFn(
 						current.phases ?? [],
 						nextPhase.name,
 						"running",
@@ -239,7 +239,7 @@ export const SeedApp: FC<SeedApp.Props> = () => {
 				return;
 			}
 			case "phase-advanced": {
-				setPhase((current) => {
+				setPhaseFn((current) => {
 					if (!current) {
 						return current;
 					}
@@ -249,9 +249,9 @@ export const SeedApp: FC<SeedApp.Props> = () => {
 						done: Math.max(0, Math.min(current.total, current.done + event.delta)),
 					};
 
-					setSummary((summary) => ({
+					setSummaryFn((summary) => ({
 						...summary,
-						phases: withPhaseStatusUpdate(
+						phases: withPhaseStatusUpdateFn(
 							summary.phases ?? [],
 							nextPhase.name,
 							"running",
@@ -270,7 +270,7 @@ export const SeedApp: FC<SeedApp.Props> = () => {
 				return;
 			}
 			case "phase-finished": {
-				setPhase((current) => {
+				setPhaseFn((current) => {
 					if (!current) {
 						return current;
 					}
@@ -280,9 +280,9 @@ export const SeedApp: FC<SeedApp.Props> = () => {
 						done: current.total,
 					};
 
-					setSummary((summary) => ({
+					setSummaryFn((summary) => ({
 						...summary,
-						phases: withPhaseStatusUpdate(
+						phases: withPhaseStatusUpdateFn(
 							summary.phases ?? [],
 							nextPhase.name,
 							"completed",
@@ -301,7 +301,7 @@ export const SeedApp: FC<SeedApp.Props> = () => {
 				return;
 			}
 			case "summary-updated": {
-				setSummary((current) => ({
+				setSummaryFn((current) => ({
 					...current,
 					...event.summary,
 					phases: event.summary.phases ?? current.phases,
@@ -316,7 +316,7 @@ export const SeedApp: FC<SeedApp.Props> = () => {
 		}
 
 		let active = true;
-		const runFiber = Effect.runFork(runSeedEffect(runConfig, onProgressEvent));
+		const runFiber = Effect.runFork(runSeedEffectFx(runConfig, onProgressEventFn));
 		runFiberRef.current = runFiber;
 
 		void Effect.runPromise(Fiber.await(runFiber)).then((result) => {
@@ -327,10 +327,10 @@ export const SeedApp: FC<SeedApp.Props> = () => {
 			runFiberRef.current = null;
 
 			if (Exit.isSuccess(result)) {
-				setSummary(result.value);
-				setPhase(null);
-				setScreenState("completed");
-				setLogLines((current) => {
+				setSummaryFn(result.value);
+				setPhaseFn(null);
+				setScreenStateFn("completed");
+				setLogLinesFn((current) => {
 					return [
 						...current,
 						`Seed finished: created ${result.value.createdCount} listings.`,
@@ -343,11 +343,11 @@ export const SeedApp: FC<SeedApp.Props> = () => {
 				return;
 			}
 
-			const message = readErrorMessage(Cause.squash(result.cause));
-			setPhase(null);
-			setErrorMessage(message);
-			setScreenState("failed");
-			setLogLines((current) => {
+			const message = readErrorMessageFn(Cause.squash(result.cause));
+			setPhaseFn(null);
+			setErrorMessageFn(message);
+			setScreenStateFn("failed");
+			setLogLinesFn((current) => {
 				return [
 					...current,
 					`Seed failed: ${message}`,
@@ -368,34 +368,34 @@ export const SeedApp: FC<SeedApp.Props> = () => {
 
 	useInput((input, key) => {
 		if (key.ctrl && input === "c") {
-			closeApp(true);
+			closeAppFn(true);
 			return;
 		}
 
 		match(screenState)
 			.with("setup", () => {
 				if (key.tab && key.shift) {
-					moveFocus(-1);
+					moveFocusFn(-1);
 					return;
 				}
 
 				if (key.tab) {
-					moveFocus(1);
+					moveFocusFn(1);
 					return;
 				}
 
 				if (focusField === "submit" && key.return) {
-					submitSetup();
+					submitSetupFn();
 				}
 			})
-			.when(isExitScreenState, () => {
+			.when(isExitScreenStateFn, () => {
 				if (input === "q") {
-					closeApp(false);
+					closeAppFn(false);
 					return;
 				}
 
 				if (input === "r") {
-					resetToSetup();
+					resetToSetupFn();
 				}
 			})
 			.otherwise(() => {});
@@ -416,11 +416,11 @@ export const SeedApp: FC<SeedApp.Props> = () => {
 						errors={validationErrors}
 						errorMessage={errorMessage}
 						focusField={focusField}
-						onCountChange={setCountInput}
-						onCountSubmit={() => {
-							setFocusField("user");
+						onCountChangeFn={setCountInputFn}
+						onCountSubmitFn={() => {
+							setFocusFieldFn("user");
 						}}
-						onSeedChange={(seedId: string) => {
+						onSeedChangeFn={(seedId: string) => {
 							const nextIndex = seedRegistry.findIndex((seed) => seed.id === seedId);
 							if (nextIndex < 0) {
 								return;
@@ -431,13 +431,13 @@ export const SeedApp: FC<SeedApp.Props> = () => {
 								return;
 							}
 
-							setSelectedSeedIndex(nextIndex);
-							setCountInput(String(nextSeed.defaultCount));
-							setUserEmailInput(nextSeed.defaultUserEmail);
+							setSelectedSeedIndexFn(nextIndex);
+							setCountInputFn(String(nextSeed.defaultCount));
+							setUserEmailInputFn(nextSeed.defaultUserEmail);
 						}}
-						onUserEmailChange={setUserEmailInput}
-						onUserEmailSubmit={() => {
-							setFocusField("submit");
+						onUserEmailChangeFn={setUserEmailInputFn}
+						onUserEmailSubmitFn={() => {
+							setFocusFieldFn("submit");
 						}}
 						selectedSeedId={selectedSeed.id}
 						seedOptions={seedRegistry.map((seed) => ({

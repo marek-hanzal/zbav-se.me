@@ -1,14 +1,14 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { listingCollectionFx } from "~/buyer-listing/fx/listingCollectionFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("listingCollectionFx (buyer) — listing status visibility", () => {
 	it("listing remains visible while transaction is open (not yet sold)", async () => {
-		const database = await testabase("listingCollection-open-still-live");
+		const database = await testabaseFn("listingCollection-open-still-live");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -37,6 +37,6 @@ describe("listingCollectionFx (buyer) — listing status visibility", () => {
 
 			const ids = collection.map((l) => l.id);
 			expect(ids).toContain(listingId);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

@@ -1,18 +1,18 @@
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withQuery } from "~/query/fn/withQuery";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withQueryFn } from "~/query/fn/withQueryFn";
 import { agentUsageCollectionFn } from "~/user-agent/fn/agentUsageCollectionFn";
 import type { AgentUsageQuerySchema } from "~/user-agent/schema/AgentUsageQuerySchema";
 import type { AgentUsageSchema } from "~/user-agent/schema/AgentUsageSchema";
 
-export const withAgentUsageQuery = withQuery({
-	logger: getRootLogger([
+export const withAgentUsageQuery = withQueryFn({
+	logger: getRootLoggerFn([
 		"query",
 		"withAgentUsageQuery",
 	]),
 	errors: {} as {
 		query: agentUsageCollectionFn.Error;
 	},
-	keys(data: AgentUsageQuerySchema.Type) {
+	keysFn(data: AgentUsageQuerySchema.Type) {
 		return [
 			"agent",
 			"usage",

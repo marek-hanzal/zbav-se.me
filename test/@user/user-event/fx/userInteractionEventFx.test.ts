@@ -1,15 +1,15 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { keyOf } from "~/hash/fn/keyOf";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { keyOfFn } from "~/hash/fn/keyOfFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 import { userInteractionEventFx } from "~/user-event/fx/userInteractionEventFx";
 
 describe("userInteractionEventFx", () => {
 	it("writes one user-scoped event and one foreign-scoped event", async () => {
 		const group = "tx-1";
-		const database = await testabase("userInteractionEventFx");
+		const database = await testabaseFn("userInteractionEventFx");
 
 		return Effect.gen(function* () {
 			const users = yield* createUsersFx({});
@@ -33,7 +33,7 @@ describe("userInteractionEventFx", () => {
 						"event",
 						"isTerminal",
 					])
-					.where("group", "=", keyOf(group))
+					.where("group", "=", keyOfFn(group))
 					.orderBy("scope", "asc")
 					.execute(),
 			);
@@ -53,6 +53,6 @@ describe("userInteractionEventFx", () => {
 				event: "transaction.message",
 				isTerminal: false,
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

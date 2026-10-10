@@ -2,7 +2,7 @@ import type { FC } from "react";
 import { ViteEnvSchema } from "~/application-env/schema/ViteEnvSchema";
 import { CopyIconAction } from "~/clipboard/ui/CopyIconAction";
 import { useTranslator } from "~/translation/hook/useTranslator";
-import { uiLinkTo } from "~/ui/fn/uiLinkTo";
+import { uiLinkToFn } from "~/ui/fn/uiLinkToFn";
 import { Container } from "~/ui/ui/Container";
 import { Group } from "~/ui/ui/Group";
 import { Markdown } from "~/ui/ui/Markdown";
@@ -36,12 +36,12 @@ export const MessageTextContent: FC<MessageTextContent.Props> = ({ groupId, text
 					href={value}
 					target={"_blank"}
 					rel="noopener"
-					{...uiLinkTo({
+					{...uiLinkToFn({
 						"data-ui-font": "light",
 						"data-ui-text": "xs",
 					})}
 				>
-					{translator.text("Embedded image - url (label)")}
+					{translator.textFn("Embedded image - url (label)")}
 				</a>
 
 				<CopyIconAction

@@ -2,17 +2,17 @@ import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import { userEventBuyerInfoFx } from "~/seller-user-event/fx/userEventBuyerInfoFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { createTransactionTimeline } from "~/test/user-event/fx/createTransactionTimeline";
+import { createTransactionTimelineFn } from "~/test/user-event/fx/createTransactionTimelineFn";
 import { seedUserEventTimelineFx } from "~/test/user-event/fx/seedUserEventTimelineFx";
 
 describe("userEventBuyerInfoFx", {
 	timeout: 4_000,
 }, () => {
 	it("Closer: end after interaction should be dirty (not counted as instant close)", async () => {
-		const database = await testabase("userEventBuyerInfoFx-closer-dirty");
+		const database = await testabaseFn("userEventBuyerInfoFx-closer-dirty");
 
 		return Effect.gen(function* () {
 			const buyer = yield* leaseTestUserFx({});
@@ -54,7 +54,7 @@ describe("userEventBuyerInfoFx", {
 			yield* seedUserEventTimelineFx({
 				userId: buyer.id,
 				events: [
-					...createTransactionTimeline({
+					...createTransactionTimelineFn({
 						group: "tx-1",
 						steps: [
 							{
@@ -83,7 +83,7 @@ describe("userEventBuyerInfoFx", {
 							},
 						],
 					}),
-					...createTransactionTimeline({
+					...createTransactionTimelineFn({
 						group: "tx-2",
 						steps: [
 							{
@@ -112,7 +112,7 @@ describe("userEventBuyerInfoFx", {
 							},
 						],
 					}),
-					...createTransactionTimeline({
+					...createTransactionTimelineFn({
 						group: "tx-3",
 						steps: [
 							{
@@ -148,6 +148,6 @@ describe("userEventBuyerInfoFx", {
 			expect(result.closer.total).toBe(3);
 			expect(result.closer.closed).toBe(1);
 			expect(result.closer.percent).toBeCloseTo(33.33, 1);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

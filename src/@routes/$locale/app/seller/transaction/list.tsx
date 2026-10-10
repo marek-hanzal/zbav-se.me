@@ -21,7 +21,7 @@ export const Route = createFileRoute("/$locale/app/seller/transaction/list")({
 		return (
 			<TitleContainer
 				data-ui="TransactionListingList[TitleContainer]"
-				textTitle={translator.text("Messages (title)")}
+				textTitle={translator.textFn("Messages (title)")}
 				left={
 					<BackHomeButton
 						to="/$locale/app/home"
@@ -64,18 +64,18 @@ export const Route = createFileRoute("/$locale/app/seller/transaction/list")({
 		const check = useMemo(() => {
 			return [
 				{
-					check() {
+					checkFn() {
 						return !listingCollection.length;
 					},
-					render() {
+					renderFn() {
 						return <EmptyListings />;
 					},
 				},
 				{
-					check() {
+					checkFn() {
 						return !hasTransactionListing.length;
 					},
-					render() {
+					renderFn() {
 						return <Empty />;
 					},
 				},
@@ -88,7 +88,7 @@ export const Route = createFileRoute("/$locale/app/seller/transaction/list")({
 		return (
 			<TitleContainer
 				data-ui="TransactionListingList[TitleContainer]"
-				textTitle={translator.text("Messages (title)")}
+				textTitle={translator.textFn("Messages (title)")}
 				left={
 					<BackHomeButton
 						to="/$locale/app/home"
@@ -108,7 +108,7 @@ export const Route = createFileRoute("/$locale/app/seller/transaction/list")({
 						data-ui-inner="default"
 					>
 						<ListGroup
-							label={translator.text(
+							label={translator.textFn(
 								"Transactions - buyer-to-seller - seller (title)",
 							)}
 							where={{
@@ -122,7 +122,7 @@ export const Route = createFileRoute("/$locale/app/seller/transaction/list")({
 						/>
 
 						<ListGroup
-							label={translator.text(
+							label={translator.textFn(
 								"Transactions - seller-to-buyer - seller (title)",
 							)}
 							where={{
@@ -138,7 +138,7 @@ export const Route = createFileRoute("/$locale/app/seller/transaction/list")({
 						/>
 
 						<ListGroup
-							label={translator.text("Transactions - archived - seller (title)")}
+							label={translator.textFn("Transactions - archived - seller (title)")}
 							where={{
 								flow: "archived",
 							}}

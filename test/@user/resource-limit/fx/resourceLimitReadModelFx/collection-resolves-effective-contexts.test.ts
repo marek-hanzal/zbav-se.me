@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { ResourceDefinitionEnumSchema } from "~/resource-definition/schema/ResourceDefinitionEnumSchema";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { resourceLimitCollectionFx } from "~/user-resource-limit/fx/resourceLimitCollectionFx";
 import {
 	atResourceLimitReadModelFx,
@@ -11,7 +11,7 @@ import {
 
 describe("resourceLimit read model fx", () => {
 	it("collection resolves effective resource bundle limits", async () => {
-		const database = await testabase("resource-limit-collection");
+		const database = await testabaseFn("resource-limit-collection");
 
 		return Effect.gen(function* () {
 			const { seller } = yield* seedResourceLimitReadModelFx(database);
@@ -104,6 +104,6 @@ describe("resourceLimit read model fx", () => {
 					},
 				]),
 			);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

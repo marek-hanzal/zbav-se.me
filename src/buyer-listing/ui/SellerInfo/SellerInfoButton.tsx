@@ -21,7 +21,7 @@ export namespace SellerInfoButton {
  */
 export const SellerInfoButton: FC<SellerInfoButton.Props> = ({ listingId, ...props }) => {
 	const translator = useTranslator();
-	const [isOpen, setIsOpen] = useState(false);
+	const [isOpen, setIsOpenFn] = useState(false);
 
 	return (
 		<>
@@ -29,7 +29,7 @@ export const SellerInfoButton: FC<SellerInfoButton.Props> = ({ listingId, ...pro
 				data-ui="SellerInfoButton[Button]"
 				iconEnabled={SellerIcon}
 				onClick={() => {
-					setIsOpen(true);
+					setIsOpenFn(true);
 				}}
 				{...props}
 			>
@@ -40,11 +40,11 @@ export const SellerInfoButton: FC<SellerInfoButton.Props> = ({ listingId, ...pro
 				data-ui="SellerInfoButton[BottomSheet]"
 				isOpen={isOpen}
 				onClose={() => {
-					setIsOpen(false);
+					setIsOpenFn(false);
 				}}
-				header={({ close }) => ({
-					title: translator.text("Seller info (title)"),
-					right: <CloseButton onClick={close} />,
+				headerFn={({ closeFn }) => ({
+					title: translator.textFn("Seller info (title)"),
+					right: <CloseButton onClick={closeFn} />,
 				})}
 				detent={"default"}
 			>

@@ -1,6 +1,6 @@
 import { sql } from "kysely";
 import type { Migration } from "kysely/migration";
-import { toEnumGuard } from "~/enum/fn/toEnumGuard";
+import { toEnumGuardFn } from "~/enum/fn/toEnumGuardFn";
 import type { ListingEventEnumSchema } from "~/listing/schema/ListingEventEnumSchema";
 
 export const ListingEventMigration: Migration = {
@@ -8,7 +8,7 @@ export const ListingEventMigration: Migration = {
 		await db.schema
 			.createType("listing_event_type_enum")
 			.asEnum(
-				toEnumGuard<ListingEventEnumSchema.Type>()([
+				toEnumGuardFn<ListingEventEnumSchema.Type>()([
 					"impression",
 					"view",
 					"listing.ignore",

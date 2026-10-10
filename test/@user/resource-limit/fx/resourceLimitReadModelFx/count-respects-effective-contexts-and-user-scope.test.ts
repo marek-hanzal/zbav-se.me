@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { resourceLimitCountFx } from "~/user-resource-limit/fx/resourceLimitCountFx";
 import {
 	atResourceLimitReadModelFx,
@@ -10,7 +10,7 @@ import {
 
 describe("resourceLimit read model fx", () => {
 	it("count respects effective bundle limits and user scope", async () => {
-		const database = await testabase("resource-limit-count");
+		const database = await testabaseFn("resource-limit-count");
 
 		return Effect.gen(function* () {
 			const { seller, buyer } = yield* seedResourceLimitReadModelFx(database);
@@ -34,6 +34,6 @@ describe("resourceLimit read model fx", () => {
 
 			expect(sellerCount).toBe(4);
 			expect(buyerCount).toBe(2);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

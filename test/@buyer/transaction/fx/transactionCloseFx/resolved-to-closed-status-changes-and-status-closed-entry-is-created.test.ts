@@ -1,14 +1,14 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionCloseFx } from "~/buyer-transaction/fx/transactionCloseFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createResolvedScenarioFx } from "~/test/transaction/fx/createResolvedScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("transactionCloseFx (buyer)", () => {
 	it("resolved → closed: status changes and status-closed entry is created", async () => {
-		const database = await testabase("buyerCloseFx-resolved-to-closed");
+		const database = await testabaseFn("buyerCloseFx-resolved-to-closed");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -45,6 +45,6 @@ describe("transactionCloseFx (buyer)", () => {
 			const kinds = entries.map((e) => e.kind);
 			expect(kinds).toContain("status-resolved");
 			expect(kinds).toContain("status-closed");
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

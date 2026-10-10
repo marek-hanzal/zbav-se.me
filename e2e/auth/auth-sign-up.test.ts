@@ -1,10 +1,10 @@
-import { expect, test } from "../test";
-import { createUser } from "../utils/createUser";
+import { expect, testFn } from "../testFn";
+import { createUserFn } from "../utils/createUserFn";
 
-test("auth sign up", async ({ page, database }) => {
+testFn("auth sign up", async ({ page, database }) => {
 	void database;
 
-	const user = createUser();
+	const user = createUserFn();
 
 	await page.goto("/cs/landing");
 

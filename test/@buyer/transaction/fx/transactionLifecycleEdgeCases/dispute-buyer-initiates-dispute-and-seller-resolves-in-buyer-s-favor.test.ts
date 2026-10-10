@@ -3,14 +3,14 @@ import { describe, expect, it } from "vitest";
 import { transactionDisputeFx } from "~/buyer-transaction/fx/transactionDisputeFx";
 import { transactionAcceptFx } from "~/seller-transaction/fx/transactionAcceptFx";
 import { transactionResolveFx } from "~/seller-transaction/fx/transactionResolveFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("transactionLifecycleEdgeCases (buyer)", () => {
 	it("dispute: buyer initiates dispute and seller resolves in buyer's favor", async () => {
-		const database = await testabase("buyerCloseFx-dispute");
+		const database = await testabaseFn("buyerCloseFx-dispute");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -69,6 +69,6 @@ describe("transactionLifecycleEdgeCases (buyer)", () => {
 			});
 
 			expect(statusAfterResolve).toBe("resolved");
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

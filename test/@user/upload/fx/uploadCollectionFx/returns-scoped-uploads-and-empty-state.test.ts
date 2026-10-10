@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 import { UploadConfigFx } from "~/user-upload/context/UploadConfigFx";
 import { uploadCollectionFx } from "~/user-upload/fx/uploadCollectionFx";
@@ -10,7 +10,7 @@ import { uploadFetchFx } from "~/user-upload/fx/uploadFetchFx";
 
 describe("uploadCollectionFx", () => {
 	it("returns only scoped uploads and stays consistent with fetch", async () => {
-		const database = await testabase("uploadCollectionFx-contract");
+		const database = await testabaseFn("uploadCollectionFx-contract");
 
 		return Effect.gen(function* () {
 			const users = yield* createUsersFx({});
@@ -72,6 +72,6 @@ describe("uploadCollectionFx", () => {
 			});
 
 			expect(empty).toEqual([]);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

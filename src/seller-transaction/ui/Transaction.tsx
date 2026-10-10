@@ -36,7 +36,7 @@ export const Transaction: FC<Transaction.Props> = ({
 		refetchInterval: refresh,
 	});
 	const [hero] = transaction.withImageUrl;
-	const [detail, setDetail] = useState(false);
+	const [detail, setDetailFn] = useState(false);
 
 	return (
 		<Container
@@ -60,20 +60,20 @@ export const Transaction: FC<Transaction.Props> = ({
 						src={hero}
 						alt={`Hero image for transaction ${transaction.id}`}
 						className={"h-42"}
-						onClick={() => setDetail((value) => !value)}
+						onClick={() => setDetailFn((value) => !value)}
 					/>
 
 					<Container data-ui-inner={"default"}>
 						<Group>
 							<LabelValue
-								textLabel={translator.text("Listing price (label)")}
+								textLabel={translator.textFn("Listing price (label)")}
 								textValue={
 									<ListingPrice price={transaction as ListingPriceSchema.Type} />
 								}
 							/>
 
 							<LabelValue
-								textLabel={translator.text("Listing location (label)")}
+								textLabel={translator.textFn("Listing location (label)")}
 								textValue={transaction.location.address}
 								textValueProps={{
 									"data-ui-truncate": false,
@@ -99,7 +99,7 @@ export const Transaction: FC<Transaction.Props> = ({
 				listingId={transaction.listingId}
 				state={{
 					value: detail,
-					set: setDetail,
+					setFn: setDetailFn,
 				}}
 			/>
 
@@ -112,7 +112,7 @@ export const Transaction: FC<Transaction.Props> = ({
 							data-ui-gap="default"
 						>
 							<InterestMessage
-								close={() => {}}
+								closeFn={() => {}}
 								transaction={transaction}
 							/>
 						</Container>
@@ -126,7 +126,7 @@ export const Transaction: FC<Transaction.Props> = ({
 							data-ui-gap={"default"}
 						>
 							<AckMessage
-								close={() => {}}
+								closeFn={() => {}}
 								transaction={transaction}
 							/>
 						</Container>
@@ -138,26 +138,28 @@ export const Transaction: FC<Transaction.Props> = ({
 							transaction={transaction}
 							left={
 								<TransactionMenuButton>
-									{(close) => (
+									{(closeFn) => (
 										<TransactionMenu
-											close={close}
+											closeFn={closeFn}
 											transaction={transaction}
 										/>
 									)}
 								</TransactionMenuButton>
 							}
 							text={{
-								open: translator.text("Transaction - send a message (placeholder)"),
-								dispute: translator.text(
+								open: translator.textFn(
+									"Transaction - send a message (placeholder)",
+								),
+								dispute: translator.textFn(
 									"Transaction - dispute - send a message (placeholder)",
 								),
-								pending: translator.text(
+								pending: translator.textFn(
 									"Transaction not accepted - seller (message)",
 								),
-								resolved: translator.text(
+								resolved: translator.textFn(
 									"Chat - transaction resolved - seller cannot write (message)",
 								),
-								closed: translator.text("Chat - transaction closed (message)"),
+								closed: translator.textFn("Chat - transaction closed (message)"),
 							}}
 							data-ui-inner="default"
 						/>

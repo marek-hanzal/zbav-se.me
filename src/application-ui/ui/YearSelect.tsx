@@ -1,5 +1,5 @@
 import { type FC, useEffect, useMemo, useRef } from "react";
-import { uiSelectButton } from "~/application-ui/fn/uiSelectButton";
+import { uiSelectButtonFn } from "~/application-ui/fn/uiSelectButtonFn";
 import type { EntitySchema } from "~/entity/schema/EntitySchema";
 import type { useSelection } from "~/selection/hook/useSelection";
 import { Button } from "~/ui/ui/Button";
@@ -29,7 +29,7 @@ export const YearSelect: FC<YearSelect.Props> = ({ from, to, selection }) => {
 		min,
 	]);
 
-	const selectedYear = selection.optional.singleId();
+	const selectedYear = selection.optional.singleIdFn();
 	const scrollRef = useRef<HTMLDivElement | null>(null);
 
 	useEffect(() => {
@@ -60,18 +60,18 @@ export const YearSelect: FC<YearSelect.Props> = ({ from, to, selection }) => {
 			>
 				{years.map((year) => {
 					const value = String(year);
-					const selected = selection.isSelected(value);
+					const selected = selection.isSelectedFn(value);
 
 					return (
 						<Button
 							key={value}
 							data-selected-year={selected ? value : undefined}
 							onClick={() => {
-								selection.toggle({
+								selection.toggleFn({
 									id: value,
 								});
 							}}
-							{...uiSelectButton({
+							{...uiSelectButtonFn({
 								isSelected: selected,
 								"data-ui-size": "default",
 								"data-ui-justify": "center",

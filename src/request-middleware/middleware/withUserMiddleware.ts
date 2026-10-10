@@ -9,7 +9,7 @@ export const withUserMiddleware = createMiddleware()
 		withLogMiddleware,
 		withAuthMiddleware,
 	])
-	.server(async ({ request, next, context: { auth, rootLogger } }) => {
+	.server(async ({ request, next: nextFn, context: { auth, rootLogger } }) => {
 		const logger = rootLogger.getChild([
 			"middleware",
 			"withUserMiddleware",
@@ -34,7 +34,7 @@ export const withUserMiddleware = createMiddleware()
 		} as const;
 
 		return withContext(context, async () => {
-			return next({
+			return nextFn({
 				context: {
 					user: data.user,
 					rootLogger: rootLogger.with(context),

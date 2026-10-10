@@ -3,11 +3,11 @@ import { stringify } from "csv-stringify/sync";
 import { DateTime } from "luxon";
 import { z } from "zod";
 import { defaultLocale } from "~/locales";
-import { getRootLogger } from "~/log/fn/getRootLogger";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
 import type { withRunnerMiddleware } from "~/user-agent/middleware/withRunnerMiddleware";
 import { userRestrictionCollectionFn } from "~/user-restriction/fn/userRestrictionCollectionFn";
 
-const logger = getRootLogger([
+const logger = getRootLoggerFn([
 	"tool",
 	"toolUserRestrictionDetail",
 ]);

@@ -1,5 +1,5 @@
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withEntityQuery } from "~/query/fn/withEntityQuery";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withEntityQueryFn } from "~/query/fn/withEntityQueryFn";
 import { categoryCollectionFn } from "~/user-category/fn/categoryCollectionFn";
 import { categoryCountFn } from "~/user-category/fn/categoryCountFn";
 import { categoryFetchFn } from "~/user-category/fn/categoryFetchFn";
@@ -7,8 +7,8 @@ import type { CategoryCountQuerySchema } from "~/user-category/schema/CategoryCo
 import type { CategoryQuerySchema } from "~/user-category/schema/CategoryQuerySchema";
 import type { CategorySchema } from "~/user-category/schema/CategorySchema";
 
-export const withCategoryQuery = withEntityQuery({
-	logger: getRootLogger([
+export const withCategoryQuery = withEntityQueryFn({
+	logger: getRootLoggerFn([
 		"query",
 		"withCategoryQuery",
 	]),
@@ -21,12 +21,12 @@ export const withCategoryQuery = withEntityQuery({
 		delete: Error;
 		patchCollection: Error;
 	},
-	keys() {
+	keysFn() {
 		return [
 			"category",
 		];
 	},
-	toIdKey(id): CategoryQuerySchema.Type {
+	toIdKeyFn(id): CategoryQuerySchema.Type {
 		return {
 			where: {
 				id,

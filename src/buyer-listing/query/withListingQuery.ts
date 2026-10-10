@@ -4,11 +4,11 @@ import { listingFetchFn } from "~/buyer-listing/fn/listingFetchFn";
 import type { ListingCountQuerySchema } from "~/buyer-listing/schema/ListingCountQuerySchema";
 import type { ListingQuerySchema } from "~/buyer-listing/schema/ListingQuerySchema";
 import type { ListingSchema } from "~/buyer-listing/schema/ListingSchema";
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withEntityQuery } from "~/query/fn/withEntityQuery";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withEntityQueryFn } from "~/query/fn/withEntityQueryFn";
 
-export const withListingQuery = withEntityQuery({
-	logger: getRootLogger([
+export const withListingQuery = withEntityQueryFn({
+	logger: getRootLoggerFn([
 		"query",
 		"withListingQuery",
 	]),
@@ -21,12 +21,12 @@ export const withListingQuery = withEntityQuery({
 		delete: Error;
 		patchCollection: Error;
 	},
-	keys() {
+	keysFn() {
 		return [
 			"listing",
 		];
 	},
-	toIdKey(id): ListingQuerySchema.Type {
+	toIdKeyFn(id): ListingQuerySchema.Type {
 		return {
 			where: {
 				id,

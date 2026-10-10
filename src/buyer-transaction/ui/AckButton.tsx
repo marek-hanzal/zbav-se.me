@@ -10,19 +10,19 @@ import type { TransactionMenuButton } from "~/user-transaction/ui/TransactionMen
 
 export namespace AckButton {
 	export interface Props extends Button.Props {
-		close: TransactionMenuButton.Close;
+		closeFn: TransactionMenuButton.Close;
 		transaction: TransactionSchema.Type;
 	}
 }
 
-export const AckButton: FC<AckButton.Props> = ({ close, transaction, ...props }) => {
+export const AckButton: FC<AckButton.Props> = ({ closeFn, transaction, ...props }) => {
 	const locale = useLocale();
-	const navigate = useNavigate();
+	const navigateFn = useNavigate();
 	const mutation = withTransactionAckMutation.useMutation({
-		async onPostMutation() {
-			close();
+		async onPostMutationFn() {
+			closeFn();
 
-			await navigate({
+			await navigateFn({
 				to: "/$locale/app/buyer/transaction/list",
 				params: {
 					locale,

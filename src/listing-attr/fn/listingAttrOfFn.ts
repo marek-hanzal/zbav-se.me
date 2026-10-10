@@ -1,10 +1,10 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
 import { z } from "zod";
-import { withKyselyFx } from "~/database/fx/withKyselyFx";
+import { withKyselyFn } from "~/database/fn/withKyselyFn";
 import { listingAttrOfFx } from "~/listing-attr/fx/listingAttrOfFx";
 import { ListingAttrOfSchema } from "~/listing-attr/schema/ListingAttrOfSchema";
-import { withLoggerFx } from "~/log/fx/withLoggerFx";
+import { withLoggerFn } from "~/log/fn/withLoggerFn";
 import { withDatabaseMiddleware } from "~/request-middleware/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/request-middleware/middleware/withLogMiddleware";
 import { zodGuardFx } from "~/validation/fx/zodGuardFx";
@@ -38,8 +38,8 @@ export const listingAttrOfFn = createServerFn()
 			schema: z.array(ListingAttrOfSchema),
 			dataFx: listingAttrOfFx(data),
 		}).pipe(
-			withKyselyFx(database),
-			withLoggerFx(rootLogger),
+			withKyselyFn(database),
+			withLoggerFn(rootLogger),
 			Effect.tapError((error) => {
 				return Effect.sync(() => {
 					logger.error(error._tag, {

@@ -1,13 +1,13 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { categoryCountFx } from "~/user-category/fx/categoryCountFx";
 
 describe("categoryCountFx", () => {
 	it("returns count contract for seeded categories", async () => {
-		const database = await testabase("categoryCountFx-contract");
+		const database = await testabaseFn("categoryCountFx-contract");
 
 		return Effect.gen(function* () {
 			const user = yield* leaseTestUserFx({});
@@ -21,6 +21,6 @@ describe("categoryCountFx", () => {
 
 			expect(typeof count).toBe("number");
 			expect(count).toBeGreaterThan(0);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

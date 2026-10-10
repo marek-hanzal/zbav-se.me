@@ -2,17 +2,17 @@ import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import { userEventSellerInfoFx } from "~/buyer-user-event/fx/userEventSellerInfoFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { createTransactionTimeline } from "~/test/user-event/fx/createTransactionTimeline";
+import { createTransactionTimelineFn } from "~/test/user-event/fx/createTransactionTimelineFn";
 import { seedUserEventTimelineFx } from "~/test/user-event/fx/seedUserEventTimelineFx";
 
 describe("userEventSellerInfoFx", {
 	timeout: 4_000,
 }, () => {
 	it("Bad behaving seller - rejects without interaction, no reactions, expired transactions", async () => {
-		const database = await testabase("userEventSellerInfoFx-bad-behaving-seller");
+		const database = await testabaseFn("userEventSellerInfoFx-bad-behaving-seller");
 		const baseTime = DateTime.now().minus({
 			days: 89,
 		});
@@ -23,7 +23,7 @@ describe("userEventSellerInfoFx", {
 			yield* seedUserEventTimelineFx({
 				userId: seller.id,
 				events: [
-					...createTransactionTimeline({
+					...createTransactionTimelineFn({
 						group: "tx-1",
 						steps: [
 							{
@@ -42,7 +42,7 @@ describe("userEventSellerInfoFx", {
 							},
 						],
 					}),
-					...createTransactionTimeline({
+					...createTransactionTimelineFn({
 						group: "tx-2",
 						steps: [
 							{
@@ -63,7 +63,7 @@ describe("userEventSellerInfoFx", {
 							},
 						],
 					}),
-					...createTransactionTimeline({
+					...createTransactionTimelineFn({
 						group: "tx-3",
 						steps: [
 							{
@@ -84,7 +84,7 @@ describe("userEventSellerInfoFx", {
 							},
 						],
 					}),
-					...createTransactionTimeline({
+					...createTransactionTimelineFn({
 						group: "tx-4",
 						steps: [
 							{
@@ -136,6 +136,6 @@ describe("userEventSellerInfoFx", {
 			expect(result.load.bucket).toBe("low");
 			expect(result.score.score).toBeLessThan(40);
 			expect(result.score.rank).toBeLessThanOrEqual(3);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

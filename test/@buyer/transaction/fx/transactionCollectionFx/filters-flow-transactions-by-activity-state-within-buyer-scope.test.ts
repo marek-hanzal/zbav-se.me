@@ -2,9 +2,9 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionCollectionFx } from "~/buyer-transaction/fx/transactionCollectionFx";
 import { transactionAcceptFx } from "~/seller-transaction/fx/transactionAcceptFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { getDefaultListingCreateFx } from "~/test/listing/fx/getDefaultListingCreateFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { activityArchiveFx } from "~/user-activity/fx/activityArchiveFx";
@@ -12,7 +12,7 @@ import { transactionEntryCreateFx } from "~/user-transaction-entry/fx/transactio
 
 describe("buyer transactionCollectionFx", () => {
 	it("filters flow transactions by activity state within buyer scope", async () => {
-		const database = await testabase("buyer-transactionCollection-active");
+		const database = await testabaseFn("buyer-transactionCollection-active");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -82,6 +82,6 @@ describe("buyer transactionCollectionFx", () => {
 			expect(typeof activeOnly[0]?.unread).toBe("number");
 			expect(activeOnly[0]?.unread).toBe(2);
 			expect(inactiveOnly[0]?.unread).toBe(0);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

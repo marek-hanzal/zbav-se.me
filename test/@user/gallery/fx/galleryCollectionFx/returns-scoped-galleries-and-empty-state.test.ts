@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 import { galleryCollectionFx } from "~/user-gallery/fx/galleryCollectionFx";
 import { galleryCountFx } from "~/user-gallery/fx/galleryCountFx";
@@ -9,7 +9,7 @@ import { galleryInsertFx } from "~/user-gallery/fx/galleryInsertFx";
 
 describe("galleryCollectionFx", () => {
 	it("returns scoped galleries and stays consistent with count and empty state", async () => {
-		const database = await testabase("galleryCollectionFx-contract");
+		const database = await testabaseFn("galleryCollectionFx-contract");
 
 		return Effect.gen(function* () {
 			const { seller, buyer, stranger } = yield* createUsersFx({});
@@ -66,6 +66,6 @@ describe("galleryCollectionFx", () => {
 			expect(sellerCount).toBe(2);
 			expect(strangerCollection).toEqual([]);
 			expect(strangerCount).toBe(0);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

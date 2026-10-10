@@ -1,9 +1,9 @@
 import type { FC } from "react";
-import { toLocaleNumber } from "~/number/fn/toLocaleNumber";
+import { toLocaleNumberFn } from "~/number/fn/toLocaleNumberFn";
 import { Mx } from "~/translation/ui/Mx";
 
 export namespace PriceInline {
-	export interface Props extends Omit<toLocaleNumber.Props, "number"> {
+	export interface Props extends Omit<toLocaleNumberFn.Props, "number"> {
 		price: number | null | undefined;
 		withVat?: boolean | null | undefined;
 	}
@@ -24,7 +24,7 @@ export const PriceInline: FC<PriceInline.Props> = ({
 		return (
 			<div className={"flex flex-row gap-2 items-center"}>
 				<div>
-					{toLocaleNumber({
+					{toLocaleNumberFn({
 						style,
 						currencyDisplay,
 						currencySign,
@@ -42,7 +42,7 @@ export const PriceInline: FC<PriceInline.Props> = ({
 		);
 	}
 
-	return toLocaleNumber({
+	return toLocaleNumberFn({
 		style,
 		currencyDisplay,
 		currencySign,

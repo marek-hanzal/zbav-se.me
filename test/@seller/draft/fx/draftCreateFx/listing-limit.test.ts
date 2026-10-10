@@ -1,17 +1,17 @@
 import { Effect } from "effect";
 import { describe, it } from "vitest";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import { ResourceDefinitionEnumSchema } from "~/resource-definition/schema/ResourceDefinitionEnumSchema";
 import { draftCreateFx } from "~/seller-draft/fx/draftCreateFx";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
 const seedListingLimitFx = (userId: string, limit: number) =>
 	Effect.promise(async () => {
-		const bundleId = genId();
+		const bundleId = genIdFn();
 		const now = new Date();
 
 		return {
@@ -25,7 +25,7 @@ const seedListingLimitFx = (userId: string, limit: number) =>
 
 describe("draftCreateFx listing limit", () => {
 	it("rejects draft creation when live listing count reaches the limit", async () => {
-		const database = await testabase("draft-create-listing-limit");
+		const database = await testabaseFn("draft-create-listing-limit");
 
 		return Effect.gen(function* () {
 			const { seller } = yield* createUsersFx({});
@@ -47,7 +47,7 @@ describe("draftCreateFx listing limit", () => {
 				const userResourceBundle = await database.kysely
 					.insertInto("user_resource_bundle")
 					.values({
-						id: genId(),
+						id: genIdFn(),
 						userId: seller.id,
 						resourceBundleId: limitSeed.bundleId,
 						createdAt: limitSeed.createdAt,
@@ -62,7 +62,7 @@ describe("draftCreateFx listing limit", () => {
 				await database.kysely
 					.insertInto("user_resource_bundle_limit")
 					.values({
-						id: genId(),
+						id: genIdFn(),
 						userResourceBundleId: userResourceBundle.id,
 						resourceDefinitionId: "seller:limit:listing.count",
 						limit: limitSeed.limit,
@@ -77,10 +77,10 @@ describe("draftCreateFx listing limit", () => {
 				userId: seller.id,
 			}).pipe(Effect.result);
 
-			expectTaggedErrorFx(result, {
+			expectTaggedErrorFn(result, {
 				tag: "ResourceLimitErrorFx",
 				message: `Resource limit exceeded for [${ResourceDefinitionEnumSchema.enum["seller:limit:listing.count"]}]`,
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

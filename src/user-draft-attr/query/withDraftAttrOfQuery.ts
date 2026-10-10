@@ -1,5 +1,5 @@
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withQuery } from "~/query/fn/withQuery";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withQueryFn } from "~/query/fn/withQueryFn";
 import { draftAttrOfFn } from "~/user-draft-attr/fn/draftAttrOfFn";
 
 export namespace withDraftAttrOfQuery {
@@ -9,15 +9,15 @@ export namespace withDraftAttrOfQuery {
 	}
 }
 
-export const withDraftAttrOfQuery = withQuery({
-	logger: getRootLogger([
+export const withDraftAttrOfQuery = withQueryFn({
+	logger: getRootLoggerFn([
 		"query",
 		"withDraftAttrOfQuery",
 	]),
 	errors: {} as {
 		query: draftAttrOfFn.Error;
 	},
-	keys(data: withDraftAttrOfQuery.Data) {
+	keysFn(data: withDraftAttrOfQuery.Data) {
 		return [
 			"draft-attr-of",
 			data,

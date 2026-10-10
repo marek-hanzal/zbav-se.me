@@ -1,14 +1,14 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { listingCollectionFx } from "~/seller-listing/fx/listingCollectionFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createResolvedScenarioFx } from "~/test/transaction/fx/createResolvedScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("listingCollectionFx (seller)", () => {
 	it("seller sees their sold listing (unlike buyer who only sees live)", async () => {
-		const database = await testabase("sellerListing-sold-visible");
+		const database = await testabaseFn("sellerListing-sold-visible");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -37,6 +37,6 @@ describe("listingCollectionFx (seller)", () => {
 			});
 
 			expect(collection.map((l) => l.id)).toContain(listingId);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

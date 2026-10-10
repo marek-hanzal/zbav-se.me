@@ -1,5 +1,5 @@
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withEntityQuery } from "~/query/fn/withEntityQuery";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withEntityQueryFn } from "~/query/fn/withEntityQueryFn";
 import { activityCollectionFn } from "~/user-activity/fn/activityCollectionFn";
 import { activityCountFn } from "~/user-activity/fn/activityCountFn";
 import { activityFetchFn } from "~/user-activity/fn/activityFetchFn";
@@ -11,8 +11,8 @@ import type { ActivityPatchSchema } from "~/user-activity/schema/ActivityPatchSc
 import type { ActivityQuerySchema } from "~/user-activity/schema/ActivityQuerySchema";
 import type { ActivitySchema } from "~/user-activity/schema/ActivitySchema";
 
-export const withActivityQuery = withEntityQuery({
-	logger: getRootLogger([
+export const withActivityQuery = withEntityQueryFn({
+	logger: getRootLoggerFn([
 		"query",
 		"withActivityQuery",
 	]),
@@ -25,12 +25,12 @@ export const withActivityQuery = withEntityQuery({
 		delete: Error;
 		patchCollection: activityPatchCollectionFn.Error;
 	},
-	keys() {
+	keysFn() {
 		return [
 			"activity",
 		];
 	},
-	toIdKey(id): ActivityQuerySchema.Type {
+	toIdKeyFn(id): ActivityQuerySchema.Type {
 		return {
 			where: {
 				id,

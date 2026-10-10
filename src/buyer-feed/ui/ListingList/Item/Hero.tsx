@@ -3,7 +3,7 @@ import { HeroImage } from "~/application-ui/ui/img.exports";
 import { Delivery } from "~/buyer-feed/ui/ListingList/Item/Delivery";
 import { Distance } from "~/buyer-feed/ui/ListingList/Item/Distance";
 import { withListingQuery } from "~/buyer-listing/query/withListingQuery";
-import { useUpload } from "~/gallery/hook/useUpload";
+import { getUploadFn } from "~/gallery/fn/getUploadFn";
 import type { ListingPriceSchema } from "~/listing/schema/ListingPriceSchema";
 import { ListingPrice } from "~/listing/ui/ListingPrice";
 import type { MarkSuspense } from "~/ui/type/MarkSuspense";
@@ -22,7 +22,7 @@ export namespace Hero {
 
 export const Hero: FC<Hero.Props> = ({ listingId, listingState, ...props }) => {
 	const { data: listing } = withListingQuery.useFetchQuery(listingId);
-	const hero = useUpload(listing.withImageUrl);
+	const hero = getUploadFn(listing.withImageUrl);
 
 	return (
 		<Container
@@ -35,7 +35,7 @@ export const Hero: FC<Hero.Props> = ({ listingId, listingState, ...props }) => {
 			data-ui-position={"relative"}
 			//
 			data-action={"open listing detail"}
-			onClick={() => listingState.set((prev) => !prev)}
+			onClick={() => listingState.setFn((prev) => !prev)}
 			{...props}
 		>
 			{listing.isIgnored ? <Overlay data-ui-type="subtle" /> : null}

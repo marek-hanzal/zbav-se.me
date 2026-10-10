@@ -1,8 +1,8 @@
 import type { ComponentProps, FC } from "react";
-import { uiProgress } from "~/ui/fn/uiProgress";
+import { uiProgressFn } from "~/ui/fn/uiProgressFn";
 
 export namespace Progress {
-	export interface Props extends uiProgress.Component<ComponentProps<"div">> {
+	export interface Props extends uiProgressFn.Component<ComponentProps<"div">> {
 		value: number;
 	}
 }
@@ -10,7 +10,7 @@ export namespace Progress {
 export const Progress: FC<Progress.Props> = ({ value, className, ...props }) => {
 	return (
 		<div
-			{...uiProgress({
+			{...uiProgressFn({
 				className,
 			})}
 			{...props}

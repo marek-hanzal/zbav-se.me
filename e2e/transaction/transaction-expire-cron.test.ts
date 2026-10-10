@@ -2,16 +2,16 @@ import path from "node:path";
 import type { Locator, Page } from "@playwright/test";
 import { Effect } from "effect";
 import { transactionCreateFx } from "~/buyer-transaction/fx/transactionCreateFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { leaseTestUserFx, TEST_USER_PASSWORD } from "~/test/user/fx/leaseTestUserFx";
 import { TransactionEntrySensitiveKindEnumSchema } from "~/transaction-contract/schema/TransactionEntrySensitiveKindEnumSchema";
-import { expect, test } from "../test";
-import { uploadFixtureViaS3 } from "../utils/uploadFixtureViaS3";
+import { expect, testFn } from "../testFn";
+import { uploadFixtureViaS3Fn } from "../utils/uploadFixtureViaS3Fn";
 
 const fixturePath = path.resolve(import.meta.dirname, "../fixtures/listing-create-image.jpg");
 
-function cronHeaders(db: string) {
+function cronHeadersFn(db: string) {
 	const token = process.env.SERVER_CRON_TOKEN;
 
 	if (!token) {
@@ -24,7 +24,7 @@ function cronHeaders(db: string) {
 	};
 }
 
-async function signIn(
+async function signInFn(
 	page: Page,
 	user: {
 		email: string;
@@ -39,7 +39,7 @@ async function signIn(
 	await page.waitForURL("/cs/app/home");
 }
 
-async function expectImageLoaded(locator: Locator) {
+async function expectImageLoadedFn(locator: Locator) {
 	await expect(locator).toBeVisible();
 	await expect
 		.poll(async () => {
@@ -50,202 +50,200 @@ async function expectImageLoaded(locator: Locator) {
 		.toBe(true);
 }
 
-test.setTimeout(120_000);
+testFn.setTimeout(120_000);
 
-test("buyer sees cron-expired transaction as a system message", async ({
-	page,
-	database,
-	db,
-	appOrigin,
-}) => {
-	const { sellerUser, buyerUser } = await Effect.gen(function* () {
-		const sellerUser = yield* leaseTestUserFx({
-			key: "a",
+testFn(
+	"buyer sees cron-expired transaction as a system message",
+	async ({ page, database, db, appOrigin }) => {
+		const { sellerUser, buyerUser } = await Effect.gen(function* () {
+			const sellerUser = yield* leaseTestUserFx({
+				key: "a",
+			});
+			const buyerUser = yield* leaseTestUserFx({
+				key: "b",
+			});
+
+			return {
+				sellerUser,
+				buyerUser,
+			};
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
+
+		const title = `E2E expired transaction ${Date.now()}`;
+		const upload = await uploadFixtureViaS3Fn({
+			database,
+			userId: sellerUser.id,
+			path: fixturePath,
 		});
-		const buyerUser = yield* leaseTestUserFx({
-			key: "b",
-		});
 
-		return {
-			sellerUser,
-			buyerUser,
-		};
-	}).pipe(withRuntimeFx(database), Effect.runPromise);
+		const listing = await createListingFx(sellerUser.id, {
+			title,
+			uploadId: upload.id,
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 
-	const title = `E2E expired transaction ${Date.now()}`;
-	const upload = await uploadFixtureViaS3({
-		database,
-		userId: sellerUser.id,
-		path: fixturePath,
-	});
+		await signInFn(page, buyerUser);
 
-	const listing = await createListingFx(sellerUser.id, {
-		title,
-		uploadId: upload.id,
-	}).pipe(withRuntimeFx(database), Effect.runPromise);
+		await page.locator('[data-action="open listings"]').click();
+		await page.waitForURL(/\/cs\/app\/buyer\/feed\/[^/]+\/list$/);
 
-	await signIn(page, buyerUser);
+		await expect(page.getByText(title)).toBeVisible();
+		await page.locator(`[data-action="open listing detail"][data-id="${listing.id}"]`).click();
 
-	await page.locator('[data-action="open listings"]').click();
-	await page.waitForURL(/\/cs\/app\/buyer\/feed\/[^/]+\/list$/);
+		await expect(page.locator('[data-ui="ListingSheet[BottomSheet]"]')).toBeVisible();
+		await expectImageLoadedFn(
+			page.locator('[data-ui="ListingSheet[BottomSheet]"] img').first(),
+		);
 
-	await expect(page.getByText(title)).toBeVisible();
-	await page.locator(`[data-action="open listing detail"][data-id="${listing.id}"]`).click();
+		await page.locator('[data-action="create transaction"]').click();
+		await expect(page.locator('[data-action="open transactions"]')).toBeVisible();
+		await page.locator('[data-action="open transactions"]').click();
+		await page.waitForURL(/\/cs\/app\/buyer\/transaction\/[^/]+\/detail$/);
 
-	await expect(page.locator('[data-ui="ListingSheet[BottomSheet]"]')).toBeVisible();
-	await expectImageLoaded(page.locator('[data-ui="ListingSheet[BottomSheet]"] img').first());
+		const transaction = await database.kysely
+			.selectFrom("transaction")
+			.select("id")
+			.where("listingId", "=", listing.id)
+			.where("userId", "=", buyerUser.id)
+			.executeTakeFirstOrThrow();
 
-	await page.locator('[data-action="create transaction"]').click();
-	await expect(page.locator('[data-action="open transactions"]')).toBeVisible();
-	await page.locator('[data-action="open transactions"]').click();
-	await page.waitForURL(/\/cs\/app\/buyer\/transaction\/[^/]+\/detail$/);
+		await database.kysely
+			.updateTable("transaction")
+			.set({
+				expiresAt: new Date("2026-05-10T03:59:59.000Z"),
+			})
+			.where("id", "=", transaction.id)
+			.execute();
 
-	const transaction = await database.kysely
-		.selectFrom("transaction")
-		.select("id")
-		.where("listingId", "=", listing.id)
-		.where("userId", "=", buyerUser.id)
-		.executeTakeFirstOrThrow();
-
-	await database.kysely
-		.updateTable("transaction")
-		.set({
-			expiresAt: new Date("2026-05-10T03:59:59.000Z"),
-		})
-		.where("id", "=", transaction.id)
-		.execute();
-
-	await database.kysely
-		.insertInto("transaction_entry")
-		.values([
-			...TransactionEntrySensitiveKindEnumSchema.options.map((kind) => ({
-				id: `${transaction.id}-${kind}`,
-				transactionId: transaction.id,
-				kind,
-				userId: buyerUser.id,
-				payload: {
-					text: kind,
+		await database.kysely
+			.insertInto("transaction_entry")
+			.values([
+				...TransactionEntrySensitiveKindEnumSchema.options.map((kind) => ({
+					id: `${transaction.id}-${kind}`,
+					transactionId: transaction.id,
+					kind,
+					userId: buyerUser.id,
+					payload: {
+						text: kind,
+					},
+					createdAt: new Date("2026-05-10T03:50:00.000Z"),
+				})),
+				{
+					id: `${transaction.id}-text`,
+					transactionId: transaction.id,
+					kind: "text" as const,
+					userId: buyerUser.id,
+					payload: {
+						text: "keep me",
+					},
+					createdAt: new Date("2026-05-10T03:50:00.000Z"),
 				},
-				createdAt: new Date("2026-05-10T03:50:00.000Z"),
-			})),
-			{
-				id: `${transaction.id}-text`,
-				transactionId: transaction.id,
-				kind: "text" as const,
-				userId: buyerUser.id,
-				payload: {
-					text: "keep me",
-				},
-				createdAt: new Date("2026-05-10T03:50:00.000Z"),
-			},
-		])
-		.execute();
+			])
+			.execute();
 
-	const cronResponse = await fetch(new URL("/api/cron/04", appOrigin), {
-		method: "POST",
-		headers: cronHeaders(db),
-	});
-
-	expect(cronResponse.ok).toBe(true);
-
-	await page.goto(`/cs/app/buyer/transaction/${transaction.id}/detail`);
-	await expect(
-		page.getByText("Automaticky ukončený obchod, dlouho se nic nedělo."),
-	).toBeVisible();
-
-	await expect
-		.poll(async () => {
-			const expiredTransaction = await database.kysely
-				.selectFrom("transaction")
-				.select("status")
-				.where("id", "=", transaction.id)
-				.executeTakeFirstOrThrow();
-
-			return expiredTransaction.status;
-		})
-		.toBe("expired");
-
-	const remainingKinds = await database.kysely
-		.selectFrom("transaction_entry")
-		.select("kind")
-		.where("transactionId", "=", transaction.id)
-		.execute();
-
-	expect(remainingKinds.map(({ kind }) => kind)).not.toEqual(
-		expect.arrayContaining(Array.from(TransactionEntrySensitiveKindEnumSchema.options)),
-	);
-	expect(remainingKinds.map(({ kind }) => kind)).toContain("text");
-	expect(remainingKinds.map(({ kind }) => kind)).toContain("status-expired");
-});
-
-test("seller sees cron-expired transaction as a system message", async ({
-	page,
-	database,
-	db,
-	appOrigin,
-}) => {
-	const { sellerUser, buyerUser } = await Effect.gen(function* () {
-		const sellerUser = yield* leaseTestUserFx({
-			key: "a",
-		});
-		const buyerUser = yield* leaseTestUserFx({
-			key: "b",
+		const cronResponse = await fetch(new URL("/api/cron/04", appOrigin), {
+			method: "POST",
+			headers: cronHeadersFn(db),
 		});
 
-		return {
-			sellerUser,
-			buyerUser,
-		};
-	}).pipe(withRuntimeFx(database), Effect.runPromise);
+		expect(cronResponse.ok).toBe(true);
 
-	const title = `E2E seller expired transaction ${Date.now()}`;
-	const upload = await uploadFixtureViaS3({
-		database,
-		userId: sellerUser.id,
-		path: fixturePath,
-	});
+		await page.goto(`/cs/app/buyer/transaction/${transaction.id}/detail`);
+		await expect(
+			page.getByText("Automaticky ukončený obchod, dlouho se nic nedělo."),
+		).toBeVisible();
 
-	const listing = await createListingFx(sellerUser.id, {
-		title,
-		uploadId: upload.id,
-	}).pipe(withRuntimeFx(database), Effect.runPromise);
+		await expect
+			.poll(async () => {
+				const expiredTransaction = await database.kysely
+					.selectFrom("transaction")
+					.select("status")
+					.where("id", "=", transaction.id)
+					.executeTakeFirstOrThrow();
 
-	const transaction = await transactionCreateFx({
-		listingId: listing.id,
-		userId: buyerUser.id,
-	}).pipe(withRuntimeFx(database), Effect.runPromise);
+				return expiredTransaction.status;
+			})
+			.toBe("expired");
 
-	await database.kysely
-		.updateTable("transaction")
-		.set({
-			expiresAt: new Date("2026-05-10T03:59:59.000Z"),
-		})
-		.where("id", "=", transaction.id)
-		.execute();
+		const remainingKinds = await database.kysely
+			.selectFrom("transaction_entry")
+			.select("kind")
+			.where("transactionId", "=", transaction.id)
+			.execute();
 
-	await signIn(page, sellerUser);
+		expect(remainingKinds.map(({ kind }) => kind)).not.toEqual(
+			expect.arrayContaining(Array.from(TransactionEntrySensitiveKindEnumSchema.options)),
+		);
+		expect(remainingKinds.map(({ kind }) => kind)).toContain("text");
+		expect(remainingKinds.map(({ kind }) => kind)).toContain("status-expired");
+	},
+);
 
-	const cronResponse = await fetch(new URL("/api/cron/04", appOrigin), {
-		method: "POST",
-		headers: cronHeaders(db),
-	});
+testFn(
+	"seller sees cron-expired transaction as a system message",
+	async ({ page, database, db, appOrigin }) => {
+		const { sellerUser, buyerUser } = await Effect.gen(function* () {
+			const sellerUser = yield* leaseTestUserFx({
+				key: "a",
+			});
+			const buyerUser = yield* leaseTestUserFx({
+				key: "b",
+			});
 
-	expect(cronResponse.ok).toBe(true);
+			return {
+				sellerUser,
+				buyerUser,
+			};
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 
-	await page.goto(`/cs/app/seller/transaction/${transaction.id}/detail`);
-	await expect(
-		page.getByText("Automaticky ukončený obchod, dlouho se nic nedělo."),
-	).toBeVisible();
+		const title = `E2E seller expired transaction ${Date.now()}`;
+		const upload = await uploadFixtureViaS3Fn({
+			database,
+			userId: sellerUser.id,
+			path: fixturePath,
+		});
 
-	await expect
-		.poll(async () => {
-			const expiredTransaction = await database.kysely
-				.selectFrom("transaction")
-				.select("status")
-				.where("id", "=", transaction.id)
-				.executeTakeFirstOrThrow();
+		const listing = await createListingFx(sellerUser.id, {
+			title,
+			uploadId: upload.id,
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 
-			return expiredTransaction.status;
-		})
-		.toBe("expired");
-});
+		const transaction = await transactionCreateFx({
+			listingId: listing.id,
+			userId: buyerUser.id,
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
+
+		await database.kysely
+			.updateTable("transaction")
+			.set({
+				expiresAt: new Date("2026-05-10T03:59:59.000Z"),
+			})
+			.where("id", "=", transaction.id)
+			.execute();
+
+		await signInFn(page, sellerUser);
+
+		const cronResponse = await fetch(new URL("/api/cron/04", appOrigin), {
+			method: "POST",
+			headers: cronHeadersFn(db),
+		});
+
+		expect(cronResponse.ok).toBe(true);
+
+		await page.goto(`/cs/app/seller/transaction/${transaction.id}/detail`);
+		await expect(
+			page.getByText("Automaticky ukončený obchod, dlouho se nic nedělo."),
+		).toBeVisible();
+
+		await expect
+			.poll(async () => {
+				const expiredTransaction = await database.kysely
+					.selectFrom("transaction")
+					.select("status")
+					.where("id", "=", transaction.id)
+					.executeTakeFirstOrThrow();
+
+				return expiredTransaction.status;
+			})
+			.toBe("expired");
+	},
+);

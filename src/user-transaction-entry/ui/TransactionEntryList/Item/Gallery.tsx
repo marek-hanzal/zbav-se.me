@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { HeroImage } from "~/application-ui/ui/img.exports";
-import { toTimeDiff } from "~/date/fn/toTimeDiff";
-import { useUpload } from "~/gallery/hook/useUpload";
+import { toTimeDiffFn } from "~/date/fn/toTimeDiffFn";
+import { getUploadFn } from "~/gallery/fn/getUploadFn";
 import { GalleryPreviewSheet } from "~/gallery/ui/GalleryPreviewSheet";
 import { useLocale } from "~/locale/hook/useLocale";
-import { withFallback } from "~/ui/fn/withFallback";
+import { withFallbackFn } from "~/ui/fn/withFallbackFn";
 import type { MarkSuspense } from "~/ui/type/MarkSuspense";
 import type { Container } from "~/ui/ui/Container";
 import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
@@ -19,7 +19,7 @@ export namespace Gallery {
 	}
 }
 
-export const Gallery = withFallback(
+export const Gallery = withFallbackFn(
 	({ _suspense, transactionEntry, ...props }: Gallery.Props) => {
 		const locale = useLocale();
 		const { data: gallery } = withTransactionEntryGalleryFetchQuery.useSuspenseQuery({
@@ -27,8 +27,8 @@ export const Gallery = withFallback(
 				transactionEntryId: transactionEntry.id,
 			},
 		});
-		const hero = useUpload(gallery.items.map(({ upload }) => upload.url));
-		const [isGalleryOpen, setIsGalleryOpen] = useState(false);
+		const hero = getUploadFn(gallery.items.map(({ upload }) => upload.url));
+		const [isGalleryOpen, setIsGalleryOpenFn] = useState(false);
 
 		return (
 			<TypeContainer
@@ -49,11 +49,11 @@ export const Gallery = withFallback(
 					data-ui-theme="light"
 					data-ui-background="default"
 					data-ui-round="default"
-					onClick={() => setIsGalleryOpen((prev) => !prev)}
+					onClick={() => setIsGalleryOpenFn((prev) => !prev)}
 				/>
 
 				<Typo
-					label={toTimeDiff({
+					label={toTimeDiffFn({
 						locale,
 						time: transactionEntry.createdAt,
 						type: "relative",
@@ -71,7 +71,7 @@ export const Gallery = withFallback(
 				<GalleryPreviewSheet
 					urls={gallery.items.map((item) => item.upload.url)}
 					isOpen={isGalleryOpen}
-					onClose={() => setIsGalleryOpen(false)}
+					onClose={() => setIsGalleryOpenFn(false)}
 				/>
 			</TypeContainer>
 		);

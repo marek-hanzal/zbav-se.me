@@ -8,25 +8,25 @@ export const withDialectMiddleware = createMiddleware()
 		withLogMiddleware,
 		withDsnMiddleware,
 	])
-	.server(async ({ next, context: { dsn, rootLogger } }) => {
+	.server(async ({ next: nextFn, context: { dsn, rootLogger } }) => {
 		const logger = rootLogger.getChild([
 			"middleware",
 			"withDialectMiddleware",
 		]);
 
-		const instance = DialectStore.createPool({
+		const instance = DialectStore.createPoolFn({
 			dsn,
 			pool: {
 				max: 3,
 			},
-			onError(error) {
+			onErrorFn(error) {
 				logger.warn("Postgres Pool Error", {
 					error,
 				});
 			},
 		});
 
-		return next({
+		return nextFn({
 			context: {
 				dialect: instance,
 			},

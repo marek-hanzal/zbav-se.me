@@ -17,7 +17,7 @@ export namespace CreateButton {
 }
 
 export const CreateButton: FC<CreateButton.Props> = ({ _suspense, ...props }) => {
-	const navigate = useNavigate();
+	const navigateFn = useNavigate();
 	const locale = useLocale();
 	const { data: listingCount } = withListingQuery.useCountQuery({
 		where: {
@@ -29,8 +29,8 @@ export const CreateButton: FC<CreateButton.Props> = ({ _suspense, ...props }) =>
 		count: listingCount,
 	});
 	const draftCreateMutation = withDraftQuery.useCreateMutation({
-		async onPostMutation({ result }) {
-			await navigate({
+		async onPostMutationFn({ result }) {
+			await navigateFn({
 				to: "/$locale/app/seller/draft/$id/edit",
 				params: {
 					locale,

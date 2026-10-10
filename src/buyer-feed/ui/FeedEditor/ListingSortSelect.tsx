@@ -1,5 +1,5 @@
 import { type FC, useId } from "react";
-import { uiSelectButton } from "~/application-ui/fn/ui.exports";
+import { uiSelectButtonFn } from "~/application-ui/fn/ui.exports";
 import type { ListingSortSchema } from "~/buyer-listing/schema/ListingSortSchema";
 import { Tx } from "~/translation/ui/Tx";
 import { TrashIcon } from "~/ui/constant/TrashIcon";
@@ -51,7 +51,7 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({ state, ...props
 							const idx = state.value.findIndex((s) => s.field === sortValue);
 
 							if (idx < 0) {
-								state.set([
+								state.setFn([
 									...state.value,
 									{
 										field: sortValue,
@@ -75,13 +75,13 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({ state, ...props
 									field: cur.field,
 									order: "desc",
 								} satisfies ListingSortSchema.Type;
-								state.set(next);
+								state.setFn(next);
 								return;
 							}
 
-							state.set(state.value.filter((_, i) => i !== idx));
+							state.setFn(state.value.filter((_, i) => i !== idx));
 						}}
-						{...uiSelectButton({
+						{...uiSelectButtonFn({
 							isSelected: Boolean(current?.order),
 							"data-ui-size": "default",
 						})}
@@ -108,9 +108,9 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({ state, ...props
 				iconEnabled={TrashIcon}
 				data-action={"clear all sorts"}
 				onClick={() => {
-					state.set([]);
+					state.setFn([]);
 				}}
-				{...uiSelectButton({
+				{...uiSelectButtonFn({
 					isSelected: false,
 				})}
 				iconProps={{

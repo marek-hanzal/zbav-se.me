@@ -4,7 +4,7 @@ import { match } from "ts-pattern";
 import { dbFx } from "~/database/fx/dbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { DateServiceFx } from "~/date/service/DateServiceFx";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import { listingSpotlightBuildFx } from "~/listing-spotlight/fx/listingSpotlightBuildFx";
 import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { draftDeleteFx } from "~/seller-draft/fx/draftDeleteFx";
@@ -92,8 +92,8 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 			}
 
 			const { title, categoryId, locationId, priceType, expires } = draft;
-			const now = dateService.now();
-			const listingId = genId();
+			const now = dateService.nowFn();
+			const listingId = genIdFn();
 
 			const gallery = yield* galleryInsertFx({
 				access: "public",

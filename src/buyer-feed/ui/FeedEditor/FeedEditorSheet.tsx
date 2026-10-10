@@ -17,14 +17,14 @@ export const FeedEditorSheet: FC<FeedEditorSheet.Props> = ({ state, ...props }) 
 		<BottomSheet
 			isOpen={state.value}
 			onClose={() => {
-				state.set(false);
+				state.setFn(false);
 			}}
-			header={({ close }) => ({
-				title: translator.text("Feed editor (title)"),
+			headerFn={({ closeFn }) => ({
+				title: translator.textFn("Feed editor (title)"),
 				right: (
 					<CloseButton
 						data-action={"close feed editor"}
-						onClick={close}
+						onClick={closeFn}
 						data-ui-background={undefined}
 						data-ui-shadow={false}
 						data-ui-border={false}

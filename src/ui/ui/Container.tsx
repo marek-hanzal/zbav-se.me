@@ -1,8 +1,8 @@
 import type { ComponentProps, FC } from "react";
-import { uiContainer } from "~/ui/fn/uiContainer";
+import { uiContainerFn } from "~/ui/fn/uiContainerFn";
 
 export namespace Container {
-	export interface Props extends uiContainer.Component<ComponentProps<"div">> {
+	export interface Props extends uiContainerFn.Component<ComponentProps<"div">> {
 		//
 	}
 }
@@ -10,7 +10,7 @@ export namespace Container {
 export const Container: FC<Container.Props> = ({ className, ...props }) => {
 	return (
 		<div
-			{...uiContainer({
+			{...uiContainerFn({
 				className,
 			})}
 			{...props}

@@ -1,13 +1,13 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { runCronAtFx } from "./runCronAtFx";
 import { seedCategoryMissCleanupScenarioFx } from "./seedCronCleanupScenarioFx";
 
 describe("withCronFx noop", () => {
 	it("does not delete cleanup-eligible rows", async () => {
-		const database = await testabase("withCronFx-noop-no-cleanup");
+		const database = await testabaseFn("withCronFx-noop-no-cleanup");
 
 		return Effect.gen(function* () {
 			const categoryMissIds = yield* seedCategoryMissCleanupScenarioFx({
@@ -29,6 +29,6 @@ describe("withCronFx noop", () => {
 			);
 
 			expect(categoryMisses).toHaveLength(3);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

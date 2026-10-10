@@ -3,15 +3,15 @@ import { describe, expect, it } from "vitest";
 import { transactionRejectFx } from "~/buyer-transaction/fx/transactionRejectFx";
 import { transactionAcceptFx } from "~/seller-transaction/fx/transactionAcceptFx";
 import { transactionResolveFx } from "~/seller-transaction/fx/transactionResolveFx";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("transactionLifecycleEdgeCases (buyer)", () => {
 	it("concurrent: buyer rejects while seller is resolving", async () => {
-		const database = await testabase("buyerCloseFx-concurrent");
+		const database = await testabaseFn("buyerCloseFx-concurrent");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -48,7 +48,7 @@ describe("transactionLifecycleEdgeCases (buyer)", () => {
 				}),
 			);
 
-			expectTaggedErrorFx(result, {
+			expectTaggedErrorFn(result, {
 				tag: "InvalidRequestErrorFx",
 			});
 
@@ -64,6 +64,6 @@ describe("transactionLifecycleEdgeCases (buyer)", () => {
 			);
 
 			expect(storedTransaction.status).toBe("resolved");
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

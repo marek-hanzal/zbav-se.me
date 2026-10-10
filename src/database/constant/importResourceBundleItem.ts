@@ -1,13 +1,13 @@
 import type { Database } from "~/database/type/Database";
 import { bundles } from "~/database-migration/constant/bundles";
 import type { withDatabaseFx } from "~/database-query/fx/withDatabaseFx";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import type { ResourceDefinitionEnumSchema } from "~/resource-definition/schema/ResourceDefinitionEnumSchema";
 import type { ResourceBundleEnumSchema } from "~/user-resource-bundle/schema/ResourceBundleEnumSchema";
 
 export const importResourceBundleItem: withDatabaseFx.Import<Database> = {
 	name: "resource-bundle-item",
-	async run({ kysely }) {
+	async runFn({ kysely }) {
 		const resourceBundleItems = Object.entries(bundles).flatMap(
 			([resourceBundleId, bundle]) => {
 				return Object.entries(bundle.items).map(([resourceDefinitionId, item]) => {
@@ -53,7 +53,7 @@ export const importResourceBundleItem: withDatabaseFx.Import<Database> = {
 			}
 
 			return {
-				id: genId(),
+				id: genIdFn(),
 				resourceBundleId,
 				resourceDefinitionId: item.resourceDefinitionId,
 				amount: item.amount,
@@ -69,8 +69,8 @@ export const importResourceBundleItem: withDatabaseFx.Import<Database> = {
 						"resourceBundleId",
 						"resourceDefinitionId",
 					])
-					.doUpdateSet((eb) => ({
-						amount: eb.ref("excluded.amount"),
+					.doUpdateSet((ebFn) => ({
+						amount: ebFn.ref("excluded.amount"),
 					}));
 			})
 			.execute();

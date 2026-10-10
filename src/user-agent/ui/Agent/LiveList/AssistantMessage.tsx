@@ -3,7 +3,7 @@ import { type FC, useMemo } from "react";
 import { match } from "ts-pattern";
 import { Group } from "~/ui/ui/Group";
 import { Markdown } from "~/ui/ui/Markdown";
-import { getResponseStreamEvent } from "~/user-agent/type/getResponseStreamEvent";
+import { getResponseStreamEventFn } from "~/user-agent/fn/getResponseStreamEventFn";
 
 export namespace AssistantMessage {
 	export interface Props extends Group.Props {
@@ -43,7 +43,7 @@ export const AssistantMessage: FC<AssistantMessage.Props> = ({ events, itemId, .
 function useResponseContent(events: RunStreamEvent[] | undefined = [], itemId: string) {
 	return useMemo(() => {
 		const mine = events.filter((event) => {
-			const responseEvent = getResponseStreamEvent(event);
+			const responseEvent = getResponseStreamEventFn(event);
 
 			if (!responseEvent) {
 				return false;
@@ -72,7 +72,7 @@ function useResponseContent(events: RunStreamEvent[] | undefined = [], itemId: s
 		let content = "";
 
 		for (const event of mine) {
-			const responseEvent = getResponseStreamEvent(event);
+			const responseEvent = getResponseStreamEventFn(event);
 
 			if (!responseEvent) {
 				continue;

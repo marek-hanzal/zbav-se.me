@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { Client } from "minio";
 import { describe, expect, it, vi } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 import { runCronAtFx } from "./runCronAtFx";
 import {
@@ -13,10 +13,11 @@ import {
 
 describe("withCronFx schedule 20 cleanup", () => {
 	it("deletes stale category misses, listing events and orphan CDN uploads only", async () => {
-		const database = await testabase("withCronFx-cleanup-20");
-		const removeObjectsMock = vi.fn();
-		const originalRemoveObjects = Client.prototype.removeObjects;
-		Client.prototype.removeObjects = removeObjectsMock as typeof Client.prototype.removeObjects;
+		const database = await testabaseFn("withCronFx-cleanup-20");
+		const removeObjectsMockFn = vi.fn();
+		const originalRemoveObjectsFn = Client.prototype.removeObjects;
+		Client.prototype.removeObjects =
+			removeObjectsMockFn as typeof Client.prototype.removeObjects;
 
 		return Effect.gen(function* () {
 			const { seller } = yield* createUsersFx({});
@@ -76,17 +77,17 @@ describe("withCronFx schedule 20 cleanup", () => {
 				]),
 			);
 			expect(uploads).toHaveLength(4);
-			expect(removeObjectsMock).toHaveBeenCalledWith("zbav-se-me-upload", [
+			expect(removeObjectsMockFn).toHaveBeenCalledWith("zbav-se-me-upload", [
 				"cron/stale.jpg",
 				"cron/boundary.jpg",
 			]);
 		}).pipe(
 			Effect.ensuring(
 				Effect.sync(() => {
-					Client.prototype.removeObjects = originalRemoveObjects;
+					Client.prototype.removeObjects = originalRemoveObjectsFn;
 				}),
 			),
-			withRuntimeFx(database),
+			withRuntimeFn(database),
 			Effect.runPromise,
 		);
 	});

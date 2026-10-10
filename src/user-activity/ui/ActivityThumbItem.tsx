@@ -2,8 +2,8 @@ import type { FC } from "react";
 import { useState } from "react";
 import { CloseButton } from "~/application-ui/ui/button.exports";
 import type { ThumbSchema } from "~/database/schema/ActivityTableThumbSchema";
-import { toTimeDiff } from "~/date/fn/toTimeDiff";
-import { useUpload } from "~/gallery/hook/useUpload";
+import { toTimeDiffFn } from "~/date/fn/toTimeDiffFn";
+import { getUploadFn } from "~/gallery/fn/getUploadFn";
 import { ListItem } from "~/list-item/ui/ListItem";
 import { useLocale } from "~/locale/hook/useLocale";
 import { withListingQuery } from "~/public-listing/query/withListingQuery";
@@ -23,9 +23,9 @@ export namespace ActivityThumbItem {
 export const ActivityThumbItem: FC<ActivityThumbItem.Props> = ({ item }) => {
 	const translator = useTranslator();
 	const locale = useLocale();
-	const [isOpen, setIsOpen] = useState(false);
+	const [isOpen, setIsOpenFn] = useState(false);
 	const { data: listing } = withListingQuery.useFetchQuery(item.payload.listingId);
-	const hero = useUpload(listing.withImageUrl);
+	const hero = getUploadFn(listing.withImageUrl);
 	const patchMutation = withActivityQuery.usePatchMutation({
 		invalidate: [],
 	});
@@ -60,7 +60,7 @@ export const ActivityThumbItem: FC<ActivityThumbItem.Props> = ({ item }) => {
 							data-ui-text="sm"
 						/>
 						<Typo
-							label={toTimeDiff({
+							label={toTimeDiffFn({
 								locale,
 								time: item.timestamp,
 							})}
@@ -70,7 +70,7 @@ export const ActivityThumbItem: FC<ActivityThumbItem.Props> = ({ item }) => {
 					</Container>
 				}
 				onClick={() => {
-					setIsOpen(true);
+					setIsOpenFn(true);
 					if (item.archivedAt) {
 						return;
 					}
@@ -90,11 +90,11 @@ export const ActivityThumbItem: FC<ActivityThumbItem.Props> = ({ item }) => {
 			<BottomSheet
 				isOpen={isOpen}
 				onClose={() => {
-					setIsOpen(false);
+					setIsOpenFn(false);
 				}}
-				header={({ close }) => ({
-					title: translator.text("Activity thumb (title)"),
-					right: <CloseButton onClick={close} />,
+				headerFn={({ closeFn }) => ({
+					title: translator.textFn("Activity thumb (title)"),
+					right: <CloseButton onClick={closeFn} />,
 				})}
 			>
 				<Container

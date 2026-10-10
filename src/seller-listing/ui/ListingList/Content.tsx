@@ -13,7 +13,7 @@ export namespace Content {
 }
 
 export const Content: FC<Content.Props> = ({ _suspense, collection }) => {
-	const placeholder = useCallback(() => {
+	const placeholderFn = useCallback(() => {
 		return <ListItemPending />;
 	}, []);
 
@@ -24,7 +24,7 @@ export const Content: FC<Content.Props> = ({ _suspense, collection }) => {
 					<VisibleContainer
 						key={listing.id}
 						id={listing.id}
-						placeholder={placeholder}
+						placeholderFn={placeholderFn}
 					>
 						<ListingItem listing={listing} />
 					</VisibleContainer>

@@ -15,7 +15,7 @@ export const Empty: FC<Empty.Props> = (props) => {
 		<EmptyStatus
 			data-ui="ListContainer[Container.empty]"
 			icon={SearchIcon}
-			textTitle={translator.text("Location not found (badge)")}
+			textTitle={translator.textFn("Location not found (badge)")}
 			{...props}
 		/>
 	);

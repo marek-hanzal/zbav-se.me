@@ -13,12 +13,12 @@ import { TransactionToolbar } from "~/user-transaction/ui/TransactionToolbar";
 
 export namespace TransactionMenu {
 	export interface Props extends Container.Props {
-		close: TransactionMenuButton.Close;
+		closeFn: TransactionMenuButton.Close;
 		transaction: TransactionSchema.Type;
 	}
 }
 
-export const TransactionMenu: FC<TransactionMenu.Props> = ({ close, transaction, ...props }) => {
+export const TransactionMenu: FC<TransactionMenu.Props> = ({ closeFn, transaction, ...props }) => {
 	return (
 		<Container
 			data-ui={"TransactionMenu"}
@@ -33,19 +33,19 @@ export const TransactionMenu: FC<TransactionMenu.Props> = ({ close, transaction,
 				status={transaction.status}
 				interest={
 					<InterestMessage
-						close={close}
+						closeFn={closeFn}
 						transaction={transaction}
 					/>
 				}
 				trade={
 					<TradeMessage
-						close={close}
+						closeFn={closeFn}
 						transaction={transaction}
 					/>
 				}
 				dispute={
 					<DisputeMessage
-						close={close}
+						closeFn={closeFn}
 						transaction={transaction}
 					/>
 				}
@@ -55,19 +55,19 @@ export const TransactionMenu: FC<TransactionMenu.Props> = ({ close, transaction,
 				status={transaction.status}
 				trade={
 					<TradeToolbar
-						close={close}
+						closeFn={closeFn}
 						transaction={transaction}
 					/>
 				}
 				resolved={
 					<ResolvedToolbar
-						close={close}
+						closeFn={closeFn}
 						transaction={transaction}
 					/>
 				}
 				dispute={
 					<DisputeToolbar
-						close={close}
+						closeFn={closeFn}
 						transaction={transaction}
 					/>
 				}

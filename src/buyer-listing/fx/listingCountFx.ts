@@ -6,7 +6,7 @@ import type { ListingWhereSchema } from "~/buyer-listing/schema/ListingWhereSche
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { withCountFx } from "~/database-query/fx/withCountFx";
-import { hasExplicitCategory } from "~/listing/fn/hasExplicitCategory";
+import { hasExplicitCategoryFn } from "~/listing/fn/hasExplicitCategoryFn";
 import { getLoggerFx } from "~/log/fx/getLoggerFx";
 
 export namespace listingCountFx {
@@ -42,7 +42,7 @@ export const listingCountFx = Effect.fn("listingCountFx")(function* ({
 				selectFx: withListingSelectFx({
 					userId,
 					meta,
-					hasExplicitCategory: hasExplicitCategory([
+					hasExplicitCategory: hasExplicitCategoryFn([
 						where,
 						scope,
 					]),

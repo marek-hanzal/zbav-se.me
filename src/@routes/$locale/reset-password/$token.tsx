@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { z } from "zod";
 import { useAppForm } from "~/application-ui/hook/form.exports";
 import { Logo } from "~/application-ui/ui/logo.exports";
-import { onSubmit } from "~/form/fn/onSubmit";
+import { onSubmitFn } from "~/form/fn/onSubmitFn";
 import { FormField } from "~/form/ui/FormField";
 import { useLocale } from "~/locale/hook/useLocale";
 import { useTranslator } from "~/translation/hook/useTranslator";
@@ -33,12 +33,12 @@ function RouteComponent() {
 
 	const translator = useTranslator();
 	const locale = useLocale();
-	const navigate = useNavigate();
+	const navigateFn = useNavigate();
 	const schema = useResetPasswordSchema();
 
 	const mutation = withResetPasswordMutation.useMutation({
-		async onPostMutation() {
-			return navigate({
+		async onPostMutationFn() {
+			return navigateFn({
 				params: {
 					locale,
 				},
@@ -56,8 +56,8 @@ function RouteComponent() {
 			onMount: schema,
 			onSubmit: schema,
 		},
-		onSubmit: onSubmit({
-			map: async ({ values }) => {
+		onSubmit: onSubmitFn({
+			mapFn: async ({ values }) => {
 				return {
 					newPassword: values.password,
 					token,
@@ -69,7 +69,7 @@ function RouteComponent() {
 
 	const invalidTokenMessage =
 		resetError === "INVALID_TOKEN"
-			? translator.text("This reset link is invalid or expired")
+			? translator.textFn("This reset link is invalid or expired")
 			: undefined;
 
 	return (
@@ -133,7 +133,9 @@ function RouteComponent() {
 											type={"password"}
 											autoComplete={"new-password"}
 											autoFocus
-											placeholder={translator.text("Enter your new password")}
+											placeholder={translator.textFn(
+												"Enter your new password",
+											)}
 											value={field.state.value ?? ""}
 											onBlur={field.handleBlur}
 											onChange={(e) => field.handleChange(e.target.value)}
@@ -157,7 +159,7 @@ function RouteComponent() {
 											data-ui={"ResetPassword-[ConfirmPasswordInput]"}
 											type={"password"}
 											autoComplete={"new-password"}
-											placeholder={translator.text(
+											placeholder={translator.textFn(
 												"Confirm your new password",
 											)}
 											value={field.state.value ?? ""}
@@ -235,17 +237,17 @@ const useResetPasswordSchema = () => {
 		.looseObject({
 			confirmPassword: z.string().min(1, {
 				error() {
-					return translator.text("Password confirmation is required");
+					return translator.textFn("Password confirmation is required");
 				},
 			}),
 			password: z.string().min(8, {
 				error() {
-					return translator.text("Password must be at least 8 characters");
+					return translator.textFn("Password must be at least 8 characters");
 				},
 			}),
 		})
 		.refine((data) => data.password === data.confirmPassword, {
-			message: translator.text("Passwords do not match"),
+			message: translator.textFn("Passwords do not match"),
 			path: [
 				"confirmPassword",
 			],

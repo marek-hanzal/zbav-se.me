@@ -1,15 +1,15 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionAcceptFx } from "~/seller-transaction/fx/transactionAcceptFx";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createResolvedScenarioFx } from "~/test/transaction/fx/createResolvedScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("transactionAcceptFx", () => {
 	it("invalid: cannot accept an already resolved transaction", async () => {
-		const database = await testabase("transactionAcceptFx-invalid-resolved");
+		const database = await testabaseFn("transactionAcceptFx-invalid-resolved");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -27,7 +27,7 @@ describe("transactionAcceptFx", () => {
 				}),
 			);
 
-			expectTaggedErrorFx(result, {
+			expectTaggedErrorFn(result, {
 				tag: "InvalidRequestErrorFx",
 				message: "Invalid transaction status transition from resolved to trade for seller",
 			});
@@ -50,6 +50,6 @@ describe("transactionAcceptFx", () => {
 
 			expect(transaction.status).toBe("resolved");
 			expect(entries.at(-1)?.kind).toBe("status-resolved");
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

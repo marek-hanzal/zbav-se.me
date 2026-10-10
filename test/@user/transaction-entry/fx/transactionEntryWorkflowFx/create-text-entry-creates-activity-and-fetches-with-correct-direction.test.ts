@@ -1,9 +1,9 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { fetchActivityItemsFx } from "~/test/activity/fx/fetchActivityItemsFx";
-import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { expectErrorFn } from "~/test/common/fx/expectErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 import { transactionEntryCollectionFx } from "~/user-transaction-entry/fx/transactionEntryCollectionFx";
@@ -13,7 +13,7 @@ import { transactionEntryFetchFx } from "~/user-transaction-entry/fx/transaction
 
 describe("transactionEntry workflow", () => {
 	it("creates text entry, notifies counterparty and maps direction per viewer", async () => {
-		const database = await testabase("transactionEntry-text-workflow");
+		const database = await testabaseFn("transactionEntry-text-workflow");
 
 		return Effect.gen(function* () {
 			const users = yield* createUsersFx({});
@@ -79,7 +79,7 @@ describe("transactionEntry workflow", () => {
 				},
 			});
 
-			expectErrorFx(outsiderFetch);
+			expectErrorFn(outsiderFetch);
 			expect(outsiderCollection).toHaveLength(0);
 			expect(outsiderCount).toBe(0);
 
@@ -107,6 +107,6 @@ describe("transactionEntry workflow", () => {
 				transactionId,
 				transactionEntryId: entry.id,
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

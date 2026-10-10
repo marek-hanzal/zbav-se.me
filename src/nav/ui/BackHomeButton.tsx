@@ -1,6 +1,6 @@
 import { createLink, type LinkComponent } from "@tanstack/react-router";
 import type { ComponentProps, FC } from "react";
-import { uiBackButton } from "~/application-ui/fn/ui.exports";
+import { uiBackButtonFn } from "~/application-ui/fn/ui.exports";
 import { ArrowLeftIcon } from "~/ui/constant/ArrowLeftIcon";
 import { Icon } from "~/ui/ui/Icon";
 
@@ -10,7 +10,7 @@ export namespace BackHomeButton {
 	}
 }
 
-const BaseBackHomeButton: FC<uiBackButton.Component<ComponentProps<"a">>> = ({
+const BaseBackHomeButton: FC<uiBackButtonFn.Component<ComponentProps<"a">>> = ({
 	className,
 	...props
 }) => {
@@ -18,7 +18,7 @@ const BaseBackHomeButton: FC<uiBackButton.Component<ComponentProps<"a">>> = ({
 		<a
 			data-root={"BackHomeButton"}
 			data-action={"go back home"}
-			{...uiBackButton({
+			{...uiBackButtonFn({
 				className,
 			})}
 			{...props}

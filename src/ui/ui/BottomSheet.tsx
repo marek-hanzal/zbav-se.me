@@ -9,7 +9,7 @@ import {
 } from "react";
 import { Sheet, type SheetRef } from "react-modal-sheet";
 import { Tx } from "~/translation/ui/Tx";
-import { tvc } from "~/ui/fn/tvc";
+import { tvcFn } from "~/ui/fn/tvcFn";
 import { useMergeRefs } from "~/ui/hook/useMergeRefs";
 import { Container } from "~/ui/ui/Container";
 import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
@@ -17,7 +17,7 @@ import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
 export namespace BottomSheet {
 	export namespace Header {
 		export interface Props {
-			close(): void;
+			closeFn(): void;
 		}
 
 		export type RenderFn = (props: Props) => {
@@ -31,7 +31,7 @@ export namespace BottomSheet {
 		containerProps?: ComponentProps<typeof Sheet.Container>;
 		contentProps?: ComponentProps<typeof Sheet.Content>;
 		withHeader?: boolean;
-		header?: Header.RenderFn;
+		headerFn?: Header.RenderFn;
 	}
 
 	export type PropsEx = Omit<Props, "isOpen" | "onClose">;
@@ -42,7 +42,7 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 	containerProps,
 	contentProps,
 	withHeader = false,
-	header,
+	headerFn,
 	children,
 	...props
 }) => {
@@ -57,8 +57,8 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 
 		return 1 - Math.min(Math.max(y / height, 0), 1);
 	});
-	const $header = header?.({
-		close: props.onClose,
+	const $header = headerFn?.({
+		closeFn: props.onClose,
 	});
 
 	return (
@@ -121,7 +121,7 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 
 			<motion.div
 				data-ui={"BottomSheet-Backdrop"}
-				className={tvc([
+				className={tvcFn([
 					"fixed",
 					"top-0",
 					"left-0",

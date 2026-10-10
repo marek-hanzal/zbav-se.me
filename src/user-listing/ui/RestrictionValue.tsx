@@ -19,10 +19,10 @@ export const RestrictionValue: FC<RestrictionValue.Props> = ({ restriction, ...p
 	return (
 		<LabelValue
 			data-ui={"RestrictionValue"}
-			textLabel={translator.text("Listing restriction (label)")}
+			textLabel={translator.textFn("Listing restriction (label)")}
 			textValue={restriction ? <Tx label={`Listing restriction - ${restriction}`} /> : null}
-			textEmpty={translator.text("Restriction not selected")}
-			textHint={translator.text("Listing restriction (hint)")}
+			textEmpty={translator.textFn("Restriction not selected")}
+			textHint={translator.textFn("Listing restriction (hint)")}
 			{...props}
 		/>
 	);

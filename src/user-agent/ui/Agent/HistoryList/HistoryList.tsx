@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { match } from "ts-pattern";
 import { Container } from "~/ui/ui/Container";
-import { AgentStreamItemsQuery } from "~/user-agent/query/AgentStreamItemsQuery";
+import { AgentStreamItemsQueryFn } from "~/user-agent/query/AgentStreamItemsQueryFn";
 import { withAgentStreamItemsQuery } from "~/user-agent/query/withAgentStreamItemsQuery";
 import { AssistantMessage } from "~/user-agent/ui/Agent/HistoryList/AssistantMessage";
 import { Reasoning } from "~/user-agent/ui/Agent/HistoryList/Reasoning";
@@ -18,7 +18,7 @@ export namespace HistoryList {
 
 export const HistoryList: FC<HistoryList.Props> = ({ threadId, inline, ...props }) => {
 	const { data: items } = withAgentStreamItemsQuery.useSuspenseQuery(
-		AgentStreamItemsQuery(threadId),
+		AgentStreamItemsQueryFn(threadId),
 	);
 
 	return (

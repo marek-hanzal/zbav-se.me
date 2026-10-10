@@ -4,7 +4,7 @@ import { dbFx } from "~/database/fx/dbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import type { TransactionEntryTableSchema } from "~/database/schema/TransactionEntryTable";
 import { DateServiceFx } from "~/date/service/DateServiceFx";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { InvalidRequestErrorFx } from "~/server-error/error/InvalidRequestErrorFx";
 import { activityCreateFx } from "~/user-activity/fx/activityCreateFx";
@@ -51,7 +51,7 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 				scopeUserId: string;
 			}) {
 				const dateService = yield* DateServiceFx;
-				const id = genId();
+				const id = genIdFn();
 
 				yield* transactionTransitionFx({
 					status: transaction.status,
@@ -66,7 +66,7 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 							...data,
 							id,
 							kind,
-							createdAt: dateService.now().toJSDate(),
+							createdAt: dateService.nowFn().toJSDate(),
 						})
 						.executeTakeFirstOrThrow();
 				});

@@ -8,7 +8,7 @@ import { GalleryValue } from "~/gallery/ui/GalleryValue";
 import { useLocale } from "~/locale/hook/useLocale";
 import { LocationValue } from "~/location/ui/LocationValue";
 import { BackHomeButton } from "~/nav/ui/BackHomeButton.exports";
-import { handleArrowNav } from "~/navigation/fn/handleArrowNav";
+import { handleArrowNavFn } from "~/navigation/fn/handleArrowNavFn";
 import { PriceTypeValue } from "~/price-type/ui/PriceTypeValue";
 import { withDraftQuery } from "~/seller-draft/query/withDraftQuery";
 import { AttrOptional } from "~/seller-draft/ui/Editor/AttrOptional";
@@ -66,7 +66,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, draftId, view, ...props })
 	return (
 		<TitleContainer
 			data-ui={"DraftEditor[TitleContainer]"}
-			textTitle={translator.text("Listing editor (title)")}
+			textTitle={translator.textFn("Listing editor (title)")}
 			left={
 				<BackHomeButton
 					id={"back-link"}
@@ -76,7 +76,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, draftId, view, ...props })
 					}}
 					//
 					data-arrow-right={"home-link"}
-					onKeyDown={handleArrowNav}
+					onKeyDown={handleArrowNavFn}
 				/>
 			}
 			right={
@@ -84,7 +84,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, draftId, view, ...props })
 					id={"home-link"}
 					//
 					data-arrow-left={"back-link"}
-					onKeyDown={handleArrowNav}
+					onKeyDown={handleArrowNavFn}
 				/>
 			}
 			data-ui-layout={"vertical-header-content"}
@@ -103,8 +103,8 @@ export const Editor: FC<Editor.Props> = ({ _suspense, draftId, view, ...props })
 					<GalleryValue
 						data-action={"set draft gallery"}
 						urls={draft.withImageUrl}
-						label={translator.text("Listing photo gallery (label)")}
-						onClick={() => view.set("gallery")}
+						label={translator.textFn("Listing photo gallery (label)")}
+						onClick={() => view.setFn("gallery")}
 					/>
 				</Group>
 
@@ -126,17 +126,17 @@ export const Editor: FC<Editor.Props> = ({ _suspense, draftId, view, ...props })
 						<TitleValue
 							data-action={"set draft title"}
 							title={draft.title}
-							textLabel={translator.text("Listing title (label)")}
-							textEmpty={translator.text("Listing title not filled")}
+							textLabel={translator.textFn("Listing title (label)")}
+							textEmpty={translator.textFn("Listing title not filled")}
 							action={<ChevronAction />}
-							onClick={() => view.set("title")}
+							onClick={() => view.setFn("title")}
 						/>
 
 						<CategoryValue
 							data-action={"select draft category"}
 							category={draft.category}
 							action={<ChevronAction />}
-							onClick={() => view.set("category")}
+							onClick={() => view.setFn("category")}
 						/>
 					</Group>
 
@@ -144,11 +144,11 @@ export const Editor: FC<Editor.Props> = ({ _suspense, draftId, view, ...props })
 						<LocationValue
 							data-action={"select draft location"}
 							location={draft.location}
-							textLabel={translator.text("Listing location (label)")}
-							textEmpty={translator.text("Listing location not selected")}
-							textHint={translator.text("Listing location (hint)")}
+							textLabel={translator.textFn("Listing location (label)")}
+							textEmpty={translator.textFn("Listing location not selected")}
+							textHint={translator.textFn("Listing location (hint)")}
 							action={<ChevronAction />}
-							onClick={() => view.set("location")}
+							onClick={() => view.setFn("location")}
 						/>
 					</Group>
 
@@ -157,7 +157,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, draftId, view, ...props })
 							data-action={"set draft price type"}
 							priceType={draft.priceType}
 							action={<ChevronAction />}
-							onClick={() => view.set("priceType")}
+							onClick={() => view.setFn("priceType")}
 						/>
 
 						{match(draft.priceType)
@@ -168,7 +168,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, draftId, view, ...props })
 										price={draft.price}
 										currency={draft.currency}
 										action={<ChevronAction />}
-										onClick={() => view.set("price")}
+										onClick={() => view.setFn("price")}
 									/>
 								);
 							})
@@ -190,7 +190,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, draftId, view, ...props })
 							data-action={"set draft expiration date"}
 							expires={draft.expires}
 							action={<ChevronAction />}
-							onClick={() => view.set("expires")}
+							onClick={() => view.setFn("expires")}
 						/>
 					</Group>
 				</Container>
@@ -213,7 +213,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, draftId, view, ...props })
 						<DeliveryValueList
 							deliveryIn={draft.delivery}
 							action={<ChevronAction />}
-							onClick={() => view.set("delivery")}
+							onClick={() => view.setFn("delivery")}
 							wrapperProps={{
 								"data-ui-tone": draft.delivery.length > 0 ? "neutral" : "secondary",
 							}}
@@ -224,7 +224,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, draftId, view, ...props })
 						<DescriptionValue
 							description={draft.description}
 							action={<ChevronAction />}
-							onClick={() => view.set("description")}
+							onClick={() => view.setFn("description")}
 						/>
 					</Group>
 
@@ -232,13 +232,13 @@ export const Editor: FC<Editor.Props> = ({ _suspense, draftId, view, ...props })
 						<ProsValueList
 							pros={draft.pros}
 							action={<ChevronAction />}
-							onClick={() => view.set("pros")}
+							onClick={() => view.setFn("pros")}
 						/>
 
 						<ConsValueList
 							cons={draft.cons}
 							action={<ChevronAction />}
-							onClick={() => view.set("cons")}
+							onClick={() => view.setFn("cons")}
 						/>
 					</Group>
 
@@ -246,7 +246,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, draftId, view, ...props })
 						<WarrantyValue
 							warranty={draft.warranty}
 							action={<ChevronAction />}
-							onClick={() => view.set("warranty")}
+							onClick={() => view.setFn("warranty")}
 						/>
 					</Group>
 
@@ -254,13 +254,13 @@ export const Editor: FC<Editor.Props> = ({ _suspense, draftId, view, ...props })
 						<ConditionValue
 							condition={draft.condition}
 							action={<ChevronAction />}
-							onClick={() => view.set("condition")}
+							onClick={() => view.setFn("condition")}
 						/>
 
 						<AgeValue
 							age={draft.age}
 							action={<ChevronAction />}
-							onClick={() => view.set("age")}
+							onClick={() => view.setFn("age")}
 						/>
 					</Group>
 
@@ -270,7 +270,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, draftId, view, ...props })
 							restriction={draft.restriction}
 							action={<ChevronAction />}
 							data-ui-disabled={!draft.categoryId}
-							onClick={() => view.set("restriction")}
+							onClick={() => view.setFn("restriction")}
 						/>
 					</Group>
 				</Container>

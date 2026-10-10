@@ -1,10 +1,10 @@
 import type { ComponentProps, FC } from "react";
 import { SpinnerIcon } from "~/ui/constant/SpinnerIcon";
-import { uiButton } from "~/ui/fn/uiButton";
+import { uiButtonFn } from "~/ui/fn/uiButtonFn";
 import { Icon } from "~/ui/ui/Icon";
 
 export namespace Button {
-	export interface Props extends uiButton.Component<ComponentProps<"button">> {
+	export interface Props extends uiButtonFn.Component<ComponentProps<"button">> {
 		/**
 		 * Icon to display when the button is enabled and not loading.
 		 */
@@ -57,7 +57,7 @@ export const Button: FC<Button.Props> = ({
 	//
 	...props
 }) => {
-	const getIcon = () => {
+	const getIconFn = () => {
 		if (loading === true) {
 			return iconLoading;
 		}
@@ -67,14 +67,14 @@ export const Button: FC<Button.Props> = ({
 		return iconEnabled;
 	};
 
-	const icon = getIcon();
+	const icon = getIconFn();
 
 	return (
 		<button
 			type={"button"}
 			disabled={disabled}
 			//
-			{...uiButton({
+			{...uiButtonFn({
 				"data-ui-disabled": disabled,
 				className,
 			})}

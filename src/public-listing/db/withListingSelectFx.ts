@@ -2,8 +2,8 @@ import { Effect } from "effect";
 import { sql } from "kysely";
 import { match } from "ts-pattern";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { withNormalizedContainsEx } from "~/database/fn/withNormalizedContainsEx";
-import { selectFx } from "~/database-query/fx/selectFx";
+import { withNormalizedContainsExFn } from "~/database/fn/withNormalizedContainsExFn";
+import { selectFn } from "~/database-query/fn/selectFn";
 import { DateServiceFx } from "~/date/service/DateServiceFx";
 import type { DeliveryEnumSchema } from "~/delivery/schema/DeliveryEnumSchema";
 import { ListingStatusEnumSchema } from "~/listing/schema/ListingStatusEnumSchema";
@@ -34,7 +34,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 }: withListingSelectFx.Props) {
 	const dateService = yield* DateServiceFx;
 	const { kysely } = yield* KyselyContextFx;
-	const now = dateService.now().toJSDate();
+	const now = dateService.nowFn().toJSDate();
 
 	let select = kysely
 		.selectFrom("listing as l")
@@ -43,13 +43,13 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 			"on-hold",
 			"banned",
 		])
-		.where((eb) => {
-			return eb("cat.restriction", "in", publicCategoryRestrictions);
+		.where((ebFn) => {
+			return ebFn("cat.restriction", "in", publicCategoryRestrictions);
 		})
-		.where((eb) => {
-			return eb.or([
-				eb("l.restriction", "is", null),
-				eb("l.restriction", "in", publicCategoryRestrictions),
+		.where((ebFn) => {
+			return ebFn.or([
+				ebFn("l.restriction", "is", null),
+				ebFn("l.restriction", "in", publicCategoryRestrictions),
 			]);
 		});
 
@@ -75,20 +75,20 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				 * For DESC (farthest-first), order by distance to the antipode ASC,
 				 * which is equivalent and keeps index usage.
 				 */
-				return select.orderBy((eb) => {
-					const origin = eb
+				return select.orderBy((ebFn) => {
+					const origin = ebFn
 						.selectFrom("location as originLoc")
-						.select((eb) => {
+						.select((ebFn) => {
 							return sql`ST_SetSRID(
                                 ST_MakePoint(
                                     case
-                                        when ${eb.val(isDesc)} and ${eb.ref("originLoc.lon")} >= 0 then ${eb.ref("originLoc.lon")} - 180
-                                        when ${eb.val(isDesc)} then ${eb.ref("originLoc.lon")} + 180
-                                        else ${eb.ref("originLoc.lon")}
+                                        when ${ebFn.val(isDesc)} and ${ebFn.ref("originLoc.lon")} >= 0 then ${ebFn.ref("originLoc.lon")} - 180
+                                        when ${ebFn.val(isDesc)} then ${ebFn.ref("originLoc.lon")} + 180
+                                        else ${ebFn.ref("originLoc.lon")}
                                     end,
                                     case
-                                        when ${eb.val(isDesc)} then -${eb.ref("originLoc.lat")}
-                                        else ${eb.ref("originLoc.lat")}
+                                        when ${ebFn.val(isDesc)} then -${ebFn.ref("originLoc.lat")}
+                                        else ${ebFn.ref("originLoc.lat")}
                                     end
                                 ),
                                 4326
@@ -97,13 +97,13 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 						.where("originLoc.id", "=", locationId)
 						.limit(1);
 
-					return sql`${eb.ref("l.withLocation")} <-> (${origin})`;
+					return sql`${ebFn.ref("l.withLocation")} <-> (${origin})`;
 				}, sortOrder);
 			})
 			.exhaustive();
 	}
 
-	return selectFx({
+	return selectFn({
 		select: select.select([
 			"l.id",
 			"l.categoryId",
@@ -117,11 +117,13 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 			"l.visibleAt",
 			"l.expiresAt",
 			//
-			(eb) => {
-				return eb
+			(ebFn) => {
+				return ebFn
 					.selectFrom("location as loc")
-					.select((eb) => {
-						return sql<LocationSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("json");
+					.select((ebFn) => {
+						return sql<LocationSchema.Type>`to_jsonb(${ebFn.table("loc")}.*)`.as(
+							"json",
+						);
 					})
 					.whereRef("loc.id", "=", "l.locationId")
 					.limit(1)
@@ -130,28 +132,28 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 					.as("location");
 			},
 			//
-			(eb) => {
-				return sql<CategorySchema.Type>`to_jsonb(${eb.table("cat")}.*)`.as("category");
+			(ebFn) => {
+				return sql<CategorySchema.Type>`to_jsonb(${ebFn.table("cat")}.*)`.as("category");
 			},
 			//
-			(eb) => {
-				return sql<string[]>`to_jsonb(${eb.ref("l.pros")})`.as("pros");
+			(ebFn) => {
+				return sql<string[]>`to_jsonb(${ebFn.ref("l.pros")})`.as("pros");
 			},
-			(eb) => {
-				return sql<string[]>`to_jsonb(${eb.ref("l.cons")})`.as("cons");
+			(ebFn) => {
+				return sql<string[]>`to_jsonb(${ebFn.ref("l.cons")})`.as("cons");
 			},
-			(eb) => {
-				return sql<DeliveryEnumSchema.Type[]>`to_jsonb(${eb.ref("l.delivery")})`.as(
+			(ebFn) => {
+				return sql<DeliveryEnumSchema.Type[]>`to_jsonb(${ebFn.ref("l.delivery")})`.as(
 					"delivery",
 				);
 			},
-			(eb) => {
-				return eb.fn
+			(ebFn) => {
+				return ebFn.fn
 					.coalesce(
 						sql<RestrictionEnumSchema.Type | null>`
                             greatest(
-                                ${eb.ref("cat.restriction")},
-                                ${eb.ref("l.restriction")}
+                                ${ebFn.ref("cat.restriction")},
+                                ${ebFn.ref("l.restriction")}
                             )
 			            `,
 						sql<RestrictionEnumSchema.Type>`${RestrictionEnumSchema.enum.none}::restriction_enum`,
@@ -159,11 +161,11 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 					.$castTo<RestrictionEnumSchema.Type>()
 					.as("withRestriction");
 			},
-			(eb) => {
-				return eb
+			(ebFn) => {
+				return ebFn
 					.and([
-						eb("l.status", "=", ListingStatusEnumSchema.enum.live),
-						eb("l.expiresAt", ">", now),
+						ebFn("l.status", "=", ListingStatusEnumSchema.enum.live),
+						ebFn("l.expiresAt", ">", now),
 					])
 					.$castTo<boolean>()
 					.as("isActive");
@@ -188,17 +190,17 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				if (where.fulltext?.length) {
 					const fulltext = where.fulltext;
 
-					query = query.where((eb) => {
-						return eb.and(
+					query = query.where((ebFn) => {
+						return ebFn.and(
 							fulltext.map((term) =>
-								eb.exists(
-									eb
+								ebFn.exists(
+									ebFn
 										.selectFrom("listing_spotlight as ls")
 										.select("ls.listingId")
 										.whereRef("ls.listingId", "=", "l.id")
-										.where((eb) => {
-											return withNormalizedContainsEx(
-												eb.ref("ls.text"),
+										.where((ebFn) => {
+											return withNormalizedContainsExFn(
+												ebFn.ref("ls.text"),
 												term,
 											);
 										}),

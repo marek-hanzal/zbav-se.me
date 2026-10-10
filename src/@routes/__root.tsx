@@ -2,7 +2,7 @@ import type { QueryClient } from "@tanstack/react-query";
 import { createRootRouteWithContext, HeadContent, Outlet, Scripts } from "@tanstack/react-router";
 import styles from "~/assets/style.css?url";
 import { getLocaleFn } from "~/locale/fn/getLocaleFn";
-import { uiContainer } from "~/ui/fn/uiContainer";
+import { uiContainerFn } from "~/ui/fn/uiContainerFn";
 
 export const Route = createRootRouteWithContext<{
 	queryClient: QueryClient;
@@ -50,7 +50,7 @@ export const Route = createRootRouteWithContext<{
 				</head>
 
 				<body
-					{...uiContainer({
+					{...uiContainerFn({
 						className: [
 							"font-roboto",
 							"w-dvw",

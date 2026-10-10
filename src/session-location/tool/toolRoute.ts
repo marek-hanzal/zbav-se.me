@@ -1,9 +1,9 @@
 import { tool } from "@openai/agents";
-import { getRootLogger } from "~/log/fn/getRootLogger";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
 import { routeFn } from "~/session-location/fn/routeFn";
 import { RouteSchema } from "~/session-location/schema/RouteSchema";
 
-const logger = getRootLogger([
+const logger = getRootLoggerFn([
 	"tool",
 	"toolRoute",
 ]);

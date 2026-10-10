@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import type { UserEventTableSchema } from "~/database/schema/UserEventTableSchema";
-import { computeLoad } from "~/user-event/fx/computeLoad";
+import { computeLoadFn } from "~/user-event/fn/computeLoadFn";
 
 interface CreateEventProps {
 	id: string;
@@ -11,7 +11,7 @@ interface CreateEventProps {
 	createdAt: DateTime;
 }
 
-function createEvent({
+function createEventFn({
 	id,
 	group,
 	event,
@@ -40,16 +40,16 @@ describe("computeLoad", () => {
 		const base = DateTime.fromISO("2026-04-02T10:00:00.000Z");
 
 		expect(
-			computeLoad({
+			computeLoadFn({
 				source: [
-					createEvent({
+					createEventFn({
 						id: "1",
 						group: "tx-1",
 						event: "transaction.create",
 						scope: "user",
 						createdAt: base,
 					}),
-					createEvent({
+					createEventFn({
 						id: "2",
 						group: "tx-1",
 						event: "transaction.open",

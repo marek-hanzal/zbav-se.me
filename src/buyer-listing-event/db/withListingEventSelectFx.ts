@@ -3,7 +3,7 @@ import { match } from "ts-pattern";
 import type { ListingEventSortSchema } from "~/buyer-listing-event/schema/ListingEventSortSchema";
 import type { ListingEventWhereSchema } from "~/buyer-listing-event/schema/ListingEventWhereSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { selectFx } from "~/database-query/fx/selectFx";
+import { selectFn } from "~/database-query/fn/selectFn";
 
 export namespace withListingEventSelectFx {
 	export interface Props {
@@ -24,7 +24,7 @@ export const withListingEventSelectFx = Effect.fn("withListingEventSelectFx")(fu
 			.exhaustive();
 	}
 
-	return selectFx({
+	return selectFn({
 		select: query.selectAll("le"),
 		queryFx(select, where: ListingEventWhereSchema.Type) {
 			return Effect.gen(function* () {

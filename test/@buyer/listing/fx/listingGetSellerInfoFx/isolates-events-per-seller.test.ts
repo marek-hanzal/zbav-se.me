@@ -2,16 +2,16 @@ import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import { listingGetSellerInfoFx } from "~/buyer-listing/fx/listingGetSellerInfoFx";
-import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { userEventCreateFx } from "~/user-event/fx/userEventCreateFx";
 
 describe("listingGetSellerInfoFx", () => {
 	it("returns seller events only for the seller behind the requested listing", async () => {
-		const database = await testabase("listingGetSellerInfoFx-event-isolation");
+		const database = await testabaseFn("listingGetSellerInfoFx-event-isolation");
 
 		return Effect.gen(function* () {
 			const sellerA = yield* leaseTestUserFx({});
@@ -28,8 +28,8 @@ describe("listingGetSellerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				withDateServiceFx({
-					now: () =>
+				withDateServiceFn({
+					nowFn: () =>
 						DateTime.now().minus({
 							days: 10,
 						}),
@@ -43,8 +43,8 @@ describe("listingGetSellerInfoFx", () => {
 				event: "transaction.open",
 				isTerminal: false,
 			}).pipe(
-				withDateServiceFx({
-					now: () =>
+				withDateServiceFn({
+					nowFn: () =>
 						DateTime.now().minus({
 							days: 9,
 						}),
@@ -59,8 +59,8 @@ describe("listingGetSellerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				withDateServiceFx({
-					now: () =>
+				withDateServiceFn({
+					nowFn: () =>
 						DateTime.now().minus({
 							days: 8,
 						}),
@@ -78,6 +78,6 @@ describe("listingGetSellerInfoFx", () => {
 			expect(sellerAInfo.events?.reaction.total).toBe(1);
 			expect(sellerBInfo.events).not.toBeNull();
 			expect(sellerBInfo.events?.reaction.total).toBe(1);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

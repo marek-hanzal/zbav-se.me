@@ -14,8 +14,8 @@ export const FilterEmpty: FC<FilterEmpty.Props> = (props) => {
 		<EmptyStatus
 			data-ui={"FilterEmpty[EmptyStatus]"}
 			icon={"icon-[famicons--trail-sign-outline]"}
-			textTitle={translator.text("No listings for current filter (title)")}
-			textMessage={translator.text("No listings for current filter (message)")}
+			textTitle={translator.textFn("No listings for current filter (title)")}
+			textMessage={translator.textFn("No listings for current filter (message)")}
 			{...props}
 		/>
 	);

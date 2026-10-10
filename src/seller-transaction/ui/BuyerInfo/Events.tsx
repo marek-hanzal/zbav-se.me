@@ -1,13 +1,13 @@
 import { DateTime } from "luxon";
 import type { FC } from "react";
-import { toTimeDiff } from "~/date/fn/toTimeDiff";
+import { toTimeDiffFn } from "~/date/fn/toTimeDiffFn";
 import { useLocale } from "~/locale/hook/useLocale";
 import type { UserEventBuyerSchema } from "~/seller-user-event/schema/UserEventBuyerSchema";
 import { useTranslator } from "~/translation/hook/useTranslator";
 import { Container } from "~/ui/ui/Container";
 import { LabelValue } from "~/ui/ui/LabelValue";
 
-const percentLabel = (value: number) => `${Math.round(value)}%`;
+const percentLabelFn = (value: number) => `${Math.round(value)}%`;
 
 export namespace Events {
 	export interface Props {
@@ -28,15 +28,15 @@ export const Events: FC<Events.Props> = ({ events }) => {
 				className={"px-0"}
 			>
 				<LabelValue
-					textLabel={translator.text("Reaction rate (label)")}
-					textHint={translator.text("Reaction rate (hint)")}
-					textValue={percentLabel(events.reaction.percent)}
+					textLabel={translator.textFn("Reaction rate (label)")}
+					textHint={translator.textFn("Reaction rate (hint)")}
+					textValue={percentLabelFn(events.reaction.percent)}
 				/>
 
 				<LabelValue
-					textLabel={translator.text("Reaction p90 (label)")}
-					textHint={translator.text("Reaction p90 (hint)")}
-					textValue={toTimeDiff({
+					textLabel={translator.textFn("Reaction p90 (label)")}
+					textHint={translator.textFn("Reaction p90 (hint)")}
+					textValue={toTimeDiffFn({
 						locale,
 						time: DateTime.now()
 							.minus({
@@ -55,15 +55,15 @@ export const Events: FC<Events.Props> = ({ events }) => {
 				className={"px-0"}
 			>
 				<LabelValue
-					textLabel={translator.text("Closer rate (label)")}
-					textHint={translator.text("Closer rate (hint)")}
-					textValue={percentLabel(events.closer.percent)}
+					textLabel={translator.textFn("Closer rate (label)")}
+					textHint={translator.textFn("Closer rate (hint)")}
+					textValue={percentLabelFn(events.closer.percent)}
 				/>
 
 				<LabelValue
-					textLabel={translator.text("Closer p90 (label)")}
-					textHint={translator.text("Closer p90 (hint)")}
-					textValue={toTimeDiff({
+					textLabel={translator.textFn("Closer p90 (label)")}
+					textHint={translator.textFn("Closer p90 (hint)")}
+					textValue={toTimeDiffFn({
 						locale,
 						time: DateTime.now()
 							.minus({
@@ -76,15 +76,15 @@ export const Events: FC<Events.Props> = ({ events }) => {
 			</Container>
 
 			<LabelValue
-				textLabel={translator.text("Decision rate (label)")}
-				textHint={translator.text("Decision rate (hint)")}
-				textValue={percentLabel(events.decision.percent)}
+				textLabel={translator.textFn("Decision rate (label)")}
+				textHint={translator.textFn("Decision rate (hint)")}
+				textValue={percentLabelFn(events.decision.percent)}
 			/>
 
 			<LabelValue
-				textLabel={translator.text("Expired rate (label)")}
-				textHint={translator.text("Expired rate (hint)")}
-				textValue={percentLabel(events.expired.percent)}
+				textLabel={translator.textFn("Expired rate (label)")}
+				textHint={translator.textFn("Expired rate (hint)")}
+				textValue={percentLabelFn(events.expired.percent)}
 			/>
 
 			<Container
@@ -94,15 +94,15 @@ export const Events: FC<Events.Props> = ({ events }) => {
 				className={"px-0"}
 			>
 				<LabelValue
-					textLabel={translator.text("Buyer load (label)")}
-					textHint={translator.text("Buyer load (hint)")}
-					textValue={translator.text(`Buyer load ${events.load.bucket}`)}
+					textLabel={translator.textFn("Buyer load (label)")}
+					textHint={translator.textFn("Buyer load (hint)")}
+					textValue={translator.textFn(`Buyer load ${events.load.bucket}`)}
 				/>
 
 				<LabelValue
-					textLabel={translator.text("Buyer activity (label)")}
-					textHint={translator.text("Buyer activity (hint)")}
-					textValue={translator.text(`Buyer activity ${events.activity.bucket}`)}
+					textLabel={translator.textFn("Buyer activity (label)")}
+					textHint={translator.textFn("Buyer activity (hint)")}
+					textValue={translator.textFn(`Buyer activity ${events.activity.bucket}`)}
 				/>
 			</Container>
 		</>

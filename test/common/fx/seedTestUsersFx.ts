@@ -1,10 +1,10 @@
 import { Effect } from "effect";
-import { auth } from "~/authentication/fn/auth";
+import { authFn } from "~/authentication/fn/authFn";
 import type { Database } from "~/database/type/Database";
 import type { withDatabaseFx } from "~/database-query/fx/withDatabaseFx";
-import { genId } from "~/identity/fn/genId";
-import { TEST_USER_PASSWORD, toLeasedTestUserEmail } from "~/test/user/fx/leaseTestUserFx";
-import { translator } from "~/translation/fn/translator";
+import { genIdFn } from "~/identity/fn/genIdFn";
+import { TEST_USER_PASSWORD, toLeasedTestUserEmailFn } from "~/test/user/fx/leaseTestUserFx";
+import { translatorFn } from "~/translation/fn/translatorFn";
 import { ResourceBundleEnumSchema } from "~/user-resource-bundle/schema/ResourceBundleEnumSchema";
 
 const TEST_USER_KEYS = [
@@ -45,12 +45,12 @@ export namespace seedTestUsersFx {
 	}
 }
 
-const toSeededTestUserResourceBundleRows = (
+const toSeededTestUserResourceBundleRowsFn = (
 	users: Database["user"][],
 	resourceBundleId: string,
 ) => {
 	return users.map((user) => ({
-		id: genId(),
+		id: genIdFn(),
 		userId: user.id,
 		resourceBundleId,
 		createdAt: TEST_USER_RESOURCE_BUNDLE_AVAILABLE_AT,
@@ -62,11 +62,11 @@ const toSeededTestUserResourceBundleRows = (
 export const seedTestUsersFx = Effect.fn("seedTestUsersFx")(function* ({
 	database,
 }: seedTestUsersFx.Props) {
-	const seedTranslator = translator({
+	const seedTranslator = translatorFn({
 		translations: [],
 	});
-	const { api } = auth({
-		dialect: () => database.dialect,
+	const { api } = authFn({
+		dialectFn: () => database.dialect,
 		translator: seedTranslator,
 	});
 
@@ -75,7 +75,7 @@ export const seedTestUsersFx = Effect.fn("seedTestUsersFx")(function* ({
 			try: async () => {
 				await api.signUpEmail({
 					body: {
-						email: toLeasedTestUserEmail(key),
+						email: toLeasedTestUserEmailFn(key),
 						name: `Test ${key.toUpperCase()}`,
 						password: TEST_USER_PASSWORD,
 					},
@@ -92,7 +92,7 @@ export const seedTestUsersFx = Effect.fn("seedTestUsersFx")(function* ({
 			.where(
 				"email",
 				"in",
-				TEST_USER_KEYS.map((key) => toLeasedTestUserEmail(key)),
+				TEST_USER_KEYS.map((key) => toLeasedTestUserEmailFn(key)),
 			)
 			.execute();
 
@@ -104,7 +104,7 @@ export const seedTestUsersFx = Effect.fn("seedTestUsersFx")(function* ({
 
 		await database.kysely
 			.insertInto("user_resource_bundle")
-			.values(toSeededTestUserResourceBundleRows(users, resourceBundle.id))
+			.values(toSeededTestUserResourceBundleRowsFn(users, resourceBundle.id))
 			.onConflict((oc) =>
 				oc
 					.columns([
@@ -162,7 +162,7 @@ export const seedTestUsersFx = Effect.fn("seedTestUsersFx")(function* ({
 				await database.kysely
 					.insertInto("user_resource_bundle_item")
 					.values({
-						id: genId(),
+						id: genIdFn(),
 						userResourceBundleId: assignment.id,
 						resourceDefinitionId: item.resourceDefinitionId,
 						amount: item.amount,
@@ -177,7 +177,7 @@ export const seedTestUsersFx = Effect.fn("seedTestUsersFx")(function* ({
 				await database.kysely
 					.insertInto("user_resource_bundle_limit")
 					.values({
-						id: genId(),
+						id: genIdFn(),
 						userResourceBundleId: assignment.id,
 						resourceDefinitionId: limit.resourceDefinitionId,
 						limit: limit.limit,
@@ -192,7 +192,7 @@ export const seedTestUsersFx = Effect.fn("seedTestUsersFx")(function* ({
 				await database.kysely
 					.insertInto("user_resource_bundle_feature")
 					.values({
-						id: genId(),
+						id: genIdFn(),
 						userResourceBundleId: assignment.id,
 						resourceDefinitionId: feature.resourceDefinitionId,
 						createdAt: TEST_USER_RESOURCE_BUNDLE_AVAILABLE_AT,

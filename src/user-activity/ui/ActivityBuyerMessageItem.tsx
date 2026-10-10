@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import type { BuyerMessageSchema } from "~/database/schema/ActivityTableBuyerMessageSchema";
-import { toTimeDiff } from "~/date/fn/toTimeDiff";
-import { useUpload } from "~/gallery/hook/useUpload";
+import { toTimeDiffFn } from "~/date/fn/toTimeDiffFn";
+import { getUploadFn } from "~/gallery/fn/getUploadFn";
 import { ListItem } from "~/list-item/ui/ListItem";
 import { useLocale } from "~/locale/hook/useLocale";
 import { withTransactionQuery } from "~/seller-transaction/query/withTransactionQuery";
@@ -19,7 +19,7 @@ export namespace ActivityBuyerMessageItem {
 export const ActivityBuyerMessageItem: FC<ActivityBuyerMessageItem.Props> = ({ item }) => {
 	const locale = useLocale();
 	const { data: transaction } = withTransactionQuery.useFetchQuery(item.payload.transactionId);
-	const hero = useUpload(transaction.withImageUrl);
+	const hero = getUploadFn(transaction.withImageUrl);
 
 	return (
 		<LinkTo
@@ -50,7 +50,7 @@ export const ActivityBuyerMessageItem: FC<ActivityBuyerMessageItem.Props> = ({ i
 							data-ui-text="sm"
 						/>
 						<Typo
-							label={toTimeDiff({
+							label={toTimeDiffFn({
 								locale,
 								time: item.timestamp,
 							})}

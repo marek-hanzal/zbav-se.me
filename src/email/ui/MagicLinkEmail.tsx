@@ -16,19 +16,19 @@ export const MagicLinkEmail: FC<MagicLinkEmail.Props> = ({ signInUrl }) => {
 
 	return (
 		<MailLayout
-			footer={translator.text("Magic link email footer")}
-			lead={translator.text("Magic link email message")}
-			preview={translator.text("Magic link email subject")}
-			title={translator.text("Magic link email title")}
+			footer={translator.textFn("Magic link email footer")}
+			lead={translator.textFn("Magic link email message")}
+			preview={translator.textFn("Magic link email subject")}
+			title={translator.textFn("Magic link email title")}
 		>
 			<Section className={"mt-8"}>
 				<MailButton href={signInUrl}>
-					{translator.text("Magic link email action")}
+					{translator.textFn("Magic link email action")}
 				</MailButton>
 			</Section>
 
 			<MailCopy
-				hint={translator.text(
+				hint={translator.textFn(
 					"If the button does not work, copy this link into your browser:",
 				)}
 				value={signInUrl}

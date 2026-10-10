@@ -1,14 +1,14 @@
 import { TypoIcon } from "~/application-ui/ui/typo.exports";
-import { toTimeDiff } from "~/date/fn/toTimeDiff";
+import { toTimeDiffFn } from "~/date/fn/toTimeDiffFn";
 import { ListItem } from "~/list-item/ui/ListItem";
 import { ListItemPending } from "~/list-item/ui/ListItemPending";
 import { useLocale } from "~/locale/hook/useLocale";
 import { StatusIcon } from "~/seller-listing/ui/TransactionList/StatusIcon";
+import { toActivityLabelFn } from "~/seller-transaction/fn/toActivityLabelFn";
 import { withTransactionQuery } from "~/seller-transaction/query/withTransactionQuery";
-import { toActivityLabel } from "~/seller-transaction/ui/toActivityLabel";
 import { useTranslator } from "~/translation/hook/useTranslator";
 import { MessageIcon } from "~/ui/constant/MessageIcon";
-import { withFallback } from "~/ui/fn/withFallback";
+import { withFallbackFn } from "~/ui/fn/withFallbackFn";
 import type { MarkSuspense } from "~/ui/type/MarkSuspense";
 import { Container } from "~/ui/ui/Container";
 import { LinkTo } from "~/ui/ui/LinkTo";
@@ -20,7 +20,7 @@ export namespace Item {
 	}
 }
 
-export const Item = withFallback(({ _suspense, transactionId, ...props }: Item.Props) => {
+export const Item = withFallbackFn(({ _suspense, transactionId, ...props }: Item.Props) => {
 	const locale = useLocale();
 	const translator = useTranslator();
 	const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId);
@@ -39,7 +39,7 @@ export const Item = withFallback(({ _suspense, transactionId, ...props }: Item.P
 				hero={<StatusIcon status={transaction.status} />}
 				title={
 					<Typo
-						label={toActivityLabel({
+						label={toActivityLabelFn({
 							entry: transaction.entry,
 							translator,
 						})}
@@ -70,7 +70,7 @@ export const Item = withFallback(({ _suspense, transactionId, ...props }: Item.P
 						)}
 
 						<Typo
-							label={toTimeDiff({
+							label={toTimeDiffFn({
 								locale,
 								time: transaction.lastAt,
 							})}

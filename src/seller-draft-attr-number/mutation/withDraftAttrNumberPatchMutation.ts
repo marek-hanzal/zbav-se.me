@@ -1,15 +1,15 @@
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withMutation } from "~/mutation/fn/withMutation";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withMutationFn } from "~/mutation/fn/withMutationFn";
 import { draftAttrNumberPatchFn } from "~/seller-draft-attr-number/fn/draftAttrNumberPatchFn";
 import type { DraftAttrNumberPatchSchema } from "~/seller-draft-attr-number/schema/DraftAttrNumberPatchSchema";
 import { withDraftAttrOfQuery } from "~/user-draft-attr/query/withDraftAttrOfQuery";
 
-export const withDraftAttrNumberPatchMutation = withMutation({
-	logger: getRootLogger([
+export const withDraftAttrNumberPatchMutation = withMutationFn({
+	logger: getRootLoggerFn([
 		"mutation",
 		"withDraftAttrNumberPatchMutation",
 	]),
-	keys(variables: DraftAttrNumberPatchSchema.Type) {
+	keysFn(variables: DraftAttrNumberPatchSchema.Type) {
 		return [
 			"draft-attr",
 			"number",

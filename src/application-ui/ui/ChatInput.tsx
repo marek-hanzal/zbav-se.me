@@ -9,53 +9,53 @@ import {
 	useState,
 } from "react";
 import { SendMessageIcon } from "~/application-ui/constant/icon.exports";
-import { uiInput } from "~/form/fn/uiInput";
+import { uiInputFn } from "~/form/fn/uiInputFn";
 import { Button } from "~/ui/ui/Button";
 import { Container } from "~/ui/ui/Container";
 
 export namespace ChatInput {
 	export interface Props extends Omit<Container.Props, "onSubmit" | "onChange"> {
 		cancel?: ReactNode;
-		onSubmit(value: string): Promise<void>;
+		onSubmitFn(value: string): Promise<void>;
 		placeholder: string;
 		maxRows?: number;
 		loading: boolean;
 		disableInput?: boolean;
 		disableSubmit?: boolean;
 		left?: ReactNode;
-		inputRef?: RefCallback<HTMLTextAreaElement>;
+		inputRefFn?: RefCallback<HTMLTextAreaElement>;
 		buttonProps?: Button.Props;
 	}
 
-	export type PropsEx = Omit<Props, "loading" | "placeholder" | "onSubmit">;
+	export type PropsEx = Omit<Props, "loading" | "placeholder" | "onSubmitFn">;
 }
 
 export const ChatInput: FC<ChatInput.Props> = ({
 	cancel,
-	onSubmit,
+	onSubmitFn,
 	placeholder,
 	maxRows = 6,
 	loading,
 	disableInput = false,
 	disableSubmit = false,
 	left,
-	inputRef,
+	inputRefFn,
 	buttonProps,
 	...props
 }) => {
-	const [message, setMessage] = useState("");
+	const [message, setMessageFn] = useState("");
 	const areaId = useId();
 	const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 	const value = message.trim();
 	const canSubmit = !disableSubmit && value.length > 0;
 
-	const submit = () => {
+	const submitFn = () => {
 		if (!canSubmit) {
 			return;
 		}
 
-		onSubmit(value);
-		setMessage("");
+		onSubmitFn(value);
+		setMessageFn("");
 	};
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: We're reacting to value change
@@ -87,7 +87,7 @@ export const ChatInput: FC<ChatInput.Props> = ({
 		maxRows,
 	]);
 
-	const handleKeyDown: KeyboardEventHandler<HTMLTextAreaElement> = (e) => {
+	const handleKeyDownFn: KeyboardEventHandler<HTMLTextAreaElement> = (e) => {
 		if (e.key === "Enter" && !e.ctrlKey && !e.metaKey) {
 			return;
 		}
@@ -95,7 +95,7 @@ export const ChatInput: FC<ChatInput.Props> = ({
 		if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
 			e.preventDefault();
 
-			submit();
+			submitFn();
 		}
 	};
 
@@ -124,17 +124,17 @@ export const ChatInput: FC<ChatInput.Props> = ({
 			<textarea
 				ref={(element) => {
 					textareaRef.current = element;
-					inputRef?.(element);
+					inputRefFn?.(element);
 				}}
 				id={areaId}
 				rows={1}
 				value={message}
 				disabled={disableInput}
 				data-ui-disabled={disableInput}
-				onChange={(e) => setMessage(e.target.value)}
-				onKeyDown={handleKeyDown}
+				onChange={(e) => setMessageFn(e.target.value)}
+				onKeyDown={handleKeyDownFn}
 				placeholder={placeholder}
-				{...uiInput({
+				{...uiInputFn({
 					"data-ui-round": "default",
 					"data-ui-border": undefined,
 					"data-ui-shadow": false,
@@ -160,7 +160,7 @@ export const ChatInput: FC<ChatInput.Props> = ({
 				disabled={!canSubmit}
 				data-ui-disabled={!canSubmit}
 				loading={loading && disableSubmit}
-				onClick={submit}
+				onClick={submitFn}
 				data-ui-justify="center"
 				data-ui-items="center"
 				data-ui-tone="brand"

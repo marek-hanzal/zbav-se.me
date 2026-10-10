@@ -1,13 +1,13 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { activityCollectionFx } from "~/user-activity/fx/activityCollectionFx";
 
 describe("activity deduplication edge cases", () => {
 	it("prefers the latest active message when a newer archived duplicate exists", async () => {
-		const database = await testabase("activityDedup-prefer-active");
+		const database = await testabaseFn("activityDedup-prefer-active");
 
 		return Effect.gen(function* () {
 			const user = yield* leaseTestUserFx({});
@@ -67,6 +67,6 @@ describe("activity deduplication edge cases", () => {
 			expect(activeOnly.map((item) => item.id)).toEqual([
 				"dedup-active-older",
 			]);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

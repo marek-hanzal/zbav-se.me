@@ -7,18 +7,18 @@ import { ConfirmButton } from "~/ui/ui/ConfirmButton";
 export namespace DeleteButton {
 	export interface Props extends ConfirmButton.Props {
 		feedId: string;
-		onDelete?(): Promise<void>;
+		onDeleteFn?(): Promise<void>;
 	}
 }
 
 export const DeleteButton: FC<DeleteButton.Props> = ({
 	feedId,
-	onDelete,
+	onDeleteFn,
 	confirmProps,
 	...props
 }) => {
 	const deleteMutation = withFeedQuery.useDeleteMutation({
-		onPostMutation: onDelete,
+		onPostMutationFn: onDeleteFn,
 		invalidate: [
 			"collection",
 			"count",

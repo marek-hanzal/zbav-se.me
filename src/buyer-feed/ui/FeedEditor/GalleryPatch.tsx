@@ -8,13 +8,13 @@ import { Container } from "~/ui/ui/Container";
 export namespace GalleryPatch {
 	export interface Props {
 		feed: FeedSchema.Type;
-		onSettled?(): void;
-		onCancel(): void;
+		onSettledFn?(): void;
+		onCancelFn(): void;
 	}
 }
 
-export const GalleryPatch: FC<GalleryPatch.Props> = ({ feed, onSettled, onCancel }) => {
-	const [uploadIds, setUploadIds] = useState<string[]>(
+export const GalleryPatch: FC<GalleryPatch.Props> = ({ feed, onSettledFn, onCancelFn }) => {
+	const [uploadIds, setUploadIdsFn] = useState<string[]>(
 		feed.uploadId
 			? [
 					feed.uploadId,
@@ -22,7 +22,7 @@ export const GalleryPatch: FC<GalleryPatch.Props> = ({ feed, onSettled, onCancel
 			: [],
 	);
 	const mutation = withFeedGalleryCreateMutation.useMutation({
-		onSettled,
+		onSettled: onSettledFn,
 	});
 
 	return (
@@ -37,23 +37,23 @@ export const GalleryPatch: FC<GalleryPatch.Props> = ({ feed, onSettled, onCancel
 				access="private"
 				state={{
 					value: uploadIds,
-					set: setUploadIds,
+					setFn: setUploadIdsFn,
 				}}
 				limit={1}
 			/>
 
 			<SaveContainer
-				onCancel={() => {
-					setUploadIds(
+				onCancelFn={() => {
+					setUploadIdsFn(
 						feed.uploadId
 							? [
 									feed.uploadId,
 								]
 							: [],
 					);
-					onCancel();
+					onCancelFn();
 				}}
-				onSave={() => {
+				onSaveFn={() => {
 					mutation.mutate({
 						feedId: feed.id,
 						uploadIds,

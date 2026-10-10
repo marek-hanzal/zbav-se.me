@@ -1,18 +1,18 @@
 import { Effect } from "effect";
 import { feedCreateFx } from "~/buyer-feed/fx/feedCreateFx";
-import { getFeedDefaultCreate } from "~/buyer-feed/service/getFeedDefaultCreate";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { getFeedDefaultCreateFn } from "~/buyer-feed/service/getFeedDefaultCreateFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { expect, test } from "../test";
+import { expect, testFn } from "../testFn";
 
-test("registers the shared user in database A", async ({ page, database, db }) => {
+testFn("registers the shared user in database A", async ({ page, database, db }) => {
 	return Effect.gen(function* () {
 		const seller = yield* leaseTestUserFx({
 			key: "a",
 		});
 
 		yield* feedCreateFx({
-			...getFeedDefaultCreate(`E2E feed A ${db}`),
+			...getFeedDefaultCreateFn(`E2E feed A ${db}`),
 			userId: seller.id,
 		});
 
@@ -29,5 +29,5 @@ test("registers the shared user in database A", async ({ page, database, db }) =
 		expect(response).toEqual({
 			db,
 		});
-	}).pipe(withRuntimeFx(database), Effect.runPromise);
+	}).pipe(withRuntimeFn(database), Effect.runPromise);
 });

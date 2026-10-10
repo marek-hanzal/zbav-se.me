@@ -11,14 +11,14 @@ import { Container } from "~/ui/ui/Container";
 export namespace StatusPatch {
 	export interface Props extends Container.Props {
 		feed: FeedSchema.Type;
-		onCancel(): void;
-		onSettled?(): void;
+		onCancelFn(): void;
+		onSettledFn?(): void;
 	}
 }
 
-export const StatusPatch: FC<StatusPatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
+export const StatusPatch: FC<StatusPatch.Props> = ({ feed, onSettledFn, onCancelFn, ...props }) => {
 	const patchMutation = withFeedQuery.usePatchMutation({
-		onSettled,
+		onSettled: onSettledFn,
 	});
 	const statusIn = feed.query?.where?.statusIn ?? [];
 	const selection = useSelection<EntitySchema.Type>({
@@ -44,8 +44,8 @@ export const StatusPatch: FC<StatusPatch.Props> = ({ feed, onSettled, onCancel, 
 			<ListingStatusSelect selection={selection} />
 
 			<SaveContainer
-				onCancel={onCancel}
-				onSave={() => {
+				onCancelFn={onCancelFn}
+				onSaveFn={() => {
 					patchMutation.mutate({
 						query: {
 							where: {
@@ -58,7 +58,7 @@ export const StatusPatch: FC<StatusPatch.Props> = ({ feed, onSettled, onCancel, 
 								where: {
 									...feed.query?.where,
 									statusIn:
-										selection.optional.multiId() as ListingStatusEnumSchema.Type[],
+										selection.optional.multiIdFn() as ListingStatusEnumSchema.Type[],
 								},
 							},
 						},

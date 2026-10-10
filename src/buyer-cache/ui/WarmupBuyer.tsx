@@ -47,12 +47,12 @@ export const WarmupBuyer: FC<WarmupBuyer.Props> = () => {
 	withBuyerListingQuery.useCollectionQuery(search?.query || {});
 	withBuyerListingQuery.useCountQuery(search?.query || {});
 
-	const update = withFeedQuery.useUpdate();
+	const updateFn = withFeedQuery.useUpdate();
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: Single-shot
 	useEffect(() => {
-		feed && update(feed);
-		search && update(search);
+		feed && updateFn(feed);
+		search && updateFn(search);
 	}, []);
 
 	withFeedQuery.useCountQuery({

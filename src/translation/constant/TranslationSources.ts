@@ -15,7 +15,7 @@ export const TranslationSources: TranslationSource.Sources = {
 	objects: [
 		{
 			object: "translator",
-			name: "text",
+			name: "textFn",
 		},
 	],
 };

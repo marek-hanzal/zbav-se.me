@@ -3,7 +3,7 @@ import z from "zod";
 import { useAppForm } from "~/application-ui/hook/form.exports";
 import { SaveContainer } from "~/container/ui/SaveContainer";
 import { FormField } from "~/form/ui/FormField";
-import { cleanOf } from "~/object/fn/cleanOf";
+import { cleanOfFn } from "~/object/fn/cleanOfFn";
 import { useTranslator } from "~/translation/hook/useTranslator";
 import { Tx } from "~/translation/ui/Tx";
 import { Container } from "~/ui/ui/Container";
@@ -28,12 +28,12 @@ namespace Schema {
 
 export namespace PersonalControl {
 	export interface Props extends Container.Props {
-		onCancel(): void;
-		onSave(props: PersonalSchema.Type["payload"]): Promise<any>;
+		onCancelFn(): void;
+		onSaveFn(props: PersonalSchema.Type["payload"]): Promise<any>;
 	}
 }
 
-export const PersonalControl: FC<PersonalControl.Props> = ({ onCancel, onSave, ...props }) => {
+export const PersonalControl: FC<PersonalControl.Props> = ({ onCancelFn, onSaveFn, ...props }) => {
 	const translator = useTranslator();
 	const form = useAppForm({
 		defaultValues: {
@@ -46,7 +46,7 @@ export const PersonalControl: FC<PersonalControl.Props> = ({ onCancel, onSave, .
 			onSubmit: Schema,
 		},
 		async onSubmit({ value }) {
-			return onSave(cleanOf(value) || {});
+			return onSaveFn(cleanOfFn(value) || {});
 		},
 	});
 
@@ -75,7 +75,7 @@ export const PersonalControl: FC<PersonalControl.Props> = ({ onCancel, onSave, .
 							>
 								{(props) => (
 									<field.TextInput
-										placeholder={translator.text(
+										placeholder={translator.textFn(
 											"Personal - Name (placeholder)",
 										)}
 										value={field.state.value ?? ""}
@@ -100,7 +100,7 @@ export const PersonalControl: FC<PersonalControl.Props> = ({ onCancel, onSave, .
 								{(props) => (
 									<field.TextInput
 										type="tel"
-										placeholder={translator.text(
+										placeholder={translator.textFn(
 											"Personal - Phone (placeholder)",
 										)}
 										value={field.state.value ?? ""}
@@ -124,7 +124,7 @@ export const PersonalControl: FC<PersonalControl.Props> = ({ onCancel, onSave, .
 								{(props) => (
 									<field.TextInput
 										type="email"
-										placeholder={translator.text(
+										placeholder={translator.textFn(
 											"Personal - Email (placeholder)",
 										)}
 										value={field.state.value ?? ""}
@@ -151,8 +151,8 @@ export const PersonalControl: FC<PersonalControl.Props> = ({ onCancel, onSave, .
 
 					return (
 						<SaveContainer
-							onCancel={onCancel}
-							onSave={() => {
+							onCancelFn={onCancelFn}
+							onSaveFn={() => {
 								form.handleSubmit();
 							}}
 							loading={isSubmitting}

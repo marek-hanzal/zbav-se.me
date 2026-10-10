@@ -9,7 +9,7 @@ export namespace ModalContainer {
 		textTitle: string;
 		icon?: Icon.Type;
 		iconProps?: Icon.PropsEx;
-		close(): void;
+		closeFn(): void;
 	}
 }
 
@@ -17,7 +17,7 @@ export const ModalContainer: FC<ModalContainer.Props> = ({
 	textTitle,
 	icon,
 	iconProps,
-	close,
+	closeFn,
 	children,
 	...props
 }) => {
@@ -37,7 +37,7 @@ export const ModalContainer: FC<ModalContainer.Props> = ({
 				right={
 					<Icon
 						icon={CloseIcon}
-						onClick={close}
+						onClick={closeFn}
 					/>
 				}
 				textTitle={textTitle}

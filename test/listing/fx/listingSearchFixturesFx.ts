@@ -2,14 +2,14 @@ import { Effect } from "effect";
 import { sql } from "kysely";
 import { DateServiceFx } from "~/date/service/DateServiceFx";
 import type { DeliveryEnumSchema } from "~/delivery/schema/DeliveryEnumSchema";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import type { ListingStatusEnumSchema } from "~/listing/schema/ListingStatusEnumSchema";
 import { listingSpotlightBuildFx } from "~/listing-spotlight/fx/listingSpotlightBuildFx";
 import type { RestrictionEnumSchema } from "~/restriction/schema/RestrictionEnumSchema";
-import type { testabase } from "~/test/testabase";
+import type { testabaseFn } from "~/test/testabaseFn";
 import type { WarrantyEnumSchema } from "~/warranty/schema/WarrantyEnumSchema";
 
-type TestDatabase = Awaited<ReturnType<typeof testabase>>;
+type TestDatabase = Awaited<ReturnType<typeof testabaseFn>>;
 type LocationFixture = {
 	id: string;
 	query: string;
@@ -189,7 +189,7 @@ export const createRestrictedCategoryFx = (
 ) =>
 	Effect.promise(async () => {
 		const category = {
-			id: genId(),
+			id: genIdFn(),
 			group: "Listing restriction fixture",
 			category: `Listing restriction ${props.restriction}`,
 			slug: props.slug,
@@ -213,13 +213,13 @@ export const createUserRestrictionFx = (
 ) =>
 	Effect.gen(function* () {
 		const dateService = yield* DateServiceFx;
-		const now = dateService.now();
+		const now = dateService.nowFn();
 
 		yield* Effect.promise(() =>
 			database.kysely
 				.insertInto("user_restriction")
 				.values({
-					id: genId(),
+					id: genIdFn(),
 					userId: props.userId,
 					restriction: props.restriction,
 					availableAt: now

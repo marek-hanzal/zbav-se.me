@@ -1,17 +1,17 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { translationSyncFx } from "~/translation/fx/translationSyncFx";
 import { translationsFx } from "~/translation/fx/translationsFx";
 
-type TestDatabase = Awaited<ReturnType<typeof testabase>>;
+type TestDatabase = Awaited<ReturnType<typeof testabaseFn>>;
 
 const countTranslationKeyFx = (database: TestDatabase, key: string) =>
 	Effect.promise(async () => {
 		const row = await database.kysely
 			.selectFrom("translation")
-			.select((eb) => eb.fn.countAll<number>().as("count"))
+			.select((ebFn) => ebFn.fn.countAll<number>().as("count"))
 			.where("key", "=", key)
 			.executeTakeFirstOrThrow();
 
@@ -20,7 +20,7 @@ const countTranslationKeyFx = (database: TestDatabase, key: string) =>
 
 describe("translationSyncFx", () => {
 	it("rebuilds the translation table from yaml files and removes stale rows", async () => {
-		const database = await testabase("translation-sync-contract");
+		const database = await testabaseFn("translation-sync-contract");
 
 		return Effect.gen(function* () {
 			yield* translationSyncFx();
@@ -67,6 +67,6 @@ describe("translationSyncFx", () => {
 			expect(dynamicAgeLabel?.value).toBe("F — Na dožití");
 			expect(dynamicAgeLabel?.dynamic).toBe(true);
 			expect(bogusKeyCount).toBe(0);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

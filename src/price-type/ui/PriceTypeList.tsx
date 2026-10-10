@@ -14,13 +14,13 @@ export const PriceTypeList: React.FC<PriceTypeList.Props> = ({ priceType, ...pro
 	return (
 		<ValueList
 			data-ui={"PriceTypeList"}
-			textLabel={translator.text("Price type (title)")}
-			textEmpty={translator.text("Price type not set")}
+			textLabel={translator.textFn("Price type (title)")}
+			textEmpty={translator.textFn("Price type not set")}
 			items={priceType.map((item) => ({
 				id: item,
 			}))}
 			renderFn={(item) => {
-				return translator.text(`Price Type - ${item.id} (label)`);
+				return translator.textFn(`Price Type - ${item.id} (label)`);
 			}}
 			wrapperProps={{
 				"data-ui-tone": priceType.length > 0 ? "neutral" : "secondary",

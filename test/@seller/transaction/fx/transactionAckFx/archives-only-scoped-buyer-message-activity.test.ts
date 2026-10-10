@@ -2,8 +2,8 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import type { ActivityTableSchema } from "~/database/schema/ActivityTable";
 import { transactionAckFx } from "~/seller-transaction/fx/transactionAckFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 type SeedActivity = Pick<
@@ -11,8 +11,8 @@ type SeedActivity = Pick<
 	"family" | "id" | "payload" | "priority" | "reference" | "type" | "userId"
 >;
 
-const seedActivity = async (
-	database: Awaited<ReturnType<typeof testabase>>,
+const seedActivityFn = async (
+	database: Awaited<ReturnType<typeof testabaseFn>>,
 	rows: SeedActivity[],
 ) => {
 	await database.kysely
@@ -29,14 +29,14 @@ const seedActivity = async (
 
 describe("seller transactionAckFx", () => {
 	it("archives only scoped buyer-message activity for the requested transaction", async () => {
-		const database = await testabase("seller-transactionAckFx-scoped");
+		const database = await testabaseFn("seller-transactionAckFx-scoped");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
 			const foreign = yield* leaseTestUserFx({});
 
 			yield* Effect.promise(() =>
-				seedActivity(database, [
+				seedActivityFn(database, [
 					{
 						id: "archive-target",
 						userId: seller.id,
@@ -109,6 +109,6 @@ describe("seller transactionAckFx", () => {
 			expect(archivedById.get("archive-target")).not.toBeNull();
 			expect(archivedById.get("keep-wrong-type")).toBeNull();
 			expect(archivedById.get("keep-foreign-user")).toBeNull();
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

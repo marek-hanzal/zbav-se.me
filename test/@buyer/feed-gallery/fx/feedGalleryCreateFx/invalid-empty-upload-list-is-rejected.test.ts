@@ -2,14 +2,14 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { feedCreateFx } from "~/buyer-feed/fx/feedCreateFx";
 import { feedGalleryCreateFx } from "~/buyer-feed-gallery/fx/feedGalleryCreateFx";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("feedGalleryCreateFx", () => {
 	it("rejects empty upload list", async () => {
-		const database = await testabase("feedGalleryCreateFx-empty");
+		const database = await testabaseFn("feedGalleryCreateFx-empty");
 
 		return Effect.gen(function* () {
 			const user = yield* leaseTestUserFx({});
@@ -29,7 +29,7 @@ describe("feedGalleryCreateFx", () => {
 				}),
 			);
 
-			expectTaggedErrorFx(result, {
+			expectTaggedErrorFn(result, {
 				tag: "InvalidRequestErrorFx",
 				message: "At least one upload is required",
 			});
@@ -43,6 +43,6 @@ describe("feedGalleryCreateFx", () => {
 			);
 
 			expect(galleryItems).toHaveLength(0);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

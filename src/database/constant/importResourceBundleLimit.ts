@@ -1,13 +1,13 @@
 import type { Database } from "~/database/type/Database";
 import { bundles } from "~/database-migration/constant/bundles";
 import type { withDatabaseFx } from "~/database-query/fx/withDatabaseFx";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import type { ResourceDefinitionEnumSchema } from "~/resource-definition/schema/ResourceDefinitionEnumSchema";
 import type { ResourceBundleEnumSchema } from "~/user-resource-bundle/schema/ResourceBundleEnumSchema";
 
 export const importResourceBundleLimit: withDatabaseFx.Import<Database> = {
 	name: "resource-bundle-limit",
-	async run({ kysely }) {
+	async runFn({ kysely }) {
 		const resourceBundleLimits = Object.entries(bundles).flatMap(
 			([resourceBundleId, bundle]) => {
 				return Object.entries(bundle.limits).map(([resourceDefinitionId, item]) => {
@@ -53,7 +53,7 @@ export const importResourceBundleLimit: withDatabaseFx.Import<Database> = {
 			}
 
 			return {
-				id: genId(),
+				id: genIdFn(),
 				resourceBundleId,
 				resourceDefinitionId: item.resourceDefinitionId,
 				limit: item.limit,
@@ -69,8 +69,8 @@ export const importResourceBundleLimit: withDatabaseFx.Import<Database> = {
 						"resourceBundleId",
 						"resourceDefinitionId",
 					])
-					.doUpdateSet((eb) => ({
-						limit: eb.ref("excluded.limit"),
+					.doUpdateSet((ebFn) => ({
+						limit: ebFn.ref("excluded.limit"),
 					}));
 			})
 			.execute();

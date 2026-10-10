@@ -42,7 +42,7 @@ export namespace AttrYearMin {
 export const AttrYearMin: FC<AttrYearMin.Props> = ({ feed, field, attr, view, ...props }) => {
 	const mutation = withFeedQuery.usePatchMutation({
 		onSuccess() {
-			view.set("default");
+			view.setFn("default");
 		},
 	});
 	const form = useAppForm({
@@ -95,7 +95,7 @@ export const AttrYearMin: FC<AttrYearMin.Props> = ({ feed, field, attr, view, ..
 						id: String(DateTime.now().year),
 					},
 				],
-		onSelect(item) {
+		onSelectFn(item) {
 			form.setFieldValue("value", item?.id ? Number.parseFloat(item.id) : null);
 		},
 	});
@@ -124,10 +124,10 @@ export const AttrYearMin: FC<AttrYearMin.Props> = ({ feed, field, attr, view, ..
 			>
 				{({ isValid, isSubmitting }) => (
 					<SaveContainer
-						onCancel={() => {
-							view.set("default");
+						onCancelFn={() => {
+							view.setFn("default");
 						}}
-						onSave={() => {
+						onSaveFn={() => {
 							form.handleSubmit();
 						}}
 						loading={isSubmitting}

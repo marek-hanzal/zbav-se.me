@@ -20,13 +20,13 @@ export namespace SignOutButton {
 export const SignOutButton: FC<SignOutButton.Props> = ({ ...props }) => {
 	const queryClient = useQueryClient();
 	const locale = useLocale();
-	const navigate = useNavigate();
+	const navigateFn = useNavigate();
 	const signOutMutation = withSignOutMutation.useMutation({
-		async onPostMutation() {
+		async onPostMutationFn() {
 			setTimeout(() => {
 				queryClient.clear();
 			}, 0);
-			return navigate({
+			return navigateFn({
 				to: "/$locale/landing",
 				params: {
 					locale,

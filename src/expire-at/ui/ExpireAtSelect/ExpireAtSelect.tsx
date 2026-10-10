@@ -6,7 +6,7 @@ import { Container } from "~/ui/ui/Container";
 export namespace ExpireAtSelect {
 	export interface Props extends Omit<Container.Props, "onChange"> {
 		value: ListingExpireEnumSchema.Type | undefined;
-		onChange(value: ListingExpireEnumSchema.Type): void;
+		onChangeFn(value: ListingExpireEnumSchema.Type): void;
 	}
 }
 
@@ -16,7 +16,7 @@ export namespace ExpireAtSelect {
  *
  * @see src/draft/ui/DraftEditor/DraftEditor.tsx
  */
-export const ExpireAtSelect: FC<ExpireAtSelect.Props> = ({ value, onChange, ...props }) => {
+export const ExpireAtSelect: FC<ExpireAtSelect.Props> = ({ value, onChangeFn, ...props }) => {
 	return (
 		<Container
 			data-ui={"ExpireAtSelect[Container]"}
@@ -32,7 +32,7 @@ export const ExpireAtSelect: FC<ExpireAtSelect.Props> = ({ value, onChange, ...p
 						key={expire}
 						expire={expire}
 						isSelected={value === expire}
-						onChange={onChange}
+						onChangeFn={onChangeFn}
 					/>
 				);
 			})}

@@ -11,7 +11,7 @@ import { ThumbLikeButton } from "~/buyer-feed/ui/ThumbLikeButton";
 import { useListingEvent } from "~/buyer-listing/hook/useListingEvent";
 import { withListingQuery } from "~/buyer-listing/query/withListingQuery";
 import { AttrSection } from "~/listing-attr/ui/AttrSection";
-import { getRootLogger } from "~/log/fn/getRootLogger";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
 import { useRenderLogger } from "~/ui/hook/useRenderLogger";
 import type { MarkSuspense } from "~/ui/type/MarkSuspense";
 import { Container } from "~/ui/ui/Container";
@@ -45,7 +45,7 @@ export const ListingCard: FC<ListingCard.Props> = ({
 	});
 
 	useRenderLogger({
-		logger: getRootLogger(),
+		logger: getRootLoggerFn(),
 		name: "ListingCard",
 		meta: {
 			listingId,

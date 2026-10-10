@@ -29,12 +29,12 @@ export const useListingEvent = ({
 		],
 	});
 	const useStore = useVisible();
-	const visible = useStore((state) => state.getById(listingId)?.visible ?? false);
+	const visible = useStore((state) => state.getByIdFn(listingId)?.visible ?? false);
 	const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
 	const listingEventCreateMutation = withListingEventCreateMutation.useMutation({});
 
-	const create = useCallback(
+	const createFn = useCallback(
 		(listingId: string, event: ListingEventEnumSchema.Type) => {
 			listingEventCreateMutation.mutate({
 				listingId,
@@ -61,7 +61,7 @@ export const useListingEvent = ({
 					event,
 					timeoutMs,
 				});
-				create(listingId, event);
+				createFn(listingId, event);
 			}, timeoutMs);
 		}
 

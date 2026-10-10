@@ -3,14 +3,14 @@ import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import { withListingBucketsFx } from "~/public-listing/fx/withListingBucketsFx";
 import { withListingShardsFx } from "~/public-listing/fx/withListingShardsFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
 describe("public listing sitemap helpers", () => {
 	it("buckets and shards include only current public listings", async () => {
-		const database = await testabase("listing-sitemap-buckets-shards");
+		const database = await testabaseFn("listing-sitemap-buckets-shards");
 		const now = DateTime.fromISO("2026-05-20T12:00:00.000Z", {
 			zone: "utc",
 		});
@@ -102,6 +102,6 @@ describe("public listing sitemap helpers", () => {
 			]);
 			expect(shards.map((listing) => listing.id)).not.toContain(expired.id);
 			expect(shards.map((listing) => listing.id)).not.toContain(future.id);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

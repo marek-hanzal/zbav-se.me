@@ -3,7 +3,7 @@ import type { FC } from "react";
 import { z } from "zod";
 import { useAppForm } from "~/application-ui/hook/form.exports";
 import { Logo } from "~/application-ui/ui/logo.exports";
-import { onSubmit } from "~/form/fn/onSubmit";
+import { onSubmitFn } from "~/form/fn/onSubmitFn";
 import { FormField } from "~/form/ui/FormField";
 import { useLocale } from "~/locale/hook/useLocale";
 import { useTranslator } from "~/translation/hook/useTranslator";
@@ -22,12 +22,12 @@ const useFormSchema = () => {
 		.looseObject({
 			email: z.email({
 				error() {
-					return translator.text("Invalid email address");
+					return translator.textFn("Invalid email address");
 				},
 			}),
 			password: z.string().min(1, {
 				error() {
-					return translator.text("Password is required");
+					return translator.textFn("Password is required");
 				},
 			}),
 		})
@@ -44,13 +44,13 @@ export namespace WithEmail {
 
 export const WithEmail: FC<WithEmail.Props> = ({ target, ...props }) => {
 	const locale = useLocale();
-	const navigate = useNavigate();
+	const navigateFn = useNavigate();
 	const router = useRouter();
 	const translator = useTranslator();
 	const schema = useFormSchema();
 
 	const signInMutation = withEmailSignInMutation.useMutation({
-		async onPostMutation() {
+		async onPostMutationFn() {
 			const fallback = router.buildLocation({
 				to: "/$locale/app/home",
 				params: {
@@ -58,7 +58,7 @@ export const WithEmail: FC<WithEmail.Props> = ({ target, ...props }) => {
 				},
 			});
 
-			return navigate({
+			return navigateFn({
 				href: target ?? fallback.href,
 			});
 		},
@@ -72,7 +72,7 @@ export const WithEmail: FC<WithEmail.Props> = ({ target, ...props }) => {
 		validators: {
 			onSubmit: schema,
 		},
-		onSubmit: onSubmit({
+		onSubmit: onSubmitFn({
 			mutation: signInMutation,
 		}),
 	});
@@ -121,7 +121,7 @@ export const WithEmail: FC<WithEmail.Props> = ({ target, ...props }) => {
 										type={"email"}
 										autoComplete={"email webauthn"}
 										autoFocus
-										placeholder={translator.text("Enter your email")}
+										placeholder={translator.textFn("Enter your email")}
 										value={field.state.value ?? ""}
 										onBlur={field.handleBlur}
 										onChange={(e) => field.handleChange(e.target.value)}
@@ -148,7 +148,7 @@ export const WithEmail: FC<WithEmail.Props> = ({ target, ...props }) => {
 										value={field.state.value ?? ""}
 										onChange={(e) => field.handleChange(e.target.value)}
 										onBlur={field.handleBlur}
-										placeholder={translator.text("Enter your password")}
+										placeholder={translator.textFn("Enter your password")}
 										{...fieldProps}
 									/>
 								)}

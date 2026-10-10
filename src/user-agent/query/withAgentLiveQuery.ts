@@ -1,6 +1,6 @@
 import type { RunStreamEvent } from "@openai/agents";
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withQuery } from "~/query/fn/withQuery";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withQueryFn } from "~/query/fn/withQueryFn";
 
 export namespace withAgentLiveQuery {
 	export interface Data {
@@ -8,12 +8,12 @@ export namespace withAgentLiveQuery {
 	}
 }
 
-export const withAgentLiveQuery = withQuery({
-	logger: getRootLogger([
+export const withAgentLiveQuery = withQueryFn({
+	logger: getRootLoggerFn([
 		"query",
 		"withAgentLiveQuery",
 	]),
-	keys: (data: withAgentLiveQuery.Data) => [
+	keysFn: (data: withAgentLiveQuery.Data) => [
 		"agent",
 		"live",
 		data,

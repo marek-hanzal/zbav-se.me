@@ -13,7 +13,7 @@ export const FieldValue: FC<FieldValue.Props> = ({ field, ...props }) => {
 	const translator = useTranslator();
 	return (
 		<LabelValue
-			textLabel={translator.text(`Field - ${field.name}`)}
+			textLabel={translator.textFn(`Field - ${field.name}`)}
 			textValue={null}
 			{...props}
 		/>

@@ -4,7 +4,7 @@ import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { dbFx } from "~/database/fx/dbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { DateServiceFx } from "~/date/service/DateServiceFx";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { UserRestrictionContextFx } from "~/user-restriction/context/UserRestrictionContextFx";
 import type { UserRestrictionCreateSchema } from "~/user-restriction/schema/UserRestrictionCreateSchema";
@@ -30,7 +30,7 @@ export const userRestrictionCreateFx = Effect.fn("userRestrictionCreateFx")(func
 
 	const delay = userRestrictionContext.delay[restriction] ?? 0;
 	const availableAt = dateService
-		.now()
+		.nowFn()
 		.plus({
 			hours: delay,
 		})
@@ -41,9 +41,9 @@ export const userRestrictionCreateFx = Effect.fn("userRestrictionCreateFx")(func
 			const { kysely } = yield* KyselyContextFx;
 			const dateService = yield* DateServiceFx;
 
-			const id = genId();
-			const createdAt = dateService.now().toJSDate();
-			const now = dateService.now().toJSDate();
+			const id = genIdFn();
+			const createdAt = dateService.nowFn().toJSDate();
+			const now = dateService.nowFn().toJSDate();
 			const isAvailable = availableAt.getTime() <= createdAt.getTime();
 
 			yield* Effect.promise(async () => {
@@ -84,10 +84,10 @@ export const userRestrictionCreateFx = Effect.fn("userRestrictionCreateFx")(func
 							expiresAt: availableAt,
 						})
 						.where("availableAt", "<=", now)
-						.where((eb) =>
-							eb.or([
-								eb("expiresAt", "is", null),
-								eb("expiresAt", ">", now),
+						.where((ebFn) =>
+							ebFn.or([
+								ebFn("expiresAt", "is", null),
+								ebFn("expiresAt", ">", now),
 							]),
 						)
 						.where("userId", "=", userId)

@@ -9,16 +9,16 @@ import { Container } from "~/ui/ui/Container";
 export namespace SortPatch {
 	export interface Props extends Container.Props {
 		feed: FeedSchema.Type;
-		onSettled?(): void;
-		onCancel(): void;
+		onSettledFn?(): void;
+		onCancelFn(): void;
 	}
 }
 
-export const SortPatch: FC<SortPatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
+export const SortPatch: FC<SortPatch.Props> = ({ feed, onSettledFn, onCancelFn, ...props }) => {
 	const patchMutation = withFeedQuery.usePatchMutation({
-		onSettled,
+		onSettled: onSettledFn,
 	});
-	const [sort, setSort] = useState<ListingSortSchema.Type[]>(feed.query?.sort ?? []);
+	const [sort, setSortFn] = useState<ListingSortSchema.Type[]>(feed.query?.sort ?? []);
 
 	return (
 		<Container
@@ -33,13 +33,13 @@ export const SortPatch: FC<SortPatch.Props> = ({ feed, onSettled, onCancel, ...p
 			<ListingSortSelect
 				state={{
 					value: sort,
-					set: setSort,
+					setFn: setSortFn,
 				}}
 			/>
 
 			<SaveContainer
-				onCancel={onCancel}
-				onSave={() => {
+				onCancelFn={onCancelFn}
+				onSaveFn={() => {
 					patchMutation.mutate({
 						query: {
 							where: {

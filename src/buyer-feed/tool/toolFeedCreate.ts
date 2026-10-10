@@ -5,9 +5,9 @@ import { FeedCreateSchema } from "~/buyer-feed/schema/FeedCreateSchema";
 import { ListingMetaSchema } from "~/buyer-listing/schema/ListingMetaSchema";
 import { ListingSortSchema } from "~/buyer-listing/schema/ListingSortSchema";
 import { ListingWhereSchema } from "~/buyer-listing/schema/ListingWhereSchema";
-import { getRootLogger } from "~/log/fn/getRootLogger";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
 
-const logger = getRootLogger([
+const logger = getRootLoggerFn([
 	"tool",
 	"toolFeedCreate",
 ]);

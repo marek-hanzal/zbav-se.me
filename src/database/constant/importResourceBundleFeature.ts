@@ -2,13 +2,13 @@ import type { ResourceBundleFeatureTableSchema } from "~/database/schema/Resourc
 import type { Database } from "~/database/type/Database";
 import { bundles } from "~/database-migration/constant/bundles";
 import type { withDatabaseFx } from "~/database-query/fx/withDatabaseFx";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import type { ResourceDefinitionEnumSchema } from "~/resource-definition/schema/ResourceDefinitionEnumSchema";
 import type { ResourceBundleEnumSchema } from "~/user-resource-bundle/schema/ResourceBundleEnumSchema";
 
 export const importResourceBundleFeature: withDatabaseFx.Import<Database> = {
 	name: "resource-bundle-feature",
-	async run({ kysely }) {
+	async runFn({ kysely }) {
 		const resourceBundleFeatures = Object.entries(bundles).flatMap(
 			([resourceBundleId, bundle]) => {
 				return Object.keys(bundle.features).map((resourceDefinitionId) => {
@@ -53,7 +53,7 @@ export const importResourceBundleFeature: withDatabaseFx.Import<Database> = {
 			}
 
 			return {
-				id: genId(),
+				id: genIdFn(),
 				resourceBundleId,
 				resourceDefinitionId: item.resourceDefinitionId,
 			};

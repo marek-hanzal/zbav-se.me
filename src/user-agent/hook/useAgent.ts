@@ -1,6 +1,6 @@
 import type { AgentInputItem } from "@openai/agents-core";
 import { useCallback } from "react";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import type { MarkSuspense } from "~/ui/type/MarkSuspense";
 import { useAgentRuntime } from "~/user-agent/runtime/index";
 
@@ -18,12 +18,12 @@ export namespace useAgent {
 
 export const useAgent = ({ threadId }: useAgent.Props) => {
 	const runtime = useAgentRuntime();
-	const state = runtime.getThreadState(threadId);
-	const queueText = getQueueText(state.queue);
+	const state = runtime.getThreadStateFn(threadId);
+	const queueText = getQueueTextFn(state.queue);
 
-	const submit = useCallback(
+	const submitFn = useCallback(
 		async (input: AgentInputItem[]) => {
-			runtime.submit(threadId, input);
+			runtime.submitFn(threadId, input);
 		},
 		[
 			runtime,
@@ -31,15 +31,15 @@ export const useAgent = ({ threadId }: useAgent.Props) => {
 		],
 	);
 
-	const clearQueue = useCallback(() => {
-		runtime.clearQueue(threadId);
+	const clearQueueFn = useCallback(() => {
+		runtime.clearQueueFn(threadId);
 	}, [
 		runtime,
 		threadId,
 	]);
 
-	const cancel = useCallback(() => {
-		runtime.cancel(threadId);
+	const cancelFn = useCallback(() => {
+		runtime.cancelFn(threadId);
 	}, [
 		runtime,
 		threadId,
@@ -51,22 +51,22 @@ export const useAgent = ({ threadId }: useAgent.Props) => {
 		isQueueFull: state.queue.length >= 5,
 		queueSize: state.queue.length,
 		queueText,
-		submit,
-		clearQueue,
+		submitFn,
+		clearQueueFn,
 		input: {
-			text(text: string): AgentInputItem[] {
+			textFn(text: string): AgentInputItem[] {
 				return [
 					{
-						id: genId(),
+						id: genIdFn(),
 						role: "user",
 						content: text.trim(),
 					},
 				];
 			},
-			image(text: string, src: string[]): AgentInputItem[] {
+			imageFn(text: string, src: string[]): AgentInputItem[] {
 				return [
 					{
-						id: genId(),
+						id: genIdFn(),
 						role: "user",
 						content: [
 							...src.flatMap((url) => [
@@ -88,24 +88,24 @@ export const useAgent = ({ threadId }: useAgent.Props) => {
 				];
 			},
 		},
-		cancel,
+		cancelFn,
 	} as const;
 };
 
-function getQueueText(queue: QueueTextItem[]): string | undefined {
+function getQueueTextFn(queue: QueueTextItem[]): string | undefined {
 	const [item] = queue;
 
 	if (!item) {
 		return undefined;
 	}
 
-	const text = item.input.map(getInputText).filter(Boolean).join(" ");
+	const text = item.input.map(getInputTextFn).filter(Boolean).join(" ");
 	const suffix = queue.length > 1 ? ` (+${queue.length - 1})` : "";
 
 	return `${text}${suffix}`;
 }
 
-function getInputText(item: AgentInputItem): string {
+function getInputTextFn(item: AgentInputItem): string {
 	if ("role" in item && item.role === "user") {
 		if (typeof item.content === "string") {
 			return item.content;

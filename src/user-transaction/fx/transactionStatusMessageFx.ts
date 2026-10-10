@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import { dbFx } from "~/database/fx/dbFx";
 import type { TransactionEntryTableSchema } from "~/database/schema/TransactionEntryTable";
 import { DateServiceFx } from "~/date/service/DateServiceFx";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import type { TransactionSideEnumSchema } from "~/transaction-contract/schema/TransactionSideEnumSchema";
 import type { TransactionStatusEnumSchema } from "~/transaction-contract/schema/TransactionStatusEnumSchema";
@@ -61,14 +61,14 @@ export const transactionStatusMessageFx = Effect.fn("transactionStatusMessageFx"
 		return kysely
 			.insertInto("transaction_entry")
 			.values({
-				id: genId(),
+				id: genIdFn(),
 				transactionId,
 				kind,
 				userId,
 				payload: {
 					text: kind,
 				},
-				createdAt: dateService.now().toJSDate(),
+				createdAt: dateService.nowFn().toJSDate(),
 			})
 			.executeTakeFirstOrThrow();
 	});

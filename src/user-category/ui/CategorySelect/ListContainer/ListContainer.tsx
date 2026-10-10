@@ -3,7 +3,7 @@ import type { EntitySchema } from "~/entity/schema/EntitySchema";
 import { useLocale } from "~/locale/hook/useLocale";
 import { useScrollTo } from "~/navigation/hook/useScrollTo";
 import type { useSelection } from "~/selection/hook/useSelection";
-import { withFallback } from "~/ui/fn/withFallback";
+import { withFallbackFn } from "~/ui/fn/withFallbackFn";
 import { useMergeRefs } from "~/ui/hook/useMergeRefs";
 import { Container } from "~/ui/ui/Container";
 import type { Fulltext } from "~/ui/ui/Fulltext";
@@ -29,7 +29,7 @@ export namespace ListContainer {
  * Coordinates category result rendering across loading, empty, and resolved query states.
  * Use it in category pickers that combine fulltext input with async category fetching.
  */
-export const ListContainer = withFallback(
+export const ListContainer = withFallbackFn(
 	({ ref, fulltext, selection, categoryId, withRestriction, ...props }: ListContainer.Props) => {
 		const locale = useLocale();
 		const { data: categories } = withCategoryQuery.useCollectionQuery({
@@ -55,7 +55,7 @@ export const ListContainer = withFallback(
 		});
 
 		const containerRef = useRef<HTMLDivElement>(null);
-		const scrollTo = useScrollTo(containerRef);
+		const scrollToFn = useScrollTo(containerRef);
 		const mergedRef = useMergeRefs([
 			ref,
 			containerRef,
@@ -64,13 +64,13 @@ export const ListContainer = withFallback(
 		// biome-ignore lint/correctness/useExhaustiveDependencies: OK
 		useEffect(() => {
 			if (categoryId) {
-				scrollTo(`[data-id=${categoryId}]`, {
+				scrollToFn(`[data-id=${categoryId}]`, {
 					behavior: "instant",
 				});
 			}
 		}, [
 			categoryId,
-			scrollTo,
+			scrollToFn,
 			categories,
 		]);
 

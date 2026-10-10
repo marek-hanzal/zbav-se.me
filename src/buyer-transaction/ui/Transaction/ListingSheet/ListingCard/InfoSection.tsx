@@ -27,8 +27,8 @@ export const InfoSection: FC<InfoSection.Props> = ({ listing, ...props }) => {
 		>
 			<Group>
 				<LabelValue
-					textLabel={translator.text("Listing restrictions (label)")}
-					textEmpty={translator.text("Listing restrictions (empty)")}
+					textLabel={translator.textFn("Listing restrictions (label)")}
+					textEmpty={translator.textFn("Listing restrictions (empty)")}
 					textValue={
 						listing.withRestriction ? (
 							<Tx label={`Listing restriction - ${listing.withRestriction}`} />
@@ -39,7 +39,7 @@ export const InfoSection: FC<InfoSection.Props> = ({ listing, ...props }) => {
 
 			<Group>
 				<LabelValue
-					textLabel={translator.text("Listing category (label)")}
+					textLabel={translator.textFn("Listing category (label)")}
 					textValue={
 						<CategoryInline
 							category={listing.category}
@@ -53,7 +53,7 @@ export const InfoSection: FC<InfoSection.Props> = ({ listing, ...props }) => {
 			{listing.description ? (
 				<Group>
 					<LabelValue
-						textLabel={translator.text("Listing description (label)")}
+						textLabel={translator.textFn("Listing description (label)")}
 						textValue={<Markdown>{listing.description}</Markdown>}
 					/>
 				</Group>
@@ -63,8 +63,8 @@ export const InfoSection: FC<InfoSection.Props> = ({ listing, ...props }) => {
 				<Group>
 					{listing.pros?.length ? (
 						<ValueList
-							textLabel={translator.text("Listing - Pros (label)")}
-							textEmpty={translator.text("Listing - Pros not filled")}
+							textLabel={translator.textFn("Listing - Pros (label)")}
+							textEmpty={translator.textFn("Listing - Pros not filled")}
 							items={listing.pros.map((pro, index) => ({
 								id: String(index),
 								pro,
@@ -75,8 +75,8 @@ export const InfoSection: FC<InfoSection.Props> = ({ listing, ...props }) => {
 
 					{listing.cons?.length ? (
 						<ValueList
-							textLabel={translator.text("Listing - Cons (label)")}
-							textEmpty={translator.text("Listing - Cons not filled")}
+							textLabel={translator.textFn("Listing - Cons (label)")}
+							textEmpty={translator.textFn("Listing - Cons not filled")}
 							items={listing.cons.map((con, index) => ({
 								id: String(index),
 								con,
@@ -90,8 +90,8 @@ export const InfoSection: FC<InfoSection.Props> = ({ listing, ...props }) => {
 			{listing.delivery?.length ? (
 				<Group>
 					<ValueList
-						textLabel={translator.text("Listing delivery (label)")}
-						textEmpty={translator.text("Delivery not selected")}
+						textLabel={translator.textFn("Listing delivery (label)")}
+						textEmpty={translator.textFn("Delivery not selected")}
 						items={(listing.delivery ?? []).map((delivery) => ({
 							id: delivery,
 							delivery,
@@ -104,7 +104,7 @@ export const InfoSection: FC<InfoSection.Props> = ({ listing, ...props }) => {
 			{listing.warranty != null ? (
 				<Group>
 					<LabelValue
-						textLabel={translator.text("Listing warranty (label)")}
+						textLabel={translator.textFn("Listing warranty (label)")}
 						textValue={<Tx label={`Listing warranty - ${listing.warranty}`} />}
 					/>
 				</Group>
@@ -114,15 +114,15 @@ export const InfoSection: FC<InfoSection.Props> = ({ listing, ...props }) => {
 				<Group>
 					{listing.condition ? (
 						<LabelValue
-							textLabel={translator.text("Listing condition (label)")}
-							textValue={translator.text(`Condition ${listing.condition} (label)`)}
+							textLabel={translator.textFn("Listing condition (label)")}
+							textValue={translator.textFn(`Condition ${listing.condition} (label)`)}
 						/>
 					) : null}
 
 					{listing.age ? (
 						<LabelValue
-							textLabel={translator.text("Listing age (label)")}
-							textValue={translator.text(`Age ${listing.condition} (label)`)}
+							textLabel={translator.textFn("Listing age (label)")}
+							textValue={translator.textFn(`Age ${listing.condition} (label)`)}
 						/>
 					) : null}
 				</Group>

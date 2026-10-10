@@ -1,8 +1,8 @@
 import { useMatchRoute } from "@tanstack/react-router";
 import { useRef } from "react";
 import { useTranslator } from "~/translation/hook/useTranslator";
-import type { uiIcon } from "~/ui/fn/uiIcon";
-import { withFallback } from "~/ui/fn/withFallback";
+import type { uiIconFn } from "~/ui/fn/uiIconFn";
+import { withFallbackFn } from "~/ui/fn/withFallbackFn";
 import type { MarkSuspense } from "~/ui/type/MarkSuspense";
 import { Container } from "~/ui/ui/Container";
 import { Fade } from "~/ui/ui/Fade";
@@ -23,14 +23,14 @@ import { NotificationLink } from "~/user-home/ui/HomeMenu/NotificationLink.expor
 import { ProfileLink } from "~/user-home/ui/HomeMenu/ProfileLink.exports";
 import { SearchLink } from "~/user-home/ui/HomeMenu/SearchLink.exports";
 
-const icon: uiIcon.Ui = {
+const icon: uiIconFn.Ui = {
 	color: "lead",
 	text: "2xl",
 };
 
 export namespace HomeMenu {
 	export interface Props extends Container.Props, MarkSuspense.Props {
-		onLinkClick?(): void;
+		onLinkClickFn?(): void;
 	}
 }
 
@@ -38,7 +38,7 @@ export namespace HomeMenu {
  * Builds the home navigation surface with links to key app destinations.
  * Use it as the main navigation entry inside user-facing hub screens.
  */
-export const HomeMenu = withFallback(({ _suspense, onLinkClick, ...props }: HomeMenu.Props) => {
+export const HomeMenu = withFallbackFn(({ _suspense, onLinkClickFn, ...props }: HomeMenu.Props) => {
 	const translator = useTranslator();
 	const containerRef = useRef<HTMLDivElement>(null);
 	const isHome = useMatchRoute()({
@@ -79,7 +79,7 @@ export const HomeMenu = withFallback(({ _suspense, onLinkClick, ...props }: Home
 				)}
 				<Group>
 					<LabelValue
-						textLabel={translator.text("Home - interaction (title)")}
+						textLabel={translator.textFn("Home - interaction (title)")}
 						textLabelProps={miniLabel}
 						textValue={
 							<Container
@@ -95,7 +95,7 @@ export const HomeMenu = withFallback(({ _suspense, onLinkClick, ...props }: Home
 
 									<NotificationLink
 										_suspense={"I know"}
-										onLinkClick={onLinkClick}
+										onLinkClickFn={onLinkClickFn}
 										iconProps={icon}
 									/>
 								</Group>
@@ -106,7 +106,7 @@ export const HomeMenu = withFallback(({ _suspense, onLinkClick, ...props }: Home
 
 				<Group>
 					<LabelValue
-						textLabel={translator.text("Home - quick tools (title)")}
+						textLabel={translator.textFn("Home - quick tools (title)")}
 						textLabelProps={miniLabel}
 						textValue={
 							<Container
@@ -137,7 +137,7 @@ export const HomeMenu = withFallback(({ _suspense, onLinkClick, ...props }: Home
 
 				<Group>
 					<LabelValue
-						textLabel={translator.text("Home - seller stuff (title)")}
+						textLabel={translator.textFn("Home - seller stuff (title)")}
 						textLabelProps={miniLabel}
 						textValue={
 							<Group data-ui-shadow={false}>
@@ -156,7 +156,7 @@ export const HomeMenu = withFallback(({ _suspense, onLinkClick, ...props }: Home
 
 				<Group>
 					<LabelValue
-						textLabel={translator.text("Home - buyer stuff (title)")}
+						textLabel={translator.textFn("Home - buyer stuff (title)")}
 						textLabelProps={miniLabel}
 						textValue={
 							<Container
@@ -181,7 +181,7 @@ export const HomeMenu = withFallback(({ _suspense, onLinkClick, ...props }: Home
 
 				<Group>
 					<LabelValue
-						textLabel={translator.text("Home - misc (title)")}
+						textLabel={translator.textFn("Home - misc (title)")}
 						textLabelProps={miniLabel}
 						textValue={
 							<Container

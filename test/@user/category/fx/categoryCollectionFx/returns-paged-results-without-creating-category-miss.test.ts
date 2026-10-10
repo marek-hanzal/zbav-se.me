@@ -1,13 +1,13 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { categoryCollectionFx } from "~/user-category/fx/categoryCollectionFx";
 
 describe("categoryCollectionFx", () => {
 	it("returns paged data for matching categories and does not create category miss", async () => {
-		const database = await testabase("categoryCollectionFx-non-empty");
+		const database = await testabaseFn("categoryCollectionFx-non-empty");
 
 		return Effect.gen(function* () {
 			const user = yield* leaseTestUserFx({});
@@ -53,6 +53,6 @@ describe("categoryCollectionFx", () => {
 			);
 
 			expect(miss).toBeUndefined();
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

@@ -1,14 +1,14 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { activityArchiveFx } from "~/user-activity/fx/activityArchiveFx";
 import { activityPatchCollectionFx } from "~/user-activity/fx/activityPatchCollectionFx";
 
 describe("activity bulk mutation scope isolation", () => {
 	it("keeps foreign rows untouched when patching and archiving scoped rows", async () => {
-		const database = await testabase("activityBulkMutationFx-scope");
+		const database = await testabaseFn("activityBulkMutationFx-scope");
 		const archivedAt = new Date("2026-04-01T14:00:00.000Z");
 
 		return Effect.gen(function* () {
@@ -96,6 +96,6 @@ describe("activity bulk mutation scope isolation", () => {
 
 			expect(rows.find((row) => row.id === "bulk-owner-a")?.archivedAt).not.toBeNull();
 			expect(rows.find((row) => row.id === "bulk-stranger-a")?.archivedAt).toBeNull();
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

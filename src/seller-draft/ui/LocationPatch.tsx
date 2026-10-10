@@ -22,17 +22,17 @@ const FormSchema = z
 export namespace LocationPatch {
 	export interface Props extends TitleContainer.Props {
 		draft: DraftSchema.Type;
-		onCancel(): void;
+		onCancelFn(): void;
 		view: useView.Use<"priceType">;
 	}
 }
 
-export const LocationPatch: FC<LocationPatch.Props> = ({ draft, onCancel, view, ...props }) => {
+export const LocationPatch: FC<LocationPatch.Props> = ({ draft, onCancelFn, view, ...props }) => {
 	const translator = useTranslator();
-	const [isSearchPendingSelection, setIsSearchPendingSelection] = useState(false);
+	const [isSearchPendingSelection, setIsSearchPendingSelectionFn] = useState(false);
 	const mutation = withDraftQuery.usePatchMutation({
 		onSuccess() {
-			view.set("priceType");
+			view.setFn("priceType");
 		},
 		invalidate: [
 			"collection",
@@ -65,7 +65,7 @@ export const LocationPatch: FC<LocationPatch.Props> = ({ draft, onCancel, view, 
 	return (
 		<TitleContainer
 			data-ui={"LocationPatch"}
-			textTitle={translator.text("Location (title)")}
+			textTitle={translator.textFn("Location (title)")}
 			left={<EditAction />}
 			{...props}
 		>
@@ -79,16 +79,16 @@ export const LocationPatch: FC<LocationPatch.Props> = ({ draft, onCancel, view, 
 				<form.AppField name={"locationId"}>
 					{(field) => (
 						<LocationSelect
-							textHint={translator.text("Location security (hint)")}
-							onChange={(value) => {
+							textHint={translator.textFn("Location security (hint)")}
+							onChangeFn={(value) => {
 								field.handleChange(value);
 								field.handleBlur();
-								setIsSearchPendingSelection(false);
+								setIsSearchPendingSelectionFn(false);
 							}}
-							onSearchChange={(value) => {
+							onSearchChangeFn={(value) => {
 								const hasSearch = Boolean(value?.trim());
 
-								setIsSearchPendingSelection(hasSearch);
+								setIsSearchPendingSelectionFn(hasSearch);
 								if (hasSearch) {
 									field.handleBlur();
 								}
@@ -106,8 +106,8 @@ export const LocationPatch: FC<LocationPatch.Props> = ({ draft, onCancel, view, 
 				>
 					{({ isValid, isSubmitting }) => (
 						<SaveContainer
-							onCancel={onCancel}
-							onSave={() => {
+							onCancelFn={onCancelFn}
+							onSaveFn={() => {
 								form.handleSubmit();
 							}}
 							loading={isSubmitting}

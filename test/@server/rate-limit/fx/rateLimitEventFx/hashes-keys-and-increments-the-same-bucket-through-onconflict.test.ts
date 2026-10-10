@@ -1,16 +1,16 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
-import { hash } from "~/hmac/fn/hash";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
+import { hashFn } from "~/hmac/fn/hashFn";
 import { rateLimitEventFx } from "~/rate-limit/fx/rateLimitEventFx";
 import { ServerHmacSchema } from "~/server-env/schema/ServerHmacSchema";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 
 describe("rateLimitEventFx", () => {
 	it("hashes keys and increments the same bucket through onConflict", async () => {
-		const database = await testabase("rateLimitEventFx-same-bucket");
+		const database = await testabaseFn("rateLimitEventFx-same-bucket");
 		const hmacConfig = ServerHmacSchema.parse(process.env);
 
 		return Effect.gen(function* () {
@@ -33,8 +33,8 @@ describe("rateLimitEventFx", () => {
 					"route:/listing/abc",
 				],
 			}).pipe(
-				withDateServiceFx({
-					now: () => fixedNow,
+				withDateServiceFn({
+					nowFn: () => fixedNow,
 				}),
 			);
 			const second = yield* rateLimitEventFx({
@@ -44,8 +44,8 @@ describe("rateLimitEventFx", () => {
 					"route:/listing/abc",
 				],
 			}).pipe(
-				withDateServiceFx({
-					now: () => fixedNow,
+				withDateServiceFn({
+					nowFn: () => fixedNow,
 				}),
 			);
 
@@ -64,7 +64,7 @@ describe("rateLimitEventFx", () => {
 			expect(rows).toHaveLength(1);
 			expect(rows[0]).toMatchObject({
 				rule: "listing:impression",
-				key: hash({
+				key: hashFn({
 					key: [
 						"user:1",
 						"route:/listing/abc",
@@ -74,6 +74,6 @@ describe("rateLimitEventFx", () => {
 				count: 2,
 			});
 			expect(rows[0]?.window.toISOString()).toBe("2026-05-11T10:05:00.000Z");
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

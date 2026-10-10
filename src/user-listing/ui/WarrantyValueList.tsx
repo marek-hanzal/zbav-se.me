@@ -23,13 +23,13 @@ export const WarrantyValueList: FC<WarrantyValueList.Props> = ({ warrantyIn, ...
 	return (
 		<ValueList
 			data-ui={"WarrantyValueList"}
-			textLabel={translator.text("Listing warranty (label)")}
-			textEmpty={translator.text("Warranty not selected")}
+			textLabel={translator.textFn("Listing warranty (label)")}
+			textEmpty={translator.textFn("Warranty not selected")}
 			items={warrantyIn.map((item) => ({
 				id: item,
 				warranty: item,
 			}))}
-			renderFn={(item) => translator.text(`Listing warranty - ${item.warranty}`)}
+			renderFn={(item) => translator.textFn(`Listing warranty - ${item.warranty}`)}
 			{...props}
 		/>
 	);

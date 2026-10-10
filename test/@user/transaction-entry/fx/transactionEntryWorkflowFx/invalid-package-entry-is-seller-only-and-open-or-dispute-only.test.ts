@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
 import { createResolvedScenarioFx } from "~/test/transaction/fx/createResolvedScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
@@ -10,7 +10,7 @@ import { transactionEntryCreateFx } from "~/user-transaction-entry/fx/transactio
 
 describe("transactionEntry workflow", () => {
 	it("allows package only for seller in open/dispute flows and rejects buyer or resolved flow", async () => {
-		const database = await testabase("transactionEntry-package-gate");
+		const database = await testabaseFn("transactionEntry-package-gate");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -62,10 +62,10 @@ describe("transactionEntry workflow", () => {
 				}),
 			);
 
-			expectTaggedErrorFx(buyerPackage, {
+			expectTaggedErrorFn(buyerPackage, {
 				tag: "InvalidRequestErrorFx",
 			});
-			expectTaggedErrorFx(resolvedPackage, {
+			expectTaggedErrorFn(resolvedPackage, {
 				tag: "InvalidRequestErrorFx",
 			});
 
@@ -79,6 +79,6 @@ describe("transactionEntry workflow", () => {
 			);
 
 			expect(packageEntries).toHaveLength(1);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

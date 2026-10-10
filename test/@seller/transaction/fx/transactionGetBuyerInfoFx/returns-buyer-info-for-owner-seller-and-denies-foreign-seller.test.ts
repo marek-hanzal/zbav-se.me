@@ -1,15 +1,15 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionGetBuyerInfoFx } from "~/seller-transaction/fx/transactionGetBuyerInfoFx";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("transactionGetBuyerInfoFx", () => {
 	it("returns buyer info for the owning seller and denies a foreign seller", async () => {
-		const database = await testabase("transactionGetBuyerInfoFx-access");
+		const database = await testabaseFn("transactionGetBuyerInfoFx-access");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -44,9 +44,9 @@ describe("transactionGetBuyerInfoFx", () => {
 				}),
 			);
 
-			expectTaggedErrorFx(denied, {
+			expectTaggedErrorFn(denied, {
 				tag: "NotFoundErrorFx",
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

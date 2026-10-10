@@ -20,7 +20,7 @@ export const withRunnerMiddleware = createMiddleware()
 	.middleware([
 		withLogMiddleware,
 	])
-	.server(async ({ next, context: { rootLogger } }) => {
+	.server(async ({ next: nextFn, context: { rootLogger } }) => {
 		const logger = rootLogger.getChild([
 			"middleware",
 			"withRunnerMiddleware",
@@ -46,7 +46,7 @@ export const withRunnerMiddleware = createMiddleware()
 			apiKey: aiConfig.SERVER_AI_TOKEN.substring(0, 6),
 		});
 
-		return next({
+		return nextFn({
 			context: {
 				runner,
 			},

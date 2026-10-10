@@ -16,14 +16,14 @@ export const Route = createFileRoute("/$locale/app/agent/$threadId")({
 
 		return (
 			<TitleContainer
-				textTitle={translator.text("Agent (title)")}
+				textTitle={translator.textFn("Agent (title)")}
 				left={
 					<BackHomeButton
 						to="/$locale/app/agent/welcome"
 						params={{
 							locale,
 						}}
-						title={translator.text("Back to agent welcome page (aria)")}
+						title={translator.textFn("Back to agent welcome page (aria)")}
 					/>
 				}
 				right={<HomeMenuButton />}
@@ -41,14 +41,14 @@ export const Route = createFileRoute("/$locale/app/agent/$threadId")({
 
 		return (
 			<TitleContainer
-				textTitle={translator.text("Agent (title)")}
+				textTitle={translator.textFn("Agent (title)")}
 				left={
 					<BackHomeButton
 						to="/$locale/app/agent/welcome"
 						params={{
 							locale,
 						}}
-						title={translator.text("Back to agent welcome page (aria)")}
+						title={translator.textFn("Back to agent welcome page (aria)")}
 					/>
 				}
 				right={<HomeMenuButton />}

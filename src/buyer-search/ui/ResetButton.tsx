@@ -1,7 +1,7 @@
 import { useQueryClient } from "@tanstack/react-query";
 import type { FC } from "react";
 import { withFeedQuery } from "~/buyer-feed/query/withFeedQuery";
-import { getFeedDefaultCreate } from "~/buyer-feed/service/getFeedDefaultCreate";
+import { getFeedDefaultCreateFn } from "~/buyer-feed/service/getFeedDefaultCreateFn";
 import { useTranslator } from "~/translation/hook/useTranslator";
 import { Tx } from "~/translation/ui/Tx";
 import { RefreshIcon } from "~/ui/constant/RefreshIcon";
@@ -17,17 +17,17 @@ export const ResetButton: FC<ResetButton.Props> = ({ feedId, className, ...props
 	const queryClient = useQueryClient();
 	const translator = useTranslator();
 	const createMutation = withFeedQuery.useCreateMutation({
-		async onPostMutation() {
-			await withFeedQuery.invalidator(queryClient, [
+		async onPostMutationFn() {
+			await withFeedQuery.invalidatorFn(queryClient, [
 				"fetch",
 			]);
 		},
 		invalidate: [],
 	});
 	const deleteMutation = withFeedQuery.useDeleteMutation({
-		async onPostMutation() {
+		async onPostMutationFn() {
 			await createMutation.mutateAsync(
-				getFeedDefaultCreate(translator.text("Search (title)"), "search"),
+				getFeedDefaultCreateFn(translator.textFn("Search (title)"), "search"),
 			);
 		},
 		invalidate: [],

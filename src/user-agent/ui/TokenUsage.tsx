@@ -1,7 +1,7 @@
 import { useLocale } from "~/locale/hook/useLocale";
-import { toLocaleNumber } from "~/number/fn/toLocaleNumber";
+import { toLocaleNumberFn } from "~/number/fn/toLocaleNumberFn";
 import { Tx } from "~/translation/ui/Tx";
-import { withFallback } from "~/ui/fn/withFallback";
+import { withFallbackFn } from "~/ui/fn/withFallbackFn";
 import { Container } from "~/ui/ui/Container";
 import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
 import { Typo } from "~/ui/ui/Typo";
@@ -13,7 +13,7 @@ export namespace TokenUsage {
 	}
 }
 
-export const TokenUsage = withFallback<TokenUsage.Props, Container>(
+export const TokenUsage = withFallbackFn<TokenUsage.Props, Container>(
 	({ threadId, ...props }) => {
 		const locale = useLocale();
 		const { data: tokens } = withAgentTokensQuery.useSuspenseQuery({
@@ -35,7 +35,7 @@ export const TokenUsage = withFallback<TokenUsage.Props, Container>(
 				{tokens.total > 0 ? (
 					<>
 						<Typo
-							label={toLocaleNumber({
+							label={toLocaleNumberFn({
 								locale,
 								number: tokens.input,
 							})}
@@ -46,7 +46,7 @@ export const TokenUsage = withFallback<TokenUsage.Props, Container>(
 							data-ui-opacity="4"
 						/>
 						<Typo
-							label={toLocaleNumber({
+							label={toLocaleNumberFn({
 								locale,
 								number: tokens.output,
 							})}

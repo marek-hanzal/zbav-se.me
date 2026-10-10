@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { computeSellerScore } from "~/buyer-user-event/fx/userEventSellerInfoFx";
+import { computeSellerScoreFn } from "~/buyer-user-event/fx/userEventSellerInfoFx";
 
 describe("userEventSellerInfoFx edge cases", () => {
 	it("returns the lowest score for an empty metric set", () => {
-		const result = computeSellerScore({
+		const result = computeSellerScoreFn({
 			reaction: {
 				total: 0,
 				reactions: 0,

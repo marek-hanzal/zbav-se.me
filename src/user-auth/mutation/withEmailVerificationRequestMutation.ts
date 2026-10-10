@@ -1,5 +1,5 @@
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withMutation } from "~/mutation/fn/withMutation";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withMutationFn } from "~/mutation/fn/withMutationFn";
 import { authClient } from "~/user-auth/service/authClient";
 
 export namespace withEmailVerificationRequestMutation {
@@ -9,16 +9,16 @@ export namespace withEmailVerificationRequestMutation {
 	}
 }
 
-export const withEmailVerificationRequestMutation = withMutation<
+export const withEmailVerificationRequestMutation = withMutationFn<
 	withEmailVerificationRequestMutation.Props,
 	unknown,
 	Error
 >({
-	logger: getRootLogger([
+	logger: getRootLoggerFn([
 		"mutation",
 		"withEmailVerificationRequestMutation",
 	]),
-	keys(variables) {
+	keysFn(variables) {
 		return [
 			"email-verification",
 			"request",

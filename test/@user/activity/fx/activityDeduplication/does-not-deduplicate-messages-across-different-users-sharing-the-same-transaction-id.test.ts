@@ -1,13 +1,13 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { activityCollectionFx } from "~/user-activity/fx/activityCollectionFx";
 
 describe("activity deduplication edge cases", () => {
 	it("does not deduplicate messages across different users sharing the same transaction id", async () => {
-		const database = await testabase("activityDedup-user-scope");
+		const database = await testabaseFn("activityDedup-user-scope");
 
 		return Effect.gen(function* () {
 			const alice = yield* leaseTestUserFx({});
@@ -78,6 +78,6 @@ describe("activity deduplication edge cases", () => {
 			expect(bobCollection.map((item) => item.id)).toEqual([
 				"dedup-user-b-1",
 			]);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

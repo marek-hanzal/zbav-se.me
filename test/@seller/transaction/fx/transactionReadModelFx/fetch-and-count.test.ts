@@ -4,15 +4,15 @@ import { transactionAcceptFx } from "~/seller-transaction/fx/transactionAcceptFx
 import { transactionCollectionFx } from "~/seller-transaction/fx/transactionCollectionFx";
 import { transactionCountFx } from "~/seller-transaction/fx/transactionCountFx";
 import { transactionFetchFx } from "~/seller-transaction/fx/transactionFetchFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { getDefaultListingCreateFx } from "~/test/listing/fx/getDefaultListingCreateFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("seller transaction read model fetch and count", () => {
 	it("filters fetch and count by ids inside seller scope", async () => {
-		const database = await testabase("sellerTransactionReadModelFx-filters-fetch-count");
+		const database = await testabaseFn("sellerTransactionReadModelFx-filters-fetch-count");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -73,6 +73,6 @@ describe("seller transaction read model fetch and count", () => {
 			expect(typeof fetched.unread).toBe("number");
 			expect(fetched.unread).toBe(0);
 			expect(fetched.status).toBe("trade");
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

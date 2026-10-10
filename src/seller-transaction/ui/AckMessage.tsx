@@ -7,12 +7,12 @@ import type { TransactionMenuButton } from "~/user-transaction/ui/TransactionMen
 
 export namespace AckMessage {
 	export interface Props extends Group.Props {
-		close: TransactionMenuButton.Close;
+		closeFn: TransactionMenuButton.Close;
 		transaction: TransactionSchema.Type;
 	}
 }
 
-export const AckMessage: FC<AckMessage.Props> = ({ close, transaction, ...props }) => {
+export const AckMessage: FC<AckMessage.Props> = ({ closeFn, transaction, ...props }) => {
 	return (
 		<Group
 			data-ui={"AckMessage"}
@@ -22,7 +22,7 @@ export const AckMessage: FC<AckMessage.Props> = ({ close, transaction, ...props 
 			{...props}
 		>
 			<AckButton
-				close={close}
+				closeFn={closeFn}
 				transaction={transaction}
 				{...MessageButtonUi}
 			/>

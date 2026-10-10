@@ -5,7 +5,7 @@ import type { FeedSortSchema } from "~/buyer-feed/schema/FeedSortSchema";
 import type { FeedWhereSchema } from "~/buyer-feed/schema/FeedWhereSchema";
 import type { ListingQuerySchema } from "~/buyer-listing/schema/ListingQuerySchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { selectFx } from "~/database-query/fx/selectFx";
+import { selectFn } from "~/database-query/fn/selectFn";
 
 export namespace withFeedSelectFx {
 	export interface Props {
@@ -27,7 +27,7 @@ export const withFeedSelectFx = Effect.fn("withFeedSelectFx")(function* ({
 			.exhaustive();
 	}
 
-	return selectFx({
+	return selectFn({
 		select: query
 			.select([
 				"f.id",
@@ -38,10 +38,10 @@ export const withFeedSelectFx = Effect.fn("withFeedSelectFx")(function* ({
 				"f.createdAt",
 				"f.updatedAt",
 			])
-			.select((eb) => eb.ref("f.query").$castTo<ListingQuerySchema.Type>().as("query"))
-			.select((eb) =>
+			.select((ebFn) => ebFn.ref("f.query").$castTo<ListingQuerySchema.Type>().as("query"))
+			.select((ebFn) =>
 				jsonObjectFrom(
-					eb
+					ebFn
 						.selectFrom("upload as u")
 						.selectAll()
 						.whereRef("u.id", "=", "f.uploadId")

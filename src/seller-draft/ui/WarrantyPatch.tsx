@@ -17,16 +17,16 @@ import { WarrantySelect } from "~/warranty/ui/WarrantySelect";
 export namespace WarrantyPatch {
 	export interface Props extends TitleContainer.Props {
 		draft: DraftSchema.Type;
-		onCancel(): void;
+		onCancelFn(): void;
 		view: useView.Use<"condition">;
 	}
 }
 
-export const WarrantyPatch: FC<WarrantyPatch.Props> = ({ draft, onCancel, view, ...props }) => {
+export const WarrantyPatch: FC<WarrantyPatch.Props> = ({ draft, onCancelFn, view, ...props }) => {
 	const translator = useTranslator();
 	const mutation = withDraftQuery.usePatchMutation({
 		onSuccess() {
-			view.set("condition");
+			view.setFn("condition");
 		},
 		invalidate: [
 			"collection",
@@ -46,13 +46,13 @@ export const WarrantyPatch: FC<WarrantyPatch.Props> = ({ draft, onCancel, view, 
 		],
 	});
 
-	const warrantyId = selection.optional.singleId();
+	const warrantyId = selection.optional.singleIdFn();
 	const warranty = (warrantyId as WarrantyEnumSchema.Type) ?? null;
 
 	return (
 		<TitleContainer
 			data-ui={"WarrantyPatch"}
-			textTitle={translator.text("Warranty (title)")}
+			textTitle={translator.textFn("Warranty (title)")}
 			left={<EditAction />}
 			{...props}
 		>
@@ -66,8 +66,8 @@ export const WarrantyPatch: FC<WarrantyPatch.Props> = ({ draft, onCancel, view, 
 				<WarrantySelect selection={selection} />
 
 				<SaveContainer
-					onCancel={onCancel}
-					onSave={() => {
+					onCancelFn={onCancelFn}
+					onSaveFn={() => {
 						mutation.mutate({
 							patch: {
 								warranty,

@@ -2,19 +2,19 @@ import { withListingQuery } from "~/buyer-listing/query/withListingQuery";
 import type { ListingSchema } from "~/buyer-listing/schema/ListingSchema";
 import { thumbCreateFn } from "~/buyer-thumb/fn/thumbCreateFn";
 import type { ThumbCreateSchema } from "~/buyer-thumb/schema/ThumbCreateSchema";
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withMutation } from "~/mutation/fn/withMutation";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withMutationFn } from "~/mutation/fn/withMutationFn";
 
-export const withThumbCreateMutation = withMutation<
+export const withThumbCreateMutation = withMutationFn<
 	ThumbCreateSchema.Type,
 	ListingSchema.Type,
 	thumbCreateFn.Error
 >({
-	logger: getRootLogger([
+	logger: getRootLoggerFn([
 		"mutation",
 		"withThumbCreateMutation",
 	]),
-	keys(variables) {
+	keysFn(variables) {
 		return [
 			"thumb",
 			"create",
@@ -28,7 +28,7 @@ export const withThumbCreateMutation = withMutation<
 	},
 	invalidate: [
 		{
-			async invalidate(queryClient, result) {
+			async invalidateFn(queryClient, result) {
 				result && withListingQuery.updateFn(queryClient, result);
 			},
 		},

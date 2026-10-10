@@ -4,14 +4,14 @@ import { seedTestUsersFx } from "~/test/common/fx/seedTestUsersFx";
 import { testDatabaseFx } from "~/test/common/fx/testDatabaseFx";
 import { withTestabaseFx } from "~/test-database/fx/withTestabaseFx";
 
-export default async function globalSetup() {
+export default async function globalSetupFn() {
 	return withTestabaseFx({
 		image: "nhost/postgres:17-20260320-1",
 		name: "zbav-seme-test-postgres",
 		port: 55433,
 		template: "test",
 		databaseFx: testDatabaseFx,
-		onMigrate: (database) => {
+		onMigrateFn: (database) => {
 			return Effect.gen(function* () {
 				yield* seedTestLocationsFx({
 					database,

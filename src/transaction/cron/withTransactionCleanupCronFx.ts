@@ -27,7 +27,7 @@ export const withTransactionCleanupCronFx = Effect.fn("vwithTransactionCleanupCr
 				"t.statusUpdatedAt",
 				"<=",
 				dateContext
-					.now()
+					.nowFn()
 					.minus({
 						month: 3,
 					})

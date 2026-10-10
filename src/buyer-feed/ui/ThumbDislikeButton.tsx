@@ -3,7 +3,7 @@ import type { ListingMetaSchema } from "~/buyer-listing/schema/ListingMetaSchema
 import { withThumbCreateMutation } from "~/buyer-thumb/mutation/withThumbCreateMutation";
 import { Tx } from "~/translation/ui/Tx";
 import { DislikeIcon } from "~/ui/constant/DislikeIcon";
-import { withFallback } from "~/ui/fn/withFallback";
+import { withFallbackFn } from "~/ui/fn/withFallbackFn";
 import type { MarkSuspense } from "~/ui/type/MarkSuspense";
 import { Button } from "~/ui/ui/Button";
 
@@ -14,7 +14,7 @@ export namespace ThumbDislikeButton {
 	}
 }
 
-export const ThumbDislikeButton = withFallback(
+export const ThumbDislikeButton = withFallbackFn(
 	({ _suspense, listingId, meta, ...props }: ThumbDislikeButton.Props) => {
 		const { data: listing } = withListingQuery.useFetchQuery(listingId);
 		const thumbCreateMutation = withThumbCreateMutation.useMutation({

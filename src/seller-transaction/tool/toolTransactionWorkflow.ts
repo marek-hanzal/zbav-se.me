@@ -1,13 +1,13 @@
 import { tool } from "@openai/agents";
 import { match } from "ts-pattern";
 import { z } from "zod";
-import { getRootLogger } from "~/log/fn/getRootLogger";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
 import { transactionAcceptFn } from "~/seller-transaction/fn/transactionAcceptFn";
 import { transactionDisputeFn } from "~/seller-transaction/fn/transactionDisputeFn";
 import { transactionRejectFn } from "~/seller-transaction/fn/transactionRejectFn";
 import { transactionResolveFn } from "~/seller-transaction/fn/transactionResolveFn";
 
-const logger = getRootLogger([
+const logger = getRootLoggerFn([
 	"tool",
 	"toolTransactionWorkflow",
 ]);

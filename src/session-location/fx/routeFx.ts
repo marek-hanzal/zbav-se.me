@@ -3,7 +3,7 @@ import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { InvalidRequestErrorFx } from "~/server-error/error/InvalidRequestErrorFx";
 import { LocationConfigFx } from "~/session-location/context/LocationConfigFx";
 import type { RouteSchema } from "~/session-location/schema/RouteSchema";
-import { linkTo } from "~/url/fn/linkTo";
+import { linkToFn } from "~/url/fn/linkToFn";
 
 export namespace routeFx {
 	export type Props = RouteSchema.Type;
@@ -34,7 +34,7 @@ export const routeFx = Effect.fn("routeFx")(function* ({
 
 	const locationConfig = yield* LocationConfigFx;
 
-	const link = linkTo({
+	const link = linkToFn({
 		base: locationConfig.api,
 		href: locationConfig.route,
 		query: {

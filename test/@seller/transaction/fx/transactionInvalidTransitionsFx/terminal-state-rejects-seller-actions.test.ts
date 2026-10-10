@@ -4,15 +4,15 @@ import { transactionSuccessFx } from "~/buyer-transaction/fx/transactionSuccessF
 import { transactionAcceptFx } from "~/seller-transaction/fx/transactionAcceptFx";
 import { transactionRejectFx } from "~/seller-transaction/fx/transactionRejectFx";
 import { transactionResolveFx } from "~/seller-transaction/fx/transactionResolveFx";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createResolvedScenarioFx } from "~/test/transaction/fx/createResolvedScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("seller transaction invalid transitions", () => {
 	it("rejects seller actions once the transaction is terminal", async () => {
-		const database = await testabase("sellerTransactionFx-invalid-terminal-actions");
+		const database = await testabaseFn("sellerTransactionFx-invalid-terminal-actions");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -30,7 +30,7 @@ describe("seller transaction invalid transitions", () => {
 			const beforeEntries = yield* Effect.promise(() =>
 				database.kysely
 					.selectFrom("transaction_entry")
-					.select((eb) => eb.fn.countAll<number>().as("count"))
+					.select((ebFn) => ebFn.fn.countAll<number>().as("count"))
 					.where("transactionId", "=", transactionId)
 					.executeTakeFirstOrThrow(),
 			);
@@ -54,16 +54,16 @@ describe("seller transaction invalid transitions", () => {
 				}),
 			);
 
-			expectTaggedErrorFx(acceptResult, {
+			expectTaggedErrorFn(acceptResult, {
 				tag: "InvalidRequestErrorFx",
 				message: "Invalid transaction status transition from success to trade for seller",
 			});
-			expectTaggedErrorFx(rejectResult, {
+			expectTaggedErrorFn(rejectResult, {
 				tag: "InvalidRequestErrorFx",
 				message:
 					"Invalid transaction status transition from success to rejected for seller",
 			});
-			expectTaggedErrorFx(resolveResult, {
+			expectTaggedErrorFn(resolveResult, {
 				tag: "InvalidRequestErrorFx",
 				message:
 					"Invalid transaction status transition from success to resolved for seller",
@@ -79,13 +79,13 @@ describe("seller transaction invalid transitions", () => {
 			const afterEntries = yield* Effect.promise(() =>
 				database.kysely
 					.selectFrom("transaction_entry")
-					.select((eb) => eb.fn.countAll<number>().as("count"))
+					.select((ebFn) => ebFn.fn.countAll<number>().as("count"))
 					.where("transactionId", "=", transactionId)
 					.executeTakeFirstOrThrow(),
 			);
 
 			expect(transaction.status).toBe("success");
 			expect(afterEntries.count).toBe(beforeEntries.count);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

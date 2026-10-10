@@ -1,7 +1,7 @@
 import type { AgentInputItem, Session } from "@openai/agents-core";
 import type { Kysely } from "kysely";
 import type { Database } from "~/database/type/Database";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 
 export namespace KyselySession {
 	export interface Props {
@@ -41,7 +41,7 @@ export class KyselySession implements Session {
 			.selectFrom(
 				(limit !== undefined && limit > 0 ? recent.limit(limit) : recent).as("recent"),
 			)
-			.select((eb) => eb.ref("payload").$castTo<AgentInputItem>().as("payload"))
+			.select((ebFn) => ebFn.ref("payload").$castTo<AgentInputItem>().as("payload"))
 			.orderBy("sort", "asc")
 			.execute();
 
@@ -56,7 +56,7 @@ export class KyselySession implements Session {
 		await this.kysely.transaction().execute(async (trx) => {
 			const current = await trx
 				.selectFrom("agent_stream")
-				.select(({ fn }) => fn.max<number>("sort").as("maxSort"))
+				.select(({ fn: fnFn }) => fnFn.max<number>("sort").as("maxSort"))
 				.where("userId", "=", this.userId)
 				.where("threadId", "=", this.threadId)
 				.executeTakeFirst();
@@ -67,7 +67,7 @@ export class KyselySession implements Session {
 				.insertInto("agent_stream")
 				.values(
 					items.map((payload) => ({
-						id: genId(),
+						id: genIdFn(),
 						userId: this.userId,
 						threadId: this.threadId,
 						payload,
@@ -84,7 +84,7 @@ export class KyselySession implements Session {
 				.selectFrom("agent_stream")
 				.select([
 					"id",
-					(eb) => eb.ref("payload").$castTo<AgentInputItem>().as("payload"),
+					(ebFn) => ebFn.ref("payload").$castTo<AgentInputItem>().as("payload"),
 				])
 				.where("userId", "=", this.userId)
 				.where("threadId", "=", this.threadId)

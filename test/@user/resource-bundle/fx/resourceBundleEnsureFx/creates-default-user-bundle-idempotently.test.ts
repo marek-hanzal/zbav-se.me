@@ -1,13 +1,13 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 import { resourceBundleEnsureFx } from "~/user-resource-bundle/fx/resourceBundleEnsureFx";
 
 describe("resourceBundleEnsureFx", () => {
 	it("creates the default user bundle assignment idempotently", async () => {
-		const database = await testabase("resource-bundle-ensure");
+		const database = await testabaseFn("resource-bundle-ensure");
 
 		return Effect.gen(function* () {
 			const { buyer } = yield* createUsersFx({});
@@ -50,6 +50,6 @@ describe("resourceBundleEnsureFx", () => {
 					type: "user",
 				},
 			]);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

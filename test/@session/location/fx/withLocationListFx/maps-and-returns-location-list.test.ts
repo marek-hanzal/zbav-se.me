@@ -2,12 +2,12 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { locationAutocompleteFx } from "~/session-location/fx/locationAutocompleteFx";
 import { withLocationListFx } from "~/session-location/fx/withLocationListFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 
 describe("withLocationListFx", () => {
 	it("returns mapped list data from persisted locations", async () => {
-		const database = await testabase("withLocationListFx-live-list");
+		const database = await testabaseFn("withLocationListFx-live-list");
 
 		return Effect.gen(function* () {
 			yield* locationAutocompleteFx({
@@ -41,6 +41,6 @@ describe("withLocationListFx", () => {
 			expect(locations[0]?.lang).toBe("cs");
 			expect(typeof locations[0]?.confidence).toBe("number");
 			expect(locations[0]?.address).toContain("Praha");
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

@@ -3,16 +3,16 @@ import { describe, expect, it } from "vitest";
 import { transactionCreateFx } from "~/buyer-transaction/fx/transactionCreateFx";
 import { transactionAcceptFx } from "~/seller-transaction/fx/transactionAcceptFx";
 import { transactionResolveFx } from "~/seller-transaction/fx/transactionResolveFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { fetchTransactionFx } from "~/test/transaction/fx/fetchTransactionFx";
 import { fetchTransactionEntryKindsFx } from "~/test/transaction-entry/fx/fetchTransactionEntryKindsFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("transactionResolveFx — sold behavior", () => {
 	it("seller resolves transaction for buyer B — buyer C gets sold, listing gets sold", async () => {
-		const database = await testabase("transactionResolveFx-sold-behavior");
+		const database = await testabaseFn("transactionResolveFx-sold-behavior");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -110,6 +110,6 @@ describe("transactionResolveFx — sold behavior", () => {
 			expect(kindsC).toContain("status-interest");
 			expect(kindsC).toContain("status-sold");
 			expect(kindsC).not.toContain("status-resolved");
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

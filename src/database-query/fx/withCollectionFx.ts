@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import type { Simplify } from "kysely";
 import type { z } from "zod";
-import type { selectFx } from "~/database-query/fx/selectFx";
+import type { selectFn } from "~/database-query/fn/selectFn";
 import type { CursorSchema } from "~/query/schema/CursorSchema";
 import type { WhereSchema } from "~/query/schema/WhereSchema";
 
@@ -18,7 +18,7 @@ export namespace withCollectionFx {
 		TQueryError,
 		TQueryContext,
 	> {
-		selectFx: selectFx<
+		selectFx: selectFn<
 			TDB,
 			TTable,
 			TOutput,

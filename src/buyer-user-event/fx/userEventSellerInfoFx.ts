@@ -3,11 +3,11 @@ import { Effect } from "effect";
 import type { UserEventSellerSchema } from "~/buyer-user-event/schema/UserEventSellerSchema";
 import type { UserEventTableSchema } from "~/database/schema/UserEventTableSchema";
 import { getLoggerFx } from "~/log/fx/getLoggerFx";
-import { clamp } from "~/number/fn/clamp";
-import { median } from "~/number/fn/median";
-import { p90 } from "~/number/fn/p90";
+import { clampFn } from "~/number/fn/clampFn";
+import { medianFn } from "~/number/fn/medianFn";
+import { p90Fn } from "~/number/fn/p90Fn";
+import { computeLoadFn } from "~/user-event/fn/computeLoadFn";
 import { computeActivityFx } from "~/user-event/fx/computeActivityFx";
-import { computeLoad } from "~/user-event/fx/computeLoad";
 import { userEventCollectionFx } from "~/user-event/fx/userEventCollectionFx";
 import type { ActivityEnumSchema } from "~/user-event/schema/ActivityEnumSchema";
 import type { LoadEnumSchema } from "~/user-event/schema/LoadEnumSchema";
@@ -32,7 +32,7 @@ export namespace userEventSellerInfoFx {
  * 3a. If transaction.closed/rejected (foreign scope) before seller reacts -> terminal
  * 3b. If transaction.message/open/closed/rejected (user scope) after create -> reaction (records delta from create)
  */
-export const computeSellerReaction = (source: UserEventTableSchema.Type[]) => {
+export const computeSellerReactionFn = (source: UserEventTableSchema.Type[]) => {
 	let total = 0; // transaction.create (foreign)
 	let reactions = 0;
 	let terminal = 0;
@@ -44,7 +44,7 @@ export const computeSellerReaction = (source: UserEventTableSchema.Type[]) => {
 	let createAtMs: number | null = null;
 	let done = false; // group resolved (reacted or terminal)
 
-	const flushGroup = () => {
+	const flushGroupFn = () => {
 		currentGroup = null;
 
 		created = false;
@@ -52,11 +52,11 @@ export const computeSellerReaction = (source: UserEventTableSchema.Type[]) => {
 		done = false;
 	};
 
-	const isBuyerTerminal = (event: UserEventTableSchema.Type) =>
+	const isBuyerTerminalFn = (event: UserEventTableSchema.Type) =>
 		(event.event === "transaction.closed" || event.event === "transaction.rejected") &&
 		event.scope === "foreign";
 
-	const isSellerReaction = (event: UserEventTableSchema.Type) =>
+	const isSellerReactionFn = (event: UserEventTableSchema.Type) =>
 		event.scope === "user" &&
 		(event.event === "transaction.message" ||
 			event.event === "transaction.open" ||
@@ -65,7 +65,7 @@ export const computeSellerReaction = (source: UserEventTableSchema.Type[]) => {
 
 	for (const event of source) {
 		if (currentGroup !== event.group) {
-			flushGroup();
+			flushGroupFn();
 			currentGroup = event.group;
 		}
 
@@ -84,7 +84,7 @@ export const computeSellerReaction = (source: UserEventTableSchema.Type[]) => {
 		if (!created || done) continue;
 
 		// buyer ended before seller could react
-		if (isBuyerTerminal(event)) {
+		if (isBuyerTerminalFn(event)) {
 			if (createAtMs != null && createdAt >= createAtMs) {
 				terminal++;
 				done = true;
@@ -93,7 +93,7 @@ export const computeSellerReaction = (source: UserEventTableSchema.Type[]) => {
 		}
 
 		// first seller reaction after create => reacted (open OR message OR close/reject)
-		if (isSellerReaction(event)) {
+		if (isSellerReactionFn(event)) {
 			if (createAtMs == null) continue;
 			if (createdAt < createAtMs) continue;
 
@@ -110,8 +110,8 @@ export const computeSellerReaction = (source: UserEventTableSchema.Type[]) => {
 		reactions,
 		terminal,
 		percent: total === 0 ? 0 : ((reactions + terminal) / total) * 100,
-		medianMs: median(deltasMs),
-		p90Ms: p90(deltasMs),
+		medianMs: medianFn(deltasMs),
+		p90Ms: p90Fn(deltasMs),
 	} satisfies UserEventSellerSchema.Type["reaction"];
 };
 
@@ -128,7 +128,7 @@ export const computeSellerReaction = (source: UserEventTableSchema.Type[]) => {
  * 2. Any interaction event between create and reject (e.g., transaction.message) -> marks as dirty
  * 3. transaction.rejected (user scope) - if not dirty, counts as rejected (records delta from create)
  */
-export const computeSellerRejected = (source: UserEventTableSchema.Type[]) => {
+export const computeSellerRejectedFn = (source: UserEventTableSchema.Type[]) => {
 	let total = 0; // transaction.create (foreign)
 	let rejected = 0;
 	const deltasMs: number[] = [];
@@ -141,7 +141,7 @@ export const computeSellerRejected = (source: UserEventTableSchema.Type[]) => {
 	let dirty = false;
 	let done = false;
 
-	const flushGroup = () => {
+	const flushGroupFn = () => {
 		currentGroup = null;
 
 		created = false;
@@ -151,10 +151,10 @@ export const computeSellerRejected = (source: UserEventTableSchema.Type[]) => {
 		done = false;
 	};
 
-	const isSellerRejected = (event: UserEventTableSchema.Type) =>
+	const isSellerRejectedFn = (event: UserEventTableSchema.Type) =>
 		event.event === "transaction.rejected" && event.scope === "user";
 
-	const isInteraction = (event: UserEventTableSchema.Type) =>
+	const isInteractionFn = (event: UserEventTableSchema.Type) =>
 		event.event === "transaction.message" ||
 		event.event === "transaction.open" ||
 		event.event === "transaction.closed" ||
@@ -162,7 +162,7 @@ export const computeSellerRejected = (source: UserEventTableSchema.Type[]) => {
 
 	for (const event of source) {
 		if (currentGroup !== event.group) {
-			flushGroup();
+			flushGroupFn();
 			currentGroup = event.group;
 		}
 
@@ -191,7 +191,7 @@ export const computeSellerRejected = (source: UserEventTableSchema.Type[]) => {
 		}
 
 		// seller rejected the transaction
-		if (isSellerRejected(event)) {
+		if (isSellerRejectedFn(event)) {
 			done = true;
 
 			if (!dirty) {
@@ -202,7 +202,7 @@ export const computeSellerRejected = (source: UserEventTableSchema.Type[]) => {
 		}
 
 		// any interaction between create and reject makes it dirty
-		if (isInteraction(event)) {
+		if (isInteractionFn(event)) {
 			dirty = true;
 		}
 	}
@@ -213,8 +213,8 @@ export const computeSellerRejected = (source: UserEventTableSchema.Type[]) => {
 		total,
 		rejected,
 		percent: total === 0 ? 0 : (rejected / total) * 100,
-		medianMs: median(deltasMs),
-		p90Ms: p90(deltasMs),
+		medianMs: medianFn(deltasMs),
+		p90Ms: p90Fn(deltasMs),
 	} satisfies UserEventSellerSchema.Type["rejected"];
 };
 
@@ -232,7 +232,7 @@ export const computeSellerRejected = (source: UserEventTableSchema.Type[]) => {
  * 2b. If transaction.rejected (user scope) -> terminal (seller rejected, not resolved)
  * 2c. If transaction.success/closed (user scope) -> resolved (seller made explicit resolution, records delta from create)
  */
-export const computeSellerResolved = (source: UserEventTableSchema.Type[]) => {
+export const computeSellerResolvedFn = (source: UserEventTableSchema.Type[]) => {
 	let total = 0;
 	let resolved = 0;
 	let terminal = 0;
@@ -244,7 +244,7 @@ export const computeSellerResolved = (source: UserEventTableSchema.Type[]) => {
 	let createAtMs: number | null = null;
 	let done = false;
 
-	const flushGroup = () => {
+	const flushGroupFn = () => {
 		currentGroup = null;
 
 		created = false;
@@ -252,21 +252,21 @@ export const computeSellerResolved = (source: UserEventTableSchema.Type[]) => {
 		done = false;
 	};
 
-	const isBuyerTerminal = (event: UserEventTableSchema.Type) =>
+	const isBuyerTerminalFn = (event: UserEventTableSchema.Type) =>
 		(event.event === "transaction.closed" ||
 			event.event === "transaction.rejected" ||
 			event.event === "transaction.success") &&
 		event.scope === "foreign";
 
-	const isSellerTerminal = (event: UserEventTableSchema.Type) =>
+	const isSellerTerminalFn = (event: UserEventTableSchema.Type) =>
 		event.event === "transaction.rejected" && event.scope === "user";
 
-	const isSellerResolve = (event: UserEventTableSchema.Type) =>
+	const isSellerResolveFn = (event: UserEventTableSchema.Type) =>
 		event.scope === "user" && event.event === "transaction.resolved";
 
 	for (const event of source) {
 		if (currentGroup !== event.group) {
-			flushGroup();
+			flushGroupFn();
 			currentGroup = event.group;
 		}
 
@@ -287,7 +287,7 @@ export const computeSellerResolved = (source: UserEventTableSchema.Type[]) => {
 		}
 
 		// buyer ended it -> seller had no choice
-		if (isBuyerTerminal(event)) {
+		if (isBuyerTerminalFn(event)) {
 			if (createAtMs != null && createdAt >= createAtMs) {
 				terminal++;
 				done = true;
@@ -296,7 +296,7 @@ export const computeSellerResolved = (source: UserEventTableSchema.Type[]) => {
 		}
 
 		// seller rejected it -> terminal (not resolved)
-		if (isSellerTerminal(event)) {
+		if (isSellerTerminalFn(event)) {
 			if (createAtMs != null && createdAt >= createAtMs) {
 				terminal++;
 				done = true;
@@ -305,7 +305,7 @@ export const computeSellerResolved = (source: UserEventTableSchema.Type[]) => {
 		}
 
 		// seller explicit resolved
-		if (isSellerResolve(event)) {
+		if (isSellerResolveFn(event)) {
 			if (createAtMs == null) {
 				continue;
 			}
@@ -326,8 +326,8 @@ export const computeSellerResolved = (source: UserEventTableSchema.Type[]) => {
 		resolved,
 		terminal,
 		percent: total === 0 ? 0 : (resolved / total) * 100,
-		medianMs: median(deltasMs),
-		p90Ms: p90(deltasMs),
+		medianMs: medianFn(deltasMs),
+		p90Ms: p90Fn(deltasMs),
 	} satisfies UserEventSellerSchema.Type["resolved"];
 };
 
@@ -346,7 +346,7 @@ export const computeSellerResolved = (source: UserEventTableSchema.Type[]) => {
  * 4a. If transaction.message/open/closed/rejected/success (user scope) after ping -> disqualifies from expired
  * 4b. If transaction.expired/resolved (foreign scope) after ping without seller action -> expired
  */
-export const computeSellerExpired = (source: UserEventTableSchema.Type[]) => {
+export const computeSellerExpiredFn = (source: UserEventTableSchema.Type[]) => {
 	let total = 0; // transaction.create (foreign)
 	let expired = 0; // transaction.expired OR transaction.resolved (foreign) without seller action after buyer ping
 	let currentGroup: string | null = null;
@@ -355,7 +355,7 @@ export const computeSellerExpired = (source: UserEventTableSchema.Type[]) => {
 	let pingAtMs: number | null = null; // buyer "ping" moment: create OR last foreign message
 	let done = false;
 
-	const flushGroup = () => {
+	const flushGroupFn = () => {
 		currentGroup = null;
 
 		created = false;
@@ -363,18 +363,18 @@ export const computeSellerExpired = (source: UserEventTableSchema.Type[]) => {
 		done = false;
 	};
 
-	const isBuyerCreate = (event: UserEventTableSchema.Type) =>
+	const isBuyerCreateFn = (event: UserEventTableSchema.Type) =>
 		event.event === "transaction.create" && event.scope === "foreign";
 
-	const isBuyerMessage = (event: UserEventTableSchema.Type) =>
+	const isBuyerMessageFn = (event: UserEventTableSchema.Type) =>
 		event.event === "transaction.message" && event.scope === "foreign";
 
-	const isBuyerEnd = (event: UserEventTableSchema.Type) =>
+	const isBuyerEndFn = (event: UserEventTableSchema.Type) =>
 		(event.event === "transaction.expired" || event.event === "transaction.resolved") &&
 		event.scope === "foreign";
 
 	// seller "did something" after ping -> not ghost
-	const isSellerAction = (event: UserEventTableSchema.Type) =>
+	const isSellerActionFn = (event: UserEventTableSchema.Type) =>
 		event.scope === "user" &&
 		(event.event === "transaction.message" ||
 			event.event === "transaction.open" ||
@@ -384,14 +384,14 @@ export const computeSellerExpired = (source: UserEventTableSchema.Type[]) => {
 
 	for (const event of source) {
 		if (currentGroup !== event.group) {
-			flushGroup();
+			flushGroupFn();
 			currentGroup = event.group;
 		}
 
 		const createdAt = event.createdAt.getTime();
 
 		// denominator: all transactions created by buyers (foreign scope) per group
-		if (isBuyerCreate(event)) {
+		if (isBuyerCreateFn(event)) {
 			if (!created) {
 				created = true;
 				total++;
@@ -406,14 +406,14 @@ export const computeSellerExpired = (source: UserEventTableSchema.Type[]) => {
 			continue;
 		}
 
-		if (pingAtMs != null && isBuyerMessage(event)) {
+		if (pingAtMs != null && isBuyerMessageFn(event)) {
 			// buyer nudged -> reset ping moment
 			pingAtMs = createdAt;
 			continue;
 		}
 
 		// seller acted after ping -> disqualify
-		if (pingAtMs != null && isSellerAction(event)) {
+		if (pingAtMs != null && isSellerActionFn(event)) {
 			if (createdAt >= pingAtMs) {
 				done = true;
 			}
@@ -421,7 +421,7 @@ export const computeSellerExpired = (source: UserEventTableSchema.Type[]) => {
 		}
 
 		// buyer ended as expired/resolved -> count only if we had a ping and seller didn't act after it
-		if (pingAtMs != null && isBuyerEnd(event)) {
+		if (pingAtMs != null && isBuyerEndFn(event)) {
 			expired++;
 			done = true;
 		}
@@ -434,7 +434,7 @@ export const computeSellerExpired = (source: UserEventTableSchema.Type[]) => {
 	} satisfies UserEventSellerSchema.Type["expired"];
 };
 
-export const computeSellerScore = (input: {
+export const computeSellerScoreFn = (input: {
 	reaction: UserEventSellerSchema.Type["reaction"];
 	resolved: UserEventSellerSchema.Type["resolved"];
 	rejected: UserEventSellerSchema.Type["rejected"];
@@ -444,13 +444,13 @@ export const computeSellerScore = (input: {
 }) => {
 	const { reaction, resolved, rejected, expired, activity, load } = input;
 
-	const bonusActivity = (bucket: ActivityEnumSchema.Type) =>
+	const bonusActivityFn = (bucket: ActivityEnumSchema.Type) =>
 		bucket === "high" ? 2 : bucket === "medium" ? 1 : 0;
 
-	const bonusLoad = (bucket: LoadEnumSchema.Type) =>
+	const bonusLoadFn = (bucket: LoadEnumSchema.Type) =>
 		bucket === "low" ? 2 : bucket === "medium" ? 1 : 0;
 
-	const bonusReactionSpeed = (reaction: { reactions: number; medianMs: number }) => {
+	const bonusReactionSpeedFn = (reaction: { reactions: number; medianMs: number }) => {
 		// bonus only if we actually have reaction samples
 		if (reaction.reactions <= 0) {
 			return 0;
@@ -474,23 +474,23 @@ export const computeSellerScore = (input: {
 	};
 
 	// positives
-	const resolvePoints = clamp(resolved.percent, 0, 100) * 0.55; // 0..55
-	const reactionPoints = clamp(reaction.percent, 0, 100) * 0.25; // 0..25
+	const resolvePoints = clampFn(resolved.percent, 0, 100) * 0.55; // 0..55
+	const reactionPoints = clampFn(reaction.percent, 0, 100) * 0.25; // 0..25
 
 	const rejectedOver = Math.max(0, rejected.percent - 10); // allow up to 10%
-	const rejectedPenalty = clamp(rejectedOver, 0, 100) * 0.25; // 0..25
+	const rejectedPenalty = clampFn(rejectedOver, 0, 100) * 0.25; // 0..25
 
 	const expiredOver = Math.max(0, expired.percent - 10); // allow up to 10%
-	const expiredPenalty = clamp(expiredOver, 0, 100) * 0.1; // 0..10
+	const expiredPenalty = clampFn(expiredOver, 0, 100) * 0.1; // 0..10
 
 	// micro context
-	const micro = bonusActivity(activity.bucket) + bonusLoad(load.bucket); // 0..4
+	const micro = bonusActivityFn(activity.bucket) + bonusLoadFn(load.bucket); // 0..4
 
 	// speed bonus
-	const speed = bonusReactionSpeed(reaction); // 0..6
+	const speed = bonusReactionSpeedFn(reaction); // 0..6
 
 	const raw = resolvePoints + reactionPoints + micro + speed - rejectedPenalty - expiredPenalty;
-	const score = clamp(Math.round(raw), 0, 100);
+	const score = clampFn(Math.round(raw), 0, 100);
 
 	return {
 		score,
@@ -551,11 +551,11 @@ export const userEventSellerInfoFx = Effect.fn("userEventSellerInfoFx")(function
 	}
 
 	const result: Omit<UserEventSellerSchema.Type, "score"> = {
-		reaction: computeSellerReaction(source),
-		rejected: computeSellerRejected(source),
-		resolved: computeSellerResolved(source),
-		expired: computeSellerExpired(source),
-		load: computeLoad({
+		reaction: computeSellerReactionFn(source),
+		rejected: computeSellerRejectedFn(source),
+		resolved: computeSellerResolvedFn(source),
+		expired: computeSellerExpiredFn(source),
+		load: computeLoadFn({
 			source,
 			createScope: "foreign",
 		}),
@@ -567,6 +567,6 @@ export const userEventSellerInfoFx = Effect.fn("userEventSellerInfoFx")(function
 
 	return {
 		...result,
-		score: computeSellerScore(result),
+		score: computeSellerScoreFn(result),
 	} satisfies UserEventSellerSchema.Type;
 });

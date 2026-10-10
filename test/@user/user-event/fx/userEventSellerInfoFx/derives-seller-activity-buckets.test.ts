@@ -2,10 +2,10 @@ import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import { userEventSellerInfoFx } from "~/buyer-user-event/fx/userEventSellerInfoFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { createTransactionTimeline } from "~/test/user-event/fx/createTransactionTimeline";
+import { createTransactionTimelineFn } from "~/test/user-event/fx/createTransactionTimelineFn";
 import { seedUserEventTimelineFx } from "~/test/user-event/fx/seedUserEventTimelineFx";
 
 interface SeedSellerEventsProps {
@@ -15,14 +15,14 @@ interface SeedSellerEventsProps {
 	withUserAction?: boolean;
 }
 
-const _createLoadEvents = ({
+const _createLoadEventsFn = ({
 	activeTransactions,
 	userId,
 }: Pick<SeedSellerEventsProps, "activeTransactions" | "userId">) =>
 	Array.from({
 		length: activeTransactions,
 	}).flatMap((_, index) =>
-		createTransactionTimeline({
+		createTransactionTimelineFn({
 			group: `tx-${userId}-${index}`,
 			steps: [
 				{
@@ -41,14 +41,14 @@ describe("userEventSellerInfoFx", {
 	timeout: 4_000,
 }, () => {
 	it("derives seller activity buckets", async () => {
-		const database = await testabase("userEventSellerInfoFx-activity-derivation");
+		const database = await testabaseFn("userEventSellerInfoFx-activity-derivation");
 
 		return Effect.gen(function* () {
 			const highSeller = yield* leaseTestUserFx({});
 			const mediumSeller = yield* leaseTestUserFx({});
 			const lowSeller = yield* leaseTestUserFx({});
 
-			const seedSellerEvents = ({
+			const seedSellerEventsFn = ({
 				userId,
 				activeTransactions,
 				lastActionDaysAgo,
@@ -57,7 +57,7 @@ describe("userEventSellerInfoFx", {
 				...Array.from({
 					length: activeTransactions,
 				}).flatMap((_, index) =>
-					createTransactionTimeline({
+					createTransactionTimelineFn({
 						group: `tx-${userId}-${index}`,
 						steps: [
 							{
@@ -72,7 +72,7 @@ describe("userEventSellerInfoFx", {
 					}),
 				),
 				...(withUserAction
-					? createTransactionTimeline({
+					? createTransactionTimelineFn({
 							group: `tx-${userId}-activity`,
 							steps: [
 								{
@@ -90,7 +90,7 @@ describe("userEventSellerInfoFx", {
 
 			yield* seedUserEventTimelineFx({
 				userId: highSeller.id,
-				events: seedSellerEvents({
+				events: seedSellerEventsFn({
 					userId: highSeller.id,
 					activeTransactions: 1,
 					lastActionDaysAgo: 5,
@@ -98,7 +98,7 @@ describe("userEventSellerInfoFx", {
 			});
 			yield* seedUserEventTimelineFx({
 				userId: mediumSeller.id,
-				events: seedSellerEvents({
+				events: seedSellerEventsFn({
 					userId: mediumSeller.id,
 					activeTransactions: 1,
 					lastActionDaysAgo: 45,
@@ -106,7 +106,7 @@ describe("userEventSellerInfoFx", {
 			});
 			yield* seedUserEventTimelineFx({
 				userId: lowSeller.id,
-				events: seedSellerEvents({
+				events: seedSellerEventsFn({
 					userId: lowSeller.id,
 					activeTransactions: 1,
 					lastActionDaysAgo: 75,
@@ -126,6 +126,6 @@ describe("userEventSellerInfoFx", {
 			expect(high?.activity.bucket).toBe("high");
 			expect(medium?.activity.bucket).toBe("medium");
 			expect(low?.activity.bucket).toBe("low");
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

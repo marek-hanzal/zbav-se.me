@@ -3,7 +3,7 @@ import type { ListingMetaSchema } from "~/buyer-listing/schema/ListingMetaSchema
 import { withIgnoreToggleMutation } from "~/buyer-listing-ignore/mutation/withIgnoreToggleMutation";
 import { Tx } from "~/translation/ui/Tx";
 import { TrashIcon } from "~/ui/constant/TrashIcon";
-import { withFallback } from "~/ui/fn/withFallback";
+import { withFallbackFn } from "~/ui/fn/withFallbackFn";
 import type { MarkSuspense } from "~/ui/type/MarkSuspense";
 import { ConfirmButton } from "~/ui/ui/ConfirmButton";
 
@@ -14,13 +14,13 @@ export namespace IgnoreButton {
 	}
 }
 
-export const IgnoreButton = withFallback(
+export const IgnoreButton = withFallbackFn(
 	({
 		_suspense,
 		listingId,
 		meta,
 		confirmProps,
-		onReset,
+		onReset: onResetFn,
 		disabled = false,
 		...props
 	}: IgnoreButton.Props) => {
@@ -55,7 +55,7 @@ export const IgnoreButton = withFallback(
 						confirmProps?.onClick?.(e);
 					},
 				}}
-				onReset={onReset}
+				onReset={onResetFn}
 				data-ui-tone={listing.isIgnored ? "primary" : "neutral"}
 				data-ui-theme="light"
 				data-ui-size="default"

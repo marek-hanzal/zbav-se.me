@@ -10,14 +10,14 @@ export namespace DialectStore {
 	export interface CreatePoolProps {
 		dsn: string;
 		pool: Omit<Pool.Config<any>, "connectionString">;
-		onError(error: Error): void;
+		onErrorFn(error: Error): void;
 	}
 }
 
 const entryMap = new Map<string, DialectStore.Entry>();
 
 export const DialectStore = {
-	createPool({ dsn, pool: props, onError }: DialectStore.CreatePoolProps) {
+	createPoolFn({ dsn, pool: props, onErrorFn }: DialectStore.CreatePoolProps) {
 		const cached = entryMap.get(dsn);
 
 		if (cached) {
@@ -28,7 +28,7 @@ export const DialectStore = {
 			...props,
 			connectionString: dsn,
 		});
-		pool.on("error", onError);
+		pool.on("error", onErrorFn);
 
 		const dialect = new PostgresDialect({
 			pool,
@@ -41,7 +41,7 @@ export const DialectStore = {
 
 		return dialect;
 	},
-	async close(dsn: string) {
+	async closeFn(dsn: string) {
 		const entry = entryMap.get(dsn);
 
 		if (!entry) {

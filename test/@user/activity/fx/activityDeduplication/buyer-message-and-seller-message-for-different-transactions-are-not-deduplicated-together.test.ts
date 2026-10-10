@@ -1,13 +1,13 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { activityCollectionFx } from "~/user-activity/fx/activityCollectionFx";
 
 describe("activity deduplication (PARTITION BY transactionId)", () => {
 	it("buyer-message and seller-message for different transactions are NOT deduplicated together", async () => {
-		const database = await testabase("activityDedup-separate-transactions");
+		const database = await testabaseFn("activityDedup-separate-transactions");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -66,6 +66,6 @@ describe("activity deduplication (PARTITION BY transactionId)", () => {
 
 			const buyerMessageItems = collection.filter((item) => item.type === "buyer-message");
 			expect(buyerMessageItems).toHaveLength(2);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

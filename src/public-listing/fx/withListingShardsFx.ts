@@ -17,7 +17,7 @@ export const withListingShardsFx = Effect.fn("withListingShardsFx")(function* ({
 	now,
 }: withListingShardsFx.Props) {
 	const dateService = yield* DateServiceFx;
-	const currentNow = now ?? dateService.now();
+	const currentNow = now ?? dateService.nowFn();
 	const limit = 50_000;
 	const offset = (page - 1) * limit;
 	const dayStart = DateTime.fromISO(day, {

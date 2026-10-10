@@ -2,8 +2,8 @@ import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
 import { feedCountFx } from "~/buyer-feed/fx/feedCountFx";
 import { FeedCountQuerySchema } from "~/buyer-feed/schema/FeedCountQuerySchema";
-import { withKyselyFx } from "~/database/fx/withKyselyFx";
-import { withLoggerFx } from "~/log/fx/withLoggerFx";
+import { withKyselyFn } from "~/database/fn/withKyselyFn";
+import { withLoggerFn } from "~/log/fn/withLoggerFn";
 import { CountSchema } from "~/query/schema/CountSchema";
 import { withDatabaseMiddleware } from "~/request-middleware/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/request-middleware/middleware/withLogMiddleware";
@@ -37,8 +37,8 @@ export const feedCountFn = createServerFn()
 				},
 			}),
 		}).pipe(
-			withKyselyFx(database),
-			withLoggerFx(rootLogger),
+			withKyselyFn(database),
+			withLoggerFn(rootLogger),
 			Effect.tapError((error) => {
 				return Effect.sync(() => {
 					logger.error(error._tag, {

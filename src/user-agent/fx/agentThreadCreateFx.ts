@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import { dbFx } from "~/database/fx/dbFx";
 import type { AgentThreadTableSchema } from "~/database/schema/AgentThreadTableSchema";
 import { DateServiceFx } from "~/date/service/DateServiceFx";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import { getLoggerFx } from "~/log/fx/getLoggerFx";
 
 export namespace agentThreadCreateFx {
@@ -20,8 +20,8 @@ export const agentThreadCreateFx = Effect.fn("agentThreadCreateFx")(function* ({
 	});
 
 	const dateContext = yield* DateServiceFx;
-	const id = genId();
-	const now = dateContext.now().toJSDate();
+	const id = genIdFn();
+	const now = dateContext.nowFn().toJSDate();
 
 	yield* dbFx(async (kysely) => {
 		return kysely

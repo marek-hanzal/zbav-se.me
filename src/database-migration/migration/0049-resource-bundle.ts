@@ -1,7 +1,7 @@
 import { sql } from "kysely";
 import type { Migration } from "kysely/migration";
 import { bundles } from "~/database-migration/constant/bundles";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import { ResourceBundleEnumSchema } from "~/user-resource-bundle/schema/ResourceBundleEnumSchema";
 
 export const ResourceBundleMigration: Migration = {
@@ -32,7 +32,7 @@ export const ResourceBundleMigration: Migration = {
 			.insertInto("resource_bundle")
 			.values(
 				ResourceBundleEnumSchema.options.map((name) => ({
-					id: genId(),
+					id: genIdFn(),
 					name,
 					type: bundles[name].type,
 					access: bundles[name].access,

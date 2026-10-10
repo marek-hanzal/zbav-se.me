@@ -3,7 +3,7 @@ import { match } from "ts-pattern";
 import type { IgnoreSortSchema } from "~/buyer-listing-ignore/schema/IgnoreSortSchema";
 import type { IgnoreWhereSchema } from "~/buyer-listing-ignore/schema/IgnoreWhereSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { selectFx } from "~/database-query/fx/selectFx";
+import { selectFn } from "~/database-query/fn/selectFn";
 
 export namespace withIgnoreSelectFx {
 	export interface Props {
@@ -24,7 +24,7 @@ export const withIgnoreSelectFx = Effect.fn("withIgnoreSelectFx")(function* ({
 			.exhaustive();
 	}
 
-	return selectFx({
+	return selectFn({
 		select: query.select([
 			"i.id",
 			"i.listingId",

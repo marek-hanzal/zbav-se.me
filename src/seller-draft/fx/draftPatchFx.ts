@@ -73,9 +73,9 @@ export const draftPatchFx = Effect.fn("draftPatchFx")(function* ({
 					return kysely
 						.deleteFrom("gallery_item as gi")
 						.where("gi.galleryId", "=", draft.galleryId)
-						.where((eb) => {
-							return eb.exists(
-								eb
+						.where((ebFn) => {
+							return ebFn.exists(
+								ebFn
 									.selectFrom("gallery as g")
 									.select("g.id")
 									.whereRef("g.id", "=", "gi.galleryId")
@@ -158,7 +158,7 @@ export const draftPatchFx = Effect.fn("draftPatchFx")(function* ({
 						...extras,
 						userId,
 						locationId,
-						updatedAt: dateService.now().toJSDate(),
+						updatedAt: dateService.nowFn().toJSDate(),
 					})
 					.where("id", "=", draft.id)
 					.execute();

@@ -1,14 +1,14 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { transactionEntryCleanupSensitiveFx } from "~/user-transaction-entry/fx/transactionEntryCleanupSensitiveFx";
 
 describe("transactionEntryCleanupSensitiveFx", () => {
 	it("does not delete entries when status is non-terminal (open)", async () => {
-		const database = await testabase("entryCleanup-non-terminal");
+		const database = await testabaseFn("entryCleanup-non-terminal");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -53,6 +53,6 @@ describe("transactionEntryCleanupSensitiveFx", () => {
 			);
 
 			expect(entries).toHaveLength(1);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

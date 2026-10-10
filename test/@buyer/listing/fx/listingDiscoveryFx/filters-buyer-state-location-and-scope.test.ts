@@ -5,7 +5,7 @@ import { listingCollectionFx } from "~/buyer-listing/fx/listingCollectionFx";
 import { listingCountFx } from "~/buyer-listing/fx/listingCountFx";
 import { favouriteCreateFx } from "~/buyer-listing-favourite/fx/favouriteCreateFx";
 import { ignoreCreateFx } from "~/buyer-listing-ignore/fx/ignoreCreateFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { getDefaultListingCreateFx } from "~/test/listing/fx/getDefaultListingCreateFx";
 import {
@@ -14,12 +14,12 @@ import {
 	postDelivery,
 	seedLocationFixtureFx,
 } from "~/test/listing/fx/listingSearchFixturesFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
 describe("buyer listing discovery flow", () => {
 	it("filters by buyer state, location and scope without leaking foreign data", async () => {
-		const database = await testabase("buyer-listing-discovery-flow");
+		const database = await testabaseFn("buyer-listing-discovery-flow");
 
 		return Effect.gen(function* () {
 			const users = yield* createUsersFx({});
@@ -170,6 +170,6 @@ describe("buyer listing discovery flow", () => {
 			]);
 			expect(allExceptOwn.map((item) => item.id)).not.toContain(ownListing.id);
 			expect(allExceptOwn.map((item) => item.id)).toContain(farListing.id);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

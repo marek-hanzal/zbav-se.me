@@ -24,16 +24,16 @@ const FormSchema = z
 export namespace CategoryPatch {
 	export interface Props extends TitleContainer.Props {
 		draft: DraftSchema.Type;
-		onCancel(): void;
+		onCancelFn(): void;
 		view: useView.Use<"location">;
 	}
 }
 
-export const CategoryPatch: FC<CategoryPatch.Props> = ({ draft, onCancel, view, ...props }) => {
+export const CategoryPatch: FC<CategoryPatch.Props> = ({ draft, onCancelFn, view, ...props }) => {
 	const translator = useTranslator();
 	const mutation = withDraftQuery.usePatchMutation({
 		onSuccess() {
-			view.set("location");
+			view.setFn("location");
 		},
 		invalidate: [
 			"collection",
@@ -75,7 +75,7 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({ draft, onCancel, view, 
 		deps: [
 			draft,
 		],
-		onSelect(item) {
+		onSelectFn(item) {
 			form.setFieldValue("categoryId", item?.id ?? null);
 		},
 	});
@@ -83,7 +83,7 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({ draft, onCancel, view, 
 	return (
 		<TitleContainer
 			data-ui={"CategoryPatch"}
-			textTitle={translator.text("Listing category (title)")}
+			textTitle={translator.textFn("Listing category (title)")}
 			left={<EditAction />}
 			{...props}
 		>
@@ -112,8 +112,8 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({ draft, onCancel, view, 
 				>
 					{({ isValid, isSubmitting }) => (
 						<SaveContainer
-							onCancel={onCancel}
-							onSave={() => {
+							onCancelFn={onCancelFn}
+							onSaveFn={() => {
 								form.handleSubmit();
 							}}
 							loading={isSubmitting}

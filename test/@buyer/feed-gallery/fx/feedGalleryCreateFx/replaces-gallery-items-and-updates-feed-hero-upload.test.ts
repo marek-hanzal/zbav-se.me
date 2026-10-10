@@ -3,16 +3,16 @@ import { describe, expect, it } from "vitest";
 import { feedCreateFx } from "~/buyer-feed/fx/feedCreateFx";
 import { feedFetchFx } from "~/buyer-feed/fx/feedFetchFx";
 import { feedGalleryCreateFx } from "~/buyer-feed-gallery/fx/feedGalleryCreateFx";
-import { testUploadUrl } from "~/test/common/fn/testUploadUrl";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { testUploadUrlFn } from "~/test/common/fn/testUploadUrlFn";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { uploadCreateFx } from "~/user-upload/fx/uploadCreateFx";
 
 describe("feedGalleryCreateFx", () => {
 	it("replaces gallery items and updates feed hero upload to the first item", async () => {
-		const database = await testabase("feedGalleryCreateFx-replace");
+		const database = await testabaseFn("feedGalleryCreateFx-replace");
 
 		return Effect.gen(function* () {
 			const user = yield* leaseTestUserFx({});
@@ -28,22 +28,22 @@ describe("feedGalleryCreateFx", () => {
 			const firstUpload = yield* uploadCreateFx({
 				access: "private",
 				userId: user.id,
-				url: testUploadUrl("feed-gallery-1.jpg"),
+				url: testUploadUrlFn("feed-gallery-1.jpg"),
 			});
 			const secondUpload = yield* uploadCreateFx({
 				access: "private",
 				userId: user.id,
-				url: testUploadUrl("feed-gallery-2.jpg"),
+				url: testUploadUrlFn("feed-gallery-2.jpg"),
 			});
 			const thirdUpload = yield* uploadCreateFx({
 				access: "private",
 				userId: user.id,
-				url: testUploadUrl("feed-gallery-3.jpg"),
+				url: testUploadUrlFn("feed-gallery-3.jpg"),
 			});
 			const strangerUpload = yield* uploadCreateFx({
 				access: "private",
 				userId: stranger.id,
-				url: testUploadUrl("feed-gallery-stranger.jpg"),
+				url: testUploadUrlFn("feed-gallery-stranger.jpg"),
 			});
 
 			const firstGallery = yield* feedGalleryCreateFx({
@@ -113,7 +113,7 @@ describe("feedGalleryCreateFx", () => {
 				}),
 			);
 
-			expectTaggedErrorFx(foreignAttempt, {
+			expectTaggedErrorFn(foreignAttempt, {
 				tag: "AccessDeniedErrorFx",
 				message: "You are not allowed to create a gallery for this feed",
 			});
@@ -136,6 +136,6 @@ describe("feedGalleryCreateFx", () => {
 					sort: 0,
 				},
 			]);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

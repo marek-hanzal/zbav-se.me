@@ -1,9 +1,9 @@
 import { createLink, type LinkComponent } from "@tanstack/react-router";
 import type { ComponentProps, FC } from "react";
-import { uiLinkTo } from "~/ui/fn/uiLinkTo";
+import { uiLinkToFn } from "~/ui/fn/uiLinkToFn";
 import { Icon } from "~/ui/ui/Icon";
 
-interface BaseLinkToProps extends uiLinkTo.Component<ComponentProps<"a">> {
+interface BaseLinkToProps extends uiLinkToFn.Component<ComponentProps<"a">> {
 	/**
 	 * Icon to display in the link.
 	 */
@@ -30,7 +30,7 @@ const BaseLinkTo: FC<BaseLinkToProps> = ({
 	return (
 		<a
 			data-root={"LinkTo"}
-			{...uiLinkTo({
+			{...uiLinkToFn({
 				className,
 			})}
 			{...props}

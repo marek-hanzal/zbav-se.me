@@ -3,8 +3,8 @@ import { describe, expect, it } from "vitest";
 import { transactionSuccessFx } from "~/buyer-transaction/fx/transactionSuccessFx";
 import { listingCollectionFx } from "~/seller-listing/fx/listingCollectionFx";
 import { listingCountFx } from "~/seller-listing/fx/listingCountFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { createResolvedScenarioFx } from "~/test/transaction/fx/createResolvedScenarioFx";
@@ -13,7 +13,7 @@ import { activityArchiveFx } from "~/user-activity/fx/activityArchiveFx";
 
 describe("seller listing inbox flows", () => {
 	it("filters buyer-to-seller, seller-to-buyer and archived listings inside seller scope", async () => {
-		const database = await testabase("seller-listing-flow-filters");
+		const database = await testabaseFn("seller-listing-flow-filters");
 
 		return Effect.gen(function* () {
 			const users = yield* createUsersFx({});
@@ -121,6 +121,6 @@ describe("seller listing inbox flows", () => {
 					...archivedCollection,
 				].map((item) => item.id),
 			).not.toContain(foreign.listingId);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

@@ -3,7 +3,7 @@ import { CloseButton } from "~/application-ui/ui/button.exports";
 import { withListingQuery } from "~/buyer-listing/query/withListingQuery";
 import { ListingCard } from "~/buyer-transaction/ui/Transaction/ListingSheet/ListingCard/index";
 import { GalleryPreview } from "~/gallery/ui/GalleryPreview";
-import { getRootLogger } from "~/log/fn/getRootLogger";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
 import { useRenderLogger } from "~/ui/hook/useRenderLogger";
 import type { MarkSuspense } from "~/ui/type/MarkSuspense";
 import type { StateType } from "~/ui/type/StateType";
@@ -33,10 +33,10 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 		defaultPanel: "default",
 		props: {
 			default: {
-				header({ close }) {
+				headerFn({ closeFn }) {
 					return {
 						title: listing.title,
-						right: <CloseButton onClick={close} />,
+						right: <CloseButton onClick={closeFn} />,
 					};
 				},
 			} satisfies BottomSheet.PropsEx,
@@ -44,7 +44,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 	});
 
 	useRenderLogger({
-		logger: getRootLogger(),
+		logger: getRootLoggerFn(),
 		name: "ListingSheet",
 		meta: {
 			listingId,
@@ -57,8 +57,8 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 				data-ui={"ListingSheet"}
 				isOpen={state.value}
 				onClose={() => {
-					state.set(false);
-					view.set("default");
+					state.setFn(false);
+					view.setFn("default");
 				}}
 				detent={"default"}
 				{...props}
@@ -70,7 +70,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 						listingId={listing.id}
 						view={view}
 						onClick={() => {
-							state.set(false);
+							state.setFn(false);
 						}}
 					/>
 				</view.Panel>
@@ -79,7 +79,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 					<GalleryPreview
 						urls={listing.withImageUrl}
 						onClick={() => {
-							view.set("default");
+							view.setFn("default");
 						}}
 					/>
 				</view.Panel>

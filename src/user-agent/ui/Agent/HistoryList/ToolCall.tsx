@@ -5,7 +5,7 @@ import { Tx } from "~/translation/ui/Tx";
 import { Container } from "~/ui/ui/Container";
 import { Group } from "~/ui/ui/Group";
 import { Typo } from "~/ui/ui/Typo";
-import { getToolOutputText } from "~/user-agent/type/getToolOutputText";
+import { getToolOutputTextFn } from "~/user-agent/fn/getToolOutputTextFn";
 
 export namespace ToolCall {
 	export interface Props extends Group.Props {
@@ -50,7 +50,7 @@ export const ToolCall: FC<ToolCall.Props> = ({ item, items, inline, ...props }) 
 	const result = items.find((i): i is FunctionCallResultItem => {
 		return i.type === "function_call_result" && i.callId === item.callId;
 	});
-	const output = getToolOutputText(result);
+	const output = getToolOutputTextFn(result);
 
 	return (
 		<Group
@@ -80,7 +80,7 @@ export const ToolCall: FC<ToolCall.Props> = ({ item, items, inline, ...props }) 
 				/>
 
 				<Typo
-					label={translator.text("Tool call input (label)")}
+					label={translator.textFn("Tool call input (label)")}
 					data-ui-text="xs"
 					data-ui-opacity="6"
 					data-ui-font="semibold"
@@ -99,7 +99,7 @@ export const ToolCall: FC<ToolCall.Props> = ({ item, items, inline, ...props }) 
 				{output !== undefined ? (
 					<>
 						<Typo
-							label={translator.text("Tool call output (label)")}
+							label={translator.textFn("Tool call output (label)")}
 							data-ui-text="xs"
 							data-ui-opacity="6"
 							data-ui-font="semibold"

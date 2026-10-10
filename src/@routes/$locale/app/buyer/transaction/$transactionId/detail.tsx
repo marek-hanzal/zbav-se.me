@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { TitleContainer } from "~/application-ui/ui/container.exports";
 import { Transaction } from "~/buyer-transaction/ui/Transaction/Transaction";
 import { useLocale } from "~/locale/hook/useLocale";
-import { getRootLogger } from "~/log/fn/getRootLogger";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
 import { BackHomeButton } from "~/nav/ui/BackHomeButton.exports";
 import { useTranslator } from "~/translation/hook/useTranslator";
 import { useRenderLogger } from "~/ui/hook/useRenderLogger";
@@ -16,7 +16,7 @@ export const Route = createFileRoute("/$locale/app/buyer/transaction/$transactio
 
 		return (
 			<TitleContainer
-				textTitle={translator.text("Messages (title)")}
+				textTitle={translator.textFn("Messages (title)")}
 				left={
 					<BackHomeButton
 						to="/$locale/app/buyer/transaction/list"
@@ -38,14 +38,14 @@ export const Route = createFileRoute("/$locale/app/buyer/transaction/$transactio
 		const locale = useLocale();
 
 		useRenderLogger({
-			logger: getRootLogger(),
+			logger: getRootLoggerFn(),
 			name: "TransactionDetail",
 		});
 
 		return (
 			<TitleContainer
 				data-ui={"TransactionDetail[TitleContainer]"}
-				textTitle={translator.text("Messages (title)")}
+				textTitle={translator.textFn("Messages (title)")}
 				left={
 					<BackHomeButton
 						to="/$locale/app/buyer/transaction/list"

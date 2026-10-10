@@ -39,7 +39,7 @@ export const transactionPatchFx = Effect.fn("transactionPatchFx")(function* ({
 				scope,
 			});
 
-			const now = dateService.now();
+			const now = dateService.nowFn();
 
 			yield* dbFx(async (kysely) => {
 				return kysely

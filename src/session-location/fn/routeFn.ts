@@ -1,13 +1,13 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
 import { z } from "zod";
-import { withLoggerFx } from "~/log/fx/withLoggerFx";
+import { withLoggerFn } from "~/log/fn/withLoggerFn";
 import { withLogMiddleware } from "~/request-middleware/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/request-middleware/middleware/withUserMiddleware";
-import { withLocationConfigFx } from "~/session-location/context/withLocationConfigFx";
+import { withLocationConfigEnvFn } from "~/session-location/fn/withLocationConfigEnvFn";
+import { withLocationConfigFn } from "~/session-location/fn/withLocationConfigFn";
 import { routeFx } from "~/session-location/fx/routeFx";
 import { RouteSchema } from "~/session-location/schema/RouteSchema";
-import { withLocationConfigEnv } from "~/session-location/schema/withLocationConfigEnv";
 import { zodFx } from "~/validation/fx/zodFx";
 
 export namespace routeFn {
@@ -33,14 +33,14 @@ export const routeFn = createServerFn()
 				...data,
 			}),
 		}).pipe(
-			withLocationConfigFx(
-				withLocationConfigEnv({
+			withLocationConfigFn(
+				withLocationConfigEnvFn({
 					api: "https://api.geoapify.com",
 					autocomplete: "/v1/geocode/autocomplete",
 					route: "/v1/routematrix",
 				}),
 			),
-			withLoggerFx(rootLogger),
+			withLoggerFn(rootLogger),
 			Effect.tapError((error) => {
 				return Effect.sync(() => {
 					logger.error(error._tag, {

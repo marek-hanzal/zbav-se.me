@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { dbFx } from "~/database/fx/dbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { ConflictErrorFx } from "~/server-error/error/ConflictErrorFx";
 import type { UserExPatchSchema } from "~/user-ex/schema/UserExPatchSchema";
@@ -38,7 +38,7 @@ export const userExPatchFx = Effect.fn("userExPatchFx")(function* ({
 						return kysely
 							.insertInto("user_ex")
 							.values({
-								id: genId(),
+								id: genIdFn(),
 								userId,
 								...patch,
 							})

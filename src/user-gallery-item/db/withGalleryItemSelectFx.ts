@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { selectFx } from "~/database-query/fx/selectFx";
+import { selectFn } from "~/database-query/fn/selectFn";
 import type { GalleryItemSortSchema } from "~/user-gallery-item/schema/GalleryItemSortSchema";
 import type { GalleryItemWhereSchema } from "~/user-gallery-item/schema/GalleryItemWhereSchema";
 import { withUploadSelectFx } from "~/user-upload/db/withUploadSelectFx";
@@ -29,15 +29,15 @@ export const withGalleryItemSelectFx = Effect.fn("withGalleryItemSelectFx")(func
 
 	const { select: uploadSelect } = yield* withUploadSelectFx({});
 
-	return selectFx({
+	return selectFn({
 		select: select.select([
 			"gal_item.id",
 			"gal_item.galleryId",
 			"gal_item.uploadId",
 			"gal_item.sort",
-			(eb) => {
+			(ebFn) => {
 				return jsonObjectFrom(
-					uploadSelect.whereRef("u.id", "=", eb.ref("gal_item.uploadId")).limit(1),
+					uploadSelect.whereRef("u.id", "=", ebFn.ref("gal_item.uploadId")).limit(1),
 				)
 					.$notNull()
 					.as("upload");
@@ -61,9 +61,9 @@ export const withGalleryItemSelectFx = Effect.fn("withGalleryItemSelectFx")(func
 
 				if (where.userId) {
 					const userId = where.userId;
-					query = query.where((eb) => {
-						return eb.exists(
-							eb
+					query = query.where((ebFn) => {
+						return ebFn.exists(
+							ebFn
 								.selectFrom("gallery as gal")
 								.select("gal.id")
 								.whereRef("gal.id", "=", "gal_item.galleryId")

@@ -5,10 +5,10 @@ import { withFeedQuery } from "~/buyer-feed/query/withFeedQuery";
 import { FavouriteButton } from "~/buyer-feed/ui/FavouriteButton";
 import { TransactionButton } from "~/buyer-feed/ui/TransactionButton";
 import type { ListingSchema } from "~/buyer-listing/schema/ListingSchema";
-import { useUpload } from "~/gallery/hook/useUpload";
+import { getUploadFn } from "~/gallery/fn/getUploadFn";
 import type { ListingPriceSchema } from "~/listing/schema/ListingPriceSchema";
 import { ListingPrice } from "~/listing/ui/ListingPrice";
-import { getRootLogger } from "~/log/fn/getRootLogger";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
 import { useTranslator } from "~/translation/hook/useTranslator";
 import { Tx } from "~/translation/ui/Tx";
 import { useRenderLogger } from "~/ui/hook/useRenderLogger";
@@ -29,11 +29,11 @@ export namespace HeroSection {
 
 export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, view }) => {
 	const translator = useTranslator();
-	const hero = useUpload(listing.withImageUrl);
+	const hero = getUploadFn(listing.withImageUrl);
 	const { data: feed } = withFeedQuery.useFetchQuery(feedId);
 
 	useRenderLogger({
-		logger: getRootLogger(),
+		logger: getRootLoggerFn(),
 		name: "HeroSection",
 		meta: {
 			listingId: listing.id,
@@ -75,7 +75,7 @@ export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, view }) =>
 					src={hero}
 					alt={`Hero image for listing ${listing.id}`}
 					data-action={"open listing gallery"}
-					onClick={() => view.set("gallery")}
+					onClick={() => view.setFn("gallery")}
 					data-ui-round="default"
 					className={"h-64"}
 				/>
@@ -107,12 +107,12 @@ export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, view }) =>
 				<Container>
 					<Group>
 						<LabelValue
-							textLabel={translator.text("Listing price (label)")}
+							textLabel={translator.textFn("Listing price (label)")}
 							textValue={<ListingPrice price={listing as ListingPriceSchema.Type} />}
 						/>
 
 						<LabelValue
-							textLabel={translator.text("Listing location (label)")}
+							textLabel={translator.textFn("Listing location (label)")}
 							textValue={listing.location.address}
 							textValueProps={{
 								"data-ui-truncate": false,

@@ -1,12 +1,12 @@
 import { Effect } from "effect";
 import type { UserEventTableSchema } from "~/database/schema/UserEventTableSchema";
 import { getLoggerFx } from "~/log/fx/getLoggerFx";
-import { clamp } from "~/number/fn/clamp";
-import { median } from "~/number/fn/median";
-import { p90 } from "~/number/fn/p90";
+import { clampFn } from "~/number/fn/clampFn";
+import { medianFn } from "~/number/fn/medianFn";
+import { p90Fn } from "~/number/fn/p90Fn";
 import type { UserEventBuyerSchema } from "~/seller-user-event/schema/UserEventBuyerSchema";
+import { computeLoadFn } from "~/user-event/fn/computeLoadFn";
 import { computeActivityFx } from "~/user-event/fx/computeActivityFx";
-import { computeLoad } from "~/user-event/fx/computeLoad";
 import { userEventCollectionFx } from "~/user-event/fx/userEventCollectionFx";
 import type { ActivityEnumSchema } from "~/user-event/schema/ActivityEnumSchema";
 import type { LoadEnumSchema } from "~/user-event/schema/LoadEnumSchema";
@@ -31,7 +31,7 @@ export namespace userEventBuyerInfoFx {
  * 3a. If transaction.closed/rejected (foreign scope) before buyer reacts -> terminal
  * 3b. If transaction.message/closed/rejected (user scope) after open -> reaction (records delta from open)
  */
-export const computeBuyerReaction = (source: UserEventTableSchema.Type[]) => {
+export const computeBuyerReactionFn = (source: UserEventTableSchema.Type[]) => {
 	let total = 0; // transaction.create (user)
 	let reactions = 0;
 	let terminal = 0;
@@ -43,7 +43,7 @@ export const computeBuyerReaction = (source: UserEventTableSchema.Type[]) => {
 	let openAtMs: number | null = null;
 	let done = false; // group resolved (reacted or terminal)
 
-	const flushGroup = () => {
+	const flushGroupFn = () => {
 		currentGroup = null;
 
 		created = false;
@@ -51,11 +51,11 @@ export const computeBuyerReaction = (source: UserEventTableSchema.Type[]) => {
 		done = false;
 	};
 
-	const isSellerTerminal = (event: UserEventTableSchema.Type) =>
+	const isSellerTerminalFn = (event: UserEventTableSchema.Type) =>
 		(event.event === "transaction.closed" || event.event === "transaction.rejected") &&
 		event.scope === "foreign";
 
-	const isBuyerReaction = (event: UserEventTableSchema.Type) =>
+	const isBuyerReactionFn = (event: UserEventTableSchema.Type) =>
 		event.scope === "user" &&
 		(event.event === "transaction.message" ||
 			event.event === "transaction.closed" ||
@@ -63,7 +63,7 @@ export const computeBuyerReaction = (source: UserEventTableSchema.Type[]) => {
 
 	for (const event of source) {
 		if (currentGroup !== event.group) {
-			flushGroup();
+			flushGroupFn();
 			currentGroup = event.group;
 		}
 
@@ -89,14 +89,14 @@ export const computeBuyerReaction = (source: UserEventTableSchema.Type[]) => {
 		}
 
 		// seller ended before buyer could react
-		if (isSellerTerminal(event)) {
+		if (isSellerTerminalFn(event)) {
 			terminal++;
 			done = true;
 			continue;
 		}
 
 		// first buyer reaction after open => reacted (message OR close/reject)
-		if (isBuyerReaction(event)) {
+		if (isBuyerReactionFn(event)) {
 			if (openAtMs == null) continue;
 			if (createdAt < openAtMs) continue;
 
@@ -113,8 +113,8 @@ export const computeBuyerReaction = (source: UserEventTableSchema.Type[]) => {
 		reactions,
 		terminal,
 		percent: total === 0 ? 0 : ((reactions + terminal) / total) * 100,
-		medianMs: median(deltasMs),
-		p90Ms: p90(deltasMs),
+		medianMs: medianFn(deltasMs),
+		p90Ms: p90Fn(deltasMs),
 	} satisfies UserEventBuyerSchema.Type["reaction"];
 };
 
@@ -132,7 +132,7 @@ export const computeBuyerReaction = (source: UserEventTableSchema.Type[]) => {
  * 3. Any other event between create and end (including messages) -> marks as dirty
  * 4. transaction.closed/rejected/success (user scope) - if not dirty, counts as closed (records delta from create)
  */
-export const computeBuyerCloser = (source: UserEventTableSchema.Type[]) => {
+export const computeBuyerCloserFn = (source: UserEventTableSchema.Type[]) => {
 	let total = 0; // transaction.create (user)
 	let closed = 0;
 	const deltasMs: number[] = [];
@@ -145,7 +145,7 @@ export const computeBuyerCloser = (source: UserEventTableSchema.Type[]) => {
 	let dirty = false;
 	let done = false;
 
-	const flushGroup = () => {
+	const flushGroupFn = () => {
 		currentGroup = null;
 
 		created = false;
@@ -155,10 +155,10 @@ export const computeBuyerCloser = (source: UserEventTableSchema.Type[]) => {
 		done = false;
 	};
 
-	const isAllowedBetween = (event: UserEventTableSchema.Type) =>
+	const isAllowedBetweenFn = (event: UserEventTableSchema.Type) =>
 		event.event === "transaction.open" && event.scope === "foreign";
 
-	const isEnd = (event: UserEventTableSchema.Type) =>
+	const isEndFn = (event: UserEventTableSchema.Type) =>
 		event.scope === "user" &&
 		(event.event === "transaction.closed" ||
 			event.event === "transaction.rejected" ||
@@ -166,7 +166,7 @@ export const computeBuyerCloser = (source: UserEventTableSchema.Type[]) => {
 
 	for (const event of source) {
 		if (currentGroup !== event.group) {
-			flushGroup();
+			flushGroupFn();
 			currentGroup = event.group;
 		}
 
@@ -194,7 +194,7 @@ export const computeBuyerCloser = (source: UserEventTableSchema.Type[]) => {
 			continue;
 		}
 
-		if (isEnd(event)) {
+		if (isEndFn(event)) {
 			done = true;
 
 			if (!dirty) {
@@ -205,7 +205,7 @@ export const computeBuyerCloser = (source: UserEventTableSchema.Type[]) => {
 		}
 
 		// anything else between create and end makes it dirty (messages included)
-		if (!isAllowedBetween(event)) {
+		if (!isAllowedBetweenFn(event)) {
 			dirty = true;
 		}
 	}
@@ -216,8 +216,8 @@ export const computeBuyerCloser = (source: UserEventTableSchema.Type[]) => {
 		total,
 		closed,
 		percent: total === 0 ? 0 : (closed / total) * 100,
-		medianMs: median(deltasMs),
-		p90Ms: p90(deltasMs),
+		medianMs: medianFn(deltasMs),
+		p90Ms: p90Fn(deltasMs),
 	} satisfies UserEventBuyerSchema.Type["closer"];
 };
 
@@ -234,7 +234,7 @@ export const computeBuyerCloser = (source: UserEventTableSchema.Type[]) => {
  * 2a. If transaction.closed/rejected (foreign scope) -> terminal (seller ended, buyer had no choice)
  * 2b. If transaction.success/closed (user scope) -> decision (buyer made explicit decision)
  */
-export const computeBuyerDecision = (source: UserEventTableSchema.Type[]) => {
+export const computeBuyerDecisionFn = (source: UserEventTableSchema.Type[]) => {
 	let total = 0; // transaction.create (user)
 	let decisions = 0;
 	let terminal = 0;
@@ -244,24 +244,24 @@ export const computeBuyerDecision = (source: UserEventTableSchema.Type[]) => {
 	let created = false; // counted total for this group
 	let done = false; // group resolved (decision OR terminal)
 
-	const flushGroup = () => {
+	const flushGroupFn = () => {
 		currentGroup = null;
 
 		created = false;
 		done = false;
 	};
 
-	const isSellerTerminal = (event: UserEventTableSchema.Type) =>
+	const isSellerTerminalFn = (event: UserEventTableSchema.Type) =>
 		(event.event === "transaction.closed" || event.event === "transaction.rejected") &&
 		event.scope === "foreign";
 
-	const isBuyerDecision = (event: UserEventTableSchema.Type) =>
+	const isBuyerDecisionFn = (event: UserEventTableSchema.Type) =>
 		event.scope === "user" &&
 		(event.event === "transaction.success" || event.event === "transaction.closed");
 
 	for (const event of source) {
 		if (currentGroup !== event.group) {
-			flushGroup();
+			flushGroupFn();
 			currentGroup = event.group;
 		}
 
@@ -279,14 +279,14 @@ export const computeBuyerDecision = (source: UserEventTableSchema.Type[]) => {
 		}
 
 		// seller ended it -> buyer had no choice
-		if (isSellerTerminal(event)) {
+		if (isSellerTerminalFn(event)) {
 			terminal++;
 			done = true;
 			continue;
 		}
 
 		// buyer explicit decision
-		if (isBuyerDecision(event)) {
+		if (isBuyerDecisionFn(event)) {
 			decisions++;
 			done = true;
 		}
@@ -315,7 +315,7 @@ export const computeBuyerDecision = (source: UserEventTableSchema.Type[]) => {
  * 4a. If transaction.message/closed/rejected/success (user scope) after ping -> disqualifies from expired
  * 4b. If transaction.expired/resolved (foreign scope) after ping without buyer action -> expired
  */
-export const computeBuyerExpired = (source: UserEventTableSchema.Type[]) => {
+export const computeBuyerExpiredFn = (source: UserEventTableSchema.Type[]) => {
 	let total = 0; // transaction.create (user)
 	let expired = 0; // transaction.expired OR transaction.resolved (foreign) without buyer action after seller ping
 	let currentGroup: string | null = null;
@@ -324,7 +324,7 @@ export const computeBuyerExpired = (source: UserEventTableSchema.Type[]) => {
 	let pingAtMs: number | null = null; // seller "ping" moment: open OR last foreign message
 	let done = false;
 
-	const flushGroup = () => {
+	const flushGroupFn = () => {
 		currentGroup = null;
 
 		created = false;
@@ -332,18 +332,18 @@ export const computeBuyerExpired = (source: UserEventTableSchema.Type[]) => {
 		done = false;
 	};
 
-	const isSellerOpen = (event: UserEventTableSchema.Type) =>
+	const isSellerOpenFn = (event: UserEventTableSchema.Type) =>
 		event.event === "transaction.open" && event.scope === "foreign";
 
-	const isSellerMessage = (event: UserEventTableSchema.Type) =>
+	const isSellerMessageFn = (event: UserEventTableSchema.Type) =>
 		event.event === "transaction.message" && event.scope === "foreign";
 
-	const isSellerEnd = (event: UserEventTableSchema.Type) =>
+	const isSellerEndFn = (event: UserEventTableSchema.Type) =>
 		(event.event === "transaction.expired" || event.event === "transaction.resolved") &&
 		event.scope === "foreign";
 
 	// buyer "did something" after ping -> not ghost
-	const isBuyerAction = (event: UserEventTableSchema.Type) =>
+	const isBuyerActionFn = (event: UserEventTableSchema.Type) =>
 		event.scope === "user" &&
 		(event.event === "transaction.message" ||
 			event.event === "transaction.closed" ||
@@ -352,7 +352,7 @@ export const computeBuyerExpired = (source: UserEventTableSchema.Type[]) => {
 
 	for (const event of source) {
 		if (currentGroup !== event.group) {
-			flushGroup();
+			flushGroupFn();
 			currentGroup = event.group;
 		}
 
@@ -372,21 +372,21 @@ export const computeBuyerExpired = (source: UserEventTableSchema.Type[]) => {
 		}
 
 		// seller "ping" starts (or updates) the expectation window
-		if (isSellerOpen(event)) {
+		if (isSellerOpenFn(event)) {
 			if (pingAtMs === null) {
 				pingAtMs = createdAt;
 			}
 			continue;
 		}
 
-		if (pingAtMs != null && isSellerMessage(event)) {
+		if (pingAtMs != null && isSellerMessageFn(event)) {
 			// seller nudged -> reset ping moment
 			pingAtMs = createdAt;
 			continue;
 		}
 
 		// buyer acted after ping -> disqualify
-		if (pingAtMs != null && isBuyerAction(event)) {
+		if (pingAtMs != null && isBuyerActionFn(event)) {
 			if (createdAt >= pingAtMs) {
 				done = true;
 			}
@@ -394,7 +394,7 @@ export const computeBuyerExpired = (source: UserEventTableSchema.Type[]) => {
 		}
 
 		// seller ended as expired/resolved -> count only if we had a ping and buyer didn't act after it
-		if (pingAtMs != null && isSellerEnd(event)) {
+		if (pingAtMs != null && isSellerEndFn(event)) {
 			expired++;
 			done = true;
 		}
@@ -407,7 +407,7 @@ export const computeBuyerExpired = (source: UserEventTableSchema.Type[]) => {
 	} satisfies UserEventBuyerSchema.Type["expired"];
 };
 
-export const computeBuyerScore = (input: {
+export const computeBuyerScoreFn = (input: {
 	reaction: UserEventBuyerSchema.Type["reaction"];
 	decision: UserEventBuyerSchema.Type["decision"];
 	closer: UserEventBuyerSchema.Type["closer"];
@@ -417,13 +417,13 @@ export const computeBuyerScore = (input: {
 }) => {
 	const { reaction, decision, closer, expired, activity, load } = input;
 
-	const bonusActivity = (bucket: ActivityEnumSchema.Type) =>
+	const bonusActivityFn = (bucket: ActivityEnumSchema.Type) =>
 		bucket === "high" ? 2 : bucket === "medium" ? 1 : 0;
 
-	const bonusLoad = (bucket: LoadEnumSchema.Type) =>
+	const bonusLoadFn = (bucket: LoadEnumSchema.Type) =>
 		bucket === "low" ? 2 : bucket === "medium" ? 1 : 0;
 
-	const bonusReactionSpeed = (reaction: { reactions: number; medianMs: number }) => {
+	const bonusReactionSpeedFn = (reaction: { reactions: number; medianMs: number }) => {
 		// bonus only if we actually have reaction samples
 		if (reaction.reactions <= 0) {
 			return 0;
@@ -447,23 +447,23 @@ export const computeBuyerScore = (input: {
 	};
 
 	// positives
-	const decisionPoints = clamp(decision.percent, 0, 100) * 0.55; // 0..55
-	const reactionPoints = clamp(reaction.percent, 0, 100) * 0.25; // 0..25
+	const decisionPoints = clampFn(decision.percent, 0, 100) * 0.55; // 0..55
+	const reactionPoints = clampFn(reaction.percent, 0, 100) * 0.25; // 0..25
 
 	const closerOver = Math.max(0, closer.percent - 10); // allow up to 10%
-	const closerPenalty = clamp(closerOver, 0, 100) * 0.25; // 0..25
+	const closerPenalty = clampFn(closerOver, 0, 100) * 0.25; // 0..25
 
 	const expiredOver = Math.max(0, expired.percent - 10); // allow up to 10%
-	const expiredPenalty = clamp(expiredOver, 0, 100) * 0.1; // 0..10
+	const expiredPenalty = clampFn(expiredOver, 0, 100) * 0.1; // 0..10
 
 	// micro context
-	const micro = bonusActivity(activity.bucket) + bonusLoad(load.bucket); // 0..4
+	const micro = bonusActivityFn(activity.bucket) + bonusLoadFn(load.bucket); // 0..4
 
 	// speed bonus
-	const speed = bonusReactionSpeed(reaction); // 0..6
+	const speed = bonusReactionSpeedFn(reaction); // 0..6
 
 	const raw = decisionPoints + reactionPoints + micro + speed - closerPenalty - expiredPenalty;
-	const score = clamp(Math.round(raw), 0, 100);
+	const score = clampFn(Math.round(raw), 0, 100);
 
 	return {
 		score,
@@ -524,11 +524,11 @@ export const userEventBuyerInfoFx = Effect.fn("userEventBuyerInfoFx")(function* 
 	}
 
 	const result: Omit<UserEventBuyerSchema.Type, "score"> = {
-		reaction: computeBuyerReaction(source),
-		closer: computeBuyerCloser(source),
-		decision: computeBuyerDecision(source),
-		expired: computeBuyerExpired(source),
-		load: computeLoad({
+		reaction: computeBuyerReactionFn(source),
+		closer: computeBuyerCloserFn(source),
+		decision: computeBuyerDecisionFn(source),
+		expired: computeBuyerExpiredFn(source),
+		load: computeLoadFn({
 			source,
 			createScope: "user",
 		}),
@@ -540,6 +540,6 @@ export const userEventBuyerInfoFx = Effect.fn("userEventBuyerInfoFx")(function* 
 
 	return {
 		...result,
-		score: computeBuyerScore(result),
+		score: computeBuyerScoreFn(result),
 	} satisfies UserEventBuyerSchema.Type;
 });

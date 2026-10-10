@@ -1,15 +1,15 @@
 import { withListingAttrOfQuery } from "~/listing-attr/query/withListingAttrOfQuery";
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withMutation } from "~/mutation/fn/withMutation";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withMutationFn } from "~/mutation/fn/withMutationFn";
 import { listingAttrEnumSinglePatchFn } from "~/seller-listing-attr-enum-single/fn/listingAttrEnumSinglePatchFn";
 import type { ListingAttrEnumSinglePatchSchema } from "~/seller-listing-attr-enum-single/schema/ListingAttrEnumSinglePatchSchema";
 
-export const withListingAttrEnumSinglePatchMutation = withMutation({
-	logger: getRootLogger([
+export const withListingAttrEnumSinglePatchMutation = withMutationFn({
+	logger: getRootLoggerFn([
 		"mutation",
 		"withListingAttrEnumSinglePatchMutation",
 	]),
-	keys(variables: ListingAttrEnumSinglePatchSchema.Type) {
+	keysFn(variables: ListingAttrEnumSinglePatchSchema.Type) {
 		return [
 			"listing-attr",
 			"enum-single",

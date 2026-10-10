@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import type { FavouriteSchema } from "~/database/schema/ActivityTableFavouriteSchema";
-import { toTimeDiff } from "~/date/fn/toTimeDiff";
-import { useUpload } from "~/gallery/hook/useUpload";
+import { toTimeDiffFn } from "~/date/fn/toTimeDiffFn";
+import { getUploadFn } from "~/gallery/fn/getUploadFn";
 import { ListItem } from "~/list-item/ui/ListItem";
 import { useLocale } from "~/locale/hook/useLocale";
 import { withListingQuery } from "~/public-listing/query/withListingQuery";
@@ -19,7 +19,7 @@ export namespace ActivityFavouriteItem {
 export const ActivityFavouriteItem: FC<ActivityFavouriteItem.Props> = ({ item }) => {
 	const locale = useLocale();
 	const { data: listing } = withListingQuery.useFetchQuery(item.payload.listingId);
-	const hero = useUpload(listing.withImageUrl);
+	const hero = getUploadFn(listing.withImageUrl);
 	const patchMutation = withActivityQuery.usePatchMutation({
 		invalidate: [],
 	});
@@ -40,7 +40,7 @@ export const ActivityFavouriteItem: FC<ActivityFavouriteItem.Props> = ({ item })
 				<Container data-ui-flow="vertical">
 					<Typo label={"listing.title"} />
 					<Typo
-						label={toTimeDiff({
+						label={toTimeDiffFn({
 							locale,
 							time: item.timestamp,
 						})}

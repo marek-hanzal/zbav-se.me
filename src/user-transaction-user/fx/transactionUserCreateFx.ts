@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import { dbFx } from "~/database/fx/dbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { DateServiceFx } from "~/date/service/DateServiceFx";
-import { genId } from "~/identity/fn/genId";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import type { TransactionSideEnumSchema } from "~/transaction-contract/schema/TransactionSideEnumSchema";
 
@@ -31,14 +31,14 @@ export const transactionUserCreateFx = Effect.fn("transactionUserCreateFx")(func
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const dateService = yield* DateServiceFx;
-			const createdAt = dateService.now().toJSDate();
+			const createdAt = dateService.nowFn().toJSDate();
 
 			yield* dbFx(async (kysely) => {
 				return kysely
 					.insertInto("transaction_user")
 					.values(
 						users.map(({ userId, side }) => ({
-							id: genId(),
+							id: genIdFn(),
 							transactionId,
 							userId,
 							side,

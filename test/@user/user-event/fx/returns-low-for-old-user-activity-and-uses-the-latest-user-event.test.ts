@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import type { UserEventTableSchema } from "~/database/schema/UserEventTableSchema";
-import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
 import { computeActivityFx } from "~/user-event/fx/computeActivityFx";
 
 interface CreateEventProps {
@@ -11,7 +11,7 @@ interface CreateEventProps {
 	scope: UserEventTableSchema.Type["scope"];
 }
 
-function createEvent({ id, createdAt, scope }: CreateEventProps): UserEventTableSchema.Type {
+function createEventFn({ id, createdAt, scope }: CreateEventProps): UserEventTableSchema.Type {
 	return {
 		id,
 		userId: "user-1",
@@ -32,21 +32,21 @@ describe("computeActivityFx", () => {
 			Effect.runSync(
 				computeActivityFx({
 					source: [
-						createEvent({
+						createEventFn({
 							id: "user-old",
 							createdAt: now.minus({
 								days: 80,
 							}),
 							scope: "user",
 						}),
-						createEvent({
+						createEventFn({
 							id: "user-latest",
 							createdAt: now.minus({
 								days: 61,
 							}),
 							scope: "user",
 						}),
-						createEvent({
+						createEventFn({
 							id: "foreign-newer",
 							createdAt: now.minus({
 								days: 1,
@@ -56,8 +56,8 @@ describe("computeActivityFx", () => {
 					],
 					days: 90,
 				}).pipe(
-					withDateServiceFx({
-						now: () => now,
+					withDateServiceFn({
+						nowFn: () => now,
 					}),
 				),
 			),

@@ -3,7 +3,7 @@ import { z } from "zod";
 import { useAppForm } from "~/application-ui/hook/form.exports";
 import { Dial } from "~/application-ui/ui/Dial/index";
 import { SaveContainer } from "~/container/ui/SaveContainer";
-import { useNextAttr } from "~/seller-draft/ui/Editor/useNextAttr";
+import { getNextAttrFn } from "~/seller-draft/fn/getNextAttrFn";
 import { withDraftAttrDecimalPatchMutation } from "~/seller-draft-attr-decimal/mutation/withDraftAttrDecimalPatchMutation";
 import { useTranslator } from "~/translation/hook/useTranslator";
 import { Tx } from "~/translation/ui/Tx";
@@ -34,10 +34,10 @@ export namespace AttrDecimal {
 
 export const AttrDecimal: FC<AttrDecimal.Props> = ({ draftId, attrs, attr, view, ...props }) => {
 	const translator = useTranslator();
-	const next = useNextAttr(attr, attrs);
+	const next = getNextAttrFn(attr, attrs);
 	const mutation = withDraftAttrDecimalPatchMutation.useMutation({
 		onSuccess() {
-			view.set(next ? `attr.${next.name}` : "default");
+			view.setFn(next ? `attr.${next.name}` : "default");
 		},
 	});
 	const form = useAppForm({
@@ -75,11 +75,11 @@ export const AttrDecimal: FC<AttrDecimal.Props> = ({ draftId, attrs, attr, view,
 						value={
 							typeof props.state.value === "number" ? props.state.value : undefined
 						}
-						onChange={(value) => {
+						onChangeFn={(value) => {
 							props.handleChange(value ?? null);
 							props.handleBlur();
 						}}
-						placeholder={translator.text("Price (placeholder)")}
+						placeholder={translator.textFn("Price (placeholder)")}
 						allowDecimals
 						data-ui-inner="default"
 					/>
@@ -94,10 +94,10 @@ export const AttrDecimal: FC<AttrDecimal.Props> = ({ draftId, attrs, attr, view,
 			>
 				{({ isValid, isSubmitting }) => (
 					<SaveContainer
-						onCancel={() => {
-							view.set("default");
+						onCancelFn={() => {
+							view.setFn("default");
 						}}
-						onSave={() => {
+						onSaveFn={() => {
 							form.handleSubmit();
 						}}
 						loading={isSubmitting}

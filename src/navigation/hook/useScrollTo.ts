@@ -20,7 +20,7 @@ export namespace useScrollTo {
  * Requires a scrollable container ref.
  */
 export function useScrollTo(containerRef: RefObject<HTMLElement | null>) {
-	const scrollTo = useCallback(
+	const scrollToFn = useCallback(
 		(selector: string, opts: useScrollTo.Options = {}) => {
 			const { index = 0, behavior = "smooth", axis = "y", offset = 0 } = opts;
 
@@ -85,5 +85,5 @@ export function useScrollTo(containerRef: RefObject<HTMLElement | null>) {
 		],
 	);
 
-	return scrollTo;
+	return scrollToFn;
 }

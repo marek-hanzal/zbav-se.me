@@ -1,5 +1,5 @@
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withEntityQuery } from "~/query/fn/withEntityQuery";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withEntityQueryFn } from "~/query/fn/withEntityQueryFn";
 import { uploadCollectionFn } from "~/user-upload/fn/uploadCollectionFn";
 import { uploadCountFn } from "~/user-upload/fn/uploadCountFn";
 import { uploadCreateFn } from "~/user-upload/fn/uploadCreateFn";
@@ -9,8 +9,8 @@ import type { UploadCreateSchema } from "~/user-upload/schema/UploadCreateSchema
 import type { UploadQuerySchema } from "~/user-upload/schema/UploadQuerySchema";
 import type { UploadSchema } from "~/user-upload/schema/UploadSchema";
 
-export const withUploadQuery = withEntityQuery({
-	logger: getRootLogger([
+export const withUploadQuery = withEntityQueryFn({
+	logger: getRootLoggerFn([
 		"query",
 		"withUploadQuery",
 	]),
@@ -23,12 +23,12 @@ export const withUploadQuery = withEntityQuery({
 		delete: Error;
 		patchCollection: Error;
 	},
-	keys() {
+	keysFn() {
 		return [
 			"upload",
 		];
 	},
-	toIdKey(id): UploadQuerySchema.Type {
+	toIdKeyFn(id): UploadQuerySchema.Type {
 		return {
 			where: {
 				id,

@@ -42,7 +42,7 @@ export const AttrNumericMax: FC<AttrNumericMax.Props> = ({ feed, field, attr, vi
 	const translator = useTranslator();
 	const mutation = withFeedQuery.usePatchMutation({
 		onSuccess() {
-			view.set("default");
+			view.setFn("default");
 		},
 	});
 	const form = useAppForm({
@@ -99,11 +99,11 @@ export const AttrNumericMax: FC<AttrNumericMax.Props> = ({ feed, field, attr, vi
 						value={
 							typeof props.state.value === "number" ? props.state.value : undefined
 						}
-						onChange={(value) => {
+						onChangeFn={(value) => {
 							props.handleChange(value ?? null);
 							props.handleBlur();
 						}}
-						placeholder={translator.text("Range minimum (placeholder)")}
+						placeholder={translator.textFn("Range minimum (placeholder)")}
 						allowDecimals={field.type === "decimal"}
 					/>
 				)}
@@ -117,10 +117,10 @@ export const AttrNumericMax: FC<AttrNumericMax.Props> = ({ feed, field, attr, vi
 			>
 				{({ isValid, isSubmitting }) => (
 					<SaveContainer
-						onCancel={() => {
-							view.set("default");
+						onCancelFn={() => {
+							view.setFn("default");
 						}}
-						onSave={() => {
+						onSaveFn={() => {
 							form.handleSubmit();
 						}}
 						loading={isSubmitting}

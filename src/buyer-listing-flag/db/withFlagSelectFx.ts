@@ -3,7 +3,7 @@ import { match } from "ts-pattern";
 import type { FlagSortSchema } from "~/buyer-listing-flag/schema/FlagSortSchema";
 import type { FlagWhereSchema } from "~/buyer-listing-flag/schema/FlagWhereSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { selectFx } from "~/database-query/fx/selectFx";
+import { selectFn } from "~/database-query/fn/selectFn";
 
 export namespace withFlagSelectFx {
 	export interface Props {
@@ -24,7 +24,7 @@ export const withFlagSelectFx = Effect.fn("withFlagSelectFx")(function* ({
 			.exhaustive();
 	}
 
-	return selectFx({
+	return selectFn({
 		select: query.select([
 			"f.id",
 			"f.listingId",

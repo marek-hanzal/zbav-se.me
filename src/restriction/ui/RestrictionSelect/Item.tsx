@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { uiSelectButton } from "~/application-ui/fn/ui.exports";
+import { uiSelectButtonFn } from "~/application-ui/fn/ui.exports";
 import type { EntitySchema } from "~/entity/schema/EntitySchema";
 import type { useSelection } from "~/selection/hook/useSelection";
 import { Tx } from "~/translation/ui/Tx";
@@ -17,18 +17,18 @@ export const Item: FC<Item.Props> = ({ restriction, allowClear, selection }) => 
 	const item = {
 		id: restriction,
 	};
-	const isSelected = selection.isSelected(restriction);
+	const isSelected = selection.isSelectedFn(restriction);
 
 	return (
 		<Button
 			onClick={() => {
 				if (allowClear) {
-					selection.toggle(item);
+					selection.toggleFn(item);
 					return;
 				}
-				selection.single(item);
+				selection.singleFn(item);
 			}}
-			{...uiSelectButton({
+			{...uiSelectButtonFn({
 				isSelected,
 				"data-ui-flow": "vertical",
 				"data-ui-items": "start",

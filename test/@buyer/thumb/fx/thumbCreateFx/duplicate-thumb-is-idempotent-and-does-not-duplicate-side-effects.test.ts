@@ -1,14 +1,14 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { thumbCreateFx } from "~/buyer-thumb/fx/thumbCreateFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("thumbCreateFx", () => {
 	it("is idempotent on duplicate thumb creation and does not duplicate side effects", async () => {
-		const database = await testabase("thumbCreate-idempotent");
+		const database = await testabaseFn("thumbCreate-idempotent");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -67,6 +67,6 @@ describe("thumbCreateFx", () => {
 			});
 			expect(events).toHaveLength(1);
 			expect(activityItems).toHaveLength(1);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

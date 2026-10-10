@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { uiSelectButton } from "~/application-ui/fn/ui.exports";
+import { uiSelectButtonFn } from "~/application-ui/fn/ui.exports";
 import { DeliveryEnumSchema } from "~/delivery/schema/DeliveryEnumSchema";
 import type { EntitySchema } from "~/entity/schema/EntitySchema";
 import type { useSelection } from "~/selection/hook/useSelection";
@@ -31,15 +31,15 @@ export const DeliverySelect: FC<DeliverySelect.Props> = ({ selection, ...props }
 				const item = {
 					id: delivery,
 				};
-				const isSelected = selection.isSelected(delivery);
+				const isSelected = selection.isSelectedFn(delivery);
 
 				return (
 					<Button
 						key={delivery}
 						onClick={() => {
-							selection.toggle(item);
+							selection.toggleFn(item);
 						}}
-						{...uiSelectButton({
+						{...uiSelectButtonFn({
 							isSelected,
 							"data-ui-flow": "horizontal",
 							"data-ui-justify": "start",

@@ -1,13 +1,13 @@
 import { Effect } from "effect";
 import { describe, it } from "vitest";
 import { listingGetSellerInfoFx } from "~/buyer-listing/fx/listingGetSellerInfoFx";
-import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { expectTaggedErrorFn } from "~/test/common/fx/expectTaggedErrorFn";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 
 describe("listingGetSellerInfoFx", () => {
 	it("fails with not found for a missing listing", async () => {
-		const database = await testabase("listingGetSellerInfoFx-missing-listing");
+		const database = await testabaseFn("listingGetSellerInfoFx-missing-listing");
 
 		return Effect.gen(function* () {
 			const result = yield* Effect.result(
@@ -16,10 +16,10 @@ describe("listingGetSellerInfoFx", () => {
 				}),
 			);
 
-			expectTaggedErrorFx(result, {
+			expectTaggedErrorFn(result, {
 				tag: "NotFoundErrorFx",
 				message: "Seller info not available",
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

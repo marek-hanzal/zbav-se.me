@@ -51,7 +51,7 @@ export const transactionUpdateStatusFx = Effect.fn("transactionUpdateStatusFx")(
 	});
 
 	const dateService = yield* DateServiceFx;
-	const now = dateService.now().toJSDate();
+	const now = dateService.nowFn().toJSDate();
 
 	yield* dbFx(async (kysely) => {
 		return kysely

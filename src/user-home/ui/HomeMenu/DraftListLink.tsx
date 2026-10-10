@@ -1,40 +1,40 @@
 import { DraftIcon } from "~/application-ui/constant/icon.exports";
-import { uiMenuButton } from "~/application-ui/fn/ui.exports";
+import { uiMenuButtonFn } from "~/application-ui/fn/ui.exports";
 import { TypoIcon } from "~/application-ui/ui/typo.exports";
 import { useLocale } from "~/locale/hook/useLocale";
 import { Tx } from "~/translation/ui/Tx";
 import { ChevronRightIcon } from "~/ui/constant/ChevronRightIcon";
-import type { uiLinkTo } from "~/ui/fn/uiLinkTo";
-import { withFallback } from "~/ui/fn/withFallback";
+import type { uiLinkToFn } from "~/ui/fn/uiLinkToFn";
+import { withFallbackFn } from "~/ui/fn/withFallbackFn";
 import type { MarkSuspense } from "~/ui/type/MarkSuspense";
 import { LinkTo } from "~/ui/ui/LinkTo";
 
 export namespace DraftListLink {
 	export interface Props
-		extends uiLinkTo.Component<Pick<LinkTo.Props, "iconProps">>,
+		extends uiLinkToFn.Component<Pick<LinkTo.Props, "iconProps">>,
 			MarkSuspense.Props {
 		//
 	}
 }
 
-export const DraftListLink = withFallback(
+export const DraftListLink = withFallbackFn(
 	({ _suspense, ...props }: DraftListLink.Props) => {
 		const locale = useLocale();
 
 		return (
 			<LinkTo
 				data-action={"open draft list"}
-				{...uiMenuButton({})}
+				{...uiMenuButtonFn({})}
 				icon={DraftIcon}
 				to="/$locale/app/seller/draft/list"
 				params={{
 					locale,
 				}}
-				activeProps={uiMenuButton({
+				activeProps={uiMenuButtonFn({
 					"data-ui-tone": "primary",
 					"data-ui-theme": "light",
 				})}
-				{...uiMenuButton({
+				{...uiMenuButtonFn({
 					"data-ui-tone": "neutral",
 					"data-ui-theme": "light",
 				})}
@@ -58,13 +58,13 @@ export const DraftListLink = withFallback(
 		return (
 			<LinkTo
 				data-action={"open draft list"}
-				{...uiMenuButton({})}
+				{...uiMenuButtonFn({})}
 				icon={DraftIcon}
 				to="/$locale/app/seller/draft/list"
 				params={{
 					locale,
 				}}
-				activeProps={uiMenuButton({
+				activeProps={uiMenuButtonFn({
 					"data-ui-tone": "primary",
 					"data-ui-theme": "light",
 				})}

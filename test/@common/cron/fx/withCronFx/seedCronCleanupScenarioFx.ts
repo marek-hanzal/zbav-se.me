@@ -1,10 +1,10 @@
 import { Effect } from "effect";
-import { testUploadUrl } from "~/test/common/fn/testUploadUrl";
+import { testUploadUrlFn } from "~/test/common/fn/testUploadUrlFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
-import type { testabase } from "~/test/testabase";
+import type { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
-type TestDatabase = Awaited<ReturnType<typeof testabase>>;
+type TestDatabase = Awaited<ReturnType<typeof testabaseFn>>;
 
 export namespace seedCategoryMissCleanupScenarioFx {
 	export interface Props {
@@ -199,21 +199,21 @@ export const seedUploadCleanupScenarioFx = ({
 					{
 						id: ids.stale,
 						userId: seller.id,
-						url: testUploadUrl("cron/stale.jpg"),
+						url: testUploadUrlFn("cron/stale.jpg"),
 						access: "public",
 						createdAt: new Date(cutoff.getTime() - 1_000),
 					},
 					{
 						id: ids.boundary,
 						userId: seller.id,
-						url: testUploadUrl("cron/boundary.jpg"),
+						url: testUploadUrlFn("cron/boundary.jpg"),
 						access: "public",
 						createdAt: cutoff,
 					},
 					{
 						id: ids.fresh,
 						userId: seller.id,
-						url: testUploadUrl("cron/fresh.jpg"),
+						url: testUploadUrlFn("cron/fresh.jpg"),
 						access: "public",
 						createdAt: new Date(cutoff.getTime() + 1_000),
 					},
@@ -227,14 +227,14 @@ export const seedUploadCleanupScenarioFx = ({
 					{
 						id: ids.gallery,
 						userId: seller.id,
-						url: testUploadUrl("cron/gallery.jpg"),
+						url: testUploadUrlFn("cron/gallery.jpg"),
 						access: "public",
 						createdAt: new Date(cutoff.getTime() - 1_000),
 					},
 					{
 						id: ids.feed,
 						userId: seller.id,
-						url: testUploadUrl("cron/feed.jpg"),
+						url: testUploadUrlFn("cron/feed.jpg"),
 						access: "public",
 						createdAt: new Date(cutoff.getTime() - 1_000),
 					},

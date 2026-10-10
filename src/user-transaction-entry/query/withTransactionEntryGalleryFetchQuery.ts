@@ -1,18 +1,18 @@
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withQuery } from "~/query/fn/withQuery";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withQueryFn } from "~/query/fn/withQueryFn";
 import type { GallerySchema } from "~/user-gallery/schema/GallerySchema";
 import { transactionEntryGalleryFetchFn } from "~/user-transaction-entry/fn/transactionEntryGalleryFetchFn";
 import type { TransactionEntryGalleryQuerySchema } from "~/user-transaction-entry/schema/TransactionEntryGalleryQuerySchema";
 
-export const withTransactionEntryGalleryFetchQuery = withQuery({
-	logger: getRootLogger([
+export const withTransactionEntryGalleryFetchQuery = withQueryFn({
+	logger: getRootLoggerFn([
 		"query",
 		"withTransactionEntryGalleryFetchQuery",
 	]),
 	errors: {} as {
 		query: transactionEntryGalleryFetchFn.Error;
 	},
-	keys(data: TransactionEntryGalleryQuerySchema.Type) {
+	keysFn(data: TransactionEntryGalleryQuerySchema.Type) {
 		return [
 			"transaction-entry",
 			"gallery",

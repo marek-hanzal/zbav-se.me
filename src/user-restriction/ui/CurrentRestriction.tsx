@@ -1,8 +1,8 @@
-import { toTimeDiff } from "~/date/fn/toTimeDiff";
+import { toTimeDiffFn } from "~/date/fn/toTimeDiffFn";
 import { useLocale } from "~/locale/hook/useLocale";
 import { useTranslator } from "~/translation/hook/useTranslator";
 import { Tx } from "~/translation/ui/Tx";
-import { withFallback } from "~/ui/fn/withFallback";
+import { withFallbackFn } from "~/ui/fn/withFallbackFn";
 import type { MarkSuspense } from "~/ui/type/MarkSuspense";
 import { Container } from "~/ui/ui/Container";
 import { LabelValue } from "~/ui/ui/LabelValue";
@@ -23,7 +23,7 @@ export namespace CurrentRestriction {
 	}
 }
 
-export const CurrentRestriction = withFallback(
+export const CurrentRestriction = withFallbackFn(
 	({ ...props }: CurrentRestriction.Props) => {
 		const locale = useLocale();
 		const translator = useTranslator();
@@ -41,9 +41,9 @@ export const CurrentRestriction = withFallback(
 
 		return (
 			<ValueList
-				textLabel={translator.text("Current Restriction value (label)")}
-				textEmpty={translator.text("Current Restriction value (empty)")}
-				textHint={translator.text("Current Restriction value (hint)")}
+				textLabel={translator.textFn("Current Restriction value (label)")}
+				textEmpty={translator.textFn("Current Restriction value (empty)")}
+				textHint={translator.textFn("Current Restriction value (hint)")}
 				textLabelProps={{
 					"data-ui-tone": "primary",
 					"data-ui-theme": "light",
@@ -74,7 +74,7 @@ export const CurrentRestriction = withFallback(
 									/>
 
 									<Typo
-										label={toTimeDiff({
+										label={toTimeDiffFn({
 											type: "human",
 											locale,
 											time: restriction.availableAt,
@@ -100,8 +100,8 @@ export const CurrentRestriction = withFallback(
 
 		return (
 			<LabelValue
-				textLabel={translator.text("Current Restriction value (label)")}
-				textEmpty={translator.text("Current Restriction value (empty)")}
+				textLabel={translator.textFn("Current Restriction value (label)")}
+				textEmpty={translator.textFn("Current Restriction value (empty)")}
 				textValue={<SpinnerContainer type={"icon"} />}
 				{...props}
 			/>

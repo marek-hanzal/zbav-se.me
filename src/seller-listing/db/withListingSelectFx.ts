@@ -3,8 +3,8 @@ import { sql } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { withNormalizedContainsEx } from "~/database/fn/withNormalizedContainsEx";
-import { selectFx } from "~/database-query/fx/selectFx";
+import { withNormalizedContainsExFn } from "~/database/fn/withNormalizedContainsExFn";
+import { selectFn } from "~/database-query/fn/selectFn";
 import type { DeliveryEnumSchema } from "~/delivery/schema/DeliveryEnumSchema";
 import { RestrictionEnumSchema } from "~/restriction/schema/RestrictionEnumSchema";
 import type { ListingSortSchema } from "~/seller-listing/schema/ListingSortSchema";
@@ -66,19 +66,19 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 			"l.updatedAt",
 			"l.visibleAt",
 		])
-		.select((eb) => {
-			return eb
+		.select((ebFn) => {
+			return ebFn
 				.selectFrom("location as loc")
-				.select((eb) => {
-					return sql<LocationSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("json");
+				.select((ebFn) => {
+					return sql<LocationSchema.Type>`to_jsonb(${ebFn.table("loc")}.*)`.as("json");
 				})
 				.whereRef("loc.id", "=", "l.locationId")
 				.limit(1)
 				.$castTo<LocationSchema.Type>()
 				.as("location");
 		})
-		.select((eb) => {
-			return eb
+		.select((ebFn) => {
+			return ebFn
 				.selectFrom("transaction as lt")
 				.select(sql<number>`count(*)::int`.as("count"))
 				.whereRef("lt.listingId", "=", "l.id")
@@ -86,13 +86,13 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				.$castTo<number>()
 				.as("withTransactionCount");
 		})
-		.select((eb) => {
-			return eb.fn
+		.select((ebFn) => {
+			return ebFn.fn
 				.coalesce(
-					eb
+					ebFn
 						.selectFrom("activity as i")
-						.select((eb) => {
-							return sql<number>`count(distinct ${eb.ref("i.payload")} ->> 'transactionId')::int`.as(
+						.select((ebFn) => {
+							return sql<number>`count(distinct ${ebFn.ref("i.payload")} ->> 'transactionId')::int`.as(
 								"unread",
 							);
 						})
@@ -100,22 +100,22 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 						.where("i.family", "=", "transaction")
 						.where("i.type", "=", "buyer-message")
 						.where("i.archivedAt", "is", null)
-						.where((eb) => {
-							return sql<boolean>`${eb.ref("i.reference")} @> ARRAY[${eb.ref("l.id")}]::text[]`;
+						.where((ebFn) => {
+							return sql<boolean>`${ebFn.ref("i.reference")} @> ARRAY[${ebFn.ref("l.id")}]::text[]`;
 						}),
-					eb.lit(0),
+					ebFn.lit(0),
 				)
 				.as("withUnreadCount");
 		})
-		.select((eb) => {
-			const activitySql = eb
+		.select((ebFn) => {
+			const activitySql = ebFn
 				.selectFrom("transaction_entry as te")
 				.innerJoin("transaction as lt", "lt.id", "te.transactionId")
 				.whereRef("lt.listingId", "=", "l.id")
-				.where((eb) => {
-					return eb.or([
-						eb("te.kind", "!=", "text"),
-						eb("lt.status", "!=", "interest"),
+				.where((ebFn) => {
+					return ebFn.or([
+						ebFn("te.kind", "!=", "text"),
+						ebFn("lt.status", "!=", "interest"),
 					]);
 				})
 				.orderBy("te.createdAt", "desc")
@@ -126,12 +126,12 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 					activitySql
 						.selectAll("te")
 						.select("lt.listingId as listingId")
-						.select((eb) => {
-							return eb
+						.select((ebFn) => {
+							return ebFn
 								.case()
 								.when("te.userId", "is", null)
 								.then(TransactionEntryDirectionEnumSchema.enum.system)
-								.when("te.userId", "=", eb.ref("l.userId"))
+								.when("te.userId", "=", ebFn.ref("l.userId"))
 								.then(TransactionEntryDirectionEnumSchema.enum.out)
 								.else(TransactionEntryDirectionEnumSchema.enum.in)
 								.end()
@@ -144,31 +144,33 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				activitySql.select("te.createdAt").$asScalar().$notNull().as("withLastAt"),
 			];
 		})
-		.select((eb) => {
+		.select((ebFn) => {
 			return sql<CategorySchema.Type>`
-                    to_jsonb(${eb.table("cat")}.*)
+                    to_jsonb(${ebFn.table("cat")}.*)
                     || jsonb_build_object(
                         'isRestricted',
-                        ${eb.ref("cat.restriction")} > ${restrictionSql}
+                        ${ebFn.ref("cat.restriction")} > ${restrictionSql}
                     )
                 `.as("category");
 		})
-		.select((eb) => {
-			return sql<string[]>`to_jsonb(${eb.ref("l.pros")})`.as("pros");
+		.select((ebFn) => {
+			return sql<string[]>`to_jsonb(${ebFn.ref("l.pros")})`.as("pros");
 		})
-		.select((eb) => {
-			return sql<string[]>`to_jsonb(${eb.ref("l.cons")})`.as("cons");
+		.select((ebFn) => {
+			return sql<string[]>`to_jsonb(${ebFn.ref("l.cons")})`.as("cons");
 		})
-		.select((eb) => {
-			return sql<DeliveryEnumSchema.Type[]>`to_jsonb(${eb.ref("l.delivery")})`.as("delivery");
+		.select((ebFn) => {
+			return sql<DeliveryEnumSchema.Type[]>`to_jsonb(${ebFn.ref("l.delivery")})`.as(
+				"delivery",
+			);
 		})
-		.select((eb) => {
-			return eb.fn
+		.select((ebFn) => {
+			return ebFn.fn
 				.coalesce(
 					sql<RestrictionEnumSchema.Type | null>`
                             greatest(
-                                ${eb.ref("cat.restriction")},
-                                ${eb.ref("l.restriction")}
+                                ${ebFn.ref("cat.restriction")},
+                                ${ebFn.ref("l.restriction")}
                             )
 			            `,
 					sql<RestrictionEnumSchema.Type>`${RestrictionEnumSchema.enum.none}::restriction_enum`,
@@ -188,7 +190,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 
 	query = query.orderBy("l.id", "desc");
 
-	return selectFx({
+	return selectFn({
 		select: query,
 		queryFx(select, where: ListingWhereSchema.Type) {
 			return Effect.gen(function* () {
@@ -209,17 +211,17 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				if (where.fulltext?.length) {
 					const fulltext = where.fulltext;
 
-					query = query.where((eb) => {
-						return eb.and(
+					query = query.where((ebFn) => {
+						return ebFn.and(
 							fulltext.map((term) =>
-								eb.exists(
-									eb
+								ebFn.exists(
+									ebFn
 										.selectFrom("listing_spotlight as ls")
 										.select("ls.listingId")
 										.whereRef("ls.listingId", "=", "l.id")
-										.where((eb) => {
-											return withNormalizedContainsEx(
-												eb.ref("ls.text"),
+										.where((ebFn) => {
+											return withNormalizedContainsExFn(
+												ebFn.ref("ls.text"),
 												term,
 											);
 										}),
@@ -238,9 +240,9 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				}
 
 				if (where.withTransaction) {
-					query = query.where(({ exists, selectFrom }) => {
-						return exists(
-							selectFrom("transaction as lt")
+					query = query.where(({ exists: existsFn, selectFrom: selectFromFn }) => {
+						return existsFn(
+							selectFromFn("transaction as lt")
 								.select("lt.id")
 								.whereRef("lt.listingId", "=", "l.id"),
 						);
@@ -251,25 +253,25 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 					const flow = where.flow;
 
 					if (flow === "buyer-to-seller") {
-						query = query.where((eb) => {
-							return eb.exists(
-								eb
+						query = query.where((ebFn) => {
+							return ebFn.exists(
+								ebFn
 									.selectFrom("activity as i")
 									.select("i.id")
 									.whereRef("i.userId", "=", "l.userId")
 									.where("i.family", "=", "transaction")
 									.where("i.type", "=", "buyer-message")
 									.where("i.archivedAt", "is", null)
-									.where((eb) => {
-										return sql`${eb.ref("i.reference")} @> ARRAY[${eb.ref("l.id")}]::text[]`;
+									.where((ebFn) => {
+										return sql`${ebFn.ref("i.reference")} @> ARRAY[${ebFn.ref("l.id")}]::text[]`;
 									}),
 							);
 						});
 					} else if (flow === "seller-to-buyer") {
-						query = query.where((eb) =>
-							eb.and([
-								eb.exists(
-									eb
+						query = query.where((ebFn) =>
+							ebFn.and([
+								ebFn.exists(
+									ebFn
 										.selectFrom("transaction as lt")
 										.select("lt.id")
 										.whereRef("lt.listingId", "=", "l.id")
@@ -279,26 +281,26 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 											"resolved",
 										]),
 								),
-								eb.not(
-									eb.exists(
-										eb
+								ebFn.not(
+									ebFn.exists(
+										ebFn
 											.selectFrom("activity as i")
 											.select("i.id")
 											.whereRef("i.userId", "=", "l.userId")
 											.where("i.family", "=", "transaction")
 											.where("i.type", "=", "buyer-message")
 											.where("i.archivedAt", "is", null)
-											.where((eb) => {
-												return sql`${eb.ref("i.reference")} @> ARRAY[${eb.ref("l.id")}]::text[]`;
+											.where((ebFn) => {
+												return sql`${ebFn.ref("i.reference")} @> ARRAY[${ebFn.ref("l.id")}]::text[]`;
 											}),
 									),
 								),
 							]),
 						);
 					} else if (flow === "archived") {
-						query = query.where((eb) => {
-							return eb.exists(
-								eb
+						query = query.where((ebFn) => {
+							return ebFn.exists(
+								ebFn
 									.selectFrom("transaction as lt")
 									.select("lt.id")
 									.whereRef("lt.listingId", "=", "l.id")

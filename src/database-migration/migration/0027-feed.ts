@@ -1,6 +1,6 @@
 import { sql } from "kysely";
 import type { Migration } from "kysely/migration";
-import { toEnumGuard } from "~/enum/fn/toEnumGuard";
+import { toEnumGuardFn } from "~/enum/fn/toEnumGuardFn";
 import type { FeedTypeEnumSchema } from "~/feed/schema/FeedTypeEnumSchema";
 
 export const FeedMigration: Migration = {
@@ -8,7 +8,7 @@ export const FeedMigration: Migration = {
 		await db.schema
 			.createType("feed_type_enum")
 			.asEnum(
-				toEnumGuard<FeedTypeEnumSchema.Type>()([
+				toEnumGuardFn<FeedTypeEnumSchema.Type>()([
 					"user",
 					"search",
 				] as const),

@@ -30,7 +30,7 @@ export const withCategoryMissCleanupCronFx = Effect.fn("withCategoryMissCleanupC
 						"cm.updatedAt",
 						"<=",
 						dateContext
-							.now()
+							.nowFn()
 							.minus({
 								days: 7,
 							})

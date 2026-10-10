@@ -4,14 +4,14 @@ import { feedCreateFx } from "~/buyer-feed/fx/feedCreateFx";
 import { favouriteCollectionFx } from "~/buyer-listing-favourite/fx/favouriteCollectionFx";
 import { favouriteCountFx } from "~/buyer-listing-favourite/fx/favouriteCountFx";
 import { favouriteToggleFx } from "~/buyer-listing-favourite/fx/favouriteToggleFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
 describe("favouriteCollectionFx", () => {
 	it("filters by listing and idIn while staying scoped to the current user", async () => {
-		const database = await testabase("favouriteCollectionFx-contract");
+		const database = await testabaseFn("favouriteCollectionFx-contract");
 
 		return Effect.gen(function* () {
 			const { seller, buyer, stranger } = yield* createUsersFx({});
@@ -93,6 +93,6 @@ describe("favouriteCollectionFx", () => {
 			expect(byIds[0]?.id).toBe(firstFavourite.id);
 			expect(count).toBe(1);
 			expect(strangerCollection).toEqual([]);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

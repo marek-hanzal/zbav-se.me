@@ -1,10 +1,10 @@
 import { tool } from "@openai/agents";
 import { z } from "zod";
 import { AccessEnumSchema } from "~/access/schema/AccessEnumSchema";
-import { getRootLogger } from "~/log/fn/getRootLogger";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
 import { uploadCreateFn } from "~/user-upload/fn/uploadCreateFn";
 
-const logger = getRootLogger([
+const logger = getRootLoggerFn([
 	"tool",
 	"toolUploadCreate",
 ]);

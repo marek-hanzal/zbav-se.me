@@ -1,5 +1,5 @@
-import { getRootLogger } from "~/log/fn/getRootLogger";
-import { withMutation } from "~/mutation/fn/withMutation";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
+import { withMutationFn } from "~/mutation/fn/withMutationFn";
 import { authClient } from "~/user-auth/service/authClient";
 
 export namespace withPasswordResetRequestMutation {
@@ -9,16 +9,16 @@ export namespace withPasswordResetRequestMutation {
 	}
 }
 
-export const withPasswordResetRequestMutation = withMutation<
+export const withPasswordResetRequestMutation = withMutationFn<
 	withPasswordResetRequestMutation.Props,
 	unknown,
 	Error
 >({
-	logger: getRootLogger([
+	logger: getRootLoggerFn([
 		"mutation",
 		"withPasswordResetRequestMutation",
 	]),
-	keys(variables) {
+	keysFn(variables) {
 		return [
 			"password-reset",
 			"request",

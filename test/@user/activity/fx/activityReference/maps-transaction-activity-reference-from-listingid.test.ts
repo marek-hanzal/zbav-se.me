@@ -1,14 +1,14 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionCreateFx } from "~/buyer-transaction/fx/transactionCreateFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
-import { testabase } from "~/test/testabase";
+import { testabaseFn } from "~/test/testabaseFn";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("activity reference", () => {
 	it("maps transaction activity reference from listingId", async () => {
-		const database = await testabase("activityReference-transaction-create");
+		const database = await testabaseFn("activityReference-transaction-create");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -40,6 +40,6 @@ describe("activity reference", () => {
 				listing.id,
 				transaction.id,
 			]);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

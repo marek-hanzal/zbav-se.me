@@ -1,10 +1,10 @@
 import { tool } from "@openai/agents";
 import { stringify } from "csv-stringify/sync";
 import { z } from "zod";
-import { getRootLogger } from "~/log/fn/getRootLogger";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
 import { listingCollectionFn } from "~/seller-listing/fn/listingCollectionFn";
 
-const logger = getRootLogger([
+const logger = getRootLoggerFn([
 	"tool",
 	"toolListingBrowse",
 ]);

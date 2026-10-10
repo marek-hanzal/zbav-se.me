@@ -1,14 +1,14 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { testabase } from "~/test/testabase";
+import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
+import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 import { userResourceBundleCreateFx } from "~/user-resource-bundle/fx/userResourceBundleCreateFx";
 import { ResourceBundleEnumSchema } from "~/user-resource-bundle/schema/ResourceBundleEnumSchema";
 
 describe("userResourceBundleCreateFx", () => {
 	it("assigns the free bundle idempotently", async () => {
-		const database = await testabase("user-resource-bundle-create");
+		const database = await testabaseFn("user-resource-bundle-create");
 
 		return Effect.gen(function* () {
 			const { seller } = yield* createUsersFx({});
@@ -46,6 +46,6 @@ describe("userResourceBundleCreateFx", () => {
 					name: ResourceBundleEnumSchema.enum["package:free"],
 				},
 			]);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

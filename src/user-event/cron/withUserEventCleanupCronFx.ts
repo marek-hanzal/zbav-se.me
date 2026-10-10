@@ -30,7 +30,7 @@ export const withUserEventCleanupCronFx = Effect.fn("userEventCleanupCronFx")(fu
 						"ue.createdAt",
 						"<=",
 						dateContext
-							.now()
+							.nowFn()
 							.minus({
 								months: 6,
 							})

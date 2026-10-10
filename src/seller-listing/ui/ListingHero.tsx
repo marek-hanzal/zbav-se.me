@@ -1,10 +1,10 @@
 import type { FC } from "react";
 import { useState } from "react";
 import { HeroImage } from "~/application-ui/ui/img.exports";
-import { useUpload } from "~/gallery/hook/useUpload";
+import { getUploadFn } from "~/gallery/fn/getUploadFn";
 import type { ListingPriceSchema } from "~/listing/schema/ListingPriceSchema";
 import { ListingPrice } from "~/listing/ui/ListingPrice";
-import { getRootLogger } from "~/log/fn/getRootLogger";
+import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
 import { withListingQuery } from "~/seller-listing/query/withListingQuery";
 import { ListingSheet } from "~/seller-listing/ui/ListingSheet";
 import { useRenderLogger } from "~/ui/hook/useRenderLogger";
@@ -20,11 +20,11 @@ export namespace ListingHero {
 
 export const ListingHero: FC<ListingHero.Props> = ({ _suspense, listingId, ...props }) => {
 	const { data: listing } = withListingQuery.useFetchQuery(listingId);
-	const [isOpen, setIsOpen] = useState(false);
-	const hero = useUpload(listing.withImageUrl);
+	const [isOpen, setIsOpenFn] = useState(false);
+	const hero = getUploadFn(listing.withImageUrl);
 
 	useRenderLogger({
-		logger: getRootLogger(),
+		logger: getRootLoggerFn(),
 		name: "ListingHero",
 		meta: {
 			listingId,
@@ -38,7 +38,7 @@ export const ListingHero: FC<ListingHero.Props> = ({ _suspense, listingId, ...pr
 				data-ui-position="relative"
 				data-ui-height="content"
 				onClick={() => {
-					setIsOpen(true);
+					setIsOpenFn(true);
 				}}
 				{...props}
 			>
@@ -88,7 +88,7 @@ export const ListingHero: FC<ListingHero.Props> = ({ _suspense, listingId, ...pr
 				listing={listing}
 				state={{
 					value: isOpen,
-					set: setIsOpen,
+					setFn: setIsOpenFn,
 				}}
 			/>
 		</>

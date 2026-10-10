@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Effect } from "effect";
-import { withKyselyFx } from "~/database/fx/withKyselyFx";
-import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
+import { withKyselyFn } from "~/database/fn/withKyselyFn";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
 import { withListingBucketsFx } from "~/public-listing/fx/withListingBucketsFx";
 import { withDatabaseMiddleware } from "~/request-middleware/middleware/withDatabaseMiddleware";
 import { withOriginMiddleware } from "~/request-middleware/middleware/withOriginMiddleware";
@@ -20,8 +20,8 @@ export const Route = createFileRoute("/sitemap.xml")({
 					child: "sitemap",
 					entries: (async function* () {
 						const buckets = await withListingBucketsFx({}).pipe(
-							withKyselyFx(database),
-							withDateServiceFx(),
+							withKyselyFn(database),
+							withDateServiceFn(),
 							Effect.runPromise,
 						);
 

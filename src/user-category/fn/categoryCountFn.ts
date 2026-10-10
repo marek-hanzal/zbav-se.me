@@ -1,8 +1,8 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
-import { withKyselyFx } from "~/database/fx/withKyselyFx";
-import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
-import { withLoggerFx } from "~/log/fx/withLoggerFx";
+import { withKyselyFn } from "~/database/fn/withKyselyFn";
+import { withDateServiceFn } from "~/date/fn/withDateServiceFn";
+import { withLoggerFn } from "~/log/fn/withLoggerFn";
 import { CountSchema } from "~/query/schema/CountSchema";
 import { withDatabaseMiddleware } from "~/request-middleware/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/request-middleware/middleware/withLogMiddleware";
@@ -37,9 +37,9 @@ export const categoryCountFn = createServerFn()
 				scope: {},
 			}),
 		}).pipe(
-			withKyselyFx(database),
-			withDateServiceFx(),
-			withLoggerFx(rootLogger),
+			withKyselyFn(database),
+			withDateServiceFn(),
+			withLoggerFn(rootLogger),
 			Effect.tapError((error) => {
 				return Effect.sync(() => {
 					logger.error(error._tag, {

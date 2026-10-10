@@ -3,20 +3,20 @@ import { FlowContainer } from "~/application-ui/ui/container.exports";
 import { withListingPingFn } from "~/public-listing/fn/withListingPingFn";
 import { withListingQuery } from "~/public-listing/query/withListingQuery";
 import { ListingCard } from "~/public-listing/ui/ListingCard/index";
-import { translator as coolTranslator } from "~/translation/fn/translator";
+import { translatorFn as coolTranslatorFn } from "~/translation/fn/translatorFn";
 import { withTranslationsQuery } from "~/translation/query/withTranslationsQuery";
 import { Container } from "~/ui/ui/Container";
 import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
 
-function toSingleLine(value: string | null | undefined) {
+function toSingleLineFn(value: string | null | undefined) {
 	return value?.replace(/\s+/g, " ").trim() ?? "";
 }
 
 export const Route = createFileRoute("/$locale/z/$id/view")({
 	async loader({ context: { queryClient }, params: { id, locale } }) {
 		try {
-			const listing = await withListingQuery.ensureFetchQuery(queryClient, id);
-			const translations = await withTranslationsQuery.ensure(queryClient, {
+			const listing = await withListingQuery.ensureFetchQueryFn(queryClient, id);
+			const translations = await withTranslationsQuery.ensureFn(queryClient, {
 				locale,
 			});
 
@@ -52,19 +52,19 @@ export const Route = createFileRoute("/$locale/z/$id/view")({
 			return {};
 		}
 		const { translations, listing } = loaderData;
-		const translator = coolTranslator({
+		const translator = coolTranslatorFn({
 			translations,
 		});
 
-		const app = translator.text("zbav-se.me");
+		const app = translator.textFn("zbav-se.me");
 		const title = `${listing.title} | ${app}`;
 		const description =
-			toSingleLine(listing.description) ||
-			toSingleLine(
+			toSingleLineFn(listing.description) ||
+			toSingleLineFn(
 				[
 					`${listing.category.category} / ${listing.category.group}`,
 					listing.location.address,
-					translator.text("Browse listing on (label)"),
+					translator.textFn("Browse listing on (label)"),
 				].join(" | "),
 			);
 		const image = listing.withImageUrl[0];

@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import { jsonArrayFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { selectFx } from "~/database-query/fx/selectFx";
+import { selectFn } from "~/database-query/fn/selectFn";
 import type { GallerySortSchema } from "~/user-gallery/schema/GallerySortSchema";
 import type { GalleryWhereSchema } from "~/user-gallery/schema/GalleryWhereSchema";
 import { withGalleryItemSelectFx } from "~/user-gallery-item/db/withGalleryItemSelectFx";
@@ -35,12 +35,12 @@ export const withGallerySelectFx = Effect.fn("withGallerySelectFx")(function* ({
 		],
 	});
 
-	return selectFx({
+	return selectFn({
 		select: select.select([
 			"gal.id",
-			(eb) => {
+			(ebFn) => {
 				return jsonArrayFrom(
-					galleryItemSelect.whereRef("gal_item.galleryId", "=", eb.ref("gal.id")),
+					galleryItemSelect.whereRef("gal_item.galleryId", "=", ebFn.ref("gal.id")),
 				).as("items");
 			},
 		]),
