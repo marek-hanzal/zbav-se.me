@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { genIdFn } from "~/identity/fn/genIdFn";
 import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { leaseTestUserFx, TEST_USER_PASSWORD } from "~/test/user/fx/leaseTestUserFx";
 import { expect, testFn } from "../testFn";
@@ -25,3 +26,28 @@ testFn("auth sign in", async ({ page, database }) => {
 
 	await expect(page.locator('[data-ui="HomeMenu[Container]"]')).toBeVisible();
 });
+
+testFn(
+	"API sign in gives the browser a session in its own database",
+	async ({ page, database, signInFn }) => {
+		const user = await leaseTestUserFx({
+			key: "a",
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
+		const email = `browser-session-${genIdFn()}@x32.cz`;
+		await database.kysely
+			.updateTable("user")
+			.set({
+				email,
+			})
+			.where("id", "=", user.id)
+			.execute();
+
+		await signInFn({
+			email,
+			password: user.password,
+		});
+		await page.goto("/cs/app/home");
+		await expect(page).toHaveURL(/\/cs\/app\/home$/);
+		await expect(page.locator('[data-ui="HomeMenu[Container]"]')).toBeVisible();
+	},
+);

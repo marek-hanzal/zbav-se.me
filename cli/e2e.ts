@@ -26,12 +26,19 @@ process.on("SIGTERM", terminateFn);
 
 let database: Awaited<ReturnType<typeof setupDatabaseFn>> | undefined;
 try {
-	if (!inspectOnly) database = await setupDatabaseFn();
+	if (!inspectOnly) {
+		const startedAt = performance.now();
+		database = await setupDatabaseFn();
+		console.info(
+			`[e2e] Database setup: ${((performance.now() - startedAt) / 1_000).toFixed(1)}s`,
+		);
+	}
 	if (requestedSignal) {
 		process.exitCode = requestedSignal === "SIGINT" ? 130 : 143;
 	} else {
 		const packagePath = createRequire(import.meta.url).resolve("playwright/package.json");
 		const cli = join(dirname(packagePath), "cli.js");
+		const startedAt = performance.now();
 		child = spawn(
 			process.execPath,
 			[
@@ -59,6 +66,11 @@ try {
 				resolveFn(code ?? (signal === "SIGINT" ? 130 : 143)),
 			);
 		});
+		if (!inspectOnly) {
+			console.info(
+				`[e2e] Playwright including app build/startup: ${((performance.now() - startedAt) / 1_000).toFixed(1)}s`,
+			);
+		}
 	}
 } finally {
 	try {

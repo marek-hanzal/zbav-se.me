@@ -27,7 +27,7 @@ export default defineConfig({
 	],
 	failOnFlakyTests: true,
 	forbidOnly: Boolean(process.env.CI),
-	fullyParallel: false,
+	fullyParallel: true,
 	reporter: process.env.CI
 		? [
 				[
@@ -39,10 +39,22 @@ export default defineConfig({
 						open: "never",
 					},
 				],
+				[
+					"json",
+					{
+						outputFile: "./results/report.json",
+					},
+				],
 			]
 		: [
 				[
 					"list",
+				],
+				[
+					"json",
+					{
+						outputFile: "./results/report.json",
+					},
 				],
 			],
 	use: {

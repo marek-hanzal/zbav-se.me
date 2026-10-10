@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import path from "node:path";
 import type { APIRequestContext } from "@playwright/test";
 import { test as base, expect } from "@playwright/test";
+import { TEST_USER_PASSWORD } from "~/test/user/fx/leaseTestUserFx";
 import { cleanupDatabaseFn } from "./utils/cleanupDatabaseFn";
 import { testabaseFn } from "./utils/testabaseFn";
 
@@ -45,6 +46,13 @@ type TestDatabase = Awaited<ReturnType<typeof testabaseFn>>;
 
 type WithRequest = <T>(callbackFn: (request: APIRequestContext) => Promise<T>) => Promise<T>;
 
+interface SignInUser {
+	email: string;
+	password?: string;
+}
+
+type SignIn = (user: SignInUser) => Promise<void>;
+
 interface TestOptions {
 	dbName?: string;
 }
@@ -54,6 +62,7 @@ interface TestFixtures {
 	db: string;
 	database: TestDatabase;
 	withRequestFn: WithRequest;
+	signInFn: SignIn;
 }
 
 type TestArgs = TestOptions & TestFixtures;
@@ -140,6 +149,7 @@ export const testFn = base.extend<TestArgs>({
 					"x-forwarded-for": "127.0.0.1",
 				},
 				ignoreHTTPSErrors: true,
+				timeout: 10_000,
 			});
 
 			contexts.add(context);
@@ -161,6 +171,31 @@ export const testFn = base.extend<TestArgs>({
 				}),
 			);
 		}
+	},
+	async signInFn({ appOrigin, context, db }, useFn) {
+		await useFn(async ({ email, password = TEST_USER_PASSWORD }) => {
+			await testFn.step("Sign in through the real auth API", async () => {
+				// This request context shares cookies with the browser. Browser routing
+				// does not intercept API requests, so pass the database explicitly.
+				const response = await context.request.post("/api/auth/sign-in/email", {
+					headers: {
+						origin: appOrigin,
+						"x-e2e-db": db,
+						"x-forwarded-for": "127.0.0.1",
+					},
+					data: {
+						email,
+						password,
+					},
+					timeout: 10_000,
+				});
+				try {
+					await expect(response).toBeOK();
+				} finally {
+					await response.dispose();
+				}
+			});
+		});
 	},
 	// Allocate the DB before the inherited context so its teardown runs last.
 	async context({ appOrigin, db, context }, useFn) {
