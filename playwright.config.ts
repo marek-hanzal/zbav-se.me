@@ -12,7 +12,7 @@ export default defineConfig({
 	webServer: [
 		{
 			name: "App",
-			command: "argc e2e:serve",
+			command: "bash cli/e2e-server.sh",
 			url: new URL("/api/e2e", appOrigin).toString(),
 			ignoreHTTPSErrors: true,
 			reuseExistingServer: false,
@@ -54,14 +54,6 @@ export default defineConfig({
 	projects: [
 		{
 			name: "mobile",
-			use: {
-				browserName: "chromium",
-				headless: true,
-				...devices["iPhone SE"],
-			},
-		},
-		{
-			name: "dev",
 			use: {
 				browserName: "chromium",
 				headless: true,

@@ -39,45 +39,108 @@ dependencies stay in `package.json` and `package-lock.json`. The pinned Node.js
 ```bash
 mise trust
 mise install
-argc ci
+npm ci
 cp .env.example .env
 docker compose up -d
 ```
 
 Project commands live in [`Argcfile.sh`](./Argcfile.sh). Run `argc --help` to list
-them. Without shell activation, use `mise exec -- argc <command>`. The command
-runner also enters the mise environment so Node.js, npm, and local dependency
-binaries resolve consistently.
+them and `argc help <command>` (or `argc <command> --help`) for requirements,
+side effects, and accepted arguments. Without shell activation, use `mise exec -- argc <command>` or
+`mise exec -- npm ci`. The command runner also enters the mise environment so
+Node.js, npm, and local dependency binaries resolve consistently.
 
 ### Run locally
 
 ```bash
-argc dev:proxy
+argc proxy
 ```
 
 Start the app in another terminal:
 
 ```bash
-argc dev:app
+argc dev
 ```
 
 Mailpit is available at <http://127.0.0.1:8025> for local SMTP inbox inspection.
 
-### Useful root commands
+## Project command contract
+
+- **mise** pins the runtime and standalone tools in `mise.toml`.
+- **npm** installs dependencies and maintains `package-lock.json`. Use `npm ci` for an exact clean install and `npm install` when changing dependencies. CI uses native `npm ci`.
+- **argc** owns project tasks, environment loading, and task composition. `package.json` contains metadata and dependencies, with no task scripts.
+
+All commands run from the repository root. Requirements below assume `mise install`
+and `npm ci` have already completed. `argc --help` lists the public commands;
+command descriptions and argument definitions are maintained in `Argcfile.sh`.
+Task help never executes the task. A bare `--help` or `-h` after the command name
+is reserved for task documentation; use `mise exec -- <tool> --help` for the
+underlying tool's full option reference.
+
+| Command | Purpose and requirements | Effects |
+| --- | --- | --- |
+| `dev` | Run Vite; needs local services and the shared HTTPS proxy. | Long-running; registers the app's Portless route and generates development files. |
+| `proxy` | Start the shared HTTPS proxy. | Background process; may create local TLS certificates. |
+| `build` | Build the application with the configured environment. | Writes build artifacts and may regenerate `src/_route.ts`. |
+| `check` | Check manifest ordering, types, style, boundaries, and dependency usage. | Does not fix source files; stops at the first failure. |
+| `check:types` | Run TypeScript with `--noEmit`. | May update compiler caches. |
+| `check:style` | Check formatting, lint, and imports with `biome ci`. | Does not apply fixes. |
+| `check:boundaries` | Enforce domain boundaries with Dependency Cruiser. | Downloads pinned tools to npm's cache if missing; first run needs registry access. |
+| `check:deps` | Report unused dependencies with Knip. | Reports candidates for source review; does not automatically remove them. |
+| `fix` | Normalize manifest ordering and apply Biome formatting and safe fixes. | Changes `package.json` and selected source files; defaults to the whole project. |
+| `test` | Run Vitest; needs Docker. | Uses disposable PostgreSQL on `55433` and writes coverage. |
+| `e2e` | Run Playwright; needs Docker, Chromium, Mailpit, and an available app origin. | Builds and starts the test server, uses disposable PostgreSQL on `55432`, and writes test artifacts. |
+| `e2e:install` | Install Chromium and system dependencies; needs network access. | Downloads browser files; Linux system packages may require elevated privileges. |
+| `verify` | Run `check`, `test`, `e2e`, then `build` sequentially. | Writes test/build artifacts; stops at the first failure. Does not run `fix` or update dependencies. |
+| `deps:update` | Update all dependency versions through Syncpack, then install with npm. | May include major upgrades; changes the manifest, lockfile, and installed dependencies. |
+| `seed` | Open the interactive seed CLI; needs the intended database. | Selected operations may reset or change application data. |
+| `translations` | Extract translation keys through the TypeScript CLI. | Rewrites generated translation data under `src/server/@migrations/translation`. |
+| `env:sync` | Legacy GitHub/Vercel environment sync; needs credentials and `@env/<environment>.json`. | Replaces remote variables and secrets. Retained until Terraform replaces it. |
+
+`check` never runs automatic repairs, tests, or builds. It checks manifest ordering
+with `syncpack format --check`; Biome's CI mode validates style without writing
+fixes. Use `fix` explicitly and review the resulting diff. `fix` always normalizes
+the root manifest, even when paths restrict the subsequent Biome operation.
+Syncpack is an internal implementation detail of `check`, `fix`, and `deps:update`.
+Style checks use concise diagnostics with file locations, rule names, and messages.
+Use `argc check:style --reporter=default` to include source excerpts.
+
+Focused commands forward trailing arguments directly to the tool named in their
+help. Do not add an extra `--` separator. Aggregate commands (`check`, `verify`,
+and `deps:update`) accept no trailing arguments. For example:
 
 ```bash
-argc ci
-argc dev:app
-argc dev:proxy
-argc build
-argc lint
-argc typecheck
-argc test
-argc e2e
-argc sp:format
-argc workflow:test
-argc workflow:check
+argc check:style src/user
+argc fix src/user
+argc test test/@user/resource-bundle
+argc e2e --grep registration
+argc e2e --headed
+argc e2e --ui
 ```
+
+Playwright has one `mobile` project (Chromium with the iPhone SE device profile).
+Headed and UI modes use that same project. The compiled server is an internal
+Playwright process defined by [`cli/e2e-server.sh`](./cli/e2e-server.sh), not a
+separate public task. Playwright manages its lifetime. The server does not force
+an existing Portless route away from another process.
+
+Build, test, seed, and translation commands load the development dotenv cascade
+while preserving variables already supplied by the caller. TypeScript CLIs run
+through local `tsx` with tsconfig path aliases; `check:types` remains a separate
+type check. The shared tsconfig uses React's automatic JSX runtime for TSX CLIs.
+
+For agents: inspect command help before unfamiliar operations. Do not start or
+restart `dev` or `proxy` unless requested. Keep `seed`, `deps:update`, and
+`env:sync` out of verification; use them only for explicitly requested data,
+dependency, or remote environment work. Do not overlap build outputs, E2E runs,
+or Vitest coverage runs. The full isolated verification example is below.
+
+Use `npm outdated` to inspect updates and `npm update` for updates within existing
+version constraints. `argc deps:update` deliberately refreshes manifest versions
+as well, including major versions. It does not run source fixes or verification;
+review the manifest and lockfile and then run `argc verify`. npm lifecycle scripts
+may run during installation. If installation fails, inspect the changed manifest
+before retrying.
 
 ## Dev URLs
 
@@ -85,33 +148,11 @@ argc workflow:check
 - API: <https://api.zbav-se.me.localhost:1355>
 - OpenAPI JSON: <https://api.zbav-se.me.localhost:1355/v3/api-docs>
 
-Start the shared HTTPS proxy with `argc dev:proxy`, then run `argc dev:app`.
+Start the shared HTTPS proxy with `argc proxy`, then run `argc dev`.
 Portless uses its default user-level state and serves the `.localhost` URLs on
 port `1355`.
 
-`syncpack` is wired for the root package through the `sp:*` commands. Use `argc sp:format` to normalize `package.json` ordering and `argc sp:update` when dependency versions need a bulk refresh.
-
-Commands forward trailing arguments to their underlying tools. For example,
-`argc test test/@user/resource-bundle` selects a Vitest directory and
-`argc e2e --grep registration` filters Playwright tests. Pass arguments directly
-after the command name, without an extra `--` separator.
-Build, test, seed, and translation commands use the development dotenv cascade and
-keep environment variables already set by the caller.
-
-Use `argc install` (or native `npm install`) when changing dependencies and
-`argc ci` (or `npm ci`) for a clean installation from the lockfile. CI uses
-`argc ci`. TypeScript CLIs run through the local `tsx` binary with tsconfig
-path aliases; type checking remains a separate `argc typecheck` step.
-The shared tsconfig uses React's automatic JSX runtime so TSX maintenance
-commands run without adding a global React import.
-
-Better Auth supports the application's Kysely version directly. No dependency
-patch or npm lifecycle hook is required.
-An npm override keeps `@tanstack/query-core` on the same version as the pinned
-`@tanstack/react-query` dependency so router SSR and persistence integrations
-share the same `QueryClient` implementation and types.
-
-### Translation extraction
+## Translation extraction
 
 `argc translations` runs the translation CLI through `tsx`. Babel 8 parses
 TypeScript and TSX and extracts the configured JSX attributes, component prop
@@ -183,30 +224,38 @@ The shared non-production environments are `uat` and `dev`, so the canonical syn
 
 Issues and PRs are welcome for bug reports, quality improvements, and architecture feedback.
 
-Before handoff, run at least:
+Before handoff, run the static checks and build:
 
 ```bash
-argc lint
-argc typecheck
-argc workflow:check
+argc check
+argc build
 ```
 
-`argc workflow:check` runs manifest normalization, formatting, TypeScript
-typecheck, lint, Dependency Cruiser, Knip, and the production build in order.
-It stops at the first failure. `argc workflow:test` runs Vitest and Playwright
-in parallel and fails if either suite fails. Playwright starts its compiled
-test server through `argc e2e:serve`.
+Run relevant tests when behavior changes. `argc verify` is the full gate: static
+checks, Vitest, Playwright, and build. It stops at the first failure and runs each
+stage sequentially. Use focused commands to filter tests or pass tool options.
 Vitest uses a temporary PostgreSQL container on port `55433`; Playwright uses
-its own container on `55432`, so the two suites can run in parallel.
+its own container on `55432`. Never overlap two runs of the same suite.
 
-To run the full suite alongside an existing development app, use a separate
-compiled server and the local Mailpit inbox:
+To run the full gate alongside an existing development app, use a separate
+compiled server and the local Mailpit inbox from `docker compose up -d`:
 
 ```bash
 PORTLESS=0 PORT=31347 HOST=127.0.0.1 \
 VITE_ORIGIN=http://127.0.0.1:31347 NITRO_PRESET=node-server \
-MAILPIT_BASE_URL=http://127.0.0.1:8025 argc workflow:test
+MAILPIT_BASE_URL=http://127.0.0.1:8025 \
+SERVER_SMTP_HOST=127.0.0.1 SERVER_SMTP_PORT=1025 \
+SERVER_SMTP_USERNAME=mailpit SERVER_SMTP_PASSWORD=mailpit \
+SERVER_SMTP_FROM='Zbavik <info@zbav-se.me>' \
+SERVER_CRON_TOKEN=e2e-cron-token SERVER_MIGRATION_TOKEN=e2e-migration-token \
+argc verify
 ```
+
+The same environment prefix works with `argc e2e --grep <pattern>`. `PORTLESS=0`
+bypasses the shared proxy; `PORT`, `HOST`, and `VITE_ORIGIN` must describe the same
+available address. E2E builds need the Node server preset, supplied here through
+`NITRO_PRESET`. Build outputs are shared with `argc build`, so run these commands
+sequentially. Verification does not start or restart the development app or proxy.
 
 Vitest coverage is scoped to server-side `Fx` and DB `Fx` business flows. Thin `Fn` wrappers, routes, UI, tools, migrations, and seed scripts are intentionally out of the coverage denominator.
 
@@ -225,11 +274,17 @@ use `Result`, and promise boundaries preserve the original tagged error. Vitest
 production build uses Vite 8.
 
 The project uses the native compiler from the regular `typescript@7.0.2` package.
-`argc dc` runs pinned `dependency-cruiser@18.5.0` and `typescript@6.0.3` through
-`npm exec`, which installs missing tools in npm's cache. Dependency Cruiser still
+`argc check:boundaries` runs pinned `dependency-cruiser@18.5.0` and
+`typescript@6.0.3` through `npm exec`, which installs missing tools in npm's cache. Dependency Cruiser still
 needs the TypeScript 6 JavaScript compiler API; neither it nor TypeScript 6 is a
 project dependency. Both local checks and CI use the same command and domain
 rules. The first run requires registry access; subsequent runs reuse npm's cache.
+
+Better Auth supports the application's Kysely version directly. No dependency
+patch or npm lifecycle hook is required.
+An npm override keeps `@tanstack/query-core` on the same version as the pinned
+`@tanstack/react-query` dependency so router SSR and persistence integrations
+share the same `QueryClient` implementation and types.
 
 - Dependency cleanup decisions in this repository are evidence-based from source usage.
 - `knip` is treated as a candidate signal, not as the source of truth.

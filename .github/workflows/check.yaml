@@ -51,7 +51,7 @@ jobs:
                   version: "2026.10.7"
 
             - name: Install dependencies
-              run: argc ci
+              run: npm ci
 
             - name: Build
               run: argc build
@@ -69,10 +69,10 @@ jobs:
                   version: "2026.10.7"
 
             - name: Install dependencies
-              run: argc ci
+              run: npm ci
 
             - name: Lint
-              run: argc lint
+              run: argc check:style
 
     dc:
         name: Dependency Cruiser
@@ -87,10 +87,10 @@ jobs:
                   version: "2026.10.7"
 
             - name: Install dependencies
-              run: argc ci
+              run: npm ci
 
             - name: Dependency Cruiser
-              run: argc dc
+              run: argc check:boundaries
 
     typecheck:
         name: Typecheck
@@ -105,10 +105,10 @@ jobs:
                   version: "2026.10.7"
 
             - name: Install dependencies
-              run: argc ci
+              run: npm ci
 
             - name: Typecheck
-              run: argc typecheck
+              run: argc check:types
 
     knip:
         name: Knip
@@ -123,10 +123,10 @@ jobs:
                   version: "2026.10.7"
 
             - name: Install dependencies
-              run: argc ci
+              run: npm ci
 
             - name: Knip
-              run: argc knip
+              run: argc check:deps
 
     vitest:
         name: Vitest
@@ -141,7 +141,7 @@ jobs:
                   version: "2026.10.7"
 
             - name: Install dependencies
-              run: argc ci
+              run: npm ci
 
             - name: Test
               run: argc test
@@ -225,7 +225,7 @@ jobs:
                   version: "2026.10.7"
 
             - name: Install dependencies
-              run: argc ci
+              run: npm ci
 
             - name: Resolve Playwright version
               id: playwright-version
@@ -234,7 +234,7 @@ jobs:
                   echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
             - name: Start portless proxy
-              run: portless proxy start -p 1355 --https
+              run: argc proxy -p 1355
 
             - name: Restore Playwright browser cache
               id: playwright-cache
@@ -244,7 +244,7 @@ jobs:
                   key: ${{ runner.os }}-playwright-chromium-${{ steps.playwright-version.outputs.version }}
 
             - name: Install Playwright browsers
-              run: argc e2e:browsers
+              run: argc e2e:install
 
             - name: Save Playwright browser cache
               if: steps.playwright-cache.outputs.cache-hit != 'true'

@@ -131,7 +131,7 @@ jobs:
                   version: "2026.10.7"
 
             - name: Install dependencies
-              run: argc ci
+              run: npm ci
 
             - name: Build
               run: argc build
