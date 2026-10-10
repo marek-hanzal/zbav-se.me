@@ -70,8 +70,9 @@ silently mocked or skipped when a service is unavailable.
 Fixture uploads cap the PUT request at 10 seconds. PUT and CDN verification
 share a 30-second network budget after presigning; each CDN attempt is capped at
 two seconds or the remaining budget, whichever is shorter. Unused response
-bodies are canceled. Failures report the last HTTP status/content type or
-network error without including signed URLs. Browser photo uploads report their
+bodies are canceled. Failures report the latest result and preserve the last
+HTTP status/content type after a later network error, without including signed
+URLs. Browser photo uploads report their
 mutation failure promptly and attach bounded, URL-redacted RPC diagnostics;
 an HTTP 200 alone does not prove that a server function succeeded.
 

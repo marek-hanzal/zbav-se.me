@@ -28,6 +28,7 @@ export async function waitForPublicImageFn({
 	const deadline = performance.now() + timeoutMs;
 	let attempts = 0;
 	let lastResult = "No response received";
+	let lastResponse: string | undefined;
 
 	while (performance.now() < deadline) {
 		let response: Response | undefined;
@@ -44,6 +45,7 @@ export async function waitForPublicImageFn({
 			});
 			const contentType = response.headers.get("content-type");
 			lastResult = `HTTP ${response.status}, content type ${contentType ?? "missing"}`;
+			lastResponse = lastResult;
 			if (response.ok && contentType?.startsWith("image/")) {
 				return;
 			}
@@ -62,6 +64,9 @@ export async function waitForPublicImageFn({
 		}
 	}
 
+	if (lastResponse && lastResponse !== lastResult) {
+		lastResult += `; last HTTP response: ${lastResponse}`;
+	}
 	const detail = lastResult
 		.replaceAll(url, "[request URL]")
 		.replace(/https?:\/\/\S+/g, "[request URL]");

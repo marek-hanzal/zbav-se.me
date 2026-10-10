@@ -7,7 +7,7 @@ configured service is unavailable.
 | Project | Files | Infrastructure |
 | --- | --- | --- |
 | `unit` | `*.unit.test.ts` | No database bootstrap or Docker; local function and contract tests. |
-| `integration` | Other `*.test.ts` files | One disposable PostgreSQL container per run, with a clean cloned database for each `testabaseFn` call. Some application flows also use configured external services. |
+| `integration` | Other `*.test.ts` files | Disposable PostgreSQL with a clean cloned database for each `testabaseFn` call. S3 tests start their own disposable SeaweedFS container. Some application flows also use configured external services. |
 | `external` | `*.external.test.ts` | Real external services that do not require a database, currently Geoapify. No PostgreSQL bootstrap or Docker. |
 
 ```bash
@@ -31,6 +31,25 @@ unique database name, and registers cleanup with `onTestFinished`, including aft
 a failed assertion. The supplied name is a diagnostic label rather than a shared
 physical database name. See [`src/test-database/README.md`](../src/test-database/README.md)
 for the reusable database resource contract.
+
+S3 integration tests use `withTestS3Fn` to start `chrislusf/seaweedfs:4.48` on a
+Docker-assigned loopback port, with tmpfs storage, test credentials, and an
+`uploads` bucket. The helper waits for an authenticated bucket check before
+returning its explicit S3 configuration and cleanup function. Tests register
+cleanup with `onTestFinished`; failed startup also removes its owned container.
+Only tests requesting this fixture start S3. No Bunny account, cloud bucket, or
+`SERVER_S3_*` environment values are needed or changed. The first run downloads
+the pinned image if missing. See [SeaweedFS mini](https://github.com/seaweedfs/seaweedfs/wiki/Quick-Start-with-weed-mini).
+
+The presign integration test performs a signed PUT, reads the stored bytes through
+the application client, rejects a tampered signature, and deletes the object.
+This covers the S3 protocol locally; Bunny-specific compatibility remains a
+separate deployment concern.
+
+Cron scheduling tests mock the S3 delete operation and use `stubS3Fn` for explicit
+test environment values. They assert against that fixture's bucket rather than a
+developer's configured cloud bucket. Vitest restores the environment after each
+test.
 
 Keep database tests in the integration project; a `*.unit.test.ts` test that calls
 `testabaseFn` fails with an explicit classification error. Real transaction flows

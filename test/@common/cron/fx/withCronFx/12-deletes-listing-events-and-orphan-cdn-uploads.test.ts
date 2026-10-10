@@ -1,6 +1,7 @@
 import { Effect } from "effect";
 import { Client } from "minio";
 import { describe, expect, it, vi } from "vitest";
+import { stubS3Fn } from "~/test/common/fn/stubS3Fn";
 import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { testabaseFn } from "~/test/testabaseFn";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
@@ -12,6 +13,7 @@ import {
 
 describe("withCronFx schedule 12 cleanup", () => {
 	it("deletes stale listing events and orphan CDN uploads only", async () => {
+		const { bucket } = stubS3Fn();
 		const database = await testabaseFn("withCronFx-cleanup-12");
 		const removeObjectsMockFn = vi
 			.spyOn(Client.prototype, "removeObjects")
@@ -61,7 +63,7 @@ describe("withCronFx schedule 12 cleanup", () => {
 				]),
 			);
 			expect(uploads).toHaveLength(4);
-			expect(removeObjectsMockFn).toHaveBeenCalledWith("zbav-se-me-upload", [
+			expect(removeObjectsMockFn).toHaveBeenCalledWith(bucket, [
 				"cron/stale.jpg",
 				"cron/boundary.jpg",
 			]);

@@ -89,7 +89,7 @@ underlying tool's full option reference.
 | `check-boundaries` | Enforce domain boundaries with Dependency Cruiser; needs `mise install`. | Reads source using the tool's own TypeScript 6 API; does not install or fix sources. |
 | `check-deps` | Report unused dependencies with Knip. | Reports candidates for source review; does not automatically remove them. |
 | `fix` | Normalize manifest ordering and apply Biome formatting and safe fixes. | Changes `package.json` and selected source files; defaults to the whole project. |
-| `test` | Run Vitest; database integration tests need Docker. | Unit, integration, and real external service projects; disposable PostgreSQL uses a free port. Writes coverage. |
+| `test` | Run Vitest; database and S3 integration tests need Docker. | Unit, integration, and real external service projects; disposable PostgreSQL and SeaweedFS use free ports. Writes coverage. |
 | `e2e` | Run Playwright; needs Docker, Chromium, Mailpit, and an available app origin. | Prepares disposable PostgreSQL on a free port, builds and starts the test server, and writes test artifacts. |
 | `e2e-install` | Install Chromium and system dependencies; needs network access. | Downloads browser files; Linux system packages may require elevated privileges. |
 | `verify` | Run `check`, `test`, `e2e`, then `build` sequentially. | Writes test/build artifacts; stops at the first failure. Does not run `fix` or update dependencies. |
@@ -224,7 +224,7 @@ runtime configuration to Vercel. See [Infrastructure](./infra/README.md).
 | auth | `SERVER_HMAC_SECRET` | yes | secret | Secret used for HMAC signing. |
 | database | `SERVER_DATABASE_URL` | yes | secret | Postgres connection string used by the server runtime and seed flows. Terraform generates the cloud value; migration programs use the direct endpoint and the app uses the pooled endpoint. |
 | e2e | `SERVER_E2E` | optional | variable | Soft gate for e2e DB routing. Set it to `e2e` only in test/dev flows that send `x-e2e-db`. |
-| s3 | `SERVER_S3_API` | yes | variable | S3-compatible endpoint used for uploads, presigning, and cleanup jobs. |
+| s3 | `SERVER_S3_API` | yes | variable | S3 endpoint: a hostname defaults to HTTPS, or provide a full URL with protocol and optional port (e.g. `http://127.0.0.1:8333`). |
 | s3 | `SERVER_S3_BUCKET` | yes | variable | Bucket name used for uploaded content storage. |
 | s3 | `SERVER_S3_KEY` | yes | secret | Access key ID for the S3-compatible storage provider. |
 | s3 | `SERVER_S3_SECRET` | yes | secret | Secret access key for the S3-compatible storage provider. |

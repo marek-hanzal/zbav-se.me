@@ -163,8 +163,9 @@ argc deploy dev
 
 `deploy` runs static checks and all Vitest projects, builds the application and
 migrator, then opens Terraform's interactive plan/apply confirmation. Tests use
-the disposable PostgreSQL fixture; external service tests use the environment's
-configured integrations. Playwright remains a separate `argc e2e` check.
+disposable PostgreSQL and local Docker S3 fixtures; no Bunny storage credentials
+are needed for tests. External service tests use the environment's configured
+integrations. Playwright remains a separate `argc e2e` check.
 The command never runs an unattended apply.
 
 To review the release plan separately:

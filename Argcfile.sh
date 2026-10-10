@@ -107,8 +107,8 @@ fix() {
 
 # @cmd Run Vitest tests
 #
-# Database integration tests require Docker; unit and external projects do not.
-# Each integration run gets its own container and free port. Coverage outputs are shared.
+# Database and S3 integration tests require Docker; unit and external projects do not.
+# Test containers use free loopback ports. Coverage outputs are shared.
 # @arg args~ Test paths and options passed to Vitest run
 test() {
 	dotenv -c development -- vitest run "$@"

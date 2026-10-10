@@ -67,9 +67,11 @@ describe("public fixture image polling", () => {
 		},
 	);
 
-	it("reports the last HTTP failure without exposing the request signature", async () => {
+	it("retains the last HTTP failure after a later timeout without exposing the request signature", async () => {
+		let requests = 0;
 		await withHttpServerFn(
 			(_request, response) => {
+				if (requests++ > 0) return;
 				response.writeHead(404, {
 					"content-type": "application/json",
 				});
@@ -86,6 +88,7 @@ describe("public fixture image polling", () => {
 					throw new Error("Expected image polling to fail");
 				}
 				expect(result.message).toContain("HTTP 404, content type application/json");
+				expect(result.message).toContain("TimeoutError");
 				expect(result.message).not.toContain("fixture-secret");
 				expect(result.message).not.toContain(url);
 			},

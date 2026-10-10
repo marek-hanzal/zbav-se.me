@@ -8,11 +8,14 @@ export const s3ClientFx = Effect.fn("s3ClientFx")(function* () {
 	logger.trace("s3ClientFx");
 
 	const s3Config = yield* s3ConfigFx;
+	const endpoint = new URL(
+		s3Config.api.includes("://") ? s3Config.api : `https://${s3Config.api}`,
+	);
 
 	return new Client({
-		endPoint: s3Config.api,
-		port: 443,
-		useSSL: true,
+		endPoint: endpoint.hostname,
+		port: endpoint.port ? Number(endpoint.port) : undefined,
+		useSSL: endpoint.protocol === "https:",
 		accessKey: s3Config.key,
 		secretKey: s3Config.secret,
 	});

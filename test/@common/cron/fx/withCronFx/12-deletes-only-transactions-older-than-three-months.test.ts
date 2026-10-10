@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
+import { stubS3Fn } from "~/test/common/fn/stubS3Fn";
 import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { testabaseFn } from "~/test/testabaseFn";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
@@ -8,6 +9,7 @@ import { runCronAtFx } from "./runCronAtFx";
 
 describe("withCronFx transaction cleanup", () => {
 	it("deletes only transactions whose statusUpdatedAt is at or before the three-month cutoff for schedule 12", async () => {
+		stubS3Fn();
 		const database = await testabaseFn("withCronFx-transaction-cleanup-12");
 
 		return Effect.gen(function* () {
