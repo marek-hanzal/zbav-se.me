@@ -34,11 +34,9 @@ docker compose up -d
 
 ```bash
 portless proxy start --https
-bun run dev:stripe
 ```
 
-Copy the `whsec_...` webhook signing secret printed by Stripe CLI into
-`SERVER_STRIPE_WEBHOOK_SECRET` in `.env`, then start the app in another terminal:
+Start the app in another terminal:
 
 ```bash
 bun run dev:app
@@ -50,7 +48,6 @@ Mailpit is available at <http://127.0.0.1:8025> for local SMTP inbox inspection.
 
 ```bash
 bun run dev:app
-bun run dev:stripe
 bun run build
 bun run lint
 bun run typecheck
@@ -143,6 +140,10 @@ Vitest coverage is scoped to server-side `Fx` and DB `Fx` business flows. Thin `
 
 The Playwright e2e flow uses `x-e2e-db` to select the per-test database. That header is ignored unless `SERVER_E2E=e2e` is present.
 Playwright runs e2e files in parallel by default. Use `E2E_WORKERS=<count> bun run e2e` to tune local or CI concurrency.
+
+The migration chain targets a fresh database and ends at `0056-user-resource-bundle-feature`.
+Databases containing removed billing migrations must be recreated before using this revision.
+Resource bundles, limits, items, and features remain available to system assignment flows.
 
 ## Dependency Hygiene
 

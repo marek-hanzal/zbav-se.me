@@ -14,8 +14,6 @@ export namespace userBundleFeatureCopyFx {
 		availableAt: Date;
 		/** Concrete snapshot expiration; null/undefined writes non-expiring rows. */
 		expiresAt?: Date | null;
-		/** Optional Stripe provenance key for copied rows. */
-		stripeKey?: string;
 	}
 }
 
@@ -26,13 +24,11 @@ export const userBundleFeatureCopyFx = Effect.fn("userBundleFeatureCopyFx")(func
 	createdAt,
 	availableAt,
 	expiresAt,
-	stripeKey,
 }: userBundleFeatureCopyFx.Props) {
 	const logger = yield* getLoggerFx("userBundleFeatureCopyFx");
 	logger.trace("userBundleFeatureCopyFx", {
 		bundleId,
 		assignmentId,
-		stripeKey,
 	});
 
 	return yield* withTransactionFx(
@@ -49,7 +45,7 @@ export const userBundleFeatureCopyFx = Effect.fn("userBundleFeatureCopyFx")(func
 				features,
 				(feature) => {
 					return dbFx(async (kysely) => {
-						const row = await kysely
+						await kysely
 							.insertInto("user_resource_bundle_feature")
 							.values({
 								id: genId(),
@@ -58,23 +54,6 @@ export const userBundleFeatureCopyFx = Effect.fn("userBundleFeatureCopyFx")(func
 								createdAt,
 								availableAt,
 								expiresAt: expiresAt ?? null,
-							})
-							.returning([
-								"id",
-							])
-							.executeTakeFirstOrThrow();
-
-						if (!stripeKey) {
-							return;
-						}
-
-						await kysely
-							.insertInto("user_resource_bundle_feature_stripe")
-							.values({
-								id: genId(),
-								userResourceBundleFeatureId: row.id,
-								key: stripeKey,
-								createdAt,
 							})
 							.execute();
 					});

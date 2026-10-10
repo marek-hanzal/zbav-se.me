@@ -32,7 +32,6 @@ import type { ResourceBundleItemTableSchema } from "~/server/database/@table/Res
 import type { ResourceBundleLimitTableSchema } from "~/server/database/@table/ResourceBundleLimitTableSchema";
 import type { ResourceBundleTableSchema } from "~/server/database/@table/ResourceBundleTableSchema";
 import type { ResourceDefinitionTableSchema } from "~/server/database/@table/ResourceDefinitionTableSchema";
-import type { StripeEventTableSchema } from "~/server/database/@table/StripeEventTableSchema";
 import type { ThumbTableSchema } from "~/server/database/@table/ThumbTableSchema";
 import type { TransactionEntryTableSchema } from "~/server/database/@table/TransactionEntryTableSchema";
 import type { TransactionTableSchema } from "~/server/database/@table/TransactionTableSchema";
@@ -41,16 +40,11 @@ import type { TranslationTableSchema } from "~/server/database/@table/Translatio
 import type { UploadTableSchema } from "~/server/database/@table/UploadTableSchema";
 import type { UserEventTableSchema } from "~/server/database/@table/UserEventTableSchema";
 import type { UserExTableSchema } from "~/server/database/@table/UserExTableSchema";
-import type { UserResourceBundleStripeTableSchema } from "~/server/database/@table/UserResourceBundleStripeTableSchema";
-import type { UserResourceBundleFeatureStripeTableSchema } from "~/server/database/@table/UserResourceBundleFeatureStripeTableSchema";
 import type { UserResourceBundleFeatureTableSchema } from "~/server/database/@table/UserResourceBundleFeatureTableSchema";
-import type { UserResourceBundleItemStripeTableSchema } from "~/server/database/@table/UserResourceBundleItemStripeTableSchema";
 import type { UserResourceBundleItemTableSchema } from "~/server/database/@table/UserResourceBundleItemTableSchema";
-import type { UserResourceBundleLimitStripeTableSchema } from "~/server/database/@table/UserResourceBundleLimitStripeTableSchema";
 import type { UserResourceBundleLimitTableSchema } from "~/server/database/@table/UserResourceBundleLimitTableSchema";
 import type { UserResourceBundleTableSchema } from "~/server/database/@table/UserResourceBundleTableSchema";
 import type { UserRestrictionTableSchema } from "~/server/database/@table/UserRestrictionTableSchema";
-import type { UserStripeTableSchema } from "~/server/database/@table/UserStripeTableSchema";
 import type { CategoryFieldTableSchema } from "./@table/CategoryFieldTableSchema";
 import type { ListingAttrDecimalTableSchema } from "./@table/ListingAttrDecimalTableSchema";
 import type { ListingAttrEnumMultiTableSchema } from "./@table/ListingAttrEnumMultiTableSchema";
@@ -98,7 +92,6 @@ export interface Database {
 	resource_bundle_limit: ResourceBundleLimitTableSchema.Type;
 	resource_bundle: ResourceBundleTableSchema.Type;
 	resource_definition: ResourceDefinitionTableSchema.Type;
-	stripe_event: StripeEventTableSchema.Type;
 	thumb: ThumbTableSchema.Type;
 	transaction_entry: TransactionEntryTableSchema.Type;
 	transaction_user: TransactionUserTableSchema.Type;
@@ -107,15 +100,10 @@ export interface Database {
 	upload: UploadTableSchema.Type;
 	user_event: UserEventTableSchema.Type;
 	user_ex: UserExTableSchema.Type;
-	user_resource_bundle_stripe: UserResourceBundleStripeTableSchema.Type;
-	user_resource_bundle_feature_stripe: UserResourceBundleFeatureStripeTableSchema.Type;
 	user_resource_bundle_feature: UserResourceBundleFeatureTableSchema.Type;
-	user_resource_bundle_item_stripe: UserResourceBundleItemStripeTableSchema.Type;
 	user_resource_bundle_item: UserResourceBundleItemTableSchema.Type;
-	user_resource_bundle_limit_stripe: UserResourceBundleLimitStripeTableSchema.Type;
 	user_resource_bundle_limit: UserResourceBundleLimitTableSchema.Type;
 	user_resource_bundle: UserResourceBundleTableSchema.Type;
 	user_restriction: UserRestrictionTableSchema.Type;
-	user_stripe: UserStripeTableSchema.Type;
 	user: auth.User;
 }

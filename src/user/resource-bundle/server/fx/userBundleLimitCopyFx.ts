@@ -14,8 +14,6 @@ export namespace userBundleLimitCopyFx {
 		availableAt: Date;
 		/** Concrete snapshot expiration; null/undefined writes non-expiring rows. */
 		expiresAt?: Date | null;
-		/** Optional Stripe provenance key for copied rows. */
-		stripeKey?: string;
 	}
 }
 
@@ -26,13 +24,11 @@ export const userBundleLimitCopyFx = Effect.fn("userBundleLimitCopyFx")(function
 	createdAt,
 	availableAt,
 	expiresAt,
-	stripeKey,
 }: userBundleLimitCopyFx.Props) {
 	const logger = yield* getLoggerFx("userBundleLimitCopyFx");
 	logger.trace("userBundleLimitCopyFx", {
 		bundleId,
 		assignmentId,
-		stripeKey,
 	});
 
 	return yield* withTransactionFx(
@@ -49,7 +45,7 @@ export const userBundleLimitCopyFx = Effect.fn("userBundleLimitCopyFx")(function
 				limits,
 				(limit) => {
 					return dbFx(async (kysely) => {
-						const row = await kysely
+						await kysely
 							.insertInto("user_resource_bundle_limit")
 							.values({
 								id: genId(),
@@ -59,23 +55,6 @@ export const userBundleLimitCopyFx = Effect.fn("userBundleLimitCopyFx")(function
 								createdAt,
 								availableAt,
 								expiresAt: expiresAt ?? null,
-							})
-							.returning([
-								"id",
-							])
-							.executeTakeFirstOrThrow();
-
-						if (!stripeKey) {
-							return;
-						}
-
-						await kysely
-							.insertInto("user_resource_bundle_limit_stripe")
-							.values({
-								id: genId(),
-								userResourceBundleLimitId: row.id,
-								key: stripeKey,
-								createdAt,
 							})
 							.execute();
 					});

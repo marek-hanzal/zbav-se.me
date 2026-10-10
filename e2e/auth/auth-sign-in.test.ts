@@ -23,5 +23,5 @@ test("auth sign in", async ({ page, database }) => {
 
 	await page.waitForURL("/cs/app/home");
 
-	await expect(page.locator('[data-ui="HomeMenu"]')).toBeVisible();
+	await expect(page.locator('[data-ui="HomeMenu[Container]"]')).toBeVisible();
 });

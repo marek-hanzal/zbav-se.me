@@ -33,7 +33,7 @@ export const bundles: Record<
 	 * Paid packages must override these limits explicitly where needed.
 	 */
 	"package:free": {
-		type: "subscription",
+		type: "package",
 		access: "protected",
 		sort: 0,
 		items: {
@@ -67,7 +67,7 @@ export const bundles: Record<
 	 * Buyer expansion package.
 	 */
 	"package:buyer": {
-		type: "subscription",
+		type: "package",
 		access: "public",
 		sort: 10,
 		items: {
@@ -103,7 +103,7 @@ export const bundles: Record<
 	 * Seller expansion package
 	 */
 	"package:seller": {
-		type: "subscription",
+		type: "package",
 		access: "public",
 		sort: 20,
 		items: {
@@ -154,7 +154,7 @@ export const bundles: Record<
 	 * This should generally extend seller/buyer plan in the spirit of "I don't want to think about limits".
 	 */
 	"package:pro": {
-		type: "subscription",
+		type: "package",
 		access: "public",
 		sort: 30,
 		items: {
@@ -216,7 +216,7 @@ export const bundles: Record<
 	 * Think about this as "I want the best available option, regardless of the price".
 	 */
 	"package:master": {
-		type: "subscription",
+		type: "package",
 		access: "public",
 		sort: 40,
 		items: {

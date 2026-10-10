@@ -43,7 +43,6 @@ export * from "./SellerIcon";
 export * from "./SendMessageIcon";
 export * from "./SendPackageIcon";
 export * from "./SentIcon";
-export * from "./ShopIcon";
 export * from "./SocialIcon";
 export * from "./StarEmptyIcon";
 export * from "./StarIcon";

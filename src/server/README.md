@@ -51,5 +51,5 @@ to one hit per 10-minute window.
 The seeded rule `auth:password-reset` caps reset requests to three attempts
 per email address in a 15-minute window.
 
-The seeded rule `billing:stripe-webhook` protects the Stripe webhook route with
-a short source/signature bucket before webhook payload processing continues.
+The migration chain ends at `0056-user-resource-bundle-feature` and targets a
+fresh database. Resource grants remain independent of external billing systems.

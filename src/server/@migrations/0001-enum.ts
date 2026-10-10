@@ -59,7 +59,7 @@ export const EnumMigration: Migration = {
 			.createType("resource_bundle_type_enum")
 			.asEnum(
 				toEnumGuard<ResourceBundleTypeEnumSchema.Type>()([
-					"subscription",
+					"package",
 					"extra",
 					"user",
 					"promo",

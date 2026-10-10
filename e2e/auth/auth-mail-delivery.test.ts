@@ -143,7 +143,7 @@ test("auth magic link sends email and signs in", async ({ page, database }) => {
 	await page.goto(parseMagicLink(mail.Text));
 	await page.waitForURL("/cs/app/home");
 
-	await expect(page.locator('[data-ui="HomeMenu"]')).toBeVisible();
+	await expect(page.locator('[data-ui="HomeMenu[Container]"]')).toBeVisible();
 });
 
 test("auth magic link rate limit returns a client-safe error", async ({ page, db, database }) => {

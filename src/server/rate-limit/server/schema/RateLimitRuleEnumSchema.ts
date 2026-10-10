@@ -5,7 +5,6 @@ export const RateLimitRuleEnumSchema = z.enum([
 	"auth:magic-link-source",
 	"auth:password-reset",
 	"auth:password-reset-source",
-	"billing:stripe-webhook",
 	"email:request",
 	"email:source",
 	"listing:event",
