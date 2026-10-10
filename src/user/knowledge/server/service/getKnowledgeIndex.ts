@@ -1,5 +1,5 @@
-import { frontOf } from "@/lib/common/front/frontOf";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { frontOf } from "~/database-query/fn/frontOf";
 import { KnowledgeFrontSchema } from "~/user/knowledge/server/schema/KnowledgeFrontSchema";
 
 const logger = getRootLogger([

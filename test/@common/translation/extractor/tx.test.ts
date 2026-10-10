@@ -3,9 +3,9 @@ import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import { parse, stringify } from "yaml";
-import type { TranslationSource } from "@/lib/common/translation";
-import { translationFiles } from "@/lib/server/tx/translationFiles";
-import { tx } from "@/lib/server/tx/tx";
+import type { TranslationSource } from "~/translation/type/TranslationSource";
+import { translationFiles } from "~/translation-tooling/fn/translationFiles";
+import { tx } from "~/translation-tooling/fn/tx";
 
 const sources: TranslationSource.Sources = {
 	jsx: [

@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import { getLoggerFx } from "@/lib/common/log";
 import { feedFetchFx } from "~/buyer/feed/server/fx/feedFetchFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { AccessDeniedErrorFx } from "~/server/error/AccessDeniedErrorFx";
 
 export namespace feedResolveFx {

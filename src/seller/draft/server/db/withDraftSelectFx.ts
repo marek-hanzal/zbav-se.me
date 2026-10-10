@@ -1,9 +1,9 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { match } from "ts-pattern";
-import { selectFx } from "@/lib/common/select";
 import type { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
+import { selectFx } from "~/database-query/fx/selectFx";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { withContainsEx } from "~/server/database/expression/withContainsEx";
 import type { LocationSchema } from "~/session/location/server/schema/LocationSchema";

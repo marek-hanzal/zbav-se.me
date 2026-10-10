@@ -1,6 +1,6 @@
 import { tool } from "@openai/agents-core";
-import { EntitySchema } from "@/lib/common/schema";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { EntitySchema } from "~/entity/schema/EntitySchema";
 import { listingFetchFn } from "../../fn/listingFetchFn";
 
 const logger = getRootLogger([

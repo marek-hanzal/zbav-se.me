@@ -10,8 +10,8 @@ import {
 } from "@logtape/logtape";
 import { getPrettyFormatter } from "@logtape/pretty";
 import { createMiddleware } from "@tanstack/react-start";
-import { genId } from "@/lib/common/gen-id";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { genId } from "~/identity/fn/genId";
 import { withDevEnvMiddleware } from "~/server/middleware/withDevEnvMiddleware";
 
 const contextLocalStorage = new AsyncLocalStorage<Record<string, unknown>>();

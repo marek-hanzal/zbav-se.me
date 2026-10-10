@@ -1,11 +1,11 @@
-import { ConfirmButton } from "@/lib/client/button";
-import { withFallback } from "@/lib/client/fallback";
-import { TrashIcon } from "@/lib/client/icon";
-import { Tx } from "@/lib/client/tx";
-import type { MarkSuspense } from "@/lib/client/type";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import type { ListingMetaSchema } from "~/buyer/listing/server/schema/ListingMetaSchema";
 import { withIgnoreToggleMutation } from "~/buyer/listing-ignore/mutation/withIgnoreToggleMutation";
+import { Tx } from "~/translation/ui/Tx";
+import { TrashIcon } from "~/ui/constant/TrashIcon";
+import { withFallback } from "~/ui/fn/withFallback";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import { ConfirmButton } from "~/ui/ui/ConfirmButton";
 
 export namespace IgnoreButton {
 	export interface Props extends ConfirmButton.Props, MarkSuspense.Props {

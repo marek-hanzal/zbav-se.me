@@ -1,6 +1,7 @@
 import { Effect } from "effect";
-import { MigrationContextFx, withDatabaseFx } from "@/lib/common/database";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { withDatabaseFx } from "~/database-query/fx/withDatabaseFx";
+import { MigrationContextFx } from "~/database-query/service/MigrationContextFx";
 import { migrations } from "~/server/@migrations/migrations";
 import { runAuthMigration } from "~/server/auth/runAuthMigration";
 import type { Database } from "~/server/database/Database";

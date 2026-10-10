@@ -1,7 +1,7 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
-import { LocaleContext } from "@/lib/client/locale";
-import { TranslationContext } from "@/lib/client/translation";
 import { withTranslationsQuery } from "~/common/translation/query/withTranslationsQuery";
+import { LocaleContext } from "~/locale/context/LocaleContext";
+import { TranslationContext } from "~/translation/context/TranslationContext";
 export const Route = createFileRoute("/$locale")({
 	component() {
 		const { locale } = Route.useParams();

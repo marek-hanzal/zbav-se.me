@@ -1,9 +1,9 @@
 import type { FC } from "react";
-import { Container } from "@/lib/client/container";
-import type { MarkSuspense } from "@/lib/client/type";
-import { Typo } from "@/lib/client/typo";
 import { withTransactionQuery } from "~/seller/transaction/query/withTransactionQuery";
 import type { TransactionWhereSchema } from "~/seller/transaction/server/schema/TransactionWhereSchema";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import { Container } from "~/ui/ui/Container";
+import { Typo } from "~/ui/ui/Typo";
 import { List } from "./List";
 
 export namespace ListGroup {

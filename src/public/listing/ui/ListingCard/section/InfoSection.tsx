@@ -1,16 +1,17 @@
 import { DateTime } from "luxon";
 import type { FC } from "react";
-import { Container } from "@/lib/client/container";
-import { Group } from "@/lib/client/group";
-import { useLocale } from "@/lib/client/locale";
-import { Markdown } from "@/lib/client/markdown";
-import { useTranslator } from "@/lib/client/translation";
-import { Tx } from "@/lib/client/tx";
-import { Typo } from "@/lib/client/typo";
-import { LabelValue, ValueList } from "@/lib/client/value";
-import { toTimeDiff } from "@/lib/common/time";
 import { CategoryInline } from "~/common/category/ui/CategoryInline";
+import { toTimeDiff } from "~/date/fn/toTimeDiff";
+import { useLocale } from "~/locale/hook/useLocale";
 import type { ListingSchema } from "~/public/listing/server/schema/ListingSchema";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Tx } from "~/translation/ui/Tx";
+import { Container } from "~/ui/ui/Container";
+import { Group } from "~/ui/ui/Group";
+import { LabelValue } from "~/ui/ui/LabelValue";
+import { Markdown } from "~/ui/ui/Markdown";
+import { Typo } from "~/ui/ui/Typo";
+import { ValueList } from "~/ui/ui/ValueList";
 
 export namespace InfoSection {
 	export interface Props extends Container.Props {

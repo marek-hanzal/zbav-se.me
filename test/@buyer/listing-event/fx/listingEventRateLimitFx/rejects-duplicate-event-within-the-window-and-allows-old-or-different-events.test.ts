@@ -1,9 +1,9 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { withDateServiceFx } from "@/lib/common/date";
 import { listingEventCreateFx } from "~/buyer/listing-event/server/fx/listingEventCreateFx";
 import { listingEventRateLimitFx } from "~/buyer/listing-event/server/fx/listingEventRateLimitFx";
+import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
 import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";

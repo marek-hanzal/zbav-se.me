@@ -1,12 +1,12 @@
 import { type FC, useState } from "react";
-import { Button } from "@/lib/client/button";
-import { ChevronRightIcon } from "@/lib/client/icon";
-import { useTranslator } from "@/lib/client/translation";
-import { Tx } from "@/lib/client/tx";
-import type { MarkSuspense } from "@/lib/client/type";
 import { EmptyStatus } from "~/common/status/ui/EmptyStatus";
 import { FeedIcon } from "~/common/ui/icon";
 import { uiCtaLinkButton } from "~/common/ui/ui";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Tx } from "~/translation/ui/Tx";
+import { ChevronRightIcon } from "~/ui/constant/ChevronRightIcon";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import { Button } from "~/ui/ui/Button";
 import { CreateSheet } from "./CreateSheet";
 
 export namespace Empty {

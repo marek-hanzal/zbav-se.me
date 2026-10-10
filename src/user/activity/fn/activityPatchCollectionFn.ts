@@ -1,8 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
 import { z } from "zod";
-import { zodGuardFx } from "@/lib/common/fx";
-import { withLoggerFx } from "@/lib/common/log";
+import { withLoggerFx } from "~/log/fx/withLoggerFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
@@ -10,6 +9,7 @@ import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { activityPatchCollectionFx } from "~/user/activity/server/fx/activityPatchCollectionFx";
 import { ActivityPatchCollectionSchema } from "~/user/activity/server/schema/ActivityPatchCollectionSchema";
 import { ActivitySchema } from "~/user/activity/server/schema/ActivitySchema";
+import { zodGuardFx } from "~/validation/fx/zodGuardFx";
 
 export namespace activityPatchCollectionFn {
 	export type Error = Effect.Error<activityPatchCollectionFx>;

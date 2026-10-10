@@ -1,7 +1,7 @@
 import type { SystemMessageItem } from "@openai/agents-core";
 import type { FC } from "react";
-import { Container } from "@/lib/client/container";
-import { Typo } from "@/lib/client/typo";
+import { Container } from "~/ui/ui/Container";
+import { Typo } from "~/ui/ui/Typo";
 
 export namespace SystemMessage {
 	export interface Props extends Container.Props {

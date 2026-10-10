@@ -1,27 +1,26 @@
 import { type Ref, Suspense, useCallback, useEffect, useRef } from "react";
-import { Container } from "@/lib/client/container";
-import { withFallback } from "@/lib/client/fallback";
-import { ChevronLeftIcon, ChevronRightIcon } from "@/lib/client/icon";
-import { LinkTo } from "@/lib/client/link-to";
-import { useLocale } from "@/lib/client/locale";
-import { useRenderLogger } from "@/lib/client/log";
-import { useMergeRefs } from "@/lib/client/ref";
-import { useScrollTo } from "@/lib/client/scroll-to";
-import { SpinnerContainer } from "@/lib/client/spinner";
-import { useTranslator } from "@/lib/client/translation";
-import { Tx } from "@/lib/client/tx";
-import type { MarkSuspense } from "@/lib/client/type";
-import {
-	useElementVisibility,
-	VisibilityProvider,
-	VisibleContainer,
-} from "@/lib/client/visibility";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { EmptyStatus } from "~/common/status/ui/EmptyStatus";
 import { DeadEndIcon } from "~/common/ui/icon";
 import { uiCtaLinkButton } from "~/common/ui/ui";
+import { useLocale } from "~/locale/hook/useLocale";
+import { useScrollTo } from "~/navigation/hook/useScrollTo";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Tx } from "~/translation/ui/Tx";
+import { ChevronLeftIcon } from "~/ui/constant/ChevronLeftIcon";
+import { ChevronRightIcon } from "~/ui/constant/ChevronRightIcon";
+import { withFallback } from "~/ui/fn/withFallback";
+import { useMergeRefs } from "~/ui/hook/useMergeRefs";
+import { useRenderLogger } from "~/ui/hook/useRenderLogger";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import { Container } from "~/ui/ui/Container";
+import { LinkTo } from "~/ui/ui/LinkTo";
+import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
+import { useElementVisibility } from "~/visibility/hook/useElementVisibility";
+import { VisibilityProvider } from "~/visibility/ui/VisibilityProvider";
+import { VisibleContainer } from "~/visibility/ui/VisibleContainer";
 import { Item } from "./Item";
 
 export namespace ListingList {

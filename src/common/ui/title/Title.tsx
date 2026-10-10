@@ -1,7 +1,7 @@
 import { isString } from "effect/Predicate";
 import type { FC, ReactNode } from "react";
-import { Container } from "@/lib/client/container";
-import { Tx } from "@/lib/client/tx";
+import { Tx } from "~/translation/ui/Tx";
+import { Container } from "~/ui/ui/Container";
 
 export namespace Title {
 	export interface Props extends Container.Props {

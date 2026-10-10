@@ -1,14 +1,14 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
-import { zodGuardFx } from "@/lib/common/fx";
-import { withLoggerFx } from "@/lib/common/log";
-import { CountSchema } from "@/lib/common/schema";
+import { withLoggerFx } from "~/log/fx/withLoggerFx";
+import { CountSchema } from "~/query/schema/CountSchema";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { activityCountFx } from "~/user/activity/server/fx/activityCountFx";
 import { ActivityCountQuerySchema } from "~/user/activity/server/schema/ActivityCountQuerySchema";
+import { zodGuardFx } from "~/validation/fx/zodGuardFx";
 
 export namespace activityCountFn {
 	export type Error = Effect.Error<activityCountFx>;

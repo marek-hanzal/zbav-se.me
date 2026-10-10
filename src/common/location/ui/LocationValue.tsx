@@ -1,6 +1,6 @@
 import type { FC } from "react";
-import { LabelValue } from "@/lib/client/value";
 import type { LocationSchema } from "~/session/location/server/schema/LocationSchema";
+import { LabelValue } from "~/ui/ui/LabelValue";
 
 export namespace LocationValue {
 	export interface Props extends LabelValue.PropsEx {

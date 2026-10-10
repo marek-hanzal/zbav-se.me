@@ -1,12 +1,12 @@
 import type { FC } from "react";
-import { Container } from "@/lib/client/container";
-import { Group } from "@/lib/client/group";
-import { Tx } from "@/lib/client/tx";
-import type { MarkSuspense } from "@/lib/client/type";
-import type { useView } from "@/lib/client/view";
 import { ChevronAction } from "~/common/ui/action/ChevronAction";
+import { Tx } from "~/translation/ui/Tx";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import { Container } from "~/ui/ui/Container";
+import { Group } from "~/ui/ui/Group";
 import { withDraftAttrOfQuery } from "~/user/draft-attr/query/withDraftAttrOfQuery";
 import { DraftAttrOf } from "~/user/draft-attr/ui/DraftAttrOf";
+import type { useView } from "~/view/hook/useView";
 
 export namespace AttrOptional {
 	export interface Props extends MarkSuspense.Props {

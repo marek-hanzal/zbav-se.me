@@ -1,11 +1,13 @@
-import { withFallback } from "@/lib/client/fallback";
-import { CartIcon, ChevronRightIcon } from "@/lib/client/icon";
-import { LinkTo, type uiLinkTo } from "@/lib/client/link-to";
-import { useLocale } from "@/lib/client/locale";
-import { Tx } from "@/lib/client/tx";
-import type { MarkSuspense } from "@/lib/client/type";
 import { TypoIcon } from "~/common/ui/typo";
 import { uiMenuButton } from "~/common/ui/ui";
+import { useLocale } from "~/locale/hook/useLocale";
+import { Tx } from "~/translation/ui/Tx";
+import { CartIcon } from "~/ui/constant/CartIcon";
+import { ChevronRightIcon } from "~/ui/constant/ChevronRightIcon";
+import type { uiLinkTo } from "~/ui/fn/uiLinkTo";
+import { withFallback } from "~/ui/fn/withFallback";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import { LinkTo } from "~/ui/ui/LinkTo";
 
 export namespace ListingsLink {
 	export interface Props

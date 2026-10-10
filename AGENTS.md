@@ -9,8 +9,8 @@
 
 ## Repository and tools
 
-- Application code lives in `src/`; shared utilities and primitives live in `lib/{client,common,server}/`. Maintenance CLIs, Vitest tests, Playwright tests, and static assets live in `cli/`, `test/`, `e2e/`, and `public/`.
-- Import aliases come from `tsconfig.json`: `~/` maps to `src/`, `@/lib/` to `lib/`, and `~/test/` to `test/`.
+- Application code, shared utilities, and UI primitives live in `src/` under their owning domains. Maintenance CLIs, Vitest tests, Playwright tests, and static assets live in `cli/`, `test/`, `e2e/`, and `public/`.
+- Import aliases come from `tsconfig.json`: `~/` maps to `src/` and `~/test/` to `test/`. Import concrete modules directly.
 - Tool versions live in `mise.toml`; commands live in `Argcfile.sh`. Run commands from the repo root through `argc` (or `mise exec -- argc` without shell activation).
 - Use npm with `package-lock.json` and `tsx` for TypeScript CLIs. Keep project commands out of `package.json`; it holds package metadata and dependencies.
 - Install dependencies with native `npm ci` or `npm install`. Inspect `argc --help` and `argc <command> --help` for command requirements, forwarded arguments, and side effects; the root README documents the task contract.
@@ -20,7 +20,7 @@
 ## Domains and server boundaries
 
 - Keep code in its owning domain. `.dependency-cruiser.cjs` defines enforced import boundaries on resolved paths; do not weaken it to make a change pass.
-- Buyer and seller must not import each other; common must not depend on either; public must not import user. Keep `lib/common` independent of client/server code and keep `lib/client` and `lib/server` separate.
+- Buyer and seller must not import each other; common must not depend on either; public must not import user. Shared runtime modules stay independent of client/server modules, and client/server runtime modules stay separate. The resolved-path rules retain these distinctions when domains share a source root.
 - Keep server internals out of client code. Use the approved function/schema surfaces and existing middleware/composition patterns; inject Effect services at the composition edge.
 - Enforce authorization, ownership, sensitivity, bans, lifecycle, limits, and rate limits on the server. UI visibility is not enforcement; never bypass a gate to make a flow work.
 - Preserve Kysely and Zod contracts and inferred function types. Validate external input at the boundary; do not replace shared contracts with duplicate local shapes or unchecked assertions.

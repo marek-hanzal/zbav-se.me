@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import { withFetchFx } from "@/lib/common/fetch";
-import { getLoggerFx } from "@/lib/common/log";
+import { withFetchFx } from "~/http/fx/withFetchFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { withUserRestrictionSelectFx } from "../db/withUserRestrictionSelectFx";
 import type { UserRestrictionQuerySchema } from "../schema/UserRestrictionQuerySchema";
 import type { UserRestrictionWhereSchema } from "../schema/UserRestrictionWhereSchema";

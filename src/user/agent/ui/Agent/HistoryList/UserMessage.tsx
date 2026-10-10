@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { Container } from "@/lib/client/container";
+import { Container } from "~/ui/ui/Container";
 import { MessageContent } from "./MessageContent";
 
 export namespace UserMessage {

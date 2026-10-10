@@ -1,8 +1,8 @@
 import type { RunStreamEvent } from "@openai/agents";
 import { type FC, useMemo } from "react";
-import { Container } from "@/lib/client/container";
-import { useTranslator } from "@/lib/client/translation";
-import { Typo } from "@/lib/client/typo";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Container } from "~/ui/ui/Container";
+import { Typo } from "~/ui/ui/Typo";
 import { getResponseStreamEvent } from "~/user/agent/type/getResponseStreamEvent";
 
 export namespace ErrorMessage {

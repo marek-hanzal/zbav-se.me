@@ -1,8 +1,8 @@
 import type { FC } from "react";
-import type { Container } from "@/lib/client/container";
-import { NotificationIcon } from "@/lib/client/icon";
-import { useTranslator } from "@/lib/client/translation";
 import { EmptyStatus } from "~/common/status/ui/EmptyStatus";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { NotificationIcon } from "~/ui/constant/NotificationIcon";
+import type { Container } from "~/ui/ui/Container";
 
 export namespace Empty {
 	export interface Props extends Container.Props {

@@ -1,9 +1,9 @@
 import type { FC } from "react";
-import { Container } from "@/lib/client/container";
-import { Tx } from "@/lib/client/tx";
-import type { MarkSuspense } from "@/lib/client/type";
-import type { useView } from "@/lib/client/view";
+import { Tx } from "~/translation/ui/Tx";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import { Container } from "~/ui/ui/Container";
 import { withCategoryAttrOfQuery } from "~/user/category/query/withCategoryAttrOfQuery";
+import type { useView } from "~/view/hook/useView";
 import type { FeedSchema } from "../../server/schema/FeedSchema";
 import { AttrValue } from "./value/AttrValue";
 

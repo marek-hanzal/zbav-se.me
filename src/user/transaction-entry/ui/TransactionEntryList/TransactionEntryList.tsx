@@ -1,10 +1,10 @@
 import { type FC, type RefObject, Suspense, useRef } from "react";
-import { useAutoScroll } from "@/lib/client/auto-scroll";
-import { Container } from "@/lib/client/container";
-import { useRenderLogger } from "@/lib/client/log";
-import type { MarkSuspense } from "@/lib/client/type";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import type { UserSideEnumSchema } from "~/common/user-event/enum/UserSideEnumSchema";
+import { useAutoScroll } from "~/navigation/hook/useAutoScroll";
+import { useRenderLogger } from "~/ui/hook/useRenderLogger";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import { Container } from "~/ui/ui/Container";
 import { withTransactionEntryQuery } from "~/user/transaction-entry/query/withTransactionEntryQuery";
 import { Item } from "./Item";
 

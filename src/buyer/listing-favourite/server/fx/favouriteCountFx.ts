@@ -1,8 +1,8 @@
 import { Effect } from "effect";
-import { withCountFx } from "@/lib/common/count";
-import { getLoggerFx } from "@/lib/common/log";
 import { withFavouriteSelectFx } from "~/buyer/listing-favourite/server/db/withFavouriteSelectFx";
 import type { FavouriteCountQuerySchema } from "~/buyer/listing-favourite/server/schema/FavouriteCountQuerySchema";
+import { withCountFx } from "~/database-query/fx/withCountFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import type { FavouriteWhereSchema } from "../schema/FavouriteWhereSchema";
 
 export namespace favouriteCountFx {

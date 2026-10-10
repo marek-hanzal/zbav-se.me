@@ -1,4 +1,4 @@
-import type { withDatabaseFx } from "@/lib/common/database";
+import type { withDatabaseFx } from "~/database-query/fx/withDatabaseFx";
 import fieldOptionSeedData from "~/server/@migrations/0005-field-seed/field-option.json" with {
 	type: "json",
 };

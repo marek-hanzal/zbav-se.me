@@ -1,11 +1,11 @@
 import type { FunctionCallResultItem, RunStreamEvent } from "@openai/agents";
 import { type FC, useMemo } from "react";
-import { Container } from "@/lib/client/container";
-import { Group } from "@/lib/client/group";
-import { SpinnerContainer } from "@/lib/client/spinner";
-import { useTranslator } from "@/lib/client/translation";
-import { Tx } from "@/lib/client/tx";
-import { Typo } from "@/lib/client/typo";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Tx } from "~/translation/ui/Tx";
+import { Container } from "~/ui/ui/Container";
+import { Group } from "~/ui/ui/Group";
+import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
+import { Typo } from "~/ui/ui/Typo";
 import { getFunctionCallResultItem } from "~/user/agent/type/getFunctionCallResultItem";
 import { getResponseStreamEvent } from "~/user/agent/type/getResponseStreamEvent";
 import { getToolOutputText } from "~/user/agent/type/getToolOutputText";

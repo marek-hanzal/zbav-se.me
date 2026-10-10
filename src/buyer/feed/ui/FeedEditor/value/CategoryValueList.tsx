@@ -1,8 +1,8 @@
-import { withFallback } from "@/lib/client/fallback";
-import { useTranslator } from "@/lib/client/translation";
-import type { MarkSuspense } from "@/lib/client/type";
-import { ValueList } from "@/lib/client/value";
 import { CategoryInline } from "~/common/category/ui/CategoryInline";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { withFallback } from "~/ui/fn/withFallback";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import { ValueList } from "~/ui/ui/ValueList";
 import { withCategoryQuery } from "~/user/category/query/withCategoryQuery";
 import type { CategorySchema } from "~/user/category/server/schema/CategorySchema";
 

@@ -1,7 +1,7 @@
 import type { FC } from "react";
-import { Container } from "@/lib/client/container";
-import { Icon } from "@/lib/client/icon";
 import { HeroImage } from "~/common/ui/img";
+import { Container } from "~/ui/ui/Container";
+import { Icon } from "~/ui/ui/Icon";
 
 export namespace Image {
 	export interface Props {

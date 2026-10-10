@@ -1,8 +1,8 @@
 import { Effect } from "effect";
-import { withFetchFx } from "@/lib/common/fetch";
-import { getLoggerFx } from "@/lib/common/log";
 import { withFavouriteSelectFx } from "~/buyer/listing-favourite/server/db/withFavouriteSelectFx";
 import type { FavouriteQuerySchema } from "~/buyer/listing-favourite/server/schema/FavouriteQuerySchema";
+import { withFetchFx } from "~/http/fx/withFetchFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import type { FavouriteWhereSchema } from "../schema/FavouriteWhereSchema";
 
 export namespace favouriteFetchFx {

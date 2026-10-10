@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { genId } from "@/lib/common/gen-id";
+import { genId } from "~/identity/fn/genId";
 import { auth } from "~/server/auth/auth";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { dbFx } from "~/server/database/fx/dbFx";

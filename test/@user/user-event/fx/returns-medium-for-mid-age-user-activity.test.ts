@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { withDateServiceFx } from "@/lib/common/date";
+import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
 import type { UserEventTableSchema } from "~/server/database/@table/UserEventTableSchema";
 import { computeActivityFx } from "~/user/user-event/server/fx/computeActivityFx";
 

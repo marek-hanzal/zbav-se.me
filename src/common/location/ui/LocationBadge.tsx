@@ -1,9 +1,9 @@
 import type { FC } from "react";
-import { Badge } from "@/lib/client/badge";
-import { Container } from "@/lib/client/container";
-import { useLocale } from "@/lib/client/locale";
-import { toLocaleNumber } from "@/lib/common/to-locale-number";
+import { useLocale } from "~/locale/hook/useLocale";
+import { toLocaleNumber } from "~/number/fn/toLocaleNumber";
 import type { LocationSchema } from "~/session/location/server/schema/LocationSchema";
+import { Badge } from "~/ui/ui/Badge";
+import { Container } from "~/ui/ui/Container";
 
 export namespace LocationBadge {
 	export interface Props extends Badge.Props {

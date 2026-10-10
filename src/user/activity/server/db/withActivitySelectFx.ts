@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { match } from "ts-pattern";
-import { selectFx } from "@/lib/common/select";
+import { selectFx } from "~/database-query/fx/selectFx";
 import type { ActivityTableSchema } from "~/server/database/@table/ActivityTableSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import type { ActivitySortSchema } from "~/user/activity/server/schema/ActivitySortSchema";

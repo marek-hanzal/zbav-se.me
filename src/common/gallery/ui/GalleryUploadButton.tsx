@@ -1,7 +1,7 @@
-import { Button } from "@/lib/client/button";
-import { Tx } from "@/lib/client/tx";
 import { GalleryUploadSheet } from "~/common/gallery/ui/GalleryUploadSheet";
 import { PhotoIcon } from "~/common/ui/icon";
+import { Tx } from "~/translation/ui/Tx";
+import { Button } from "~/ui/ui/Button";
 
 export namespace GalleryUploadButton {
 	export interface Props<TData extends GalleryUploadSheet.Uploads, TResult>

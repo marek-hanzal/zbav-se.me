@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import { withCollectionFx } from "@/lib/common/collection";
-import { getLoggerFx } from "@/lib/common/log";
+import { withCollectionFx } from "~/database-query/fx/withCollectionFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { withResourceLimitSelectFx } from "../db/withResourceLimitSelectFx";
 import type { ResourceLimitQuerySchema } from "../schema/ResourceLimitQuerySchema";
 import type { ResourceLimitWhereSchema } from "../schema/ResourceLimitWhereSchema";

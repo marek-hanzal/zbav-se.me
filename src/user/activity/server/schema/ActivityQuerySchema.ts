@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { CursorSchema } from "@/lib/common/schema";
+import { CursorSchema } from "~/query/schema/CursorSchema";
 import { ActivitySortSchema } from "~/user/activity/server/schema/ActivitySortSchema";
 import { ActivityWhereSchema } from "~/user/activity/server/schema/ActivityWhereSchema";
 

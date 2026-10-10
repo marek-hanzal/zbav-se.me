@@ -1,8 +1,8 @@
 import { Effect } from "effect";
-import { withTestabaseFx } from "@/lib/server/test";
 import { seedTestLocationsFx } from "~/test/common/fx/seedTestLocationsFx";
 import { seedTestUsersFx } from "~/test/common/fx/seedTestUsersFx";
 import { testDatabaseFx } from "~/test/common/fx/testDatabaseFx";
+import { withTestabaseFx } from "~/test-database/fx/withTestabaseFx";
 
 export default async function globalSetup() {
 	return withTestabaseFx({

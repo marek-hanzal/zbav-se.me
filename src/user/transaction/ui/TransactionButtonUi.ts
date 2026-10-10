@@ -1,4 +1,4 @@
-import type { ConfirmButton } from "@/lib/client/button";
+import type { ConfirmButton } from "~/ui/ui/ConfirmButton";
 
 export const TransactionButtonUi: ConfirmButton.Props = {
 	iconProps: {

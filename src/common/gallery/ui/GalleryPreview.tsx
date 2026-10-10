@@ -1,7 +1,7 @@
 import { type FC, useRef } from "react";
-import { Container } from "@/lib/client/container";
-import { Fade } from "@/lib/client/fade";
 import { HeroImage } from "~/common/ui/img";
+import { Container } from "~/ui/ui/Container";
+import { Fade } from "~/ui/ui/Fade";
 
 export namespace GalleryPreview {
 	export interface Props extends Container.Props {

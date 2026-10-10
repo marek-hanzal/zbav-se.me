@@ -1,8 +1,8 @@
 import type { FC } from "react";
-import { Container } from "@/lib/client/container";
-import type { MarkSuspense } from "@/lib/client/type";
 import { HeroImage } from "~/common/ui/img";
 import type { ListingSchema } from "~/seller/listing/server/schema/ListingSchema";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import { Container } from "~/ui/ui/Container";
 
 export namespace ListingCard {
 	export interface Hooks {

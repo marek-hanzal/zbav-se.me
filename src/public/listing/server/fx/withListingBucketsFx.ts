@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import type { DateTime } from "luxon";
-import { DateServiceFx } from "@/lib/common/date";
+import { DateServiceFx } from "~/date/service/DateServiceFx";
 import { withListingSelectFx } from "~/public/listing/server/db/withListingSelectFx";
 
 export namespace withListingBucketsFx {

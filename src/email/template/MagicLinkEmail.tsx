@@ -1,6 +1,6 @@
 import { Section } from "@react-email/components";
 import type { FC } from "react";
-import { useTranslator } from "@/lib/client/translation";
+import { useTranslator } from "~/translation/hook/useTranslator";
 import { MailButton } from "../ui/MailButton";
 import { MailCopy } from "../ui/MailCopy";
 import { MailLayout } from "../ui/MailLayout";

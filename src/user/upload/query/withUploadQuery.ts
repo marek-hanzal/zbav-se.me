@@ -1,5 +1,5 @@
-import { withEntityQuery } from "@/lib/client/query";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { withEntityQuery } from "~/query/fn/withEntityQuery";
 import { uploadCollectionFn } from "~/user/upload/fn/uploadCollectionFn";
 import { uploadCountFn } from "~/user/upload/fn/uploadCountFn";
 import { uploadCreateFn } from "~/user/upload/fn/uploadCreateFn";

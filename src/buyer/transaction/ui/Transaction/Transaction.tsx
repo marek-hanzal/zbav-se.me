@@ -1,9 +1,9 @@
 import { type FC, useRef } from "react";
-import { Container } from "@/lib/client/container";
-import { useRenderLogger } from "@/lib/client/log";
-import type { MarkSuspense } from "@/lib/client/type";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { UserSideEnumSchema } from "~/common/user-event/enum/UserSideEnumSchema";
+import { useRenderLogger } from "~/ui/hook/useRenderLogger";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import { Container } from "~/ui/ui/Container";
 import { TransactionEntryList } from "~/user/transaction-entry/ui/TransactionEntryList";
 import { TransactionHero } from "./TransactionHero";
 import { TransactionInput } from "./TransactionInput";

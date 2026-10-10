@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { CursorSchema } from "@/lib/common/schema";
 import { TransactionSortSchema } from "~/buyer/transaction/server/schema/TransactionSortSchema";
 import { TransactionWhereSchema } from "~/buyer/transaction/server/schema/TransactionWhereSchema";
+import { CursorSchema } from "~/query/schema/CursorSchema";
 
 export const TransactionQuerySchema = z
 	.looseObject({

@@ -1,11 +1,11 @@
 import { type PropsWithChildren, useCallback } from "react";
-import { withFallback } from "@/lib/client/fallback";
-import { useRenderLogger } from "@/lib/client/log";
-import { SpinnerContainer } from "@/lib/client/spinner";
-import type { MarkSuspense } from "@/lib/client/type";
-import { useView } from "@/lib/client/view";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { withFallback } from "~/ui/fn/withFallback";
+import { useRenderLogger } from "~/ui/hook/useRenderLogger";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
+import { useView } from "~/view/hook/useView";
 import { AttrEditor } from "./AttrEditor";
 import { Editor } from "./Editor";
 import { AgePatch } from "./patch/AgePatch";

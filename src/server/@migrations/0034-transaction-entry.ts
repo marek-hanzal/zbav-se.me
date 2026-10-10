@@ -1,7 +1,7 @@
 import { sql } from "kysely";
 import type { Migration } from "kysely/migration";
-import { toEnumGuard } from "@/lib/common/to-enum-guard";
 import type { TransactionEntryKindEnumSchema } from "~/common/user-transaction/enum/TransactionEntryKindEnumSchema";
+import { toEnumGuard } from "~/enum/fn/toEnumGuard";
 
 export const TransactionEntryMigration: Migration = {
 	async up(db) {

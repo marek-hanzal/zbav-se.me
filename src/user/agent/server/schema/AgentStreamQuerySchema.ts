@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { CursorSchema } from "@/lib/common/schema";
+import { CursorSchema } from "~/query/schema/CursorSchema";
 import { AgentStreamSortSchema } from "~/user/agent/server/schema/AgentStreamSortSchema";
 import { AgentStreamWhereSchema } from "~/user/agent/server/schema/AgentStreamWhereSchema";
 

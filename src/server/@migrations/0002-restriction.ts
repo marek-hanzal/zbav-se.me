@@ -1,6 +1,6 @@
 import type { Migration } from "kysely/migration";
-import { toEnumGuard } from "@/lib/common/to-enum-guard";
 import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
+import { toEnumGuard } from "~/enum/fn/toEnumGuard";
 
 export const RestrictionMigration: Migration = {
 	async up(db) {

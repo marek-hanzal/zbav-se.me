@@ -1,9 +1,9 @@
 import { Effect } from "effect";
-import { withFetchFx } from "@/lib/common/fetch";
-import { getLoggerFx } from "@/lib/common/log";
 import { withListingSelectFx } from "~/buyer/listing/server/db/withListingSelectFx";
 import type { ListingQuerySchema } from "~/buyer/listing/server/schema/ListingQuerySchema";
 import { hasExplicitCategory } from "~/common/listing/util/hasExplicitCategory";
+import { withFetchFx } from "~/http/fx/withFetchFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import type { ListingWhereSchema } from "../schema/ListingWhereSchema";
 
 export namespace listingFetchFx {

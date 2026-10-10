@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { OrderEnumSchema } from "@/lib/common/schema";
+import { OrderEnumSchema } from "~/query/schema/OrderEnumSchema";
 
 export const AgentUsageSortSchema = z
 	.looseObject({

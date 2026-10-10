@@ -1,8 +1,8 @@
 import { Effect } from "effect";
-import { withFetchFx } from "@/lib/common/fetch";
-import { getLoggerFx } from "@/lib/common/log";
 import { withFeedSelectFx } from "~/buyer/feed/server/db/withFeedSelectFx";
 import type { FeedQuerySchema } from "~/buyer/feed/server/schema/FeedQuerySchema";
+import { withFetchFx } from "~/http/fx/withFetchFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import type { FeedWhereSchema } from "../schema/FeedWhereSchema";
 
 export namespace feedFetchFx {

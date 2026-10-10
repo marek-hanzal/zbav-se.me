@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { withDatabaseName } from "@/lib/common/database/withDatabaseName";
+import { withDatabaseName } from "~/database-query/fn/withDatabaseName";
 import { DialectStore } from "~/server/database/DialectStore";
 import { ServerDatabaseSchema } from "~/server/env/ServerDatabaseSchema";
 import { ServerE2eSchema } from "~/server/env/ServerE2eSchema";

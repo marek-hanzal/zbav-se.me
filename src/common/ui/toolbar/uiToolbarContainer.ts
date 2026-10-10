@@ -1,5 +1,5 @@
-import { ui as coolUi } from "@/lib/client/cls";
-import type { uiContainer } from "@/lib/client/container";
+import { ui as coolUi } from "~/ui/fn/ui";
+import type { uiContainer } from "~/ui/fn/uiContainer";
 
 export namespace uiToolbarContainer {
 	export interface Ui extends uiContainer.Ui {

@@ -1,15 +1,16 @@
 import type { FC } from "react";
-import { BottomSheet } from "@/lib/client/bottom-sheet";
-import { CloseIcon } from "@/lib/client/icon";
-import { useRenderLogger } from "@/lib/client/log";
-import { useTranslator } from "@/lib/client/translation";
-import type { MarkSuspense, StateType } from "@/lib/client/type";
-import { useView } from "@/lib/client/view";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import { SellerInfo } from "~/buyer/listing/SellerInfo/SellerInfo";
 import { GalleryPreview } from "~/common/gallery/ui/GalleryPreview";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { CloseButton } from "~/common/ui/button";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { CloseIcon } from "~/ui/constant/CloseIcon";
+import { useRenderLogger } from "~/ui/hook/useRenderLogger";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import type { StateType } from "~/ui/type/StateType";
+import { BottomSheet } from "~/ui/ui/BottomSheet";
+import { useView } from "~/view/hook/useView";
 import { ListingCard } from "./ListingCard";
 
 export namespace ListingSheet {

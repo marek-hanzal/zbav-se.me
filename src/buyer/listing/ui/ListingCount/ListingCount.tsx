@@ -1,11 +1,12 @@
-import { withFallback } from "@/lib/client/fallback";
-import { Icon, SpinnerIcon } from "@/lib/client/icon";
-import { useLocale } from "@/lib/client/locale";
-import { useTranslator } from "@/lib/client/translation";
-import type { MarkSuspense } from "@/lib/client/type";
-import { toLocaleNumber } from "@/lib/common/to-locale-number";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import type { ListingQuerySchema } from "~/buyer/listing/server/schema/ListingQuerySchema";
+import { useLocale } from "~/locale/hook/useLocale";
+import { toLocaleNumber } from "~/number/fn/toLocaleNumber";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { SpinnerIcon } from "~/ui/constant/SpinnerIcon";
+import { withFallback } from "~/ui/fn/withFallback";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import { Icon } from "~/ui/ui/Icon";
 
 export namespace ListingCount {
 	export interface Props extends MarkSuspense.Props {

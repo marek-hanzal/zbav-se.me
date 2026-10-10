@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import nodemailer from "nodemailer";
-import { getLoggerFx } from "@/lib/common/log";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { MailContextFx } from "../context/MailContextFx";
 import { MailErrorFx } from "../error/MailErrorFx";
 

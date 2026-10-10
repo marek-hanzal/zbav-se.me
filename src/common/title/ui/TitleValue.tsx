@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { LabelValue } from "@/lib/client/value";
+import { LabelValue } from "~/ui/ui/LabelValue";
 
 export namespace TitleValue {
 	export interface Props extends Omit<LabelValue.PropsEx, "title"> {

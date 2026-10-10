@@ -1,7 +1,7 @@
 import type { FC } from "react";
-import { useTranslator } from "@/lib/client/translation";
 import { EmptyStatus } from "~/common/status/ui/EmptyStatus";
 import { SearchIcon } from "~/common/ui/icon";
+import { useTranslator } from "~/translation/hook/useTranslator";
 
 export namespace Empty {
 	export interface Props extends EmptyStatus.Props {

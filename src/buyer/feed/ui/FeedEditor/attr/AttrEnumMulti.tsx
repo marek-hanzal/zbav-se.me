@@ -1,15 +1,15 @@
 import type { FC } from "react";
-import { Button } from "@/lib/client/button";
-import { Container } from "@/lib/client/container";
-import { useSelection } from "@/lib/client/selection";
-import { useTranslator } from "@/lib/client/translation";
-import type { useView } from "@/lib/client/view";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import type { AttrWhereSchema } from "~/buyer/listing/server/schema/AttrWhereSchema";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { uiSelectButton } from "~/common/ui/ui";
+import { useSelection } from "~/selection/hook/useSelection";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Button } from "~/ui/ui/Button";
+import { Container } from "~/ui/ui/Container";
 import type { CategoryAttrOfSchema } from "~/user/category/server/schema/CategoryAttrOfSchema";
+import type { useView } from "~/view/hook/useView";
 
 export namespace AttrEnumMulti {
 	export interface Props extends Container.Props {

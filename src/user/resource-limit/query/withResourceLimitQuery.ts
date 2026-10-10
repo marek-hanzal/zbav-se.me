@@ -1,5 +1,5 @@
-import { withEntityQuery } from "@/lib/client/query";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { withEntityQuery } from "~/query/fn/withEntityQuery";
 import { resourceLimitCollectionFn } from "~/user/resource-limit/fn/resourceLimitCollectionFn";
 import { resourceLimitCountFn } from "~/user/resource-limit/fn/resourceLimitCountFn";
 import { resourceLimitFetchFn } from "~/user/resource-limit/fn/resourceLimitFetchFn";

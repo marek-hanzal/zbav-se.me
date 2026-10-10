@@ -1,6 +1,6 @@
 import { createMiddleware } from "@tanstack/react-start";
 import { setResponseHeader } from "@tanstack/react-start/server";
-import { withDatabaseName } from "@/lib/common/database/withDatabaseName";
+import { withDatabaseName } from "~/database-query/fn/withDatabaseName";
 import { ServerDatabaseSchema } from "~/server/env/ServerDatabaseSchema";
 import { ServerE2eSchema } from "~/server/env/ServerE2eSchema";
 

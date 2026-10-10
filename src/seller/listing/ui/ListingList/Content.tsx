@@ -1,9 +1,9 @@
 import { type FC, useCallback } from "react";
-import type { MarkSuspense } from "@/lib/client/type";
-import { VisibleContainer } from "@/lib/client/visibility";
 import { ListItemPending } from "~/common/list-item/ListItemPending";
 import { CreateButton } from "~/seller/draft/ui/DraftList/CreateButton";
 import type { ListingSchema } from "~/seller/listing/server/schema/ListingSchema";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import { VisibleContainer } from "~/visibility/ui/VisibleContainer";
 import { ListingItem } from "./ListingItem";
 
 export namespace Content {

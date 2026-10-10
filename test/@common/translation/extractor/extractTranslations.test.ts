@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
-import type { TranslationSource } from "@/lib/common/translation";
-import { extractTranslations } from "@/lib/server/tx/extractTranslations";
+import type { TranslationSource } from "~/translation/type/TranslationSource";
+import { extractTranslations } from "~/translation-tooling/fn/extractTranslations";
 
 const sources: TranslationSource.Sources = {
 	jsx: [

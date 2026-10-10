@@ -1,6 +1,6 @@
 import { type FC, type RefObject, useRef } from "react";
-import { useAutoScroll } from "@/lib/client/auto-scroll";
-import { Container } from "@/lib/client/container";
+import { useAutoScroll } from "~/navigation/hook/useAutoScroll";
+import { Container } from "~/ui/ui/Container";
 import { EmptyWelcome } from "./EmptyWelcome";
 import { HistoryList } from "./HistoryList";
 import { LiveList } from "./LiveList";

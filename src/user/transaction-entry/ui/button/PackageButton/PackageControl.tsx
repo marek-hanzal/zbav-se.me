@@ -1,10 +1,10 @@
 import type { FC } from "react";
-import { Container } from "@/lib/client/container";
-import { FormField } from "@/lib/client/form";
-import { useTranslator } from "@/lib/client/translation";
-import { Tx } from "@/lib/client/tx";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { useAppForm } from "~/common/ui/form";
+import { FormField } from "~/form/ui/FormField";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Tx } from "~/translation/ui/Tx";
+import { Container } from "~/ui/ui/Container";
 import { PackageSchema } from "~/user/transaction-entry/server/schema/TransactionEntryCreateSchema/PackageSchema";
 
 export namespace PackageControl {

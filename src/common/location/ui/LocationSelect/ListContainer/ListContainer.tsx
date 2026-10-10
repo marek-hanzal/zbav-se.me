@@ -1,12 +1,12 @@
-import { Button } from "@/lib/client/button";
-import { Container } from "@/lib/client/container";
-import { withFallback } from "@/lib/client/fallback";
-import type { Fulltext } from "@/lib/client/fulltext";
-import { useLocale } from "@/lib/client/locale";
-import { SpinnerContainer } from "@/lib/client/spinner";
 import { uiSelectButton } from "~/common/ui/ui";
+import { useLocale } from "~/locale/hook/useLocale";
 import { withLocationAutocompleteQuery } from "~/session/location/query/withLocationAutocompleteQuery";
 import type { LocationSchema } from "~/session/location/server/schema/LocationSchema";
+import { withFallback } from "~/ui/fn/withFallback";
+import { Button } from "~/ui/ui/Button";
+import { Container } from "~/ui/ui/Container";
+import type { Fulltext } from "~/ui/ui/Fulltext";
+import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
 import { Empty } from "./Data/Empty";
 import { Default } from "./Default";
 

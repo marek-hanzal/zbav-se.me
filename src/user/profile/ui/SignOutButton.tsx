@@ -1,10 +1,10 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import type { FC } from "react";
-import { Button } from "@/lib/client/button";
-import { useLocale } from "@/lib/client/locale";
-import { Tx } from "@/lib/client/tx";
 import { LockIcon } from "~/common/ui/icon";
+import { useLocale } from "~/locale/hook/useLocale";
+import { Tx } from "~/translation/ui/Tx";
+import { Button } from "~/ui/ui/Button";
 import { withSignOutMutation } from "~/user/auth/mutation/withSignOutMutation";
 
 export namespace SignOutButton {

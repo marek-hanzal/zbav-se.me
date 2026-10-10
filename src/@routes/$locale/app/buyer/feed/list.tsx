@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Suspense } from "react";
-import { useLocale } from "@/lib/client/locale";
-import { useTranslator } from "@/lib/client/translation";
 import { FeedList } from "~/buyer/feed/ui/FeedList";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
+import { useLocale } from "~/locale/hook/useLocale";
+import { useTranslator } from "~/translation/hook/useTranslator";
 import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
 
 export const Route = createFileRoute("/$locale/app/buyer/feed/list")({

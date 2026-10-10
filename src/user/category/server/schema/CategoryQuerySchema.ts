@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { CursorSchema } from "@/lib/common/schema";
+import { CursorSchema } from "~/query/schema/CursorSchema";
 import { CategorySortSchema } from "~/user/category/server/schema/CategorySortSchema";
 import { CategoryWhereSchema } from "~/user/category/server/schema/CategoryWhereSchema";
 

@@ -1,9 +1,9 @@
 import { type FC, useEffect, useMemo, useRef } from "react";
-import { Button } from "@/lib/client/button";
-import { Container } from "@/lib/client/container";
-import type { useSelection } from "@/lib/client/selection";
-import type { EntitySchema } from "@/lib/common/schema";
-import type { Nullish } from "@/lib/common/type";
+import type { EntitySchema } from "~/entity/schema/EntitySchema";
+import type { useSelection } from "~/selection/hook/useSelection";
+import { Button } from "~/ui/ui/Button";
+import { Container } from "~/ui/ui/Container";
+import type { Nullish } from "~/value/type/Nullish";
 import { uiSelectButton } from "../ui/uiSelectButton";
 
 export namespace YearSelect {

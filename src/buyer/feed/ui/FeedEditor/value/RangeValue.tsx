@@ -1,8 +1,8 @@
 import type { FC } from "react";
-import { useLocale } from "@/lib/client/locale";
-import { useTranslator } from "@/lib/client/translation";
-import { LabelValue } from "@/lib/client/value";
-import { toLocaleNumber } from "@/lib/common/to-locale-number";
+import { useLocale } from "~/locale/hook/useLocale";
+import { toLocaleNumber } from "~/number/fn/toLocaleNumber";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { LabelValue } from "~/ui/ui/LabelValue";
 
 export namespace RangeValue {
 	export interface Props extends LabelValue.PropsEx {

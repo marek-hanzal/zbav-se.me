@@ -1,9 +1,9 @@
 import type { FC } from "react";
-import { Container } from "@/lib/client/container";
-import { useTranslator } from "@/lib/client/translation";
-import { Tx } from "@/lib/client/tx";
-import { LabelValue } from "@/lib/client/value";
 import { RatingIcon } from "~/common/score/ui/RatingIcon";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Tx } from "~/translation/ui/Tx";
+import { Container } from "~/ui/ui/Container";
+import { LabelValue } from "~/ui/ui/LabelValue";
 
 export namespace Score {
 	export interface Props {

@@ -1,8 +1,7 @@
 import type { FC } from "react";
-import { useTranslator } from "@/lib/client/translation";
-import { LabelValue } from "@/lib/client/value";
-
 import type { WarrantyEnumSchema } from "~/common/warranty/enum/WarrantyEnumSchema";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { LabelValue } from "~/ui/ui/LabelValue";
 
 export namespace WarrantyValue {
 	export interface Props extends LabelValue.PropsEx {

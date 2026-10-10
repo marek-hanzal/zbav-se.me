@@ -1,6 +1,6 @@
-import { withMutation } from "@/lib/client/mutation";
 import { withListingAttrOfQuery } from "~/common/listing-attr/query/withListingAttrOfQuery";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { withMutation } from "~/mutation/fn/withMutation";
 import { listingAttrEnumMultiPatchFn } from "../fn/listingAttrEnumMultiPatchFn";
 import type { ListingAttrEnumMultiPatchSchema } from "../server/schema/ListingAttrEnumMultiPatchSchema";
 

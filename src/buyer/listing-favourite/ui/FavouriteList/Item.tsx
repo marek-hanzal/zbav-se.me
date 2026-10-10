@@ -1,9 +1,9 @@
 import type { FC } from "react";
-import { useLocale } from "@/lib/client/locale";
-import { Typo } from "@/lib/client/typo";
-import { toTimeDiff } from "@/lib/common/time";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
 import { ListItem } from "~/common/list-item/ListItem";
+import { toTimeDiff } from "~/date/fn/toTimeDiff";
+import { useLocale } from "~/locale/hook/useLocale";
+import { Typo } from "~/ui/ui/Typo";
 
 export namespace Item {
 	export interface Props {

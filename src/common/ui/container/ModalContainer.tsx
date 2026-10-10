@@ -1,6 +1,7 @@
 import type { FC } from "react";
-import { Container } from "@/lib/client/container";
-import { CloseIcon, Icon } from "@/lib/client/icon";
+import { CloseIcon } from "~/ui/constant/CloseIcon";
+import { Container } from "~/ui/ui/Container";
+import { Icon } from "~/ui/ui/Icon";
 import { Title } from "../title";
 
 export namespace ModalContainer {

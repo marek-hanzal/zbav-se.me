@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import { NotFoundErrorFx } from "@/lib/common/error";
-import { getLoggerFx } from "@/lib/common/log";
+import { NotFoundErrorFx } from "~/error/error/NotFoundErrorFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { dbFx } from "~/server/database/fx/dbFx";
 
 export namespace draftCheckIfOwnFx {

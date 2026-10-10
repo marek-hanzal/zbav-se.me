@@ -1,10 +1,10 @@
 import { type FC, useState } from "react";
-import { Container } from "@/lib/client/container";
-import { useTranslator } from "@/lib/client/translation";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { LocationSelect } from "~/common/location/ui/LocationSelect";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Container } from "~/ui/ui/Container";
 
 export namespace LocationPatch {
 	export interface Props extends Container.Props {

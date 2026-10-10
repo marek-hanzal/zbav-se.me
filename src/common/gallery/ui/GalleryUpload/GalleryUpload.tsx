@@ -1,10 +1,10 @@
 import { type FC, useRef } from "react";
-import { Container } from "@/lib/client/container";
-import { useSnapperNav } from "@/lib/client/snapper";
-import { SnapperNav } from "@/lib/client/snapper-nav";
-import type { StateType } from "@/lib/client/type";
 import type { AccessEnumSchema } from "~/common/access/AccessEnumSchema";
 import { PhotoUpload } from "~/common/photo/ui/PhotoUpload";
+import { useSnapperNav } from "~/navigation/hook/useSnapperNav";
+import { SnapperNav } from "~/navigation/ui/SnapperNav";
+import type { StateType } from "~/ui/type/StateType";
+import { Container } from "~/ui/ui/Container";
 import { Toolbar } from "./Toolbar";
 
 export namespace GalleryUpload {

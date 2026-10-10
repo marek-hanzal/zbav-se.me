@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import { withCollectionFx } from "@/lib/common/collection";
-import { getLoggerFx } from "@/lib/common/log";
+import { withCollectionFx } from "~/database-query/fx/withCollectionFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { withAgentStreamSelectFx } from "../db/withAgentStreamSelectFx";
 import type { AgentStreamQuerySchema } from "../schema/AgentStreamQuerySchema";
 import type { AgentStreamWhereSchema } from "../schema/AgentStreamWhereSchema";

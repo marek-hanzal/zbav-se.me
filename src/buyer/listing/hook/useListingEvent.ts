@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef } from "react";
-import { useVisible } from "@/lib/client/visibility";
 import { withListingEventCreateMutation } from "~/buyer/listing-event/mutation/withListingEventCreateMutation";
 import type { ListingEventEnumSchema } from "~/common/listing/enum/ListingEventEnumSchema";
 import { useLogger } from "~/common/log/hook/useLogger";
+import { useVisible } from "~/visibility/hook/useVisible";
 
 export namespace useListingEvent {
 	export interface Props {

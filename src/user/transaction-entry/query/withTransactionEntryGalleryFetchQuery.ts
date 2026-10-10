@@ -1,5 +1,5 @@
-import { withQuery } from "@/lib/client/query";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { withQuery } from "~/query/fn/withQuery";
 import type { GallerySchema } from "~/user/gallery/server/schema/GallerySchema";
 import { transactionEntryGalleryFetchFn } from "~/user/transaction-entry/fn/transactionEntryGalleryFetchFn";
 import type { TransactionEntryGalleryQuerySchema } from "~/user/transaction-entry/server/schema/TransactionEntryGalleryQuerySchema";

@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { getLoggerFx } from "@/lib/common/log";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { dbFx } from "~/server/database/fx/dbFx";
 import type { FieldOptionCreateSchema } from "../schema/FieldOptionCreateSchema";
 

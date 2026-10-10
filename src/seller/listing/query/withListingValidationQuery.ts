@@ -1,5 +1,5 @@
-import { withQuery } from "@/lib/client/query";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { withQuery } from "~/query/fn/withQuery";
 import { listingValidateFn } from "../fn/listingValidateFn";
 import type { ListingValidateSchema } from "../server/schema/ListingValidateSchema";
 

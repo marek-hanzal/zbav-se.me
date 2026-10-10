@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { LatLonSchema } from "@/lib/common/location";
+import { LatLonSchema } from "~/coordinate/schema/LatLonSchema";
 import { RouteModeEnumSchema } from "~/session/location/server/schema/RouteModeEnumSchema";
 
 export const RouteSchema = z

@@ -1,8 +1,8 @@
-import { withQuery } from "@/lib/client/query";
-import type { EntitySchema } from "@/lib/common/schema";
 import { listingGetSellerInfoFn } from "~/buyer/listing/fn/listingGetSellerInfoFn";
 import type { SellerInfoSchema } from "~/buyer/listing/server/schema/SellerInfoSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import type { EntitySchema } from "~/entity/schema/EntitySchema";
+import { withQuery } from "~/query/fn/withQuery";
 
 export const withListingSellerInfoQuery = withQuery({
 	logger: getRootLogger([

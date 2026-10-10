@@ -3,7 +3,7 @@ import { describe, expect, test } from "vitest";
 import {
 	TaggedErrorSerializationAdapter,
 	toTaggedError,
-} from "@/lib/common/error/TaggedErrorSerializationAdapter";
+} from "~/error/serialization/TaggedErrorSerializationAdapter";
 import { RateLimitErrorFx } from "~/server/error/RateLimitErrorFx";
 
 const rateLimitError = new RateLimitErrorFx({

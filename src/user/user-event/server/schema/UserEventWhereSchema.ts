@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { WhereSchema } from "@/lib/common/schema";
 import { UserEventScopeEnumSchema } from "~/common/user-event/enum/UserEventScopeEnumSchema";
+import { WhereSchema } from "~/query/schema/WhereSchema";
 import { UserEventEnumSchema } from "./UserEventEnumSchema";
 import { UserEventSourceEnumSchema } from "./UserEventSourceEnumSchema";
 

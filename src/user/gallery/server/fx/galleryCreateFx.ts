@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { getLoggerFx } from "@/lib/common/log";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { galleryFetchFx } from "~/user/gallery/server/fx/galleryFetchFx";
 import { galleryInsertFx } from "~/user/gallery/server/fx/galleryInsertFx";
 

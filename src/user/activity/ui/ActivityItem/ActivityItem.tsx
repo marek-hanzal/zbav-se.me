@@ -1,7 +1,7 @@
 import { match } from "ts-pattern";
-import { withFallback } from "@/lib/client/fallback";
-import type { MarkSuspense } from "@/lib/client/type";
 import { ListItemPending } from "~/common/list-item/ListItemPending";
+import { withFallback } from "~/ui/fn/withFallback";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
 import { withActivityQuery } from "~/user/activity/query/withActivityQuery";
 import { ActivityBuyerMessageItem } from "../payload/ActivityBuyerMessageItem";
 import { ActivityFavouriteItem } from "../payload/ActivityFavouriteItem";

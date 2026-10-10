@@ -1,10 +1,10 @@
 import type { FC, ReactNode } from "react";
 import { useCallback } from "react";
 import { match } from "ts-pattern";
-import { Container } from "@/lib/client/container";
-import { Tx } from "@/lib/client/tx";
 import { ChatInput } from "~/common/ui/chat";
 import type { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
+import { Tx } from "~/translation/ui/Tx";
+import { Container } from "~/ui/ui/Container";
 import { withTransactionEntryQuery } from "~/user/transaction-entry/query/withTransactionEntryQuery";
 
 export namespace TransactionChat {

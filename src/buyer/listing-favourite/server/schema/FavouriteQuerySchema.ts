@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { CursorSchema } from "@/lib/common/schema";
 import { FavouriteSortSchema } from "~/buyer/listing-favourite/server/schema/FavouriteSortSchema";
 import { FavouriteWhereSchema } from "~/buyer/listing-favourite/server/schema/FavouriteWhereSchema";
+import { CursorSchema } from "~/query/schema/CursorSchema";
 
 export const FavouriteQuerySchema = z
 	.looseObject({

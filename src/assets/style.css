@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @import "./fonts.css";
-@import "@/lib/client/style.css";
+@import "~/ui/css/style.css";
 
 @plugin "@iconify/tailwind4";
 

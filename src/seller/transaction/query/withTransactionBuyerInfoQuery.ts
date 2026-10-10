@@ -1,5 +1,5 @@
-import { withQuery } from "@/lib/client/query";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { withQuery } from "~/query/fn/withQuery";
 import { transactionBuyerInfoFn } from "~/seller/transaction/fn/transactionBuyerInfoFn";
 import type { TransactionBuyerInfoSchema } from "~/seller/transaction/server/schema/TransactionBuyerInfoSchema";
 import type { TransactionQuerySchema } from "~/seller/transaction/server/schema/TransactionQuerySchema";

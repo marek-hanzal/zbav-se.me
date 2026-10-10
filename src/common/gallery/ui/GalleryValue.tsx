@@ -1,8 +1,8 @@
 import type { FC } from "react";
-import { Container } from "@/lib/client/container";
-import { Status } from "@/lib/client/status";
 import { PhotoIcon } from "~/common/ui/icon";
 import { HeroImage } from "~/common/ui/img";
+import { Container } from "~/ui/ui/Container";
+import { Status } from "~/ui/ui/Status";
 import { useMaybeUpload } from "../hook/useMaybeUpload";
 
 export namespace GalleryValue {

@@ -1,8 +1,8 @@
 import type { FC } from "react";
-import { Container } from "@/lib/client/container";
-import { Typo } from "@/lib/client/typo";
 import { withListingQuery } from "~/seller/listing/query/withListingQuery";
 import type { ListingWhereSchema } from "~/seller/listing/server/schema/ListingWhereSchema";
+import { Container } from "~/ui/ui/Container";
+import { Typo } from "~/ui/ui/Typo";
 import { TransactionListingList } from ".";
 
 export namespace ListGroup {

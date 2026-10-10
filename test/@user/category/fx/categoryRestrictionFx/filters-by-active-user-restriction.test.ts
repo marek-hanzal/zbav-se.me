@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { DateServiceFx } from "@/lib/common/date";
-import { genId } from "@/lib/common/gen-id";
 import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
+import { DateServiceFx } from "~/date/service/DateServiceFx";
+import { genId } from "~/identity/fn/genId";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";

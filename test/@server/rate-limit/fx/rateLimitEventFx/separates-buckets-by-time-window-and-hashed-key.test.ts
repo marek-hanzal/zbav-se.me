@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { withDateServiceFx } from "@/lib/common/date";
-import { hash } from "@/lib/server/hmac";
+import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
+import { hash } from "~/hmac/fn/hash";
 import { ServerHmacSchema } from "~/server/env/ServerHmacSchema";
 import { rateLimitEventFx } from "~/server/rate-limit/server/fx/rateLimitEventFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";

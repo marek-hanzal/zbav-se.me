@@ -1,5 +1,5 @@
-import { withQuery } from "@/lib/client/query";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { withQuery } from "~/query/fn/withQuery";
 import { agentUsageCollectionFn } from "~/user/agent/fn/agentUsageCollectionFn";
 import type { AgentUsageQuerySchema } from "~/user/agent/server/schema/AgentUsageQuerySchema";
 import type { AgentUsageSchema } from "~/user/agent/server/schema/AgentUsageSchema";

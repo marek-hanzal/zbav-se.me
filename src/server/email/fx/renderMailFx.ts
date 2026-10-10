@@ -1,7 +1,7 @@
 import { render, toPlainText } from "@react-email/render";
 import { Effect } from "effect";
 import type { ReactNode } from "react";
-import { getLoggerFx } from "@/lib/common/log";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { MailErrorFx } from "../error/MailErrorFx";
 
 export namespace renderMailFx {

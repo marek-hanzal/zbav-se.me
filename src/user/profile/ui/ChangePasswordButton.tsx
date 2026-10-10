@@ -1,6 +1,6 @@
 import { type FC, useState } from "react";
-import { Button } from "@/lib/client/button";
-import { Tx } from "@/lib/client/tx";
+import { Tx } from "~/translation/ui/Tx";
+import { Button } from "~/ui/ui/Button";
 import { ChangePasswordSheet } from "./ChangePasswordSheet";
 
 export namespace ChangePasswordButton {

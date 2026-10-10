@@ -1,6 +1,6 @@
 import type { AgentInputItem, Session } from "@openai/agents-core";
 import type { Kysely } from "kysely";
-import { genId } from "@/lib/common/gen-id";
+import { genId } from "~/identity/fn/genId";
 import type { Database } from "~/server/database/Database";
 
 export namespace KyselySession {

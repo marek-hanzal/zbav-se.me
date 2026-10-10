@@ -1,13 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useLocale } from "@/lib/client/locale";
-import { useRenderLogger } from "@/lib/client/log";
-import { SpinnerContainer } from "@/lib/client/spinner";
-import { useTranslator } from "@/lib/client/translation";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import { ListingCard } from "~/buyer/listing/ui/ListingCard";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
+import { useLocale } from "~/locale/hook/useLocale";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { useRenderLogger } from "~/ui/hook/useRenderLogger";
+import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
 import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
 
 export const Route = createFileRoute("/$locale/app/buyer/listing/$id/view")({

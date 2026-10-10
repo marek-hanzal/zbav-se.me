@@ -1,14 +1,15 @@
 import type { FC } from "react";
-import { Container } from "@/lib/client/container";
-import { Overlay } from "@/lib/client/overlay";
-import { SpinnerContainer } from "@/lib/client/spinner";
-import type { MarkSuspense, StateType } from "@/lib/client/type";
-import { Typo } from "@/lib/client/typo";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import type { ListingPriceSchema } from "~/common/listing/schema/ListingPriceSchema";
 import { ListingPrice } from "~/common/listing/ui/ListingPrice";
 import { HeroImage } from "~/common/ui/img";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import type { StateType } from "~/ui/type/StateType";
+import { Container } from "~/ui/ui/Container";
+import { Overlay } from "~/ui/ui/Overlay";
+import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
+import { Typo } from "~/ui/ui/Typo";
 import { Delivery } from "./Delivery";
 import { Distance } from "./Distance";
 

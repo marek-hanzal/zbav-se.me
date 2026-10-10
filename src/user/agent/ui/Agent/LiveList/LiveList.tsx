@@ -1,6 +1,6 @@
 import type { RunStreamEvent } from "@openai/agents-core";
 import { type FC, useMemo } from "react";
-import { Container } from "@/lib/client/container";
+import { Container } from "~/ui/ui/Container";
 import { withAgentLiveQuery } from "~/user/agent/query/withAgentLiveQuery";
 import { getResponseStreamEvent } from "~/user/agent/type/getResponseStreamEvent";
 import { AssistantMessage } from "./AssistantMessage";

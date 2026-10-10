@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { describe, it } from "vitest";
-import { genId } from "@/lib/common/gen-id";
 import { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/ResourceDefinitionEnumSchema";
+import { genId } from "~/identity/fn/genId";
 import { draftCreateFx } from "~/seller/draft/server/fx/draftCreateFx";
 import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";

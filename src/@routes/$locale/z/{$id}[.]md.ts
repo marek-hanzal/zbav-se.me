@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { match } from "ts-pattern";
-import { toLocaleNumber } from "@/lib/common/to-locale-number";
 import { listingAttrOfFn } from "~/common/listing-attr/fn/listingAttrOfFn";
+import { toLocaleNumber } from "~/number/fn/toLocaleNumber";
 import { withListingQuery } from "~/public/listing/query/withListingQuery";
 import { withTranslationMiddleware } from "~/server/middleware/withTranslationMiddleware";
 

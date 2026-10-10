@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import type { withDatabaseFx } from "@/lib/common/database";
 import { translationSyncFx } from "~/common/translation/server/fx/translationSyncFx";
+import type { withDatabaseFx } from "~/database-query/fx/withDatabaseFx";
 import type { Database } from "../Database";
 import { withKyselyFx } from "../fx/withKyselyFx";
 

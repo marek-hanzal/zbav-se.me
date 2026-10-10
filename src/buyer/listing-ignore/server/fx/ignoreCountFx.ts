@@ -1,8 +1,8 @@
 import { Effect } from "effect";
-import { withCountFx } from "@/lib/common/count";
-import { getLoggerFx } from "@/lib/common/log";
 import { withIgnoreSelectFx } from "~/buyer/listing-ignore/server/db/withIgnoreSelectFx";
 import type { IgnoreCountQuerySchema } from "~/buyer/listing-ignore/server/schema/IgnoreCountQuerySchema";
+import { withCountFx } from "~/database-query/fx/withCountFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import type { IgnoreWhereSchema } from "../schema/IgnoreWhereSchema";
 
 export namespace ignoreCountFx {

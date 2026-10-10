@@ -1,6 +1,6 @@
-import { withEntityQuery } from "@/lib/client/query";
-import type { CountSchema } from "@/lib/common/schema";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { withEntityQuery } from "~/query/fn/withEntityQuery";
+import type { CountSchema } from "~/query/schema/CountSchema";
 import { userRestrictionCollectionFn } from "~/user/user-restriction/fn/userRestrictionCollectionFn";
 import { userRestrictionCreateFn } from "~/user/user-restriction/fn/userRestrictionCreateFn";
 import { userRestrictionFetchFn } from "~/user/user-restriction/fn/userRestrictionFetchFn";

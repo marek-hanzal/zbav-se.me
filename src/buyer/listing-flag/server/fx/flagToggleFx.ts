@@ -1,11 +1,11 @@
 import { Effect } from "effect";
-import { getLoggerFx } from "@/lib/common/log";
 import { listingCheckIfOwnFx } from "~/buyer/listing/server/fx/listingCheckIfOwnFx";
 import { listingFetchFx } from "~/buyer/listing/server/fx/listingFetchFx";
 import { listingEventCreateFx } from "~/buyer/listing-event/server/fx/listingEventCreateFx";
 import { flagCreateFx } from "~/buyer/listing-flag/server/fx/flagCreateFx";
 import { flagDeleteFx } from "~/buyer/listing-flag/server/fx/flagDeleteFx";
 import type { FlagToggleSchema } from "~/buyer/listing-flag/server/schema/FlagToggleSchema";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { activityCreateFx } from "~/user/activity/server/fx/activityCreateFx";
 

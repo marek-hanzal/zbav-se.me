@@ -1,6 +1,6 @@
 import { createMiddleware } from "@tanstack/react-start";
-import { linkTo } from "@/lib/common/link-to";
 import { ViteEnvSchema } from "~/common/env/ViteEnvSchema";
+import { linkTo } from "~/url/fn/linkTo";
 
 /**
  * This middleware provides a way how to generate absolute URLs, usefull for callbacks and this kind

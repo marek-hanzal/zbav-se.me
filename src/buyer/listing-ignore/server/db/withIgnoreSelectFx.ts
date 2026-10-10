@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
-import { selectFx } from "@/lib/common/select";
+import { selectFx } from "~/database-query/fx/selectFx";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import type { IgnoreSortSchema } from "../schema/IgnoreSortSchema";
 import type { IgnoreWhereSchema } from "../schema/IgnoreWhereSchema";

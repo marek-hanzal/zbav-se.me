@@ -1,7 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
-import { zodGuardFx } from "@/lib/common/fx";
-import { withLoggerFx } from "@/lib/common/log";
+import { withLoggerFx } from "~/log/fx/withLoggerFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
@@ -9,6 +8,7 @@ import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { transactionEntryFetchFx } from "~/user/transaction-entry/server/fx/transactionEntryFetchFx";
 import { TransactionEntryQuerySchema } from "~/user/transaction-entry/server/schema/TransactionEntryQuerySchema";
 import { TransactionEntrySchema } from "~/user/transaction-entry/server/schema/TransactionEntrySchema";
+import { zodGuardFx } from "~/validation/fx/zodGuardFx";
 
 export namespace transactionEntryFetchFn {
 	export type Error = Effect.Error<transactionEntryFetchFx>;

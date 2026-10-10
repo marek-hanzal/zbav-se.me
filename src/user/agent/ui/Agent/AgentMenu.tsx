@@ -1,10 +1,10 @@
 import type { FC } from "react";
-import { Button } from "@/lib/client/button";
-import { Container } from "@/lib/client/container";
-import { Group } from "@/lib/client/group";
-import { Tx } from "@/lib/client/tx";
-import type { StateType } from "@/lib/client/type";
 import { PhotoIcon } from "~/common/ui/icon";
+import { Tx } from "~/translation/ui/Tx";
+import type { StateType } from "~/ui/type/StateType";
+import { Button } from "~/ui/ui/Button";
+import { Container } from "~/ui/ui/Container";
+import { Group } from "~/ui/ui/Group";
 import { MessageButtonUi } from "~/user/transaction/ui/MessageButtonUi";
 import type { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
 

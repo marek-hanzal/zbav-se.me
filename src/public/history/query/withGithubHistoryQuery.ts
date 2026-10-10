@@ -1,7 +1,7 @@
-import { withQuery } from "@/lib/client/query";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { historyFn } from "~/public/github/fn/historyFn";
 import type { GitHubHistorySchema } from "~/public/github/server/schema/GitHubHistorySchema";
+import { withQuery } from "~/query/fn/withQuery";
 
 type GithubHistoryQuery = {
 	weeks: number;

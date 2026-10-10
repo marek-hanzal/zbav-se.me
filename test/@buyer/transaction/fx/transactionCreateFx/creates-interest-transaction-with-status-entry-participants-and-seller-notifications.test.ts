@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { keyOf } from "@/lib/common/key-of";
 import { transactionCreateFx } from "~/buyer/transaction/server/fx/transactionCreateFx";
+import { keyOf } from "~/hash/fn/keyOf";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";

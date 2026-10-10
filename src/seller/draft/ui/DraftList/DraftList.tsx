@@ -1,8 +1,8 @@
 import { type FC, useMemo } from "react";
-import { Container } from "@/lib/client/container";
-import { EmptyState } from "@/lib/client/empty-state";
-import type { MarkSuspense } from "@/lib/client/type";
 import { withDraftQuery } from "~/seller/draft/query/withDraftQuery";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import { Container } from "~/ui/ui/Container";
+import { EmptyState } from "~/ui/ui/EmptyState";
 import { CreateButton } from "./CreateButton";
 import { Empty } from "./Empty";
 import { Item } from "./Item";

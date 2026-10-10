@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import { withCollectionFx } from "@/lib/common/collection";
-import { getLoggerFx } from "@/lib/common/log";
+import { withCollectionFx } from "~/database-query/fx/withCollectionFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { withResourceDefinitionSelectFx } from "../db/withResourceDefinitionSelectFx";
 import type { ResourceDefinitionQuerySchema } from "../schema/ResourceDefinitionQuerySchema";
 import type { ResourceDefinitionWhereSchema } from "../schema/ResourceDefinitionWhereSchema";

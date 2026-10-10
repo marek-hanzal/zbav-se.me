@@ -1,18 +1,18 @@
 import { type FC, useMemo } from "react";
 import { match, P } from "ts-pattern";
 import { z } from "zod";
-import { Container } from "@/lib/client/container";
-import { ArrowRightIcon } from "@/lib/client/icon";
-import { useLocale } from "@/lib/client/locale";
-import { Tx } from "@/lib/client/tx";
-import { Typo } from "@/lib/client/typo";
-import type { useView } from "@/lib/client/view";
-import { clamp } from "@/lib/common/clamp";
-import { toLocaleNumber } from "@/lib/common/to-locale-number";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { useAppForm } from "~/common/ui/form";
+import { useLocale } from "~/locale/hook/useLocale";
+import { clamp } from "~/number/fn/clamp";
+import { toLocaleNumber } from "~/number/fn/toLocaleNumber";
 import { withDraftAttrDecimalPatchMutation } from "~/seller/draft-attr-decimal/mutation/withDraftAttrDecimalPatchMutation";
+import { Tx } from "~/translation/ui/Tx";
+import { ArrowRightIcon } from "~/ui/constant/ArrowRightIcon";
+import { Container } from "~/ui/ui/Container";
+import { Typo } from "~/ui/ui/Typo";
 import type { DraftAttrOfSchema } from "~/user/draft-attr/server/schema/DraftAttrOfSchema";
+import type { useView } from "~/view/hook/useView";
 import { useNextAttr } from "./useNextAttr";
 
 const toNumericBound = (value: number | null | undefined, fallback: number) => {

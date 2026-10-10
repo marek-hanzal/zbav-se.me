@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { getLoggerFx } from "@/lib/common/log";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { transactionFetchFx } from "~/seller/transaction/server/fx/transactionFetchFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { InvalidRequestErrorFx } from "~/server/error/InvalidRequestErrorFx";

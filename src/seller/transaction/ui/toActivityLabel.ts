@@ -1,5 +1,5 @@
 import { match } from "ts-pattern";
-import type { translator as Translator } from "@/lib/common/translation/translator";
+import type { translator as Translator } from "~/translation/fn/translator";
 import type { TransactionEntrySchema } from "~/user/transaction-entry/server/schema/TransactionEntrySchema";
 import { TransactionEntryText } from "~/user/transaction-entry/server/schema/TransactionEntrySchema/TextSchema";
 import { toStatusLabel } from "./toStatusLabel";

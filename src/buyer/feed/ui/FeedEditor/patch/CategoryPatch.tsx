@@ -1,10 +1,10 @@
 import type { FC } from "react";
-import { Container } from "@/lib/client/container";
-import { useSelection } from "@/lib/client/selection";
-import type { EntitySchema } from "@/lib/common/schema";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
+import type { EntitySchema } from "~/entity/schema/EntitySchema";
+import { useSelection } from "~/selection/hook/useSelection";
+import { Container } from "~/ui/ui/Container";
 import { CategorySelect } from "~/user/category/ui/CategorySelect";
 
 export namespace CategoryPatch {

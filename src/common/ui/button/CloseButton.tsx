@@ -1,6 +1,6 @@
 import type { FC } from "react";
-import { Button } from "@/lib/client/button";
-import { CloseDrawerIcon } from "@/lib/client/icon";
+import { CloseDrawerIcon } from "~/ui/constant/CloseDrawerIcon";
+import { Button } from "~/ui/ui/Button";
 import { uiBackButton } from "../ui/uiBackButton";
 
 export namespace CloseButton {

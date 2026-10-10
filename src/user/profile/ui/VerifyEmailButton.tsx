@@ -1,11 +1,11 @@
 import { useRouter } from "@tanstack/react-router";
 import { type FC, useState } from "react";
-import { Button } from "@/lib/client/button";
-import { Container } from "@/lib/client/container";
-import { ErrorBadge } from "@/lib/client/error";
-import { useLocale } from "@/lib/client/locale";
-import { Tx } from "@/lib/client/tx";
 import { EmailIcon } from "~/common/ui/icon";
+import { useLocale } from "~/locale/hook/useLocale";
+import { Tx } from "~/translation/ui/Tx";
+import { Button } from "~/ui/ui/Button";
+import { Container } from "~/ui/ui/Container";
+import { ErrorBadge } from "~/ui/ui/ErrorBadge";
 import { withEmailVerificationRequestMutation } from "~/user/auth/mutation/withEmailVerificationRequestMutation";
 
 export namespace VerifyEmailButton {

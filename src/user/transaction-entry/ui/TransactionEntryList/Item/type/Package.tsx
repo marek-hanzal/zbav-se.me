@@ -1,12 +1,14 @@
 import type { FC } from "react";
-import type { Container } from "@/lib/client/container";
-import { ExternalIcon, Icon } from "@/lib/client/icon";
-import { useLocale } from "@/lib/client/locale";
-import { useTranslator } from "@/lib/client/translation";
-import { Typo, uiTypo } from "@/lib/client/typo";
-import { LabelValue } from "@/lib/client/value";
-import { toTimeDiff } from "@/lib/common/time";
 import { SendPackageIcon } from "~/common/ui/icon";
+import { toTimeDiff } from "~/date/fn/toTimeDiff";
+import { useLocale } from "~/locale/hook/useLocale";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { ExternalIcon } from "~/ui/constant/ExternalIcon";
+import { uiTypo } from "~/ui/fn/uiTypo";
+import type { Container } from "~/ui/ui/Container";
+import { Icon } from "~/ui/ui/Icon";
+import { LabelValue } from "~/ui/ui/LabelValue";
+import { Typo } from "~/ui/ui/Typo";
 import type { TransactionEntryPackage } from "~/user/transaction-entry/server/schema/TransactionEntrySchema/PackageSchema";
 import { TypeContainer } from "./TypeContainer";
 

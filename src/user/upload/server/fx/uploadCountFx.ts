@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import { withCountFx } from "@/lib/common/count";
-import { getLoggerFx } from "@/lib/common/log";
+import { withCountFx } from "~/database-query/fx/withCountFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import type { UploadCountQuerySchema } from "~/user/upload/server/schema/UploadCountQuerySchema";
 import { withUploadSelectFx } from "../db/withUploadSelectFx";
 import type { UploadWhereSchema } from "../schema/UploadWhereSchema";

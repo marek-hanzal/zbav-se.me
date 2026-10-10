@@ -1,17 +1,17 @@
 import { type FC, useState } from "react";
-import { Container } from "@/lib/client/container";
-import { ArrowRightIcon } from "@/lib/client/icon";
-import { useTranslator } from "@/lib/client/translation";
-import { Tx } from "@/lib/client/tx";
-import type { MarkSuspense } from "@/lib/client/type";
-import type { useView } from "@/lib/client/view";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { GalleryUpload } from "~/common/gallery/ui/GalleryUpload";
 import { EditAction } from "~/common/ui/action/EditAction";
 import { TitleContainer } from "~/common/ui/container";
 import { withDraftQuery } from "~/seller/draft/query/withDraftQuery";
 import type { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Tx } from "~/translation/ui/Tx";
+import { ArrowRightIcon } from "~/ui/constant/ArrowRightIcon";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import { Container } from "~/ui/ui/Container";
 import { withResourceLimitCheckQuery } from "~/user/resource-limit/query/withResourceLimitCheckQuery";
+import type { useView } from "~/view/hook/useView";
 
 export namespace GalleryPatch {
 	export interface Props extends MarkSuspense.Props, Container.Props {

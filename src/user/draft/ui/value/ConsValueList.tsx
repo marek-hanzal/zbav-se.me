@@ -1,7 +1,7 @@
 import type { FC } from "react";
-import { useTranslator } from "@/lib/client/translation";
-import { Tx } from "@/lib/client/tx";
-import { ValueList } from "@/lib/client/value";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Tx } from "~/translation/ui/Tx";
+import { ValueList } from "~/ui/ui/ValueList";
 
 export namespace ConsValueList {
 	export interface Props

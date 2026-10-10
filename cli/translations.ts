@@ -1,6 +1,6 @@
-import { TranslationSources } from "@/lib/client/translation";
-import { tx } from "@/lib/server/tx";
 import { locales } from "~/locales";
+import { TranslationSources } from "~/translation/constant/TranslationSources";
+import { tx } from "~/translation-tooling/fn/tx";
 
 tx({
 	packages: [

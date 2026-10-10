@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { Container } from "@/lib/client/container";
+import { Container } from "~/ui/ui/Container";
 import { AgentStreamItemsQuery } from "~/user/agent/query/AgentStreamItemsQuery";
 import { withAgentStreamItemsQuery } from "~/user/agent/query/withAgentStreamItemsQuery";
 import { AssistantMessage } from "./AssistantMessage";

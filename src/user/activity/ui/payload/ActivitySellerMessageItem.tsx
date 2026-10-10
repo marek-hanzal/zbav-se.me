@@ -1,14 +1,14 @@
 import type { FC } from "react";
-import { Container } from "@/lib/client/container";
-import { LinkTo } from "@/lib/client/link-to";
-import { useLocale } from "@/lib/client/locale";
-import { Tx } from "@/lib/client/tx";
-import { Typo } from "@/lib/client/typo";
-import { toTimeDiff } from "@/lib/common/time";
 import { withTransactionQuery } from "~/buyer/transaction/query/withTransactionQuery";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import { ListItem } from "~/common/list-item/ListItem";
+import { toTimeDiff } from "~/date/fn/toTimeDiff";
+import { useLocale } from "~/locale/hook/useLocale";
 import type { SellerMessageSchema } from "~/server/database/@table/ActivityTableSchema/SellerMessageSchema";
+import { Tx } from "~/translation/ui/Tx";
+import { Container } from "~/ui/ui/Container";
+import { LinkTo } from "~/ui/ui/LinkTo";
+import { Typo } from "~/ui/ui/Typo";
 
 export namespace ActivitySellerMessageItem {
 	export interface Props {

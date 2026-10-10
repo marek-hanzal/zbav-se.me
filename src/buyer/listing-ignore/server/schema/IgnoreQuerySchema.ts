@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { CursorSchema } from "@/lib/common/schema";
 import { IgnoreSortSchema } from "~/buyer/listing-ignore/server/schema/IgnoreSortSchema";
 import { IgnoreWhereSchema } from "~/buyer/listing-ignore/server/schema/IgnoreWhereSchema";
+import { CursorSchema } from "~/query/schema/CursorSchema";
 
 export const IgnoreQuerySchema = z
 	.looseObject({

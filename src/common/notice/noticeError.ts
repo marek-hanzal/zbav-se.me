@@ -1,4 +1,4 @@
-import type { NoticeSchema } from "@/lib/common/schema";
+import type { NoticeSchema } from "~/notice/schema/NoticeSchema";
 
 export const noticeError = (e: { message: string }): NoticeSchema.Type => {
 	return {

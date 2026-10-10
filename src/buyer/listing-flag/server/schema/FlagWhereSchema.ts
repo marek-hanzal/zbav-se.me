@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { WhereSchema } from "@/lib/common/schema";
+import { WhereSchema } from "~/query/schema/WhereSchema";
 
 export const FlagWhereSchema = z
 	.looseObject({

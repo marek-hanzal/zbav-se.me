@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import { withFetchFx } from "@/lib/common/fetch";
-import { getLoggerFx } from "@/lib/common/log";
+import { withFetchFx } from "~/http/fx/withFetchFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { withGallerySelectFx } from "~/user/gallery/server/db/withGallerySelectFx";
 import type { GalleryQuerySchema } from "~/user/gallery/server/schema/GalleryQuerySchema";
 import type { GalleryWhereSchema } from "../schema/GalleryWhereSchema";

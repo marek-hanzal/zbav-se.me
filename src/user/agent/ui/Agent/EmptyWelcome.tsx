@@ -1,7 +1,7 @@
 import type { FC } from "react";
-import { Container } from "@/lib/client/container";
-import { Status } from "@/lib/client/status";
-import { useTranslator } from "@/lib/client/translation";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Container } from "~/ui/ui/Container";
+import { Status } from "~/ui/ui/Status";
 import { AgentStreamItemsQuery } from "../../query/AgentStreamItemsQuery";
 import { withAgentStreamItemsQuery } from "../../query/withAgentStreamItemsQuery";
 

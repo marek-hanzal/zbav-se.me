@@ -1,9 +1,9 @@
 import { type FC, useId } from "react";
-import { Container } from "@/lib/client/container";
-import { Tx } from "@/lib/client/tx";
-import type { MarkSuspense } from "@/lib/client/type";
 import { withGithubHistoryQuery } from "~/public/history/query/withGithubHistoryQuery";
 import { HistoryItem } from "~/public/ui/HistoryItem";
+import { Tx } from "~/translation/ui/Tx";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import { Container } from "~/ui/ui/Container";
 
 const DEFAULT_PALETTE = [
 	"bg-slate-50 text-slate-900 border-slate-100",

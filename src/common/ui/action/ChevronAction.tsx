@@ -1,5 +1,6 @@
 import type { FC } from "react";
-import { ChevronRightIcon, Icon } from "@/lib/client/icon";
+import { ChevronRightIcon } from "~/ui/constant/ChevronRightIcon";
+import { Icon } from "~/ui/ui/Icon";
 
 export namespace ChevronAction {
 	export interface Props extends Icon.PropsEx {

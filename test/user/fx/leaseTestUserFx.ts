@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import { genId } from "@/lib/common/gen-id";
 import { getFeedDefaultCreate } from "~/buyer/feed/service/getFeedDefaultCreate";
+import { genId } from "~/identity/fn/genId";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import type { Database } from "~/server/database/Database";
 import { dbFx } from "~/server/database/fx/dbFx";

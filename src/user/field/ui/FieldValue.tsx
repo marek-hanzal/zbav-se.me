@@ -1,6 +1,6 @@
 import type { FC } from "react";
-import { useTranslator } from "@/lib/client/translation";
-import { LabelValue } from "@/lib/client/value";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { LabelValue } from "~/ui/ui/LabelValue";
 import type { FieldSchema } from "../server/schema/FieldSchema";
 
 export namespace FieldValue {

@@ -1,8 +1,8 @@
-import { withMutation } from "@/lib/client/mutation";
-import type { EntitySchema } from "@/lib/common/schema";
 import { transactionRejectFn } from "~/buyer/transaction/fn/transactionRejectFn";
 import type { TransactionSchema } from "~/buyer/transaction/server/schema/TransactionSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import type { EntitySchema } from "~/entity/schema/EntitySchema";
+import { withMutation } from "~/mutation/fn/withMutation";
 import { withActivityQuery } from "~/user/activity/query/withActivityQuery";
 import { withTransactionQuery } from "../query/withTransactionQuery";
 

@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
-import { getLoggerFx } from "@/lib/common/log";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { RateLimitErrorFx } from "~/server/error/RateLimitErrorFx";
 import { rateLimitEventFx } from "~/server/rate-limit/server/fx/rateLimitEventFx";
 

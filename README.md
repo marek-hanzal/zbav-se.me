@@ -6,8 +6,7 @@ This repo stays public for transparency and learning, but it is **not open sourc
 
 ## What is here
 
-- `src/` - app code, routes, domains, and server runtime
-- `lib/` - shared client/common/server helpers and UI primitives
+- `src/` - app code, routes, domains, server runtime, shared utilities, and UI primitives
 - `cli/` - local maintenance and generation scripts
 - `test/` - Vitest suites and fixtures
 - `e2e/` - Playwright setup and helpers

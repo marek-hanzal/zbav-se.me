@@ -1,10 +1,10 @@
 import type { AgentInputItem, FunctionCallItem, FunctionCallResultItem } from "@openai/agents-core";
 import type { FC } from "react";
-import { Container } from "@/lib/client/container";
-import { Group } from "@/lib/client/group";
-import { useTranslator } from "@/lib/client/translation";
-import { Tx } from "@/lib/client/tx";
-import { Typo } from "@/lib/client/typo";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Tx } from "~/translation/ui/Tx";
+import { Container } from "~/ui/ui/Container";
+import { Group } from "~/ui/ui/Group";
+import { Typo } from "~/ui/ui/Typo";
 import { getToolOutputText } from "~/user/agent/type/getToolOutputText";
 
 export namespace ToolCall {

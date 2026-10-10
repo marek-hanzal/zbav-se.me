@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import { getLoggerFx } from "@/lib/common/log";
 import type { ListingEventEnumSchema } from "~/common/listing/enum/ListingEventEnumSchema";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { rateLimitCheckFx } from "~/server/rate-limit/server/fx/rateLimitCheckFx";
 
 const LISTING_EVENT_RATE_LIMIT_RULE = "listing:event";

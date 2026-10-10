@@ -1,7 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
-import { zodGuardFx } from "@/lib/common/fx";
-import { withLoggerFx } from "@/lib/common/log";
+import { withLoggerFx } from "~/log/fx/withLoggerFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
@@ -9,6 +8,7 @@ import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { galleryFetchFx } from "~/user/gallery/server/fx/galleryFetchFx";
 import { GalleryQuerySchema } from "~/user/gallery/server/schema/GalleryQuerySchema";
 import { GallerySchema } from "~/user/gallery/server/schema/GallerySchema";
+import { zodGuardFx } from "~/validation/fx/zodGuardFx";
 
 export namespace galleryFetchFn {
 	export type Error = Effect.Error<galleryFetchFx>;

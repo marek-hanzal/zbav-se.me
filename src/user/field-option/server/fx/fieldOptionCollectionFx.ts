@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import { withCollectionFx } from "@/lib/common/collection";
-import { getLoggerFx } from "@/lib/common/log";
+import { withCollectionFx } from "~/database-query/fx/withCollectionFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { withFieldOptionSelectFx } from "~/user/field-option/server/db/withFieldOptionSelectFx";
 import type { FieldOptionQuerySchema } from "~/user/field-option/server/schema/FieldOptionQuerySchema";
 import type { FieldOptionWhereSchema } from "../schema/FieldOptionWhereSchema";

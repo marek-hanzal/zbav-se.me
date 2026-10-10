@@ -1,6 +1,6 @@
 import { createMiddleware } from "@tanstack/react-start";
 import { Effect } from "effect";
-import { withDialectFx } from "@/lib/common/database";
+import { withDialectFx } from "~/database-query/fx/withDialectFx";
 import { databaseFx } from "~/server/database/databaseFx";
 import { withDialectMiddleware } from "~/server/middleware/withDialectMiddleware";
 

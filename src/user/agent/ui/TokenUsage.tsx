@@ -1,10 +1,10 @@
-import { Container } from "@/lib/client/container";
-import { withFallback } from "@/lib/client/fallback";
-import { useLocale } from "@/lib/client/locale";
-import { SpinnerContainer } from "@/lib/client/spinner";
-import { Tx } from "@/lib/client/tx";
-import { Typo } from "@/lib/client/typo";
-import { toLocaleNumber } from "@/lib/common/to-locale-number";
+import { useLocale } from "~/locale/hook/useLocale";
+import { toLocaleNumber } from "~/number/fn/toLocaleNumber";
+import { Tx } from "~/translation/ui/Tx";
+import { withFallback } from "~/ui/fn/withFallback";
+import { Container } from "~/ui/ui/Container";
+import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
+import { Typo } from "~/ui/ui/Typo";
 import { withAgentTokensQuery } from "~/user/agent/query/withAgentTokensQuery";
 
 export namespace TokenUsage {

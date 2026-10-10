@@ -1,17 +1,17 @@
 import { type FC, useState } from "react";
-import { Container } from "@/lib/client/container";
-import { FormField } from "@/lib/client/form";
-import { ArrowRightIcon } from "@/lib/client/icon";
-import { TextInput } from "@/lib/client/text-input";
-import { useTranslator } from "@/lib/client/translation";
-import { Tx } from "@/lib/client/tx";
-import type { useView } from "@/lib/client/view";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { ProsConsSchema } from "~/common/listing/schema/ProsConsSchema";
 import { EditAction } from "~/common/ui/action/EditAction";
 import { TitleContainer } from "~/common/ui/container";
+import { FormField } from "~/form/ui/FormField";
 import { withDraftQuery } from "~/seller/draft/query/withDraftQuery";
 import type { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Tx } from "~/translation/ui/Tx";
+import { ArrowRightIcon } from "~/ui/constant/ArrowRightIcon";
+import { Container } from "~/ui/ui/Container";
+import { TextInput } from "~/ui/ui/TextInput";
+import type { useView } from "~/view/hook/useView";
 
 const PROS_CONS_MAX_ITEMS = 5;
 const PROS_CONS_ITEM_MAX_LENGTH = 72;

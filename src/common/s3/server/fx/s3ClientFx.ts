@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { Client } from "minio";
-import { getLoggerFx } from "@/lib/common/log";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { s3ConfigFx } from "../context/s3ConfigFx";
 
 export const s3ClientFx = Effect.fn("s3ClientFx")(function* () {

@@ -1,8 +1,9 @@
 import { type FC, useCallback } from "react";
-import type { MarkSuspense } from "@/lib/client/type";
-import { Panel, useView } from "@/lib/client/view";
 import { withDraftQuery } from "~/seller/draft/query/withDraftQuery";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
 import { withDraftAttrOfQuery } from "~/user/draft-attr/query/withDraftAttrOfQuery";
+import { useView } from "~/view/hook/useView";
+import { Panel } from "~/view/ui/Panel";
 import { Editor } from "./Editor";
 import { AttrPatch } from "./Editor/AttrPatch";
 import { AgePatch } from "./patch/AgePatch";

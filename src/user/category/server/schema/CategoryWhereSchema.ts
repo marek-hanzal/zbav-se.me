@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { WhereSchema } from "@/lib/common/schema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
+import { WhereSchema } from "~/query/schema/WhereSchema";
 
 export const CategoryWhereSchema = z
 	.looseObject({

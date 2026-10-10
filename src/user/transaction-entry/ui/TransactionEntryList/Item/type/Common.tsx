@@ -1,10 +1,10 @@
 import type { FC } from "react";
-import type { Container } from "@/lib/client/container";
-import { useLocale } from "@/lib/client/locale";
-import { Mx } from "@/lib/client/mx";
-import { Typo } from "@/lib/client/typo";
-import { toTimeDiff } from "@/lib/common/time";
 import type { UserSideEnumSchema } from "~/common/user-event/enum/UserSideEnumSchema";
+import { toTimeDiff } from "~/date/fn/toTimeDiff";
+import { useLocale } from "~/locale/hook/useLocale";
+import { Mx } from "~/translation/ui/Mx";
+import type { Container } from "~/ui/ui/Container";
+import { Typo } from "~/ui/ui/Typo";
 import type { TransactionEntryCommon } from "~/user/transaction-entry/server/schema/TransactionEntrySchema/CommonSchema";
 import { TypeContainer } from "./TypeContainer";
 

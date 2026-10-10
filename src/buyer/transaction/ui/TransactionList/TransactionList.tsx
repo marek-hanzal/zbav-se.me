@@ -1,5 +1,5 @@
 import { type FC, Suspense } from "react";
-import { Container } from "@/lib/client/container";
+import { Container } from "~/ui/ui/Container";
 import { Item } from "./Item";
 
 export namespace TransactionList {

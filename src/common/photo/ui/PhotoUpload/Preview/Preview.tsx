@@ -1,7 +1,7 @@
-import { withFallback } from "@/lib/client/fallback";
-import { SpinnerContainer } from "@/lib/client/spinner";
-import type { MarkSuspense } from "@/lib/client/type";
 import { HeroImage } from "~/common/ui/img";
+import { withFallback } from "~/ui/fn/withFallback";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
 import { withUploadQuery } from "~/user/upload/query/withUploadQuery";
 
 export namespace Preview {

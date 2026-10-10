@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { Container } from "@/lib/client/container";
+import { Container } from "~/ui/ui/Container";
 
 export namespace FieldContainer {
 	export interface Props extends Container.Props {

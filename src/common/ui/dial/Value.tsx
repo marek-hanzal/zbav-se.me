@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { Typo } from "@/lib/client/typo";
+import { Typo } from "~/ui/ui/Typo";
 
 export namespace Value {
 	export interface Props {

@@ -1,11 +1,12 @@
 import type { FC } from "react";
-import { ChevronLeftIcon, ChevronRightIcon } from "@/lib/client/icon";
-import { LinkTo } from "@/lib/client/link-to";
-import { useLocale } from "@/lib/client/locale";
-import { useTranslator } from "@/lib/client/translation";
-import { Tx } from "@/lib/client/tx";
 import { EmptyStatus } from "~/common/status/ui/EmptyStatus";
 import { uiCtaLinkButton } from "~/common/ui/ui";
+import { useLocale } from "~/locale/hook/useLocale";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Tx } from "~/translation/ui/Tx";
+import { ChevronLeftIcon } from "~/ui/constant/ChevronLeftIcon";
+import { ChevronRightIcon } from "~/ui/constant/ChevronRightIcon";
+import { LinkTo } from "~/ui/ui/LinkTo";
 
 export namespace Empty {
 	export type Props = {};

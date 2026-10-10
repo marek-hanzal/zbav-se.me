@@ -1,7 +1,7 @@
 import { sql } from "kysely";
 import type { Migration } from "kysely/migration";
-import { toEnumGuard } from "@/lib/common/to-enum-guard";
 import type { ListingEventEnumSchema } from "~/common/listing/enum/ListingEventEnumSchema";
+import { toEnumGuard } from "~/enum/fn/toEnumGuard";
 
 export const ListingEventMigration: Migration = {
 	async up(db) {

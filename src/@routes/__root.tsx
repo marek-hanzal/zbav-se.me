@@ -1,8 +1,8 @@
 import type { QueryClient } from "@tanstack/react-query";
 import { createRootRouteWithContext, HeadContent, Outlet, Scripts } from "@tanstack/react-router";
-import { uiContainer } from "@/lib/client/container";
 import styles from "~/assets/style.css?url";
 import { getLocaleFn } from "~/common/locale/getLocaleFn";
+import { uiContainer } from "~/ui/fn/uiContainer";
 
 export const Route = createRootRouteWithContext<{
 	queryClient: QueryClient;

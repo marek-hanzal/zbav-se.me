@@ -1,5 +1,5 @@
 import type { FC, ReactNode } from "react";
-import { Container } from "@/lib/client/container";
+import { Container } from "~/ui/ui/Container";
 
 export namespace FlowContainer {
 	export interface Props extends Container.Props {

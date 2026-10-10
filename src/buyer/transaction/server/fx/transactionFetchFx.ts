@@ -1,8 +1,8 @@
 import { Effect } from "effect";
-import { withFetchFx } from "@/lib/common/fetch";
-import { getLoggerFx } from "@/lib/common/log";
 import { withTransactionSelectFx } from "~/buyer/transaction/server/db/withTransactionSelectFx";
 import type { TransactionQuerySchema } from "~/buyer/transaction/server/schema/TransactionQuerySchema";
+import { withFetchFx } from "~/http/fx/withFetchFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import type { TransactionWhereSchema } from "../schema/TransactionWhereSchema";
 
 export namespace transactionFetchFx {

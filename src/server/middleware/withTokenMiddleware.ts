@@ -1,5 +1,5 @@
 import { createMiddleware } from "@tanstack/react-start";
-import type { NoticeSchema } from "@/lib/common/schema";
+import type { NoticeSchema } from "~/notice/schema/NoticeSchema";
 
 export namespace withTokenMiddleware {
 	export interface Props {

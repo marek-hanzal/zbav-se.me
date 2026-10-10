@@ -1,14 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useLocale } from "@/lib/client/locale";
-import { SpinnerContainer } from "@/lib/client/spinner";
-import { useTranslator } from "@/lib/client/translation";
-import { translator } from "@/lib/common/translation";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { getFeedDefaultCreate } from "~/buyer/feed/service/getFeedDefaultCreate";
 import { SearchEditor } from "~/buyer/search/ui/SearchEditor";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { withTranslationsQuery } from "~/common/translation/query/withTranslationsQuery";
 import { TitleContainer } from "~/common/ui/container";
+import { useLocale } from "~/locale/hook/useLocale";
+import { translator } from "~/translation/fn/translator";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
 import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
 
 export const Route = createFileRoute("/$locale/app/buyer/search")({

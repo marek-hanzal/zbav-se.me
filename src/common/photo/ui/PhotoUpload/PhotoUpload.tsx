@@ -1,10 +1,10 @@
 import { type FC, Suspense } from "react";
-import { Container } from "@/lib/client/container";
-import { SpinnerIcon } from "@/lib/client/icon";
-import { Progress } from "@/lib/client/progress";
-import { Status } from "@/lib/client/status";
-import { useTranslator } from "@/lib/client/translation";
 import type { AccessEnumSchema } from "~/common/access/AccessEnumSchema";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { SpinnerIcon } from "~/ui/constant/SpinnerIcon";
+import { Container } from "~/ui/ui/Container";
+import { Progress } from "~/ui/ui/Progress";
+import { Status } from "~/ui/ui/Status";
 import { Placeholder } from "./Placeholder";
 import { Preview } from "./Preview";
 import { useController } from "./useController";

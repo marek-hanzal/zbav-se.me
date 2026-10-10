@@ -1,20 +1,18 @@
-import { Badge } from "@/lib/client/badge";
-import { Container } from "@/lib/client/container";
-import { withFallback } from "@/lib/client/fallback";
-import {
-	ChevronRightIcon,
-	Icon,
-	type Icon as IconType,
-	LoaderIcon,
-	NotificationIcon,
-} from "@/lib/client/icon";
-import { LinkTo } from "@/lib/client/link-to";
-import { useLocale } from "@/lib/client/locale";
-import { Tx } from "@/lib/client/tx";
-import type { MarkSuspense } from "@/lib/client/type";
-import { toLocaleNumber } from "@/lib/common/to-locale-number";
 import { TypoIcon } from "~/common/ui/typo";
 import { uiMenuButton } from "~/common/ui/ui";
+import { useLocale } from "~/locale/hook/useLocale";
+import { toLocaleNumber } from "~/number/fn/toLocaleNumber";
+import { Tx } from "~/translation/ui/Tx";
+import { ChevronRightIcon } from "~/ui/constant/ChevronRightIcon";
+import { LoaderIcon } from "~/ui/constant/LoaderIcon";
+import { NotificationIcon } from "~/ui/constant/NotificationIcon";
+import { withFallback } from "~/ui/fn/withFallback";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import { Badge } from "~/ui/ui/Badge";
+import { Container } from "~/ui/ui/Container";
+import type { Icon as IconType } from "~/ui/ui/Icon";
+import { Icon } from "~/ui/ui/Icon";
+import { LinkTo } from "~/ui/ui/LinkTo";
 import { withActivityQuery } from "~/user/activity/query/withActivityQuery";
 
 export namespace NotificationLink {

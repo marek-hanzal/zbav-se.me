@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Suspense } from "react";
-import { useLocale } from "@/lib/client/locale";
-import { useTranslator } from "@/lib/client/translation";
 import { ActivityPriorityEnumSchema } from "~/common/activity/enum/ActivityPriorityEnumSchema";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
+import { useLocale } from "~/locale/hook/useLocale";
+import { useTranslator } from "~/translation/hook/useTranslator";
 import { ActivityList } from "~/user/activity/ui/ActivityList";
 import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
 

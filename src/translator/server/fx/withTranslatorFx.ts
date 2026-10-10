@@ -1,7 +1,7 @@
 import { Effect } from "effect";
-import { translator } from "@/lib/common/translation";
 import { translationsFx } from "~/common/translation/server/fx/translationsFx";
 import type { LocaleSchema } from "~/common/translation/server/schema/LocaleSchema";
+import { translator } from "~/translation/fn/translator";
 
 export namespace withTranslatorFx {
 	export interface Props extends LocaleSchema.Type {

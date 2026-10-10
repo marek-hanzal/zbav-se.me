@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { CursorSchema } from "@/lib/common/schema";
 import { ListingEventSortSchema } from "~/buyer/listing-event/server/schema/ListingEventSortSchema";
 import { ListingEventWhereSchema } from "~/buyer/listing-event/server/schema/ListingEventWhereSchema";
+import { CursorSchema } from "~/query/schema/CursorSchema";
 
 export const ListingEventQuerySchema = z
 	.looseObject({

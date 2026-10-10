@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import { withCollectionFx } from "@/lib/common/collection";
-import { getLoggerFx } from "@/lib/common/log";
+import { withCollectionFx } from "~/database-query/fx/withCollectionFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { withUserEventSelectFx } from "../db/withUserEventSelectFx";
 import type { UserEventQuerySchema } from "../schema/UserEventQuerySchema";
 import type { UserEventWhereSchema } from "../schema/UserEventWhereSchema";

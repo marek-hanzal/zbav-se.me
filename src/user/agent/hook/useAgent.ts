@@ -1,7 +1,7 @@
 import type { AgentInputItem } from "@openai/agents-core";
 import { useCallback } from "react";
-import type { MarkSuspense } from "@/lib/client/type";
-import { genId } from "@/lib/common/gen-id";
+import { genId } from "~/identity/fn/genId";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
 import { useAgentRuntime } from "~/user/agent/runtime";
 
 type QueueTextItem = {

@@ -1,11 +1,12 @@
 import { useMemo, useRef } from "react";
-import { Container } from "@/lib/client/container";
-import { EmptyState } from "@/lib/client/empty-state";
-import { withFallback } from "@/lib/client/fallback";
-import { SpinnerContainer } from "@/lib/client/spinner";
-import type { MarkSuspense } from "@/lib/client/type";
-import { useElementVisibility, VisibilityProvider } from "@/lib/client/visibility";
 import { withListingQuery } from "~/seller/listing/query/withListingQuery";
+import { withFallback } from "~/ui/fn/withFallback";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import { Container } from "~/ui/ui/Container";
+import { EmptyState } from "~/ui/ui/EmptyState";
+import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
+import { useElementVisibility } from "~/visibility/hook/useElementVisibility";
+import { VisibilityProvider } from "~/visibility/ui/VisibilityProvider";
 import { Content } from "./Content";
 import { Empty } from "./Data/Empty";
 

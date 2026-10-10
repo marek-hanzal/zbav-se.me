@@ -1,9 +1,9 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
-import { withCollectionFx } from "@/lib/common/collection";
-import { getLoggerFx } from "@/lib/common/log";
 import type { ListingQuerySchema } from "~/buyer/listing/server/schema/ListingQuerySchema";
 import { hasExplicitCategory } from "~/common/listing/util/hasExplicitCategory";
+import { withCollectionFx } from "~/database-query/fx/withCollectionFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { withListingSelectFx } from "../db/withListingSelectFx";

@@ -1,9 +1,10 @@
 import type { FC, ReactNode } from "react";
-import { Button } from "@/lib/client/button";
-import { Container } from "@/lib/client/container";
-import { ArrowLeftIcon, SaveIcon } from "@/lib/client/icon";
-import { Tx } from "@/lib/client/tx";
 import { uiCancelButton, uiSaveButton } from "~/common/ui/ui";
+import { Tx } from "~/translation/ui/Tx";
+import { ArrowLeftIcon } from "~/ui/constant/ArrowLeftIcon";
+import { SaveIcon } from "~/ui/constant/SaveIcon";
+import { Button } from "~/ui/ui/Button";
+import { Container } from "~/ui/ui/Container";
 
 export namespace SaveContainer {
 	export interface Props extends Container.Props {

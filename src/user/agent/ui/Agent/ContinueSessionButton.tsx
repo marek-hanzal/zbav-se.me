@@ -1,9 +1,10 @@
 import type { FC } from "react";
-import { uiButton } from "@/lib/client/button";
-import { ArrowRightIcon } from "@/lib/client/icon";
-import { LinkTo, type uiLinkTo } from "@/lib/client/link-to";
-import { useLocale } from "@/lib/client/locale";
-import { Tx } from "@/lib/client/tx";
+import { useLocale } from "~/locale/hook/useLocale";
+import { Tx } from "~/translation/ui/Tx";
+import { ArrowRightIcon } from "~/ui/constant/ArrowRightIcon";
+import { uiButton } from "~/ui/fn/uiButton";
+import type { uiLinkTo } from "~/ui/fn/uiLinkTo";
+import { LinkTo } from "~/ui/ui/LinkTo";
 
 export namespace ContinueSessionButton {
 	export interface Props

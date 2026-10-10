@@ -1,6 +1,6 @@
 import { sql } from "kysely";
 import type { Migration } from "kysely/migration";
-import { genId } from "@/lib/common/gen-id";
+import { genId } from "~/identity/fn/genId";
 import { ResourceBundleEnumSchema } from "~/user/resource-bundle/server/schema/ResourceBundleEnumSchema";
 import { bundles } from "./0049-resource-bundle/bundles";
 

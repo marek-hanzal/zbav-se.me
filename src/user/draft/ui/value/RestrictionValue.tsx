@@ -1,8 +1,8 @@
 import type { FC } from "react";
-import { useTranslator } from "@/lib/client/translation";
-import { Tx } from "@/lib/client/tx";
-import { LabelValue } from "@/lib/client/value";
 import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Tx } from "~/translation/ui/Tx";
+import { LabelValue } from "~/ui/ui/LabelValue";
 
 export namespace RestrictionValue {
 	export interface Props extends Omit<LabelValue.Props, "textValue"> {

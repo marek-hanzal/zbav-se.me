@@ -1,8 +1,8 @@
 import type { FC } from "react";
-import { ConfirmButton } from "@/lib/client/button";
-import { TrashIcon } from "@/lib/client/icon";
-import { Tx } from "@/lib/client/tx";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
+import { Tx } from "~/translation/ui/Tx";
+import { TrashIcon } from "~/ui/constant/TrashIcon";
+import { ConfirmButton } from "~/ui/ui/ConfirmButton";
 
 export namespace DeleteButton {
 	export interface Props extends ConfirmButton.Props {

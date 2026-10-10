@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { SpinnerContainer } from "@/lib/client/spinner";
+import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
 
 import { ListItem } from "./ListItem";
 

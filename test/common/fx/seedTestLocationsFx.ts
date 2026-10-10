@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
-import type { withDatabaseFx } from "@/lib/common/database";
+import type { withDatabaseFx } from "~/database-query/fx/withDatabaseFx";
 import type { Database } from "~/server/database/Database";
 
 export namespace seedTestLocationsFx {

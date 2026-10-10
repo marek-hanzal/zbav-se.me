@@ -1,5 +1,5 @@
-import { withQuery } from "@/lib/client/query";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { withQuery } from "~/query/fn/withQuery";
 import { translationsFn } from "../fn/translationsFn";
 import type { LocaleSchema } from "../server/schema/LocaleSchema";
 

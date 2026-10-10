@@ -1,8 +1,9 @@
 import type { FC, ReactNode } from "react";
-import { Container } from "@/lib/client/container";
-import { Group } from "@/lib/client/group";
-import { ChevronRightIcon, Icon } from "@/lib/client/icon";
-import { isString } from "@/lib/common/is-string";
+import { isString } from "~/string/fn/isString";
+import { ChevronRightIcon } from "~/ui/constant/ChevronRightIcon";
+import { Container } from "~/ui/ui/Container";
+import { Group } from "~/ui/ui/Group";
+import { Icon } from "~/ui/ui/Icon";
 import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
 import { Image } from "./Image";
 

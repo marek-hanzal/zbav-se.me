@@ -1,6 +1,6 @@
 import type { RunStreamEvent } from "@openai/agents";
-import { withQuery } from "@/lib/client/query";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { withQuery } from "~/query/fn/withQuery";
 
 export namespace withAgentLiveQuery {
 	export interface Data {

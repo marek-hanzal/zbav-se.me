@@ -1,8 +1,8 @@
 import { type FC, Fragment } from "react";
 import { match, P } from "ts-pattern";
-import type { MarkSuspense } from "@/lib/client/type";
-import type { useView } from "@/lib/client/view";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
 import { withCategoryAttrOfQuery } from "~/user/category/query/withCategoryAttrOfQuery";
+import type { useView } from "~/view/hook/useView";
 import type { FeedSchema } from "../../server/schema/FeedSchema";
 import { AttrEnumMulti } from "./attr/AttrEnumMulti";
 import { AttrEnumSingle } from "./attr/AttrEnumSingle";

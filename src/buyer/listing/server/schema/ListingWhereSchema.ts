@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { WhereSchema } from "@/lib/common/schema";
 import { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
 import { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
 import { PriceTypeEnumSchema } from "~/common/price-type/enum/PriceTypeEnumSchema";
 import { WarrantyEnumSchema } from "~/common/warranty/enum/WarrantyEnumSchema";
+import { WhereSchema } from "~/query/schema/WhereSchema";
 import { AttrWhereSchema } from "./AttrWhereSchema";
 
 export const ListingWhereSchema = z

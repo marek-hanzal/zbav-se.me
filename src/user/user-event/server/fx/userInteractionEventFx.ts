@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { getLoggerFx } from "@/lib/common/log";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import type { UserEventCreateSchema } from "../schema/UserEventCreateSchema";
 import { userEventCreateFx } from "./userEventCreateFx";

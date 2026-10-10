@@ -1,11 +1,12 @@
 import type { RunStreamEvent } from "@openai/agents-core";
 import { type FC, useEffect, useMemo, useState } from "react";
-import { Container } from "@/lib/client/container";
-import { Group } from "@/lib/client/group";
-import { SpinnerContainer } from "@/lib/client/spinner";
-import { useTranslator } from "@/lib/client/translation";
-import { Typo } from "@/lib/client/typo";
-import { list, rangedom } from "@/lib/common/rangedom";
+import { list } from "~/random/fn/list";
+import { rangedom } from "~/random/fn/rangedom";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Container } from "~/ui/ui/Container";
+import { Group } from "~/ui/ui/Group";
+import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
+import { Typo } from "~/ui/ui/Typo";
 import { getResponseStreamEvent } from "~/user/agent/type/getResponseStreamEvent";
 
 export namespace Reasoning {

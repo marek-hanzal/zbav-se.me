@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import type { MarkSuspense } from "@/lib/client/type";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
 
 export namespace WarmupCache {
 	export interface Props extends MarkSuspense.Props {

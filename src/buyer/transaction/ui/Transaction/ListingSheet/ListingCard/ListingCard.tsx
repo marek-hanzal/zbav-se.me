@@ -1,11 +1,11 @@
 import type { FC } from "react";
-import { Container } from "@/lib/client/container";
-import { useRenderLogger } from "@/lib/client/log";
-import type { MarkSuspense } from "@/lib/client/type";
-import type { useView } from "@/lib/client/view";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import { AttrSection } from "~/common/listing-attr/ui/AttrSection";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { useRenderLogger } from "~/ui/hook/useRenderLogger";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import { Container } from "~/ui/ui/Container";
+import type { useView } from "~/view/hook/useView";
 import { HeroSection } from "./section/HeroSection";
 import { InfoSection } from "./section/InfoSection";
 

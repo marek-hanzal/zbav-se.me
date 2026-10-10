@@ -1,11 +1,11 @@
 import type { FC } from "react";
-import type { uiContainer } from "@/lib/client/container";
-import { Container } from "@/lib/client/container";
-import { WarningIcon } from "@/lib/client/icon";
-import { Mx } from "@/lib/client/mx";
-import type { Status as StatusUi } from "@/lib/client/status";
-import { Status } from "@/lib/client/status";
 import { uiWarningStatus } from "~/common/ui/ui";
+import { Mx } from "~/translation/ui/Mx";
+import { WarningIcon } from "~/ui/constant/WarningIcon";
+import type { uiContainer } from "~/ui/fn/uiContainer";
+import { Container } from "~/ui/ui/Container";
+import type { Status as StatusUi } from "~/ui/ui/Status";
+import { Status } from "~/ui/ui/Status";
 
 export namespace Default {
 	export interface Props extends uiContainer.Props {

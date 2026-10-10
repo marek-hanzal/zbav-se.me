@@ -1,8 +1,8 @@
 import type { RunStreamEvent } from "@openai/agents";
 import { type FC, useMemo } from "react";
 import { match } from "ts-pattern";
-import { Group } from "@/lib/client/group";
-import { Markdown } from "@/lib/client/markdown";
+import { Group } from "~/ui/ui/Group";
+import { Markdown } from "~/ui/ui/Markdown";
 import { getResponseStreamEvent } from "~/user/agent/type/getResponseStreamEvent";
 
 export namespace AssistantMessage {

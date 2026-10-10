@@ -1,6 +1,6 @@
 import type { FC } from "react";
-import { Container } from "@/lib/client/container";
-import { Status } from "@/lib/client/status";
+import { Container } from "~/ui/ui/Container";
+import { Status } from "~/ui/ui/Status";
 
 export namespace EmptyStatus {
 	export interface Props

@@ -1,4 +1,3 @@
-import { withEntityQuery } from "@/lib/client/query";
 import { feedCollectionFn } from "~/buyer/feed/fn/feedCollectionFn";
 import { feedCountFn } from "~/buyer/feed/fn/feedCountFn";
 import { feedCreateFn } from "~/buyer/feed/fn/feedCreateFn";
@@ -11,6 +10,7 @@ import type { FeedPatchSchema } from "~/buyer/feed/server/schema/FeedPatchSchema
 import type { FeedQuerySchema } from "~/buyer/feed/server/schema/FeedQuerySchema";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { withEntityQuery } from "~/query/fn/withEntityQuery";
 import { withResourceLimitCheckQuery } from "~/user/resource-limit/query/withResourceLimitCheckQuery";
 
 export const withFeedQuery = withEntityQuery({

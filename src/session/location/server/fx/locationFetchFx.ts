@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import { withFetchFx } from "@/lib/common/fetch";
-import { getLoggerFx } from "@/lib/common/log";
+import { withFetchFx } from "~/http/fx/withFetchFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { withLocationSelectFx } from "~/session/location/server/db/withLocationSelectFx";
 import type { LocationQuerySchema } from "~/session/location/server/schema/LocationQuerySchema";
 

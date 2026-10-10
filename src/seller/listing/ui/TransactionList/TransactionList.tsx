@@ -1,11 +1,11 @@
 import { type FC, useMemo } from "react";
-import { Container } from "@/lib/client/container";
-import { EmptyState } from "@/lib/client/empty-state";
-import { useTranslator } from "@/lib/client/translation";
-import type { MarkSuspense } from "@/lib/client/type";
 import { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
 import { withTransactionQuery } from "~/seller/transaction/query/withTransactionQuery";
 import { toStatusLabel } from "~/seller/transaction/ui/toStatusLabel";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import { Container } from "~/ui/ui/Container";
+import { EmptyState } from "~/ui/ui/EmptyState";
 import { Empty } from "./Empty";
 import { ListGroup } from "./ListGroup";
 

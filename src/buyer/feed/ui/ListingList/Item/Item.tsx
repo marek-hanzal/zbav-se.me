@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { withFallback } from "@/lib/client/fallback";
-import { useRenderLogger } from "@/lib/client/log";
-import { SpinnerContainer } from "@/lib/client/spinner";
-import type { MarkSuspense } from "@/lib/client/type";
 import { useListingEvent } from "~/buyer/listing/hook/useListingEvent";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { withFallback } from "~/ui/fn/withFallback";
+import { useRenderLogger } from "~/ui/hook/useRenderLogger";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
 import { ListingSheet } from "../../ListingSheet";
 import { Hero } from "./Hero";
 

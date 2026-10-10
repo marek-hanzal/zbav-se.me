@@ -1,13 +1,13 @@
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { Container } from "@/lib/client/container";
-import { useRenderLogger } from "@/lib/client/log";
-import { useTranslator } from "@/lib/client/translation";
-import type { MarkSuspense } from "@/lib/client/type";
 import { withTransactionQuery } from "~/buyer/transaction/query/withTransactionQuery";
 import { RejectedMessage } from "~/buyer/transaction/ui/status/RejectedMessage";
 import { TransactionMenu } from "~/buyer/transaction/ui/TransactionMenu";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { useRenderLogger } from "~/ui/hook/useRenderLogger";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import { Container } from "~/ui/ui/Container";
 import { TransactionChat } from "~/user/transaction/ui/TransactionChat";
 import { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
 

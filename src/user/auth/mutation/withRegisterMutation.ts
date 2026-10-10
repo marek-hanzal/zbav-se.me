@@ -1,5 +1,5 @@
-import { withMutation } from "@/lib/client/mutation";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { withMutation } from "~/mutation/fn/withMutation";
 import { authClient } from "~/user/auth/authClient";
 
 export namespace withRegisterMutation {

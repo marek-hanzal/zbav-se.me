@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { EntitySchema } from "@/lib/common/schema";
+import { EntitySchema } from "~/entity/schema/EntitySchema";
 import { ResourceDefinitionTableSchema } from "~/server/database/@table/ResourceDefinitionTableSchema";
 
 export const ResourceDefinitionSchema = z

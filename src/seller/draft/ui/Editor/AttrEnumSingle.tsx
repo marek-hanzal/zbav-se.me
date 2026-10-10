@@ -1,15 +1,15 @@
 import type { FC } from "react";
-import { Button } from "@/lib/client/button";
-import { Container } from "@/lib/client/container";
-import { ArrowRightIcon } from "@/lib/client/icon";
-import { useSelection } from "@/lib/client/selection";
-import { useTranslator } from "@/lib/client/translation";
-import { Tx } from "@/lib/client/tx";
-import type { useView } from "@/lib/client/view";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { uiSelectButton } from "~/common/ui/ui";
+import { useSelection } from "~/selection/hook/useSelection";
 import { withDraftAttrEnumSinglePatchMutation } from "~/seller/draft-attr-enum-single/mutation/withDraftAttrEnumSinglePatchMutation";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Tx } from "~/translation/ui/Tx";
+import { ArrowRightIcon } from "~/ui/constant/ArrowRightIcon";
+import { Button } from "~/ui/ui/Button";
+import { Container } from "~/ui/ui/Container";
 import type { DraftAttrOfSchema } from "~/user/draft-attr/server/schema/DraftAttrOfSchema";
+import type { useView } from "~/view/hook/useView";
 import { useNextAttr } from "./useNextAttr";
 
 export namespace AttrEnumSingle {

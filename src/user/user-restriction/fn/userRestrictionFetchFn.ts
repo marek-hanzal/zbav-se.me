@@ -1,8 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
-import { withDateServiceFx } from "@/lib/common/date";
-import { zodGuardFx } from "@/lib/common/fx";
-import { withLoggerFx } from "@/lib/common/log";
+import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
+import { withLoggerFx } from "~/log/fx/withLoggerFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
@@ -10,6 +9,7 @@ import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { userRestrictionFetchFx } from "~/user/user-restriction/server/fx/userRestrictionFetchFx";
 import { UserRestrictionQuerySchema } from "~/user/user-restriction/server/schema/UserRestrictionQuerySchema";
 import { UserRestrictionSchema } from "~/user/user-restriction/server/schema/UserRestrictionSchema";
+import { zodGuardFx } from "~/validation/fx/zodGuardFx";
 
 export namespace userRestrictionFetchFn {
 	export type Error = Effect.Error<userRestrictionFetchFx>;

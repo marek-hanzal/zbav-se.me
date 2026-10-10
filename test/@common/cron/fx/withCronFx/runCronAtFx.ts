@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
-import { withDateServiceFx } from "@/lib/common/date";
 import type { ScheduleSchema } from "~/common/@cron/schema/ScheduleSchema";
 import { withCronFx } from "~/common/@cron/server/withCronFx";
+import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
 
 export namespace runCronAtFx {
 	export interface Props {

@@ -1,7 +1,7 @@
 import { tool } from "@openai/agents";
 import { stringify } from "csv-stringify/sync";
-import { ofGoogleMap } from "@/lib/common/location";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { ofGoogleMap } from "~/coordinate/fn/ofGoogleMap";
 import { locationAutocompleteFn } from "~/session/location/fn/locationAutocompleteFn";
 import { LocationAutocompleteSchema } from "~/session/location/server/schema/LocationAutocompleteSchema";
 

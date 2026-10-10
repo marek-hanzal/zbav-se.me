@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useLocale } from "@/lib/client/locale";
-import { handleArrowNav } from "@/lib/client/nav";
-import { SpinnerContainer } from "@/lib/client/spinner";
-import { useTranslator } from "@/lib/client/translation";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
+import { useLocale } from "~/locale/hook/useLocale";
+import { handleArrowNav } from "~/navigation/fn/handleArrowNav";
 import { DraftEditor } from "~/seller/draft/ui/DraftEditor";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
 import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
 
 export const Route = createFileRoute("/$locale/app/seller/draft/$id/edit")({

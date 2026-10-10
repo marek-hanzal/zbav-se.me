@@ -1,5 +1,5 @@
-import { withMutation } from "@/lib/client/mutation";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { withMutation } from "~/mutation/fn/withMutation";
 import { agentThreadCreateSessionFn } from "~/user/agent/fn/agentThreadCreateSessionFn";
 import { withAgentLiveQuery } from "~/user/agent/query/withAgentLiveQuery";
 import { withAgentStreamItemsQuery } from "~/user/agent/query/withAgentStreamItemsQuery";

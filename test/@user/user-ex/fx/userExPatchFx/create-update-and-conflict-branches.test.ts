@@ -2,13 +2,11 @@ import { Effect } from "effect";
 import { PostgresDialect, sql } from "kysely";
 import { Pool } from "pg";
 import { describe, expect, it } from "vitest";
-import {
-	MigrationContextFx,
-	withDatabaseFx,
-	withDatabaseName,
-	withDialectFx,
-} from "@/lib/common/database";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { withDatabaseName } from "~/database-query/fn/withDatabaseName";
+import { withDatabaseFx } from "~/database-query/fx/withDatabaseFx";
+import { withDialectFx } from "~/database-query/fx/withDialectFx";
+import { MigrationContextFx } from "~/database-query/service/MigrationContextFx";
 import type { Database } from "~/server/database/Database";
 import { ServerDatabaseSchema } from "~/server/env/ServerDatabaseSchema";
 import { expectErrorFx } from "~/test/common/fx/expectErrorFx";

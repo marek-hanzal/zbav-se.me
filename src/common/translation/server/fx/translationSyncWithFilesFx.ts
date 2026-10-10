@@ -2,9 +2,9 @@ import { Effect } from "effect";
 import { sql } from "kysely";
 import { parse } from "yaml";
 import { z } from "zod";
-import { TranslationSchema } from "@/lib/common/schema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
+import { TranslationSchema } from "~/translation/schema/TranslationSchema";
 
 const TranslationSourceSchema = z.record(
 	z.string(),

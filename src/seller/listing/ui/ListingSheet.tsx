@@ -1,9 +1,10 @@
 import type { FC } from "react";
-import { BottomSheet } from "@/lib/client/bottom-sheet";
-import type { MarkSuspense, StateType } from "@/lib/client/type";
-import { useView } from "@/lib/client/view";
 import { GalleryPreview } from "~/common/gallery/ui/GalleryPreview";
 import type { ListingSchema } from "~/seller/listing/server/schema/ListingSchema";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import type { StateType } from "~/ui/type/StateType";
+import { BottomSheet } from "~/ui/ui/BottomSheet";
+import { useView } from "~/view/hook/useView";
 import { ListingCard } from "./ListingCard";
 
 export namespace ListingSheet {

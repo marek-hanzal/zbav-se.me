@@ -1,6 +1,6 @@
 import type { FC } from "react";
-import { Container } from "@/lib/client/container";
 import { ListingExpireEnumSchema } from "~/common/listing/enum/ListingExpireEnumSchema";
+import { Container } from "~/ui/ui/Container";
 import { Item } from "./Item";
 
 export namespace ExpireAtSelect {

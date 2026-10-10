@@ -1,9 +1,9 @@
-import { withMutation } from "@/lib/client/mutation";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
 import { thumbCreateFn } from "~/buyer/thumb/fn/thumbCreateFn";
 import type { ThumbCreateSchema } from "~/buyer/thumb/server/schema/ThumbCreateSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { withMutation } from "~/mutation/fn/withMutation";
 
 export const withThumbCreateMutation = withMutation<
 	ThumbCreateSchema.Type,

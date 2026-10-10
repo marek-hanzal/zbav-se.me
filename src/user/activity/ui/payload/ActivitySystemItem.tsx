@@ -1,13 +1,13 @@
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { Container } from "@/lib/client/container";
-import { LinkTo } from "@/lib/client/link-to";
-import { useLocale } from "@/lib/client/locale";
-import { Tx } from "@/lib/client/tx";
-import { Typo } from "@/lib/client/typo";
-import { toTimeDiff } from "@/lib/common/time";
 import { ListItem } from "~/common/list-item/ListItem";
+import { toTimeDiff } from "~/date/fn/toTimeDiff";
+import { useLocale } from "~/locale/hook/useLocale";
 import type { SystemSchema } from "~/server/database/@table/ActivityTableSchema/SystemSchema";
+import { Tx } from "~/translation/ui/Tx";
+import { Container } from "~/ui/ui/Container";
+import { LinkTo } from "~/ui/ui/LinkTo";
+import { Typo } from "~/ui/ui/Typo";
 import { withActivityQuery } from "~/user/activity/query/withActivityQuery";
 
 export namespace ActivitySystemItem {

@@ -1,17 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Suspense } from "react";
-import { uiButton } from "@/lib/client/button";
-import { Container } from "@/lib/client/container";
-import { ChevronRightIcon, GitHubIcon, Icon } from "@/lib/client/icon";
-import { LinkTo, uiLinkTo } from "@/lib/client/link-to";
-import { Status } from "@/lib/client/status";
-import { useTranslator } from "@/lib/client/translation";
-import { Tx } from "@/lib/client/tx";
 import face from "~/assets/face.webp";
 import { HeroImage } from "~/common/ui/img";
 import { Logo } from "~/common/ui/logo";
 import { History } from "~/public/ui/History";
 import { HistoryPending } from "~/public/ui/HistoryPending";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Tx } from "~/translation/ui/Tx";
+import { ChevronRightIcon } from "~/ui/constant/ChevronRightIcon";
+import { GitHubIcon } from "~/ui/constant/GitHubIcon";
+import { uiButton } from "~/ui/fn/uiButton";
+import { uiLinkTo } from "~/ui/fn/uiLinkTo";
+import { Container } from "~/ui/ui/Container";
+import { Icon } from "~/ui/ui/Icon";
+import { LinkTo } from "~/ui/ui/LinkTo";
+import { Status } from "~/ui/ui/Status";
 
 export const Route = createFileRoute("/$locale/landing")({
 	component() {

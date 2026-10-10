@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import { linkTo } from "@/lib/common/link-to";
-import { getLoggerFx } from "@/lib/common/log";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
+import { linkTo } from "~/url/fn/linkTo";
 import { LocationConfigFx } from "../context/LocationConfigFx";
 
 export namespace withLocationRequestFx {

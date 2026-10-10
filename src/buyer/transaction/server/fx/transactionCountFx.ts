@@ -1,8 +1,8 @@
 import { Effect } from "effect";
-import { withCountFx } from "@/lib/common/count";
-import { getLoggerFx } from "@/lib/common/log";
 import { withTransactionSelectFx } from "~/buyer/transaction/server/db/withTransactionSelectFx";
 import type { TransactionCountQuerySchema } from "~/buyer/transaction/server/schema/TransactionCountQuerySchema";
+import { withCountFx } from "~/database-query/fx/withCountFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import type { TransactionWhereSchema } from "../schema/TransactionWhereSchema";
 
 export namespace transactionCountFx {

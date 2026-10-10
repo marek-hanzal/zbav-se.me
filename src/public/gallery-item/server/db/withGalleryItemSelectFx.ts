@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
-import { selectFx } from "@/lib/common/select";
+import { selectFx } from "~/database-query/fx/selectFx";
 import { withUploadSelectFx } from "~/public/upload/server/db/withUploadSelectFx";
 import type { UploadSchema } from "~/public/upload/server/schema/UploadSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";

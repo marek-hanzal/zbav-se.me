@@ -1,7 +1,7 @@
 import { Effect } from "effect";
-import { NotFoundErrorFx } from "@/lib/common/error";
-import { withFetchFx } from "@/lib/common/fetch";
-import { getLoggerFx } from "@/lib/common/log";
+import { NotFoundErrorFx } from "~/error/error/NotFoundErrorFx";
+import { withFetchFx } from "~/http/fx/withFetchFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { withGallerySelectFx } from "~/user/gallery/server/db/withGallerySelectFx";
 import { transactionEntryFetchFx } from "~/user/transaction-entry/server/fx/transactionEntryFetchFx";
 import type { TransactionEntryGalleryQuerySchema } from "~/user/transaction-entry/server/schema/TransactionEntryGalleryQuerySchema";

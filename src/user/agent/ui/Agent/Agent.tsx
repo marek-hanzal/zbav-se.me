@@ -1,6 +1,6 @@
 import { type FC, useRef } from "react";
-import { Container } from "@/lib/client/container";
-import type { MarkSuspense } from "@/lib/client/type";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import { Container } from "~/ui/ui/Container";
 import { useAgent } from "~/user/agent/hook/useAgent";
 import { AgentInput } from "./AgentInput";
 import { AgentMessageList } from "./AgentMessageList";

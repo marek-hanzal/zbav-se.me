@@ -1,17 +1,18 @@
 import type { FC } from "react";
 import { match, P } from "ts-pattern";
-import { Container } from "@/lib/client/container";
-import { Group } from "@/lib/client/group";
-import { ArrowRightIcon, Icon } from "@/lib/client/icon";
-import { useLocale } from "@/lib/client/locale";
-import { useTranslator } from "@/lib/client/translation";
-import { Tx } from "@/lib/client/tx";
-import { Typo } from "@/lib/client/typo";
-import { ValueList } from "@/lib/client/value";
-import type { useView } from "@/lib/client/view";
-import { toLocaleNumber } from "@/lib/common/to-locale-number";
 import type { AttrWhereSchema } from "~/buyer/listing/server/schema/AttrWhereSchema";
+import { useLocale } from "~/locale/hook/useLocale";
+import { toLocaleNumber } from "~/number/fn/toLocaleNumber";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Tx } from "~/translation/ui/Tx";
+import { ArrowRightIcon } from "~/ui/constant/ArrowRightIcon";
+import { Container } from "~/ui/ui/Container";
+import { Group } from "~/ui/ui/Group";
+import { Icon } from "~/ui/ui/Icon";
+import { Typo } from "~/ui/ui/Typo";
+import { ValueList } from "~/ui/ui/ValueList";
 import type { CategoryAttrOfSchema } from "~/user/category/server/schema/CategoryAttrOfSchema";
+import type { useView } from "~/view/hook/useView";
 
 export namespace AttrValue {
 	export interface Props {

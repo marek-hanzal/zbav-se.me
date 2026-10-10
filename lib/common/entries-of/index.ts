@@ -1,1 +1,0 @@
-export { entriesOf } from "./entriesOf";

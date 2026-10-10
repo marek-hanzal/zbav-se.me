@@ -1,13 +1,14 @@
-import { Container } from "@/lib/client/container";
-import { withFallback } from "@/lib/client/fallback";
-import { useLocale } from "@/lib/client/locale";
-import { SpinnerContainer } from "@/lib/client/spinner";
-import { useTranslator } from "@/lib/client/translation";
-import { Tx } from "@/lib/client/tx";
-import type { MarkSuspense } from "@/lib/client/type";
-import { Typo } from "@/lib/client/typo";
-import { LabelValue, ValueList } from "@/lib/client/value";
-import { toTimeDiff } from "@/lib/common/time";
+import { toTimeDiff } from "~/date/fn/toTimeDiff";
+import { useLocale } from "~/locale/hook/useLocale";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Tx } from "~/translation/ui/Tx";
+import { withFallback } from "~/ui/fn/withFallback";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import { Container } from "~/ui/ui/Container";
+import { LabelValue } from "~/ui/ui/LabelValue";
+import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
+import { Typo } from "~/ui/ui/Typo";
+import { ValueList } from "~/ui/ui/ValueList";
 import { withUserRestrictionQuery } from "~/user/user-restriction/query/withUserRestrictionQuery";
 import type { UserRestrictionSchema } from "~/user/user-restriction/server/schema/UserRestrictionSchema";
 

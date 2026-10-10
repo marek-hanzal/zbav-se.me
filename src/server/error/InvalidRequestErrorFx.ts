@@ -1,5 +1,5 @@
 import { Data } from "effect";
-import type { WireError } from "@/lib/common/error";
+import type { WireError } from "~/error/type/WireError";
 
 export class InvalidRequestErrorFx
 	extends Data.TaggedError("InvalidRequestErrorFx")<{

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { CursorSchema } from "@/lib/common/schema";
+import { CursorSchema } from "~/query/schema/CursorSchema";
 import { GallerySortSchema } from "~/user/gallery/server/schema/GallerySortSchema";
 import { GalleryWhereSchema } from "~/user/gallery/server/schema/GalleryWhereSchema";
 

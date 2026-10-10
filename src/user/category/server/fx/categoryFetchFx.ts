@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import { withFetchFx } from "@/lib/common/fetch";
-import { getLoggerFx } from "@/lib/common/log";
+import { withFetchFx } from "~/http/fx/withFetchFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import type { CategoryQuerySchema } from "~/user/category/server/schema/CategoryQuerySchema";
 import { withCategorySelectFx } from "../db/withCategorySelectFx";
 import type { CategoryWhereSchema } from "../schema/CategoryWhereSchema";

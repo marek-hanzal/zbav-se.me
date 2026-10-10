@@ -1,10 +1,10 @@
 import type { FC } from "react";
-import { Container } from "@/lib/client/container";
-import { useTranslator } from "@/lib/client/translation";
-import type { StateType } from "@/lib/client/type";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { LocationSelect } from "~/common/location/ui/LocationSelect";
 import type { LocationSchema } from "~/session/location/server/schema/LocationSchema";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import type { StateType } from "~/ui/type/StateType";
+import { Container } from "~/ui/ui/Container";
 
 export namespace Content {
 	export interface Props extends Container.Props {

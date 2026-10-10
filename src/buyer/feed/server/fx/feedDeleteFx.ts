@@ -1,7 +1,7 @@
 import { Effect } from "effect";
-import { getLoggerFx } from "@/lib/common/log";
 import { feedFetchFx } from "~/buyer/feed/server/fx/feedFetchFx";
 import type { FeedQuerySchema } from "~/buyer/feed/server/schema/FeedQuerySchema";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import type { FeedWhereSchema } from "../schema/FeedWhereSchema";

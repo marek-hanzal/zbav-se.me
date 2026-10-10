@@ -1,7 +1,7 @@
 import { Effect } from "effect";
-import { getLoggerFx } from "@/lib/common/log";
 import { TransactionEntrySensitiveKindEnumSchema } from "~/common/user-transaction/enum/TransactionEntrySensitiveKindEnumSchema";
 import type { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { Transitions } from "~/user/transaction/server/fx/transactionTransitionFx";
 

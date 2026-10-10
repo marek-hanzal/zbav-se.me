@@ -1,6 +1,6 @@
 import type { FC, ReactNode } from "react";
-import { Container } from "@/lib/client/container";
-import type { Tx } from "@/lib/client/tx";
+import type { Tx } from "~/translation/ui/Tx";
+import { Container } from "~/ui/ui/Container";
 import { Title } from "../title/Title";
 import { BottomContainer } from "./BottomContainer";
 

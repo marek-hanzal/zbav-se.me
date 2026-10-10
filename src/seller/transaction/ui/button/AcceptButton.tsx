@@ -1,8 +1,8 @@
 import type { FC } from "react";
-import { Button } from "@/lib/client/button";
-import { Tx } from "@/lib/client/tx";
 import { CheckIcon } from "~/common/ui/icon";
 import type { TransactionSchema } from "~/seller/transaction/server/schema/TransactionSchema";
+import { Tx } from "~/translation/ui/Tx";
+import { Button } from "~/ui/ui/Button";
 import type { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
 import { withTransactionAcceptMutation } from "../../mutation/withTransactionAcceptMutation";
 

@@ -1,13 +1,15 @@
-import { Container } from "@/lib/client/container";
-import { withFallback } from "@/lib/client/fallback";
-import { Group } from "@/lib/client/group";
-import { ChevronRightIcon, type Icon, MessageIcon } from "@/lib/client/icon";
-import { LinkTo } from "@/lib/client/link-to";
-import { useLocale } from "@/lib/client/locale";
-import { Tx } from "@/lib/client/tx";
-import type { MarkSuspense } from "@/lib/client/type";
 import { TypoIcon } from "~/common/ui/typo";
 import { uiMenuButton } from "~/common/ui/ui";
+import { useLocale } from "~/locale/hook/useLocale";
+import { Tx } from "~/translation/ui/Tx";
+import { ChevronRightIcon } from "~/ui/constant/ChevronRightIcon";
+import { MessageIcon } from "~/ui/constant/MessageIcon";
+import { withFallback } from "~/ui/fn/withFallback";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import { Container } from "~/ui/ui/Container";
+import { Group } from "~/ui/ui/Group";
+import type { Icon } from "~/ui/ui/Icon";
+import { LinkTo } from "~/ui/ui/LinkTo";
 
 export namespace MessageLink {
 	export interface Props extends Group.Props, MarkSuspense.Props {

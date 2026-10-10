@@ -1,8 +1,10 @@
 import type { FC } from "react";
-import { Button } from "@/lib/client/button";
-import { Container } from "@/lib/client/container";
-import { ArrowLeftIcon, ArrowRightIcon, TrashIcon } from "@/lib/client/icon";
-import { useTranslator } from "@/lib/client/translation";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { ArrowLeftIcon } from "~/ui/constant/ArrowLeftIcon";
+import { ArrowRightIcon } from "~/ui/constant/ArrowRightIcon";
+import { TrashIcon } from "~/ui/constant/TrashIcon";
+import { Button } from "~/ui/ui/Button";
+import { Container } from "~/ui/ui/Container";
 
 export namespace Toolbar {
 	export interface Hooks {

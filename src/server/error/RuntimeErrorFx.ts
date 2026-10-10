@@ -1,5 +1,5 @@
 import { Data } from "effect";
-import type { WireError } from "@/lib/common/error";
+import type { WireError } from "~/error/type/WireError";
 
 /**
  * General runtime error not belonging to a particular domain.

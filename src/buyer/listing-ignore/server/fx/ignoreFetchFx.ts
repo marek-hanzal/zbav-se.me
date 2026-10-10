@@ -1,8 +1,8 @@
 import { Effect } from "effect";
-import { withFetchFx } from "@/lib/common/fetch";
-import { getLoggerFx } from "@/lib/common/log";
 import { withIgnoreSelectFx } from "~/buyer/listing-ignore/server/db/withIgnoreSelectFx";
 import type { IgnoreQuerySchema } from "~/buyer/listing-ignore/server/schema/IgnoreQuerySchema";
+import { withFetchFx } from "~/http/fx/withFetchFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import type { IgnoreWhereSchema } from "../schema/IgnoreWhereSchema";
 
 export namespace ignoreFetchFx {

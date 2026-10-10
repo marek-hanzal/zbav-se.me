@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { CursorSchema } from "@/lib/common/schema";
 import { FlagSortSchema } from "~/buyer/listing-flag/server/schema/FlagSortSchema";
 import { FlagWhereSchema } from "~/buyer/listing-flag/server/schema/FlagWhereSchema";
+import { CursorSchema } from "~/query/schema/CursorSchema";
 
 export const FlagQuerySchema = z
 	.looseObject({

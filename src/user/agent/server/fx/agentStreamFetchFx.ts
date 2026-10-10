@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import { withFetchFx } from "@/lib/common/fetch";
-import { getLoggerFx } from "@/lib/common/log";
+import { withFetchFx } from "~/http/fx/withFetchFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { withAgentStreamSelectFx } from "~/user/agent/server/db/withAgentStreamSelectFx";
 import type { AgentStreamQuerySchema } from "~/user/agent/server/schema/AgentStreamQuerySchema";
 import type { AgentStreamWhereSchema } from "../schema/AgentStreamWhereSchema";

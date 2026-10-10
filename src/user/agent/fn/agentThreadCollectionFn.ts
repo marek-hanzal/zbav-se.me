@@ -1,8 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
 import { z } from "zod";
-import { zodGuardFx } from "@/lib/common/fx";
-import { withLoggerFx } from "@/lib/common/log";
+import { withLoggerFx } from "~/log/fx/withLoggerFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
@@ -10,6 +9,7 @@ import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { agentThreadCollectionFx } from "~/user/agent/server/fx/agentThreadCollectionFx";
 import { AgentThreadQuerySchema } from "~/user/agent/server/schema/AgentThreadQuerySchema";
 import { AgentThreadSchema } from "~/user/agent/server/schema/AgentThreadSchema";
+import { zodGuardFx } from "~/validation/fx/zodGuardFx";
 
 export namespace agentThreadCollectionFn {
 	export type Error = Effect.Error<agentThreadCollectionFx>;

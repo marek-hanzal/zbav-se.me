@@ -1,5 +1,5 @@
-import { withQuery } from "@/lib/client/query";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { withQuery } from "~/query/fn/withQuery";
 import { rateLimitFn } from "~/server/rate-limit/fn/rateLimitFn";
 import type { RateLimitQuerySchema } from "~/server/rate-limit/server/schema/RateLimitQuerySchema";
 import type { RateLimitSchema } from "~/server/rate-limit/server/schema/RateLimitSchema";

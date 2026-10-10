@@ -1,11 +1,12 @@
 import type { FC, ReactNode } from "react";
 import { match } from "ts-pattern";
-import type { Container } from "@/lib/client/container";
-import { useLocale } from "@/lib/client/locale";
-import { useTranslator } from "@/lib/client/translation";
-import type { Typo } from "@/lib/client/typo";
-import { LabelValue, ValueList } from "@/lib/client/value";
-import { toLocaleNumber } from "@/lib/common/to-locale-number";
+import { useLocale } from "~/locale/hook/useLocale";
+import { toLocaleNumber } from "~/number/fn/toLocaleNumber";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import type { Container } from "~/ui/ui/Container";
+import { LabelValue } from "~/ui/ui/LabelValue";
+import type { Typo } from "~/ui/ui/Typo";
+import { ValueList } from "~/ui/ui/ValueList";
 import type { ListingAttrOfSchema } from "../server/schema/ListingAttrOfSchema";
 
 export namespace ListingAttrOf {

@@ -1,5 +1,5 @@
-import { withEntityQuery } from "@/lib/client/query";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { withEntityQuery } from "~/query/fn/withEntityQuery";
 import { transactionEntryCollectionFn } from "~/user/transaction-entry/fn/transactionEntryCollectionFn";
 import { transactionEntryCountFn } from "~/user/transaction-entry/fn/transactionEntryCountFn";
 import { transactionEntryCreateFn } from "~/user/transaction-entry/fn/transactionEntryCreateFn";

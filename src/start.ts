@@ -1,5 +1,5 @@
 import { createCsrfMiddleware, createStart } from "@tanstack/react-start";
-import { TaggedErrorSerializationAdapter } from "@/lib/common/error";
+import { TaggedErrorSerializationAdapter } from "~/error/serialization/TaggedErrorSerializationAdapter";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 
 const csrfMiddleware = createCsrfMiddleware({

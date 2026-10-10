@@ -8,9 +8,9 @@ import {
 	useRef,
 	useState,
 } from "react";
-import { Button } from "@/lib/client/button";
-import { Container } from "@/lib/client/container";
-import { uiInput } from "@/lib/client/form";
+import { uiInput } from "~/form/fn/uiInput";
+import { Button } from "~/ui/ui/Button";
+import { Container } from "~/ui/ui/Container";
 import { SendMessageIcon } from "../icon";
 
 export namespace ChatInput {

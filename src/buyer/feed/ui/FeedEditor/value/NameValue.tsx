@@ -1,6 +1,6 @@
 import type { FC } from "react";
-import { useTranslator } from "@/lib/client/translation";
-import { LabelValue } from "@/lib/client/value";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { LabelValue } from "~/ui/ui/LabelValue";
 
 export namespace NameValue {
 	export interface Props extends LabelValue.PropsEx {

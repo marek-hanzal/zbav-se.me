@@ -1,14 +1,14 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
 import { z } from "zod";
-import { zodGuardFx } from "@/lib/common/fx";
-import { withLoggerFx } from "@/lib/common/log";
+import { withLoggerFx } from "~/log/fx/withLoggerFx";
 import { galleryCollectionFx } from "~/public/gallery/server/fx/galleryCollectionFx";
 import { GalleryQuerySchema } from "~/public/gallery/server/schema/GalleryQuerySchema";
 import { GallerySchema } from "~/public/gallery/server/schema/GallerySchema";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
+import { zodGuardFx } from "~/validation/fx/zodGuardFx";
 
 export namespace galleryCollectionFn {
 	export type Error = Effect.Error<galleryCollectionFx>;

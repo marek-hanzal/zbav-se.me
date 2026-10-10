@@ -1,8 +1,8 @@
 import { z } from "zod";
-import { CursorSchema } from "@/lib/common/schema";
 import { ListingMetaSchema } from "~/public/listing/server/schema/ListingMetaSchema";
 import { ListingSortSchema } from "~/public/listing/server/schema/ListingSortSchema";
 import { ListingWhereSchema } from "~/public/listing/server/schema/ListingWhereSchema";
+import { CursorSchema } from "~/query/schema/CursorSchema";
 
 export const ListingQuerySchema = z
 	.looseObject({

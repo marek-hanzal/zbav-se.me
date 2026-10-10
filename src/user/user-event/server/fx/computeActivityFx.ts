@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { DateServiceFx } from "@/lib/common/date";
+import { DateServiceFx } from "~/date/service/DateServiceFx";
 import type { UserEventTableSchema } from "~/server/database/@table/UserEventTableSchema";
 import type { ActivityEnumSchema } from "../schema/ActivityEnumSchema";
 

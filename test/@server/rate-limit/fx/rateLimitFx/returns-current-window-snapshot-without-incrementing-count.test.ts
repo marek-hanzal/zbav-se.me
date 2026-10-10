@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { withDateServiceFx } from "@/lib/common/date";
+import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
 import { rateLimitEventFx } from "~/server/rate-limit/server/fx/rateLimitEventFx";
 import { rateLimitFx } from "~/server/rate-limit/server/fx/rateLimitFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";

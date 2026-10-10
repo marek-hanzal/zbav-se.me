@@ -1,4 +1,3 @@
-import { withEntityQuery } from "@/lib/client/query";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { listingCollectionFn } from "~/public/listing/fn/listingCollectionFn";
 import { listingCountFn } from "~/public/listing/fn/listingCountFn";
@@ -6,6 +5,7 @@ import { listingFetchFn } from "~/public/listing/fn/listingFetchFn";
 import type { ListingCountQuerySchema } from "~/public/listing/server/schema/ListingCountQuerySchema";
 import type { ListingQuerySchema } from "~/public/listing/server/schema/ListingQuerySchema";
 import type { ListingSchema } from "~/public/listing/server/schema/ListingSchema";
+import { withEntityQuery } from "~/query/fn/withEntityQuery";
 
 export const withListingQuery = withEntityQuery({
 	logger: getRootLogger([

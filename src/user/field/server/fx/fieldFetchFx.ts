@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import { withFetchFx } from "@/lib/common/fetch";
-import { getLoggerFx } from "@/lib/common/log";
+import { withFetchFx } from "~/http/fx/withFetchFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { withFieldSelectFx } from "~/user/field/server/db/withFieldSelectFx";
 import type { FieldQuerySchema } from "~/user/field/server/schema/FieldQuerySchema";
 import type { FieldWhereSchema } from "../schema/FieldWhereSchema";

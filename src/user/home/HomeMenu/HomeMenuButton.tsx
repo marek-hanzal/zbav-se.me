@@ -1,8 +1,9 @@
 import type { FC } from "react";
-import { LinkTo, type uiLinkTo } from "@/lib/client/link-to";
-import { useLocale } from "@/lib/client/locale";
-import { useTranslator } from "@/lib/client/translation";
 import { HomeIcon } from "~/common/ui/icon";
+import { useLocale } from "~/locale/hook/useLocale";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import type { uiLinkTo } from "~/ui/fn/uiLinkTo";
+import { LinkTo } from "~/ui/ui/LinkTo";
 
 export namespace HomeMenuButton {
 	export interface Props extends uiLinkTo.Component<Pick<LinkTo.Props, "id" | "onKeyDown">> {

@@ -1,10 +1,10 @@
 import { type FC, Suspense, useState } from "react";
-import { Container } from "@/lib/client/container";
-import { Fulltext } from "@/lib/client/fulltext";
-import type { Status } from "@/lib/client/status";
-import { useTranslator } from "@/lib/client/translation";
 import { ListContainer } from "~/common/location/ui/LocationSelect/ListContainer";
 import type { LocationSchema } from "~/session/location/server/schema/LocationSchema";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Container } from "~/ui/ui/Container";
+import { Fulltext } from "~/ui/ui/Fulltext";
+import type { Status } from "~/ui/ui/Status";
 
 export namespace LocationSelect {
 	export interface Props extends Omit<Container.Props, "onChange"> {

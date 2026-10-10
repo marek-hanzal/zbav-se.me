@@ -1,12 +1,12 @@
 import type { FC } from "react";
-import { CopyIconAction } from "@/lib/client/clipboard/CopyIconAction";
-import type { Container as ContainerType } from "@/lib/client/container";
-import { Container } from "@/lib/client/container";
-import { useLocale } from "@/lib/client/locale";
-import { useTranslator } from "@/lib/client/translation";
-import { Typo } from "@/lib/client/typo";
-import { LabelValue } from "@/lib/client/value";
-import { toTimeDiff } from "@/lib/common/time";
+import { CopyIconAction } from "~/clipboard/ui/CopyIconAction";
+import { toTimeDiff } from "~/date/fn/toTimeDiff";
+import { useLocale } from "~/locale/hook/useLocale";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import type { Container as ContainerType } from "~/ui/ui/Container";
+import { Container } from "~/ui/ui/Container";
+import { LabelValue } from "~/ui/ui/LabelValue";
+import { Typo } from "~/ui/ui/Typo";
 import type { TransactionEntryPersonal } from "~/user/transaction-entry/server/schema/TransactionEntrySchema/PersonalSchema";
 import { TypeContainer } from "./TypeContainer";
 

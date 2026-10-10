@@ -1,7 +1,7 @@
 import type { FC } from "react";
-import { useTranslator } from "@/lib/client/translation";
-import { LabelValue } from "@/lib/client/value";
 import type { ListingExpireEnumSchema } from "~/common/listing/enum/ListingExpireEnumSchema";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { LabelValue } from "~/ui/ui/LabelValue";
 
 export namespace ExpiresValue {
 	export interface Props extends LabelValue.PropsEx {

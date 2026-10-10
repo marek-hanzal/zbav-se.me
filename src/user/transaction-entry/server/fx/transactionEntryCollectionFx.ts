@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import { withCollectionFx } from "@/lib/common/collection";
-import { getLoggerFx } from "@/lib/common/log";
+import { withCollectionFx } from "~/database-query/fx/withCollectionFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { withTransactionEntrySelectFx } from "../db/withTransactionEntrySelectFx";
 import type { TransactionEntryQuerySchema } from "../schema/TransactionEntryQuerySchema";
 import type { TransactionEntryWhereSchema } from "../schema/TransactionEntryWhereSchema";

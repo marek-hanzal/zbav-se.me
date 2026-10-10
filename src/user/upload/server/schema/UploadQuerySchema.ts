@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { CursorSchema } from "@/lib/common/schema";
+import { CursorSchema } from "~/query/schema/CursorSchema";
 import { UploadSortSchema } from "~/user/upload/server/schema/UploadSortSchema";
 import { UploadWhereSchema } from "~/user/upload/server/schema/UploadWhereSchema";
 

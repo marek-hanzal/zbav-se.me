@@ -1,0 +1,77 @@
+import { type FC, Suspense } from "react";
+import { getRootLogger } from "~/common/log/getRootLogger";
+import { useRenderLogger } from "~/ui/hook/useRenderLogger";
+import { Container } from "~/ui/ui/Container";
+import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
+import type { useView } from "~/view/hook/useView";
+
+export namespace Panel {
+	export interface Props<TPanel extends string, TProps extends object | unknown = unknown>
+		extends Container.Props {
+		name: TPanel;
+		/**
+		 * Keep mounted (useful for "root" pages which keeps e.g. scroll position)
+		 */
+		keep?: boolean;
+		control: useView.Use<TPanel, TProps>;
+	}
+}
+
+/**
+ * Panel content is snapshotted on visibility changes.
+ *
+ * Hidden panels intentionally do not react to parent renders.
+ * Visible panel content also does not receive parent updates unless visibility changes.
+ *
+ * Use this only for panel flows where opened content owns its local state
+ * or reads live data internally.
+ */
+export const Panel = <TPanel extends string, TProps extends object | unknown = unknown>({
+	name,
+	keep = false,
+	control,
+	...props
+}: Panel.Props<TPanel, TProps>) => {
+	const isVisible = control.isVisible(name);
+
+	if (!isVisible && !keep) {
+		return null;
+	}
+
+	return (
+		<Content
+			isVisible={isVisible}
+			name={name}
+			{...props}
+		/>
+	);
+};
+
+// ================================================================================================================
+
+export const Content: FC<
+	Container.Props & {
+		isVisible: boolean;
+		name: string;
+	}
+> = ({ isVisible, name, children, ...props }) => {
+	useRenderLogger({
+		logger: getRootLogger(),
+		name: "Panel",
+		meta: {
+			name,
+		},
+	});
+
+	return (
+		<Container
+			data-ui={`Panel-${name}`}
+			className={isVisible ? undefined : "hidden"}
+			data-ui-height={"full"}
+			data-ui-scroll={"vertical"}
+			{...props}
+		>
+			<Suspense fallback={<SpinnerContainer />}>{children}</Suspense>
+		</Container>
+	);
+};

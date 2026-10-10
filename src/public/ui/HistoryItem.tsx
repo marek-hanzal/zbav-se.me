@@ -1,7 +1,7 @@
 import type { FC } from "react";
-import { Container } from "@/lib/client/container";
-import { Typo } from "@/lib/client/typo";
 import type { GitHubHistorySchema } from "~/public/github/server/schema/GitHubHistorySchema";
+import { Container } from "~/ui/ui/Container";
+import { Typo } from "~/ui/ui/Typo";
 
 const clamp = (value: number, min: number, max: number) => {
 	return Math.max(min, Math.min(max, value));

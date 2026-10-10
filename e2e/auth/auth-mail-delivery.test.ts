@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { genId } from "@/lib/common/gen-id";
+import { genId } from "~/identity/fn/genId";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { withTranslatorFx } from "~/translator/server/fx/withTranslatorFx";

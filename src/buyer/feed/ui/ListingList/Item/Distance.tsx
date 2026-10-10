@@ -1,9 +1,9 @@
 import type { FC } from "react";
-import { Container } from "@/lib/client/container";
-import { useLocale } from "@/lib/client/locale";
-import { Tx } from "@/lib/client/tx";
-import { Typo } from "@/lib/client/typo";
-import { toLocaleNumber } from "@/lib/common/to-locale-number";
+import { useLocale } from "~/locale/hook/useLocale";
+import { toLocaleNumber } from "~/number/fn/toLocaleNumber";
+import { Tx } from "~/translation/ui/Tx";
+import { Container } from "~/ui/ui/Container";
+import { Typo } from "~/ui/ui/Typo";
 
 export namespace Distance {
 	export interface Props extends Omit<Typo.Props, "label"> {

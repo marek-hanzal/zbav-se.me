@@ -1,7 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
-import { zodGuardFx } from "@/lib/common/fx";
-import { withLoggerFx } from "@/lib/common/log";
+import { withLoggerFx } from "~/log/fx/withLoggerFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
@@ -9,6 +8,7 @@ import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { locationFetchFx } from "~/session/location/server/fx/locationFetchFx";
 import { LocationQuerySchema } from "~/session/location/server/schema/LocationQuerySchema";
 import { LocationSchema } from "~/session/location/server/schema/LocationSchema";
+import { zodGuardFx } from "~/validation/fx/zodGuardFx";
 
 export namespace locationFetchFn {
 	export type Error = Effect.Error<locationFetchFx>;

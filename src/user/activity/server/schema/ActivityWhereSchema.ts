@@ -1,8 +1,8 @@
 import { z } from "zod";
-import { WhereSchema } from "@/lib/common/schema";
 import { ActivityFamilyEnumSchema } from "~/common/activity/enum/ActivityFamilyEnumSchema";
 import { ActivityPriorityEnumSchema } from "~/common/activity/enum/ActivityPriorityEnumSchema";
 import { ActivityTypeEnumSchema } from "~/common/activity/enum/ActivityTypeEnumSchema";
+import { WhereSchema } from "~/query/schema/WhereSchema";
 
 export const ActivityWhereSchema = z
 	.looseObject({

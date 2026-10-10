@@ -1,7 +1,7 @@
 import type { FC } from "react";
-import { Group } from "@/lib/client/group";
 import type { TransactionSchema } from "~/seller/transaction/server/schema/TransactionSchema";
 import { AckButton } from "~/seller/transaction/ui/button/AckButton";
+import { Group } from "~/ui/ui/Group";
 import { MessageButtonUi } from "~/user/transaction/ui/MessageButtonUi";
 import type { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
 

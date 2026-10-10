@@ -1,12 +1,12 @@
 import type { FC } from "react";
 import z from "zod";
-import { Container } from "@/lib/client/container";
-import { FormField } from "@/lib/client/form";
-import { useTranslator } from "@/lib/client/translation";
-import { Tx } from "@/lib/client/tx";
-import { cleanOf } from "@/lib/common/clean-of";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { useAppForm } from "~/common/ui/form";
+import { FormField } from "~/form/ui/FormField";
+import { cleanOf } from "~/object/fn/cleanOf";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Tx } from "~/translation/ui/Tx";
+import { Container } from "~/ui/ui/Container";
 import type { PersonalSchema } from "~/user/transaction-entry/server/schema/TransactionEntryCreateSchema/PersonalSchema";
 
 const Schema = z

@@ -1,9 +1,9 @@
 import type { FC } from "react";
-import { Button } from "@/lib/client/button";
-import type { useSelection } from "@/lib/client/selection";
-import { Tx } from "@/lib/client/tx";
-import type { EntitySchema } from "@/lib/common/schema";
 import { uiSelectButton } from "~/common/ui/ui";
+import type { EntitySchema } from "~/entity/schema/EntitySchema";
+import type { useSelection } from "~/selection/hook/useSelection";
+import { Tx } from "~/translation/ui/Tx";
+import { Button } from "~/ui/ui/Button";
 
 export namespace Item {
 	export interface Props {

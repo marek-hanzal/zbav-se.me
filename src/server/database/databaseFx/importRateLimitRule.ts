@@ -1,4 +1,4 @@
-import type { withDatabaseFx } from "@/lib/common/database";
+import type { withDatabaseFx } from "~/database-query/fx/withDatabaseFx";
 import rateLimitRuleSeedData from "~/server/@migrations/0046-rate-limit-rule/rule.json" with {
 	type: "json",
 };

@@ -1,7 +1,7 @@
 import type { FC } from "react";
-import { Container } from "@/lib/client/container";
-import { Group } from "@/lib/client/group";
-import type { MarkSuspense } from "@/lib/client/type";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import { Container } from "~/ui/ui/Container";
+import { Group } from "~/ui/ui/Group";
 import { withListingAttrOfQuery } from "../query/withListingAttrOfQuery";
 import { ListingAttrOf } from "./ListingAttrOf";
 

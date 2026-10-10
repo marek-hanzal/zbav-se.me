@@ -1,12 +1,13 @@
 import type { FC } from "react";
-import { Button, uiButton } from "@/lib/client/button";
-import { ChevronRightIcon } from "@/lib/client/icon";
-import { LinkTo } from "@/lib/client/link-to";
-import { useLocale } from "@/lib/client/locale";
-import { Tx } from "@/lib/client/tx";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
 import { withTransactionQuery } from "~/buyer/transaction/query/withTransactionQuery";
 import { TransactionIcon } from "~/common/ui/icon";
+import { useLocale } from "~/locale/hook/useLocale";
+import { Tx } from "~/translation/ui/Tx";
+import { ChevronRightIcon } from "~/ui/constant/ChevronRightIcon";
+import { uiButton } from "~/ui/fn/uiButton";
+import { Button } from "~/ui/ui/Button";
+import { LinkTo } from "~/ui/ui/LinkTo";
 
 export namespace TransactionButton {
 	export interface Props extends Button.Props {

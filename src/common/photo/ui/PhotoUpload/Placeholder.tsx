@@ -1,8 +1,8 @@
 import type { FC } from "react";
-import { Container } from "@/lib/client/container";
-import { Status } from "@/lib/client/status";
-import { useTranslator } from "@/lib/client/translation";
 import { PhotoIcon } from "~/common/ui/icon";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Container } from "~/ui/ui/Container";
+import { Status } from "~/ui/ui/Status";
 
 export namespace Placeholder {
 	export interface Props {

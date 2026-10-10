@@ -1,12 +1,12 @@
-import { Container } from "@/lib/client/container";
-import { withFallback } from "@/lib/client/fallback";
-import { Group } from "@/lib/client/group";
-import { SpinnerContainer } from "@/lib/client/spinner";
-import { Status } from "@/lib/client/status";
-import { useTranslator } from "@/lib/client/translation";
-import type { MarkSuspense } from "@/lib/client/type";
 import { withListingSellerInfoQuery } from "~/buyer/listing/query/withListingSellerInfoQuery";
 import { SearchIcon } from "~/common/ui/icon";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { withFallback } from "~/ui/fn/withFallback";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import { Container } from "~/ui/ui/Container";
+import { Group } from "~/ui/ui/Group";
+import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
+import { Status } from "~/ui/ui/Status";
 import { Header } from "./Header";
 import { Score } from "./Score";
 

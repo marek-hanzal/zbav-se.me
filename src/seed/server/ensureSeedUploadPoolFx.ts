@@ -1,9 +1,9 @@
 import { randomUUID } from "node:crypto";
 import { Effect } from "effect";
-import { genId } from "@/lib/common/gen-id";
-import { rangedom } from "@/lib/common/rangedom/rangedom";
 import { s3ConfigFx } from "~/common/s3/server/context/s3ConfigFx";
 import { s3ClientFx } from "~/common/s3/server/fx/s3ClientFx";
+import { genId } from "~/identity/fn/genId";
+import { rangedom } from "~/random/fn/rangedom";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
 import { UploadConfigFx } from "~/user/upload/server/context/UploadConfigFx";

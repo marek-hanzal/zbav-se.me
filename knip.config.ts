@@ -13,7 +13,6 @@ const config: KnipConfig = {
 	],
 	project: [
 		"cli/**/*.ts",
-		"lib/**/*.{ts,tsx}",
 		"src/**/*.{ts,tsx}",
 		"test/**/*.{ts,tsx}",
 		"e2e/**/*.{ts,tsx}",

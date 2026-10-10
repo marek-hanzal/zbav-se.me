@@ -1,8 +1,8 @@
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { Container } from "@/lib/client/container";
-import { Icon } from "@/lib/client/icon";
 import type { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
+import { Container } from "~/ui/ui/Container";
+import { Icon } from "~/ui/ui/Icon";
 
 export namespace StatusIcon {
 	export interface Props {

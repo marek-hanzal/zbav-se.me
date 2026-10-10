@@ -1,8 +1,8 @@
 import { sql } from "kysely";
 import type { Migration } from "kysely/migration";
-import { toEnumGuard } from "@/lib/common/to-enum-guard";
 import type { ActivityPriorityEnumSchema } from "~/common/activity/enum/ActivityPriorityEnumSchema";
 import type { ActivityTypeEnumSchema } from "~/common/activity/enum/ActivityTypeEnumSchema";
+import { toEnumGuard } from "~/enum/fn/toEnumGuard";
 
 export const ActivityMigration: Migration = {
 	async up(db) {

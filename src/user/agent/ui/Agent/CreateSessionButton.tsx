@@ -1,9 +1,9 @@
 import { useNavigate } from "@tanstack/react-router";
 import type { FC } from "react";
-import { Button } from "@/lib/client/button";
-import { MessageIcon } from "@/lib/client/icon";
-import { useLocale } from "@/lib/client/locale";
-import { Tx } from "@/lib/client/tx";
+import { useLocale } from "~/locale/hook/useLocale";
+import { Tx } from "~/translation/ui/Tx";
+import { MessageIcon } from "~/ui/constant/MessageIcon";
+import { Button } from "~/ui/ui/Button";
 import { withAgentThreadCreateSessionMutation } from "~/user/agent/mutation/withAgentThreadCreateSessionMutation";
 import { withAgentLiveQuery } from "~/user/agent/query/withAgentLiveQuery";
 

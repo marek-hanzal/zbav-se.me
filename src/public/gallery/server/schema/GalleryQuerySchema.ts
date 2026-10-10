@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { CursorSchema } from "@/lib/common/schema";
 import { GallerySortSchema } from "~/public/gallery/server/schema/GallerySortSchema";
 import { GalleryWhereSchema } from "~/public/gallery/server/schema/GalleryWhereSchema";
+import { CursorSchema } from "~/query/schema/CursorSchema";
 
 export const GalleryQuerySchema = z
 	.looseObject({

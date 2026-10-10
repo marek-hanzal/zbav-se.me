@@ -1,17 +1,17 @@
 import type { FC } from "react";
 import { useState } from "react";
-import { BottomSheet } from "@/lib/client/bottom-sheet";
-import { Container } from "@/lib/client/container";
-import { useLocale } from "@/lib/client/locale";
-import { useTranslator } from "@/lib/client/translation";
-import { Tx } from "@/lib/client/tx";
-import { Typo } from "@/lib/client/typo";
-import { toTimeDiff } from "@/lib/common/time";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import { ListItem } from "~/common/list-item/ListItem";
 import { CloseButton } from "~/common/ui/button";
+import { toTimeDiff } from "~/date/fn/toTimeDiff";
+import { useLocale } from "~/locale/hook/useLocale";
 import { withListingQuery } from "~/public/listing/query/withListingQuery";
 import type { ThumbSchema } from "~/server/database/@table/ActivityTableSchema/ThumbSchema";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Tx } from "~/translation/ui/Tx";
+import { BottomSheet } from "~/ui/ui/BottomSheet";
+import { Container } from "~/ui/ui/Container";
+import { Typo } from "~/ui/ui/Typo";
 import { withActivityQuery } from "~/user/activity/query/withActivityQuery";
 
 export namespace ActivityThumbItem {

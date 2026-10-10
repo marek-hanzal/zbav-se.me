@@ -26,10 +26,6 @@ export default defineConfig({
 				find: /^~\//,
 				replacement: `${resolve(import.meta.dirname, "./src")}/`,
 			},
-			{
-				find: /^@\/lib\//,
-				replacement: `${resolve(import.meta.dirname, "./lib")}/`,
-			},
 		],
 	},
 	test: {

@@ -1,7 +1,7 @@
 import type { FC, ReactNode } from "react";
 import { match } from "ts-pattern";
-import { Container } from "@/lib/client/container";
 import type { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
+import { Container } from "~/ui/ui/Container";
 
 export namespace TransactionToolbar {
 	export interface Props extends Container.Props {

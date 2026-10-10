@@ -1,7 +1,7 @@
 import type { FC } from "react";
-import { Typo } from "@/lib/client/typo";
 import { ListItem } from "~/common/list-item/ListItem";
 import type { ListingSchema } from "~/seller/listing/server/schema/ListingSchema";
+import { Typo } from "~/ui/ui/Typo";
 
 export namespace ListingItem {
 	export interface Props {

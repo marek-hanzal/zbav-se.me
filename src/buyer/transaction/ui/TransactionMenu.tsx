@@ -1,6 +1,6 @@
 import type { FC } from "react";
-import { Container } from "@/lib/client/container";
 import type { TransactionSchema } from "~/buyer/transaction/server/schema/TransactionSchema";
+import { Container } from "~/ui/ui/Container";
 import type { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
 import { TransactionMessage } from "~/user/transaction/ui/TransactionMessage";
 import { TransactionToolbar } from "~/user/transaction/ui/TransactionToolbar";

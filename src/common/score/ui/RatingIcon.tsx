@@ -1,6 +1,6 @@
 import type { FC } from "react";
-import { Icon } from "@/lib/client/icon";
 import { RatingToIcon } from "~/common/ui/rating";
+import { Icon } from "~/ui/ui/Icon";
 
 export namespace RatingIcon {
 	export interface Props extends Icon.PropsEx {

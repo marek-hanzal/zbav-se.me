@@ -1,11 +1,11 @@
 import { Suspense } from "react";
-import { Container } from "@/lib/client/container";
-import { withFallback } from "@/lib/client/fallback";
-import { Group } from "@/lib/client/group";
-import { SpinnerContainer } from "@/lib/client/spinner";
-import { Tx } from "@/lib/client/tx/Tx";
-import type { MarkSuspense } from "@/lib/client/type";
 import { FeedEditor } from "~/buyer/feed/ui/FeedEditor/FeedEditor";
+import { Tx } from "~/translation/ui/Tx";
+import { withFallback } from "~/ui/fn/withFallback";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import { Container } from "~/ui/ui/Container";
+import { Group } from "~/ui/ui/Group";
+import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
 import { ResetButton } from "./ResetButton";
 import { SaveAsFeedButton } from "./SaveAsFeedButton";
 import { SearchButton } from "./SearchButton";

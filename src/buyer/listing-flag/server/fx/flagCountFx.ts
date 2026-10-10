@@ -1,8 +1,8 @@
 import { Effect } from "effect";
-import { withCountFx } from "@/lib/common/count";
-import { getLoggerFx } from "@/lib/common/log";
 import { withFlagSelectFx } from "~/buyer/listing-flag/server/db/withFlagSelectFx";
 import type { FlagCountQuerySchema } from "~/buyer/listing-flag/server/schema/FlagCountQuerySchema";
+import { withCountFx } from "~/database-query/fx/withCountFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import type { FlagWhereSchema } from "../schema/FlagWhereSchema";
 
 export namespace flagCountFx {

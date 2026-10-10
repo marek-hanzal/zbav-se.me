@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { ConfirmButton } from "@/lib/client/button";
-import { Container } from "@/lib/client/container";
-import { withFallback } from "@/lib/client/fallback";
-import { Mx } from "@/lib/client/mx";
-import { Tx } from "@/lib/client/tx";
-import type { MarkSuspense } from "@/lib/client/type";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import type { ListingMetaSchema } from "~/buyer/listing/server/schema/ListingMetaSchema";
 import { withFlagToggleMutation } from "~/buyer/listing-flag/mutation/withFlagToggleMutation";
 import { FlagIcon } from "~/common/ui/icon";
+import { Mx } from "~/translation/ui/Mx";
+import { Tx } from "~/translation/ui/Tx";
+import { withFallback } from "~/ui/fn/withFallback";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import { ConfirmButton } from "~/ui/ui/ConfirmButton";
+import { Container } from "~/ui/ui/Container";
 
 export namespace FlagButton {
 	export interface Props extends ConfirmButton.Props, MarkSuspense.Props {

@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { CursorSchema } from "@/lib/common/schema";
 import { FeedSortSchema } from "~/buyer/feed/server/schema/FeedSortSchema";
 import { FeedWhereSchema } from "~/buyer/feed/server/schema/FeedWhereSchema";
+import { CursorSchema } from "~/query/schema/CursorSchema";
 
 export const FeedQuerySchema = z
 	.looseObject({

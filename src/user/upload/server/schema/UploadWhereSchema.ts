@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { WhereSchema } from "@/lib/common/schema";
 import { AccessEnumSchema } from "~/common/access/AccessEnumSchema";
+import { WhereSchema } from "~/query/schema/WhereSchema";
 
 export const UploadWhereSchema = z
 	.looseObject({

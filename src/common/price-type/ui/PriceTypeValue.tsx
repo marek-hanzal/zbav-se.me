@@ -1,7 +1,7 @@
 import type { FC } from "react";
-import { useTranslator } from "@/lib/client/translation";
-import { LabelValue } from "@/lib/client/value";
 import type { PriceTypeEnumSchema } from "~/common/price-type/enum/PriceTypeEnumSchema";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { LabelValue } from "~/ui/ui/LabelValue";
 
 export namespace PriceTypeValue {
 	export interface Props extends LabelValue.PropsEx {

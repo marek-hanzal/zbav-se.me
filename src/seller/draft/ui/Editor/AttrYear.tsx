@@ -1,14 +1,14 @@
 import { DateTime } from "luxon";
 import type { FC } from "react";
-import { Container } from "@/lib/client/container";
-import { ArrowRightIcon } from "@/lib/client/icon";
-import { useSelection } from "@/lib/client/selection";
-import { Tx } from "@/lib/client/tx";
-import type { useView } from "@/lib/client/view";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { YearSelect } from "~/common/ui/year/YearSelect";
+import { useSelection } from "~/selection/hook/useSelection";
 import { withDraftAttrNumberPatchMutation } from "~/seller/draft-attr-number/mutation/withDraftAttrNumberPatchMutation";
+import { Tx } from "~/translation/ui/Tx";
+import { ArrowRightIcon } from "~/ui/constant/ArrowRightIcon";
+import { Container } from "~/ui/ui/Container";
 import type { DraftAttrOfSchema } from "~/user/draft-attr/server/schema/DraftAttrOfSchema";
+import type { useView } from "~/view/hook/useView";
 import { useNextAttr } from "./useNextAttr";
 
 export namespace AttrYear {

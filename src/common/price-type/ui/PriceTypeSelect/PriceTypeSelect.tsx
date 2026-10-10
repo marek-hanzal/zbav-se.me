@@ -1,8 +1,8 @@
 import type { FC } from "react";
-import { Container } from "@/lib/client/container";
-import type { useSelection } from "@/lib/client/selection";
-import type { EntitySchema } from "@/lib/common/schema";
 import { PriceTypeEnumSchema } from "~/common/price-type/enum/PriceTypeEnumSchema";
+import type { EntitySchema } from "~/entity/schema/EntitySchema";
+import type { useSelection } from "~/selection/hook/useSelection";
+import { Container } from "~/ui/ui/Container";
 import { Item } from "./Item";
 
 export namespace PriceTypeSelect {

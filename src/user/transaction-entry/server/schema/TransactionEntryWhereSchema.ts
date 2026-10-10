@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { WhereSchema } from "@/lib/common/schema";
 import { TransactionEntryKindEnumSchema } from "~/common/user-transaction/enum/TransactionEntryKindEnumSchema";
+import { WhereSchema } from "~/query/schema/WhereSchema";
 
 export const TransactionEntryWhereSchema = z
 	.looseObject({

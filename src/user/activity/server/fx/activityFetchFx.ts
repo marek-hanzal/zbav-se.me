@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import { withFetchFx } from "@/lib/common/fetch";
-import { getLoggerFx } from "@/lib/common/log";
+import { withFetchFx } from "~/http/fx/withFetchFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { withActivitySelectFx } from "~/user/activity/server/db/withActivitySelectFx";
 import type { ActivityQuerySchema } from "~/user/activity/server/schema/ActivityQuerySchema";
 import type { ActivityWhereSchema } from "../schema/ActivityWhereSchema";

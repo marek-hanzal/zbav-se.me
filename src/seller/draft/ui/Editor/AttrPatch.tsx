@@ -1,10 +1,10 @@
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { useTranslator } from "@/lib/client/translation";
-import type { useView } from "@/lib/client/view";
 import { EditAction } from "~/common/ui/action/EditAction";
 import { TitleContainer } from "~/common/ui/container";
+import { useTranslator } from "~/translation/hook/useTranslator";
 import type { DraftAttrOfSchema } from "~/user/draft-attr/server/schema/DraftAttrOfSchema";
+import type { useView } from "~/view/hook/useView";
 import { AttrDecimal } from "./AttrDecimal";
 import { AttrEnumMulti } from "./AttrEnumMulti";
 import { AttrEnumSingle } from "./AttrEnumSingle";

@@ -1,13 +1,13 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
-import { zodGuardFx } from "@/lib/common/fx";
-import { withLoggerFx } from "@/lib/common/log";
+import { withLoggerFx } from "~/log/fx/withLoggerFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { fieldOptionFetchFx } from "~/user/field-option/server/fx/fieldOptionFetchFx";
 import { FieldOptionQuerySchema } from "~/user/field-option/server/schema/FieldOptionQuerySchema";
 import { FieldOptionSchema } from "~/user/field-option/server/schema/FieldOptionSchema";
+import { zodGuardFx } from "~/validation/fx/zodGuardFx";
 
 export namespace fieldOptionFetchFn {
 	export type Error = Effect.Error<fieldOptionFetchFx>;

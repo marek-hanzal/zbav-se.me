@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { expect } from "vitest";
-import type { CountSchema } from "@/lib/common/schema";
-import type { EntitySchema } from "@/lib/common/schema/EntitySchema";
+import type { EntitySchema } from "~/entity/schema/EntitySchema";
+import type { CountSchema } from "~/query/schema/CountSchema";
 import { createToggleBaseContextFx } from "~/test/@buyer/common/fx/createToggleBaseContextFx";
 import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
 import { runWithTestRuntime } from "~/test/common/fx/runWithTestRuntime";

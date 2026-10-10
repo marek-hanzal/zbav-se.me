@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Suspense } from "react";
-import { useTranslator } from "@/lib/client/translation";
 import { TitleContainer } from "~/common/ui/container";
+import { useTranslator } from "~/translation/hook/useTranslator";
 import { HomeMenu } from "~/user/home/HomeMenu";
 
 export const Route = createFileRoute("/$locale/app/home")({

@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Suspense } from "react";
-import { Container } from "@/lib/client/container";
-import type { MarkSuspense } from "@/lib/client/type";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import { Container } from "~/ui/ui/Container";
 import { Item } from "./Item";
 
 export namespace List {

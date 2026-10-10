@@ -4,6 +4,8 @@ This is the application code.
 
 ## Layout
 
+- Shared utilities and primitives are ordinary source domains, alongside application code. Import their concrete `~/domain/kind/module` paths; there is no separate `lib/` root or alias.
+- `ui/` owns shared presentation primitives and CSS. Stateful browser capabilities such as clipboard, navigation, selection, visibility, query, and mutation have their own domains.
 - Compose screens directly in `src/@routes/`, including pending and error UI. There is no separate `*Page` component layer.
 - Keep reusable UI components in the owning domain's `ui/` folder. Routes read their own params, search, and loader data and pass the relevant values to those components; domain components do not import concrete route modules.
 - Prefer reusable forms, lists, cards, editors, and layout primitives. Small amounts of route composition duplication are acceptable.

@@ -1,7 +1,7 @@
 import type { FC, ReactNode } from "react";
 import { useState } from "react";
-import { BottomSheet } from "@/lib/client/bottom-sheet";
-import { Button } from "@/lib/client/button";
+import { BottomSheet } from "~/ui/ui/BottomSheet";
+import { Button } from "~/ui/ui/Button";
 
 export namespace TransactionMenuButton {
 	export type Close = () => void;

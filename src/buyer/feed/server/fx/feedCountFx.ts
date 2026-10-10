@@ -1,8 +1,8 @@
 import { Effect } from "effect";
-import { withCountFx } from "@/lib/common/count";
-import { getLoggerFx } from "@/lib/common/log";
 import { withFeedSelectFx } from "~/buyer/feed/server/db/withFeedSelectFx";
 import type { FeedCountQuerySchema } from "~/buyer/feed/server/schema/FeedCountQuerySchema";
+import { withCountFx } from "~/database-query/fx/withCountFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import type { FeedWhereSchema } from "../schema/FeedWhereSchema";
 
 export namespace feedCountFx {

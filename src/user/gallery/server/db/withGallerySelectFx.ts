@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { jsonArrayFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
-import { selectFx } from "@/lib/common/select";
+import { selectFx } from "~/database-query/fx/selectFx";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { withGalleryItemSelectFx } from "~/user/gallery-item/server/db/withGalleryItemSelectFx";
 import type { GallerySortSchema } from "../schema/GallerySortSchema";

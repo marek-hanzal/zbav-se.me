@@ -1,7 +1,7 @@
 import type { FC } from "react";
-import { useTranslator } from "@/lib/client/translation";
-import { ValueList } from "@/lib/client/value";
 import type { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { ValueList } from "~/ui/ui/ValueList";
 
 export namespace ListingStatusValueList {
 	export interface Props

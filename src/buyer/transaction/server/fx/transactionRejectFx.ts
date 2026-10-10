@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import { getLoggerFx } from "@/lib/common/log";
 import { transactionFetchFx } from "~/buyer/transaction/server/fx/transactionFetchFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { activityCreateFx } from "~/user/activity/server/fx/activityCreateFx";
 import { transactionMessageActivityArchiveFx } from "~/user/transaction/server/fx/transactionMessageActivityArchiveFx";

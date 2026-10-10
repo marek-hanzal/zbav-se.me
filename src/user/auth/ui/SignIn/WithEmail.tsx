@@ -1,18 +1,18 @@
 import { useNavigate, useRouter } from "@tanstack/react-router";
 import type { FC } from "react";
 import { z } from "zod";
-import { Container } from "@/lib/client/container";
-import { ErrorBadge } from "@/lib/client/error";
-import { FormField } from "@/lib/client/form";
-import { ChevronRightIcon } from "@/lib/client/icon";
-import { LinkTo } from "@/lib/client/link-to";
-import { useLocale } from "@/lib/client/locale";
-import { Status } from "@/lib/client/status";
-import { onSubmit } from "@/lib/client/submit";
-import { useTranslator } from "@/lib/client/translation";
-import { Tx } from "@/lib/client/tx";
 import { useAppForm } from "~/common/ui/form";
 import { Logo } from "~/common/ui/logo";
+import { onSubmit } from "~/form/fn/onSubmit";
+import { FormField } from "~/form/ui/FormField";
+import { useLocale } from "~/locale/hook/useLocale";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Tx } from "~/translation/ui/Tx";
+import { ChevronRightIcon } from "~/ui/constant/ChevronRightIcon";
+import { Container } from "~/ui/ui/Container";
+import { ErrorBadge } from "~/ui/ui/ErrorBadge";
+import { LinkTo } from "~/ui/ui/LinkTo";
+import { Status } from "~/ui/ui/Status";
 import { withEmailSignInMutation } from "../../mutation/withEmailSignInMutation";
 
 const useFormSchema = () => {

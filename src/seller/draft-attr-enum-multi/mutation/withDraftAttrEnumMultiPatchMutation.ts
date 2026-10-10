@@ -1,5 +1,5 @@
-import { withMutation } from "@/lib/client/mutation";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { withMutation } from "~/mutation/fn/withMutation";
 import { withDraftAttrOfQuery } from "~/user/draft-attr/query/withDraftAttrOfQuery";
 import { draftAttrEnumMultiPatchFn } from "../fn/draftAttrEnumMultiPatchFn";
 import type { DraftAttrEnumMultiPatchSchema } from "../server/schema/DraftAttrEnumMultiPatchSchema";

@@ -1,7 +1,7 @@
 import { getMigrations } from "better-auth/db/migration";
 import type { Dialect } from "kysely";
-import { translator } from "@/lib/common/translation";
 import { auth } from "~/server/auth/auth";
+import { translator } from "~/translation/fn/translator";
 
 export const runAuthMigration = async (dialect: Dialect) => {
 	const migrationTranslator = translator({

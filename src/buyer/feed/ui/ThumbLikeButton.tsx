@@ -1,11 +1,11 @@
-import { Button } from "@/lib/client/button";
-import { withFallback } from "@/lib/client/fallback";
-import { LikeIcon } from "@/lib/client/icon";
-import { Tx } from "@/lib/client/tx";
-import type { MarkSuspense } from "@/lib/client/type";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import type { ListingMetaSchema } from "~/buyer/listing/server/schema/ListingMetaSchema";
 import { withThumbCreateMutation } from "~/buyer/thumb/mutation/withThumbCreateMutation";
+import { Tx } from "~/translation/ui/Tx";
+import { LikeIcon } from "~/ui/constant/LikeIcon";
+import { withFallback } from "~/ui/fn/withFallback";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import { Button } from "~/ui/ui/Button";
 
 export namespace ThumbLikeButton {
 	export interface Props extends Button.Props, MarkSuspense.Props {

@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { match } from "ts-pattern";
-import { selectFx } from "@/lib/common/select";
+import { selectFx } from "~/database-query/fx/selectFx";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { withContainsEx } from "~/server/database/expression/withContainsEx";
 import type { LocationSortSchema } from "~/session/location/server/schema/LocationSortSchema";

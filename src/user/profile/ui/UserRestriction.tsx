@@ -1,6 +1,7 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { type FC, useState } from "react";
-import { EditIcon, Icon } from "@/lib/client/icon";
+import { EditIcon } from "~/ui/constant/EditIcon";
+import { Icon } from "~/ui/ui/Icon";
 import { CurrentRestriction } from "~/user/restriction/ui/CurrentRestriction";
 import { withUserRestrictionQuery } from "~/user/user-restriction/query/withUserRestrictionQuery";
 import { RestrictionSheet } from "./RestrictionSheet";

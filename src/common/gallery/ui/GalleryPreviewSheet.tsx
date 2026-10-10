@@ -1,8 +1,8 @@
 import type { FC } from "react";
-import { BottomSheet } from "@/lib/client/bottom-sheet";
-import { useTranslator } from "@/lib/client/translation";
 import { GalleryPreview } from "~/common/gallery/ui/GalleryPreview";
 import { CloseButton } from "~/common/ui/button";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { BottomSheet } from "~/ui/ui/BottomSheet";
 
 export namespace GalleryPreviewSheet {
 	export interface Props extends BottomSheet.Props {

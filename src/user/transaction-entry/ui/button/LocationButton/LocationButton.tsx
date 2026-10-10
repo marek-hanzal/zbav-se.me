@@ -1,12 +1,12 @@
 import type { FC } from "react";
 import { useState } from "react";
-import { BottomSheet } from "@/lib/client/bottom-sheet";
-import { Button } from "@/lib/client/button";
-import { useTranslator } from "@/lib/client/translation";
-import { Tx } from "@/lib/client/tx";
 import { CloseButton } from "~/common/ui/button";
 import { LocationIcon } from "~/common/ui/icon";
 import type { LocationSchema } from "~/session/location/server/schema/LocationSchema";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Tx } from "~/translation/ui/Tx";
+import { BottomSheet } from "~/ui/ui/BottomSheet";
+import { Button } from "~/ui/ui/Button";
 import type { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
 import { withTransactionEntryQuery } from "~/user/transaction-entry/query/withTransactionEntryQuery";
 import { Content } from "./Content";

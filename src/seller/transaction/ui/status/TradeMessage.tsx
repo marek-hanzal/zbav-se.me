@@ -1,8 +1,8 @@
 import type { FC } from "react";
-import type { Container } from "@/lib/client/container";
-import { Group } from "@/lib/client/group";
 import type { TransactionSchema } from "~/seller/transaction/server/schema/TransactionSchema";
 import { BuyerInfoButton } from "~/seller/transaction/ui/button/BuyerInfoButton";
+import type { Container } from "~/ui/ui/Container";
+import { Group } from "~/ui/ui/Group";
 import { MessageButtonUi } from "~/user/transaction/ui/MessageButtonUi";
 import type { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
 import { GalleryButton } from "~/user/transaction-entry/ui/button/GalleryButton";

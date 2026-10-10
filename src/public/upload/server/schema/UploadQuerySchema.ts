@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { CursorSchema } from "@/lib/common/schema";
 import { UploadSortSchema } from "~/public/upload/server/schema/UploadSortSchema";
 import { UploadWhereSchema } from "~/public/upload/server/schema/UploadWhereSchema";
+import { CursorSchema } from "~/query/schema/CursorSchema";
 
 export const UploadQuerySchema = z
 	.looseObject({

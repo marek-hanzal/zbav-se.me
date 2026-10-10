@@ -1,8 +1,8 @@
 import type { FC } from "react";
-import { Container } from "@/lib/client/container";
-import { useTranslator } from "@/lib/client/translation";
-import { Typo } from "@/lib/client/typo";
 import type { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Container } from "~/ui/ui/Container";
+import { Typo } from "~/ui/ui/Typo";
 
 export namespace Delivery {
 	export interface Props extends Typo.PropsEx {

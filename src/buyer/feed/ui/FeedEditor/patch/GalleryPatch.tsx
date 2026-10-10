@@ -1,9 +1,9 @@
 import { type FC, useState } from "react";
-import { Container } from "@/lib/client/container";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import { withFeedGalleryCreateMutation } from "~/buyer/feed-gallery/mutation/withFeedGalleryCreateMutation";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { GalleryUpload } from "~/common/gallery/ui/GalleryUpload";
+import { Container } from "~/ui/ui/Container";
 
 export namespace GalleryPatch {
 	export interface Props {

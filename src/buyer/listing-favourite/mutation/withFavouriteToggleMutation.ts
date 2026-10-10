@@ -1,9 +1,9 @@
-import { withMutation } from "@/lib/client/mutation";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
 import { favouriteToggleFn } from "~/buyer/listing-favourite/fn/favouriteToggleFn";
 import type { FavouriteToggleSchema } from "~/buyer/listing-favourite/server/schema/FavouriteToggleSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { withMutation } from "~/mutation/fn/withMutation";
 
 export const withFavouriteToggleMutation = withMutation<
 	FavouriteToggleSchema.Type,

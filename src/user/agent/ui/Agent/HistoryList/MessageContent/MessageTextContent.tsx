@@ -1,11 +1,11 @@
 import type { FC } from "react";
-import { CopyIconAction } from "@/lib/client/clipboard/CopyIconAction";
-import { Container } from "@/lib/client/container";
-import { Group } from "@/lib/client/group";
-import { uiLinkTo } from "@/lib/client/link-to";
-import { Markdown } from "@/lib/client/markdown";
-import { useTranslator } from "@/lib/client/translation";
+import { CopyIconAction } from "~/clipboard/ui/CopyIconAction";
 import { ViteEnvSchema } from "~/common/env/ViteEnvSchema";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { uiLinkTo } from "~/ui/fn/uiLinkTo";
+import { Container } from "~/ui/ui/Container";
+import { Group } from "~/ui/ui/Group";
+import { Markdown } from "~/ui/ui/Markdown";
 
 export namespace MessageTextContent {
 	export interface Props extends Group.Props {

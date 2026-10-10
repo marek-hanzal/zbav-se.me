@@ -1,9 +1,9 @@
 import { type FC, useState } from "react";
-import { Container } from "@/lib/client/container";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import type { ListingSortSchema } from "~/buyer/listing/server/schema/ListingSortSchema";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
+import { Container } from "~/ui/ui/Container";
 import { ListingSortSelect } from "./ListingSortSelect";
 
 export namespace SortPatch {

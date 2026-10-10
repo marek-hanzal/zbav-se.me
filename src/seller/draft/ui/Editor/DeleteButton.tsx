@@ -1,13 +1,13 @@
 import { useNavigate } from "@tanstack/react-router";
 import type { FC } from "react";
-import { ConfirmButton } from "@/lib/client/button";
-import { TrashIcon } from "@/lib/client/icon";
-import { useLocale } from "@/lib/client/locale";
-import { useTranslator } from "@/lib/client/translation";
-import { Tx } from "@/lib/client/tx";
 import { uiSaveButton } from "~/common/ui/ui";
+import { useLocale } from "~/locale/hook/useLocale";
 import { withDraftQuery } from "~/seller/draft/query/withDraftQuery";
 import type { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Tx } from "~/translation/ui/Tx";
+import { TrashIcon } from "~/ui/constant/TrashIcon";
+import { ConfirmButton } from "~/ui/ui/ConfirmButton";
 
 export namespace DeleteButton {
 	export interface Props extends ConfirmButton.Props {

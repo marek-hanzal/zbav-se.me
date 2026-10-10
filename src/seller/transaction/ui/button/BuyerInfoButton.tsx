@@ -1,10 +1,10 @@
 import { type FC, Suspense, useState } from "react";
-import { BottomSheet } from "@/lib/client/bottom-sheet";
-import { Button } from "@/lib/client/button";
-import { useTranslator } from "@/lib/client/translation";
-import { Tx } from "@/lib/client/tx";
 import { CloseButton } from "~/common/ui/button";
 import { BuyerIcon } from "~/common/ui/icon";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Tx } from "~/translation/ui/Tx";
+import { BottomSheet } from "~/ui/ui/BottomSheet";
+import { Button } from "~/ui/ui/Button";
 import { BuyerInfo } from "../BuyerInfo";
 
 export namespace BuyerInfoButton {

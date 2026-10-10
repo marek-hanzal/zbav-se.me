@@ -1,8 +1,8 @@
 import { match } from "ts-pattern";
-import { withFallback } from "@/lib/client/fallback";
-import { SpinnerContainer } from "@/lib/client/spinner";
-import type { MarkSuspense } from "@/lib/client/type";
 import type { UserSideEnumSchema } from "~/common/user-event/enum/UserSideEnumSchema";
+import { withFallback } from "~/ui/fn/withFallback";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
 import { withTransactionEntryQuery } from "~/user/transaction-entry/query/withTransactionEntryQuery";
 import { Common } from "./type/Common";
 import { Gallery } from "./type/Gallery";

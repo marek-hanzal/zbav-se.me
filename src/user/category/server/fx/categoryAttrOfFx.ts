@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { jsonArrayFrom } from "kysely/helpers/postgres";
-import { getLoggerFx } from "@/lib/common/log";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import type { CategoryAttrOfSchema } from "../schema/CategoryAttrOfSchema";
 

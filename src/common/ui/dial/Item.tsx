@@ -1,6 +1,6 @@
 import type { FC } from "react";
-import { Button } from "@/lib/client/button";
-import type { Icon } from "@/lib/client/icon";
+import { Button } from "~/ui/ui/Button";
+import type { Icon } from "~/ui/ui/Icon";
 
 export namespace Item {
 	export interface Props extends Button.Props {

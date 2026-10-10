@@ -1,11 +1,12 @@
-import { Button } from "@/lib/client/button";
-import { withFallback } from "@/lib/client/fallback";
-import { FavouriteIcon, FavouriteOffIcon } from "@/lib/client/icon";
-import { Tx } from "@/lib/client/tx";
-import type { MarkSuspense } from "@/lib/client/type";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import type { ListingMetaSchema } from "~/buyer/listing/server/schema/ListingMetaSchema";
 import { withFavouriteToggleMutation } from "~/buyer/listing-favourite/mutation/withFavouriteToggleMutation";
+import { Tx } from "~/translation/ui/Tx";
+import { FavouriteIcon } from "~/ui/constant/FavouriteIcon";
+import { FavouriteOffIcon } from "~/ui/constant/FavouriteOffIcon";
+import { withFallback } from "~/ui/fn/withFallback";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import { Button } from "~/ui/ui/Button";
 
 export namespace FavouriteButton {
 	export interface Props extends Button.Props, MarkSuspense.Props {

@@ -1,9 +1,9 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
-import { NotFoundErrorFx } from "@/lib/common/error";
-import { getLoggerFx } from "@/lib/common/log";
 import type { SellerInfoSchema } from "~/buyer/listing/server/schema/SellerInfoSchema";
 import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
+import { NotFoundErrorFx } from "~/error/error/NotFoundErrorFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { dbFx } from "~/server/database/fx/dbFx";
 
 export namespace listingGetSellerInfoFx {

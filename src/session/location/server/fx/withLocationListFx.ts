@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import { withCollectionFx } from "@/lib/common/collection";
-import { getLoggerFx } from "@/lib/common/log";
+import { withCollectionFx } from "~/database-query/fx/withCollectionFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { withLocationSelectFx } from "~/session/location/server/db/withLocationSelectFx";
 import type { LocationQuerySchema } from "~/session/location/server/schema/LocationQuerySchema";
 import type { LocationWhereSchema } from "../schema/LocationWhereSchema";

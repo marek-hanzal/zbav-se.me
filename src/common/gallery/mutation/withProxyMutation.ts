@@ -1,5 +1,5 @@
-import { withMutation } from "@/lib/client/mutation";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { withMutation } from "~/mutation/fn/withMutation";
 import { uploadCollectionFn } from "~/user/upload/fn/uploadCollectionFn";
 import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
 import type { GalleryUploadSheet } from "../ui/GalleryUploadSheet";

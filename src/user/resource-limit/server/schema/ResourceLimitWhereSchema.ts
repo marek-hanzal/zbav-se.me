@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { WhereSchema } from "@/lib/common/schema";
 import { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/ResourceDefinitionEnumSchema";
+import { WhereSchema } from "~/query/schema/WhereSchema";
 
 export const ResourceLimitWhereSchema = z
 	.looseObject({

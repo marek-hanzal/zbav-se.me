@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import { getLoggerFx } from "@/lib/common/log";
 import { ignoreFetchFx } from "~/buyer/listing-ignore/server/fx/ignoreFetchFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 

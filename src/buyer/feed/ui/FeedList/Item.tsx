@@ -1,15 +1,15 @@
 import { type FC, Suspense, useState } from "react";
-import { Button } from "@/lib/client/button";
-import { Container } from "@/lib/client/container";
-import { Group } from "@/lib/client/group";
-import { EditIcon } from "@/lib/client/icon";
-import { LinkTo } from "@/lib/client/link-to";
-import { useLocale } from "@/lib/client/locale";
-import { Tx } from "@/lib/client/tx";
-import { Typo } from "@/lib/client/typo";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import { ListingCount } from "~/buyer/listing/ui/ListingCount";
 import { ListItem } from "~/common/list-item/ListItem";
+import { useLocale } from "~/locale/hook/useLocale";
+import { Tx } from "~/translation/ui/Tx";
+import { EditIcon } from "~/ui/constant/EditIcon";
+import { Button } from "~/ui/ui/Button";
+import { Container } from "~/ui/ui/Container";
+import { Group } from "~/ui/ui/Group";
+import { LinkTo } from "~/ui/ui/LinkTo";
+import { Typo } from "~/ui/ui/Typo";
 import { FeedEditorSheet } from "../FeedEditor/FeedEditorSheet";
 import { DeleteButton } from "./DeleteButton";
 

@@ -1,5 +1,5 @@
-import { withEntityQuery } from "@/lib/client/query";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { withEntityQuery } from "~/query/fn/withEntityQuery";
 import { agentThreadCollectionFn } from "~/user/agent/fn/agentThreadCollectionFn";
 import { agentThreadCountFn } from "~/user/agent/fn/agentThreadCountFn";
 import { agentThreadCreateFn } from "~/user/agent/fn/agentThreadCreateFn";

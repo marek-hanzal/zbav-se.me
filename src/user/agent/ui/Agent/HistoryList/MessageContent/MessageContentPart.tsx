@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import type { Group } from "@/lib/client/group";
+import type { Group } from "~/ui/ui/Group";
 import type { MessageContent } from "./MessageContent";
 import { MessageImageContent } from "./MessageImageContent";
 import { MessageTextContent } from "./MessageTextContent";

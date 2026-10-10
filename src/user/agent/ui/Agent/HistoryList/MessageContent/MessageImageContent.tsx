@@ -1,8 +1,8 @@
 import { type FC, useState } from "react";
-import { Container } from "@/lib/client/container";
-import { Group } from "@/lib/client/group";
 import { GalleryPreviewSheet } from "~/common/gallery/ui/GalleryPreviewSheet";
 import { HeroImage } from "~/common/ui/img";
+import { Container } from "~/ui/ui/Container";
+import { Group } from "~/ui/ui/Group";
 
 export namespace MessageImageContent {
 	export interface Props extends Group.Props {

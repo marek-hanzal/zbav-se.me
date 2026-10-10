@@ -1,9 +1,9 @@
 import type { FC } from "react";
-import { useRenderLogger } from "@/lib/client/log";
-import type { useView } from "@/lib/client/view";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { HeroImage } from "~/common/ui/img";
 import type { ListingSchema } from "~/seller/listing/server/schema/ListingSchema";
+import { useRenderLogger } from "~/ui/hook/useRenderLogger";
+import type { useView } from "~/view/hook/useView";
 
 export namespace HeroSection {
 	export interface Props {

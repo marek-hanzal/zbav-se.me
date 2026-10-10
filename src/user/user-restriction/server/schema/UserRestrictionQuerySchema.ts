@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { CursorSchema } from "@/lib/common/schema";
+import { CursorSchema } from "~/query/schema/CursorSchema";
 import { UserRestrictionSortSchema } from "./UserRestrictionSortSchema";
 import { UserRestrictionWhereSchema } from "./UserRestrictionWhereSchema";
 

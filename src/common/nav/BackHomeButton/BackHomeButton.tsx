@@ -1,7 +1,8 @@
 import { createLink, type LinkComponent } from "@tanstack/react-router";
 import type { ComponentProps, FC } from "react";
-import { ArrowLeftIcon, Icon } from "@/lib/client/icon";
 import { uiBackButton } from "~/common/ui/ui";
+import { ArrowLeftIcon } from "~/ui/constant/ArrowLeftIcon";
+import { Icon } from "~/ui/ui/Icon";
 
 export namespace BackHomeButton {
 	export interface Props extends ComponentProps<typeof BackHomeButton> {

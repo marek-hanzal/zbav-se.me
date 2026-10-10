@@ -1,11 +1,12 @@
-import { withFallback } from "@/lib/client/fallback";
-import { Icon, ShowIcon } from "@/lib/client/icon";
-import { useTranslator } from "@/lib/client/translation";
-import type { MarkSuspense } from "@/lib/client/type";
-import { LabelValue } from "@/lib/client/value";
-import type { useView } from "@/lib/client/view";
 import { withListingSellerInfoQuery } from "~/buyer/listing/query/withListingSellerInfoQuery";
 import { RatingIcon } from "~/common/score/ui/RatingIcon";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { ShowIcon } from "~/ui/constant/ShowIcon";
+import { withFallback } from "~/ui/fn/withFallback";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import { Icon } from "~/ui/ui/Icon";
+import { LabelValue } from "~/ui/ui/LabelValue";
+import type { useView } from "~/view/hook/useView";
 
 export namespace SellerInfo {
 	export interface Props extends MarkSuspense.Props {

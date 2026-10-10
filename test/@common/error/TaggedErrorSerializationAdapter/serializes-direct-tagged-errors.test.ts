@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { TaggedErrorSerializationAdapter } from "@/lib/common/error/TaggedErrorSerializationAdapter";
+import { TaggedErrorSerializationAdapter } from "~/error/serialization/TaggedErrorSerializationAdapter";
 import { RateLimitErrorFx } from "~/server/error/RateLimitErrorFx";
 
 const rateLimitError = new RateLimitErrorFx({

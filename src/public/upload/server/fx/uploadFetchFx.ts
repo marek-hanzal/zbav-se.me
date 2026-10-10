@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import { withFetchFx } from "@/lib/common/fetch";
-import { getLoggerFx } from "@/lib/common/log";
+import { withFetchFx } from "~/http/fx/withFetchFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { withUploadSelectFx } from "~/public/upload/server/db/withUploadSelectFx";
 import type { UploadQuerySchema } from "~/public/upload/server/schema/UploadQuerySchema";
 import type { UploadWhereSchema } from "../schema/UploadWhereSchema";

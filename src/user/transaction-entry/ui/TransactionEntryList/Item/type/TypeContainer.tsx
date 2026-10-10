@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { Group } from "@/lib/client/group";
+import { Group } from "~/ui/ui/Group";
 import type { TransactionEntryDirectionEnumSchema } from "~/user/transaction-entry/server/schema/TransactionEntryDirectionEnumSchema";
 
 export namespace TypeContainer {

@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { WhereSchema } from "@/lib/common/schema";
 import { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
 import { TransactionFlowEnumSchema } from "~/common/user-transaction/enum/TransactionFlowEnumSchema";
+import { WhereSchema } from "~/query/schema/WhereSchema";
 
 export const ListingWhereSchema = z
 	.looseObject({

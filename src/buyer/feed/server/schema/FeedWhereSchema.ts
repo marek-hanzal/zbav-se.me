@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { WhereSchema } from "@/lib/common/schema";
 import { FeedTypeEnumSchema } from "~/common/feed/enum/FeedTypeEnumSchema";
+import { WhereSchema } from "~/query/schema/WhereSchema";
 
 export const FeedWhereSchema = z
 	.looseObject({

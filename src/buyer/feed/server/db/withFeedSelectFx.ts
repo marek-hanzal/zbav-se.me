@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
-import { selectFx } from "@/lib/common/select";
 import type { ListingQuerySchema } from "~/buyer/listing/server/schema/ListingQuerySchema";
+import { selectFx } from "~/database-query/fx/selectFx";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import type { FeedSortSchema } from "../schema/FeedSortSchema";
 import type { FeedWhereSchema } from "../schema/FeedWhereSchema";

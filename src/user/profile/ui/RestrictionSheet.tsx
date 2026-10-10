@@ -1,11 +1,11 @@
 import type { FC } from "react";
-import { BottomSheet } from "@/lib/client/bottom-sheet";
-import { Container } from "@/lib/client/container";
-import { useSelection } from "@/lib/client/selection";
-import { useTranslator } from "@/lib/client/translation";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { RestrictionSelect } from "~/common/restriction/ui/RestrictionSelect";
+import { useSelection } from "~/selection/hook/useSelection";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { BottomSheet } from "~/ui/ui/BottomSheet";
+import { Container } from "~/ui/ui/Container";
 
 export namespace RestrictionSheet {
 	export interface Props extends BottomSheet.Props {

@@ -1,6 +1,6 @@
 import type { FC } from "react";
-import { useTranslator } from "@/lib/client/translation";
-import { ValueList } from "@/lib/client/value";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { ValueList } from "~/ui/ui/ValueList";
 
 export namespace AgeValueList {
 	export interface Props

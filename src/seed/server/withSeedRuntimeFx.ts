@@ -1,12 +1,12 @@
 import { Effect } from "effect";
 import { PostgresDialect } from "kysely";
 import Pool from "pg-pool";
-import { withDialectFx } from "@/lib/common/database";
-import { withDateServiceFx } from "@/lib/common/date";
-import { withLoggerFx } from "@/lib/common/log";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { withS3ConfigFx } from "~/common/s3/server/context/withS3ConfigFx";
 import { withS3ConfigEnv } from "~/common/s3/server/env/withS3ConfigEnv";
+import { withDialectFx } from "~/database-query/fx/withDialectFx";
+import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
+import { withLoggerFx } from "~/log/fx/withLoggerFx";
 import { databaseFx } from "~/server/database/databaseFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { ServerDatabaseSchema } from "~/server/env/ServerDatabaseSchema";

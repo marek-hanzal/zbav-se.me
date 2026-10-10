@@ -1,12 +1,12 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
 import { z } from "zod";
-import { zodFx } from "@/lib/common/fx";
-import { withLoggerFx } from "@/lib/common/log";
+import { withLoggerFx } from "~/log/fx/withLoggerFx";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { routeFx } from "~/session/location/server/fx/routeFx";
 import { RouteSchema } from "~/session/location/server/schema/RouteSchema";
+import { zodFx } from "~/validation/fx/zodFx";
 import { withLocationConfigFx } from "../server/context/withLocationConfigFx";
 import { withLocationConfigEnv } from "../server/env/withLocationConfigEnv";
 

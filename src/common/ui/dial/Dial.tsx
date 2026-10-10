@@ -1,7 +1,7 @@
 import { type FC, useEffect, useState } from "react";
-import { tvc } from "@/lib/client/cls";
-import { Container } from "@/lib/client/container";
-import { Icon } from "@/lib/client/icon";
+import { tvc } from "~/ui/fn/tvc";
+import { Container } from "~/ui/ui/Container";
+import { Icon } from "~/ui/ui/Icon";
 import { BackspaceIcon } from "../icon/BackspaceIcon";
 import { ClearIcon } from "../icon/ClearIcon";
 import { Item } from "./Item";

@@ -1,6 +1,6 @@
 import { createFormHook, createFormHookContexts } from "@tanstack/react-form";
-import { SubmitButton } from "@/lib/client/submit";
-import { TextInput } from "@/lib/client/text-input";
+import { SubmitButton } from "~/form/ui/SubmitButton";
+import { TextInput } from "~/ui/ui/TextInput";
 
 const { fieldContext, formContext } = createFormHookContexts();
 

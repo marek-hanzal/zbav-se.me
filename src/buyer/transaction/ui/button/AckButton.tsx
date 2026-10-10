@@ -1,10 +1,10 @@
 import { useNavigate } from "@tanstack/react-router";
 import type { FC } from "react";
-import { Button } from "@/lib/client/button";
-import { useLocale } from "@/lib/client/locale";
-import { Tx } from "@/lib/client/tx";
 import type { TransactionSchema } from "~/buyer/transaction/server/schema/TransactionSchema";
 import { CheckIcon } from "~/common/ui/icon";
+import { useLocale } from "~/locale/hook/useLocale";
+import { Tx } from "~/translation/ui/Tx";
+import { Button } from "~/ui/ui/Button";
 import type { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
 import { withTransactionAckMutation } from "../../mutation/withTransactionAckMutation";
 

@@ -1,8 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
-import { withDateServiceFx } from "@/lib/common/date";
-import { zodGuardFx } from "@/lib/common/fx";
-import { withLoggerFx } from "@/lib/common/log";
+import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
+import { withLoggerFx } from "~/log/fx/withLoggerFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
@@ -10,6 +9,7 @@ import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { agentThreadCreateFx } from "~/user/agent/server/fx/agentThreadCreateFx";
 import { AgentThreadCreateSchema } from "~/user/agent/server/schema/AgentThreadCreateSchema";
 import { AgentThreadSchema } from "~/user/agent/server/schema/AgentThreadSchema";
+import { zodGuardFx } from "~/validation/fx/zodGuardFx";
 
 export namespace agentThreadCreateFn {
 	export type Error = Effect.Error<agentThreadCreateFx>;

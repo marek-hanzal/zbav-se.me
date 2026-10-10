@@ -1,10 +1,10 @@
-import { withEntityQuery } from "@/lib/client/query";
-import type { CountSchema } from "@/lib/common/schema";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { resourceDefinitionCollectionFn } from "~/common/resource-definition/fn/resourceDefinitionCollectionFn";
 import { resourceDefinitionFetchFn } from "~/common/resource-definition/fn/resourceDefinitionFetchFn";
 import type { ResourceDefinitionQuerySchema } from "~/common/resource-definition/server/schema/ResourceDefinitionQuerySchema";
 import type { ResourceDefinitionSchema } from "~/common/resource-definition/server/schema/ResourceDefinitionSchema";
+import { withEntityQuery } from "~/query/fn/withEntityQuery";
+import type { CountSchema } from "~/query/schema/CountSchema";
 
 export const withResourceDefinitionQuery = withEntityQuery({
 	logger: getRootLogger([

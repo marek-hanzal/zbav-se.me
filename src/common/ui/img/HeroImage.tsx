@@ -6,10 +6,11 @@ import {
 	useRef,
 	useState,
 } from "react";
-import { Container, type uiContainer } from "@/lib/client/container";
-import { SpinnerContainer } from "@/lib/client/spinner";
-import { Status } from "@/lib/client/status";
-import { useTranslator } from "@/lib/client/translation";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import type { uiContainer } from "~/ui/fn/uiContainer";
+import { Container } from "~/ui/ui/Container";
+import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
+import { Status } from "~/ui/ui/Status";
 
 type ImageStatus = "loading" | "loaded" | "error";
 

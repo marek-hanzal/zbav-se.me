@@ -1,5 +1,5 @@
 import { type ZodError, z } from "zod";
-import type { NoticeSchema } from "@/lib/common/schema";
+import type { NoticeSchema } from "~/notice/schema/NoticeSchema";
 
 export const noticeZodError = (zod: ZodError): NoticeSchema.Type => {
 	return {

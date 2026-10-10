@@ -1,11 +1,11 @@
 import type { FC } from "react";
-import { Group } from "@/lib/client/group";
-import { useLocale } from "@/lib/client/locale";
-import { useTranslator } from "@/lib/client/translation";
-import { LabelValue } from "@/lib/client/value";
-import { toTimeDiff } from "@/lib/common/time";
-import { toLocaleNumber } from "@/lib/common/to-locale-number";
 import type { SellerInfoSchema } from "~/buyer/listing/server/schema/SellerInfoSchema";
+import { toTimeDiff } from "~/date/fn/toTimeDiff";
+import { useLocale } from "~/locale/hook/useLocale";
+import { toLocaleNumber } from "~/number/fn/toLocaleNumber";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Group } from "~/ui/ui/Group";
+import { LabelValue } from "~/ui/ui/LabelValue";
 
 export namespace Header {
 	export interface Props {

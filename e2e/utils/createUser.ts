@@ -1,4 +1,4 @@
-import { genId } from "@/lib/common/gen-id";
+import { genId } from "~/identity/fn/genId";
 
 export function createUser() {
 	return {

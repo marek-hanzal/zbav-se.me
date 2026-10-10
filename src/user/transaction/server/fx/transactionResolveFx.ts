@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { getLoggerFx } from "@/lib/common/log";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { AccessDeniedErrorFx } from "~/server/error/AccessDeniedErrorFx";
 import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";

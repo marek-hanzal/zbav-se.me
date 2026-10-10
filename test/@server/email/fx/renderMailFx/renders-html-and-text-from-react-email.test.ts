@@ -1,11 +1,11 @@
 import { Effect } from "effect";
 import { createElement } from "react";
 import { describe, expect, it } from "vitest";
-import { TranslationContext } from "@/lib/client/translation";
 import { EmailVerificationEmail } from "~/email/template/EmailVerificationEmail";
 import { renderMailFx } from "~/server/email/fx/renderMailFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
+import { TranslationContext } from "~/translation/context/TranslationContext";
 import { withTranslatorFx } from "~/translator/server/fx/withTranslatorFx";
 
 describe("renderMailFx", () => {

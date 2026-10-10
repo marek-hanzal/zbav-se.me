@@ -1,4 +1,3 @@
-import { withEntityQuery } from "@/lib/client/query";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import type { ListingMetaSchema } from "~/buyer/listing/server/schema/ListingMetaSchema";
 import { transactionCollectionFn } from "~/buyer/transaction/fn/transactionCollectionFn";
@@ -10,6 +9,7 @@ import type { TransactionCreateSchema } from "~/buyer/transaction/server/schema/
 import type { TransactionQuerySchema } from "~/buyer/transaction/server/schema/TransactionQuerySchema";
 import type { TransactionSchema } from "~/buyer/transaction/server/schema/TransactionSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { withEntityQuery } from "~/query/fn/withEntityQuery";
 
 export namespace withTransactionQuery {
 	export interface CreateVariables extends TransactionCreateSchema.Type {

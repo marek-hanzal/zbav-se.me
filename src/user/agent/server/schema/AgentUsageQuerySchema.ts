@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { CursorSchema } from "@/lib/common/schema";
+import { CursorSchema } from "~/query/schema/CursorSchema";
 import { AgentUsageSortSchema } from "~/user/agent/server/schema/AgentUsageSortSchema";
 import { AgentUsageWhereSchema } from "~/user/agent/server/schema/AgentUsageWhereSchema";
 

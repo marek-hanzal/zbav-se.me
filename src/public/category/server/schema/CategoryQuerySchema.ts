@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { CursorSchema } from "@/lib/common/schema";
 import { CategorySortSchema } from "~/public/category/server/schema/CategorySortSchema";
 import { CategoryWhereSchema } from "~/public/category/server/schema/CategoryWhereSchema";
+import { CursorSchema } from "~/query/schema/CursorSchema";
 
 export const CategoryQuerySchema = z
 	.looseObject({

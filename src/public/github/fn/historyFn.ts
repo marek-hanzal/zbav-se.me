@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { DateTime } from "luxon";
 import { z } from "zod";
-import { genId } from "@/lib/common/gen-id";
+import { genId } from "~/identity/fn/genId";
 import type { GitHubHistorySchema } from "~/public/github/server/schema/GitHubHistorySchema";
 import { ServerGithubSchema } from "~/server/env/ServerGithubSchema";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";

@@ -1,12 +1,12 @@
 import { createFileRoute, notFound, redirect } from "@tanstack/react-router";
-import { Container } from "@/lib/client/container";
-import { SpinnerContainer } from "@/lib/client/spinner";
-import { translator as coolTranslator } from "@/lib/common/translation";
 import { withTranslationsQuery } from "~/common/translation/query/withTranslationsQuery";
 import { FlowContainer } from "~/common/ui/container";
 import { withListingPingFn } from "~/public/listing/fn/withListingPingFn";
 import { withListingQuery } from "~/public/listing/query/withListingQuery";
 import { ListingCard } from "~/public/listing/ui/ListingCard";
+import { translator as coolTranslator } from "~/translation/fn/translator";
+import { Container } from "~/ui/ui/Container";
+import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
 
 function toSingleLine(value: string | null | undefined) {
 	return value?.replace(/\s+/g, " ").trim() ?? "";

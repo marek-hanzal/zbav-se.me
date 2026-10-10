@@ -1,11 +1,11 @@
 import { useId, useState } from "react";
-import { BottomSheet } from "@/lib/client/bottom-sheet";
-import { Container } from "@/lib/client/container";
-import type { withMutation } from "@/lib/client/mutation";
-import type { StateType } from "@/lib/client/type";
 import type { AccessEnumSchema } from "~/common/access/AccessEnumSchema";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { GalleryUpload } from "~/common/gallery/ui/GalleryUpload";
+import type { withMutation } from "~/mutation/fn/withMutation";
+import type { StateType } from "~/ui/type/StateType";
+import { BottomSheet } from "~/ui/ui/BottomSheet";
+import { Container } from "~/ui/ui/Container";
 import { withUploadMutation } from "~/user/upload/mutation/withUploadMutation";
 
 export namespace GalleryUploadSheet {

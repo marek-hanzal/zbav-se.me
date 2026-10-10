@@ -1,8 +1,8 @@
 import { Effect } from "effect";
-import { withFetchFx } from "@/lib/common/fetch";
-import { getLoggerFx } from "@/lib/common/log";
 import { withFlagSelectFx } from "~/buyer/listing-flag/server/db/withFlagSelectFx";
 import type { FlagQuerySchema } from "~/buyer/listing-flag/server/schema/FlagQuerySchema";
+import { withFetchFx } from "~/http/fx/withFetchFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import type { FlagWhereSchema } from "../schema/FlagWhereSchema";
 
 export namespace flagFetchFx {

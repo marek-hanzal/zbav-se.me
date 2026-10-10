@@ -1,7 +1,7 @@
 import type { FC } from "react";
-import { useTranslator } from "@/lib/client/translation";
-import { ValueList } from "@/lib/client/value";
 import type { WarrantyEnumSchema } from "~/common/warranty/enum/WarrantyEnumSchema";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { ValueList } from "~/ui/ui/ValueList";
 
 export namespace WarrantyValueList {
 	export interface Item {

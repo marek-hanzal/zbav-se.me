@@ -1,10 +1,10 @@
 import { Effect } from "effect";
-import { NotFoundErrorFx } from "@/lib/common/error";
-import { zodGuardFx } from "@/lib/common/fx";
-import { getLoggerFx } from "@/lib/common/log";
+import { NotFoundErrorFx } from "~/error/error/NotFoundErrorFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { TransactionBuyerInfoSchema } from "~/seller/transaction/server/schema/TransactionBuyerInfoSchema";
 import { userEventBuyerInfoFx } from "~/seller/user-event/server/fx/userEventBuyerInfoFx";
 import { dbFx } from "~/server/database/fx/dbFx";
+import { zodGuardFx } from "~/validation/fx/zodGuardFx";
 
 export namespace transactionGetBuyerInfoFx {
 	export interface Props {

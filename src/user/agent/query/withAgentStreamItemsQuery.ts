@@ -1,6 +1,6 @@
 import type { AgentInputItem } from "@openai/agents-core";
-import { withQuery } from "@/lib/client/query";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { withQuery } from "~/query/fn/withQuery";
 import { agentStreamItemsFn } from "~/user/agent/fn/agentStreamItemsFn";
 import type { AgentStreamQuerySchema } from "~/user/agent/server/schema/AgentStreamQuerySchema";
 

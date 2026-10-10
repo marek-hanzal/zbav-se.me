@@ -1,10 +1,10 @@
 import { useMemo } from "react";
-import { Container } from "@/lib/client/container";
-import { EmptyState } from "@/lib/client/empty-state";
-import { withFallback } from "@/lib/client/fallback";
-import { SpinnerContainer } from "@/lib/client/spinner";
-import type { MarkSuspense } from "@/lib/client/type";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
+import { withFallback } from "~/ui/fn/withFallback";
+import type { MarkSuspense } from "~/ui/type/MarkSuspense";
+import { Container } from "~/ui/ui/Container";
+import { EmptyState } from "~/ui/ui/EmptyState";
+import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
 import { CreateButton } from "./CreateButton";
 import { Empty } from "./Empty";
 import { Item } from "./Item";

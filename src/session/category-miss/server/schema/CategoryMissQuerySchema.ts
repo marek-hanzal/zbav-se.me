@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { CursorSchema } from "@/lib/common/schema";
+import { CursorSchema } from "~/query/schema/CursorSchema";
 import { CategoryMissFilterSchema } from "~/session/category-miss/server/schema/CategoryMissFilterSchema";
 import { CategoryMissSortSchema } from "~/session/category-miss/server/schema/CategoryMissSortSchema";
 import { CategoryMissWhereSchema } from "~/session/category-miss/server/schema/CategoryMissWhereSchema";

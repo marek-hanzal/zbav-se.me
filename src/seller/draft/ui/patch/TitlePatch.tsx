@@ -1,20 +1,20 @@
 import type { FC } from "react";
 import { z } from "zod";
-import { Container } from "@/lib/client/container";
-import { FormField } from "@/lib/client/form";
-import { ArrowRightIcon } from "@/lib/client/icon";
-import { Mx } from "@/lib/client/mx";
-import { Status } from "@/lib/client/status";
-import { useTranslator } from "@/lib/client/translation";
-import { Tx } from "@/lib/client/tx";
-import type { useView } from "@/lib/client/view";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { TitleSchema } from "~/common/listing/schema/TitleSchema";
 import { EditAction } from "~/common/ui/action/EditAction";
 import { TitleContainer } from "~/common/ui/container";
 import { useAppForm } from "~/common/ui/form";
+import { FormField } from "~/form/ui/FormField";
 import { withDraftQuery } from "~/seller/draft/query/withDraftQuery";
 import type { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Mx } from "~/translation/ui/Mx";
+import { Tx } from "~/translation/ui/Tx";
+import { ArrowRightIcon } from "~/ui/constant/ArrowRightIcon";
+import { Container } from "~/ui/ui/Container";
+import { Status } from "~/ui/ui/Status";
+import type { useView } from "~/view/hook/useView";
 
 const FormSchema = z
 	.looseObject({

@@ -1,7 +1,8 @@
 import { Effect } from "effect";
-import { getLoggerFx } from "@/lib/common/log/getLoggerFx";
-import type { ValidationErrorSchema, ValidationResultSchema } from "@/lib/common/schema";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { draftFetchFx } from "~/seller/draft/server/fx/draftFetchFx";
+import type { ValidationErrorSchema } from "~/validation/schema/ValidationErrorSchema";
+import type { ValidationResultSchema } from "~/validation/schema/ValidationResultSchema";
 import { ListingSchema } from "../schema/ListingSchema";
 
 export namespace listingValidateFx {

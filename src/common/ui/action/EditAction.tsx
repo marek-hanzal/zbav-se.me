@@ -1,5 +1,6 @@
 import type { FC } from "react";
-import { EditIcon, Icon } from "@/lib/client/icon";
+import { EditIcon } from "~/ui/constant/EditIcon";
+import { Icon } from "~/ui/ui/Icon";
 
 export namespace EditAction {
 	export interface Props extends Icon.PropsEx {

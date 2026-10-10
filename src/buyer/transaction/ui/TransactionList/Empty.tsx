@@ -1,12 +1,13 @@
 import type { FC } from "react";
-import type { Container } from "@/lib/client/container";
-import { ChevronRightIcon, MessageIcon } from "@/lib/client/icon";
-import { LinkTo } from "@/lib/client/link-to";
-import { useLocale } from "@/lib/client/locale";
-import { useTranslator } from "@/lib/client/translation";
-import { Tx } from "@/lib/client/tx";
 import { EmptyStatus } from "~/common/status/ui/EmptyStatus";
 import { uiCtaLinkButton } from "~/common/ui/ui";
+import { useLocale } from "~/locale/hook/useLocale";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Tx } from "~/translation/ui/Tx";
+import { ChevronRightIcon } from "~/ui/constant/ChevronRightIcon";
+import { MessageIcon } from "~/ui/constant/MessageIcon";
+import type { Container } from "~/ui/ui/Container";
+import { LinkTo } from "~/ui/ui/LinkTo";
 
 export namespace Empty {
 	export interface Props extends Container.Props {

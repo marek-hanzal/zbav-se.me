@@ -1,12 +1,12 @@
 import { getLogger } from "@logtape/logtape";
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { keyOf } from "@/lib/common/key-of";
-import { withLoggerFx } from "@/lib/common/log";
 import { ViteEnvSchema } from "~/common/env/ViteEnvSchema";
 import { withS3ConfigFx } from "~/common/s3/server/context/withS3ConfigFx";
 import { withS3ConfigEnv } from "~/common/s3/server/env/withS3ConfigEnv";
 import { s3PreSignFx } from "~/common/s3/server/fx/s3PreSignFx";
+import { keyOf } from "~/hash/fn/keyOf";
+import { withLoggerFx } from "~/log/fx/withLoggerFx";
 import { ServerS3Schema } from "~/server/env/ServerS3Schema";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";

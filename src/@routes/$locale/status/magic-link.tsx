@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Container } from "@/lib/client/container";
-import { LinkTo } from "@/lib/client/link-to";
-import { useLocale } from "@/lib/client/locale";
-import { Status } from "@/lib/client/status";
-import { useTranslator } from "@/lib/client/translation";
-import { Tx } from "@/lib/client/tx";
 import { Logo } from "~/common/ui/logo";
+import { useLocale } from "~/locale/hook/useLocale";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Tx } from "~/translation/ui/Tx";
+import { Container } from "~/ui/ui/Container";
+import { LinkTo } from "~/ui/ui/LinkTo";
+import { Status } from "~/ui/ui/Status";
 
 export const Route = createFileRoute("/$locale/status/magic-link")({
 	component() {

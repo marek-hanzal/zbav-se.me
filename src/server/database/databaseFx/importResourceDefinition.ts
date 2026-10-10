@@ -1,5 +1,5 @@
-import type { withDatabaseFx } from "@/lib/common/database";
 import { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/ResourceDefinitionEnumSchema";
+import type { withDatabaseFx } from "~/database-query/fx/withDatabaseFx";
 import type { ResourceDefinitionTableSchema } from "../@table/ResourceDefinitionTableSchema";
 import type { Database } from "../Database";
 

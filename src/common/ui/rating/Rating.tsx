@@ -1,10 +1,10 @@
 import { type FC, useMemo } from "react";
-import { Button } from "@/lib/client/button";
-import { Container } from "@/lib/client/container";
-import { TrashIcon } from "@/lib/client/icon";
-import type { useSelection } from "@/lib/client/selection";
-import { Tx } from "@/lib/client/tx";
-import type { EntitySchema } from "@/lib/common/schema";
+import type { EntitySchema } from "~/entity/schema/EntitySchema";
+import type { useSelection } from "~/selection/hook/useSelection";
+import { Tx } from "~/translation/ui/Tx";
+import { TrashIcon } from "~/ui/constant/TrashIcon";
+import { Button } from "~/ui/ui/Button";
+import { Container } from "~/ui/ui/Container";
 import { uiSelectButton } from "../ui";
 import { RatingToIcon } from "./RatingToIcon";
 

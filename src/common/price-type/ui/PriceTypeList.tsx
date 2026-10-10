@@ -1,6 +1,6 @@
-import { useTranslator } from "@/lib/client/translation";
-import { ValueList } from "@/lib/client/value";
 import type { EntrySchema } from "~/server/database/@table/TransactionEntryTableSchema/EntrySchema";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { ValueList } from "~/ui/ui/ValueList";
 import type { PriceTypeEnumSchema } from "../enum/PriceTypeEnumSchema";
 
 export namespace PriceTypeList {

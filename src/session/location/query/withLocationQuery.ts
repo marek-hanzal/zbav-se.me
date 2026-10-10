@@ -1,6 +1,6 @@
-import { withEntityQuery } from "@/lib/client/query";
-import type { CountSchema } from "@/lib/common/schema";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { withEntityQuery } from "~/query/fn/withEntityQuery";
+import type { CountSchema } from "~/query/schema/CountSchema";
 import { locationFetchFn } from "~/session/location/fn/locationFetchFn";
 import type { LocationQuerySchema } from "~/session/location/server/schema/LocationQuerySchema";
 import type { LocationSchema } from "../server/schema/LocationSchema";

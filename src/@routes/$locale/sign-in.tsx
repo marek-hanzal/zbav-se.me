@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useRef } from "react";
 import { z } from "zod";
-import { Container } from "@/lib/client/container";
-import { Fade } from "@/lib/client/fade";
+import { Container } from "~/ui/ui/Container";
+import { Fade } from "~/ui/ui/Fade";
 import { WithEmail } from "~/user/auth/ui/SignIn/WithEmail";
 import { WithMagic } from "~/user/auth/ui/SignIn/WithMagic";
 

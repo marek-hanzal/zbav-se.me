@@ -1,12 +1,12 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
 import { z } from "zod";
-import { zodGuardFx } from "@/lib/common/fx";
-import { withLoggerFx } from "@/lib/common/log";
-import { TranslationSchema } from "@/lib/common/schema";
+import { withLoggerFx } from "~/log/fx/withLoggerFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
+import { TranslationSchema } from "~/translation/schema/TranslationSchema";
+import { zodGuardFx } from "~/validation/fx/zodGuardFx";
 import { translationsFx } from "../server/fx/translationsFx";
 import { LocaleSchema } from "../server/schema/LocaleSchema";
 

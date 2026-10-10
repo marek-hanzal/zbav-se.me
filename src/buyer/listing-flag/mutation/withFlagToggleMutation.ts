@@ -1,9 +1,9 @@
-import { withMutation } from "@/lib/client/mutation";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
 import { flagToggleFn } from "~/buyer/listing-flag/fn/flagToggleFn";
 import type { FlagToggleSchema } from "~/buyer/listing-flag/server/schema/FlagToggleSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { withMutation } from "~/mutation/fn/withMutation";
 
 export const withFlagToggleMutation = withMutation<
 	FlagToggleSchema.Type,

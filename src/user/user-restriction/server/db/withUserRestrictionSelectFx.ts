@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
-import { DateServiceFx } from "@/lib/common/date";
-import { selectFx } from "@/lib/common/select";
+import { selectFx } from "~/database-query/fx/selectFx";
+import { DateServiceFx } from "~/date/service/DateServiceFx";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import type { UserRestrictionSortSchema } from "../schema/UserRestrictionSortSchema";
 import type { UserRestrictionWhereSchema } from "../schema/UserRestrictionWhereSchema";

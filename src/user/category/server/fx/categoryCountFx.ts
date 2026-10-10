@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import { withCountFx } from "@/lib/common/count";
-import { getLoggerFx } from "@/lib/common/log";
+import { withCountFx } from "~/database-query/fx/withCountFx";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import type { CategoryCountQuerySchema } from "~/user/category/server/schema/CategoryCountQuerySchema";
 import { withCategorySelectFx } from "../db/withCategorySelectFx";
 import type { CategoryWhereSchema } from "../schema/CategoryWhereSchema";

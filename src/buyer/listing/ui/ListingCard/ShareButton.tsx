@@ -1,10 +1,10 @@
 import { useRouter } from "@tanstack/react-router";
 import { type FC, useState } from "react";
-import { Button } from "@/lib/client/button";
-import { useCopy } from "@/lib/client/clipboard";
-import { useLocale } from "@/lib/client/locale";
-import { useTranslator } from "@/lib/client/translation";
+import { useCopy } from "~/clipboard/hook/useCopy";
 import { CheckIcon } from "~/common/ui/icon";
+import { useLocale } from "~/locale/hook/useLocale";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Button } from "~/ui/ui/Button";
 
 export namespace ShareButton {
 	export interface Props extends Button.Props {

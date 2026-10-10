@@ -1,10 +1,10 @@
 import { Effect } from "effect";
-import { genId } from "@/lib/common/gen-id";
-import { keyOf } from "@/lib/common/key-of";
-import { linkTo } from "@/lib/common/link-to";
-import { getLoggerFx } from "@/lib/common/log";
 import { s3ClientFx } from "~/common/s3/server/fx/s3ClientFx";
+import { keyOf } from "~/hash/fn/keyOf";
+import { genId } from "~/identity/fn/genId";
+import { getLoggerFx } from "~/log/fx/getLoggerFx";
 import { rateLimitCheckFx } from "~/server/rate-limit/server/fx/rateLimitCheckFx";
+import { linkTo } from "~/url/fn/linkTo";
 import { UploadConfigFx } from "~/user/upload/server/context/UploadConfigFx";
 import { s3ConfigFx } from "../context/s3ConfigFx";
 

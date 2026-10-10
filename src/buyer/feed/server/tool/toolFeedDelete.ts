@@ -1,7 +1,7 @@
 import { tool } from "@openai/agents";
-import { EntitySchema } from "@/lib/common/schema";
 import { feedDeleteFn } from "~/buyer/feed/fn/feedDeleteFn";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { EntitySchema } from "~/entity/schema/EntitySchema";
 
 const logger = getRootLogger([
 	"tool",

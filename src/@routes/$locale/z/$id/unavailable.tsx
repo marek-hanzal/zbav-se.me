@@ -1,16 +1,16 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
-import { Container } from "@/lib/client/container";
-import { ChevronRightIcon } from "@/lib/client/icon";
-import { LinkTo } from "@/lib/client/link-to";
-import { useLocale } from "@/lib/client/locale";
-import { Status } from "@/lib/client/status";
-import { useTranslator } from "@/lib/client/translation";
-import { Tx } from "@/lib/client/tx";
-import { translator as coolTranslator } from "@/lib/common/translation";
 import { withTranslationsQuery } from "~/common/translation/query/withTranslationsQuery";
 import { FlowContainer } from "~/common/ui/container";
 import { Logo } from "~/common/ui/logo";
 import { uiCtaLinkButton } from "~/common/ui/ui";
+import { useLocale } from "~/locale/hook/useLocale";
+import { translator as coolTranslator } from "~/translation/fn/translator";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Tx } from "~/translation/ui/Tx";
+import { ChevronRightIcon } from "~/ui/constant/ChevronRightIcon";
+import { Container } from "~/ui/ui/Container";
+import { LinkTo } from "~/ui/ui/LinkTo";
+import { Status } from "~/ui/ui/Status";
 
 export const Route = createFileRoute("/$locale/z/$id/unavailable")({
 	async loader({ context: { queryClient }, params: { locale } }) {

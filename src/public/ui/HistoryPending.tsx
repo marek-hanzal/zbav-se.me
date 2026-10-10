@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { SpinnerContainer } from "@/lib/client/spinner";
+import { SpinnerContainer } from "~/ui/ui/SpinnerContainer";
 
 export namespace HistoryPending {
 	export interface Props extends SpinnerContainer.Props {

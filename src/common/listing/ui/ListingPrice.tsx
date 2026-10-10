@@ -1,11 +1,11 @@
 import type { FC } from "react";
 import { match, P } from "ts-pattern";
-import { Container } from "@/lib/client/container";
-import { useLocale } from "@/lib/client/locale";
-import { PriceInline } from "@/lib/client/price-inline";
-import { useTranslator } from "@/lib/client/translation";
-import { Tx } from "@/lib/client/tx";
-import { Typo } from "@/lib/client/typo";
+import { useLocale } from "~/locale/hook/useLocale";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Tx } from "~/translation/ui/Tx";
+import { Container } from "~/ui/ui/Container";
+import { PriceInline } from "~/ui/ui/PriceInline";
+import { Typo } from "~/ui/ui/Typo";
 import type { ListingPriceSchema } from "../schema/ListingPriceSchema";
 
 export namespace ListingPrice {

@@ -1,8 +1,8 @@
 import type { AgentInputItem } from "@openai/agents-core";
 import type { FC } from "react";
-import { Group } from "@/lib/client/group";
-import { useTranslator } from "@/lib/client/translation";
-import { Tx } from "@/lib/client/tx";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Tx } from "~/translation/ui/Tx";
+import { Group } from "~/ui/ui/Group";
 
 export namespace Reasoning {
 	export interface Props extends Group.Props {

@@ -1,15 +1,15 @@
 import type { FC } from "react";
 import { z } from "zod";
-import { BottomSheet } from "@/lib/client/bottom-sheet";
-import { Container } from "@/lib/client/container";
-import { ErrorBadge } from "@/lib/client/error";
-import { FormField } from "@/lib/client/form";
-import { onSubmit } from "@/lib/client/submit";
-import { useTranslator } from "@/lib/client/translation";
-import { Tx } from "@/lib/client/tx";
-import type { StateType } from "@/lib/client/type";
 import { CloseButton } from "~/common/ui/button";
 import { useAppForm } from "~/common/ui/form";
+import { onSubmit } from "~/form/fn/onSubmit";
+import { FormField } from "~/form/ui/FormField";
+import { useTranslator } from "~/translation/hook/useTranslator";
+import { Tx } from "~/translation/ui/Tx";
+import type { StateType } from "~/ui/type/StateType";
+import { BottomSheet } from "~/ui/ui/BottomSheet";
+import { Container } from "~/ui/ui/Container";
+import { ErrorBadge } from "~/ui/ui/ErrorBadge";
 import { withPasswordChangeMutation } from "~/user/auth/mutation/withPasswordChangeMutation";
 
 const useFormSchema = () => {

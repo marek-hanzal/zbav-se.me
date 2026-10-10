@@ -1,6 +1,6 @@
 import { createMiddleware } from "@tanstack/react-start";
 import { Effect } from "effect";
-import { withDateServiceFx } from "@/lib/common/date";
+import { withDateServiceFx } from "~/date/fx/withDateServiceFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
