@@ -10,7 +10,7 @@ import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddlewa
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 
 export namespace uploadCollectionFn {
-	export type Error = Effect.Effect.Error<uploadCollectionFx>;
+	export type Error = Effect.Error<uploadCollectionFx>;
 }
 
 export const uploadCollectionFn = createServerFn()
@@ -18,7 +18,7 @@ export const uploadCollectionFn = createServerFn()
 		withLogMiddleware,
 		withDatabaseMiddleware,
 	])
-	.inputValidator(UploadQuerySchema)
+	.validator(UploadQuerySchema)
 	.handler(async ({ data, context: { database, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

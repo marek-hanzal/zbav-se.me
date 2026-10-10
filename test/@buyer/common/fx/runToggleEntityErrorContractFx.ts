@@ -5,7 +5,7 @@ import { runWithTestRuntime } from "~/test/common/fx/runWithTestRuntime";
 import { testabase } from "~/test/testabase";
 
 namespace runToggleEntityErrorContractFx {
-	export type BaseContext = Effect.Effect.Success<ReturnType<typeof createToggleBaseContextFx>>;
+	export type BaseContext = Effect.Success<ReturnType<typeof createToggleBaseContextFx>>;
 
 	export interface ToggleContext<Extra> extends BaseContext {
 		extra: Extra;
@@ -48,7 +48,7 @@ export const runToggleEntityErrorContractFx = async <Extra, Runtime>({
 			yield* beforeFx(context);
 		}
 
-		const result = yield* Effect.either(errorFx(context));
+		const result = yield* Effect.result(errorFx(context));
 		expectTaggedErrorFx(result, expectedError);
 
 		if (assertAfterFx) {

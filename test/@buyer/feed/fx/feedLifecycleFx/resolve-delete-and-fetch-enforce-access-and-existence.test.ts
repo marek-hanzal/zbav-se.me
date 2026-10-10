@@ -32,7 +32,7 @@ describe("feedLifecycleFx", () => {
 
 			expect(resolved.id).toBe(feed.id);
 
-			const foreignResolution = yield* Effect.either(
+			const foreignResolution = yield* Effect.result(
 				feedResolveFx({
 					userId: stranger.id,
 					feedId: feed.id,
@@ -44,7 +44,7 @@ describe("feedLifecycleFx", () => {
 				message: "You are not allowed to access this feed",
 			});
 
-			const foreignPatch = yield* Effect.either(
+			const foreignPatch = yield* Effect.result(
 				feedPatchFx({
 					scope: {
 						userId: stranger.id,
@@ -59,7 +59,7 @@ describe("feedLifecycleFx", () => {
 					},
 				}),
 			);
-			const foreignDelete = yield* Effect.either(
+			const foreignDelete = yield* Effect.result(
 				feedDeleteFx({
 					scope: {
 						userId: stranger.id,
@@ -88,7 +88,7 @@ describe("feedLifecycleFx", () => {
 
 			expect(deleted.id).toBe(feed.id);
 
-			const missing = yield* Effect.either(
+			const missing = yield* Effect.result(
 				feedFetchFx({
 					scope: {
 						userId: owner.id,

@@ -35,7 +35,7 @@ describe("seller listingFetchFx", () => {
 			expect(fetched.title).toBe("Seller own listing");
 			expect(fetched.withRestriction).toBe("none");
 
-			const foreign = yield* Effect.either(
+			const foreign = yield* Effect.result(
 				listingFetchFx({
 					userId: users.seller.id,
 					where: {

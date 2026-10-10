@@ -11,7 +11,7 @@ import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddlewa
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 
 export namespace listingCountFn {
-	export type Error = Effect.Effect.Error<listingCountFx>;
+	export type Error = Effect.Error<listingCountFx>;
 }
 
 export const listingCountFn = createServerFn()
@@ -19,7 +19,7 @@ export const listingCountFn = createServerFn()
 		withLogMiddleware,
 		withDatabaseMiddleware,
 	])
-	.inputValidator(ListingCountQuerySchema)
+	.validator(ListingCountQuerySchema)
 	.handler(async ({ data, context: { database, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

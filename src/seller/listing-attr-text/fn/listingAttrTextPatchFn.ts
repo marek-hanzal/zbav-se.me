@@ -12,7 +12,7 @@ import { listingAttrTextPatchFx } from "../server/fx/listingAttrTextPatchFx";
 import { ListingAttrTextPatchSchema } from "../server/schema/ListingAttrTextPatchSchema";
 
 export namespace listingAttrTextPatchFn {
-	export type Error = Effect.Effect.Error<listingAttrTextPatchFx>;
+	export type Error = Effect.Error<listingAttrTextPatchFx>;
 }
 
 export const listingAttrTextPatchFn = createServerFn()
@@ -21,7 +21,7 @@ export const listingAttrTextPatchFn = createServerFn()
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(ListingAttrTextPatchSchema)
+	.validator(ListingAttrTextPatchSchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

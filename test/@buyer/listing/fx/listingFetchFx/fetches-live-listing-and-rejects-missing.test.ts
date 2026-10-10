@@ -36,7 +36,7 @@ describe("buyer listingFetchFx", () => {
 			expect(fetched.status).toBe("live");
 			expect(fetched.withRestriction).toBe("adult-relaxed");
 
-			const missing = yield* Effect.either(
+			const missing = yield* Effect.result(
 				listingFetchFx({
 					userId: users.buyer.id,
 					where: {

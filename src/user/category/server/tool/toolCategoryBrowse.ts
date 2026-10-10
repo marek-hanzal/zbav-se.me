@@ -2,7 +2,6 @@ import { tool } from "@openai/agents";
 import { stringify } from "csv-stringify/sync";
 import { z } from "zod";
 import { getRootLogger } from "~/common/log/getRootLogger";
-import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 import { categoryCollectionFn } from "~/user/category/fn/categoryCollectionFn";
 
 const logger = getRootLogger([
@@ -30,7 +29,7 @@ Available:
 - ready to use: category is free to use in any way
     `.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(InputSchema),
+	parameters: InputSchema,
 	async execute(input) {
 		logger.trace("toolCategoryBrowse", {
 			input,

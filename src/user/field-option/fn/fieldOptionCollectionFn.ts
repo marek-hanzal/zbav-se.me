@@ -11,7 +11,7 @@ import { FieldOptionQuerySchema } from "~/user/field-option/server/schema/FieldO
 import { FieldOptionSchema } from "../server/schema/FieldOptionSchema";
 
 export namespace fieldOptionCollectionFn {
-	export type Error = Effect.Effect.Error<fieldOptionCollectionFx>;
+	export type Error = Effect.Error<fieldOptionCollectionFx>;
 }
 
 export const fieldOptionCollectionFn = createServerFn()
@@ -19,7 +19,7 @@ export const fieldOptionCollectionFn = createServerFn()
 		withLogMiddleware,
 		withDatabaseMiddleware,
 	])
-	.inputValidator(FieldOptionQuerySchema)
+	.validator(FieldOptionQuerySchema)
 	.handler(async ({ data, context: { database, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

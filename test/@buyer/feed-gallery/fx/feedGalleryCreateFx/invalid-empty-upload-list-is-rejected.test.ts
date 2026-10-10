@@ -21,7 +21,7 @@ describe("feedGalleryCreateFx", () => {
 				query: {},
 			});
 
-			const result = yield* Effect.either(
+			const result = yield* Effect.result(
 				feedGalleryCreateFx({
 					userId: user.id,
 					feedId: feed.id,

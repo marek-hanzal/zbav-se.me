@@ -12,7 +12,7 @@ import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 
 export namespace favouriteToggleFn {
-	export type Error = Effect.Effect.Error<favouriteToggleFx>;
+	export type Error = Effect.Error<favouriteToggleFx>;
 }
 
 export const favouriteToggleFn = createServerFn({
@@ -23,7 +23,7 @@ export const favouriteToggleFn = createServerFn({
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(FavouriteToggleSchema)
+	.validator(FavouriteToggleSchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

@@ -1,3 +1,4 @@
+import { spawnSync } from "node:child_process";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 import process from "node:process";
@@ -8,6 +9,21 @@ interface ParsedEnvFile {
 	environment: string;
 	variables: EnvMap;
 	secrets: EnvMap;
+}
+
+interface VercelEnvResponse {
+	envs?: VercelEnv[];
+}
+
+interface VercelEnvOperationResponse {
+	failed?: unknown[];
+}
+
+interface VercelEnvPayload {
+	key: string;
+	target: readonly string[];
+	type: "plain" | "sensitive";
+	value: string;
 }
 
 interface VercelEnv {
@@ -28,14 +44,14 @@ function printUsage(reason?: string, exitCode = 1): never {
 		console.error("");
 	}
 
-	console.error("Usage: bun run env:sync <environment> <vercel-project-id>");
+	console.error("Usage: argc env:sync <environment> <vercel-project-id>");
 	console.error("");
 	console.error(`Available environments: ${availableEnvironments.join(", ") || "(none found)"}`);
 	console.error("");
 	console.error("Examples:");
 
 	for (const environment of availableEnvironments) {
-		console.error(`  bun run env:sync ${environment} prj_xxx`);
+		console.error(`  argc env:sync ${environment} prj_xxx`);
 	}
 
 	process.exit(exitCode);
@@ -255,9 +271,9 @@ function fetchExistingEnvs(projectId: string, orgId: string, token: string): Ver
 	const url = new URL(`https://api.vercel.com/v10/projects/${projectId}/env`);
 	url.searchParams.set("teamId", orgId);
 
-	const proc = Bun.spawnSync({
-		cmd: [
-			"curl",
+	const proc = spawnSync(
+		"curl",
+		[
 			"-s",
 			"-X",
 			"GET",
@@ -267,18 +283,17 @@ function fetchExistingEnvs(projectId: string, orgId: string, token: string): Ver
 			"Content-Type: application/json",
 			url.toString(),
 		],
-		stdout: "pipe",
-		stderr: "pipe",
-	});
+		{
+			encoding: "utf8",
+		},
+	);
 
-	if (proc.exitCode !== 0) {
-		const stderr = new TextDecoder().decode(proc.stderr).trim();
+	if (proc.status !== 0) {
+		const stderr = proc.error?.message ?? proc.stderr?.trim() ?? "Command failed.";
 		throw new Error(`Failed to fetch Vercel envs: ${stderr}`);
 	}
 
-	const body = JSON.parse(new TextDecoder().decode(proc.stdout)) as {
-		envs?: VercelEnv[];
-	};
+	const body = JSON.parse(proc.stdout) as VercelEnvResponse;
 	return body.envs ?? [];
 }
 
@@ -292,9 +307,9 @@ function deleteExistingEnvs(projectId: string, orgId: string, token: string, ids
 		ids,
 	});
 
-	const proc = Bun.spawnSync({
-		cmd: [
-			"curl",
+	const proc = spawnSync(
+		"curl",
+		[
 			"-s",
 			"-X",
 			"DELETE",
@@ -306,36 +321,27 @@ function deleteExistingEnvs(projectId: string, orgId: string, token: string, ids
 			body,
 			url.toString(),
 		],
-		stdout: "pipe",
-		stderr: "pipe",
-	});
+		{
+			encoding: "utf8",
+		},
+	);
 
-	if (proc.exitCode !== 0) {
-		const stderr = new TextDecoder().decode(proc.stderr).trim();
+	if (proc.status !== 0) {
+		const stderr = proc.error?.message ?? proc.stderr?.trim() ?? "Command failed.";
 		throw new Error(`Failed to delete Vercel envs: ${stderr}`);
 	}
 }
 
-function createEnvs(
-	projectId: string,
-	orgId: string,
-	token: string,
-	payload: Array<{
-		key: string;
-		target: readonly string[];
-		type: "plain" | "sensitive";
-		value: string;
-	}>,
-) {
+function createEnvs(projectId: string, orgId: string, token: string, payload: VercelEnvPayload[]) {
 	const url = new URL(`https://api.vercel.com/v10/projects/${projectId}/env`);
 	url.searchParams.set("teamId", orgId);
 	url.searchParams.set("upsert", "true");
 
 	const body = JSON.stringify(payload);
 
-	const proc = Bun.spawnSync({
-		cmd: [
-			"curl",
+	const proc = spawnSync(
+		"curl",
+		[
 			"-s",
 			"-X",
 			"POST",
@@ -347,18 +353,17 @@ function createEnvs(
 			body,
 			url.toString(),
 		],
-		stdout: "pipe",
-		stderr: "pipe",
-	});
+		{
+			encoding: "utf8",
+		},
+	);
 
-	if (proc.exitCode !== 0) {
-		const stderr = new TextDecoder().decode(proc.stderr).trim();
+	if (proc.status !== 0) {
+		const stderr = proc.error?.message ?? proc.stderr?.trim() ?? "Command failed.";
 		throw new Error(`Failed to create Vercel envs: ${stderr}`);
 	}
 
-	const response = JSON.parse(new TextDecoder().decode(proc.stdout)) as {
-		failed?: unknown[];
-	};
+	const response = JSON.parse(proc.stdout) as VercelEnvOperationResponse;
 	if (Array.isArray(response.failed) && response.failed.length > 0) {
 		throw new Error(`Vercel reported ${response.failed.length} failed env operations.`);
 	}
@@ -374,18 +379,18 @@ function listGhNames(cmd: string[]) {
 }
 
 function runGh(cmd: string[]) {
-	const proc = Bun.spawnSync({
-		cmd,
-		stdout: "pipe",
-		stderr: "pipe",
+	const [command, ...args] = cmd;
+	if (!command) throw new Error("Missing command.");
+	const proc = spawnSync(command, args, {
+		encoding: "utf8",
 	});
 
-	if (proc.exitCode !== 0) {
-		const stderr = new TextDecoder().decode(proc.stderr).trim();
-		throw new Error(stderr || `Command failed: ${cmd.join(" ")}`);
+	if (proc.status !== 0) {
+		const stderr = proc.error?.message ?? proc.stderr?.trim() ?? "Command failed.";
+		throw new Error(stderr || `Command failed: ${command}`);
 	}
 
-	return new TextDecoder().decode(proc.stdout).trim();
+	return proc.stdout.trim();
 }
 
 async function main() {

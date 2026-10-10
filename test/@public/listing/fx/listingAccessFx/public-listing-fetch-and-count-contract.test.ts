@@ -57,7 +57,7 @@ describe("public listing fetch/count contract", () => {
 					id: implicitListing.id,
 				},
 			});
-			const explicitHiddenFetch = yield* Effect.either(
+			const explicitHiddenFetch = yield* Effect.result(
 				listingFetchFx({
 					scope: {},
 					where: {
@@ -72,7 +72,7 @@ describe("public listing fetch/count contract", () => {
 					categoryId: explicitCategory.id,
 				},
 			});
-			const blockedFetch = yield* Effect.either(
+			const blockedFetch = yield* Effect.result(
 				listingFetchFx({
 					scope: {},
 					where: {

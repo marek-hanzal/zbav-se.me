@@ -1,0 +1,9 @@
+[tools]
+node = "24.21.0"
+argc = "1.24.0"
+github-cli = "2.102.0"
+"npm:portless" = "0.7.2"
+"npm:vercel" = "50.44.0"
+
+[env]
+_.path = ["{{config_root}}/node_modules/.bin"]

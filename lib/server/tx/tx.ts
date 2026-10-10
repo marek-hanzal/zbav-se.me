@@ -1,11 +1,12 @@
 import fs from "node:fs";
-import { print, project, query } from "@phenomnomnominal/tsquery";
 import cliProgress from "cli-progress";
 import { Timer } from "timer-node";
 import { parse, stringify } from "yaml";
 import { diffOf } from "@/lib/common/diff-of";
 import type { TranslationSchema } from "@/lib/common/schema";
 import { keyOf, type TranslationSource } from "@/lib/common/translation";
+import { extractTranslations } from "./extractTranslations";
+import { translationFiles } from "./translationFiles";
 
 export namespace tx {
 	export interface Translation {
@@ -14,6 +15,7 @@ export namespace tx {
 	}
 
 	export type Translations = Record<string, Translation>;
+	export type LocaleTranslations = Record<string, TranslationSchema.Type>;
 
 	export interface Props {
 		packages: string[];
@@ -97,10 +99,8 @@ export const tx = ({
 		console.log();
 	}
 
-	// Optimize: Move helper functions and selectors outside loops
-	const addTranslation = (node: any, sourceKey: string) => {
-		const printed = print(node);
-		const text = printed.substring(1, printed.length - 1);
+	// Track extracted texts without changing existing translation keys.
+	const addTranslation = (text: string, sourceKey: string) => {
 		const key = keyOf(text);
 
 		if (!key.length) {
@@ -120,38 +120,8 @@ export const tx = ({
 		};
 	};
 
-	const literalSelector = "StringLiteral, NoSubstitutionTemplateLiteral";
-	const jsxLiteralSelector = "StringLiteral, JsxExpression NoSubstitutionTemplateLiteral";
-
-	// Pre-compile JSX selectors (individual for tracking)
-	const jsxSelectors = sources.jsx.map(({ name, attr }) => ({
-		selector: `JsxSelfClosingElement[tagName.name=${name}] JsxAttribute[name.name=${attr}], JsxOpeningElement[tagName.name=${name}] JsxAttribute[name.name=${attr}]`,
-		sourceKey: `jsx:${name}.${attr}`,
-	}));
-
-	// Pre-compile selector for component prop defaults (individual for tracking)
-	const propDefaultSelectors = sources.jsx.map(({ name, attr }) => ({
-		selector: `VariableDeclaration:has(Identifier[name=${name}]) Parameter ObjectBindingPattern BindingElement:has(Identifier[name=${attr}])`,
-		sourceKey: `jsx:${name}.${attr}`,
-	}));
-
-	// Build selectors for function calls (individual for tracking)
-	// Match direct arguments, ConditionalExpression (ternary), BinaryExpression (nullish coalescing, logical operators)
-	const functionSelectors = sources.functions.map(({ name }) => ({
-		selector: `CallExpression:has(Identifier[name=${name}]) > StringLiteral, CallExpression:has(Identifier[name=${name}]) > NoSubstitutionTemplateLiteral, CallExpression:has(Identifier[name=${name}]) > ConditionalExpression StringLiteral, CallExpression:has(Identifier[name=${name}]) > ConditionalExpression NoSubstitutionTemplateLiteral, CallExpression:has(Identifier[name=${name}]) > ParenthesizedExpression StringLiteral, CallExpression:has(Identifier[name=${name}]) > ParenthesizedExpression NoSubstitutionTemplateLiteral, CallExpression:has(Identifier[name=${name}]) > BinaryExpression StringLiteral, CallExpression:has(Identifier[name=${name}]) > BinaryExpression NoSubstitutionTemplateLiteral`,
-		sourceKey: `function:${name}`,
-	}));
-
-	// Build selectors for object method calls (individual for tracking)
-	const objectSelectors = sources.objects.map(({ object, name }) => ({
-		selector: `CallExpression:has(PropertyAccessExpression:has(Identifier[name=${object}]):has(Identifier[name=${name}])) > StringLiteral, CallExpression:has(PropertyAccessExpression:has(Identifier[name=${object}]):has(Identifier[name=${name}])) > NoSubstitutionTemplateLiteral, CallExpression:has(PropertyAccessExpression:has(Identifier[name=${object}]):has(Identifier[name=${name}])) > ConditionalExpression StringLiteral, CallExpression:has(PropertyAccessExpression:has(Identifier[name=${object}]):has(Identifier[name=${name}])) > ConditionalExpression NoSubstitutionTemplateLiteral, CallExpression:has(PropertyAccessExpression:has(Identifier[name=${object}]):has(Identifier[name=${name}])) > ParenthesizedExpression StringLiteral, CallExpression:has(PropertyAccessExpression:has(Identifier[name=${object}]):has(Identifier[name=${name}])) > ParenthesizedExpression NoSubstitutionTemplateLiteral, CallExpression:has(PropertyAccessExpression:has(Identifier[name=${object}]):has(Identifier[name=${name}])) > BinaryExpression StringLiteral, CallExpression:has(PropertyAccessExpression:has(Identifier[name=${object}]):has(Identifier[name=${name}])) > BinaryExpression NoSubstitutionTemplateLiteral`,
-		sourceKey: `object:${object}.${name}`,
-	}));
-
 	packages.forEach((path) => {
-		const sourceFiles = project(`${path}/tsconfig.json`).filter((source) =>
-			filter.test(source.fileName),
-		);
+		const sourceFiles = translationFiles(path, filter);
 		const total = sourceFiles.length;
 
 		console.log(`\n📦 Package: ${colors.cyan}${path}${colors.reset}`);
@@ -175,38 +145,20 @@ export const tx = ({
 			sourceFiles.forEach((source, index) => {
 				files++;
 				progressBar.update(index + 1, {
-					file: source.fileName.split("/").pop(),
+					file: source.split("/").pop(),
 				});
 
-				// Extract from JSX elements
-				for (const { selector, sourceKey } of jsxSelectors) {
-					query(source, selector).forEach((attr) => {
-						query(attr, jsxLiteralSelector).forEach((node) => {
-							addTranslation(node, sourceKey);
-						});
-					});
-				}
-
-				// Extract from component prop defaults
-				for (const { selector, sourceKey } of propDefaultSelectors) {
-					query(source, selector).forEach((binding) => {
-						query(binding, literalSelector).forEach((node) => {
-							addTranslation(node, sourceKey);
-						});
-					});
-				}
-
-				// Extract from function calls
-				for (const { selector, sourceKey } of functionSelectors) {
-					query(source, selector).forEach((node) => {
-						addTranslation(node, sourceKey);
-					});
-				}
-
-				// Extract from object method calls
-				for (const { selector, sourceKey } of objectSelectors) {
-					query(source, selector).forEach((node) => {
-						addTranslation(node, sourceKey);
+				try {
+					for (const { text, sourceKey } of extractTranslations({
+						code: fs.readFileSync(source, "utf-8"),
+						filename: source,
+						sources,
+					})) {
+						addTranslation(text, sourceKey);
+					}
+				} catch (cause) {
+					throw new Error(`Failed to extract translations from ${source}`, {
+						cause,
 					});
 				}
 			});
@@ -342,15 +294,14 @@ export const tx = ({
 	locales.forEach((locale) => {
 		const target = `${output}/${locale}.${format}`;
 
-		let current: Record<string, TranslationSchema.Type> = {};
+		let current: tx.LocaleTranslations = {};
 		try {
 			const fileContent = fs.readFileSync(target, {
 				encoding: "utf-8",
 			});
-			current = (format === "json" ? JSON.parse(fileContent) : parse(fileContent)) as Record<
-				string,
-				any
-			>;
+			current = (
+				format === "json" ? JSON.parse(fileContent) : parse(fileContent)
+			) as tx.LocaleTranslations;
 		} catch (_) {
 			// Noop
 		}

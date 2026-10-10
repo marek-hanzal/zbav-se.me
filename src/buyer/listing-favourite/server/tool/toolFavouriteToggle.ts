@@ -2,7 +2,6 @@ import { tool } from "@openai/agents";
 import { z } from "zod";
 import { favouriteToggleFn } from "~/buyer/listing-favourite/fn/favouriteToggleFn";
 import { getRootLogger } from "~/common/log/getRootLogger";
-import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 
 const logger = getRootLogger([
 	"tool",
@@ -35,7 +34,7 @@ Toggles concrete listing as favourite/unfavourite.
 - You can mark multiple listings as favourite.
     `.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(InputSchema),
+	parameters: InputSchema,
 	async execute(input) {
 		logger.trace("toolFavouriteToggle", {
 			input,

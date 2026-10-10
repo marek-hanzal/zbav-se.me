@@ -15,7 +15,7 @@ describe("checkRestrictionFx", () => {
 	it("accepts only equal or stronger requested restriction levels across the whole matrix", async () => {
 		for (const [levelIndex, level] of restrictionLevels.entries()) {
 			for (const [requestIndex, request] of restrictionLevels.entries()) {
-				const result = await Effect.either(
+				const result = await Effect.result(
 					checkRestrictionFx({
 						level,
 						request,
@@ -23,13 +23,13 @@ describe("checkRestrictionFx", () => {
 				).pipe(Effect.runPromise);
 
 				if (requestIndex >= levelIndex) {
-					expect(result._tag).toBe("Right");
+					expect(result._tag).toBe("Success");
 				} else {
-					expect(result._tag).toBe("Left");
+					expect(result._tag).toBe("Failure");
 
-					if (result._tag === "Left") {
-						expect(result.left._tag).toBe("InvalidRequestErrorFx");
-						expect(result.left.message).toContain(
+					if (result._tag === "Failure") {
+						expect(result.failure._tag).toBe("InvalidRequestErrorFx");
+						expect(result.failure.message).toContain(
 							`Cannot use lower restriction level [${request}] than [${level}]`,
 						);
 					}

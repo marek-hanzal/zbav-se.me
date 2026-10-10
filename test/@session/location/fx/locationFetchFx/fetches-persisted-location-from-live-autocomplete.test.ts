@@ -32,7 +32,7 @@ describe("locationFetchFx", () => {
 			expect(fetched.lang).toBe("cs");
 			expect(fetched.address).toBeTruthy();
 
-			const missing = yield* Effect.either(
+			const missing = yield* Effect.result(
 				locationFetchFx({
 					where: {
 						id: "missing-location-id",

@@ -12,7 +12,7 @@ import { listingAttrEnumMultiPatchFx } from "../server/fx/listingAttrEnumMultiPa
 import { ListingAttrEnumMultiPatchSchema } from "../server/schema/ListingAttrEnumMultiPatchSchema";
 
 export namespace listingAttrEnumMultiPatchFn {
-	export type Error = Effect.Effect.Error<listingAttrEnumMultiPatchFx>;
+	export type Error = Effect.Error<listingAttrEnumMultiPatchFx>;
 }
 
 export const listingAttrEnumMultiPatchFn = createServerFn()
@@ -21,7 +21,7 @@ export const listingAttrEnumMultiPatchFn = createServerFn()
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(ListingAttrEnumMultiPatchSchema)
+	.validator(ListingAttrEnumMultiPatchSchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

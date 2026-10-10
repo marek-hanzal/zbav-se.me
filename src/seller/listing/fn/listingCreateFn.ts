@@ -14,7 +14,7 @@ import { withUploadConfigFx } from "~/user/upload/server/context/withUploadConfi
 import { withUploadConfigEnv } from "~/user/upload/server/env/withUploadConfigEnv";
 
 export namespace listingCreateFn {
-	export type Error = Effect.Effect.Error<listingCreateFx>;
+	export type Error = Effect.Error<listingCreateFx>;
 }
 
 export const listingCreateFn = createServerFn({
@@ -25,7 +25,7 @@ export const listingCreateFn = createServerFn({
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(ListingCreateSchema)
+	.validator(ListingCreateSchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

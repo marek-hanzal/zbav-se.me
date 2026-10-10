@@ -363,7 +363,7 @@ export const buildSeedListingPlansFx = Effect.fn("buildSeedListingPlansFx")(func
 		}
 
 		if ((index + 1) % PLAN_YIELD_INTERVAL === 0) {
-			yield* Effect.yieldNow();
+			yield* Effect.yieldNow;
 		}
 	}
 

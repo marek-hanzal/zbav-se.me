@@ -57,7 +57,7 @@ describe("field read model", () => {
 					},
 				],
 			});
-			const missingField = yield* Effect.either(
+			const missingField = yield* Effect.result(
 				fieldFetchFx({
 					scope: {},
 					where: {

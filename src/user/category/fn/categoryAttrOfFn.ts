@@ -10,7 +10,7 @@ import { categoryAttrOfFx } from "../server/fx/categoryAttrOfFx";
 import { CategoryAttrOfSchema } from "../server/schema/CategoryAttrOfSchema";
 
 export namespace categoryAttrOfFn {
-	export type Error = Effect.Effect.Error<categoryAttrOfFx>;
+	export type Error = Effect.Error<categoryAttrOfFx>;
 }
 
 export const categoryAttrOfFn = createServerFn()
@@ -18,7 +18,7 @@ export const categoryAttrOfFn = createServerFn()
 		withLogMiddleware,
 		withDatabaseMiddleware,
 	])
-	.inputValidator(
+	.validator(
 		z
 			.looseObject({
 				categoryId: z.string().min(1),

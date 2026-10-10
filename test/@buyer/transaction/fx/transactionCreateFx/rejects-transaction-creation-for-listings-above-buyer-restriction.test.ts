@@ -18,7 +18,7 @@ describe("transactionCreateFx", () => {
 				restriction: "adult",
 			});
 
-			const result = yield* Effect.either(
+			const result = yield* Effect.result(
 				transactionCreateFx({
 					userId: buyer.id,
 					listingId: listing.id,

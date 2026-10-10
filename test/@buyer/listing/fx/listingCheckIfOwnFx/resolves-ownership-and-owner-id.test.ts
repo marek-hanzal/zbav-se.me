@@ -16,7 +16,7 @@ describe("listingCheckIfOwnFx", () => {
 
 			const listing = yield* createListingFx(users.seller.id);
 
-			const missing = yield* Effect.either(
+			const missing = yield* Effect.result(
 				listingCheckIfOwnFx({
 					userId: users.buyer.id,
 					listingId: "missing-listing-id",
@@ -25,7 +25,7 @@ describe("listingCheckIfOwnFx", () => {
 			);
 			expectErrorFx(missing);
 
-			const own = yield* Effect.either(
+			const own = yield* Effect.result(
 				listingCheckIfOwnFx({
 					userId: users.seller.id,
 					listingId: listing.id,

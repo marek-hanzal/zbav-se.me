@@ -12,7 +12,7 @@ import { categoryCountFx } from "~/user/category/server/fx/categoryCountFx";
 import { CategoryCountQuerySchema } from "~/user/category/server/schema/CategoryCountQuerySchema";
 
 export namespace categoryCountFn {
-	export type Error = Effect.Effect.Error<categoryCountFx>;
+	export type Error = Effect.Error<categoryCountFx>;
 }
 
 export const categoryCountFn = createServerFn()
@@ -21,7 +21,7 @@ export const categoryCountFn = createServerFn()
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(CategoryCountQuerySchema)
+	.validator(CategoryCountQuerySchema)
 	.handler(async ({ data, context: { database, rootLogger, user }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

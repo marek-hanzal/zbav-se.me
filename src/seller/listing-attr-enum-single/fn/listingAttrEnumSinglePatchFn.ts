@@ -12,7 +12,7 @@ import { listingAttrEnumSinglePatchFx } from "../server/fx/listingAttrEnumSingle
 import { ListingAttrEnumSinglePatchSchema } from "../server/schema/ListingAttrEnumSinglePatchSchema";
 
 export namespace listingAttrEnumSinglePatchFn {
-	export type Error = Effect.Effect.Error<listingAttrEnumSinglePatchFx>;
+	export type Error = Effect.Error<listingAttrEnumSinglePatchFx>;
 }
 
 export const listingAttrEnumSinglePatchFn = createServerFn()
@@ -21,7 +21,7 @@ export const listingAttrEnumSinglePatchFn = createServerFn()
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(ListingAttrEnumSinglePatchSchema)
+	.validator(ListingAttrEnumSinglePatchSchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

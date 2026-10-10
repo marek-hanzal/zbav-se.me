@@ -19,7 +19,7 @@ describe("buyer listing restriction fetch scope", () => {
 				slugPrefix: "buyer-fetch-restriction",
 			});
 
-			const defaultRestrictedCategoryFetch = yield* Effect.either(
+			const defaultRestrictedCategoryFetch = yield* Effect.result(
 				listingFetchFx({
 					userId: users.buyer.id,
 					scope: {},
@@ -28,7 +28,7 @@ describe("buyer listing restriction fetch scope", () => {
 					},
 				}),
 			);
-			const defaultRestrictedListingFetch = yield* Effect.either(
+			const defaultRestrictedListingFetch = yield* Effect.result(
 				listingFetchFx({
 					userId: users.buyer.id,
 					scope: {},
@@ -65,7 +65,7 @@ describe("buyer listing restriction fetch scope", () => {
 					id: fixtures.adultListingRestriction.id,
 				},
 			});
-			const adultRestrictedCategoryFetch = yield* Effect.either(
+			const adultRestrictedCategoryFetch = yield* Effect.result(
 				listingFetchFx({
 					userId: users.buyer.id,
 					scope: {},
@@ -74,7 +74,7 @@ describe("buyer listing restriction fetch scope", () => {
 					},
 				}),
 			);
-			const adultRestrictedListingFetch = yield* Effect.either(
+			const adultRestrictedListingFetch = yield* Effect.result(
 				listingFetchFx({
 					userId: users.buyer.id,
 					scope: {},

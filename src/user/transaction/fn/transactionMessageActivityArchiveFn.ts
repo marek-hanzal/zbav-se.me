@@ -21,7 +21,7 @@ const InputSchema = z
 	.strip();
 
 export namespace transactionMessageActivityArchiveFn {
-	export type Error = Effect.Effect.Error<transactionMessageActivityArchiveFx>;
+	export type Error = Effect.Error<transactionMessageActivityArchiveFx>;
 }
 
 export const transactionMessageActivityArchiveFn = createServerFn({
@@ -32,7 +32,7 @@ export const transactionMessageActivityArchiveFn = createServerFn({
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(InputSchema)
+	.validator(InputSchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

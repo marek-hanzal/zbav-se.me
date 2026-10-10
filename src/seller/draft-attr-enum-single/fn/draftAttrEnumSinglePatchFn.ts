@@ -13,7 +13,7 @@ import { draftAttrEnumSinglePatchFx } from "../server/fx/draftAttrEnumSinglePatc
 import { DraftAttrEnumSinglePatchSchema } from "../server/schema/DraftAttrEnumSinglePatchSchema";
 
 export namespace draftAttrEnumSinglePatchFn {
-	export type Error = Effect.Effect.Error<draftAttrOfFx>;
+	export type Error = Effect.Error<draftAttrOfFx>;
 }
 
 export const draftAttrEnumSinglePatchFn = createServerFn()
@@ -22,7 +22,7 @@ export const draftAttrEnumSinglePatchFn = createServerFn()
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(DraftAttrEnumSinglePatchSchema)
+	.validator(DraftAttrEnumSinglePatchSchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

@@ -33,7 +33,7 @@ describe("transactionEntry read model", () => {
 				},
 			});
 
-			const outsiderFetch = yield* Effect.either(
+			const outsiderFetch = yield* Effect.result(
 				transactionEntryFetchFx({
 					userId: outsider.id,
 					where: {

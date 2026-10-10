@@ -3,7 +3,6 @@ import { stringify } from "csv-stringify/sync";
 import { z } from "zod";
 import { listingCollectionFn } from "~/buyer/listing/fn/listingCollectionFn";
 import { getRootLogger } from "~/common/log/getRootLogger";
-import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 import { ListingQuerySchema } from "../schema/ListingQuerySchema";
 import { ListingWhereSchema } from "../schema/ListingWhereSchema";
 
@@ -58,7 +57,7 @@ Hint:
 - for sort by 'geo' you must provide 'meta.locationId'
     `.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(InputSchema),
+	parameters: InputSchema,
 	async execute(input) {
 		logger.trace("toolListingBrowse", {
 			input,

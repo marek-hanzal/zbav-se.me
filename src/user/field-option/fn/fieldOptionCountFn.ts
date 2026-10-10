@@ -8,7 +8,7 @@ import { fieldOptionCountFx } from "~/user/field-option/server/fx/fieldOptionCou
 import { FieldOptionCountQuerySchema } from "~/user/field-option/server/schema/FieldOptionCountQuerySchema";
 
 export namespace fieldOptionCountFn {
-	export type Error = Effect.Effect.Error<fieldOptionCountFx>;
+	export type Error = Effect.Error<fieldOptionCountFx>;
 }
 
 export const fieldOptionCountFn = createServerFn()
@@ -16,7 +16,7 @@ export const fieldOptionCountFn = createServerFn()
 		withLogMiddleware,
 		withDatabaseMiddleware,
 	])
-	.inputValidator(FieldOptionCountQuerySchema)
+	.validator(FieldOptionCountQuerySchema)
 	.handler(async ({ data, context: { database, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

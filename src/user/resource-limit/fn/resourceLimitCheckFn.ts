@@ -12,7 +12,7 @@ import { ResourceLimitCheckSchema } from "../server/schema/ResourceLimitCheckSch
 import { ResourceLimitInfoSchema } from "../server/schema/ResourceLimitInfoSchema";
 
 export namespace resourceLimitCheckFn {
-	export type Error = Effect.Effect.Error<resourceLimitCheckFx>;
+	export type Error = Effect.Error<resourceLimitCheckFx>;
 }
 
 export const resourceLimitCheckFn = createServerFn()
@@ -21,7 +21,7 @@ export const resourceLimitCheckFn = createServerFn()
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(ResourceLimitCheckSchema)
+	.validator(ResourceLimitCheckSchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

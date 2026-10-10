@@ -11,7 +11,7 @@ import { agentThreadCountFx } from "~/user/agent/server/fx/agentThreadCountFx";
 import { AgentThreadCountQuerySchema } from "~/user/agent/server/schema/AgentThreadCountQuerySchema";
 
 export namespace agentThreadCountFn {
-	export type Error = Effect.Effect.Error<agentThreadCountFx>;
+	export type Error = Effect.Error<agentThreadCountFx>;
 }
 
 export const agentThreadCountFn = createServerFn()
@@ -20,7 +20,7 @@ export const agentThreadCountFn = createServerFn()
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(AgentThreadCountQuerySchema)
+	.validator(AgentThreadCountQuerySchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

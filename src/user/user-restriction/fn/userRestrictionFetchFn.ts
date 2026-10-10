@@ -12,7 +12,7 @@ import { UserRestrictionQuerySchema } from "~/user/user-restriction/server/schem
 import { UserRestrictionSchema } from "~/user/user-restriction/server/schema/UserRestrictionSchema";
 
 export namespace userRestrictionFetchFn {
-	export type Error = Effect.Effect.Error<userRestrictionFetchFx>;
+	export type Error = Effect.Error<userRestrictionFetchFx>;
 }
 
 export const userRestrictionFetchFn = createServerFn()
@@ -21,7 +21,7 @@ export const userRestrictionFetchFn = createServerFn()
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(UserRestrictionQuerySchema)
+	.validator(UserRestrictionQuerySchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

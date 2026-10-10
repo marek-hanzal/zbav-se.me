@@ -43,7 +43,7 @@ describe("seller listing transaction foreign isolation", () => {
 					],
 				},
 			});
-			const foreignFetch = yield* Effect.either(
+			const foreignFetch = yield* Effect.result(
 				listingFetchFx({
 					userId: seller.id,
 					scope: {

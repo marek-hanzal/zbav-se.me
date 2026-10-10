@@ -1,7 +1,6 @@
 import { tool } from "@openai/agents-core";
 import { z } from "zod";
 import { getRootLogger } from "~/common/log/getRootLogger";
-import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 import { listingFetchFn } from "../../fn/listingFetchFn";
 
 const logger = getRootLogger([
@@ -24,7 +23,7 @@ Fetch seller listing detail based on 'listingId'.
 - Don't invent your own 'listingId'
 	`.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(InputSchema),
+	parameters: InputSchema,
 	async execute(input) {
 		logger.trace("toolListingDetail", {
 			input,

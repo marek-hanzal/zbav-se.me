@@ -10,7 +10,7 @@ import { FieldCreateSchema } from "~/user/field/server/schema/FieldCreateSchema"
 import { FieldSchema } from "~/user/field/server/schema/FieldSchema";
 
 export namespace fieldCreateFn {
-	export type Error = Effect.Effect.Error<fieldCreateFx>;
+	export type Error = Effect.Error<fieldCreateFx>;
 }
 
 export const fieldCreateFn = createServerFn({
@@ -20,7 +20,7 @@ export const fieldCreateFn = createServerFn({
 		withLogMiddleware,
 		withDatabaseMiddleware,
 	])
-	.inputValidator(FieldCreateSchema)
+	.validator(FieldCreateSchema)
 	.handler(async ({ data, context: { database, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

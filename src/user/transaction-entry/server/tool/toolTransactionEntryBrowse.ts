@@ -3,7 +3,6 @@ import { stringify } from "csv-stringify/sync";
 import { match } from "ts-pattern";
 import { z } from "zod";
 import { getRootLogger } from "~/common/log/getRootLogger";
-import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 import { transactionEntryCollectionFn } from "~/user/transaction-entry/fn/transactionEntryCollectionFn";
 import { transactionEntryGalleryFetchFn } from "~/user/transaction-entry/fn/transactionEntryGalleryFetchFn";
 
@@ -43,7 +42,7 @@ Status explanation:
 - status-interest: Seller must react, there is waiting buyer (accept/reject a trade)
     `.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(InputSchema),
+	parameters: InputSchema,
 	async execute(input) {
 		logger.trace("toolTransactionEntryBrowse", {
 			input,

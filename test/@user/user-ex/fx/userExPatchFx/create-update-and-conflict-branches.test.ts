@@ -99,18 +99,18 @@ describe("userExPatchFx", () => {
 							patch: {
 								locationId: null,
 							},
-						}).pipe(runtime, Effect.either, Effect.runPromise),
+						}).pipe(runtime, Effect.result, Effect.runPromise),
 						userExPatchFx({
 							userId: users.buyer.id,
 							patch: {
 								locationId: null,
 							},
-						}).pipe(secondRuntime, Effect.either, Effect.runPromise),
+						}).pipe(secondRuntime, Effect.result, Effect.runPromise),
 					]),
 				);
 
-				const conflicts = parallel.filter((item) => item._tag === "Left");
-				const successes = parallel.filter((item) => item._tag === "Right");
+				const conflicts = parallel.filter((item) => item._tag === "Failure");
+				const successes = parallel.filter((item) => item._tag === "Success");
 				const conflict = conflicts[0];
 
 				expect(successes.length).toBeGreaterThan(0);

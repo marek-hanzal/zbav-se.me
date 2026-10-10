@@ -14,7 +14,7 @@ import { withLocationConfigFx } from "../server/context/withLocationConfigFx";
 import { withLocationConfigEnv } from "../server/env/withLocationConfigEnv";
 
 export namespace locationAutocompleteFn {
-	export type Error = Effect.Effect.Error<locationAutocompleteFx>;
+	export type Error = Effect.Error<locationAutocompleteFx>;
 }
 
 export const locationAutocompleteFn = createServerFn()
@@ -23,7 +23,7 @@ export const locationAutocompleteFn = createServerFn()
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(LocationAutocompleteSchema)
+	.validator(LocationAutocompleteSchema)
 	.handler(async ({ data, context: { database, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

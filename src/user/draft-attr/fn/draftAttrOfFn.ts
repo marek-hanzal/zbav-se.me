@@ -10,7 +10,7 @@ import { draftAttrOfFx } from "../server/fx/draftAttrOfFx";
 import { DraftAttrOfSchema } from "../server/schema/DraftAttrOfSchema";
 
 export namespace draftAttrOfFn {
-	export type Error = Effect.Effect.Error<draftAttrOfFx>;
+	export type Error = Effect.Error<draftAttrOfFx>;
 }
 
 export const draftAttrOfFn = createServerFn()
@@ -18,7 +18,7 @@ export const draftAttrOfFn = createServerFn()
 		withLogMiddleware,
 		withDatabaseMiddleware,
 	])
-	.inputValidator(
+	.validator(
 		z
 			.looseObject({
 				draftId: z.string().min(1),

@@ -16,7 +16,7 @@ const rateLimitError = new RateLimitErrorFx({
 	retryAt: "2026-05-21T10:00:00.000Z",
 });
 
-const runFiberFailure = async () => {
+const runRejectedError = async () => {
 	try {
 		await Effect.fail(rateLimitError).pipe(Effect.runPromise);
 	} catch (error) {
@@ -27,15 +27,16 @@ const runFiberFailure = async () => {
 };
 
 describe("TaggedErrorSerializationAdapter", () => {
-	test("serializes tagged errors wrapped by Effect FiberFailure", async () => {
-		const fiberFailure = await runFiberFailure();
+	test("serializes tagged errors rejected by Effect.runPromise", async () => {
+		const rejectedError = await runRejectedError();
 
-		expect(toTaggedError(fiberFailure)).toBe(rateLimitError);
-		expect(TaggedErrorSerializationAdapter.test(fiberFailure)).toBe(true);
-		if (!TaggedErrorSerializationAdapter.test(fiberFailure)) {
-			throw new Error("Expected FiberFailure to be serializable");
+		expect(rejectedError).toBe(rateLimitError);
+		expect(toTaggedError(rejectedError)).toBe(rateLimitError);
+		expect(TaggedErrorSerializationAdapter.test(rejectedError)).toBe(true);
+		if (!TaggedErrorSerializationAdapter.test(rejectedError)) {
+			throw new Error("Expected the rejected tagged error to be serializable");
 		}
-		expect(TaggedErrorSerializationAdapter.toSerializable(fiberFailure)).toEqual({
+		expect(TaggedErrorSerializationAdapter.toSerializable(rejectedError)).toEqual({
 			message: "Too many magic link requests. Please try again later.",
 			tag: "RateLimitErrorFx",
 		});

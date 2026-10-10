@@ -125,19 +125,16 @@ jobs:
         steps:
             - uses: actions/checkout@v6.0.2
 
-            - name: Setup Node.js
-              uses: actions/setup-node@v6.3.0
+            - name: Setup project toolset
+              uses: jdx/mise-action@v5.1.1
               with:
-                  node-version: "24"
-
-            - name: Setup Bun
-              uses: oven-sh/setup-bun@v2.2.0
+                  version: "2026.10.7"
 
             - name: Install dependencies
-              run: bun install --frozen-lockfile
+              run: argc ci
 
             - name: Build
-              run: bun run build
+              run: argc build
 
             - name: Cache save (app prebuilt)
               uses: actions/cache/save@v5.0.3
@@ -151,6 +148,8 @@ jobs:
         environment: dev
         needs: [build]
         steps:
+            - uses: actions/checkout@v6.0.2
+
             - name: Cache restore (app prebuilt)
               uses: actions/cache/restore@v5.0.3
               with:
@@ -158,13 +157,10 @@ jobs:
                   key: app-${{ github.run_id }}
                   fail-on-cache-miss: true
 
-            - name: Setup Node.js
-              uses: actions/setup-node@v6.3.0
+            - name: Setup project toolset
+              uses: jdx/mise-action@v5.1.1
               with:
-                  node-version: "24"
-
-            - name: Setup Bun
-              uses: oven-sh/setup-bun@v2.2.0
+                  version: "2026.10.7"
 
             - name: Strip assets
               run: rm -rf .vercel/output/static/assets || true
@@ -173,7 +169,7 @@ jobs:
               env:
                   VERCEL_PROJECT_ID: ${{ env.VERCEL_APP_PROJECT_ID }}
               run: |
-                  bunx -y vercel@latest deploy \
+                  vercel deploy \
                     --prebuilt \
                     --prod --yes \
                     --token "$VERCEL_TOKEN"

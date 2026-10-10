@@ -38,7 +38,7 @@ describe("feedCreateFx", () => {
 				name: "Saved finds",
 				query: {},
 			});
-			const duplicate = yield* Effect.either(
+			const duplicate = yield* Effect.result(
 				feedCreateFx({
 					userId: owner.id,
 					type: "search",

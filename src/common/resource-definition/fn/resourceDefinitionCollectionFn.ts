@@ -12,7 +12,7 @@ import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 
 export namespace resourceDefinitionCollectionFn {
-	export type Error = Effect.Effect.Error<resourceDefinitionCollectionFx>;
+	export type Error = Effect.Error<resourceDefinitionCollectionFx>;
 }
 
 export const resourceDefinitionCollectionFn = createServerFn()
@@ -21,7 +21,7 @@ export const resourceDefinitionCollectionFn = createServerFn()
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(ResourceDefinitionQuerySchema)
+	.validator(ResourceDefinitionQuerySchema)
 	.handler(async ({ data, context: { database, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

@@ -10,7 +10,7 @@ import { FieldOptionCreateSchema } from "~/user/field-option/server/schema/Field
 import { FieldOptionSchema } from "~/user/field-option/server/schema/FieldOptionSchema";
 
 export namespace fieldOptionCreateFn {
-	export type Error = Effect.Effect.Error<fieldOptionCreateFx>;
+	export type Error = Effect.Error<fieldOptionCreateFx>;
 }
 
 export const fieldOptionCreateFn = createServerFn({
@@ -20,7 +20,7 @@ export const fieldOptionCreateFn = createServerFn({
 		withLogMiddleware,
 		withDatabaseMiddleware,
 	])
-	.inputValidator(FieldOptionCreateSchema)
+	.validator(FieldOptionCreateSchema)
 	.handler(async ({ data, context: { database, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

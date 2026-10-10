@@ -7,6 +7,8 @@ export interface UploadConfig {
 	cdn: string;
 }
 
-export class UploadConfigFx extends Context.Tag("UploadConfigFx")<UploadConfigFx, UploadConfig>() {
+export class UploadConfigFx extends Context.Service<UploadConfigFx, UploadConfig>()(
+	"UploadConfigFx",
+) {
 	//
 }

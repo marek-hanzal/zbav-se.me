@@ -19,7 +19,7 @@ describe("listingEventRateLimitFx", () => {
 				restriction: "adult",
 			});
 
-			const result = yield* Effect.either(
+			const result = yield* Effect.result(
 				listingEventCreateFx({
 					userId: buyer.id,
 					listingId: listing.id,

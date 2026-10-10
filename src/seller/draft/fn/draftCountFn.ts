@@ -12,7 +12,7 @@ import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 
 export namespace draftCountFn {
-	export type Error = Effect.Effect.Error<draftCountFx>;
+	export type Error = Effect.Error<draftCountFx>;
 }
 
 export const draftCountFn = createServerFn()
@@ -21,7 +21,7 @@ export const draftCountFn = createServerFn()
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(DraftCountQuerySchema)
+	.validator(DraftCountQuerySchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

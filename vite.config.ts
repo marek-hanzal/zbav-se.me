@@ -14,8 +14,8 @@ export default defineConfig(({ mode }) => {
 		base: process.env.VITE_APP_ASSETS,
 		resolve: {
 			alias: {
-				"~": path.resolve(__dirname, "./src"),
-				"@/lib": path.resolve(__dirname, "./lib"),
+				"~": path.resolve(import.meta.dirname, "./src"),
+				"@/lib": path.resolve(import.meta.dirname, "./lib"),
 			},
 		},
 		plugins: [

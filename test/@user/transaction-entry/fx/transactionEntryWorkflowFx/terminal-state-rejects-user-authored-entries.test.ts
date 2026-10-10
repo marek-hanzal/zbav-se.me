@@ -26,7 +26,7 @@ describe("transactionEntry workflow", () => {
 				userId: buyer.id,
 			});
 
-			const sellerText = yield* Effect.either(
+			const sellerText = yield* Effect.result(
 				transactionEntryCreateFx({
 					userId: seller.id,
 					transactionId,
@@ -36,7 +36,7 @@ describe("transactionEntry workflow", () => {
 					},
 				}),
 			);
-			const buyerPersonal = yield* Effect.either(
+			const buyerPersonal = yield* Effect.result(
 				transactionEntryCreateFx({
 					userId: buyer.id,
 					transactionId,

@@ -11,7 +11,7 @@ import { activityCountFx } from "~/user/activity/server/fx/activityCountFx";
 import { ActivityCountQuerySchema } from "~/user/activity/server/schema/ActivityCountQuerySchema";
 
 export namespace activityCountFn {
-	export type Error = Effect.Effect.Error<activityCountFx>;
+	export type Error = Effect.Error<activityCountFx>;
 }
 
 export const activityCountFn = createServerFn()
@@ -20,7 +20,7 @@ export const activityCountFn = createServerFn()
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(ActivityCountQuerySchema)
+	.validator(ActivityCountQuerySchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

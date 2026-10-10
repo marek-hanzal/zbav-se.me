@@ -10,7 +10,7 @@ export const withCron00Fx = Effect.fn("withCron00Fx")(function* () {
 		},
 		{
 			concurrency: 2,
-			mode: "either",
+			mode: "result",
 		},
 	);
 });

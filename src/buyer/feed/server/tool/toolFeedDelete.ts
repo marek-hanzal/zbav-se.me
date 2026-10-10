@@ -2,7 +2,6 @@ import { tool } from "@openai/agents";
 import { EntitySchema } from "@/lib/common/schema";
 import { feedDeleteFn } from "~/buyer/feed/fn/feedDeleteFn";
 import { getRootLogger } from "~/common/log/getRootLogger";
-import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 
 const logger = getRootLogger([
 	"tool",
@@ -22,7 +21,7 @@ Delete single saved listing search selected by a query.
 - Use this tool only if user explicitly asked to do so
     `.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(InputSchema),
+	parameters: InputSchema,
 	async execute(input) {
 		logger.trace("toolFeedDelete", {
 			input,

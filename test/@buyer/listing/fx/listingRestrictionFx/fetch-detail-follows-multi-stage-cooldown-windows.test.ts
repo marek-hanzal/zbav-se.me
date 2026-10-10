@@ -71,7 +71,7 @@ describe("buyer listing restriction fetch flow", () => {
 			);
 			const beforeFirstBoundaryRestricted = yield* atFx(
 				"2026-04-30T10:29:59.999Z",
-				Effect.either(
+				Effect.result(
 					listingFetchFx({
 						userId: users.buyer.id,
 						scope: {},
@@ -93,7 +93,7 @@ describe("buyer listing restriction fetch flow", () => {
 			);
 			const afterReturnToNoneAdult = yield* atFx(
 				"2026-04-30T11:30:00.000Z",
-				Effect.either(
+				Effect.result(
 					listingFetchFx({
 						userId: users.buyer.id,
 						scope: {},
@@ -105,7 +105,7 @@ describe("buyer listing restriction fetch flow", () => {
 			);
 			const afterReturnToNoneRestricted = yield* atFx(
 				"2026-04-30T11:30:00.000Z",
-				Effect.either(
+				Effect.result(
 					listingFetchFx({
 						userId: users.buyer.id,
 						scope: {},

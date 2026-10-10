@@ -20,7 +20,7 @@ describe("transactionAcceptFx", () => {
 				buyerId: buyer.id,
 			});
 
-			const result = yield* Effect.either(
+			const result = yield* Effect.result(
 				transactionAcceptFx({
 					transactionId,
 					userId: seller.id,

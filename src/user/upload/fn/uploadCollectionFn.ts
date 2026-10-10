@@ -12,7 +12,7 @@ import { UploadQuerySchema } from "../server/schema/UploadQuerySchema";
 import { UploadSchema } from "../server/schema/UploadSchema";
 
 export namespace uploadCollectionFn {
-	export type Error = Effect.Effect.Error<uploadCollectionFx>;
+	export type Error = Effect.Error<uploadCollectionFx>;
 }
 
 export const uploadCollectionFn = createServerFn()
@@ -21,7 +21,7 @@ export const uploadCollectionFn = createServerFn()
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(UploadQuerySchema)
+	.validator(UploadQuerySchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

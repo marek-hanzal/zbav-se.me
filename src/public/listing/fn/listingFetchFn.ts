@@ -11,7 +11,7 @@ import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddlewa
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 
 export namespace listingFetchFn {
-	export type Error = Effect.Effect.Error<listingFetchFx>;
+	export type Error = Effect.Error<listingFetchFx>;
 }
 
 export const listingFetchFn = createServerFn()
@@ -19,7 +19,7 @@ export const listingFetchFn = createServerFn()
 		withLogMiddleware,
 		withDatabaseMiddleware,
 	])
-	.inputValidator(ListingQuerySchema)
+	.validator(ListingQuerySchema)
 	.handler(async ({ data, context: { database, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

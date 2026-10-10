@@ -38,7 +38,7 @@ describe("transactionEntry workflow", () => {
 			expect(sellerPackage.kind).toBe("package");
 			expect(sellerPackage.direction).toBe("out");
 
-			const buyerPackage = yield* Effect.either(
+			const buyerPackage = yield* Effect.result(
 				transactionEntryCreateFx({
 					userId: buyer.id,
 					transactionId: openScenario.transactionId,
@@ -50,7 +50,7 @@ describe("transactionEntry workflow", () => {
 				}),
 			);
 
-			const resolvedPackage = yield* Effect.either(
+			const resolvedPackage = yield* Effect.result(
 				transactionEntryCreateFx({
 					userId: seller.id,
 					transactionId: resolvedScenario.transactionId,

@@ -146,7 +146,7 @@ const insertChunkedRowsFx = Effect.fn("insertChunkedRowsFx")(function* <
 			});
 		}
 
-		yield* Effect.yieldNow();
+		yield* Effect.yieldNow;
 	}
 });
 
@@ -324,7 +324,7 @@ export const listingSeedPublishFx = Effect.fn("listingSeedPublishFx")(function* 
 		}
 
 		if ((planIndex + 1) % PUBLISH_YIELD_INTERVAL === 0) {
-			yield* Effect.yieldNow();
+			yield* Effect.yieldNow;
 		}
 	}
 

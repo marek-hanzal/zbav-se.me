@@ -12,9 +12,9 @@ export interface TransactionContext {
 	extend: number;
 }
 
-export class TransactionContextFx extends Context.Tag("TransactionContextFx")<
+export class TransactionContextFx extends Context.Service<
 	TransactionContextFx,
 	TransactionContext
->() {
+>()("TransactionContextFx") {
 	//
 }

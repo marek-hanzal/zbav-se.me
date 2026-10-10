@@ -27,7 +27,7 @@ describe("transactionSuccessFx (buyer)", () => {
 					.executeTakeFirstOrThrow(),
 			);
 
-			const result = yield* Effect.either(
+			const result = yield* Effect.result(
 				transactionSuccessFx({
 					transactionId,
 					userId: seller.id,

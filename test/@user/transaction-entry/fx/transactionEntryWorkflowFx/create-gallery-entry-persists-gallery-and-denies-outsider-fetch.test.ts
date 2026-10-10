@@ -134,7 +134,7 @@ describe("transactionEntry workflow", () => {
 			]);
 			expect(sellerGallery.id).toBe(entry.payload.galleryId);
 
-			const outsiderView = yield* Effect.either(
+			const outsiderView = yield* Effect.result(
 				transactionEntryFetchFx({
 					userId: outsider.id,
 					where: {
@@ -142,7 +142,7 @@ describe("transactionEntry workflow", () => {
 					},
 				}),
 			);
-			const outsiderGallery = yield* Effect.either(
+			const outsiderGallery = yield* Effect.result(
 				transactionEntryGalleryFetchFx({
 					userId: outsider.id,
 					where: {

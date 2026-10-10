@@ -10,7 +10,7 @@ import { activityArchiveFx } from "~/user/activity/server/fx/activityArchiveFx";
 import { ActivityQuerySchema } from "~/user/activity/server/schema/ActivityQuerySchema";
 
 export namespace activityArchiveFn {
-	export type Error = Effect.Effect.Error<activityArchiveFx>;
+	export type Error = Effect.Error<activityArchiveFx>;
 }
 
 export const activityArchiveFn = createServerFn({
@@ -21,7 +21,7 @@ export const activityArchiveFn = createServerFn({
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(ActivityQuerySchema)
+	.validator(ActivityQuerySchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

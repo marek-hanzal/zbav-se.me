@@ -12,7 +12,7 @@ import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 
 export namespace flagToggleFn {
-	export type Error = Effect.Effect.Error<flagToggleFx>;
+	export type Error = Effect.Error<flagToggleFx>;
 }
 
 export const flagToggleFn = createServerFn({
@@ -23,7 +23,7 @@ export const flagToggleFn = createServerFn({
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(FlagToggleSchema)
+	.validator(FlagToggleSchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

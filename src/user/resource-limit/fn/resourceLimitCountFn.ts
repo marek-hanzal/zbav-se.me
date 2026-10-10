@@ -12,7 +12,7 @@ import { resourceLimitCountFx } from "~/user/resource-limit/server/fx/resourceLi
 import { ResourceLimitCountQuerySchema } from "~/user/resource-limit/server/schema/ResourceLimitCountQuerySchema";
 
 export namespace resourceLimitCountFn {
-	export type Error = Effect.Effect.Error<resourceLimitCountFx>;
+	export type Error = Effect.Error<resourceLimitCountFx>;
 }
 
 export const resourceLimitCountFn = createServerFn()
@@ -21,7 +21,7 @@ export const resourceLimitCountFn = createServerFn()
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(ResourceLimitCountQuerySchema)
+	.validator(ResourceLimitCountQuerySchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

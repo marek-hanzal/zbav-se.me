@@ -8,7 +8,7 @@ export namespace withCategoryMissSelectFx {
 		sort?: CategoryMissSortSchema.Type[];
 	}
 
-	export type Select = Effect.Effect.Success<ReturnType<typeof withCategoryMissSelectFx>>;
+	export type Select = Effect.Success<ReturnType<typeof withCategoryMissSelectFx>>;
 }
 
 export const withCategoryMissSelectFx = Effect.fn("withCategoryMissSelectFx")(function* ({

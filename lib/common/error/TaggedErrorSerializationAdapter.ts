@@ -1,5 +1,5 @@
 import { createSerializationAdapter } from "@tanstack/react-router";
-import { Cause, Option, Predicate, Runtime } from "effect";
+import { Predicate } from "effect";
 import { TaggedError } from "./TaggedError";
 
 export namespace TaggedErrorSerializationAdapter {
@@ -7,7 +7,7 @@ export namespace TaggedErrorSerializationAdapter {
 		readonly _tag: string;
 	}
 
-	export type Input = Runtime.FiberFailure | TaggedError;
+	export type Input = TaggedError;
 
 	export interface Wire {
 		message: string;
@@ -26,19 +26,7 @@ const isTaggedError = (value: unknown): value is TaggedErrorSerializationAdapter
 export const toTaggedError = (
 	value: unknown,
 ): TaggedErrorSerializationAdapter.TaggedError | undefined => {
-	if (isTaggedError(value)) {
-		return value;
-	}
-
-	if (!Runtime.isFiberFailure(value)) {
-		return undefined;
-	}
-
-	const failure = Cause.failureOption(value[Runtime.FiberFailureCauseId]);
-
-	if (Option.isSome(failure) && isTaggedError(failure.value)) {
-		return failure.value;
-	}
+	return isTaggedError(value) ? value : undefined;
 };
 
 export const TaggedErrorSerializationAdapter = createSerializationAdapter<

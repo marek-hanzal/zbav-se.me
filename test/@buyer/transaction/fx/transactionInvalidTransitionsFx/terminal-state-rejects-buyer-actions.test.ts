@@ -35,25 +35,25 @@ describe("buyer transaction invalid transitions", () => {
 					.executeTakeFirstOrThrow(),
 			);
 
-			const rejectResult = yield* Effect.either(
+			const rejectResult = yield* Effect.result(
 				transactionRejectFx({
 					transactionId,
 					userId: buyer.id,
 				}),
 			);
-			const disputeResult = yield* Effect.either(
+			const disputeResult = yield* Effect.result(
 				transactionDisputeFx({
 					transactionId,
 					userId: buyer.id,
 				}),
 			);
-			const successResult = yield* Effect.either(
+			const successResult = yield* Effect.result(
 				transactionSuccessFx({
 					transactionId,
 					userId: buyer.id,
 				}),
 			);
-			const closeAgainResult = yield* Effect.either(
+			const closeAgainResult = yield* Effect.result(
 				transactionCloseFx({
 					transactionId,
 					userId: buyer.id,

@@ -6,7 +6,6 @@ import { ListingMetaSchema } from "~/buyer/listing/server/schema/ListingMetaSche
 import { ListingSortSchema } from "~/buyer/listing/server/schema/ListingSortSchema";
 import { ListingWhereSchema } from "~/buyer/listing/server/schema/ListingWhereSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
-import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 
 const logger = getRootLogger([
 	"tool",
@@ -54,7 +53,7 @@ Hint:
 - Pay attention to available fields in 'query' field, also in 'query.meta'
     `.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(InputSchema),
+	parameters: InputSchema,
 	async execute(input) {
 		logger.trace("toolFeedCreate", {
 			data: input,

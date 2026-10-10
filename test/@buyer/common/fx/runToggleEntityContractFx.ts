@@ -5,7 +5,7 @@ import { runWithTestRuntime } from "~/test/common/fx/runWithTestRuntime";
 import { testabase } from "~/test/testabase";
 
 namespace runToggleEntityContractFx {
-	export type BaseContext = Effect.Effect.Success<ReturnType<typeof createToggleBaseContextFx>>;
+	export type BaseContext = Effect.Success<ReturnType<typeof createToggleBaseContextFx>>;
 
 	export interface ToggleContext<Extra> extends BaseContext {
 		extra: Extra;

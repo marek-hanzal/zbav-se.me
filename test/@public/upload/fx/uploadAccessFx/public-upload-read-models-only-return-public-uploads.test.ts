@@ -41,7 +41,7 @@ describe("public upload access", () => {
 			const collection = yield* uploadCollectionFx({
 				scope: {},
 			});
-			const privateFetch = yield* Effect.either(
+			const privateFetch = yield* Effect.result(
 				uploadFetchFx({
 					where: {
 						id: privateUpload.id,

@@ -39,65 +39,58 @@ export const favouriteToggleFx = Effect.fn("favouriteToggleFx")(function* ({
 				message: "You cannot add your own listing to favourites",
 			});
 
-			yield* Effect.if(toggle, {
-				onTrue() {
-					return Effect.gen(function* () {
-						yield* favouriteCreateFx({
-							feedId,
-							listingId,
-							userId,
-						});
+			if (toggle) {
+				yield* favouriteCreateFx({
+					feedId,
+					listingId,
+					userId,
+				});
 
-						yield* listingEventCreateFx({
-							userId,
-							listingId,
-							event: "listing.favourite",
-							checkVisibility: false,
-						}).pipe(Effect.ignore);
+				yield* listingEventCreateFx({
+					userId,
+					listingId,
+					event: "listing.favourite",
+					checkVisibility: false,
+				}).pipe(Effect.ignore);
 
-						yield* activityCreateFx({
-							userId: listingUserId,
-							reference: [
-								listingId,
-							],
-							family: "reaction",
-							type: "listing.favourite",
-							payload: {
-								listingId,
-							},
-							priority: "common",
-						});
-					});
-				},
-				onFalse() {
-					return Effect.gen(function* () {
-						yield* favouriteDeleteFx({
-							listingId,
-							userId,
-						});
+				yield* activityCreateFx({
+					userId: listingUserId,
+					reference: [
+						listingId,
+					],
+					family: "reaction",
+					type: "listing.favourite",
+					payload: {
+						listingId,
+					},
+					priority: "common",
+				});
+			} else {
+				yield* favouriteDeleteFx({
+					listingId,
+					userId,
+				});
 
-						yield* listingEventCreateFx({
-							userId,
-							listingId,
-							event: "unfavourite",
-							checkVisibility: false,
-						}).pipe(Effect.ignore);
+				yield* listingEventCreateFx({
+					userId,
+					listingId,
+					event: "unfavourite",
+					checkVisibility: false,
+				}).pipe(Effect.ignore);
 
-						yield* activityCreateFx({
-							userId: listingUserId,
-							reference: [
-								listingId,
-							],
-							family: "reaction",
-							type: "unfavourite",
-							payload: {
-								listingId,
-							},
-							priority: "common",
-						});
-					});
-				},
-			});
+				yield* activityCreateFx({
+					userId: listingUserId,
+					reference: [
+						listingId,
+					],
+					family: "reaction",
+					type: "unfavourite",
+					payload: {
+						listingId,
+					},
+					priority: "common",
+				});
+			}
 
 			return yield* listingFetchFx({
 				userId,

@@ -12,7 +12,7 @@ import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 
 export namespace ignoreToggleFn {
-	export type Error = Effect.Effect.Error<ignoreToggleFx>;
+	export type Error = Effect.Error<ignoreToggleFx>;
 }
 
 export const ignoreToggleFn = createServerFn({
@@ -23,7 +23,7 @@ export const ignoreToggleFn = createServerFn({
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(IgnoreToggleSchema)
+	.validator(IgnoreToggleSchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

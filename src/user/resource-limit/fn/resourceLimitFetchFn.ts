@@ -12,7 +12,7 @@ import { ResourceLimitQuerySchema } from "~/user/resource-limit/server/schema/Re
 import { ResourceLimitSchema } from "~/user/resource-limit/server/schema/ResourceLimitSchema";
 
 export namespace resourceLimitFetchFn {
-	export type Error = Effect.Effect.Error<resourceLimitFetchFx>;
+	export type Error = Effect.Error<resourceLimitFetchFx>;
 }
 
 export const resourceLimitFetchFn = createServerFn()
@@ -21,7 +21,7 @@ export const resourceLimitFetchFn = createServerFn()
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(ResourceLimitQuerySchema)
+	.validator(ResourceLimitQuerySchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

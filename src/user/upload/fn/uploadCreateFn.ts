@@ -14,7 +14,7 @@ import { UploadCreateSchema } from "../server/schema/UploadCreateSchema";
 import { UploadSchema } from "../server/schema/UploadSchema";
 
 export namespace uploadCreateFn {
-	export type Error = Effect.Effect.Error<uploadCreateFx>;
+	export type Error = Effect.Error<uploadCreateFx>;
 }
 
 export const uploadCreateFn = createServerFn({
@@ -25,7 +25,7 @@ export const uploadCreateFn = createServerFn({
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(UploadCreateSchema)
+	.validator(UploadCreateSchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

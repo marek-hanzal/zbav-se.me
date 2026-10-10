@@ -61,7 +61,7 @@ describe("public category privacy", () => {
 					idIn: categoryIdIn,
 				},
 			});
-			const adultRelaxedFetch = yield* Effect.either(
+			const adultRelaxedFetch = yield* Effect.result(
 				publicCategoryFetchFx({
 					scope: {},
 					where: {

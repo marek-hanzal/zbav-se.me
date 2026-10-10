@@ -3,7 +3,6 @@ import { stringify } from "csv-stringify/sync";
 import { z } from "zod";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { listingCollectionFn } from "~/seller/listing/fn/listingCollectionFn";
-import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 
 const logger = getRootLogger([
 	"tool",
@@ -26,7 +25,7 @@ Use it for seller-owned listing lookup and management.
 Do not use for buyer-visible marketplace search.
 	`.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(InputSchema),
+	parameters: InputSchema,
 	async execute(input) {
 		logger.trace("toolListingBrowse", {
 			input,

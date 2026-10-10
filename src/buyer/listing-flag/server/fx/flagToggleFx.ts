@@ -37,82 +37,75 @@ export const flagToggleFx = Effect.fn("flagToggleFx")(function* ({
 				message: "You cannot flag your own listing",
 			});
 
-			return yield* Effect.if(toggle, {
-				onTrue() {
-					return Effect.gen(function* () {
-						yield* flagCreateFx({
-							userId,
-							listingId,
-						});
+			if (toggle) {
+				yield* flagCreateFx({
+					userId,
+					listingId,
+				});
 
-						yield* listingEventCreateFx({
-							userId,
-							listingId,
-							event: "listing.flag",
-							checkVisibility: false,
-						}).pipe(Effect.ignore);
+				yield* listingEventCreateFx({
+					userId,
+					listingId,
+					event: "listing.flag",
+					checkVisibility: false,
+				}).pipe(Effect.ignore);
 
-						yield* activityCreateFx({
-							userId: listingUserId,
-							reference: [
-								listingId,
-							],
-							family: "reaction",
-							type: "listing.flag",
-							payload: {
-								listingId,
-							},
-							priority: "common",
-						});
+				yield* activityCreateFx({
+					userId: listingUserId,
+					reference: [
+						listingId,
+					],
+					family: "reaction",
+					type: "listing.flag",
+					payload: {
+						listingId,
+					},
+					priority: "common",
+				});
 
-						return yield* listingFetchFx({
-							userId,
-							where: {
-								id: listingId,
-							},
-							scope: {},
-							meta,
-						});
-					});
-				},
-				onFalse() {
-					return Effect.gen(function* () {
-						yield* flagDeleteFx({
-							userId,
-							listingId,
-						});
+				return yield* listingFetchFx({
+					userId,
+					where: {
+						id: listingId,
+					},
+					scope: {},
+					meta,
+				});
+			} else {
+				yield* flagDeleteFx({
+					userId,
+					listingId,
+				});
 
-						yield* listingEventCreateFx({
-							userId,
-							listingId,
-							event: "unflag",
-							checkVisibility: false,
-						}).pipe(Effect.ignore);
+				yield* listingEventCreateFx({
+					userId,
+					listingId,
+					event: "unflag",
+					checkVisibility: false,
+				}).pipe(Effect.ignore);
 
-						yield* activityCreateFx({
-							userId: listingUserId,
-							reference: [
-								listingId,
-							],
-							family: "reaction",
-							type: "unflag",
-							payload: {
-								listingId,
-							},
-							priority: "common",
-						});
+				yield* activityCreateFx({
+					userId: listingUserId,
+					reference: [
+						listingId,
+					],
+					family: "reaction",
+					type: "unflag",
+					payload: {
+						listingId,
+					},
+					priority: "common",
+				});
 
-						return yield* listingFetchFx({
-							userId,
-							where: {
-								id: listingId,
-							},
-							scope: {},
-							meta,
-						});
-					});
-				},
-			});
+				return yield* listingFetchFx({
+					userId,
+					where: {
+						id: listingId,
+					},
+					scope: {},
+					meta,
+				});
+			}
 		}),
 	);
 });

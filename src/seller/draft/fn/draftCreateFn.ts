@@ -12,7 +12,7 @@ import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 
 export namespace draftCreateFn {
-	export type Error = Effect.Effect.Error<draftCreateFx>;
+	export type Error = Effect.Error<draftCreateFx>;
 }
 
 export const draftCreateFn = createServerFn({
@@ -23,7 +23,7 @@ export const draftCreateFn = createServerFn({
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(DraftCreateSchema)
+	.validator(DraftCreateSchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

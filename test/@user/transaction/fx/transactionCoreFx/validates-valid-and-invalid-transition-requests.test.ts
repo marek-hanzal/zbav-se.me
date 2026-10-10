@@ -10,7 +10,7 @@ describe("transaction core", () => {
 		const database = await testabase("transactionCore-transition");
 
 		return Effect.gen(function* () {
-			const allowed = yield* Effect.either(
+			const allowed = yield* Effect.result(
 				transactionTransitionFx({
 					status: "interest",
 					request: "trade",
@@ -18,7 +18,7 @@ describe("transaction core", () => {
 				}),
 			);
 
-			const denied = yield* Effect.either(
+			const denied = yield* Effect.result(
 				transactionTransitionFx({
 					status: "interest",
 					request: "trade",
@@ -26,7 +26,7 @@ describe("transaction core", () => {
 				}),
 			);
 
-			const deniedTerminalWrite = yield* Effect.either(
+			const deniedTerminalWrite = yield* Effect.result(
 				transactionTransitionFx({
 					status: "sold",
 					request: "text",
@@ -34,7 +34,7 @@ describe("transaction core", () => {
 				}),
 			);
 
-			expect(allowed._tag).toBe("Right");
+			expect(allowed._tag).toBe("Success");
 			expectTaggedErrorFx(denied, {
 				tag: "InvalidRequestErrorFx",
 			});

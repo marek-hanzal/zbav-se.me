@@ -10,7 +10,7 @@ describe("rateLimitFx", () => {
 		const database = await testabase("rateLimitFx-missing-rule");
 
 		return Effect.gen(function* () {
-			const result = yield* Effect.either(
+			const result = yield* Effect.result(
 				rateLimitFx({
 					rule: "missing:snapshot-rule",
 					key: [

@@ -2,7 +2,6 @@ import { tool } from "@openai/agents";
 import { stringify } from "csv-stringify/sync";
 import { ofGoogleMap } from "@/lib/common/location";
 import { getRootLogger } from "~/common/log/getRootLogger";
-import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 import { locationAutocompleteFn } from "~/session/location/fn/locationAutocompleteFn";
 import { LocationAutocompleteSchema } from "~/session/location/server/schema/LocationAutocompleteSchema";
 
@@ -25,7 +24,7 @@ Use when the user gives a place name or address and you need normalized location
 or a location id. Return compact candidates; do not guess an id when multiple candidates are plausible.
     `.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(InputSchema),
+	parameters: InputSchema,
 	async execute(input) {
 		logger.trace("toolLocationBrowse", {
 			input,

@@ -68,7 +68,7 @@ describe("field option read model", () => {
 				],
 				limit: 20,
 			});
-			const missingOption = yield* Effect.either(
+			const missingOption = yield* Effect.result(
 				fieldOptionFetchFx({
 					scope: {},
 					where: {

@@ -16,7 +16,7 @@ import { withUploadConfigFx } from "~/user/upload/server/context/withUploadConfi
 import { withUploadConfigEnv } from "~/user/upload/server/env/withUploadConfigEnv";
 
 export namespace s3PreSignFn {
-	export type Error = Effect.Effect.Error<s3PreSignFx>;
+	export type Error = Effect.Error<s3PreSignFx>;
 }
 
 export const s3PreSignFn = createServerFn({
@@ -27,7 +27,7 @@ export const s3PreSignFn = createServerFn({
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(S3PreSignRequestSchema)
+	.validator(S3PreSignRequestSchema)
 	.handler(async ({ data, context: { user, rootLogger, database }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

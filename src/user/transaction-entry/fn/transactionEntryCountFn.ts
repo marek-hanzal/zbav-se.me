@@ -11,7 +11,7 @@ import { transactionEntryCountFx } from "~/user/transaction-entry/server/fx/tran
 import { TransactionEntryCountQuerySchema } from "~/user/transaction-entry/server/schema/TransactionEntryCountQuerySchema";
 
 export namespace transactionEntryCountFn {
-	export type Error = Effect.Effect.Error<transactionEntryCountFx>;
+	export type Error = Effect.Error<transactionEntryCountFx>;
 }
 
 export const transactionEntryCountFn = createServerFn()
@@ -20,7 +20,7 @@ export const transactionEntryCountFn = createServerFn()
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(TransactionEntryCountQuerySchema)
+	.validator(TransactionEntryCountQuerySchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

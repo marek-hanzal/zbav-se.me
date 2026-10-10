@@ -11,7 +11,7 @@ import { RateLimitQuerySchema } from "~/server/rate-limit/server/schema/RateLimi
 import { RateLimitSchema } from "~/server/rate-limit/server/schema/RateLimitSchema";
 
 export namespace rateLimitFn {
-	export type Error = Effect.Effect.Error<rateLimitFx>;
+	export type Error = Effect.Error<rateLimitFx>;
 }
 
 export const rateLimitFn = createServerFn()
@@ -19,7 +19,7 @@ export const rateLimitFn = createServerFn()
 		withLogMiddleware,
 		withDatabaseMiddleware,
 	])
-	.inputValidator(RateLimitQuerySchema)
+	.validator(RateLimitQuerySchema)
 	.handler(async ({ data, context: { database, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

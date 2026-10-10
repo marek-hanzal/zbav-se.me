@@ -27,13 +27,13 @@ describe("seller ownership helpers", () => {
 				userId: users.seller.id,
 				draftId: draft.id,
 			});
-			const foreignDraft = yield* Effect.either(
+			const foreignDraft = yield* Effect.result(
 				draftCheckIfOwnFx({
 					userId: users.stranger.id,
 					draftId: draft.id,
 				}),
 			);
-			const missingDraft = yield* Effect.either(
+			const missingDraft = yield* Effect.result(
 				draftCheckIfOwnFx({
 					userId: users.seller.id,
 					draftId: "missing-draft-id",
@@ -44,13 +44,13 @@ describe("seller ownership helpers", () => {
 				userId: users.seller.id,
 				listingId: listing.id,
 			});
-			const foreignListing = yield* Effect.either(
+			const foreignListing = yield* Effect.result(
 				listingCheckIfOwnFx({
 					userId: users.stranger.id,
 					listingId: listing.id,
 				}),
 			);
-			const missingListing = yield* Effect.either(
+			const missingListing = yield* Effect.result(
 				listingCheckIfOwnFx({
 					userId: users.seller.id,
 					listingId: "missing-listing-id",

@@ -13,7 +13,7 @@ import { draftAttrTextPatchFx } from "../server/fx/draftAttrTextPatchFx";
 import { DraftAttrTextPatchSchema } from "../server/schema/DraftAttrTextPatchSchema";
 
 export namespace draftAttrTextPatchFn {
-	export type Error = Effect.Effect.Error<draftAttrOfFx>;
+	export type Error = Effect.Error<draftAttrOfFx>;
 }
 
 export const draftAttrTextPatchFn = createServerFn()
@@ -22,7 +22,7 @@ export const draftAttrTextPatchFn = createServerFn()
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(DraftAttrTextPatchSchema)
+	.validator(DraftAttrTextPatchSchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

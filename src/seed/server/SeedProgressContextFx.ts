@@ -10,10 +10,9 @@ export interface SeedProgress {
 	updateSummary(input: { summary: Partial<SeedRunSummary.Type> }): Effect.Effect<void>;
 }
 
-export class SeedProgressContextFx extends Context.Tag("SeedProgressContextFx")<
-	SeedProgressContextFx,
-	SeedProgress
->() {
+export class SeedProgressContextFx extends Context.Service<SeedProgressContextFx, SeedProgress>()(
+	"SeedProgressContextFx",
+) {
 	//
 }
 

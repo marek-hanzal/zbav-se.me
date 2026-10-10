@@ -399,14 +399,9 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 					.otherwise(() => Effect.void);
 			});
 
-			yield* Effect.if(transaction.status === "interest" && transaction.side === "buyer", {
-				onTrue() {
-					return Effect.void;
-				},
-				onFalse() {
-					return createCounterpartyActivityFx;
-				},
-			});
+			if (transaction.status !== "interest" || transaction.side !== "buyer") {
+				yield* createCounterpartyActivityFx;
+			}
 
 			return transactionEntry;
 		}),

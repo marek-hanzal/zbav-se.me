@@ -13,7 +13,7 @@ import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { withTransactionContextFx } from "~/user/transaction/server/context/withTransactionContextFx";
 
 export namespace transactionRejectFn {
-	export type Error = Effect.Effect.Error<transactionRejectFx>;
+	export type Error = Effect.Error<transactionRejectFx>;
 }
 
 export const transactionRejectFn = createServerFn({
@@ -24,7 +24,7 @@ export const transactionRejectFn = createServerFn({
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(EntitySchema)
+	.validator(EntitySchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

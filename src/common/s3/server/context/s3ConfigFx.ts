@@ -7,6 +7,6 @@ export interface s3Config {
 	bucket: string;
 }
 
-export class s3ConfigFx extends Context.Tag("s3ConfigFx")<s3ConfigFx, s3Config>() {
+export class s3ConfigFx extends Context.Service<s3ConfigFx, s3Config>()("s3ConfigFx") {
 	//
 }

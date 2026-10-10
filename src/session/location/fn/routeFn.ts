@@ -11,7 +11,7 @@ import { withLocationConfigFx } from "../server/context/withLocationConfigFx";
 import { withLocationConfigEnv } from "../server/env/withLocationConfigEnv";
 
 export namespace routeFn {
-	export type Error = Effect.Effect.Error<routeFx>;
+	export type Error = Effect.Error<routeFx>;
 }
 
 export const routeFn = createServerFn()
@@ -19,7 +19,7 @@ export const routeFn = createServerFn()
 		withLogMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(RouteSchema)
+	.validator(RouteSchema)
 	.handler(async ({ data, context: { rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

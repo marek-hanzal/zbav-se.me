@@ -58,7 +58,7 @@ describe("transactionEntry workflow", () => {
 
 			expect(collection.map((item) => item.id)).toContain(entry.id);
 
-			const outsiderFetch = yield* Effect.either(
+			const outsiderFetch = yield* Effect.result(
 				transactionEntryFetchFx({
 					userId: stranger.id,
 					where: {

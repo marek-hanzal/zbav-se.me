@@ -10,7 +10,7 @@ describe("locationAutocompleteFx", () => {
 		const database = await testabase("locationAutocompleteFx-cache");
 
 		return Effect.gen(function* () {
-			const shortText = yield* Effect.either(
+			const shortText = yield* Effect.result(
 				locationAutocompleteFx({
 					text: "Pr",
 					lang: "cs",

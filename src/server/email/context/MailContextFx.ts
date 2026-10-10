@@ -8,6 +8,6 @@ export interface MailContext {
 	from: string;
 }
 
-export class MailContextFx extends Context.Tag("MailContextFx")<MailContextFx, MailContext>() {
+export class MailContextFx extends Context.Service<MailContextFx, MailContext>()("MailContextFx") {
 	//
 }

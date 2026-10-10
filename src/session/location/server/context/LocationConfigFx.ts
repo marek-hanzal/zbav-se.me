@@ -16,9 +16,8 @@ export interface LocationConfig {
 	route: string;
 }
 
-export class LocationConfigFx extends Context.Tag("LocationConfigFx")<
-	LocationConfigFx,
-	LocationConfig
->() {
+export class LocationConfigFx extends Context.Service<LocationConfigFx, LocationConfig>()(
+	"LocationConfigFx",
+) {
 	//
 }

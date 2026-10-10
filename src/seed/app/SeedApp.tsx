@@ -1,6 +1,6 @@
 import { StatusMessage } from "@inkjs/ui";
-import { Effect, Exit, Fiber } from "effect";
-import { Box, useApp, useInput, useStdout } from "ink";
+import { Cause, Effect, Exit, Fiber } from "effect";
+import { Box, useApp, useInput, useWindowSize } from "ink";
 import { type FC, useEffect, useEffectEvent, useMemo, useRef, useState } from "react";
 import { match } from "ts-pattern";
 import { runSeedEffect } from "~/seed/fn/runSeedFn";
@@ -80,10 +80,8 @@ export namespace SeedApp {
 
 export const SeedApp: FC<SeedApp.Props> = () => {
 	const { exit } = useApp();
-	const { stdout } = useStdout();
-	const rows = stdout.rows ?? 24;
-	const columns = stdout.columns ?? 80;
-	const runFiberRef = useRef<Fiber.RuntimeFiber<SeedRunSummary.Type, unknown> | null>(null);
+	const { rows, columns } = useWindowSize();
+	const runFiberRef = useRef<Fiber.Fiber<SeedRunSummary.Type, unknown> | null>(null);
 	const isExitingRef = useRef(false);
 
 	const [countInput, setCountInput] = useState(String(seedRegistry[0]?.defaultCount ?? 25));
@@ -341,11 +339,11 @@ export const SeedApp: FC<SeedApp.Props> = () => {
 				return;
 			}
 
-			if (Exit.isInterrupted(result)) {
+			if (Cause.hasInterrupts(result.cause)) {
 				return;
 			}
 
-			const message = readErrorMessage(result.cause);
+			const message = readErrorMessage(Cause.squash(result.cause));
 			setPhase(null);
 			setErrorMessage(message);
 			setScreenState("failed");

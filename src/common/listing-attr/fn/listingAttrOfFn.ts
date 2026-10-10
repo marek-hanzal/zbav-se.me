@@ -10,7 +10,7 @@ import { listingAttrOfFx } from "../server/fx/listingAttrOfFx";
 import { ListingAttrOfSchema } from "../server/schema/ListingAttrOfSchema";
 
 export namespace listingAttrOfFn {
-	export type Error = Effect.Effect.Error<listingAttrOfFx>;
+	export type Error = Effect.Error<listingAttrOfFx>;
 }
 
 export const listingAttrOfFn = createServerFn()
@@ -18,7 +18,7 @@ export const listingAttrOfFn = createServerFn()
 		withLogMiddleware,
 		withDatabaseMiddleware,
 	])
-	.inputValidator(
+	.validator(
 		z
 			.looseObject({
 				listingId: z.string().min(1),

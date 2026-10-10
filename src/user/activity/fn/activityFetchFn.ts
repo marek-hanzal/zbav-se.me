@@ -11,7 +11,7 @@ import { ActivityQuerySchema } from "~/user/activity/server/schema/ActivityQuery
 import { ActivitySchema } from "~/user/activity/server/schema/ActivitySchema";
 
 export namespace activityFetchFn {
-	export type Error = Effect.Effect.Error<activityFetchFx>;
+	export type Error = Effect.Error<activityFetchFx>;
 }
 
 export const activityFetchFn = createServerFn()
@@ -20,7 +20,7 @@ export const activityFetchFn = createServerFn()
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(ActivityQuerySchema)
+	.validator(ActivityQuerySchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

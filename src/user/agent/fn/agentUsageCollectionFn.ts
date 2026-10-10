@@ -12,7 +12,7 @@ import { AgentUsageQuerySchema } from "~/user/agent/server/schema/AgentUsageQuer
 import { AgentUsageSchema } from "~/user/agent/server/schema/AgentUsageSchema";
 
 export namespace agentUsageCollectionFn {
-	export type Error = Effect.Effect.Error<agentUsageCollectionFx>;
+	export type Error = Effect.Error<agentUsageCollectionFx>;
 }
 
 export const agentUsageCollectionFn = createServerFn()
@@ -21,7 +21,7 @@ export const agentUsageCollectionFn = createServerFn()
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(AgentUsageQuerySchema)
+	.validator(AgentUsageQuerySchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

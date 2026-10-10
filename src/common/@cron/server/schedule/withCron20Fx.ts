@@ -18,7 +18,7 @@ export const withCron20Fx = Effect.fn("withCron20Fx")(function* () {
 		},
 		{
 			concurrency: 2,
-			mode: "either",
+			mode: "result",
 		},
 	);
 });

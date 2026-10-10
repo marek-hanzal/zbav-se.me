@@ -20,7 +20,7 @@ describe("rateLimitEventFx", () => {
 		const database = await testabase("rateLimitEventFx-missing-rule");
 
 		return Effect.gen(function* () {
-			const result = yield* Effect.either(
+			const result = yield* Effect.result(
 				rateLimitEventFx({
 					rule: "missing:rule",
 					key: [

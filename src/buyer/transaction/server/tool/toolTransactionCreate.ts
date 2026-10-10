@@ -2,7 +2,6 @@ import { tool } from "@openai/agents";
 import { transactionCreateFn } from "~/buyer/transaction/fn/transactionCreateFn";
 import { TransactionCreateSchema } from "~/buyer/transaction/server/schema/TransactionCreateSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
-import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 
 const logger = getRootLogger([
 	"tool",
@@ -21,7 +20,7 @@ Buyer-side transaction action: create/open a new transaction for a concrete list
 - If the listing is favourite, offer the user to remove it from favourites
 	`.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(InputSchema),
+	parameters: InputSchema,
 	async execute(input) {
 		logger.trace("toolTransactionCreate", {
 			input,

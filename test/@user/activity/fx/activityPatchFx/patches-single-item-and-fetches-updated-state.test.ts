@@ -67,7 +67,7 @@ describe("activityPatchFx", () => {
 
 			expect(fetched.archivedAt?.toISOString()).toBe(archivedAt.toISOString());
 
-			const foreignFetch = yield* Effect.either(
+			const foreignFetch = yield* Effect.result(
 				activityFetchFx({
 					scope: {
 						userId: stranger.id,
@@ -77,7 +77,7 @@ describe("activityPatchFx", () => {
 					},
 				}),
 			);
-			const foreignPatch = yield* Effect.either(
+			const foreignPatch = yield* Effect.result(
 				activityPatchFx({
 					scope: {
 						userId: stranger.id,

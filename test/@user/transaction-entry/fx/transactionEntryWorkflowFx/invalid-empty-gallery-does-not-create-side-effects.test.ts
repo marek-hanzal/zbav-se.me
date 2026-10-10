@@ -42,7 +42,7 @@ describe("transactionEntry workflow", () => {
 				type: "buyer-message",
 			});
 
-			const result = yield* Effect.either(
+			const result = yield* Effect.result(
 				transactionEntryCreateFx({
 					userId: buyer.id,
 					transactionId,

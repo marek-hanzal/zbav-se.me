@@ -12,7 +12,7 @@ import { listingValidateFx } from "../server/fx/listingValidateFx";
 import { ListingValidateSchema } from "../server/schema/ListingValidateSchema";
 
 export namespace listingValidateFn {
-	export type Error = Effect.Effect.Error<listingValidateFx>;
+	export type Error = Effect.Error<listingValidateFx>;
 }
 
 export const listingValidateFn = createServerFn()
@@ -21,7 +21,7 @@ export const listingValidateFn = createServerFn()
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(ListingValidateSchema)
+	.validator(ListingValidateSchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

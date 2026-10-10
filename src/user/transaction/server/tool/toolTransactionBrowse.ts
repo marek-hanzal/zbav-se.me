@@ -5,7 +5,6 @@ import { transactionCollectionFn as buyerTransactionCollectionFn } from "~/buyer
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
 import { transactionCollectionFn as sellerTransactionCollectionFn } from "~/seller/transaction/fn/transactionCollectionFn";
-import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 
 const logger = getRootLogger([
 	"tool",
@@ -48,7 +47,7 @@ Browse the user's trade transactions from both seller and buyer side in one list
 - You can use 'unreadCount' to get number of items a user must react to
 		`.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(InputSchema),
+	parameters: InputSchema,
 	async execute(input) {
 		logger.trace("toolTransactionBrowse", {
 			input,

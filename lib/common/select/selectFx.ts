@@ -36,7 +36,7 @@ export const selectFx = <
 	TQueryError,
 	TQueryContext,
 >(
-	select: Effect.Effect.Success<
+	select: Effect.Success<
 		selectFx<
 			TDB,
 			TTable,
@@ -48,7 +48,7 @@ export const selectFx = <
 			TQueryContext
 		>
 	>,
-): Effect.Effect.Success<
+): Effect.Success<
 	selectFx<TDB, TTable, TOutput, TWhere, TSelectError, TSelectContext, TQueryError, TQueryContext>
 > => {
 	return select;

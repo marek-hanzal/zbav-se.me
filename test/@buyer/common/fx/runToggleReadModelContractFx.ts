@@ -8,7 +8,7 @@ import { runWithTestRuntime } from "~/test/common/fx/runWithTestRuntime";
 import { testabase } from "~/test/testabase";
 
 namespace runToggleReadModelContractFx {
-	export type BaseContext = Effect.Effect.Success<ReturnType<typeof createToggleBaseContextFx>>;
+	export type BaseContext = Effect.Success<ReturnType<typeof createToggleBaseContextFx>>;
 
 	export interface Context<Extra> extends BaseContext {
 		extra: Extra;
@@ -112,7 +112,7 @@ export const runToggleReadModelContractFx = async <
 
 		const afterCollection = yield* collectionFx(context, context.users.buyer.id);
 		const afterCount = yield* countFx(context, context.users.buyer.id);
-		const afterFetch = yield* Effect.either(fetchFx(context, context.users.buyer.id));
+		const afterFetch = yield* Effect.result(fetchFx(context, context.users.buyer.id));
 
 		expect(afterCollection).toEqual([]);
 		expect(afterCount).toBe(0);

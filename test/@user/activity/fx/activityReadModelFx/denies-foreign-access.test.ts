@@ -37,7 +37,7 @@ describe("activity read model", () => {
 					.execute(),
 			);
 
-			const foreignFetch = yield* Effect.either(
+			const foreignFetch = yield* Effect.result(
 				activityFetchFx({
 					scope: {
 						userId: user.id,

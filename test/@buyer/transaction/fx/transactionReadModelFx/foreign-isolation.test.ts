@@ -41,7 +41,7 @@ describe("buyer transaction read model foreign isolation", () => {
 					],
 				},
 			});
-			const foreignFetch = yield* Effect.either(
+			const foreignFetch = yield* Effect.result(
 				transactionFetchFx({
 					scope: {
 						userId: buyer.id,

@@ -12,7 +12,7 @@ import { ListingQuerySchema } from "../server/schema/ListingQuerySchema";
 import { ListingSchema } from "../server/schema/ListingSchema";
 
 export namespace listingDeleteFn {
-	export type Error = Effect.Effect.Error<listingDeleteFx>;
+	export type Error = Effect.Error<listingDeleteFx>;
 }
 
 export const listingDeleteFn = createServerFn({
@@ -23,7 +23,7 @@ export const listingDeleteFn = createServerFn({
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(ListingQuerySchema)
+	.validator(ListingQuerySchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

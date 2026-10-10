@@ -12,7 +12,7 @@ import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 
 export namespace listingEventCreateFn {
-	export type Error = Effect.Effect.Error<listingEventCreateFx>;
+	export type Error = Effect.Error<listingEventCreateFx>;
 }
 
 export const listingEventCreateFn = createServerFn({
@@ -23,7 +23,7 @@ export const listingEventCreateFn = createServerFn({
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(ListingEventCreateSchema)
+	.validator(ListingEventCreateSchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

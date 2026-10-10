@@ -106,7 +106,7 @@ describe("user category restriction fetch flow", () => {
 			);
 			const beforeFirstBoundaryRestricted = yield* atFx(
 				"2026-05-01T10:29:59.999Z",
-				Effect.either(
+				Effect.result(
 					categoryFetchFx({
 						userId: user.id,
 						scope: {},
@@ -130,7 +130,7 @@ describe("user category restriction fetch flow", () => {
 			);
 			const afterReturnToNoneAdult = yield* atFx(
 				"2026-05-01T11:30:00.000Z",
-				Effect.either(
+				Effect.result(
 					categoryFetchFx({
 						userId: user.id,
 						scope: {},

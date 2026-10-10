@@ -32,7 +32,7 @@ describe("listingEventRateLimitFx", () => {
 				}),
 			);
 
-			const duplicate = yield* Effect.either(
+			const duplicate = yield* Effect.result(
 				listingEventRateLimitFx({
 					listingId: listing.id,
 					event: "listing.favourite",
@@ -71,7 +71,7 @@ describe("listingEventRateLimitFx", () => {
 
 			expect(duplicateCount).toHaveLength(1);
 
-			const differentEvent = yield* Effect.either(
+			const differentEvent = yield* Effect.result(
 				listingEventRateLimitFx({
 					listingId: listing.id,
 					event: "like",
@@ -82,9 +82,9 @@ describe("listingEventRateLimitFx", () => {
 				),
 			);
 
-			expect(differentEvent._tag).toBe("Right");
+			expect(differentEvent._tag).toBe("Success");
 
-			const nextWindowEvent = yield* Effect.either(
+			const nextWindowEvent = yield* Effect.result(
 				listingEventRateLimitFx({
 					listingId: listing.id,
 					event: "listing.favourite",
@@ -95,7 +95,7 @@ describe("listingEventRateLimitFx", () => {
 				),
 			);
 
-			expect(nextWindowEvent._tag).toBe("Right");
+			expect(nextWindowEvent._tag).toBe("Success");
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

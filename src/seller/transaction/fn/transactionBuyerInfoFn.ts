@@ -13,7 +13,7 @@ import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 
 export namespace transactionBuyerInfoFn {
-	export type Error = Effect.Effect.Error<transactionGetBuyerInfoFx>;
+	export type Error = Effect.Error<transactionGetBuyerInfoFx>;
 }
 
 export const transactionBuyerInfoFn = createServerFn()
@@ -22,7 +22,7 @@ export const transactionBuyerInfoFn = createServerFn()
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(TransactionQuerySchema)
+	.validator(TransactionQuerySchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

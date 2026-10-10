@@ -37,82 +37,75 @@ export const ignoreToggleFx = Effect.fn("ignoreToggleFx")(function* ({
 				message: "You cannot ignore your own listing",
 			});
 
-			return yield* Effect.if(toggle, {
-				onTrue() {
-					return Effect.gen(function* () {
-						yield* ignoreCreateFx({
-							userId,
-							listingId,
-						});
+			if (toggle) {
+				yield* ignoreCreateFx({
+					userId,
+					listingId,
+				});
 
-						yield* listingEventCreateFx({
-							userId,
-							listingId,
-							event: "listing.ignore",
-							checkVisibility: false,
-						}).pipe(Effect.ignore);
+				yield* listingEventCreateFx({
+					userId,
+					listingId,
+					event: "listing.ignore",
+					checkVisibility: false,
+				}).pipe(Effect.ignore);
 
-						yield* activityCreateFx({
-							userId: listingUserId,
-							reference: [
-								listingId,
-							],
-							family: "reaction",
-							type: "listing.ignore",
-							payload: {
-								listingId,
-							},
-							priority: "common",
-						});
+				yield* activityCreateFx({
+					userId: listingUserId,
+					reference: [
+						listingId,
+					],
+					family: "reaction",
+					type: "listing.ignore",
+					payload: {
+						listingId,
+					},
+					priority: "common",
+				});
 
-						return yield* listingFetchFx({
-							userId,
-							where: {
-								id: listingId,
-							},
-							scope: {},
-							meta,
-						});
-					});
-				},
-				onFalse() {
-					return Effect.gen(function* () {
-						yield* ignoreDeleteFx({
-							userId,
-							listingId,
-						});
+				return yield* listingFetchFx({
+					userId,
+					where: {
+						id: listingId,
+					},
+					scope: {},
+					meta,
+				});
+			} else {
+				yield* ignoreDeleteFx({
+					userId,
+					listingId,
+				});
 
-						yield* listingEventCreateFx({
-							userId,
-							listingId,
-							event: "unignore",
-							checkVisibility: false,
-						}).pipe(Effect.ignore);
+				yield* listingEventCreateFx({
+					userId,
+					listingId,
+					event: "unignore",
+					checkVisibility: false,
+				}).pipe(Effect.ignore);
 
-						yield* activityCreateFx({
-							userId: listingUserId,
-							reference: [
-								listingId,
-							],
-							family: "reaction",
-							type: "unignore",
-							payload: {
-								listingId,
-							},
-							priority: "common",
-						});
+				yield* activityCreateFx({
+					userId: listingUserId,
+					reference: [
+						listingId,
+					],
+					family: "reaction",
+					type: "unignore",
+					payload: {
+						listingId,
+					},
+					priority: "common",
+				});
 
-						return yield* listingFetchFx({
-							userId,
-							where: {
-								id: listingId,
-							},
-							scope: {},
-							meta,
-						});
-					});
-				},
-			});
+				return yield* listingFetchFx({
+					userId,
+					where: {
+						id: listingId,
+					},
+					scope: {},
+					meta,
+				});
+			}
 		}),
 	);
 });

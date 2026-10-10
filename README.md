@@ -7,39 +7,58 @@ This repo stays public for transparency and learning, but it is **not open sourc
 ## What is here
 
 - `src/` - app code, routes, domains, and server runtime
-- `@lib/` - shared client/common helpers and UI primitives
+- `lib/` - shared client/common/server helpers and UI primitives
 - `cli/` - local maintenance and generation scripts
 - `test/` - Vitest suites and fixtures
 - `e2e/` - Playwright setup and helpers
 - `public/` - static assets
 
+## Product specification
+
+[`MASTER.md`](./MASTER.md) describes product intent in Czech. It is a draft,
+with an actionable review list at the beginning and stable IDs for unresolved
+decisions. It does not certify which behavior is currently implemented.
+Implementation policy lives in [`AGENTS.md`](./AGENTS.md), including domain and
+server boundaries, route/UI conventions, verification, and Git handoff rules.
+Area-specific implementation details live in the nearest `README.md`.
+
 ## Local development
 
 ### Requirements
 
-- Bun `1.3.0+`
-- Node.js `22.6.0+`
+- [mise](https://mise.jdx.dev/getting-started.html), activated in your shell
 - Docker (recommended for local infra)
+
+[`mise.toml`](./mise.toml) pins Node.js (including its bundled npm), argc, GitHub CLI,
+Portless, and Vercel CLI for local development and GitHub Actions. Application
+dependencies stay in `package.json` and `package-lock.json`. The pinned Node.js
+24.21.0 distribution includes npm 11.19.0.
 
 ### Setup
 
 ```bash
-bun install
-npm install -g portless
+mise trust
+mise install
+argc ci
 cp .env.example .env
 docker compose up -d
 ```
 
+Project commands live in [`Argcfile.sh`](./Argcfile.sh). Run `argc --help` to list
+them. Without shell activation, use `mise exec -- argc <command>`. The command
+runner also enters the mise environment so Node.js, npm, and local dependency
+binaries resolve consistently.
+
 ### Run locally
 
 ```bash
-portless proxy start --https
+argc dev:proxy
 ```
 
 Start the app in another terminal:
 
 ```bash
-bun run dev:app
+argc dev:app
 ```
 
 Mailpit is available at <http://127.0.0.1:8025> for local SMTP inbox inspection.
@@ -47,15 +66,17 @@ Mailpit is available at <http://127.0.0.1:8025> for local SMTP inbox inspection.
 ### Useful root commands
 
 ```bash
-bun run dev:app
-bun run build
-bun run lint
-bun run typecheck
-bun run test
-bun run e2e
-bun run sp:format
-bun run workflow:test
-bun run workflow:check
+argc ci
+argc dev:app
+argc dev:proxy
+argc build
+argc lint
+argc typecheck
+argc test
+argc e2e
+argc sp:format
+argc workflow:test
+argc workflow:check
 ```
 
 ## Dev URLs
@@ -64,15 +85,51 @@ bun run workflow:check
 - API: <https://api.zbav-se.me.localhost:1355>
 - OpenAPI JSON: <https://api.zbav-se.me.localhost:1355/v3/api-docs>
 
-The app script stays a plain `portless ...` command. Start the shared HTTPS proxy with `portless proxy start --https`, then run `bun run dev:app`. Portless uses its default user-level state and serves the `.localhost` URLs on port `1355`.
+Start the shared HTTPS proxy with `argc dev:proxy`, then run `argc dev:app`.
+Portless uses its default user-level state and serves the `.localhost` URLs on
+port `1355`.
 
-`syncpack` is wired for the root package through `sp:*` scripts. Use `bun run sp:format` to normalize `package.json` ordering and `bun run sp:update` when dependency versions need a bulk refresh.
+`syncpack` is wired for the root package through the `sp:*` commands. Use `argc sp:format` to normalize `package.json` ordering and `argc sp:update` when dependency versions need a bulk refresh.
+
+Commands forward trailing arguments to their underlying tools. For example,
+`argc test test/@user/resource-bundle` selects a Vitest directory and
+`argc e2e --grep registration` filters Playwright tests. Pass arguments directly
+after the command name, without an extra `--` separator.
+Build, test, seed, and translation commands use the development dotenv cascade and
+keep environment variables already set by the caller.
+
+Use `argc install` (or native `npm install`) when changing dependencies and
+`argc ci` (or `npm ci`) for a clean installation from the lockfile. CI uses
+`argc ci`. TypeScript CLIs run through the local `tsx` binary with tsconfig
+path aliases; type checking remains a separate `argc typecheck` step.
+The shared tsconfig uses React's automatic JSX runtime so TSX maintenance
+commands run without adding a global React import.
+
+Better Auth supports the application's Kysely version directly. No dependency
+patch or npm lifecycle hook is required.
+An npm override keeps `@tanstack/query-core` on the same version as the pinned
+`@tanstack/react-query` dependency so router SSR and persistence integrations
+share the same `QueryClient` implementation and types.
+
+### Translation extraction
+
+`argc translations` runs the translation CLI through `tsx`. Babel 8 parses
+TypeScript and TSX and extracts the configured JSX attributes, component prop
+defaults, function calls, and object method calls. Static template literals and
+literal branches are supported; interpolated templates are not translation keys.
+`get-tsconfig` resolves `extends`, `include`, `exclude`, and explicit `files`
+without loading the TypeScript compiler API.
+
+The extractor preserves existing key escaping and descendant source matching.
+It sorts locale output, retains translated values and entries marked `dynamic`,
+and removes obsolete static keys. A source parsing error aborts extraction before
+any locale files are written.
 
 ## Environment Variables
 
 This README is the shared source of truth for environment variable naming and intent in the app.
 GitHub Actions environments are the source of truth only for which values are currently configured.
-Local sync source files live in `@env/*.json` and can be applied with `bun run env:sync <environment>`.
+Local sync source files live in `@env/*.json` and can be applied with `argc env:sync <environment> <vercel-project-id>`.
 The shared non-production environments are `uat` and `dev`, so the canonical sync files are `@env/uat.json` and `@env/dev.json`.
 
 ### GitHub Actions only
@@ -129,17 +186,32 @@ Issues and PRs are welcome for bug reports, quality improvements, and architectu
 Before handoff, run at least:
 
 ```bash
-bun run lint
-bun run typecheck
-bun run workflow:check
+argc lint
+argc typecheck
+argc workflow:check
 ```
 
-`bun run workflow:check` runs the full non-test verification pipeline for the repo: formatting, linting, and TypeScript typecheck.
+`argc workflow:check` runs manifest normalization, formatting, TypeScript
+typecheck, lint, Dependency Cruiser, Knip, and the production build in order.
+It stops at the first failure. `argc workflow:test` runs Vitest and Playwright
+in parallel and fails if either suite fails. Playwright starts its compiled
+test server through `argc e2e:serve`.
+Vitest uses a temporary PostgreSQL container on port `55433`; Playwright uses
+its own container on `55432`, so the two suites can run in parallel.
+
+To run the full suite alongside an existing development app, use a separate
+compiled server and the local Mailpit inbox:
+
+```bash
+PORTLESS=0 PORT=31347 HOST=127.0.0.1 \
+VITE_ORIGIN=http://127.0.0.1:31347 NITRO_PRESET=node-server \
+MAILPIT_BASE_URL=http://127.0.0.1:8025 argc workflow:test
+```
 
 Vitest coverage is scoped to server-side `Fx` and DB `Fx` business flows. Thin `Fn` wrappers, routes, UI, tools, migrations, and seed scripts are intentionally out of the coverage denominator.
 
 The Playwright e2e flow uses `x-e2e-db` to select the per-test database. That header is ignored unless `SERVER_E2E=e2e` is present.
-Playwright runs e2e files in parallel by default. Use `E2E_WORKERS=<count> bun run e2e` to tune local or CI concurrency.
+Playwright runs e2e files in parallel by default. Use `E2E_WORKERS=<count> argc e2e` to tune local or CI concurrency.
 
 The migration chain targets a fresh database and ends at `0056-user-resource-bundle-feature`.
 Databases containing removed billing migrations must be recreated before using this revision.
@@ -147,12 +219,27 @@ Resource bundles, limits, items, and features remain available to system assignm
 
 ## Dependency Hygiene
 
+The application uses Effect 4. Service keys use `Context.Service`, result values
+use `Result`, and promise boundaries preserve the original tagged error. Vitest
+5 runs the database business-flow suite; type checking uses TypeScript 7 and the
+production build uses Vite 8.
+
+The project uses the native compiler from the regular `typescript@7.0.2` package.
+`argc dc` runs pinned `dependency-cruiser@18.5.0` and `typescript@6.0.3` through
+`npm exec`, which installs missing tools in npm's cache. Dependency Cruiser still
+needs the TypeScript 6 JavaScript compiler API; neither it nor TypeScript 6 is a
+project dependency. Both local checks and CI use the same command and domain
+rules. The first run requires registry access; subsequent runs reuse npm's cache.
+
 - Dependency cleanup decisions in this repository are evidence-based from source usage.
 - `knip` is treated as a candidate signal, not as the source of truth.
 - `dependency-cruiser` rules work on resolved source paths under `src/`, not on import alias strings.
 - Server-crossing import rules should use resolved `src/...` paths and keep only the approved server surfaces open, such as `server/fn` and `server/schema`, from the non-server side of the app. Type-only imports and `src/@routes` server glue are exempt.
 
 ## MCP
+
+OpenCode configures the Playwright MCP server in [`opencode.json`](./opencode.json).
+Shared agent instructions live in [`AGENTS.md`](./AGENTS.md).
 
 Shared MCP server template is in [`mcp.json`](./mcp.json).
 

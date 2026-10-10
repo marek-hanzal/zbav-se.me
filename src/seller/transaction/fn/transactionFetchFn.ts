@@ -11,7 +11,7 @@ import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 
 export namespace transactionFetchFn {
-	export type Error = Effect.Effect.Error<transactionFetchFx>;
+	export type Error = Effect.Error<transactionFetchFx>;
 }
 
 export const transactionFetchFn = createServerFn()
@@ -20,7 +20,7 @@ export const transactionFetchFn = createServerFn()
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(TransactionQuerySchema)
+	.validator(TransactionQuerySchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

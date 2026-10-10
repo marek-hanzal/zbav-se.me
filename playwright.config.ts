@@ -12,7 +12,7 @@ export default defineConfig({
 	webServer: [
 		{
 			name: "App",
-			command: "bunx run-s e2e:build e2e:start",
+			command: "argc e2e:serve",
 			url: new URL("/api/e2e", appOrigin).toString(),
 			ignoreHTTPSErrors: true,
 			reuseExistingServer: false,

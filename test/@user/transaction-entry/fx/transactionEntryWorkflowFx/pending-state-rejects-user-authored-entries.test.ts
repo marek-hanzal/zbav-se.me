@@ -71,7 +71,7 @@ describe("transactionEntry workflow", () => {
 					transactionId: transaction.id,
 				},
 			});
-			const sellerFetchInInterest = yield* Effect.either(
+			const sellerFetchInInterest = yield* Effect.result(
 				transactionEntryFetchFx({
 					userId: seller.id,
 					where: {
@@ -100,7 +100,7 @@ describe("transactionEntry workflow", () => {
 			expectErrorFx(sellerFetchInInterest);
 			expect(sellerTextActivity).toBeUndefined();
 
-			const sellerTextResult = yield* Effect.either(
+			const sellerTextResult = yield* Effect.result(
 				transactionEntryCreateFx({
 					userId: seller.id,
 					transactionId: transaction.id,
@@ -110,7 +110,7 @@ describe("transactionEntry workflow", () => {
 					},
 				}),
 			);
-			const galleryResult = yield* Effect.either(
+			const galleryResult = yield* Effect.result(
 				transactionEntryCreateFx({
 					userId: buyer.id,
 					transactionId: transaction.id,
@@ -122,7 +122,7 @@ describe("transactionEntry workflow", () => {
 					},
 				}),
 			);
-			const locationResult = yield* Effect.either(
+			const locationResult = yield* Effect.result(
 				transactionEntryCreateFx({
 					userId: buyer.id,
 					transactionId: transaction.id,
@@ -132,7 +132,7 @@ describe("transactionEntry workflow", () => {
 					},
 				}),
 			);
-			const personalResult = yield* Effect.either(
+			const personalResult = yield* Effect.result(
 				transactionEntryCreateFx({
 					userId: buyer.id,
 					transactionId: transaction.id,

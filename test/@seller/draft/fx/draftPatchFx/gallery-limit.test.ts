@@ -121,7 +121,7 @@ describe("draftPatchFx gallery limit", () => {
 				patch: {
 					uploadIds: aboveLimitUploadIds,
 				},
-			}).pipe(Effect.either);
+			}).pipe(Effect.result);
 			const galleryItems = yield* Effect.promise(() =>
 				database.kysely
 					.selectFrom("gallery_item")

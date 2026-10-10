@@ -10,7 +10,7 @@ import { FieldQuerySchema } from "~/user/field/server/schema/FieldQuerySchema";
 import { FieldSchema } from "~/user/field/server/schema/FieldSchema";
 
 export namespace fieldFetchFn {
-	export type Error = Effect.Effect.Error<fieldFetchFx>;
+	export type Error = Effect.Error<fieldFetchFx>;
 }
 
 export const fieldFetchFn = createServerFn()
@@ -18,7 +18,7 @@ export const fieldFetchFn = createServerFn()
 		withLogMiddleware,
 		withDatabaseMiddleware,
 	])
-	.inputValidator(FieldQuerySchema)
+	.validator(FieldQuerySchema)
 	.handler(async ({ data, context: { database, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

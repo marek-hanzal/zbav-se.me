@@ -12,7 +12,7 @@ import { ActivityPatchCollectionSchema } from "~/user/activity/server/schema/Act
 import { ActivitySchema } from "~/user/activity/server/schema/ActivitySchema";
 
 export namespace activityPatchCollectionFn {
-	export type Error = Effect.Effect.Error<activityPatchCollectionFx>;
+	export type Error = Effect.Error<activityPatchCollectionFx>;
 }
 
 export const activityPatchCollectionFn = createServerFn({
@@ -23,7 +23,7 @@ export const activityPatchCollectionFn = createServerFn({
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(ActivityPatchCollectionSchema)
+	.validator(ActivityPatchCollectionSchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

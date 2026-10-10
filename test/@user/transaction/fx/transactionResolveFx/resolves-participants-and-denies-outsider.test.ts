@@ -41,7 +41,7 @@ describe("transactionResolveFx", () => {
 			expect(sellerResolved.buyerId).toBe(users.buyer.id);
 			expect(sellerResolved.sellerId).toBe(users.seller.id);
 
-			const outsider = yield* Effect.either(
+			const outsider = yield* Effect.result(
 				transactionResolveFx({
 					userId: users.stranger.id,
 					transactionId: transaction.id,

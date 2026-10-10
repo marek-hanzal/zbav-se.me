@@ -37,7 +37,7 @@ const impl = <A, E extends TaggedError, R, H extends HandlerMap<E>>(
 	handlers: ExactKeys<H, TagOf<E>>,
 ): Effect.Effect<A | HandlerOut<E, H>, never, R> =>
 	self.pipe(
-		Effect.catchAll((e) => {
+		Effect.catch((e) => {
 			const tag = e._tag as TagOf<E>;
 			const fn = handlers[tag] as (x: E) => HandlerOut<E, H>;
 			return Effect.succeed(fn(e));

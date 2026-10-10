@@ -4,7 +4,6 @@ import { z } from "zod";
 import { transactionAckFn as buyerTransactionAckFn } from "~/buyer/transaction/fn/transactionAckFn";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { transactionAckFn as sellerTransactionAckFn } from "~/seller/transaction/fn/transactionAckFn";
-import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 
 const logger = getRootLogger([
 	"tool",
@@ -60,7 +59,7 @@ Important:
 - you may acknowledge multiple messages in one call
 	`.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(InputSchema),
+	parameters: InputSchema,
 	async execute(input) {
 		logger.trace("toolTransactionAcknowledge", {
 			input,

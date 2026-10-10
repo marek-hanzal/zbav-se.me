@@ -11,7 +11,7 @@ import { translationsFx } from "../server/fx/translationsFx";
 import { LocaleSchema } from "../server/schema/LocaleSchema";
 
 export namespace translationsFn {
-	export type Error = Effect.Effect.Error<translationsFx>;
+	export type Error = Effect.Error<translationsFx>;
 }
 
 export const translationsFn = createServerFn()
@@ -19,7 +19,7 @@ export const translationsFn = createServerFn()
 		withLogMiddleware,
 		withDatabaseMiddleware,
 	])
-	.inputValidator(LocaleSchema)
+	.validator(LocaleSchema)
 	.handler(async ({ data, context: { database, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

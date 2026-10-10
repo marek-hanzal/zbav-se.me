@@ -1,6 +1,5 @@
 import { tool } from "@openai/agents";
 import { getRootLogger } from "~/common/log/getRootLogger";
-import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 import { routeFn } from "~/session/location/fn/routeFn";
 import { RouteSchema } from "~/session/location/server/schema/RouteSchema";
 
@@ -21,7 +20,7 @@ as latitude and longitude. Prefer "drive" unless the user clearly asks for walki
 You need to resolve lat/lon using "location-browse" tool before this.
 	`.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(RouteSchema),
+	parameters: RouteSchema,
 	async execute(input) {
 		logger.trace("toolRoute", {
 			input,

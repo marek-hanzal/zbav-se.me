@@ -4,7 +4,6 @@ import { DateTime } from "luxon";
 import { z } from "zod";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { defaultLocale } from "~/locales";
-import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 import type { withRunnerMiddleware } from "~/user/agent/server/middleware/withRunnerMiddleware";
 import { userRestrictionCollectionFn } from "../../fn/userRestrictionCollectionFn";
 
@@ -34,7 +33,7 @@ ready to use: this restriction level is already available and in use
 waiting: this restriction level will be available (tell the user when)
     `.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(InputSchema),
+	parameters: InputSchema,
 	async execute(input, context) {
 		logger.trace("toolUserRestrictionDetail", {
 			input,

@@ -11,7 +11,7 @@ import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddlewa
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 
 export namespace withListingPingFn {
-	export type Error = Effect.Effect.Error<withListingPingFx>;
+	export type Error = Effect.Error<withListingPingFx>;
 }
 
 export const withListingPingFn = createServerFn()
@@ -19,7 +19,7 @@ export const withListingPingFn = createServerFn()
 		withLogMiddleware,
 		withDatabaseMiddleware,
 	])
-	.inputValidator(EntitySchema)
+	.validator(EntitySchema)
 	.handler(async ({ data, context: { database, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

@@ -12,7 +12,7 @@ import { CategoryQuerySchema } from "~/user/category/server/schema/CategoryQuery
 import { CategorySchema } from "~/user/category/server/schema/CategorySchema";
 
 export namespace categoryFetchFn {
-	export type Error = Effect.Effect.Error<categoryFetchFx>;
+	export type Error = Effect.Error<categoryFetchFx>;
 }
 
 export const categoryFetchFn = createServerFn()
@@ -21,7 +21,7 @@ export const categoryFetchFn = createServerFn()
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(CategoryQuerySchema)
+	.validator(CategoryQuerySchema)
 	.handler(async ({ data, context: { database, rootLogger, user }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

@@ -11,7 +11,7 @@ import { galleryCountFx } from "~/user/gallery/server/fx/galleryCountFx";
 import { GalleryCountQuerySchema } from "~/user/gallery/server/schema/GalleryCountQuerySchema";
 
 export namespace galleryCountFn {
-	export type Error = Effect.Effect.Error<galleryCountFx>;
+	export type Error = Effect.Error<galleryCountFx>;
 }
 
 export const galleryCountFn = createServerFn()
@@ -20,7 +20,7 @@ export const galleryCountFn = createServerFn()
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(GalleryCountQuerySchema)
+	.validator(GalleryCountQuerySchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

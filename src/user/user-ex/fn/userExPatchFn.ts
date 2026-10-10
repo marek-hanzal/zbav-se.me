@@ -12,7 +12,7 @@ import { UserExPatchSchema } from "~/user/user-ex/server/schema/UserExPatchSchem
 import { UserExSchema } from "~/user/user-ex/server/schema/UserExSchema";
 
 export namespace userExPatchFn {
-	export type Error = Effect.Effect.Error<userExPatchFx>;
+	export type Error = Effect.Error<userExPatchFx>;
 }
 
 export const userExPatchFn = createServerFn({
@@ -23,7 +23,7 @@ export const userExPatchFn = createServerFn({
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(UserExPatchSchema)
+	.validator(UserExPatchSchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

@@ -22,9 +22,9 @@ describe("transaction core", () => {
 			const unexpectedAllowed: string[] = [];
 
 			for (const transition of expectedTransitions) {
-				const result = yield* Effect.either(transactionTransitionFx(transition));
+				const result = yield* Effect.result(transactionTransitionFx(transition));
 
-				if (result._tag === "Left") {
+				if (result._tag === "Failure") {
 					unexpectedDenied.push(transitionKey(transition));
 				}
 			}
@@ -43,9 +43,9 @@ describe("transaction core", () => {
 							continue;
 						}
 
-						const result = yield* Effect.either(transactionTransitionFx(transition));
+						const result = yield* Effect.result(transactionTransitionFx(transition));
 
-						if (result._tag === "Right") {
+						if (result._tag === "Success") {
 							unexpectedAllowed.push(key);
 						}
 					}

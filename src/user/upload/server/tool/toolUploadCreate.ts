@@ -2,7 +2,6 @@ import { tool } from "@openai/agents";
 import { z } from "zod";
 import { AccessEnumSchema } from "~/common/access/AccessEnumSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
-import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 import { uploadCreateFn } from "~/user/upload/fn/uploadCreateFn";
 
 const logger = getRootLogger([
@@ -38,7 +37,7 @@ Access:
 - private: for user private stuff (e.g. drafts)
     `.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(InputSchema),
+	parameters: InputSchema,
 	async execute(input) {
 		logger.trace("toolUploadCreate", {
 			data: input,

@@ -103,7 +103,7 @@ describe("feedGalleryCreateFx", () => {
 
 			expect(fetchedFeed.uploadId).toBe(thirdUpload.id);
 
-			const foreignAttempt = yield* Effect.either(
+			const foreignAttempt = yield* Effect.result(
 				feedGalleryCreateFx({
 					userId: stranger.id,
 					feedId: feed.id,

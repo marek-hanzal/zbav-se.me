@@ -62,7 +62,7 @@ describe("feed contract", () => {
 					.where("id", "=", feed.id)
 					.executeTakeFirstOrThrow(),
 			);
-			const foreignResolve = yield* Effect.either(
+			const foreignResolve = yield* Effect.result(
 				feedResolveFx({
 					userId: stranger.id,
 					feedId: feed.id,

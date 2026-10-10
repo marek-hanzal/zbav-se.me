@@ -4,9 +4,8 @@ import type { Database } from "~/server/database/Database";
 
 export type KyselyContext = withDatabaseFx.Instance<Database>;
 
-export class KyselyContextFx extends Context.Tag("KyselyContextFx")<
-	KyselyContextFx,
-	KyselyContext
->() {
+export class KyselyContextFx extends Context.Service<KyselyContextFx, KyselyContext>()(
+	"KyselyContextFx",
+) {
 	//
 }

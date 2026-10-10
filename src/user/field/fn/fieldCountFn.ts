@@ -8,7 +8,7 @@ import { fieldCountFx } from "~/user/field/server/fx/fieldCountFx";
 import { FieldCountQuerySchema } from "~/user/field/server/schema/FieldCountQuerySchema";
 
 export namespace fieldCountFn {
-	export type Error = Effect.Effect.Error<fieldCountFx>;
+	export type Error = Effect.Error<fieldCountFx>;
 }
 
 export const fieldCountFn = createServerFn()
@@ -16,7 +16,7 @@ export const fieldCountFn = createServerFn()
 		withLogMiddleware,
 		withDatabaseMiddleware,
 	])
-	.inputValidator(FieldCountQuerySchema)
+	.validator(FieldCountQuerySchema)
 	.handler(async ({ data, context: { database, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

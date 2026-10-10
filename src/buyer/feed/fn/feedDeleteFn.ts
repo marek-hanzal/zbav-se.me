@@ -11,7 +11,7 @@ import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 
 export namespace feedDeleteFn {
-	export type Error = Effect.Effect.Error<feedDeleteFx>;
+	export type Error = Effect.Error<feedDeleteFx>;
 }
 
 export const feedDeleteFn = createServerFn({
@@ -22,7 +22,7 @@ export const feedDeleteFn = createServerFn({
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(FeedQuerySchema)
+	.validator(FeedQuerySchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

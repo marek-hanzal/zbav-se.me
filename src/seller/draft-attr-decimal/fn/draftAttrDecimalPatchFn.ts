@@ -13,7 +13,7 @@ import { draftAttrDecimalPatchFx } from "../server/fx/draftAttrDecimalPatchFx";
 import { DraftAttrDecimalPatchSchema } from "../server/schema/DraftAttrDecimalPatchSchema";
 
 export namespace draftAttrDecimalPatchFn {
-	export type Error = Effect.Effect.Error<draftAttrOfFx>;
+	export type Error = Effect.Error<draftAttrOfFx>;
 }
 
 export const draftAttrDecimalPatchFn = createServerFn()
@@ -22,7 +22,7 @@ export const draftAttrDecimalPatchFn = createServerFn()
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(DraftAttrDecimalPatchSchema)
+	.validator(DraftAttrDecimalPatchSchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

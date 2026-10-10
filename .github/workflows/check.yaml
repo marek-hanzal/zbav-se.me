@@ -45,19 +45,16 @@ jobs:
         steps:
             - uses: actions/checkout@v6.0.2
 
-            - name: Setup Node.js
-              uses: actions/setup-node@v6.3.0
+            - name: Setup project toolset
+              uses: jdx/mise-action@v5.1.1
               with:
-                  node-version: "24"
-
-            - name: Setup Bun
-              uses: oven-sh/setup-bun@v2.2.0
+                  version: "2026.10.7"
 
             - name: Install dependencies
-              run: bun install --frozen-lockfile
+              run: argc ci
 
             - name: Build
-              run: bun run build
+              run: argc build
 
     lint:
         name: Lint
@@ -66,19 +63,16 @@ jobs:
         steps:
             - uses: actions/checkout@v6.0.2
 
-            - name: Setup Node.js
-              uses: actions/setup-node@v6.3.0
+            - name: Setup project toolset
+              uses: jdx/mise-action@v5.1.1
               with:
-                  node-version: "24"
-
-            - name: Setup Bun
-              uses: oven-sh/setup-bun@v2.2.0
+                  version: "2026.10.7"
 
             - name: Install dependencies
-              run: bun install --frozen-lockfile
+              run: argc ci
 
             - name: Lint
-              run: bun run lint
+              run: argc lint
 
     dc:
         name: Dependency Cruiser
@@ -87,19 +81,16 @@ jobs:
         steps:
             - uses: actions/checkout@v6.0.2
 
-            - name: Setup Node.js
-              uses: actions/setup-node@v6.3.0
+            - name: Setup project toolset
+              uses: jdx/mise-action@v5.1.1
               with:
-                  node-version: "24"
-
-            - name: Setup Bun
-              uses: oven-sh/setup-bun@v2.2.0
+                  version: "2026.10.7"
 
             - name: Install dependencies
-              run: bun install --frozen-lockfile
+              run: argc ci
 
             - name: Dependency Cruiser
-              run: bun run dc
+              run: argc dc
 
     typecheck:
         name: Typecheck
@@ -108,19 +99,16 @@ jobs:
         steps:
             - uses: actions/checkout@v6.0.2
 
-            - name: Setup Node.js
-              uses: actions/setup-node@v6.3.0
+            - name: Setup project toolset
+              uses: jdx/mise-action@v5.1.1
               with:
-                  node-version: "24"
-
-            - name: Setup Bun
-              uses: oven-sh/setup-bun@v2.2.0
+                  version: "2026.10.7"
 
             - name: Install dependencies
-              run: bun install --frozen-lockfile
+              run: argc ci
 
             - name: Typecheck
-              run: bun run typecheck
+              run: argc typecheck
 
     knip:
         name: Knip
@@ -129,19 +117,16 @@ jobs:
         steps:
             - uses: actions/checkout@v6.0.2
 
-            - name: Setup Node.js
-              uses: actions/setup-node@v6.3.0
+            - name: Setup project toolset
+              uses: jdx/mise-action@v5.1.1
               with:
-                  node-version: "24"
-
-            - name: Setup Bun
-              uses: oven-sh/setup-bun@v2.2.0
+                  version: "2026.10.7"
 
             - name: Install dependencies
-              run: bun install --frozen-lockfile
+              run: argc ci
 
             - name: Knip
-              run: bun run knip
+              run: argc knip
 
     vitest:
         name: Vitest
@@ -150,19 +135,16 @@ jobs:
         steps:
             - uses: actions/checkout@v6.0.2
 
-            - name: Setup Node.js
-              uses: actions/setup-node@v6.3.0
+            - name: Setup project toolset
+              uses: jdx/mise-action@v5.1.1
               with:
-                  node-version: "24"
-
-            - name: Setup Bun
-              uses: oven-sh/setup-bun@v2.2.0
+                  version: "2026.10.7"
 
             - name: Install dependencies
-              run: bun install --frozen-lockfile
+              run: argc ci
 
             - name: Test
-              run: bun run test
+              run: argc test
 
             - name: Publish coverage summary
               if: always()
@@ -237,25 +219,19 @@ jobs:
         steps:
             - uses: actions/checkout@v6.0.2
 
-            - name: Setup Node.js
-              uses: actions/setup-node@v6.3.0
+            - name: Setup project toolset
+              uses: jdx/mise-action@v5.1.1
               with:
-                  node-version: "24"
-
-            - name: Setup Bun
-              uses: oven-sh/setup-bun@v2.2.0
+                  version: "2026.10.7"
 
             - name: Install dependencies
-              run: bun install --frozen-lockfile
+              run: argc ci
 
             - name: Resolve Playwright version
               id: playwright-version
               run: |
                   VERSION=$(node -p 'require("./package.json").devDependencies["@playwright/test"]')
                   echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-
-            - name: Install portless
-              run: bun install -g portless
 
             - name: Start portless proxy
               run: portless proxy start -p 1355 --https
@@ -268,7 +244,7 @@ jobs:
                   key: ${{ runner.os }}-playwright-chromium-${{ steps.playwright-version.outputs.version }}
 
             - name: Install Playwright browsers
-              run: bunx playwright install --with-deps chromium
+              run: argc e2e:browsers
 
             - name: Save Playwright browser cache
               if: steps.playwright-cache.outputs.cache-hit != 'true'
@@ -278,7 +254,7 @@ jobs:
                   key: ${{ runner.os }}-playwright-chromium-${{ steps.playwright-version.outputs.version }}
 
             - name: Run Playwright
-              run: bun run e2e
+              run: argc e2e
 
             - name: Upload Playwright artifacts
               if: always()

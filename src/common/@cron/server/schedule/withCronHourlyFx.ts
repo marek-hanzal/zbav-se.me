@@ -8,7 +8,7 @@ export const withCronHourlyFx = Effect.fn("withCronHourlyFx")(function* () {
 		},
 		{
 			concurrency: 2,
-			mode: "either",
+			mode: "result",
 		},
 	);
 });

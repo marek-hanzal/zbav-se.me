@@ -17,7 +17,7 @@ const InputSchema = z
 	.strip();
 
 export namespace transactionAckFn {
-	export type Error = Effect.Effect.Error<transactionAckFx>;
+	export type Error = Effect.Error<transactionAckFx>;
 }
 
 export const transactionAckFn = createServerFn({
@@ -28,7 +28,7 @@ export const transactionAckFn = createServerFn({
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(InputSchema)
+	.validator(InputSchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

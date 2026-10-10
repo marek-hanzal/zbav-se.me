@@ -1,12 +1,12 @@
-import { Either } from "effect";
+import { Result } from "effect";
 import { expect } from "vitest";
 
-export const expectErrorFx = <L, R>(result: Either.Either<L, R>) => {
-	expect(Either.isLeft(result)).toBe(true);
+export const expectErrorFx = <A, E>(result: Result.Result<A, E>) => {
+	expect(Result.isFailure(result)).toBe(true);
 
-	if (Either.isRight(result)) {
-		throw new Error("Expected Effect.either(...) to return Left");
+	if (Result.isSuccess(result)) {
+		throw new Error("Expected Effect.result(...) to return Failure");
 	}
 
-	return result.left;
+	return result.failure;
 };

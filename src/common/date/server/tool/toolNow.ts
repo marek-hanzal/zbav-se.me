@@ -2,7 +2,6 @@ import { tool } from "@openai/agents-core";
 import { DateTime } from "luxon";
 import { z } from "zod";
 import { getRootLogger } from "~/common/log/getRootLogger";
-import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 import type { withRunnerMiddleware } from "~/user/agent/server/middleware/withRunnerMiddleware";
 
 const logger = getRootLogger([
@@ -22,7 +21,7 @@ export const toolNow = tool<InputSchema, withRunnerMiddleware.Context>({
 Current date-time
 	`.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(InputSchema),
+	parameters: InputSchema,
 	async execute(input, context) {
 		logger.trace("toolNow", {
 			input,

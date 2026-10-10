@@ -71,7 +71,7 @@ describe("feedLifecycleFx", () => {
 				"macbook pro",
 			]);
 
-			const foreignPatch = yield* Effect.either(
+			const foreignPatch = yield* Effect.result(
 				feedPatchFx({
 					scope: {
 						userId: stranger.id,
@@ -122,7 +122,7 @@ describe("feedLifecycleFx", () => {
 
 			expect(count).toBe(3);
 
-			const foreignFetch = yield* Effect.either(
+			const foreignFetch = yield* Effect.result(
 				feedFetchFx({
 					scope: {
 						userId: stranger.id,

@@ -11,7 +11,7 @@ import { agentUsageDeleteCollectionFx } from "~/user/agent/server/fx/agentUsageD
 import { AgentUsageQuerySchema } from "~/user/agent/server/schema/AgentUsageQuerySchema";
 
 export namespace agentUsageDeleteCollectionFn {
-	export type Error = Effect.Effect.Error<agentUsageDeleteCollectionFx>;
+	export type Error = Effect.Error<agentUsageDeleteCollectionFx>;
 }
 
 export const agentUsageDeleteCollectionFn = createServerFn({
@@ -22,7 +22,7 @@ export const agentUsageDeleteCollectionFn = createServerFn({
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(AgentUsageQuerySchema)
+	.validator(AgentUsageQuerySchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

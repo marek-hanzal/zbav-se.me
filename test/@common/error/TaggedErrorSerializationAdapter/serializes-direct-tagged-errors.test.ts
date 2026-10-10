@@ -1,4 +1,3 @@
-import { Effect } from "effect";
 import { describe, expect, test } from "vitest";
 import { TaggedErrorSerializationAdapter } from "@/lib/common/error/TaggedErrorSerializationAdapter";
 import { RateLimitErrorFx } from "~/server/error/RateLimitErrorFx";
@@ -12,16 +11,6 @@ const rateLimitError = new RateLimitErrorFx({
 	window: 900,
 	retryAt: "2026-05-21T10:00:00.000Z",
 });
-
-const _runFiberFailure = async () => {
-	try {
-		await Effect.fail(rateLimitError).pipe(Effect.runPromise);
-	} catch (error) {
-		return error;
-	}
-
-	throw new Error("Expected Effect.runPromise to reject");
-};
 
 describe("TaggedErrorSerializationAdapter", () => {
 	test("serializes direct tagged errors", () => {

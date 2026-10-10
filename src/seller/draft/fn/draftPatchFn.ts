@@ -12,7 +12,7 @@ import { DraftPatchSchema } from "../server/schema/DraftPatchSchema";
 import { DraftSchema } from "../server/schema/DraftSchema";
 
 export namespace draftPatchFn {
-	export type Error = Effect.Effect.Error<draftPatchFx>;
+	export type Error = Effect.Error<draftPatchFx>;
 }
 
 export const draftPatchFn = createServerFn({
@@ -23,7 +23,7 @@ export const draftPatchFn = createServerFn({
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(DraftPatchSchema)
+	.validator(DraftPatchSchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

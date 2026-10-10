@@ -27,7 +27,7 @@ describe("transactionEntryGalleryFetchFx", () => {
 				},
 			});
 
-			const result = yield* Effect.either(
+			const result = yield* Effect.result(
 				transactionEntryGalleryFetchFx({
 					userId: buyer.id,
 					where: {

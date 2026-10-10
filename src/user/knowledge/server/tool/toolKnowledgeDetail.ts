@@ -1,7 +1,6 @@
 import { tool } from "@openai/agents";
 import { z } from "zod";
 import { getRootLogger } from "~/common/log/getRootLogger";
-import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 import { getKnowledgeIndex } from "~/user/knowledge/server/service/getKnowledgeIndex";
 
 const logger = getRootLogger([
@@ -27,7 +26,7 @@ Get the knowledge using 'topicId'
 - You may use directly Related as 'topicId' for another 'knowledge-detail' call
     `.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(InputSchema),
+	parameters: InputSchema,
 	async execute(input) {
 		logger.trace("toolKnowledgeDetail", {
 			input,

@@ -41,7 +41,7 @@ describe("uploadFetchFx", () => {
 			expect(fetched.id).toBe(ownUpload.id);
 			expect(fetched.url).toBe(ownUploadUrl);
 
-			const foreign = yield* Effect.either(
+			const foreign = yield* Effect.result(
 				uploadFetchFx({
 					where: {
 						id: foreignUpload.id,
@@ -53,7 +53,7 @@ describe("uploadFetchFx", () => {
 			);
 			expectErrorFx(foreign);
 
-			const missing = yield* Effect.either(
+			const missing = yield* Effect.result(
 				uploadFetchFx({
 					where: {
 						id: "missing-upload-id",

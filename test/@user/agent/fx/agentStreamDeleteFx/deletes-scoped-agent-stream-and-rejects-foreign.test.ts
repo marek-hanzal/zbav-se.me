@@ -77,7 +77,7 @@ describe("agentStreamDeleteFx", () => {
 
 			expect(deleted.id).toBe("agent-stream-alice");
 
-			const aliceAfterDelete = yield* Effect.either(
+			const aliceAfterDelete = yield* Effect.result(
 				agentStreamFetchFx({
 					where: {
 						id: "agent-stream-alice",
@@ -87,7 +87,7 @@ describe("agentStreamDeleteFx", () => {
 					},
 				}),
 			);
-			const foreignDelete = yield* Effect.either(
+			const foreignDelete = yield* Effect.result(
 				agentStreamDeleteFx({
 					where: {
 						id: "agent-stream-bob",

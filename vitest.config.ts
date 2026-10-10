@@ -20,15 +20,15 @@ export default defineConfig({
 		alias: [
 			{
 				find: /^~\/test\//,
-				replacement: `${resolve(__dirname, "./test")}/`,
+				replacement: `${resolve(import.meta.dirname, "./test")}/`,
 			},
 			{
 				find: /^~\//,
-				replacement: `${resolve(__dirname, "./src")}/`,
+				replacement: `${resolve(import.meta.dirname, "./src")}/`,
 			},
 			{
 				find: /^@\/lib\//,
-				replacement: `${resolve(__dirname, "./lib")}/`,
+				replacement: `${resolve(import.meta.dirname, "./lib")}/`,
 			},
 		],
 	},
@@ -54,12 +54,6 @@ export default defineConfig({
 		isolate: false,
 		sequence: {
 			shuffle: false,
-		},
-		benchmark: {
-			compare: "benchmark.json",
-			reporters: [
-				"default",
-			],
 		},
 		//
 		/**

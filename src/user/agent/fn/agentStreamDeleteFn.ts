@@ -11,7 +11,7 @@ import { AgentStreamQuerySchema } from "~/user/agent/server/schema/AgentStreamQu
 import { AgentStreamSchema } from "~/user/agent/server/schema/AgentStreamSchema";
 
 export namespace agentStreamDeleteFn {
-	export type Error = Effect.Effect.Error<agentStreamDeleteFx>;
+	export type Error = Effect.Error<agentStreamDeleteFx>;
 }
 
 export const agentStreamDeleteFn = createServerFn({
@@ -22,7 +22,7 @@ export const agentStreamDeleteFn = createServerFn({
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(AgentStreamQuerySchema)
+	.validator(AgentStreamQuerySchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

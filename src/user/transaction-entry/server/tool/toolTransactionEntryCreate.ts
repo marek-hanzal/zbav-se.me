@@ -1,7 +1,6 @@
 import { tool } from "@openai/agents";
 import { z } from "zod";
 import { getRootLogger } from "~/common/log/getRootLogger";
-import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 import { transactionEntryCreateFn } from "~/user/transaction-entry/fn/transactionEntryCreateFn";
 import { TransactionEntryCreateSchema } from "~/user/transaction-entry/server/schema/TransactionEntryCreateSchema";
 
@@ -67,7 +66,7 @@ personal - use if user provided you any of: name / phone / email
 text - if none of other kinds matches, use plain text (last chance)
 	`.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(InputSchema),
+	parameters: InputSchema,
 	async execute(input) {
 		logger.trace("toolTransactionEntryCreate", {
 			data: input,

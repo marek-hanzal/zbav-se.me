@@ -16,7 +16,7 @@ describe("thumbCreateFx", () => {
 
 			const listing = yield* createListingFx(seller.id);
 
-			const result = yield* Effect.either(
+			const result = yield* Effect.result(
 				thumbCreateFx({
 					userId: seller.id,
 					listingId: listing.id,

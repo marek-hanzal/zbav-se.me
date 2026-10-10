@@ -13,7 +13,7 @@ import { draftAttrEnumMultiPatchFx } from "../server/fx/draftAttrEnumMultiPatchF
 import { DraftAttrEnumMultiPatchSchema } from "../server/schema/DraftAttrEnumMultiPatchSchema";
 
 export namespace draftAttrEnumMultiPatchFn {
-	export type Error = Effect.Effect.Error<draftAttrOfFx>;
+	export type Error = Effect.Error<draftAttrOfFx>;
 }
 
 export const draftAttrEnumMultiPatchFn = createServerFn()
@@ -22,7 +22,7 @@ export const draftAttrEnumMultiPatchFn = createServerFn()
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(DraftAttrEnumMultiPatchSchema)
+	.validator(DraftAttrEnumMultiPatchSchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

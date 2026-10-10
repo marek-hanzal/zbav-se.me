@@ -12,7 +12,7 @@ import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 
 export namespace thumbCreateFn {
-	export type Error = Effect.Effect.Error<thumbCreateFx>;
+	export type Error = Effect.Error<thumbCreateFx>;
 }
 
 export const thumbCreateFn = createServerFn({
@@ -23,7 +23,7 @@ export const thumbCreateFn = createServerFn({
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(ThumbCreateSchema)
+	.validator(ThumbCreateSchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

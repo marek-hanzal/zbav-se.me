@@ -11,7 +11,7 @@ import { AgentThreadQuerySchema } from "~/user/agent/server/schema/AgentThreadQu
 import { AgentThreadSchema } from "~/user/agent/server/schema/AgentThreadSchema";
 
 export namespace agentThreadFetchFn {
-	export type Error = Effect.Effect.Error<agentThreadFetchFx>;
+	export type Error = Effect.Error<agentThreadFetchFx>;
 }
 
 export const agentThreadFetchFn = createServerFn()
@@ -20,7 +20,7 @@ export const agentThreadFetchFn = createServerFn()
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(AgentThreadQuerySchema)
+	.validator(AgentThreadQuerySchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

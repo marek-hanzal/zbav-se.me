@@ -141,7 +141,7 @@ describe("public listing visibility", () => {
 					],
 				},
 			});
-			const hiddenExplicitFetch = yield* Effect.either(
+			const hiddenExplicitFetch = yield* Effect.result(
 				listingFetchFx({
 					scope: {},
 					where: {
@@ -156,7 +156,7 @@ describe("public listing visibility", () => {
 					categoryId: explicitCategory.id,
 				},
 			});
-			const blockedFetch = yield* Effect.either(
+			const blockedFetch = yield* Effect.result(
 				listingFetchFx({
 					scope: {},
 					where: {

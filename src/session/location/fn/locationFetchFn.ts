@@ -11,7 +11,7 @@ import { LocationQuerySchema } from "~/session/location/server/schema/LocationQu
 import { LocationSchema } from "~/session/location/server/schema/LocationSchema";
 
 export namespace locationFetchFn {
-	export type Error = Effect.Effect.Error<locationFetchFx>;
+	export type Error = Effect.Error<locationFetchFx>;
 }
 
 export const locationFetchFn = createServerFn()
@@ -20,7 +20,7 @@ export const locationFetchFn = createServerFn()
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(LocationQuerySchema)
+	.validator(LocationQuerySchema)
 	.handler(async ({ data, context: { database, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

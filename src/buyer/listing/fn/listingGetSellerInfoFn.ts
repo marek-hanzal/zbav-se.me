@@ -12,7 +12,7 @@ import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 
 export namespace listingGetSellerInfoFn {
-	export type Error = Effect.Effect.Error<listingGetSellerInfoFx>;
+	export type Error = Effect.Error<listingGetSellerInfoFx>;
 }
 
 export const listingGetSellerInfoFn = createServerFn()
@@ -21,7 +21,7 @@ export const listingGetSellerInfoFn = createServerFn()
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(EntitySchema)
+	.validator(EntitySchema)
 	.handler(async ({ data, context: { database, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

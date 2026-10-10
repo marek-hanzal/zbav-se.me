@@ -11,7 +11,7 @@ import { transactionEntryGalleryFetchFx } from "~/user/transaction-entry/server/
 import { TransactionEntryGalleryQuerySchema } from "~/user/transaction-entry/server/schema/TransactionEntryGalleryQuerySchema";
 
 export namespace transactionEntryGalleryFetchFn {
-	export type Error = Effect.Effect.Error<transactionEntryGalleryFetchFx>;
+	export type Error = Effect.Error<transactionEntryGalleryFetchFx>;
 }
 
 export const transactionEntryGalleryFetchFn = createServerFn()
@@ -20,7 +20,7 @@ export const transactionEntryGalleryFetchFn = createServerFn()
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(TransactionEntryGalleryQuerySchema)
+	.validator(TransactionEntryGalleryQuerySchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

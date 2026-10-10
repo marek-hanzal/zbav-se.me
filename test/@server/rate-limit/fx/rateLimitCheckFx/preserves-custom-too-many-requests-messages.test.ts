@@ -24,7 +24,7 @@ describe("rateLimitCheckFx", () => {
 					.execute(),
 			);
 
-			const result = yield* Effect.either(
+			const result = yield* Effect.result(
 				rateLimitCheckFx({
 					rule: "listing:flag",
 					key: [

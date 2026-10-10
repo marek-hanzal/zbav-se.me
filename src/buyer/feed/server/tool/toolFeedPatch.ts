@@ -2,7 +2,6 @@ import { tool } from "@openai/agents";
 import { z } from "zod";
 import { feedPatchFn } from "~/buyer/feed/fn/feedPatchFn";
 import { getRootLogger } from "~/common/log/getRootLogger";
-import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 
 const logger = getRootLogger([
 	"tool",
@@ -33,7 +32,7 @@ Update an existing feed.
 You need 'feedId' from other tools to proceed here.
     `.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(InputSchema),
+	parameters: InputSchema,
 	async execute(input) {
 		logger.trace("toolFeedPatch", {
 			input,

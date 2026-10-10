@@ -110,6 +110,8 @@ export const test = base.extend<TestArgs>({
 				extraHTTPHeaders: {
 					origin: appOrigin,
 					"x-e2e-db": db,
+					// Match the local proxy's client IP instead of the seed's unknown source.
+					"x-forwarded-for": "127.0.0.1",
 				},
 				ignoreHTTPSErrors: true,
 			});

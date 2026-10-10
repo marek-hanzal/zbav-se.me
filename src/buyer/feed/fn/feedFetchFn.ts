@@ -11,7 +11,7 @@ import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 
 export namespace feedFetchFn {
-	export type Error = Effect.Effect.Error<feedFetchFx>;
+	export type Error = Effect.Error<feedFetchFx>;
 }
 
 export const feedFetchFn = createServerFn()
@@ -20,7 +20,7 @@ export const feedFetchFn = createServerFn()
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(FeedQuerySchema)
+	.validator(FeedQuerySchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

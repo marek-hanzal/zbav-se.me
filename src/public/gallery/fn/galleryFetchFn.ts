@@ -10,7 +10,7 @@ import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddlewa
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 
 export namespace galleryFetchFn {
-	export type Error = Effect.Effect.Error<galleryFetchFx>;
+	export type Error = Effect.Error<galleryFetchFx>;
 }
 
 export const galleryFetchFn = createServerFn()
@@ -18,7 +18,7 @@ export const galleryFetchFn = createServerFn()
 		withLogMiddleware,
 		withDatabaseMiddleware,
 	])
-	.inputValidator(GalleryQuerySchema)
+	.validator(GalleryQuerySchema)
 	.handler(async ({ data, context: { database, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

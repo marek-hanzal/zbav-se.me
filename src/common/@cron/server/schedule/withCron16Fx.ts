@@ -16,7 +16,7 @@ export const withCron16Fx = Effect.fn("withCron16Fx")(function* () {
 		},
 		{
 			concurrency: 2,
-			mode: "either",
+			mode: "result",
 		},
 	);
 });

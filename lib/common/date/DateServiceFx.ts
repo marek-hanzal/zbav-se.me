@@ -6,6 +6,6 @@ export interface DateService {
 	ofSeconds(seconds: number): DateTime;
 }
 
-export class DateServiceFx extends Context.Tag("DateServiceFx")<DateServiceFx, DateService>() {
+export class DateServiceFx extends Context.Service<DateServiceFx, DateService>()("DateServiceFx") {
 	//
 }

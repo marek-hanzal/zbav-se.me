@@ -12,7 +12,7 @@ import { DraftQuerySchema } from "../server/schema/DraftQuerySchema";
 import { DraftSchema } from "../server/schema/DraftSchema";
 
 export namespace draftDeleteFn {
-	export type Error = Effect.Effect.Error<draftDeleteFx>;
+	export type Error = Effect.Error<draftDeleteFx>;
 }
 
 export const draftDeleteFn = createServerFn({
@@ -23,7 +23,7 @@ export const draftDeleteFn = createServerFn({
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(DraftQuerySchema)
+	.validator(DraftQuerySchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

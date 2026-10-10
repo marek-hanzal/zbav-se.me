@@ -10,7 +10,7 @@ describe("listingGetSellerInfoFx", () => {
 		const database = await testabase("listingGetSellerInfoFx-missing-listing");
 
 		return Effect.gen(function* () {
-			const result = yield* Effect.either(
+			const result = yield* Effect.result(
 				listingGetSellerInfoFx({
 					listingId: "missing-listing",
 				}),

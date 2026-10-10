@@ -5,7 +5,6 @@ import { z } from "zod";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { defaultLocale } from "~/locales";
-import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 import type { withRunnerMiddleware } from "~/user/agent/server/middleware/withRunnerMiddleware";
 import { userRestrictionCollectionFn } from "../../fn/userRestrictionCollectionFn";
 import { userRestrictionCreateFn } from "../../fn/userRestrictionCreateFn";
@@ -31,7 +30,7 @@ User must confirm you this action as switching to another level involves cooldow
 (adult and above) are not available immediately; user must acknowledge this.
     `.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(InputSchema),
+	parameters: InputSchema,
 	async execute(input, context) {
 		logger.trace("toolUserRestrictionSwitch", {
 			input,

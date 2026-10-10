@@ -4,9 +4,9 @@ import { locales } from "~/locales";
 
 tx({
 	packages: [
-		`${__dirname}/..`,
+		`${import.meta.dirname}/..`,
 	],
-	output: `${__dirname}/../src/server/@migrations/translation`,
+	output: `${import.meta.dirname}/../src/server/@migrations/translation`,
 	locales,
 	sources: TranslationSources,
 });

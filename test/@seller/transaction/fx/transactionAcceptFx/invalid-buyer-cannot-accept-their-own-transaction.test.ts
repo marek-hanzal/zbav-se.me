@@ -38,7 +38,7 @@ describe("transactionAcceptFx", () => {
 					.executeTakeFirstOrThrow(),
 			);
 
-			const result = yield* Effect.either(
+			const result = yield* Effect.result(
 				transactionAcceptFx({
 					transactionId: tx.id,
 					userId: buyer.id,

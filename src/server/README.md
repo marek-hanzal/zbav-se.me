@@ -53,3 +53,15 @@ per email address in a 15-minute window.
 
 The migration chain ends at `0056-user-resource-bundle-feature` and targets a
 fresh database. Resource grants remain independent of external billing systems.
+
+Effect services use `Context.Service` keys. Typed failures stay in the error
+channel; `Effect.result` exposes `Success` and `Failure` values for callers that
+need to inspect both outcomes. `Effect.runPromise` rejects with the original
+error, so server serialization reads tagged errors directly. Cron schedules use
+`Effect.all` with `mode: "result"` to collect independent task failures without
+short-circuiting the remaining tasks.
+
+OpenAI Agents tools pass their Zod object schemas directly to the SDK. This
+preserves inferred input types and runtime validation, including optional input
+normalization in strict mode. Do not cast generated JSON Schema back to Zod:
+Zod metadata can emit a root reference, which is unsuitable for tool parameters.

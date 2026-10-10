@@ -30,7 +30,7 @@ export const historyFn = createServerFn()
 		withLogMiddleware,
 		withDatabaseMiddleware,
 	])
-	.inputValidator(InputSchema)
+	.validator(InputSchema)
 	.handler(
 		async ({
 			data,

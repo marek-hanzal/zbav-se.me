@@ -2,7 +2,6 @@ import { tool } from "@openai/agents";
 import { stringify } from "csv-stringify/sync";
 import { z } from "zod";
 import { getRootLogger } from "~/common/log/getRootLogger";
-import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 import { getKnowledgeIndex } from "~/user/knowledge/server/service/getKnowledgeIndex";
 
 const logger = getRootLogger([
@@ -28,7 +27,7 @@ Result is set of topics with summaries and 'topicId' you can use for 'knowledge-
 Related topics are array of 'topicId'; fetch only when needed to get really deep knowledge.
     `.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(InputSchema),
+	parameters: InputSchema,
 	async execute(input) {
 		logger.trace("toolKnowledgeBrowse", {
 			input,

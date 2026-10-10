@@ -37,7 +37,7 @@ describe("transactionGetBuyerInfoFx", () => {
 
 			expect(buyerInfo.registered).toBeInstanceOf(Date);
 
-			const denied = yield* Effect.either(
+			const denied = yield* Effect.result(
 				transactionGetBuyerInfoFx({
 					userId: strangerSeller.id,
 					transactionId: transaction.id,

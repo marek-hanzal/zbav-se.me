@@ -3,7 +3,6 @@ import { stringify } from "csv-stringify/sync";
 import { z } from "zod";
 import { feedCollectionFn } from "~/buyer/feed/fn/feedCollectionFn";
 import { getRootLogger } from "~/common/log/getRootLogger";
-import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 
 const logger = getRootLogger([
 	"tool",
@@ -21,7 +20,7 @@ Browse current buyer's saved feeds.
 This is a source of 'feedId'
     `.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(InputSchema),
+	parameters: InputSchema,
 	async execute(input) {
 		logger.trace("toolFeedBrowse", {
 			input,

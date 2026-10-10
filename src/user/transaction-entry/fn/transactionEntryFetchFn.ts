@@ -11,7 +11,7 @@ import { TransactionEntryQuerySchema } from "~/user/transaction-entry/server/sch
 import { TransactionEntrySchema } from "~/user/transaction-entry/server/schema/TransactionEntrySchema";
 
 export namespace transactionEntryFetchFn {
-	export type Error = Effect.Effect.Error<transactionEntryFetchFx>;
+	export type Error = Effect.Error<transactionEntryFetchFx>;
 }
 
 export const transactionEntryFetchFn = createServerFn()
@@ -20,7 +20,7 @@ export const transactionEntryFetchFn = createServerFn()
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(TransactionEntryQuerySchema)
+	.validator(TransactionEntryQuerySchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

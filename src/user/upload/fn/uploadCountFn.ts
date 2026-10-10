@@ -11,7 +11,7 @@ import { uploadCountFx } from "../server/fx/uploadCountFx";
 import { UploadCountQuerySchema } from "../server/schema/UploadCountQuerySchema";
 
 export namespace uploadCountFn {
-	export type Error = Effect.Effect.Error<uploadCountFx>;
+	export type Error = Effect.Error<uploadCountFx>;
 }
 
 export const uploadCountFn = createServerFn()
@@ -20,7 +20,7 @@ export const uploadCountFn = createServerFn()
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(UploadCountQuerySchema)
+	.validator(UploadCountQuerySchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

@@ -12,7 +12,7 @@ import { listingAttrDecimalPatchFx } from "../server/fx/listingAttrDecimalPatchF
 import { ListingAttrDecimalPatchSchema } from "../server/schema/ListingAttrDecimalPatchSchema";
 
 export namespace listingAttrDecimalPatchFn {
-	export type Error = Effect.Effect.Error<listingAttrDecimalPatchFx>;
+	export type Error = Effect.Error<listingAttrDecimalPatchFx>;
 }
 
 export const listingAttrDecimalPatchFn = createServerFn()
@@ -21,7 +21,7 @@ export const listingAttrDecimalPatchFn = createServerFn()
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(ListingAttrDecimalPatchSchema)
+	.validator(ListingAttrDecimalPatchSchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

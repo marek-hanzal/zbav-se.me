@@ -1,7 +1,6 @@
 import { tool } from "@openai/agents-core";
 import { EntitySchema } from "@/lib/common/schema";
 import { getRootLogger } from "~/common/log/getRootLogger";
-import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 import { listingFetchFn } from "../../fn/listingFetchFn";
 
 const logger = getRootLogger([
@@ -22,7 +21,7 @@ Hint:
 - If there are more images, tell the user
     `.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(InputSchema),
+	parameters: InputSchema,
 	async execute(input) {
 		logger.trace("toolListingDetail", {
 			input,

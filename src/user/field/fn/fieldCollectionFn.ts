@@ -11,7 +11,7 @@ import { FieldQuerySchema } from "~/user/field/server/schema/FieldQuerySchema";
 import { FieldSchema } from "../server/schema/FieldSchema";
 
 export namespace fieldCollectionFn {
-	export type Error = Effect.Effect.Error<fieldCollectionFx>;
+	export type Error = Effect.Error<fieldCollectionFx>;
 }
 
 export const fieldCollectionFn = createServerFn()
@@ -19,7 +19,7 @@ export const fieldCollectionFn = createServerFn()
 		withLogMiddleware,
 		withDatabaseMiddleware,
 	])
-	.inputValidator(FieldQuerySchema)
+	.validator(FieldQuerySchema)
 	.handler(async ({ data, context: { database, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

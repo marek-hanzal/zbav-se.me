@@ -1,4 +1,4 @@
-import type { Either } from "effect";
+import type { Result } from "effect";
 import { expect } from "vitest";
 import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
 
@@ -10,23 +10,20 @@ export namespace expectTaggedErrorFx {
 	}
 }
 
-export const expectTaggedErrorFx = <L, R>(
-	result: Either.Either<L, R>,
+export const expectTaggedErrorFx = <A, E>(
+	result: Result.Result<A, E>,
 	{ tag, message, messageIncludes }: expectTaggedErrorFx.Props,
 ) => {
-	const error = expectErrorFx(result) as {
-		_tag?: string;
-		message?: string;
-	};
+	const error = expectErrorFx(result);
 
-	expect(error._tag).toBe(tag);
+	expect(error).toHaveProperty("_tag", tag);
 
 	if (message !== undefined) {
-		expect(error.message).toBe(message);
+		expect(error).toHaveProperty("message", message);
 	}
 
 	if (messageIncludes !== undefined) {
-		expect(error.message).toContain(messageIncludes);
+		expect(error).toHaveProperty("message", expect.stringContaining(messageIncludes));
 	}
 
 	return error;

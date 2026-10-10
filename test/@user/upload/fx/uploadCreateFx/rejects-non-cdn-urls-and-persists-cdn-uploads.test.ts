@@ -16,7 +16,7 @@ describe("uploadCreateFx", () => {
 			const uploadConfig = yield* UploadConfigFx;
 			const validUrl = `${uploadConfig.cdn.replace(/\/$/, "")}/upload-create-valid.jpg`;
 
-			const invalid = yield* Effect.either(
+			const invalid = yield* Effect.result(
 				uploadCreateFx({
 					access: "private",
 					userId: user.id,

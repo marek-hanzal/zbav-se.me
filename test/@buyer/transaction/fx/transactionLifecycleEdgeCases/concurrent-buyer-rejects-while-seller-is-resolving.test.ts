@@ -41,7 +41,7 @@ describe("transactionLifecycleEdgeCases (buyer)", () => {
 				userId: seller.id,
 			});
 
-			const result = yield* Effect.either(
+			const result = yield* Effect.result(
 				transactionRejectFx({
 					transactionId: tx.id,
 					userId: buyer.id,

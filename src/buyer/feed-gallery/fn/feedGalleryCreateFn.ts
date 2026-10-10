@@ -12,7 +12,7 @@ import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { GallerySchema } from "~/user/gallery/server/schema/GallerySchema";
 
 export namespace feedGalleryCreateFn {
-	export type Error = Effect.Effect.Error<feedGalleryCreateFx>;
+	export type Error = Effect.Error<feedGalleryCreateFx>;
 }
 
 export const feedGalleryCreateFn = createServerFn({
@@ -23,7 +23,7 @@ export const feedGalleryCreateFn = createServerFn({
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(FeedGalleryCreateSchema)
+	.validator(FeedGalleryCreateSchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

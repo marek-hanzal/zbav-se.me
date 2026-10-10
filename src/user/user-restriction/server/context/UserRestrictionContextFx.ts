@@ -8,9 +8,9 @@ export interface UserRestrictionContext {
 	delay: Partial<Record<RestrictionEnumSchema.Type, number>>;
 }
 
-export class UserRestrictionContextFx extends Context.Tag("UserRestrictionContextFx")<
+export class UserRestrictionContextFx extends Context.Service<
 	UserRestrictionContextFx,
 	UserRestrictionContext
->() {
+>()("UserRestrictionContextFx") {
 	//
 }

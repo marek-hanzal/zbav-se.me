@@ -34,7 +34,7 @@ describe("transactionPatchFx", () => {
 					.executeTakeFirstOrThrow(),
 			);
 
-			const foreignAttempt = yield* Effect.either(
+			const foreignAttempt = yield* Effect.result(
 				transactionPatchFx({
 					userId: stranger.id,
 					patch: {

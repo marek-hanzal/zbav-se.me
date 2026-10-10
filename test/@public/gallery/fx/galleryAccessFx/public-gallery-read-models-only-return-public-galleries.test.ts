@@ -37,7 +37,7 @@ describe("public gallery access", () => {
 			const collection = yield* galleryCollectionFx({
 				scope: {},
 			});
-			const privateFetch = yield* Effect.either(
+			const privateFetch = yield* Effect.result(
 				galleryFetchFx({
 					where: {
 						id: privateGallery.id,

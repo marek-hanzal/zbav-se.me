@@ -44,7 +44,7 @@ describe("rateLimitCheckFx", () => {
 					now: () => fixedNow,
 				}),
 			);
-			const third = yield* Effect.either(
+			const third = yield* Effect.result(
 				rateLimitCheckFx({
 					rule: "listing:contact",
 					key: [

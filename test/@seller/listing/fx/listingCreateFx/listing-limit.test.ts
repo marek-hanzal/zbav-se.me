@@ -76,7 +76,7 @@ describe("listingCreateFx listing limit", () => {
 			const result = yield* listingCreateFx({
 				userId: seller.id,
 				draftId: genId(),
-			}).pipe(Effect.either);
+			}).pipe(Effect.result);
 
 			expectTaggedErrorFx(result, {
 				tag: "ResourceLimitErrorFx",

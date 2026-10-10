@@ -12,7 +12,7 @@ import { listingAttrNumberPatchFx } from "../server/fx/listingAttrNumberPatchFx"
 import { ListingAttrNumberPatchSchema } from "../server/schema/ListingAttrNumberPatchSchema";
 
 export namespace listingAttrNumberPatchFn {
-	export type Error = Effect.Effect.Error<listingAttrNumberPatchFx>;
+	export type Error = Effect.Error<listingAttrNumberPatchFx>;
 }
 
 export const listingAttrNumberPatchFn = createServerFn()
@@ -21,7 +21,7 @@ export const listingAttrNumberPatchFn = createServerFn()
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(ListingAttrNumberPatchSchema)
+	.validator(ListingAttrNumberPatchSchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

@@ -374,7 +374,7 @@ export const listingSeedFx = Effect.fn("listingSeedFx")(function* ({
 		yield* progress.log({
 			message: `Stored draft batch ${batchIndex + 1}/${batchCount} (${plans.length} listings)`,
 		});
-		yield* Effect.yieldNow();
+		yield* Effect.yieldNow;
 	}
 
 	yield* progress.finishPhase();
@@ -413,7 +413,7 @@ export const listingSeedFx = Effect.fn("listingSeedFx")(function* ({
 						});
 						publishedCount = nextCreatedCount;
 
-						yield* Effect.yieldNow();
+						yield* Effect.yieldNow;
 					}
 
 					if (createdCount == null && delta > 0) {
@@ -428,7 +428,7 @@ export const listingSeedFx = Effect.fn("listingSeedFx")(function* ({
 		yield* removeListingSeedBatchFx({
 			filePath,
 		});
-		yield* Effect.yieldNow();
+		yield* Effect.yieldNow;
 	}
 
 	yield* progress.finishPhase();

@@ -8,7 +8,6 @@ export default {
 		"version",
 		"type",
 		"sideEffects",
-		"scripts",
 		"dependencies",
 		"peerDependencies",
 		"devDependencies",

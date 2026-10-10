@@ -12,7 +12,7 @@ import { GalleryQuerySchema } from "~/user/gallery/server/schema/GalleryQuerySch
 import { GallerySchema } from "~/user/gallery/server/schema/GallerySchema";
 
 export namespace galleryCollectionFn {
-	export type Error = Effect.Effect.Error<galleryCollectionFx>;
+	export type Error = Effect.Error<galleryCollectionFx>;
 }
 
 export const galleryCollectionFn = createServerFn()
@@ -21,7 +21,7 @@ export const galleryCollectionFn = createServerFn()
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(GalleryQuerySchema)
+	.validator(GalleryQuerySchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",

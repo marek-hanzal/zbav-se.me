@@ -18,7 +18,7 @@ export const withCron08Fx = Effect.fn("withCron08Fx")(function* () {
 		},
 		{
 			concurrency: 2,
-			mode: "either",
+			mode: "result",
 		},
 	);
 });
