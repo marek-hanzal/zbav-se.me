@@ -1,6 +1,12 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
+import { useLocale } from "@/lib/client/locale";
+import { SpinnerContainer } from "@/lib/client/spinner";
+import { useTranslator } from "@/lib/client/translation";
+import { BackHomeButton } from "~/common/nav/BackHomeButton";
+import { TitleContainer } from "~/common/ui/container";
 import { withAgentThreadQuery } from "~/user/agent/query/withAgentThreadQuery";
-import { AgentThreadPage } from "~/user/agent/ui/AgentThreadPage";
+import { Agent } from "~/user/agent/ui/Agent";
+import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
 
 export const Route = createFileRoute("/$locale/app/agent/continue")({
 	async loader({ context: { queryClient }, params: { locale } }) {
@@ -38,5 +44,26 @@ export const Route = createFileRoute("/$locale/app/agent/continue")({
 			},
 		});
 	},
-	pendingComponent: AgentThreadPage.Fallback,
+	pendingComponent: () => {
+		const translator = useTranslator();
+		const locale = useLocale();
+
+		return (
+			<TitleContainer
+				textTitle={translator.text("Agent (title)")}
+				left={
+					<BackHomeButton
+						to="/$locale/app/agent/welcome"
+						params={{
+							locale,
+						}}
+						title={translator.text("Back to agent welcome page (aria)")}
+					/>
+				}
+				right={<HomeMenuButton />}
+			>
+				<SpinnerContainer />
+			</TitleContainer>
+		);
+	},
 });

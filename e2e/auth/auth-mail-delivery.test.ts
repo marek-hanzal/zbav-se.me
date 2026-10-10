@@ -99,9 +99,9 @@ test("auth sign up sends verification email", async ({ page, database }) => {
 	await page.goto("/cs/landing");
 	await page.click('[data-action="goto sign-up"]');
 	await page.waitForURL("/cs/sign-up");
-	await page.locator('[data-ui="SignUpPage[EmailInput]"]').fill(email);
-	await page.locator('[data-ui="SignUpPage[PasswordInput]"]').fill(password);
-	await page.locator('[data-ui="SignUpPage[ConfirmPasswordInput]"]').fill(password);
+	await page.locator('[data-ui="SignUp-[EmailInput]"]').fill(email);
+	await page.locator('[data-ui="SignUp-[PasswordInput]"]').fill(password);
+	await page.locator('[data-ui="SignUp-[ConfirmPasswordInput]"]').fill(password);
 	await page.locator('[data-action="sign up"]').click();
 	await page.waitForURL("/cs/app/welcome");
 
@@ -125,7 +125,7 @@ test("auth magic link sends email and signs in", async ({ page, database }) => {
 
 	await page.goto("/cs/app/home");
 	await page.waitForURL(/\/cs\/sign-in(?:\?.*)?$/);
-	const magicEmailInput = page.locator('[data-ui="SignInPage[MagicEmailInput]"]');
+	const magicEmailInput = page.locator('[data-ui="SignIn-[MagicEmailInput]"]');
 
 	await magicEmailInput.scrollIntoViewIfNeeded();
 	await magicEmailInput.fill(user.email);

@@ -14,7 +14,7 @@ import { withDraftQuery } from "~/seller/draft/query/withDraftQuery";
  * Renders a dedicated home menu draft navigation link with domain-specific state handling.
  * Use it when the home menu draft destination should be shown conditionally in navigation.
  *
- * @see src/@user/home/page/HomePage.tsx
+ * @see src/@routes/$locale/app/home.tsx
  */
 export namespace DraftLink {
 	export interface Props

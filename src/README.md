@@ -4,7 +4,9 @@ This is the application code.
 
 ## Layout
 
-- Keep screen and page component trees in `ui/`.
+- Compose screens directly in `src/@routes/`, including pending and error UI. There is no separate `*Page` component layer.
+- Keep reusable UI components in the owning domain's `ui/` folder. Routes read their own params, search, and loader data and pass the relevant values to those components; domain components do not import concrete route modules.
+- Prefer reusable forms, lists, cards, editors, and layout primitives. Small amounts of route composition duplication are acceptable.
 - Keep query wrappers in `query/`.
 - Keep mutation wrappers in `mutation/`.
 - Keep cross-domain public surfaces close to the concrete UI components and routes; `~public/` re-export wrappers are no longer used.

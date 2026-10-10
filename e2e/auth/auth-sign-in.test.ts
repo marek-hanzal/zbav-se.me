@@ -17,8 +17,8 @@ test("auth sign in", async ({ page, database }) => {
 
 	await page.waitForURL(/\/cs\/sign-in(?:\?.*)?$/);
 
-	await page.locator('[data-ui="SignInPage[EmailInput]"]').fill(user.email);
-	await page.locator('[data-ui="SignInPage[PasswordInput]"]').fill(TEST_USER_PASSWORD);
+	await page.locator('[data-ui="SignIn-[EmailInput]"]').fill(user.email);
+	await page.locator('[data-ui="SignIn-[PasswordInput]"]').fill(TEST_USER_PASSWORD);
 	await page.locator('[data-action="sign in"]').click();
 
 	await page.waitForURL("/cs/app/home");

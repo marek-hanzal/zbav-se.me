@@ -1,10 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useLocale } from "@/lib/client/locale";
+import { SpinnerContainer } from "@/lib/client/spinner";
+import { useTranslator } from "@/lib/client/translation";
 import { translator } from "@/lib/common/translation";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { getFeedDefaultCreate } from "~/buyer/feed/service/getFeedDefaultCreate";
-import { SearchPage } from "~/buyer/search/ui/SearchPage/SearchPage";
-import { SearchPagePending } from "~/buyer/search/ui/SearchPage/SearchPagePending";
+import { SearchEditor } from "~/buyer/search/ui/SearchEditor";
+import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { withTranslationsQuery } from "~/common/translation/query/withTranslationsQuery";
+import { TitleContainer } from "~/common/ui/container";
+import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
 
 export const Route = createFileRoute("/$locale/app/buyer/search")({
 	async loader({ context: { queryClient }, params: { locale } }) {
@@ -34,8 +39,66 @@ export const Route = createFileRoute("/$locale/app/buyer/search")({
 			))
 		);
 	},
-	pendingComponent: SearchPagePending,
+	pendingComponent: () => {
+		const translator = useTranslator();
+		const locale = useLocale();
+
+		return (
+			<TitleContainer
+				data-ui={"Search[TitleContainer.pending]"}
+				textTitle={translator.text("Search (title)")}
+				left={
+					<BackHomeButton
+						to="/$locale/app/home"
+						params={{
+							locale,
+						}}
+					/>
+				}
+				data-ui-layout="vertical-header-content"
+				right={<HomeMenuButton />}
+			>
+				<SpinnerContainer />
+			</TitleContainer>
+		);
+	},
 	component() {
-		return <SearchPage _suspense={"I know"} />;
+		const translator = useTranslator();
+		const locale = useLocale();
+		const {
+			data: { id: feedId },
+		} = withFeedQuery.useEntityQuery({
+			where: {
+				type: "search",
+			},
+			sort: [
+				{
+					field: "updatedAt",
+					order: "desc",
+				},
+			],
+		});
+
+		return (
+			<TitleContainer
+				data-ui={"Search[TitleContainer]"}
+				textTitle={translator.text("Search (title)")}
+				left={
+					<BackHomeButton
+						to="/$locale/app/home"
+						params={{
+							locale,
+						}}
+					/>
+				}
+				data-ui-layout="vertical-header-content"
+				right={<HomeMenuButton />}
+			>
+				<SearchEditor
+					_suspense={"I know"}
+					feedId={feedId}
+				/>
+			</TitleContainer>
+		);
 	},
 });

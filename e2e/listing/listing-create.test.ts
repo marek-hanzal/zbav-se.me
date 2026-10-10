@@ -36,9 +36,9 @@ test("new seller draft gallery uses the free plan photo limit", async ({ page, d
 	await page.click('[data-action="goto sign-up"]');
 	await page.waitForURL("/cs/sign-up");
 
-	await page.locator('[data-ui="SignUpPage[EmailInput]"]').fill(user.email);
-	await page.locator('[data-ui="SignUpPage[PasswordInput]"]').fill(user.password);
-	await page.locator('[data-ui="SignUpPage[ConfirmPasswordInput]"]').fill(user.password);
+	await page.locator('[data-ui="SignUp-[EmailInput]"]').fill(user.email);
+	await page.locator('[data-ui="SignUp-[PasswordInput]"]').fill(user.password);
+	await page.locator('[data-ui="SignUp-[ConfirmPasswordInput]"]').fill(user.password);
 	await page.locator('[data-action="sign up"]').click();
 
 	await page.waitForURL("/cs/app/welcome");
@@ -67,15 +67,15 @@ test("seller creates listing from draft flow", async ({ page, database }) => {
 	await page.click('[data-action="goto sign-in"]');
 	await page.waitForURL("/cs/sign-in");
 
-	await page.locator('[data-ui="SignInPage[EmailInput]"]').fill(user.email);
-	await page.locator('[data-ui="SignInPage[PasswordInput]"]').fill(TEST_USER_PASSWORD);
+	await page.locator('[data-ui="SignIn-[EmailInput]"]').fill(user.email);
+	await page.locator('[data-ui="SignIn-[PasswordInput]"]').fill(TEST_USER_PASSWORD);
 	await page.locator('[data-action="sign in"]').click();
 	await page.waitForURL("/cs/app/home");
 
 	await page.locator('[data-action="create listing"]').click();
 	await page.waitForURL(/\/cs\/app\/seller\/draft\/[^/]+\/edit$/);
 
-	await expect(page.locator('[data-ui="EditorPage"]')).toBeVisible();
+	await expect(page.locator('[data-ui="DraftEditor[TitleContainer]"]')).toBeVisible();
 	await page.locator('[data-action="set draft gallery"]').click();
 	await expect(page.locator('[data-ui="GalleryPatch"]')).toBeVisible();
 	await page.locator('[data-action="upload photo"]').first().setInputFiles(fixturePath);
@@ -114,7 +114,7 @@ test("seller creates listing from draft flow", async ({ page, database }) => {
 	await page.locator('[data-action="select expiration 7-days"]').click();
 	await clickSave(page);
 
-	await expect(page.locator('[data-ui="EditorPage"]')).toBeVisible();
+	await expect(page.locator('[data-ui="DraftEditor[TitleContainer]"]')).toBeVisible();
 	await expect(page.locator('[data-action="publish draft"]')).toBeEnabled();
 	await page.locator('[data-action="publish draft"]').click();
 

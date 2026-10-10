@@ -65,7 +65,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, draftId, view, ...props })
 
 	return (
 		<TitleContainer
-			data-ui={"EditorPage"}
+			data-ui={"DraftEditor[TitleContainer]"}
 			textTitle={translator.text("Listing editor (title)")}
 			left={
 				<BackHomeButton
@@ -266,7 +266,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, draftId, view, ...props })
 
 					<Group>
 						<RestrictionValue
-							data-ui={"set draft restriction"}
+							data-ui={"DraftEditor-[RestrictionValue]"}
 							restriction={draft.restriction}
 							action={<ChevronAction />}
 							data-ui-disabled={!draft.categoryId}

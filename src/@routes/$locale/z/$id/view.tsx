@@ -1,10 +1,12 @@
 import { createFileRoute, notFound, redirect } from "@tanstack/react-router";
+import { Container } from "@/lib/client/container";
+import { SpinnerContainer } from "@/lib/client/spinner";
 import { translator as coolTranslator } from "@/lib/common/translation";
 import { withTranslationsQuery } from "~/common/translation/query/withTranslationsQuery";
+import { FlowContainer } from "~/common/ui/container";
 import { withListingPingFn } from "~/public/listing/fn/withListingPingFn";
 import { withListingQuery } from "~/public/listing/query/withListingQuery";
-import { PublicListingPage } from "~/public/listing/ui/PublicListingPage";
-import { PublicListingPagePending } from "~/public/listing/ui/PublicListingPagePending";
+import { ListingCard } from "~/public/listing/ui/ListingCard";
 
 function toSingleLine(value: string | null | undefined) {
 	return value?.replace(/\s+/g, " ").trim() ?? "";
@@ -112,12 +114,28 @@ export const Route = createFileRoute("/$locale/z/$id/view")({
 	component() {
 		const { id } = Route.useParams();
 
+		const listingId = id;
+
 		return (
-			<PublicListingPage
-				listingId={id}
-				_suspense={"I know"}
-			/>
+			<FlowContainer data-ui={"PublicListing[FlowContainer]"}>
+				<Container
+					data-ui-height="full"
+					data-ui-width="full"
+					data-ui-scroll="vertical"
+				>
+					<ListingCard
+						_suspense={"I know"}
+						listingId={listingId}
+					/>
+				</Container>
+			</FlowContainer>
 		);
 	},
-	pendingComponent: PublicListingPagePending,
+	pendingComponent: () => {
+		return (
+			<FlowContainer data-ui={"PublicListingPending[FlowContainer]"}>
+				<SpinnerContainer />
+			</FlowContainer>
+		);
+	},
 });

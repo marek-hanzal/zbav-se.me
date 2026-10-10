@@ -27,14 +27,14 @@
 
 ## Routes and UI
 
-- Routes live in `src/@routes`; screen and page component trees live in the owning domain's local `ui/` folders. Query wrappers belong in `query/`, mutation wrappers in `mutation/`.
-- Each UI page route delegates rendering to its own domain `*Page`. Root/layout routes, redirects, and server/API/XML endpoints do not need artificial page components.
-- Route files contain route configuration, search validation, guards/loaders, metadata, and thin render adapters. Keep business logic and page UI in the owning domain.
-- Read `Route.useParams`, `Route.useSearch`, `Route.useLoaderData`, etc. in route adapters and inject the mapped values through props. `*Page` components must not import or call Route APIs.
+- Routes live in `src/@routes` and own screen composition directly, alongside route configuration, search validation, guards/loaders, and metadata. Do not introduce `*Page` components or a separate page layer.
+- Keep reusable UI components in the owning domain's local `ui/` folders, query wrappers in `query/`, mutation wrappers in `mutation/`, and business logic in its owning domain.
+- Read `Route.useParams`, `Route.useSearch`, `Route.useLoaderData`, etc. in route render callbacks and pass the relevant values to reusable components. Domain components must not import concrete route modules or call their Route APIs.
+- Prefer capable, reusable components over screen wrappers. Small amounts of route composition duplication are acceptable; pending and error composition also belong to the route.
 
 ## Code and components
 
-- Exactly one React component per file.
+- Exactly one reusable React component per file. TanStack route files may declare their own component, pending, and error render callbacks together.
 - Prefer namespace props: `export namespace ComponentName { export interface Props ... }` with `export const ComponentName: FC<ComponentName.Props>`.
 - Extend base UI props when applicable (`Container.Props`, `Button.Props`, ...), keep wrappers pass-through (`...props`), and merge `ui` defaults with `...ui` last. Prefer grouped `hooks` props for multiple callbacks.
 - No ad-hoc type holder files (`foo-props.ts`, `types.ts`, `type.ts`). Infer types from existing contracts or define named aliases beside the implementation; no inline complex types in signatures or variables.

@@ -33,8 +33,8 @@ async function signIn(
 	await page.goto("/cs/landing");
 	await page.locator('[data-action="goto sign-in"]').click();
 	await page.waitForURL("/cs/sign-in");
-	await page.locator('[data-ui="SignInPage[EmailInput]"]').fill(user.email);
-	await page.locator('[data-ui="SignInPage[PasswordInput]"]').fill(TEST_USER_PASSWORD);
+	await page.locator('[data-ui="SignIn-[EmailInput]"]').fill(user.email);
+	await page.locator('[data-ui="SignIn-[PasswordInput]"]').fill(TEST_USER_PASSWORD);
 	await page.locator('[data-action="sign in"]').click();
 	await page.waitForURL("/cs/app/home");
 }
@@ -92,8 +92,8 @@ test("buyer sees cron-expired transaction as a system message", async ({
 	await expect(page.getByText(title)).toBeVisible();
 	await page.locator(`[data-action="open listing detail"][data-id="${listing.id}"]`).click();
 
-	await expect(page.locator('[data-ui="ListingSheet"]')).toBeVisible();
-	await expectImageLoaded(page.locator('[data-ui="ListingSheet"] img').first());
+	await expect(page.locator('[data-ui="ListingSheet[BottomSheet]"]')).toBeVisible();
+	await expectImageLoaded(page.locator('[data-ui="ListingSheet[BottomSheet]"] img').first());
 
 	await page.locator('[data-action="create transaction"]').click();
 	await expect(page.locator('[data-action="open transactions"]')).toBeVisible();

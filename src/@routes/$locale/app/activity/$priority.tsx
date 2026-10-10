@@ -1,15 +1,44 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Suspense } from "react";
+import { useLocale } from "@/lib/client/locale";
+import { useTranslator } from "@/lib/client/translation";
 import { ActivityPriorityEnumSchema } from "~/common/activity/enum/ActivityPriorityEnumSchema";
-import { ActivityListPage } from "~/user/activity/ui/ActivityListPage/ActivityListPage";
+import { BackHomeButton } from "~/common/nav/BackHomeButton";
+import { TitleContainer } from "~/common/ui/container";
+import { ActivityList } from "~/user/activity/ui/ActivityList";
+import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
 
 export const Route = createFileRoute("/$locale/app/activity/$priority")({
 	component() {
-		const { priority } = Route.useParams();
+		const { priority: rawPriority } = Route.useParams();
+
+		const priority = ActivityPriorityEnumSchema.default("high")
+			.catch("high")
+			.parse(rawPriority);
+
+		const translator = useTranslator();
+		const locale = useLocale();
 
 		return (
-			<ActivityListPage
-				priority={ActivityPriorityEnumSchema.default("high").catch("high").parse(priority)}
-			/>
+			<TitleContainer
+				textTitle={translator.text("Activity (title)")}
+				left={
+					<BackHomeButton
+						to="/$locale/app/home"
+						params={{
+							locale,
+						}}
+					/>
+				}
+				right={<HomeMenuButton />}
+			>
+				<Suspense fallback={<ActivityList.Fallback />}>
+					<ActivityList
+						_suspense={"I know"}
+						priority={priority}
+					/>
+				</Suspense>
+			</TitleContainer>
 		);
 	},
 });

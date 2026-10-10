@@ -1,6 +1,34 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { MyListingPage } from "~/seller/listing/ui/MyListingPage/MyListingPage";
+import { Suspense } from "react";
+import { useLocale } from "@/lib/client/locale";
+import { useTranslator } from "@/lib/client/translation";
+import { BackHomeButton } from "~/common/nav/BackHomeButton";
+import { TitleContainer } from "~/common/ui/container";
+import { ListingList } from "~/seller/listing/ui/ListingList";
+import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
 
 export const Route = createFileRoute("/$locale/app/seller/listing/my")({
-	component: MyListingPage,
+	component() {
+		const translator = useTranslator();
+		const locale = useLocale();
+
+		return (
+			<TitleContainer
+				textTitle={translator.text("My listings (title)")}
+				left={
+					<BackHomeButton
+						to="/$locale/app/home"
+						params={{
+							locale,
+						}}
+					/>
+				}
+				right={<HomeMenuButton />}
+			>
+				<Suspense fallback={<ListingList.Fallback />}>
+					<ListingList _suspense={"I know"} />
+				</Suspense>
+			</TitleContainer>
+		);
+	},
 });
