@@ -1,8 +1,9 @@
+import { getLogger } from "@logtape/logtape";
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
+import { withLoggerFn } from "~/log/fn/withLoggerFn";
 import { routeFx } from "~/session-location/fx/routeFx";
-import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
-import { testabaseFn } from "~/test/testabaseFn";
+import { withTestGeoapifyFn } from "~/test/common/fn/withTestGeoapifyFn";
 
 const source = {
 	lat: 50.075539,
@@ -16,8 +17,6 @@ const target = {
 
 describe("routeFx", () => {
 	it("returns matrix distance from the live routing provider", async () => {
-		const database = await testabaseFn("routeFx-live-distance");
-
 		return Effect.gen(function* () {
 			const distance = yield* routeFx({
 				source,
@@ -27,6 +26,6 @@ describe("routeFx", () => {
 
 			expect(distance).toBeGreaterThan(100_000);
 			expect(distance).toBeLessThan(300_000);
-		}).pipe(withRuntimeFn(database), Effect.runPromise);
+		}).pipe(withTestGeoapifyFn(), withLoggerFn(getLogger("zbav-se.me")), Effect.runPromise);
 	});
 });

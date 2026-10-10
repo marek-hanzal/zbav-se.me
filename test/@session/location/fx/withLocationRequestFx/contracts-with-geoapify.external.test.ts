@@ -1,13 +1,12 @@
+import { getLogger } from "@logtape/logtape";
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
+import { withLoggerFn } from "~/log/fn/withLoggerFn";
 import { withLocationRequestFx } from "~/session-location/fx/withLocationRequestFx";
-import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
-import { testabaseFn } from "~/test/testabaseFn";
+import { withTestGeoapifyFn } from "~/test/common/fn/withTestGeoapifyFn";
 
 describe("withLocationRequestFx", () => {
 	it("returns parsed Geoapify features and respects observable request contract", async () => {
-		const database = await testabaseFn("withLocationRequestFx-geoapify");
-
 		return Effect.gen(function* () {
 			const features = yield* withLocationRequestFx({
 				text: "Praha",
@@ -30,6 +29,6 @@ describe("withLocationRequestFx", () => {
 			expect(typeof feature.properties.lat).toBe("number");
 			expect(typeof feature.properties.lon).toBe("number");
 			expect(feature.properties.rank.confidence).toBeGreaterThan(0);
-		}).pipe(withRuntimeFn(database), Effect.runPromise);
+		}).pipe(withTestGeoapifyFn(), withLoggerFn(getLogger("zbav-se.me")), Effect.runPromise);
 	});
 });

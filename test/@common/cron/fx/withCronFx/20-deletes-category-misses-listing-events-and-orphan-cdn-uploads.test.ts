@@ -14,10 +14,9 @@ import {
 describe("withCronFx schedule 20 cleanup", () => {
 	it("deletes stale category misses, listing events and orphan CDN uploads only", async () => {
 		const database = await testabaseFn("withCronFx-cleanup-20");
-		const removeObjectsMockFn = vi.fn();
-		const originalRemoveObjectsFn = Client.prototype.removeObjects;
-		Client.prototype.removeObjects =
-			removeObjectsMockFn as typeof Client.prototype.removeObjects;
+		const removeObjectsMockFn = vi
+			.spyOn(Client.prototype, "removeObjects")
+			.mockResolvedValue([]);
 
 		return Effect.gen(function* () {
 			const { seller } = yield* createUsersFx({});
@@ -81,14 +80,6 @@ describe("withCronFx schedule 20 cleanup", () => {
 				"cron/stale.jpg",
 				"cron/boundary.jpg",
 			]);
-		}).pipe(
-			Effect.ensuring(
-				Effect.sync(() => {
-					Client.prototype.removeObjects = originalRemoveObjectsFn;
-				}),
-			),
-			withRuntimeFn(database),
-			Effect.runPromise,
-		);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

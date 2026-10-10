@@ -12,10 +12,9 @@ import {
 describe("withCronFx schedule 16 cleanup", () => {
 	it("deletes stale user events and orphan CDN uploads only", async () => {
 		const database = await testabaseFn("withCronFx-cleanup-16");
-		const removeObjectsMockFn = vi.fn();
-		const originalRemoveObjectsFn = Client.prototype.removeObjects;
-		Client.prototype.removeObjects =
-			removeObjectsMockFn as typeof Client.prototype.removeObjects;
+		const removeObjectsMockFn = vi
+			.spyOn(Client.prototype, "removeObjects")
+			.mockResolvedValue([]);
 
 		return Effect.gen(function* () {
 			const user = yield* Effect.promise(() =>
@@ -67,14 +66,6 @@ describe("withCronFx schedule 16 cleanup", () => {
 				"cron/stale.jpg",
 				"cron/boundary.jpg",
 			]);
-		}).pipe(
-			Effect.ensuring(
-				Effect.sync(() => {
-					Client.prototype.removeObjects = originalRemoveObjectsFn;
-				}),
-			),
-			withRuntimeFn(database),
-			Effect.runPromise,
-		);
+		}).pipe(withRuntimeFn(database), Effect.runPromise);
 	});
 });

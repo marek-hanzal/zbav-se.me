@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import path from "node:path";
 import type { APIRequestContext } from "@playwright/test";
 import { test as base, expect } from "@playwright/test";
+import { cleanupDatabaseFn } from "./utils/cleanupDatabaseFn";
 import { testabaseFn } from "./utils/testabaseFn";
 
 const appOrigin = process.env.VITE_ORIGIN ?? "https://zbav-se.me.localhost:1355";
@@ -68,9 +69,18 @@ export const testFn = base.extend<TestArgs>({
 	async appOrigin({}, useFn) {
 		await useFn(appOrigin);
 	},
-	async db({ dbName }, useFn, testInfo) {
-		await useFn(
-			dbName ??
+	async db({ database }, useFn) {
+		await useFn(database.databaseName);
+	},
+	async database({ appOrigin, dbName, playwright }, useFn, testInfo) {
+		if (process.env.ZBAV_E2E_RUN !== "1") {
+			throw new Error("Run E2E through argc e2e to allocate an isolated database");
+		}
+		let cleanupFn = async () => {};
+
+		const database = await testabaseFn({
+			name:
+				dbName ??
 				toDatabaseNameFn(
 					testInfo.file,
 					testInfo.project.name,
@@ -78,28 +88,44 @@ export const testFn = base.extend<TestArgs>({
 					testInfo.workerIndex,
 					testInfo.retry,
 				),
-		);
-	},
-	async database({ db }, useFn) {
-		let cleanupFn = async () => {};
-
-		const database = await testabaseFn({
-			name: db,
 			onTestFinishedFn(callbackFn) {
 				cleanupFn = callbackFn;
 			},
 		});
 
-		await useFn(database);
+		const closePoolFn = async () => {
+			const request = await playwright.request.newContext({
+				baseURL: appOrigin,
+				ignoreHTTPSErrors: true,
+				timeout: 5_000,
+			});
 
-		await fetch(new URL("/api/e2e", appOrigin), {
-			method: "DELETE",
-			headers: {
-				"x-e2e-db": db,
-			},
-		});
+			try {
+				const response = await request.delete("/api/e2e", {
+					headers: {
+						"x-e2e-db": database.databaseName,
+					},
+				});
 
-		await cleanupFn();
+				if (!response.ok()) {
+					throw new Error(
+						`Application database pool cleanup failed (${response.status()})`,
+					);
+				}
+			} finally {
+				await request.dispose();
+			}
+		};
+
+		try {
+			await useFn(database);
+		} finally {
+			await cleanupDatabaseFn({
+				databaseName: database.databaseName,
+				closePoolFn,
+				cleanupFn,
+			});
+		}
 	},
 	async withRequestFn({ appOrigin, db, playwright }, useFn) {
 		const contexts = new Set<APIRequestContext>();
@@ -126,25 +152,22 @@ export const testFn = base.extend<TestArgs>({
 			}
 		};
 
-		await useFn(withRequestFn);
-
-		await Promise.all(
-			Array.from(contexts).map(async (context) => {
-				await context.dispose();
-			}),
-		);
+		try {
+			await useFn(withRequestFn);
+		} finally {
+			await Promise.all(
+				Array.from(contexts).map(async (context) => {
+					await context.dispose();
+				}),
+			);
+		}
 	},
-	async page({ page, db, database }, useFn) {
-		void database;
+	// Allocate the DB before the inherited context so its teardown runs last.
+	async context({ appOrigin, db, context }, useFn) {
+		const isAppUrlFn = (url: URL) => url.origin === new URL(appOrigin).origin;
 
-		await page.context().route("**/*", async (route) => {
+		await context.route(isAppUrlFn, async (route) => {
 			const request = route.request();
-			const isAppRequest = new URL(request.url()).origin === appOrigin;
-
-			if (!isAppRequest) {
-				await route.continue();
-				return;
-			}
 
 			await route.continue({
 				headers: {
@@ -155,11 +178,10 @@ export const testFn = base.extend<TestArgs>({
 		});
 
 		try {
-			await useFn(page);
+			await useFn(context);
 		} finally {
-			if (!page.isClosed()) {
-				await page.close();
-			}
+			// Close every page before evicting the server pool or dropping the clone.
+			await context.close();
 		}
 	},
 });

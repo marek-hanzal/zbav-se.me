@@ -108,8 +108,8 @@ fix() {
 
 # @cmd Run Vitest tests
 #
-# Requires: Docker. Creates a disposable PostgreSQL container on port 55433 and writes coverage.
-# Do not overlap Vitest runs: they share container names and coverage outputs.
+# Database integration tests require Docker; unit and external projects do not.
+# Each integration run gets its own container and free port. Coverage outputs are shared.
 # @arg args~ Test paths and options passed to Vitest run
 test() {
 	dotenv -c development -- vitest run "$@"
@@ -118,11 +118,11 @@ test() {
 # @cmd Run Playwright tests; supports --ui and --headed
 #
 # Requires: Docker, Chromium, Mailpit, and an available app origin (HTTPS proxy by default).
-# Builds and starts a compiled test server; uses disposable PostgreSQL on port 55432.
+# Builds and starts a compiled test server; uses a unique PostgreSQL container and free port.
 # Writes build outputs and test artifacts. See README.md to isolate it from a running dev app.
 # @arg args~ Test paths and options passed to Playwright test
 e2e() {
-	dotenv -c development -- playwright test "$@"
+	dotenv -c development -- tsx ./cli/e2e.ts "$@"
 }
 
 # @cmd Install Chromium and its system dependencies

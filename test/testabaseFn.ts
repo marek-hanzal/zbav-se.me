@@ -1,15 +1,27 @@
 import { Effect } from "effect";
-import { onTestFinished } from "vitest";
+import { inject, onTestFinished } from "vitest";
 import type { Database } from "~/database/type/Database";
 import { withDatabaseFx } from "~/database-query/fx/withDatabaseFx";
 import { MigrationContextFx } from "~/database-query/service/MigrationContextFx";
 import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
-import { ServerDatabaseSchema } from "~/server-env/schema/ServerDatabaseSchema";
 import { testabaseFn as coolTestabaseFn } from "~/test-database/fn/testabaseFn";
 
+declare module "vitest" {
+	export interface ProvidedContext {
+		testDatabaseDsn: string;
+	}
+}
+
 export const testabaseFn = (name: string) => {
+	const dsn = inject("testDatabaseDsn");
+	if (!dsn) {
+		throw new Error(
+			"Database tests require the integration project. Remove the .unit suffix from this test file.",
+		);
+	}
+
 	return coolTestabaseFn({
-		dsn: ServerDatabaseSchema.parse(process.env).SERVER_DATABASE_URL,
+		dsn,
 		databaseFx: withDatabaseFx<Database>({
 			logger: getRootLoggerFn([
 				"db",

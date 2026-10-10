@@ -6,20 +6,25 @@ export async function waitForConnectFn(dsn: string, timeoutMs = 15_000) {
 	let lastError = "unknown";
 
 	while (Date.now() - started < timeoutMs) {
+		const client = new Client({
+			connectionString: dsn,
+			connectionTimeoutMillis: 250,
+			query_timeout: 1_000,
+		});
 		try {
-			const client = new Client({
-				connectionString: dsn,
-				connectionTimeoutMillis: 250,
-			});
 			await client.connect();
 			await client.query("select 1");
-			await client.end();
 			return;
 		} catch (error) {
 			lastError = error instanceof Error ? error.message : String(error);
-			await sleepFn(75);
+		} finally {
+			await client.end();
 		}
+		await sleepFn(75);
 	}
 
-	throw new Error(`Postgres not accepting connections: ${dsn}\n${lastError}`);
+	const target = new URL(dsn);
+	throw new Error(
+		`Postgres not accepting connections at ${target.host}${target.pathname}\n${lastError}`,
+	);
 }

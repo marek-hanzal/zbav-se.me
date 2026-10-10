@@ -47,13 +47,12 @@ async function waitForMailpitMessageFn({ recipient, subject }: MessageMatch) {
 	const deadline = Date.now() + 20_000;
 
 	while (Date.now() < deadline) {
-		const listResponse = await fetch(new URL("/api/v1/messages", mailpitBaseUrl));
+		const listResponse = await fetch(new URL("/api/v1/messages", mailpitBaseUrl), {
+			signal: AbortSignal.timeout(2_000),
+		});
 
 		if (!listResponse.ok) {
-			await new Promise((resolveFn) => {
-				setTimeout(resolveFn, 500);
-			});
-			continue;
+			throw new Error(`Mailpit message listing failed (${listResponse.status})`);
 		}
 
 		const list = (await listResponse.json()) as MailpitMessageList;
@@ -70,6 +69,9 @@ async function waitForMailpitMessageFn({ recipient, subject }: MessageMatch) {
 		if (message) {
 			const messageResponse = await fetch(
 				new URL(`/api/v1/message/${message.ID}`, mailpitBaseUrl),
+				{
+					signal: AbortSignal.timeout(2_000),
+				},
 			);
 
 			if (messageResponse.ok) {
@@ -118,6 +120,16 @@ testFn("auth magic link sends email and signs in", async ({ page, database }) =>
 	const user = await leaseTestUserFx({
 		key: "a",
 	}).pipe(withRuntimeFn(database), Effect.runPromise);
+	const email = `${genIdFn()}@x32.cz`;
+
+	await database.kysely
+		.updateTable("user")
+		.set({
+			email,
+		})
+		.where("id", "=", user.id)
+		.executeTakeFirstOrThrow();
+
 	const translator = await withTranslatorFx({
 		locale: "cs",
 	}).pipe(withRuntimeFn(database), Effect.runPromise);
@@ -128,12 +140,12 @@ testFn("auth magic link sends email and signs in", async ({ page, database }) =>
 	const magicEmailInput = page.locator('[data-ui="SignIn-[MagicEmailInput]"]');
 
 	await magicEmailInput.scrollIntoViewIfNeeded();
-	await magicEmailInput.fill(user.email);
+	await magicEmailInput.fill(email);
 	await page.locator('[data-action="sign in with magic link"]').click();
 	await page.waitForURL("/cs/status/magic-link");
 
 	const mail = await waitForMailpitMessageFn({
-		recipient: user.email,
+		recipient: email,
 		subject,
 	});
 
@@ -146,36 +158,34 @@ testFn("auth magic link sends email and signs in", async ({ page, database }) =>
 	await expect(page.locator('[data-ui="HomeMenu[Container]"]')).toBeVisible();
 });
 
-testFn("auth magic link rate limit returns a client-safe error", async ({ page, db, database }) => {
-	void database;
+testFn(
+	"auth magic link rate limit returns a client-safe error",
+	async ({ appOrigin, withRequestFn }) => {
+		const email = `${genIdFn()}@x32.cz`;
+		const body = {
+			email,
+			callbackURL: new URL("/cs/app/home", appOrigin).toString(),
+		};
+		const expectedMessage = "Too many magic link requests. Please try again later.";
 
-	const email = `${genIdFn()}@x32.cz`;
-	const body = {
-		email,
-		callbackURL: new URL("/cs/app/home", process.env.VITE_ORIGIN).toString(),
-	};
-	const headers = {
-		"x-e2e-db": db,
-	};
-	const expectedMessage = "Too many magic link requests. Please try again later.";
+		await withRequestFn(async (request) => {
+			for (let attempt = 0; attempt < 3; attempt++) {
+				const response = await request.post("/api/auth/sign-in/magic-link", {
+					data: body,
+				});
 
-	for (let attempt = 0; attempt < 3; attempt++) {
-		const response = await page.request.post("/api/auth/sign-in/magic-link", {
-			data: body,
-			headers,
+				expect(response.ok()).toBe(true);
+			}
+
+			const response = await request.post("/api/auth/sign-in/magic-link", {
+				data: body,
+			});
+			const text = await response.text();
+
+			expect(response.status()).toBe(429);
+			expect(text).toContain(expectedMessage);
+			expect(text).not.toContain("SERVER_ERROR");
+			expect(text).not.toContain("FiberFailure");
 		});
-
-		expect(response.ok()).toBe(true);
-	}
-
-	const response = await page.request.post("/api/auth/sign-in/magic-link", {
-		data: body,
-		headers,
-	});
-	const text = await response.text();
-
-	expect(response.status()).toBe(429);
-	expect(text).toContain(expectedMessage);
-	expect(text).not.toContain("SERVER_ERROR");
-	expect(text).not.toContain("FiberFailure");
-});
+	},
+);

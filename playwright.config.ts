@@ -1,11 +1,13 @@
 import { defineConfig, devices } from "@playwright/test";
 
 const appOrigin = process.env.VITE_ORIGIN ?? "https://zbav-se.me.localhost:1355";
-const e2eWorkers = Number.parseInt(process.env.E2E_WORKERS ?? "8", 10);
+const e2eWorkers = Number(process.env.E2E_WORKERS ?? "8");
+if (!Number.isInteger(e2eWorkers) || e2eWorkers < 1) {
+	throw new Error("E2E_WORKERS must be a positive integer");
+}
 
 export default defineConfig({
 	testDir: "./e2e",
-	globalSetup: "./e2e/init.ts",
 	outputDir: "./results",
 	timeout: 60_000,
 	workers: e2eWorkers,
@@ -19,12 +21,12 @@ export default defineConfig({
 			timeout: 60_000,
 			env: {
 				...process.env,
-				SERVER_DATABASE_URL: "postgresql://postgres:postgres@localhost:55432/postgres",
 				SERVER_E2E: "e2e",
 			},
 		},
 	],
 	failOnFlakyTests: true,
+	forbidOnly: Boolean(process.env.CI),
 	fullyParallel: false,
 	reporter: process.env.CI
 		? [
@@ -47,9 +49,10 @@ export default defineConfig({
 		baseURL: appOrigin,
 		ignoreHTTPSErrors: true,
 		locale: "cs-CZ",
+		serviceWorkers: "block",
 		trace: "retain-on-failure",
-		screenshot: "on",
-		video: "on",
+		screenshot: "only-on-failure",
+		video: "retain-on-failure",
 	},
 	projects: [
 		{

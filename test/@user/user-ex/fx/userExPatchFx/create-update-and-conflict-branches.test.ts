@@ -1,14 +1,13 @@
 import { Effect } from "effect";
 import { PostgresDialect, sql } from "kysely";
 import { Pool } from "pg";
-import { describe, expect, it } from "vitest";
+import { describe, expect, inject, it } from "vitest";
 import type { Database } from "~/database/type/Database";
 import { withDatabaseNameFn } from "~/database-query/fn/withDatabaseNameFn";
 import { withDialectFn } from "~/database-query/fn/withDialectFn";
 import { withDatabaseFx } from "~/database-query/fx/withDatabaseFx";
 import { MigrationContextFx } from "~/database-query/service/MigrationContextFx";
 import { getRootLoggerFn } from "~/log/fn/getRootLoggerFn";
-import { ServerDatabaseSchema } from "~/server-env/schema/ServerDatabaseSchema";
 import { expectErrorFn } from "~/test/common/fx/expectErrorFn";
 import { withRuntimeFn } from "~/test/common/fx/withRuntimeFn";
 import { testabaseFn } from "~/test/testabaseFn";
@@ -18,7 +17,6 @@ import { userExPatchFx } from "~/user-ex/fx/userExPatchFx";
 describe("userExPatchFx", () => {
 	it("creates when missing, updates when existing, and hits conflict branch on concurrent create", async () => {
 		const database = await testabaseFn("userExPatchFx-create-update-conflict");
-		const databaseConfig = ServerDatabaseSchema.parse(process.env);
 		const secondDatabase = await withDatabaseFx<Database>({
 			logger: getRootLoggerFn([
 				"db",
@@ -28,8 +26,8 @@ describe("userExPatchFx", () => {
 				new PostgresDialect({
 					pool: new Pool({
 						connectionString: withDatabaseNameFn({
-							dsn: databaseConfig.SERVER_DATABASE_URL,
-							name: "userExPatchFx-create-update-conflict",
+							dsn: inject("testDatabaseDsn"),
+							name: database.databaseName,
 						}),
 						application_name: "userExPatchFx:secondary",
 						max: 1,

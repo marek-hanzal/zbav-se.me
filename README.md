@@ -87,8 +87,8 @@ underlying tool's full option reference.
 | `check:boundaries` | Enforce domain boundaries with Dependency Cruiser. | Downloads pinned tools to npm's cache if missing; first run needs registry access. |
 | `check:deps` | Report unused dependencies with Knip. | Reports candidates for source review; does not automatically remove them. |
 | `fix` | Normalize manifest ordering and apply Biome formatting and safe fixes. | Changes `package.json` and selected source files; defaults to the whole project. |
-| `test` | Run Vitest; needs Docker. | Uses disposable PostgreSQL on `55433` and writes coverage. |
-| `e2e` | Run Playwright; needs Docker, Chromium, Mailpit, and an available app origin. | Builds and starts the test server, uses disposable PostgreSQL on `55432`, and writes test artifacts. |
+| `test` | Run Vitest; database integration tests need Docker. | Unit, integration, and real external service projects; disposable PostgreSQL uses a free port. Writes coverage. |
+| `e2e` | Run Playwright; needs Docker, Chromium, Mailpit, and an available app origin. | Prepares disposable PostgreSQL on a free port, builds and starts the test server, and writes test artifacts. |
 | `e2e:install` | Install Chromium and system dependencies; needs network access. | Downloads browser files; Linux system packages may require elevated privileges. |
 | `verify` | Run `check`, `test`, `e2e`, then `build` sequentially. | Writes test/build artifacts; stops at the first failure. Does not run `fix` or update dependencies. |
 | `deps:update` | Update all dependency versions through Syncpack, then install with npm. | May include major upgrades; changes the manifest, lockfile, and installed dependencies. |
@@ -233,8 +233,11 @@ argc build
 Run relevant tests when behavior changes. `argc verify` is the full gate: static
 checks, Vitest, Playwright, and build. It stops at the first failure and runs each
 stage sequentially. Use focused commands to filter tests or pass tool options.
-Vitest uses a temporary PostgreSQL container on port `55433`; Playwright uses
-its own container on `55432`. Never overlap two runs of the same suite.
+Each database test run gets a unique PostgreSQL container and an available
+loopback port. Vitest unit and external projects do not start PostgreSQL.
+Coverage, E2E reports, and application build outputs are still shared; coordinate
+runs that write to the same directories. See [Vitest tests](test/README.md) and
+[E2E tests](e2e/README.md) for fixture contracts and focused commands.
 
 To run the full gate alongside an existing development app, use a separate
 compiled server and the local Mailpit inbox from `docker compose up -d`:

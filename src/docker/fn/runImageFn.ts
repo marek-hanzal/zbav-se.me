@@ -11,7 +11,6 @@ export namespace runImageFn {
 		 */
 		image: string;
 		flags?: string[];
-		props?: Record<string, string | number>;
 		env?: Record<string, string | number>;
 		/**
 		 * Exposed ports (optional)
@@ -25,7 +24,6 @@ export function runImageFn({
 	name,
 	image,
 	flags = [],
-	props = {},
 	env = {},
 	port = [],
 	message,
@@ -39,13 +37,6 @@ export function runImageFn({
 			name,
 			"--rm",
 			...flags,
-			//
-			...Object.entries(props).flatMap(([k, v]) => {
-				return [
-					"-e",
-					`${k}=${v}`,
-				];
-			}),
 			//
 			...Object.entries(env).flatMap(([k, v]) => {
 				return [

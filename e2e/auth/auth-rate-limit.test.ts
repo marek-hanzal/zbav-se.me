@@ -51,7 +51,8 @@ testFn("auth sign up rate limit", async ({ database, withRequestFn }) => {
 			});
 		});
 
-		expect(response.status).not.toBe(429);
+		expect(response.status).toBeGreaterThanOrEqual(200);
+		expect(response.status).toBeLessThan(300);
 	}
 
 	const blockedUser = createUserFn();
@@ -78,7 +79,8 @@ testFn("auth password reset request rate limit", async ({ appOrigin, database, w
 				redirectTo,
 			});
 
-			expect(response.status).not.toBe(429);
+			expect(response.status).toBeGreaterThanOrEqual(200);
+			expect(response.status).toBeLessThan(300);
 		}
 
 		const blockedResponse = await postAuthFn(request, `/api/auth${requestPasswordResetPath}`, {

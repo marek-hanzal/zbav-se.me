@@ -1,6 +1,6 @@
 import { resolve } from "node:path";
 import react from "@vitejs/plugin-react";
-import { defineConfig } from "vitest/config";
+import { defaultExclude, defineConfig } from "vitest/config";
 
 export default defineConfig({
 	build: {
@@ -29,13 +29,41 @@ export default defineConfig({
 		],
 	},
 	test: {
-		globalSetup: [
-			"./test/init.ts",
-		],
 		environment: "node",
 		globals: true,
-		include: [
-			"./test/**/*.test.ts",
+		projects: [
+			{
+				test: {
+					name: "unit",
+					include: [
+						"./test/**/*.unit.test.ts",
+					],
+				},
+			},
+			{
+				test: {
+					name: "integration",
+					include: [
+						"./test/**/*.test.ts",
+					],
+					exclude: [
+						...defaultExclude,
+						"**/*.unit.test.ts",
+						"**/*.external.test.ts",
+					],
+					globalSetup: [
+						"./test/init.ts",
+					],
+				},
+			},
+			{
+				test: {
+					name: "external",
+					include: [
+						"./test/**/*.external.test.ts",
+					],
+				},
+			},
 		],
 		chaiConfig: {
 			truncateThreshold: 0,
@@ -46,8 +74,11 @@ export default defineConfig({
 			maxDepth: 12,
 		},
 		slowTestThreshold: 1_000,
-		passWithNoTests: true,
-		isolate: false,
+		passWithNoTests: false,
+		isolate: true,
+		restoreMocks: true,
+		unstubGlobals: true,
+		unstubEnvs: true,
 		sequence: {
 			shuffle: false,
 		},
@@ -86,7 +117,7 @@ export default defineConfig({
 				"src/*/tool/**/*.ts",
 				"src/database/fx/databaseFx.ts",
 			],
-			reportOnFailure: false,
+			reportOnFailure: true,
 			watermarks: {
 				statements: [
 					45,
@@ -106,7 +137,6 @@ export default defineConfig({
 				],
 			},
 		},
-		bail: 1,
 		silent: false,
 		ui: false,
 	},
