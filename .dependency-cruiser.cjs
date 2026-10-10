@@ -895,6 +895,7 @@ module.exports = {
 			from: {
 				orphan: true,
 				pathNot: [
+					"^src/database-migration/script/migrate[.]ts$", // standalone executable
 					"(^|/)[.][^/]+[.](?:js|cjs|mjs|ts|cts|mts|json)$", // dot files
 					"[.]d[.]ts$", // TypeScript declaration files
 					"(^|/)tsconfig[.]json$", // TypeScript config

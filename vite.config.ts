@@ -11,6 +11,7 @@ export default defineConfig(({ mode }) => {
 
 	return {
 		clearScreen: false,
+		envDir: process.env.ZBAV_SE_ME_RELEASE === "1" ? false : undefined,
 		base: process.env.VITE_APP_ASSETS,
 		resolve: {
 			alias: {

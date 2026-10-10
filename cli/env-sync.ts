@@ -44,14 +44,14 @@ function printUsageFn(reason?: string, exitCode = 1): never {
 		console.error("");
 	}
 
-	console.error("Usage: argc env:sync <environment> <vercel-project-id>");
+	console.error("Usage: argc env-sync <environment> <vercel-project-id>");
 	console.error("");
 	console.error(`Available environments: ${availableEnvironments.join(", ") || "(none found)"}`);
 	console.error("");
 	console.error("Examples:");
 
 	for (const environment of availableEnvironments) {
-		console.error(`  argc env:sync ${environment} prj_xxx`);
+		console.error(`  argc env-sync ${environment} prj_xxx`);
 	}
 
 	process.exit(exitCode);

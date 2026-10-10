@@ -1,0 +1,39 @@
+{
+	"prefix": "zbav-se-me",
+	"team": "zbav-se-me",
+	"bunny": "de",
+	"neon": "aws-eu-central-1",
+	"vercel": "fra1",
+	"domain": "zbav-se.me",
+	"dns": {
+		"dev": {
+			"app": "dev",
+			"assets": "cdn.dev",
+			"content": "content.dev",
+			"records": {}
+		},
+		"uat": {
+			"app": "uat",
+			"assets": "cdn.uat",
+			"content": "content.uat",
+			"records": {}
+		},
+		"prod": {
+			"app": "",
+			"assets": "cdn",
+			"content": "content",
+			"records": {
+				"google": {
+					"name": "",
+					"type": "TXT",
+					"value": "google-site-verification=WuEvra1GNXnlTZLVkO8DFEjDEMiPFAZiMOhxCKKzJ94"
+				},
+				"resend": {
+					"name": "resend._domainkey",
+					"type": "TXT",
+					"value": "p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDESTFKhoOr28QPvSm4nelTznl3HGEcB8MepCcG0AjK0eEWKwSeIJmeDY4Ti4TsKCi5sbnJGHiabN7knoKdl9hR+R+jHAUQsNzt9QzYrvNXpfYCW3RCd7y591hcTGShrfvmZg7jsZ9vfKZODlZW0hkNWjulYckyBJXlwl9objwXiQIDAQAB"
+				}
+			}
+		}
+	}
+}

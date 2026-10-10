@@ -5,10 +5,11 @@ const config: KnipConfig = {
 	entry: [
 		"src/_route.ts",
 		"src/@routes/**/*.{ts,tsx}",
+		"src/database-migration/script/migrate.ts",
 		"cli/**/*.ts",
 		"test/**/*.ts",
 		"e2e/**/*.ts",
-		"vite.config.ts",
+		"vite*.config.ts",
 		"tailwind.config.ts",
 	],
 	project: [
@@ -16,7 +17,7 @@ const config: KnipConfig = {
 		"src/**/*.{ts,tsx}",
 		"test/**/*.{ts,tsx}",
 		"e2e/**/*.{ts,tsx}",
-		"vite.config.ts",
+		"vite*.config.ts",
 		"tailwind.config.ts",
 	],
 	ignoreDependencies: [
