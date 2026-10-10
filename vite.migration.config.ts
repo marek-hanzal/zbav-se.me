@@ -17,6 +17,9 @@ export default defineConfig({
 		target: "node24",
 		minify: false,
 		rolldownOptions: {
+			checks: {
+				moduleLevelDirective: false,
+			},
 			// Better Auth's cookie hook imports Start lazily; migrations never run it.
 			external: [
 				"pg-native",

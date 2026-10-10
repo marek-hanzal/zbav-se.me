@@ -13,7 +13,7 @@ resource "bunnynet_dns_record" "app" {
   name = local.dns.app
   type = "CNAME"
   # Bunny automatically flattens the production apex CNAME into A/AAAA answers.
-  value       = data.vercel_domain_config.app.recommended_cname
+  value       = trimsuffix(data.vercel_domain_config.app.recommended_cname, ".")
   accelerated = false
 }
 
@@ -23,7 +23,7 @@ resource "bunnynet_dns_record" "cdn" {
   zone        = data.bunnynet_dns_zone.app.id
   name        = local.dns[each.key]
   type        = "CNAME"
-  value       = each.value.cdn_domain
+  value       = "${each.value.name}.${each.value.cdn_domain}"
   accelerated = false
 }
 

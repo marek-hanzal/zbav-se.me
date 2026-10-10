@@ -49,7 +49,7 @@ output "cdn" {
     for key, zone in bunnynet_pullzone.app : key => {
       name  = local.hosts[key]
       type  = "CNAME"
-      value = zone.cdn_domain
+      value = "${zone.name}.${zone.cdn_domain}"
     }
   }
 }

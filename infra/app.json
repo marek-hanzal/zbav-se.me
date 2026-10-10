@@ -1,8 +1,10 @@
 {
 	"prefix": "zbav-se-me",
 	"team": "zbav-se-me",
+	"org": "org-ancient-grass-37795644",
 	"bunny": "de",
 	"neon": "aws-eu-central-1",
+	"history": 21600,
 	"vercel": "fra1",
 	"domain": "zbav-se.me",
 	"dns": {

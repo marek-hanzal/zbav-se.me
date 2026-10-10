@@ -30,7 +30,8 @@ locals {
   dns    = local.config.dns[terraform.workspace]
   name   = "${local.config.prefix}-${terraform.workspace}"
   domain = local.dns.app == "" ? local.config.domain : "${local.dns.app}.${local.config.domain}"
-  path   = "${path.module}/../../.release/${terraform.workspace}"
+  # Vercel strips this prefix literally; match the data source's normalized paths.
+  path = ".release/${terraform.workspace}"
 
   environment = {
     name            = terraform.workspace

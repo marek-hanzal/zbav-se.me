@@ -104,10 +104,14 @@ underlying tool's full option reference.
 | `infra-bootstrap-plan` | Preview changes to the private Terraform state zone and shared DNS zone. | Reads infrastructure and state; saves no plan file. |
 | `infra-bootstrap-apply` | Import/update the Terraform state zone and manage shared DNS after interactive review. | Writes remote state and applies zone changes; Terraform asks for confirmation. |
 | `infra-init <dev\|uat\|prod>` | Initialize an application Terraform workspace after bootstrap. | Connects to S3 and creates/selects the workspace; may write empty remote state. |
-| `release <dev\|uat\|prod>` | Build app and migration artifacts using public environment configuration. | Writes `.release/<environment>` and shared build outputs; no cloud operations or dotenv loading. |
+| `release <dev\|uat\|prod>` | Build app and migration artifacts using public environment configuration. | Writes `infra/app/.release/<environment>` and shared build outputs; no cloud operations or dotenv loading. |
 | `infra-plan <dev\|uat\|prod>` | Preview application infrastructure and the built release. | Requires `release` and encrypted application values; does not create workspaces or save a plan. |
 | `infra-apply <dev\|uat\|prod>` | Apply infrastructure, migrations, assets, and the built release. | Writes remote state, runs the local migrator, and uploads assets through the Bunny provider after Terraform confirmation. |
 | `deploy <dev\|uat\|prod>` | Run static checks, all Vitest projects, release build, then Terraform apply. | Uses SOPS application values, disposable test PostgreSQL, and an interactive apply confirmation. |
+
+Application, Nitro, and migration builds suppress Rolldown's
+`MODULE_LEVEL_DIRECTIVE` diagnostics for dependency directives such as `use client`.
+Other build diagnostics remain enabled.
 
 The [infrastructure guide](./infra/README.md) contains the first bootstrap command
 sequence, application credentials, local deployment flow, and fresh-checkout

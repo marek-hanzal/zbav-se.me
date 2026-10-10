@@ -384,14 +384,14 @@ infra-apply() (
 # @cmd Build an environment-specific application and migration release locally
 #
 # Requires: installed dependencies. Uses public settings from infra/app.json, without dotenv.
-# Writes .release/<environment>, .vercel/output, and other Vite/Nitro build artifacts.
+# Writes infra/app/.release/<environment>, .vercel/output, and other Vite/Nitro build artifacts.
 # Does not contact cloud services. Shares build directories with build and E2E.
 # @arg environment! Terraform workspace: dev, uat, or prod
 release() (
 	local environment target
 	_infra_target release "$@"
 	_infra_release_environment
-	target="$PWD/.release/$environment"
+	target="$PWD/infra/app/.release/$environment"
 	mkdir -p "$target/.vercel"
 	rm -f "$target/release.json"
 	rm -rf "$target/.vercel/output" "$target/assets" .vercel/output

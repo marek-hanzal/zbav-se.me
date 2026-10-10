@@ -26,10 +26,19 @@ these names refers to local Docker services.
 | `prod` | `zbav-se.me` (apex) | `zbav-se-me-prod` |
 
 The public configuration lives in `app.json`; Terraform and the release build
-read the same root domain, DNS names, resource prefix, team, and regions. Defaults
-use Frankfurt for Bunny, Neon, and Vercel. Each workspace owns two private S3 storage zones
+read the same root domain, DNS names, resource prefix, Vercel team, Neon
+organization, and regions. Defaults use Frankfurt for Bunny, Neon, and Vercel.
+Each workspace owns two private S3 storage zones
 (`assets` and `content`), their Bunny pull zones, one Neon PostgreSQL 17 project,
 and one Vercel project. Database and storage resources use `prevent_destroy`.
+
+Neon point-in-time restore history is configured by `history` in `app.json`, in
+seconds. It is explicitly set to 21600 (six hours), matching the current Free
+plan limit; the pinned provider otherwise requests one day, which Neon rejects.
+Increase this value only after the organization's plan supports a longer window.
+Compute autoscaling stays between 0.25 and 1 CU. The idle suspend timeout is left
+to Neon's plan default (five minutes on Free); explicitly requesting 300 seconds
+is rejected by Free accounts even though it represents the same duration.
 
 Bunny storage stays in the configured primary region (`DE` / Frankfurt) without
 additional replication regions. Both pull zones enable only the European CDN
@@ -51,6 +60,12 @@ Bunny DNS. The release build and runtime expand them into full hostnames:
 | `prod` | `https://cdn.zbav-se.me/` | `https://content.zbav-se.me` |
 
 The mapping derives from `terraform.workspace`.
+
+CDN CNAME targets combine the pull-zone name and the provider's `cdn_domain`
+suffix, for example `zbav-se-me-dev-assets.b-cdn.net`. The suffix alone is not
+a pull-zone hostname. Vercel's recommended CNAME can include the final DNS root
+dot; Terraform removes that dot because Bunny DNS rejects it.
+
 Application plans reject `default` and unknown workspaces. The shared state-zone
 bootstrap stays in `bootstrap/` with workspace `default`. It owns the state zone
 and root DNS zone once; application workspaces own their environment's DNS records.
@@ -98,7 +113,7 @@ Verify the delegation before the first application apply:
 
 ```bash
 mise exec -- bunny dns zones nameservers zbav-se.me
-dig +short NS zbav-se.me
+dig @1.1.1.1 +short NS zbav-se.me
 ```
 
 Wait until the authoritative nameservers point to Bunny. This setup intentionally
@@ -125,9 +140,10 @@ After bootstrap, add `NEON_API_KEY` and `VERCEL_API_TOKEN` to the shared encrypt
 file with `argc infra-secrets-edit`. These authenticate the local Terraform
 providers; no GitHub secrets or CLI login/profile extraction is involved.
 The Vercel token must have access to the team configured in `app.json`.
-Use an organization-wide Neon key that can create projects. With a personal Neon
-key, add `"org": "org-..."` to `app.json`; organization keys infer the organization
-automatically. Project-scoped keys cannot provision new projects. See
+Use a personal or organization-wide Neon key that can create projects in the
+organization configured by `org` in `app.json`. Terraform always sends this
+organization explicitly; personal keys require it. Project-scoped keys cannot
+provision new projects. See
 [Neon's project API](https://api-docs.neon.tech/reference/createproject).
 
 Create and fill each environment's encrypted application file:
@@ -179,10 +195,15 @@ argc infra-apply dev
 `release` only builds local artifacts. `infra-plan`/`infra-apply` require those
 artifacts for the selected environment; they do not rebuild them. Release builds
 disable local dotenv loading and use the explicit public configuration in
-`app.json`. Outputs are isolated in `.release/<workspace>`; the Vite/Nitro build
-directories are still shared with ordinary builds and E2E, so do not overlap them.
+`app.json`. Outputs are isolated in `infra/app/.release/<workspace>`; the Vite/Nitro
+build directories are still shared with ordinary builds and E2E, so do not overlap them.
 Rebuild when changing the source, dependencies, public config, or build settings.
 Terraform rejects a release built for another environment or old public config.
+
+Terraform reads `.release/<workspace>` directly inside its `app/` root. Keep this
+path without a leading `./`: the Vercel data source normalizes file paths, while
+the deployment strips `path_prefix` literally. Both must match so Vercel receives
+`.vercel/output/config.json` and its function files at the root.
 
 Terraform performs these dependency-ordered operations:
 

@@ -32,6 +32,11 @@ export default defineConfig(({ mode }) => {
 				? nitro({
 						preset: process.env.NITRO_PRESET || "vercel",
 						noExternals: true,
+						rolldownConfig: {
+							checks: {
+								moduleLevelDirective: false,
+							},
+						},
 					})
 				: undefined,
 		],
@@ -48,6 +53,10 @@ export default defineConfig(({ mode }) => {
 			assetsInlineLimit: 0,
 			sourcemap: false,
 			rolldownOptions: {
+				// Suppress noisy dependency `use client` directive diagnostics.
+				checks: {
+					moduleLevelDirective: false,
+				},
 				output: {
 					minify: false,
 				},
